@@ -5,23 +5,45 @@ body, div, td, p, a {
     font-size:9pt;
 }
 
-#db_info .header {
+.title {
+    font-weight:bold;
+    font-size:14px;
+    border-bottom:2px solid #EEEEEE;
+    padding-bottom:5px;
+}
+
+li {
+    clear:both;
+    height:30px;
+}
+
+.header {
     width:80px;
     font-weight:bold;
     float:left;
     padding-top:2px;
 }
 
-#db_info .tail {
+.tail {
     float:left;
 }
 
-#db_info .tail input {
+.submit_button {
+    clear:both;
+    margin-top:10px;
+}
+
+input[type=password] {
     border:1px solid #DDDDDD;
     height:16px;
 }
 
-#db_info .tail .button {
+input[type=text] {
+    border:1px solid #DDDDDD;
+    height:16px;
+}
+
+.button {
     border:1px solid #555555;
     background-color:#888888;
     color:#FFFFFF;
@@ -30,7 +52,3 @@ body, div, td, p, a {
     font-weight:bold;
 }
 
-#db_info li {
-    clear:both;
-    height:30px;
-}

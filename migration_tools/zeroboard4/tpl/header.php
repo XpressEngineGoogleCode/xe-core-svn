@@ -5,10 +5,11 @@
     <meta name="generator" content="zeroboard xe (http://www.zeroboard.com)" />
     <meta http-equiv="imagetoolbar" content="no" />
 
-    <title>zeroboard4 migration tool</title>
+    <title>zeroboard4 data export tool ver 0.1</title>
     <link rel="stylesheet" href="./tpl/default.css" type="text/css" />
+    <script type="text/javascript" src="./tpl/export.js"></script>
 </head>
 <body>
 
-<h1>zeroboard4 data migration tool</h1>
-<hr>
+<h1>zeroboard4 data export tool ver 0.1</h1>
+<hr />
