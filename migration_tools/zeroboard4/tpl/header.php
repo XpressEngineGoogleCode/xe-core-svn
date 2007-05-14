@@ -7,7 +7,6 @@
 
     <title>zeroboard4 data export tool ver 0.1</title>
     <link rel="stylesheet" href="./tpl/css/default.css" type="text/css" />
-    <script type="text/javascript" src="./tpl/js/migration_tool.js"></script>
 </head>
 <body>
 
