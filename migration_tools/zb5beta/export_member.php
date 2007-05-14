@@ -10,7 +10,7 @@
     $image_mark_path = sprintf('%s/icon/private_icon/',$path);
 
     // 회원정보를 구함
-    $query = "select * from zetyx_member_table";
+    $query = "select * from zb_member_list";
     $member_result = mysql_query($query) or die(mysql_error());
 
     $xml_buff = '';
@@ -18,39 +18,33 @@
         $member_buff = null;
 
         // 기본정보들
-        $member_buff .= sprintf('<user_id>%s</user_id>', addXmlQuote(iconv('EUC-KR','UTF-8',$member_info->user_id)));
+        $member_buff .= sprintf('<user_id>%s</user_id>', addXmlQuote($member_info->user_id));
         $member_buff .= sprintf('<password>%s</password>', addXmlQuote($member_info->password));
-        $member_buff .= sprintf('<user_name>%s</user_name>', addXmlQuote(iconv('EUC-KR','UTF-8',$member_info->name)));
-        $member_buff .= sprintf('<email_address>%s</email_address>', addXmlQuote(iconv('EUC-KR','UTF-8',$member_info->email)));
-        $member_buff .= sprintf('<homepage>%s</homepage>', addXmlQuote(iconv('EUC-KR','UTF-8',$member_info->homepage)));
-        $member_buff .= sprintf('<nick_name>%s</nick_name>', addXmlQuote(iconv('EUC-KR','UTF-8',$member_info->name)));
-        $member_buff .= sprintf('<birthday>%s</birthday>', date('YmdHis', $member_info->birth));
-        $member_buff .= sprintf('<regdate>%s</regdate>', date('YmdHis', $member_info->reg_date));
+        $member_buff .= sprintf('<user_name>%s</user_name>', addXmlQuote($member_info->user_name));
+        $member_buff .= sprintf('<email_address>%s</email_address>', addXmlQuote($member_info->email_address));
+        $member_buff .= sprintf('<nick_name>%s</nick_name>', addXmlQuote($member_info->nick_name));
+        $member_buff .= sprintf('<regdate>%s</regdate>', $member_info->reg_date);
+        if($member_info->sign) $member_buff .= sprintf('<signature><![CDATA[%s]]></signature>', $member_info->sign);
 
         // 이미지네임
-        $image_nickname_file = sprintf('%s%d.gif',$image_nickname_path,$member_info->no);
-        if(file_exists($image_nickname_file)) $member_buff .= sprintf('<image_nickname>%s</image_nickname>', getFileContentByBase64Encode($image_nickname_file));
+        if($member_info->image_nick) {
+            $pos = strpos($member_info->image_nick, 'files');
+            $image_nickname_file = sprintf('%s/%s', $path, substr($member_info->image_nick, $pos, strlen($member_info->image_nick)));
+            if(file_exists($image_nickname_file)) $member_buff .= sprintf('<image_nickname>%s</image_nickname>', getFileContentByBase64Encode($image_nickname_file));
+        }
 
         // 이미지마크
-        $image_mark_file = sprintf('%s%d.gif',$image_mark_path,$member_info->no);
-        if(file_exists($image_mark_file)) $member_buff .= sprintf('<image_mark>%s</image_mark>', getFileContentByBase64Encode($image_mark_file));
-
+        if($member_info->image_mark) {
+            $pos = strpos($member_info->image_mark, 'files');
+            $image_mark_file = sprintf('%s/%s', $path, substr($member_info->image_mark, $pos, strlen($member_info->image_mark)));
+            if(file_exists($image_mark_file)) $member_buff .= sprintf('<image_mark>%s</image_mark>', getFileContentByBase64Encode($image_mark_file));
+        }
     
-        $xml_buff .= sprintf('<member user_id="%s">%s</member>', addXmlQuote(iconv('EUC-KR','UTF-8',$member_info->user_id)), $member_buff);
+        $xml_buff .= sprintf('<member user_id="%s">%s</member>', addXmlQuote($member_info->user_id), $member_buff);
     }
 
-    $xml_buff = sprintf('<root type="zeoboard4">%s</root>', $xml_buff);
+    $xml_buff = sprintf('<root type="zb5beta">%s</root>', $xml_buff);
 
     // 다운로드
-    header("Content-Type: application/octet-stream");
-    header("Expires: Mon, 26 Jul 1997 05:00:00 GMT");
-    header("Last-Modified: " . gmdate("D, d M Y H:i:s") . " GMT");
-    header("Cache-Control: no-store, no-cache, must-revalidate");
-    header("Cache-Control: post-check=0, pre-check=0", false);
-    header("Pragma: no-cache");
-    header("Content-Length: " .strlen($xml_buff));
-    header('Content-Disposition: attachment; filename="'.$filename.'"');
-    header("Content-Transfer-Encoding: binary");
-
-    print $xml_buff; 
+    procDownload($filename, $xml_buff);
 ?>

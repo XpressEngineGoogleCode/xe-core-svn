@@ -6,10 +6,10 @@
     $filename = $_POST['filename'];
 
     // id를 구함
-    $id = ereg_replace('^module\_','',$target_module);
+    $module_srl = ereg_replace('^module\_','',$target_module);
 
     // 게시물을 구함
-    $query = sprintf('select a.*, b.user_id from zetyx_board_%s a left outer join zetyx_member_table b on a.ismember = b.no where a.headnum < 0 and a.arrangenum >=0  order by a.headnum, a.arrangenum', $id);
+    $query = sprintf("select * from {$db_prefix}articles where module_srl = '{$module_srl}' and listorder < 0");
     $document_result = mysql_query($query) or die(mysql_error());
 
     $xml_buff = '';
@@ -18,111 +18,87 @@
         $document_buff = null;
 
         // 기본 정보
-        if($document_info->headnum <= -2000000000) $document_buff .= sprintf('<is_notice>Y</is_notice>');
-        if($document_buff->is_secret) $document_buff .= sprintf('<is_secret>Y</is_secret>');
-        $document_buff .= sprintf('<title><![CDATA[%s]]></title>', iconv('EUC-KR','UTF-8',$document_info->subject));
-        $document_buff .= sprintf('<readed_count>%d</readed_count>', $document_info->hit);
-        $document_buff .= sprintf('<voted_count>%d</voted_count>', $document_info->vote);
-        $document_buff .= sprintf('<comment_count>%d</comment_count>', $document_info->total_comment);
-        $document_buff .= sprintf('<password>%s</password>', addXmlQuote($document_info->password));
-        $document_buff .= sprintf('<user_id>%s</user_id>', addXmlQuote(iconv('EUC-KR','UTF-8',$document_info->user_id)));
-        if($document_info->user_id) $document_buff .= sprintf('<user_name>%s</user_name>', addXmlQuote(iconv('EUC-KR','UTF-8',$document_info->name)));
-        $document_buff .= sprintf('<nick_name>%s</nick_name>', addXmlQuote(iconv('EUC-KR','UTF-8',$document_info->name)));
-        $document_buff .= sprintf('<email_address>%s</email_address>', addXmlQuote(iconv('EUC-KR','UTF-8',$document_info->email)));
-        $document_buff .= sprintf('<homepage>%s</homepage>', addXmlQuote(iconv('EUC-KR','UTF-8',$document_info->homepage)));
-        $document_buff .= sprintf('<regdate>%s</regdate>', date("YmdHis", $document_info->reg_date));
-        $document_buff .= sprintf('<ipaddress>%s</ipaddress>', $document_info->ip);
+        if($document_info->is_notice == 'Y') $document_buff .= sprintf('<is_notice>Y</is_notice>');
+        $document_buff .= sprintf('<nick_name>%s</nick_name>', addXmlQuote($document_info->writer));
+        $document_buff .= sprintf('<user_id>%s</user_id>', addXmlQuote($document_info->user_id));
+        if($document_info->user_id) $document_buff .= sprintf('<user_name>%s</user_name>', addXmlQuote($document_info->writer));
+        $document_buff .= sprintf('<password>%s</password>', addXmlQuote($document_info->passwd));
+        $document_buff .= sprintf('<title><![CDATA[%s]]></title>', $document_info->title);
+        if($document_info->tag) $document_buff .= sprintf('<tag>%s</tag>', addXmlQuote($document_info->tag));
+        $document_buff .= sprintf('<regdate>%s</regdate>', $document_info->regdate);
+        $document_buff .= sprintf('<ipaddress>%s</ipaddress>', $document_info->ipaddress);
+        $document_buff .= sprintf('<comment_count>%d</comment_count>', $document_info->comment_cnt);
+        $document_buff .= sprintf('<trackback_count>%d</trackback_count>', $document_info->trackback_cnt);
+        $document_buff .= sprintf('<readed_count>%d</readed_count>', $document_info->readed_cnt);
+        $document_buff .= sprintf('<voted_count>%d</voted_count>', $document_info->voted_cnt);
+        $document_buff .= sprintf('<allow_comment>%d</allow_comment>', $document_info->allow_comment);
+        $document_buff .= sprintf('<allow_trackback>%d</allow_trackback>', $document_info->allow_trackback);
 
         // 첨부파일 정리와 내용 변경을 위한 작업들..
-        $content = $document_info->memo;
-        $member_srl = $document_info->ismember;
+        $content = $document_info->article;
+        $article_srl = $document_info->article_srl;
 
-        // use_html옵션에 따른 컨텐츠 정리
-        switch($document_info->use_html) {
-            case 2 : 
-                    // pass
-                break;
-            default : 
-                    $content = nl2br($content);
-                break;
-        }
-
-        // 그림창고를 이용한 파일 첨부 내용을 찾음 
-        $attach_files = array();
-        if($member_srl) {
-            $match_count = preg_match_all('/\[img:([^\.]*)\.(jpg|gif|png|jpeg)([^\]]*)\]/i', $content, $matches);
-            if($match_count) {
-                for($i=0;$i<$match_count;$i++) {
-                    $image_filename = sprintf('%s.%s', $matches[1][$i], $matches[2][$i]);
-                    $attach_files[] = sprintf('%s/icon/member_image_box/%d/%s', $path, $member_srl, $image_filename);
-                }
+        // 첨부파일 목록 가져옴
+        if($document_info->file_cnt) {
+            $file_query = "select * from {$db_prefix}file where article_srl = '{$article_srl}'";
+            $file_result = mysql_query($file_query) or die(mysql_error());
+            $attches_xml_buff = '';
+            $uploaded_count = 0;
+            while($file_info = mysql_fetch_object($file_result)) {
+                if($file_info->is_used != 'Y') continue;
+                $attach_filename = sprintf('%s/%s', $path, $file_info->path);
+                if(!file_exists($attach_filename)) continue;
+                $attches_xml_buff .= sprintf('<file name="%s">', addXmlQuote($file_info->s_filename));
+                $attches_xml_buff .= sprintf('<downloaded_count>%d</downloaded_count>', $file_info->download_cnt);
+                $attches_xml_buff .= sprintf('<buff><![CDATA[%s]]></buff>', getFileContentByBase64Encode($attach_filename));
+                $attches_xml_buff .= '</file>';
+                $uploaded_count ++;
             }
-
-            // content의 내용을 변경
-            $content = preg_replace('/\[img:([^\.]*)\.(jpg|gif|png|jpeg),align=([^,]*),width=([^,]*),height=([^,]*),vspace=([^,]*),hspace=([^,]*),border=([^\]]*)\]/i', '<img src="\\1.\\2" align="\\3" width="\\4" height="\\5" border="\\8" alt="\\1.\\2" />', $content);
+            $document_buff .= sprintf('<uploaded_count>%d</uploaded_count>', $uploaded_count);
+            $document_buff .= sprintf('<files count="%d">%s</files>', $uploaded_count, $attches_xml_buff);
         }
-
-        if($document_info->file_name1) {
-            $attach_files[] = sprintf('%s/%s', $path, $document_info->file_name1);
-            if(eregi('(jpg|gif|jpeg|png)$', $document_info->file_name1)) $content = sprintf('<img src="%s" border="0" alt="%s" /><br />%s', $document_info->s_file_name1, $document_info->s_file_name1, $content);
-        }
-        if($document_info->file_name2) {
-            $attach_files[] = sprintf('%s/%s', $path, $document_info->file_name2);
-            if(eregi('(jpg|gif|jpeg|png)$', $document_info->file_name2)) $content = sprintf('<img src="%s" border="0" alt="%s" /><br />%s', $document_info->s_file_name2, $document_info->s_file_name2, $content);
-        }
-
-        $uploaded_count = count($attach_files);
-
-        // 첨부된 파일 또는 이미지박스를 이용한 파일목록을 구함
-        $document_buff .= sprintf('<uploaded_count>%d</uploaded_count>', $uploaded_count);
-        $document_buff .= sprintf('<content><![CDATA[%s]]></content>', iconv('EUC-KR','UTF-8',$content));
-
-        // 첨부파일을 읽어서 xml파일에 추가
-        $attaches_xml_buff = null;
-        for($i=0;$i<$uploaded_count;$i++) {
-            $attach_file = $attach_files[$i];
-            if(!file_exists($attach_file)) continue;
-            $tmp_arr = explode('/',$attach_file);
-            $attach_filename = $tmp_arr[count($tmp_arr)-1];
-
-            $attach_file_buff = getFileContentByBase64Encode($attach_file);
-            $attaches_xml_buff .= sprintf('<file name="%s"><![CDATA[%s]]></file>', addXmlQuote(iconv('EUC-KR','UTF-8',$attach_filename)), $attach_file_buff);
-        }
-        $document_buff .= sprintf('<files count="%d">%s</files>', $uploaded_count, $attaches_xml_buff);
 
         // 코멘트 목록을 구해옴
-        $query = sprintf('select a.*, b.user_id from zetyx_board_comment_%s a left outer join zetyx_member_table b on a.ismember = b.no where a.parent = %d', $id, $document_info->no);
+        $query = sprintf("select * from {$db_prefix}comment where article_srl = '{$article_srl}' order by listorder");
         $comment_result = mysql_query($query) or die(mysql_error());
         $comment_xml_buff = '';
         while($comment_info = mysql_fetch_object($comment_result)) {
             $comment_buff = '';
-            $comment_buff .= sprintf('<content><![CDATA[%s]]></content>', iconv('EUC-KR','UTF-8',nl2br($comment_info->memo)));
-            $comment_buff .= sprintf('<password>%s</password>', addXmlQuote($comment_info->password));
-            $comment_buff .= sprintf('<user_id>%s</user_id>', addXmlQuote(iconv('EUC-KR','UTF-8',$comment_info->user_id)));
-            if($comment_info->user_id) $comment_buff .= sprintf('<user_name>%s</user_name>', addXmlQuote(iconv('EUC-KR','UTF-8',$comment_info->name)));
-            $comment_buff .= sprintf('<nick_name>%s</nick_name>', addXmlQuote(iconv('EUC-KR','UTF-8',$comment_info->name)));
-            $comment_buff .= sprintf('<member_srl>%d</member_srl>', $comment_info->ismember);
-            $comment_buff .= sprintf('<ipaddress>%s</ipaddress>', addXmlQuote($comment_info->ip));
-            $comment_buff .= sprintf('<regdate>%s</regdate>', date('YmdHis', $comment_info->reg_date));
+            $comment_buff .= sprintf('<comment_srl>%d</comment_srl>', $comment_info->comment_srl);
+            $comment_buff .= sprintf('<parent_srl>%d</parent_srl>', $comment_info->parent_srl);
+            $comment_buff .= sprintf('<content><![CDATA[%s]]></content>', nl2br($comment_info->article));
+            $comment_buff .= sprintf('<password>%s</password>', addXmlQuote($comment_info->passwd));
+            $comment_buff .= sprintf('<user_id>%s</user_id>', addXmlQuote($comment_info->user_id));
+            if($comment_info->user_id) $comment_buff .= sprintf('<user_name>%s</user_name>', addXmlQuote($comment_info->writer));
+            $comment_buff .= sprintf('<nick_name>%s</nick_name>', addXmlQuote($comment_info->writer));
+            $comment_buff .= sprintf('<member_srl>%d</member_srl>', $comment_info->member_srl);
+            $comment_buff .= sprintf('<ipaddress>%s</ipaddress>', addXmlQuote($comment_info->ipaddress));
+            $comment_buff .= sprintf('<regdate>%s</regdate>', $comment_info->reg_date);
             $comment_xml_buff .= sprintf('<comment>%s</comment>', $comment_buff);
         }
-        $document_buff .= sprintf('<comments count="%d">%s</comments>', $document_info->total_comment, $comment_xml_buff);
+        $document_buff .= sprintf('<comments count="%d">%s</comments>', $document_info->comment_count, $comment_xml_buff);
+
+        // 트랙백 목록을 구해옴
+        $query = sprintf("select * from {$db_prefix}trackback where article_srl = '{$article_srl}' order by listorder");
+        $trackback_result = mysql_query($query) or die(mysql_error());
+        $trackback_xml_buff = '';
+        while($trackback_info = mysql_fetch_object($trackback_result)) {
+            $trackback_buff = '';
+            $trackback_buff .= sprintf('<url>%s</url>', addXmlQuote($trackback_info->url));
+            $trackback_buff .= sprintf('<title><![CDATA[%s]]></title>', $trackback_info->title);
+            $trackback_buff .= sprintf('<blog_name><![CDATA[%s]]></blog_name>', $trackback_info->blog_name);
+            $trackback_buff .= sprintf('<excerpt><![CDATA[%s]]></excerpt>', $trackback_info->excerpt);
+            $trackback_buff .= sprintf('<ipaddress>%s</ipaddress>', addXmlQuote($trackback_info->ipaddress));
+            $trackback_buff .= sprintf('<regdate>%s</regdate>', $trackback_info->reg_date);
+            $trackback_xml_buff .= sprintf('<trackback>%s</trackback>', $trackback_buff);
+        }
+        $document_buff .= sprintf('<trackbacks count="%d">%s</trackbacks>', $document_info->trackback_count, $trackback_xml_buff);
     
         $xml_buff .= sprintf('<document sequence="%d">%s</document>', $sequence++, $document_buff);
     }
 
-    $xml_buff = sprintf('<root type="zeoboard4">%s</root>', $xml_buff);
+    $xml_buff = sprintf('<root type="zb5beta">%s</root>', $xml_buff);
 
     // 다운로드
-    header("Content-Type: application/octet-stream");
-    header("Expires: Mon, 26 Jul 1997 05:00:00 GMT");
-    header("Last-Modified: " . gmdate("D, d M Y H:i:s") . " GMT");
-    header("Cache-Control: no-store, no-cache, must-revalidate");
-    header("Cache-Control: post-check=0, pre-check=0", false);
-    header("Pragma: no-cache");
-    header("Content-Length: " .strlen($xml_buff));
-    header('Content-Disposition: attachment; filename="'.$filename.'"');
-    header("Content-Transfer-Encoding: binary");
-
-    print $xml_buff; 
+    procDownload($filename, $xml_buff);
 ?>

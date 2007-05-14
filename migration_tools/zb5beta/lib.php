@@ -41,4 +41,23 @@
         fclose($fp);
         return base64_encode($buff);
     }
+
+    function procDownload($filename, $content) {
+        if(strstr($_SERVER['HTTP_USER_AGENT'], "MSIE")) {
+            $filename = urlencode($filename);
+            $filename = preg_replace('/\./', '%2e', $filename, substr_count($filename, '.') - 1);
+        }
+
+        header("Content-Type: application/octet-stream");
+        header("Expires: Mon, 26 Jul 1997 05:00:00 GMT");
+        header("Last-Modified: " . gmdate("D, d M Y H:i:s") . " GMT");
+        header("Cache-Control: no-store, no-cache, must-revalidate");
+        header("Cache-Control: post-check=0, pre-check=0", false);
+        header("Pragma: no-cache");
+        header("Content-Length: " .strlen($content));
+        header('Content-Disposition: attachment; filename="'.$filename.'"');
+        header("Content-Transfer-Encoding: binary");
+
+        print $content; 
+    }
 ?>
