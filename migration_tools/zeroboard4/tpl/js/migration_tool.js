@@ -17,6 +17,7 @@ function doMigrationStep1(fo_obj) {
 
 function completeMigrationStep1(ret_obj, response_tags) {
     var module_list = ret_obj["module_list"];
+    alert(module_list);
 
     xGetElementById("path").style.display = "none";
     xGetElementById("module_list").style.display = "block";

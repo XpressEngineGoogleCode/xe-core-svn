@@ -1,29 +1,34 @@
 <?php include "./tpl/header.php"; ?>
 
+<form action="./" method="get" onsubmit="return doMigration(this);">
+<input type="hidden" name="step" value="1" />
+
 <div id="path">
     <div class="title">Step 1. 설치된 경로를 입력해 주세요.</div>
-    <form action="./" method="get" onsubmit="return doMigrationStep1(this);">
         <ul>
             <li>
                 <div class="header">path</div>
                 <div class="tail"><input type="text" name="path" value="./" /></div>
-                <div class="tail"><input type="submit" value="next" class="button" /></div>
+                <div class="tail"><input type="button" value="next" class="button" /></div>
             </li>
         </ul>
-    </form>
 </div>
 
 <div id="module_list" style="display:none">
     <div class="title">Step 2. 회원정보 또는 게시판을 선택해주세요.</div>
     <form action="./" method="get" onsubmit="return doMigrationStep2(this);">
-        <div>
-            <input type="radio" name="target_module" value="member" id="member" />
-            <label for="member">member</label>
-            <input type="radio" name="target_module" value="module_board" id="module_board" />
-            <label for="module_board">board</label>
+        <ul>
+            <li>
+                <div class="header"><label for="member">member</label></div>
+                <div class="tail"><input type="radio" name="target_module" value="member" id="member" /></div>
+            </li>
+            <li>
+                <div class="header"><input type="radio" name="target_module" value="module_board" id="module_board" /></div>
+                <div class="tail"><label for="module_board">board</label></div>
+            </li>
         </div>
         <div class="submit_button">
-            <input type="submit" value="next" class="button" />
+            <input type="button" value="next" class="button" />
         </div>
     </form>
 </div>
