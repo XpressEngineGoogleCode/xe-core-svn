@@ -54,7 +54,7 @@
             if($match_count) {
                 for($i=0;$i<$match_count;$i++) {
                     $image_filename = sprintf('%s.%s', $matches[1][$i], $matches[2][$i]);
-                    $attach_files[] = sprintf('%s/icon/member_image_box/%d/%s', $path, $member_srl, $image_filename);
+                    $attach_files[] = array('filename'=>sprintf('%s/icon/member_image_box/%d/%s', $path, $member_srl, $image_filename),"downloaded_count"=>0);
                 }
             }
 
@@ -63,11 +63,11 @@
         }
 
         if($document_info->file_name1) {
-            $attach_files[] = sprintf('%s/%s', $path, $document_info->file_name1);
+            $attach_files[] = array("filename"=>sprintf('%s/%s', $path, $document_info->file_name1),"downloaded_count"=>$document_info->download1);
             if(eregi('(jpg|gif|jpeg|png)$', $document_info->file_name1)) $content = sprintf('<img src="%s" border="0" alt="%s" /><br />%s', $document_info->s_file_name1, $document_info->s_file_name1, $content);
         }
         if($document_info->file_name2) {
-            $attach_files[] = sprintf('%s/%s', $path, $document_info->file_name2);
+            $attach_files[] = array("filename"=>sprintf('%s/%s', $path, $document_info->file_name2),"downloaded_count"=>$document_info->download2);
             if(eregi('(jpg|gif|jpeg|png)$', $document_info->file_name2)) $content = sprintf('<img src="%s" border="0" alt="%s" /><br />%s', $document_info->s_file_name2, $document_info->s_file_name2, $content);
         }
 
@@ -80,13 +80,13 @@
         // 첨부파일을 읽어서 xml파일에 추가
         $attaches_xml_buff = null;
         for($i=0;$i<$uploaded_count;$i++) {
-            $attach_file = $attach_files[$i];
+            $attach_file = $attach_files[$i]['filename'];
             if(!file_exists($attach_file)) continue;
             $tmp_arr = explode('/',$attach_file);
             $attach_filename = $tmp_arr[count($tmp_arr)-1];
 
             $attach_file_buff = getFileContentByBase64Encode($attach_file);
-            $attaches_xml_buff .= sprintf('<file name="%s"><![CDATA[%s]]></file>', addXmlQuote(iconv('EUC-KR','UTF-8',$attach_filename)), $attach_file_buff);
+            $attaches_xml_buff .= sprintf('<file name="%s"><downloaded_count>%d</downloaded_count><buff><![CDATA[%s]]></buff></file>', addXmlQuote(iconv('EUC-KR','UTF-8',$attach_filename)), $attach_files[$i]['downloaded_count'], $attach_file_buff);
         }
         $document_buff .= sprintf('<files count="%d">%s</files>', $uploaded_count, $attaches_xml_buff);
 
@@ -111,18 +111,8 @@
         $xml_buff .= sprintf('<document sequence="%d">%s</document>', $sequence++, $document_buff);
     }
 
-    $xml_buff = sprintf('<root type="zeoboard4">%s</root>', $xml_buff);
+    $xml_buff = sprintf('<root type="zeroboard4">%s</root>', $xml_buff);
 
     // 다운로드
-    header("Content-Type: application/octet-stream");
-    header("Expires: Mon, 26 Jul 1997 05:00:00 GMT");
-    header("Last-Modified: " . gmdate("D, d M Y H:i:s") . " GMT");
-    header("Cache-Control: no-store, no-cache, must-revalidate");
-    header("Cache-Control: post-check=0, pre-check=0", false);
-    header("Pragma: no-cache");
-    header("Content-Length: " .strlen($xml_buff));
-    header('Content-Disposition: attachment; filename="'.$filename.'"');
-    header("Content-Transfer-Encoding: binary");
-
-    print $xml_buff; 
+    procDownload($filename, $xml_buff);
 ?>

@@ -39,18 +39,8 @@
         $xml_buff .= sprintf('<member user_id="%s">%s</member>', addXmlQuote(iconv('EUC-KR','UTF-8',$member_info->user_id)), $member_buff);
     }
 
-    $xml_buff = sprintf('<root type="zeoboard4">%s</root>', $xml_buff);
+    $xml_buff = sprintf('<root type="zeroboard4">%s</root>', $xml_buff);
 
     // 다운로드
-    header("Content-Type: application/octet-stream");
-    header("Expires: Mon, 26 Jul 1997 05:00:00 GMT");
-    header("Last-Modified: " . gmdate("D, d M Y H:i:s") . " GMT");
-    header("Cache-Control: no-store, no-cache, must-revalidate");
-    header("Cache-Control: post-check=0, pre-check=0", false);
-    header("Pragma: no-cache");
-    header("Content-Length: " .strlen($xml_buff));
-    header('Content-Disposition: attachment; filename="'.$filename.'"');
-    header("Content-Transfer-Encoding: binary");
-
-    print $xml_buff; 
+    procDownload($filename, $xml_buff);
 ?>
