@@ -31,7 +31,7 @@
 ?>
 
         <div class="button_area">
-            <input type="submit" value="next" class="button" />
+            <input type="submit" value="next" />
         </div>
 
     </form>

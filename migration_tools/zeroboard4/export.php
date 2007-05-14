@@ -23,10 +23,10 @@
 
         <div class="content">
             <div class="header">파일 이름</div>
-            <div class="tail"><input type="text" name="path" value="<?=$target_module?>.xml" /></div>
-            <div class="tail"><input type="submit" value="next" class="button" /></div>
+            <div class="tail"><input type="text" name="filename" value="<?=$target_module?>.xml" /></div>
+            <div class="tail"><input type="submit" value="next" /></div>
         </div>
 
-    </div>
+    </form>
 
 <?php include "./tpl/footer.php"; ?>
