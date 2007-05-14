@@ -18,13 +18,13 @@
         $member_buff = null;
 
         // 기본정보들
-        $member_buff .= sprintf('<user_id>%s</user_id>', addXmlQuote($member_info->user_id));
-        $member_buff .= sprintf('<user_id>%s</user_id>', addXmlQuote($member_info->user_id));
+        $member_buff .= sprintf('<user_id>%s</user_id>', addXmlQuote(iconv('EUC-KR','UTF-8',$member_info->user_id)));
+        $member_buff .= sprintf('<user_id>%s</user_id>', addXmlQuote(iconv('EUC-KR','UTF-8',$member_info->user_id)));
         $member_buff .= sprintf('<password>%s</password>', addXmlQuote($member_info->password));
-        $member_buff .= sprintf('<user_name>%s</user_name>', addXmlQuote($member_info->name));
-        $member_buff .= sprintf('<email_address>%s</email_address>', addXmlQuote($member_info->email));
-        $member_buff .= sprintf('<homepage>%s</homepage>', addXmlQuote($member_info->homepage));
-        $member_buff .= sprintf('<nick_name>%s</nick_name>', addXmlQuote($member_info->name));
+        $member_buff .= sprintf('<user_name>%s</user_name>', addXmlQuote(iconv('EUC-KR','UTF-8',$member_info->name)));
+        $member_buff .= sprintf('<email_address>%s</email_address>', addXmlQuote(iconv('EUC-KR','UTF-8',$member_info->email)));
+        $member_buff .= sprintf('<homepage>%s</homepage>', addXmlQuote(iconv('EUC-KR','UTF-8',$member_info->homepage)));
+        $member_buff .= sprintf('<nick_name>%s</nick_name>', addXmlQuote(iconv('EUC-KR','UTF-8',$member_info->name)));
         $member_buff .= sprintf('<birthday>%s</birthday>', date('YmdHis', $member_info->birth));
         $member_buff .= sprintf('<regdate>%s</regdate>', date('YmdHis', $member_info->reg_date));
 
@@ -37,7 +37,7 @@
         if(file_exists($image_mark_file)) $member_buff .= sprintf('<image_mark>%s</image_mark>', getFileContentByBase64Encode($image_mark_file));
 
     
-        $xml_buff .= sprintf('<member user_id="%s">%s</member>', addXmlQuote($member_info->user_id), $member_buff);
+        $xml_buff .= sprintf('<member user_id="%s">%s</member>', addXmlQuote(iconv('EUC-KR','UTF-8',$member_info->user_id)), $member_buff);
     }
 
     $xml_buff = sprintf('<root type="zeoboard4">%s</root>', $xml_buff);
