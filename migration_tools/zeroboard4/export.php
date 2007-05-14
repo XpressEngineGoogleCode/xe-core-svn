@@ -2,9 +2,17 @@
     include "lib.php";
 
     include "./tpl/header.php"; 
+
+    if(!ereg("^module\_", $target_module)) {
+        $action_file = 'export_member.php';
+        $target_title = '회원정보'; 
+    } else {
+        $action_file = 'export_board.php';
+        $target_title = sprintf('%s (%s)',  substr($target_module, 7), '게시판' );
+    }
 ?>
 
-    <form action="./do_export.php" method="post">
+    <form action="./<?=$action_file?>" method="post">
     <input type="hidden" name="path" value="<?=$path?>" />
     <input type="hidden" name="target_module" value="<?=$target_module?>" />
 
@@ -13,12 +21,7 @@
 
         <div class="content">
             <div class="header">백업 대상</div>
-            <div class="tail">
-<?
-    if(!ereg("^module\_", $target_module)) print "회원정보"; 
-    else printf('%s (%s)',  substr($target_module, 7), "게시판" );
-?>
-            </div>
+            <div class="tail"><?=$target_title?></div>
         </div>
 
         <div class="content">

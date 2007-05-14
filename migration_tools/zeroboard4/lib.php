@@ -24,4 +24,14 @@
         exit();
     }
 
+    function addXmlQuote($val) {
+        return str_replace(array('<','>','&'),array('&lt;','gt;','&amp;'),trim($val));
+    }
+
+    function getFileContentByBase64Encode($filename) {
+        $fp = fopen($filename,"r");
+        $buff = fgets($fp, filesize($filename));
+        fclose($fp);
+        return base64_encode($buff);
+    }
 ?>
