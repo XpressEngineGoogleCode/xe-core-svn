@@ -6,8 +6,11 @@
     <meta http-equiv="imagetoolbar" content="no" />
 
     <title>zeroboard4 data export tool ver 0.1</title>
-    <link rel="stylesheet" href="./tpl/default.css" type="text/css" />
-    <script type="text/javascript" src="./tpl/export.js"></script>
+    <link rel="stylesheet" href="./tpl/css/default.css" type="text/css" />
+    <script type="text/javascript" src="./tpl/js/x.js"></script>
+    <script type="text/javascript" src="./tpl/js/common.js"></script>
+    <script type="text/javascript" src="./tpl/js/xml_handler.js"></script>
+    <script type="text/javascript" src="./tpl/js/migration_tool.js"></script>
 </head>
 <body>
 
