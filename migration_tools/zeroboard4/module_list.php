@@ -23,8 +23,8 @@
     while($module_info = mysql_fetch_object($module_list_result)) {
 ?>
         <div class="content">
-            <div class="header"><input type="radio" name="target_module" value="module_<?=$module_info->name?>" id="module_board" /></div>
-            <div class="tail"><label for="module_board"><?=$module_info->name?></label></div>
+            <div class="header"><input type="radio" name="target_module" value="module_<?=$module_info->name?>" id="module_<?=$module_info->name?>" /></div>
+            <div class="tail"><label for="module_<?=$module_info->name?>"><?=$module_info->name?></label></div>
         </div>
 <?
     }
