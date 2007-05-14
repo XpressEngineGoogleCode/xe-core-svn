@@ -5,9 +5,9 @@
     <meta name="generator" content="zeroboard xe (http://www.zeroboard.com)" />
     <meta http-equiv="imagetoolbar" content="no" />
 
-    <title>zeroboard4 data export tool ver 0.1</title>
+    <title>zb5beta data export tool ver 0.1</title>
     <link rel="stylesheet" href="./tpl/css/default.css" type="text/css" />
 </head>
 <body>
 
-<div class="main_title">zeroboard4 data export tool ver 0.1</div>
+<div class="main_title">zb5beta data export tool ver 0.1</div>

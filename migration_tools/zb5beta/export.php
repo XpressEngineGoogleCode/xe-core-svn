@@ -7,8 +7,13 @@
         $action_file = 'export_member.php';
         $target_title = '회원정보'; 
     } else {
+        $module_srl = substr($target_module,7);
+        $query = "select * from {$db_prefix}module_manager where module_srl = '{$module_srl}'";
+        $module_result = mysql_query($query) or die(mysql_error());
+        $module_info = mysql_fetch_object($module_result);
+    
         $action_file = 'export_board.php';
-        $target_title = sprintf('%s (%s)',  substr($target_module, 7), '게시판' );
+        $target_title = $module_info->title;
     }
 ?>
 
@@ -26,7 +31,7 @@
 
         <div class="content">
             <div class="header">파일 이름</div>
-            <div class="tail"><input type="text" class="input_text "name="filename" value="<?=eregi_replace('^module_','',$target_module)?>_<?=date("Ymd_His")?>.xml" /></div>
+            <div class="tail"><input type="text" class="input_text "name="filename" value="<?=$target_title?>_<?=eregi_replace('^module_','',$target_module)?>_<?=date("Ymd_His")?>.xml" /></div>
             <div class="tail"><input type="submit" class="input_submit" value="next" /></div>
         </div>
 
