@@ -1,63 +1,32 @@
-<?php include "./tpl/header.php"; ?>
+<?php 
+    include "lib.php";
 
-<form action="./" method="get" onsubmit="return doMigration(this);">
-<input type="hidden" name="step" value="1" />
+    include "./tpl/header.php"; 
+?>
 
-<div id="path">
-    <div class="title">Step 1. 설치된 경로를 입력해 주세요.</div>
-        <ul>
-            <li>
-                <div class="header">path</div>
-                <div class="tail"><input type="text" name="path" value="./" /></div>
-                <div class="tail"><input type="button" value="next" class="button" /></div>
-            </li>
-        </ul>
-</div>
+    <form action="./do_export.php" method="post">
+    <input type="hidden" name="path" value="<?=$path?>" />
+    <input type="hidden" name="target_module" value="<?=$target_module?>" />
 
-<div id="module_list" style="display:none">
-    <div class="title">Step 2. 회원정보 또는 게시판을 선택해주세요.</div>
-    <form action="./" method="get" onsubmit="return doMigrationStep2(this);">
-        <ul>
-            <li>
-                <div class="header"><label for="member">member</label></div>
-                <div class="tail"><input type="radio" name="target_module" value="member" id="member" /></div>
-            </li>
-            <li>
-                <div class="header"><input type="radio" name="target_module" value="module_board" id="module_board" /></div>
-                <div class="tail"><label for="module_board">board</label></div>
-            </li>
-        </div>
-        <div class="submit_button">
-            <input type="button" value="next" class="button" />
-        </div>
-    </form>
-</div>
+        <div class="title">Step 3. 백업할 파일 이름을 선택해주세요.</div>
+        <div class="desc">백업 파일은 파일이름.xml로 저장되며 제로보드XE에서 import 가능합니다.</div>
 
-<div id="category_list" style="display:none">
-    <div class="title">Step 3. 카테고리를 선택해주세요.</div>
-    <form action="./" method="get" onsubmit="return doMigrationStep3(this);">
-        <div class="category_list">
-            <input type="checkbox" name="category" value="0" id="category_0" checked="true" />
-            <label for="category_0">category1</label>
-            <input type="checkbox" name="category" value="1" id="category_1" checked="true" />
-            <label for="category_1">category2</label>
+        <div class="content">
+            <div class="header">백업 대상</div>
+            <div class="tail">
+<?
+    if(!ereg("^module\_", $target_module)) print "회원정보"; 
+    else printf('%s (%s)',  substr($target_module, 7), "게시판" );
+?>
+            </div>
         </div>
-        <div class="submit_button">
-            <input type="submit" value="next" class="button" />
-        </div>
-    </form>
-</div>
 
-<div id="begin_dump" style="display:none">
-    <div class="title">Step 4. 백업파일명을 입력해주세요.</div>
-    <form action="./" method="get" onsubmit="return doMigrationStep4(this);">
-        <div class="category_list">
-            filename : <input type="text" name="filename" value="member.xml" />
+        <div class="content">
+            <div class="header">파일 이름</div>
+            <div class="tail"><input type="text" name="path" value="<?=$target_module?>.xml" /></div>
+            <div class="tail"><input type="submit" value="next" class="button" /></div>
         </div>
-        <div class="submit_button">
-            <input type="submit" value="next" class="button" />
-        </div>
-    </form>
-</div>
+
+    </div>
 
 <?php include "./tpl/footer.php"; ?>

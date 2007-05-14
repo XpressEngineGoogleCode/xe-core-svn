@@ -1,12 +1,6 @@
 <?php 
     include "lib.php";
 
-    // 접속이 안되면 메인 페이지로 이동
-    if(!$connect) {
-        header("location:./");
-        exit();
-    }
-
     // 게시판 목록 구하기
     $query = "select * from zetyx_admin_table";
     $module_list_result = mysql_query($query) or die(mysql_error());
@@ -14,7 +8,7 @@
     include "./tpl/header.php"; 
 ?>
 
-    <form action="./export.php" method="post" onsubmit="return doMigration(this);">
+    <form action="./export.php" method="post">
     <input type="hidden" name="path" value="<?=$path?>" />
 
         <div class="title">Step 2. 백업할 대상을 선택해주세요. (회원정보 또는 게시판)</div>
@@ -29,7 +23,7 @@
     while($module_info = mysql_fetch_object($module_list_result)) {
 ?>
         <div class="content">
-            <div class="header"><input type="radio" name="target_module" value="module_board" id="module_board" /></div>
+            <div class="header"><input type="radio" name="target_module" value="module_<?=$module_info->name?>" id="module_board" /></div>
             <div class="tail"><label for="module_board"><?=$module_info->name?></label></div>
         </div>
 <?

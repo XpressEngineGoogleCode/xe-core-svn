@@ -1,6 +1,6 @@
 <?php include "./tpl/header.php"; ?>
 
-    <form action="./module_list.php" method="get">
+    <form action="./module_list.php" method="post">
         <div class="title">Step 1. 경로 입력</div>
         <div class="desc">제로보드가 설치된 경로를 입력해 주세요.</div>
 
