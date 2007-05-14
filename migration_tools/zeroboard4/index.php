@@ -7,7 +7,7 @@
         <div class="content">
             <div class="header">path</div>
             <div class="tail"><input type="text" name="path" value="./" /></div>
-            <div class="tail"><input type="button" value="next" class="button" /></div>
+            <div class="tail"><input type="submit" value="next" class="button" /></div>
         </div>
     </form>
 

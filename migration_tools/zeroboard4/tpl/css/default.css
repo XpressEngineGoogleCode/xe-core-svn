@@ -29,16 +29,25 @@ body, div, td, p, a {
 
 .content {
     padding-left:50px;
+    clear:both;
 }
 
 .header {
     width:80px;
     font-weight:bold;
     float:left;
+    margin-bottom:10px;
 }
 
 .tail {
     float:left;
+}
+
+.button_area {
+    color:#AAAAAA;
+    padding-top:10px;
+    margin:10px 0px 0px 50px;
+    clear:left;
 }
 
 .powered_by {
