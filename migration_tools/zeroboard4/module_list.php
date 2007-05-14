@@ -15,23 +15,23 @@
         <div class="desc">제로보드4는 회원정보와 그외 게시판으로 종류를 나누어 백업하실 수 있습니다.</div>
 
         <div class="content">
-            <div class="header"><input type="radio" name="target_module" value="member" id="member" /></div>
-            <div class="tail"><label for="member">회원정보</label></div>
+            <input type="radio" name="target_module" value="member" id="member" />
+            <label for="member">회원정보</label>
         </div>
 
 <?
     while($module_info = mysql_fetch_object($module_list_result)) {
 ?>
         <div class="content">
-            <div class="header"><input type="radio" name="target_module" value="module_<?=$module_info->name?>" id="module_<?=$module_info->name?>" /></div>
-            <div class="tail"><label for="module_<?=$module_info->name?>"><?=$module_info->name?></label></div>
+            <input type="radio" name="target_module" value="module_<?=$module_info->name?>" id="module_<?=$module_info->name?>" />
+            <label for="module_<?=$module_info->name?>"><?=$module_info->name?></label>
         </div>
 <?
     }
 ?>
 
         <div class="button_area">
-            <input type="submit" value="next" />
+            <input type="submit" value="next" class="input_submit" />
         </div>
 
     </form>

@@ -26,8 +26,8 @@
 
         <div class="content">
             <div class="header">파일 이름</div>
-            <div class="tail"><input type="text" name="filename" value="<?=eregi_replace('^module_','',$target_module)?>_<?=date("Ymd_His")?>.xml" /></div>
-            <div class="tail"><input type="submit" value="next" /></div>
+            <div class="tail"><input type="text" class="input_text "name="filename" value="<?=eregi_replace('^module_','',$target_module)?>_<?=date("Ymd_His")?>.xml" /></div>
+            <div class="tail"><input type="submit" class="input_submit" value="next" /></div>
         </div>
 
     </form>

@@ -36,7 +36,6 @@ body, div, td, p, a {
     width:80px;
     font-weight:bold;
     float:left;
-    margin-bottom:10px;
 }
 
 .tail {
@@ -59,18 +58,30 @@ body, div, td, p, a {
     text-align:right; 
 }
 
-input[type=password] {
-    border:1px solid #DDDDDD;
-    height:14px;
-}
-
 input[type=text] {
     border:1px solid #DDDDDD;
     width:400px;
     height:14px;
 }
 
+.input_text {
+    border:1px solid #DDDDDD;
+    width:400px;
+    height:14px;
+}
+
 input[type=submit] {
+    border:1px solid #555555;
+    background-color:#888888;
+    color:#FFFFFF;
+    width:50px;
+    height:18px;
+    font-size:11px;
+    letter-spacing:-1px;
+    font-weight:bold;
+}
+
+.input_submit {
     border:1px solid #555555;
     background-color:#888888;
     color:#FFFFFF;

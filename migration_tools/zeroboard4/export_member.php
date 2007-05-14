@@ -19,7 +19,6 @@
 
         // 기본정보들
         $member_buff .= sprintf('<user_id>%s</user_id>', addXmlQuote(iconv('EUC-KR','UTF-8',$member_info->user_id)));
-        $member_buff .= sprintf('<user_id>%s</user_id>', addXmlQuote(iconv('EUC-KR','UTF-8',$member_info->user_id)));
         $member_buff .= sprintf('<password>%s</password>', addXmlQuote($member_info->password));
         $member_buff .= sprintf('<user_name>%s</user_name>', addXmlQuote(iconv('EUC-KR','UTF-8',$member_info->name)));
         $member_buff .= sprintf('<email_address>%s</email_address>', addXmlQuote(iconv('EUC-KR','UTF-8',$member_info->email)));

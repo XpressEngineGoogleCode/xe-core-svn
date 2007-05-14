@@ -6,8 +6,8 @@
 
         <div class="content">
             <div class="header">path</div>
-            <div class="tail"><input type="text" name="path" value="/home1/DOMAINS/MYYAMI.COM/bbs" /></div>
-            <div class="tail"><input type="submit" value="next" /></div>
+            <div class="tail"><input type="text" name="path" class="input_text"value="/home1/DOMAINS/MYYAMI.COM/bbs" /></div>
+            <div class="tail"><input type="submit" class="input_submit"value="next" /></div>
         </div>
     </form>
 
