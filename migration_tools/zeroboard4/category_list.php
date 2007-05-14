@@ -1,5 +1,8 @@
 <?php include "./tpl/header.php"; ?>
 
+    <form action="./" method="get" onsubmit="return doMigration(this);">
+    <input type="hidden" name="path" value="<?=$path?>" />
+
 <form action="./" method="get" onsubmit="return doMigration(this);">
 <input type="hidden" name="step" value="1" />
 

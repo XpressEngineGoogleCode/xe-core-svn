@@ -7,4 +7,7 @@
     if(!file_exists($config_file)) return;
 
     $buff = file($config_file);
+
+    $connect = mysql_connect(trim($buff[1]), trim($buff[2]), trim($buff[3])) or die(mysql_error());
+    mysql_select_db(trim($buff[4]), $connect) or die(mysql_error());
 ?>
