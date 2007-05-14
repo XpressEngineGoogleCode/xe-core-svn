@@ -23,7 +23,7 @@
         $member_buff .= sprintf('<user_name>%s</user_name>', addXmlQuote($member_info->user_name));
         $member_buff .= sprintf('<email_address>%s</email_address>', addXmlQuote($member_info->email_address));
         $member_buff .= sprintf('<nick_name>%s</nick_name>', addXmlQuote($member_info->nick_name));
-        $member_buff .= sprintf('<regdate>%s</regdate>', $member_info->reg_date);
+        $member_buff .= sprintf('<regdate>%s</regdate>', $member_info->regdate);
         if($member_info->sign) $member_buff .= sprintf('<signature><![CDATA[%s]]></signature>', $member_info->sign);
 
         // 이미지네임
