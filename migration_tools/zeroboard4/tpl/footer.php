@@ -1,4 +1,6 @@
-<hr />
-<h6>powered by zero (zeroboard.com)</h6>
+
+    <div class="powered_by">
+        powered by zero (zeroboard.com)
+    </div>
 </body>
 </html>
