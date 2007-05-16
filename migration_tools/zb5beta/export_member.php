@@ -40,10 +40,10 @@
             if(file_exists($image_mark_file)) $member_buff .= sprintf('<image_mark>%s</image_mark>', getFileContentByBase64Encode($image_mark_file));
         }
     
-        $xml_buff .= sprintf('<member user_id="%s">%s</member>', addXmlQuote($member_info->user_id), $member_buff);
+        $xml_buff .= sprintf('<member user_id="%s">%s</member>', addXmlQuote($member_info->user_id), base64_encode($member_buff));
     }
 
-    $xml_buff = sprintf('<root type="zb5beta">%s</root>', $xml_buff);
+    $xml_buff = sprintf('<root target="member">%s</root>', $xml_buff);
 
     // 다운로드
     procDownload($filename, $xml_buff);

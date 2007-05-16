@@ -94,10 +94,10 @@
         }
         $document_buff .= sprintf('<trackbacks count="%d">%s</trackbacks>', $document_info->trackback_count, $trackback_xml_buff);
     
-        $xml_buff .= sprintf('<document sequence="%d">%s</document>', $sequence++, $document_buff);
+        $xml_buff .= sprintf('<document sequence="%d">%s</document>', $sequence++, base64_encode($document_buff));
     }
 
-    $xml_buff = sprintf('<root type="zb5beta">%s</root>', $xml_buff);
+    $xml_buff = sprintf('<root target="module">%s</root>', $xml_buff);
 
     // 다운로드
     procDownload($filename, $xml_buff);
