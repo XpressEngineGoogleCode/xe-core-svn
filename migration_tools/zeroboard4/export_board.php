@@ -108,7 +108,7 @@
         }
         $document_buff .= sprintf("<comments count=\"%d\">\n%s</comments>\n", $document_info->total_comment, $comment_xml_buff);
     
-        $xml_buff .= sprintf("<document sequence=\"%d\">\n%s</document>\n"."\n", $sequence++, base64_encode($document_buff));
+        $xml_buff .= sprintf("<document sequence=\"%d\">\n%s</document>\n"."\n", $sequence++, $document_buff);
     }
 
     // 다운로드
