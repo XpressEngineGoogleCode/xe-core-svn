@@ -42,7 +42,7 @@
             if(file_exists($image_mark_file)) $member_buff .= sprintf("<image_mark>%s</image_mark>\n", getFileContentByBase64Encode($image_mark_file));
         }
     
-        $xml_buff .= sprintf("<member user_id=\"%s\">\n%s</member>\n"."\n", addXmlQuote($member_info->user_id), $member_buff);
+        $xml_buff .= sprintf("<member user_id=\"%s\">\n%s</member>\n", addXmlQuote($member_info->user_id), $member_buff);
     }
 
     $xml_buff = sprintf("<root target=\"member\">\n%s</root>\n", $xml_buff);
