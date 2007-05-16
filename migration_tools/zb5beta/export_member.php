@@ -24,6 +24,8 @@
         $member_buff .= sprintf('<email_address>%s</email_address>', addXmlQuote($member_info->email_address));
         $member_buff .= sprintf('<nick_name>%s</nick_name>', addXmlQuote($member_info->nick_name));
         $member_buff .= sprintf('<regdate>%s</regdate>', $member_info->regdate);
+	$member_buff .= sprintf('<allow_mailing>%s</allow_mailing>', $member_info->mailing);
+	$member_buff .= sprintf('<point>%d</point>', $member_info->point);
         if($member_info->sign) $member_buff .= sprintf('<signature><![CDATA[%s]]></signature>', $member_info->sign);
 
         // 이미지네임

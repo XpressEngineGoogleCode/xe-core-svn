@@ -26,6 +26,10 @@
         $member_buff .= sprintf('<nick_name>%s</nick_name>', addXmlQuote(iconv('EUC-KR','UTF-8',$member_info->name)));
         $member_buff .= sprintf('<birthday>%s</birthday>', date('YmdHis', $member_info->birth));
         $member_buff .= sprintf('<regdate>%s</regdate>', date('YmdHis', $member_info->reg_date));
+	if($member_info->mailing!=0) $allow_mailing = 'Y';
+	else $allow_mailing = 'N';
+	$member_buff .= sprintf('<allow_mailing>%s</allow_mailing>', $allow_mailing);
+	$member_buff .= sprintf('<point>%d</point>', $member_info->point1+$member_info->point2);
 
         // 이미지네임
         $image_nickname_file = sprintf('%s%d.gif',$image_nickname_path,$member_info->no);
