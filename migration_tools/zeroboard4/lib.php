@@ -32,7 +32,7 @@
         $fp = fopen($filename,"r");
 	    if($fp) {
   	        while(!feof($fp)) {
-	            $buff .= fgets($fp, filesize($filename));
+	            $buff .= fgets($fp, 1024);
 	        }
 	        fclose($fp);
 	        return base64_encode($buff);
