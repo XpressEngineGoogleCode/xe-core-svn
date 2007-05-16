@@ -9,7 +9,7 @@
     $id = ereg_replace('^module\_','',$target_module);
 
     // 게시물을 구함
-    $query = sprintf('select a.*, b.user_id from zetyx_board_%s a left outer join zetyx_member_table b on a.ismember = b.no where a.headnum < 0 and a.arrangenum >=0  order by a.headnum, a.arrangenum', $id);
+    $query = sprintf('select a.*, b.user_id from zetyx_board_%s a left outer join zetyx_member_table b on a.ismember = b.no where a.headnum < 0 and a.arrangenum >=0  order by a.regdate', $id);
     $document_result = mysql_query($query) or die(mysql_error());
 
     $xml_buff = '';
