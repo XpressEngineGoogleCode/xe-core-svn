@@ -108,7 +108,7 @@
         }
         $document_buff .= sprintf('<comments count="%d">%s</comments>', $document_info->total_comment, $comment_xml_buff);
     
-        $xml_buff .= sprintf('<document sequence="%d">%s</document>', $sequence++, base64_encode($document_buff));
+        $xml_buff .= sprintf('<document sequence="%d">%s</document>'."\n", $sequence++, base64_encode($document_buff));
     }
 
     $xml_buff = sprintf('<root target="module">%s</root>', $xml_buff);

@@ -94,7 +94,7 @@
         }
         $document_buff .= sprintf('<trackbacks count="%d">%s</trackbacks>', $document_info->trackback_count, $trackback_xml_buff);
     
-        $xml_buff .= sprintf('<document sequence="%d">%s</document>', $sequence++, base64_encode($document_buff));
+        $xml_buff .= sprintf('<document sequence="%d">%s</document>'."\n", $sequence++, base64_encode($document_buff));
     }
 
     $xml_buff = sprintf('<root target="module">%s</root>', $xml_buff);
