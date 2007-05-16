@@ -18,20 +18,20 @@
         $document_buff = null;
 
         // 기본 정보
-        if($document_info->headnum <= -2000000000) $document_buff .= sprintf('<is_notice>Y</is_notice>');
-        if($document_buff->is_secret) $document_buff .= sprintf('<is_secret>Y</is_secret>');
-        $document_buff .= sprintf('<title><![CDATA[%s]]></title>', iconv('EUC-KR','UTF-8',$document_info->subject));
-        $document_buff .= sprintf('<readed_count>%d</readed_count>', $document_info->hit);
-        $document_buff .= sprintf('<voted_count>%d</voted_count>', $document_info->vote);
-        $document_buff .= sprintf('<comment_count>%d</comment_count>', $document_info->total_comment);
-        $document_buff .= sprintf('<password>%s</password>', addXmlQuote($document_info->password));
-        $document_buff .= sprintf('<user_id>%s</user_id>', addXmlQuote(iconv('EUC-KR','UTF-8',$document_info->user_id)));
-        if($document_info->user_id) $document_buff .= sprintf('<user_name>%s</user_name>', addXmlQuote(iconv('EUC-KR','UTF-8',$document_info->name)));
-        $document_buff .= sprintf('<nick_name>%s</nick_name>', addXmlQuote(iconv('EUC-KR','UTF-8',$document_info->name)));
-        $document_buff .= sprintf('<email_address>%s</email_address>', addXmlQuote(iconv('EUC-KR','UTF-8',$document_info->email)));
-        $document_buff .= sprintf('<homepage>%s</homepage>', addXmlQuote(iconv('EUC-KR','UTF-8',$document_info->homepage)));
-        $document_buff .= sprintf('<regdate>%s</regdate>', date("YmdHis", $document_info->reg_date));
-        $document_buff .= sprintf('<ipaddress>%s</ipaddress>', $document_info->ip);
+        if($document_info->headnum <= -2000000000) $document_buff .= sprintf("<is_notice>Y</is_notice>\n");
+        if($document_buff->is_secret) $document_buff .= sprintf("<is_secret>Y</is_secret>\n");
+        $document_buff .= sprintf("<title>%s</title>\n", addXmlQuote(iconv('EUC-KR','UTF-8',$document_info->subject)));
+        $document_buff .= sprintf("<readed_count>%d</readed_count>\n", $document_info->hit);
+        $document_buff .= sprintf("<voted_count>%d</voted_count>\n", $document_info->vote);
+        $document_buff .= sprintf("<comment_count>%d</comment_count>\n", $document_info->total_comment);
+        $document_buff .= sprintf("<password>%s</password>\n", addXmlQuote($document_info->password));
+        $document_buff .= sprintf("<user_id>%s</user_id>\n", addXmlQuote(iconv('EUC-KR','UTF-8',$document_info->user_id)));
+        if($document_info->user_id) $document_buff .= sprintf("<user_name>%s</user_name>\n", addXmlQuote(iconv('EUC-KR','UTF-8',$document_info->name)));
+        $document_buff .= sprintf("<nick_name>%s</nick_name>\n", addXmlQuote(iconv('EUC-KR','UTF-8',$document_info->name)));
+        $document_buff .= sprintf("<email_address>%s</email_address>\n", addXmlQuote(iconv('EUC-KR','UTF-8',$document_info->email)));
+        $document_buff .= sprintf("<homepage>%s</homepage>\n", addXmlQuote(iconv('EUC-KR','UTF-8',$document_info->homepage)));
+        $document_buff .= sprintf("<regdate>%s</regdate>\n", date("YmdHis", $document_info->reg_date));
+        $document_buff .= sprintf("<ipaddress>%s</ipaddress>\n", $document_info->ip);
 
         // 첨부파일 정리와 내용 변경을 위한 작업들..
         $content = $document_info->memo;
@@ -74,8 +74,8 @@
         $uploaded_count = count($attach_files);
 
         // 첨부된 파일 또는 이미지박스를 이용한 파일목록을 구함
-        $document_buff .= sprintf('<uploaded_count>%d</uploaded_count>', $uploaded_count);
-        $document_buff .= sprintf('<content><![CDATA[%s]]></content>', iconv('EUC-KR','UTF-8',$content));
+        $document_buff .= sprintf("<uploaded_count>%d</uploaded_count>\n", $uploaded_count);
+        $document_buff .= sprintf("<content>%s</content>\n", addXmlQuote(iconv('EUC-KR','UTF-8',$content)));
 
         // 첨부파일을 읽어서 xml파일에 추가
         $attaches_xml_buff = null;
@@ -86,9 +86,9 @@
             $attach_filename = $tmp_arr[count($tmp_arr)-1];
 
             $attach_file_buff = getFileContentByBase64Encode($attach_file);
-            $attaches_xml_buff .= sprintf('<file name="%s"><downloaded_count>%d</downloaded_count><buff><![CDATA[%s]]></buff></file>', addXmlQuote(iconv('EUC-KR','UTF-8',$attach_filename)), $attach_files[$i]['downloaded_count'], $attach_file_buff);
+            $attaches_xml_buff .= sprintf("<file name=\"%s\">\n<downloaded_count>%d</downloaded_count>\n<buff>\n%s</buff>\n</file>\n", addXmlQuote(iconv('EUC-KR','UTF-8',$attach_filename)), $attach_files[$i]['downloaded_count'], $attach_file_buff);
         }
-        $document_buff .= sprintf('<files count="%d">%s</files>', $uploaded_count, $attaches_xml_buff);
+        $document_buff .= sprintf("<files count=\"%d\">\n%s</files>\n", $uploaded_count, $attaches_xml_buff);
 
         // 코멘트 목록을 구해옴
         $query = sprintf('select a.*, b.user_id from zetyx_board_comment_%s a left outer join zetyx_member_table b on a.ismember = b.no where a.parent = %d', $id, $document_info->no);
@@ -96,23 +96,21 @@
         $comment_xml_buff = '';
         while($comment_info = mysql_fetch_object($comment_result)) {
             $comment_buff = '';
-            $comment_buff .= sprintf('<content><![CDATA[%s]]></content>', iconv('EUC-KR','UTF-8',nl2br($comment_info->memo)));
-            $comment_buff .= sprintf('<password>%s</password>', addXmlQuote($comment_info->password));
-            $comment_buff .= sprintf('<user_id>%s</user_id>', addXmlQuote(iconv('EUC-KR','UTF-8',$comment_info->user_id)));
-            if($comment_info->user_id) $comment_buff .= sprintf('<user_name>%s</user_name>', addXmlQuote(iconv('EUC-KR','UTF-8',$comment_info->name)));
-            $comment_buff .= sprintf('<nick_name>%s</nick_name>', addXmlQuote(iconv('EUC-KR','UTF-8',$comment_info->name)));
-            $comment_buff .= sprintf('<member_srl>%d</member_srl>', $comment_info->ismember);
-            $comment_buff .= sprintf('<ipaddress>%s</ipaddress>', addXmlQuote($comment_info->ip));
-            $comment_buff .= sprintf('<regdate>%s</regdate>', date('YmdHis', $comment_info->reg_date));
-            $comment_xml_buff .= sprintf('<comment>%s</comment>', $comment_buff);
+            $comment_buff .= sprintf("<content>%s</content>\n", addXmlQuote(iconv('EUC-KR','UTF-8',nl2br($comment_info->memo))));
+            $comment_buff .= sprintf("<password>%s</password>\n", addXmlQuote($comment_info->password));
+            $comment_buff .= sprintf("<user_id>%s</user_id>\n", addXmlQuote(iconv('EUC-KR','UTF-8',$comment_info->user_id)));
+            if($comment_info->user_id) $comment_buff .= sprintf("<user_name>%s</user_name>\n", addXmlQuote(iconv('EUC-KR','UTF-8',$comment_info->name)));
+            $comment_buff .= sprintf("<nick_name>%s</nick_name>\n", addXmlQuote(iconv('EUC-KR','UTF-8',$comment_info->name)));
+            $comment_buff .= sprintf("<member_srl>%d</member_srl>\n", $comment_info->ismember);
+            $comment_buff .= sprintf("<ipaddress>%s</ipaddress>\n", addXmlQuote($comment_info->ip));
+            $comment_buff .= sprintf("<regdate>%s</regdate>\n", date('YmdHis', $comment_info->reg_date));
+            $comment_xml_buff .= sprintf("<comment>%s</comment>\n", $comment_buff);
         }
-        $document_buff .= sprintf('<comments count="%d">%s</comments>', $document_info->total_comment, $comment_xml_buff);
+        $document_buff .= sprintf("<comments count=\"%d\">\n%s</comments>\n", $document_info->total_comment, $comment_xml_buff);
     
-        $xml_buff .= sprintf('<document sequence="%d">%s</document>'."\n", $sequence++, base64_encode($document_buff));
+        $xml_buff .= sprintf("<document sequence=\"%d\">\n%s</document>\n"."\n", $sequence++, base64_encode($document_buff));
     }
 
-    $xml_buff = sprintf('<root target="module">%s</root>', $xml_buff);
-
     // 다운로드
-    procDownload($filename, $xml_buff);
+    procDownload($filename, "<root target=\"module\">\n".$xml_buff."</root>");
 ?>
