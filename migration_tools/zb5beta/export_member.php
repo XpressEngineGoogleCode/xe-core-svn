@@ -26,7 +26,7 @@
         $member_buff .= sprintf("<regdate>%s</regdate>\n", $member_info->regdate);
 	    $member_buff .= sprintf("<allow_mailing>%s</allow_mailing>\n", $member_info->mailing);
 	    $member_buff .= sprintf("<point>%d</point>\n", $member_info->point);
-        if($member_info->sign) $member_buff .= sprintf("<signature>%s</signature>\n", addXmlQuote($member_info->sign));
+        if($member_info->sign) $member_buff .= sprintf("<signature>%s</signature>\n", base64_encode($member_info->sign));
 
         // 이미지네임
         if($member_info->image_nick) {
