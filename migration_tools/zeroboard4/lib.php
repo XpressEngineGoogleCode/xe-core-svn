@@ -30,9 +30,14 @@
 
     function getFileContentByBase64Encode($filename) {
         $fp = fopen($filename,"r");
-        $buff = fgets($fp, filesize($filename));
-        fclose($fp);
-        return base64_encode($buff);
+	if($fp) {
+  	    while(!feof($fp)) {
+	        $buff .= fgets($fp, filesize($filename));
+	    }
+	    fclose($fp);
+	    return base64_encode($buff);
+	}
+	return null;
     }
 
     function procDownload($filename, $content) {
