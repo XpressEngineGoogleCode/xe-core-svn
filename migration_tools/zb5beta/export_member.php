@@ -19,14 +19,14 @@
 
         // 기본정보들
         $member_buff .= sprintf("<user_id>%s</user_id>\n", addXmlQuote($member_info->user_id));
-        $member_buff .= sprintf("<password>%s</password>\n", addXmlQuote($member_info->password));
+        $member_buff .= sprintf("<password>%s</password>\n", addXmlQuote($member_info->passwd));
         $member_buff .= sprintf("<user_name>%s</user_name>\n", addXmlQuote($member_info->user_name));
         $member_buff .= sprintf("<email_address>%s</email_address>\n", addXmlQuote($member_info->email_address));
         $member_buff .= sprintf("<nick_name>%s</nick_name>\n", addXmlQuote($member_info->nick_name));
         $member_buff .= sprintf("<regdate>%s</regdate>\n", $member_info->regdate);
 	    $member_buff .= sprintf("<allow_mailing>%s</allow_mailing>\n", $member_info->mailing);
 	    $member_buff .= sprintf("<point>%d</point>\n", $member_info->point);
-        if($member_info->sign) $member_buff .= sprintf("<signature><![CDATA[%s]]></signature>\n", $member_info->sign);
+        if($member_info->sign) $member_buff .= sprintf("<signature>%s</signature>\n", addXmlQuote($member_info->sign));
 
         // 이미지네임
         if($member_info->image_nick) {
