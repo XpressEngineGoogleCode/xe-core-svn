@@ -6,9 +6,11 @@
     if(!ereg("^module\_", $target_module)) {
         $action_file = 'export_member.php';
         $target_title = '회원정보'; 
+        $target = 'member';
     } else {
         $action_file = 'export_board.php';
         $target_title = sprintf('%s (%s)',  substr($target_module, 7), '게시판' );
+        $target = 'module';
     }
 ?>
 
@@ -24,9 +26,19 @@
             <div class="tail"><?=$target_title?></div>
         </div>
 
+<?php
+    if($target == 'module') {
+?>
+        <div class="content">
+            <div class="header">게시판 URL</div>
+            <div class="tail"><input type="text" class="input_text" name="url" value="" /></div>
+<?
+    }
+?>
+
         <div class="content">
             <div class="header">파일 이름</div>
-            <div class="tail"><input type="text" class="input_text "name="filename" value="<?=eregi_replace('^module_','',$target_module)?>_<?=date("Ymd_His")?>.xml" /></div>
+            <div class="tail"><input type="text" class="input_text" name="filename" value="<?=eregi_replace('^module_','',$target_module)?>_<?=date("Ymd_His")?>.xml" /></div>
             <div class="tail"><input type="submit" class="input_submit" value="next" /></div>
         </div>
 
