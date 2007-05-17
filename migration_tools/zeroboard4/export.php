@@ -16,8 +16,9 @@
 
         preg_match("/([a-zA-Z\_]+)\.php/i", $_SERVER['PHP_SELF'], $match);
         $filename = $match[0];
+        $query_url = str_replace($filename, '', $_SERVER['PHP_SELF']);
 
-        $module_url = sprintf("http://%s%s",$hostname, $filename);
+        $module_url = sprintf("http://%s%s",$hostname, $query_url);
     }
 ?>
 
