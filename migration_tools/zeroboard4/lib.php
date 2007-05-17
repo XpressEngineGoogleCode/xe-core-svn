@@ -25,7 +25,7 @@
     }
 
     function addXmlQuote($val) {
-        return str_replace(array('<','>','&'),array('&lt;','&gt;','&amp;'),trim($val));
+        return str_replace(array('&','<','>'),array('&amp;','&lt;','&gt;'),trim($val));
     }
 
     function getFileContentByBase64Encode($filename) {
