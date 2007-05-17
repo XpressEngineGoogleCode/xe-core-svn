@@ -36,7 +36,7 @@
         $document_buff .= sprintf("<ipaddress>%s</ipaddress>\n", $document_info->ip);
 
         // 첨부파일 정리와 내용 변경을 위한 작업들..
-        $content = $document_info->memo;
+        $content = stripslashes($document_info->memo);
         $member_srl = $document_info->ismember;
 
         // use_html옵션에 따른 컨텐츠 정리
