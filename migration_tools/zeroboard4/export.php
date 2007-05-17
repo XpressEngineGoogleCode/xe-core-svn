@@ -32,6 +32,7 @@
         <div class="content">
             <div class="header">게시판 URL</div>
             <div class="tail"><input type="text" class="input_text" name="url" value="" /></div>
+        </div>
 <?
     }
 ?>
