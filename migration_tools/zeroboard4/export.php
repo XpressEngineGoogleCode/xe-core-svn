@@ -13,7 +13,11 @@
         $hostname = $_SERVER['SERVER_NAME'];
         $port = $_SERVER['SERVER_PORT'];
         if($port!=80) $hostname .= ":{$port}";
-        $module_url = sprintf("http://%s",$hostname);
+
+        preg_match("/([a-zA-Z\_]+)\.php/i", $_SERVER['PHP_SELF'], $match);
+        $filename = $match[0];
+
+        $module_url = sprintf("http://%s%s",$hostname, $filename);
     }
 ?>
 
