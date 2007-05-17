@@ -4,6 +4,8 @@
     include "lib.php";
 
     $filename = $_POST['filename'];
+    $url = $_POST['url'];
+    if(substr($url,-1)!='/') $url .= '/';
 
     // id를 구함
     $id = ereg_replace('^module\_','',$target_module);
@@ -85,7 +87,7 @@
             $tmp_arr = explode('/',$attach_file);
             $attach_filename = $tmp_arr[count($tmp_arr)-1];
 
-            $attaches_xml_buff .= sprintf("<file><filename>%s</filename>\n<download_count>%d</download_count>\n</file>\n", addXmlQuote(iconv('EUC-KR','UTF-8',$attach_filename)), $attach_files[$i]['download_count']);
+            $attaches_xml_buff .= sprintf("<file><filename>%s%s</filename>\n<download_count>%d</download_count>\n</file>\n", $url, addXmlQuote(iconv('EUC-KR','UTF-8',$attach_filename)), $attach_files[$i]['download_count']);
         }
         $document_buff .= sprintf("<files count=\"%d\">\n%s</files>\n", $uploaded_count, $attaches_xml_buff);
 
