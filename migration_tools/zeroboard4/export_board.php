@@ -65,11 +65,11 @@
         }
 
         if($document_info->file_name1) {
-            $attach_files[] = array("filename"=>sprintf('%s', $document_info->file_name1),"download_count"=>$document_info->download1);
+            $attach_files[] = array("filename"=>$document_info->file_name1,"download_count"=>$document_info->download1);
             if(eregi('(jpg|gif|jpeg|png)$', $document_info->file_name1)) $content = sprintf('<img src="%s" border="0" alt="%s" /><br />%s', $document_info->s_file_name1, $document_info->s_file_name1, $content);
         }
         if($document_info->file_name2) {
-            $attach_files[] = array("filename"=>sprintf('%s', $document_info->file_name2),"download_count"=>$document_info->download2);
+            $attach_files[] = array("filename"=>$document_info->file_name2,"download_count"=>$document_info->download2);
             if(eregi('(jpg|gif|jpeg|png)$', $document_info->file_name2)) $content = sprintf('<img src="%s" border="0" alt="%s" /><br />%s', $document_info->s_file_name2, $document_info->s_file_name2, $content);
         }
 
@@ -87,7 +87,7 @@
             $tmp_arr = explode('/',$attach_file);
             $attach_filename = $tmp_arr[count($tmp_arr)-1];
 
-            $attaches_xml_buff .= sprintf("<file><filename>%s%s</filename>\n<download_count>%d</download_count>\n</file>\n", $url, addXmlQuote(iconv('EUC-KR','UTF-8',$attach_filename)), $attach_files[$i]['download_count']);
+            $attaches_xml_buff .= sprintf("<file><filename>%s%s</filename>\n<url>%s%s</url>\n<download_count>%d</download_count>\n</file>\n", addXmlQuote(iconv('EUC-KR','UTF-8',$attach_filename)), $url, $attach_file, $attach_files[$i]['download_count']);
         }
         $document_buff .= sprintf("<files count=\"%d\">\n%s</files>\n", $uploaded_count, $attaches_xml_buff);
 
