@@ -6,11 +6,14 @@
     if(!ereg("^module\_", $target_module)) {
         $action_file = 'export_member.php';
         $target_title = '회원정보'; 
-        $target = 'member';
     } else {
         $action_file = 'export_board.php';
         $target_title = sprintf('%s (%s)',  substr($target_module, 7), '게시판' );
-        $target = 'module';
+
+        $hostname = $_SERVER['SERVER_NAME'];
+        $port = $_SERVER['SERVER_PORT'];
+        if($port!=80) $hostname .= ":{$port}";
+        $module_url = sprintf("http://%s",$hostname);
     }
 ?>
 
@@ -27,11 +30,11 @@
         </div>
 
 <?php
-    if($target == 'module') {
+    if($module_url) {
 ?>
         <div class="content">
             <div class="header">게시판 URL</div>
-            <div class="tail"><input type="text" class="input_text" name="url" value="<?=$_SERVER['PHP_SELF']?>" /></div>
+            <div class="tail"><input type="text" class="input_text" name="url" value="<?=$module_url?>" /></div>
         </div>
 <?
     }
