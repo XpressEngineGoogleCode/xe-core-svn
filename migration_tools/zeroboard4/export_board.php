@@ -83,7 +83,7 @@
         $attaches_xml_buff = null;
         for($i=0;$i<$uploaded_count;$i++) {
             $attach_file = $attach_files[$i]['filename'];
-            if(!file_exists($path.$attach_file)) continue;
+            if(!file_exists($path.'/'.$attach_file)) continue;
             $tmp_arr = explode('/',$attach_file);
             $attach_filename = $tmp_arr[count($tmp_arr)-1];
 
