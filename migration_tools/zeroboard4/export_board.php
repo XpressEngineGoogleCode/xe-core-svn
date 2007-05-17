@@ -87,7 +87,7 @@
             $tmp_arr = explode('/',$attach_file);
             $attach_filename = $tmp_arr[count($tmp_arr)-1];
 
-            $attaches_xml_buff .= sprintf("<file><filename>%s%s</filename>\n<url>%s%s</url>\n<download_count>%d</download_count>\n</file>\n", addXmlQuote(iconv('EUC-KR','UTF-8',$attach_filename)), $url, $attach_file, $attach_files[$i]['download_count']);
+            $attaches_xml_buff .= sprintf("<file><filename>%s</filename>\n<url>%s%s</url>\n<download_count>%d</download_count>\n</file>\n", addXmlQuote(iconv('EUC-KR','UTF-8',$attach_filename)), $url, $attach_file, $attach_files[$i]['download_count']);
         }
         $document_buff .= sprintf("<files count=\"%d\">\n%s</files>\n", $uploaded_count, $attaches_xml_buff);
 
