@@ -34,6 +34,9 @@
         $document_buff .= sprintf("<homepage>%s</homepage>\n", addXmlQuote(iconv('EUC-KR','UTF-8',$document_info->homepage)));
         $document_buff .= sprintf("<regdate>%s</regdate>\n", date("YmdHis", $document_info->reg_date));
         $document_buff .= sprintf("<ipaddress>%s</ipaddress>\n", $document_info->ip);
+        $document_buff .= sprintf("<allow_comment>%s</allow_comment>\n", 'Y');
+        $document_buff .= sprintf("<lock_comment>%s</lock_comment>\n", 'N');
+        $document_buff .= sprintf("<allow_trackback>%s</allow_trackback>\n", 'Y');
 
         // 첨부파일 정리와 내용 변경을 위한 작업들..
         $content = stripslashes($document_info->memo);
