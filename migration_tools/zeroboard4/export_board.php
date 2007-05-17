@@ -56,7 +56,7 @@
             if($match_count) {
                 for($i=0;$i<$match_count;$i++) {
                     $image_filename = sprintf('%s.%s', $matches[1][$i], $matches[2][$i]);
-                    $attach_files[] = array('filename'=>sprintf('%s/icon/member_image_box/%d/%s', $path, $member_srl, $image_filename),"download_count"=>0);
+                    $attach_files[] = array('filename'=>sprintf('icon/member_image_box/%d/%s', $member_srl, $image_filename),"download_count"=>0);
                 }
             }
 
@@ -65,11 +65,11 @@
         }
 
         if($document_info->file_name1) {
-            $attach_files[] = array("filename"=>sprintf('%s/%s', $path, $document_info->file_name1),"download_count"=>$document_info->download1);
+            $attach_files[] = array("filename"=>sprintf('%s', $document_info->file_name1),"download_count"=>$document_info->download1);
             if(eregi('(jpg|gif|jpeg|png)$', $document_info->file_name1)) $content = sprintf('<img src="%s" border="0" alt="%s" /><br />%s', $document_info->s_file_name1, $document_info->s_file_name1, $content);
         }
         if($document_info->file_name2) {
-            $attach_files[] = array("filename"=>sprintf('%s/%s', $path, $document_info->file_name2),"download_count"=>$document_info->download2);
+            $attach_files[] = array("filename"=>sprintf('%s', $document_info->file_name2),"download_count"=>$document_info->download2);
             if(eregi('(jpg|gif|jpeg|png)$', $document_info->file_name2)) $content = sprintf('<img src="%s" border="0" alt="%s" /><br />%s', $document_info->s_file_name2, $document_info->s_file_name2, $content);
         }
 
