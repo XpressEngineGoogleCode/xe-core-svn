@@ -45,8 +45,8 @@
         $document_buff .= sprintf("<trackback_count>%d</trackback_count>\n", $document_info->trackback_cnt);
         $document_buff .= sprintf("<readed_count>%d</readed_count>\n", $document_info->readed_cnt);
         $document_buff .= sprintf("<voted_count>%d</voted_count>\n", $document_info->voted_cnt);
-        $document_buff .= sprintf("<allow_comment>%d</allow_comment>\n", $document_info->allow_comment);
-        $document_buff .= sprintf("<allow_trackback>%d</allow_trackback>\n", $document_info->allow_trackback);
+        $document_buff .= sprintf("<allow_comment>%s</allow_comment>\n", $document_info->allow_comment);
+        $document_buff .= sprintf("<allow_trackback>%s</allow_trackback>\n", $document_info->allow_trackback);
 
         // 첨부파일 정리와 내용 변경을 위한 작업들..
         $content = $document_info->article;
@@ -68,7 +68,7 @@
                 $uploaded_count ++;
             }
             $document_buff .= sprintf("<uploaded_count>%d</uploaded_count>\n", $uploaded_count);
-            $document_buff .= sprintf("<content>%s</content>\n", addXmlQuote(iconv('EUC-KR','UTF-8',$content)));
+            $document_buff .= sprintf("<content>%s</content>\n", $content);
             $document_buff .= sprintf("<files count=\"%d\">%s</files>\n", $uploaded_count, $attches_xml_buff);
         }
 
