@@ -37,7 +37,7 @@
         $document_buff .= sprintf("<user_id>%s</user_id>\n", addXmlQuote($document_info->user_id));
         if($document_info->user_id) $document_buff .= sprintf("<user_name>%s</user_name>\n", addXmlQuote($document_info->writer));
         $document_buff .= sprintf("<password>%s</password>\n", addXmlQuote($document_info->passwd));
-        $document_buff .= sprintf("<title><![CDATA[%s]]></title>\n", $document_info->title);
+        $document_buff .= sprintf("<title>%s</title>\n", addXmlQuote($document_info->title));
         if($document_info->tag) $document_buff .= sprintf("<tag>%s</tag>\n", addXmlQuote($document_info->tag));
         $document_buff .= sprintf("<regdate>%s</regdate>\n", $document_info->regdate);
         $document_buff .= sprintf("<ipaddress>%s</ipaddress>\n", $document_info->ipaddress);
@@ -68,6 +68,7 @@
                 $uploaded_count ++;
             }
             $document_buff .= sprintf("<uploaded_count>%d</uploaded_count>\n", $uploaded_count);
+            $document_buff .= sprintf("<content>%s</content>\n", addXmlQuote(iconv('EUC-KR','UTF-8',$content)));
             $document_buff .= sprintf("<files count=\"%d\">%s</files>\n", $uploaded_count, $attches_xml_buff);
         }
 
@@ -79,7 +80,7 @@
             $comment_buff = '';
             $comment_buff .= sprintf("<comment_srl>%d</comment_srl>\n", $comment_info->comment_srl);
             $comment_buff .= sprintf("<parent_srl>%d</parent_srl>\n", $comment_info->parent_srl);
-            $comment_buff .= sprintf("<content><![CDATA[%s]]></content>\n", nl2br($comment_info->article));
+            $comment_buff .= sprintf("<content>%s</content>\n", addXmlQuote($comment_info->article));
             $comment_buff .= sprintf("<password>%s</password>\n", addXmlQuote($comment_info->passwd));
             $comment_buff .= sprintf("<user_id>%s</user_id>\n", addXmlQuote($comment_info->user_id));
             if($comment_info->user_id) $comment_buff .= sprintf("<user_name>%s</user_name>\n", addXmlQuote($comment_info->writer));
@@ -98,9 +99,9 @@
         while($trackback_info = mysql_fetch_object($trackback_result)) {
             $trackback_buff = '';
             $trackback_buff .= sprintf("<url>%s</url>\n", addXmlQuote($trackback_info->url));
-            $trackback_buff .= sprintf("<title><![CDATA[%s]]></title>\n", $trackback_info->title);
-            $trackback_buff .= sprintf("<blog_name><![CDATA[%s]]></blog_name>\n", $trackback_info->blog_name);
-            $trackback_buff .= sprintf("<excerpt><![CDATA[%s]]></excerpt>\n", $trackback_info->excerpt);
+            $trackback_buff .= sprintf("<title>%s</title>\n", addXmlQuote($trackback_info->title));
+            $trackback_buff .= sprintf("<blog_name>%s</blog_name>\n", addXmlQuote($trackback_info->blog_name));
+            $trackback_buff .= sprintf("<excerpt>%s</excerpt>\n", addXmlQuote($trackback_info->excerpt));
             $trackback_buff .= sprintf("<ipaddress>%s</ipaddress>\n", addXmlQuote($trackback_info->ipaddress));
             $trackback_buff .= sprintf("<regdate>%s</regdate>\n", $trackback_info->reg_date);
             $trackback_xml_buff .= sprintf("<trackback>%s</trackback>\n", $trackback_buff);
