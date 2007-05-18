@@ -10,6 +10,15 @@
     // id를 구함
     $id = ereg_replace('^module\_','',$target_module);
 
+    // 다운로드 헤더 출력
+    printDownloadHeader($filename);
+
+    // 게시물의 수를 구함
+    $query = sprintf("select count(*) as count from zetyx_board_%s", $id);
+    $count_result = mysql_query($query) or die(mysql_error());
+    $count_info = mysql_fetch_object($count_result);
+    $total_count = $count_info->count;
+
     // 게시물을 구함
     $query = sprintf('select a.*, b.user_id from zetyx_board_%s a left outer join zetyx_member_table b on a.ismember = b.no where a.headnum < 0 and a.arrangenum >=0  order by a.reg_date', $id);
     $document_result = mysql_query($query) or die(mysql_error());
@@ -112,9 +121,8 @@
         }
         $document_buff .= sprintf("<comments count=\"%d\">\n%s</comments>\n", $document_info->total_comment, $comment_xml_buff);
     
-        $xml_buff .= sprintf("<document sequence=\"%d\">\n%s</document>\n"."\n", $sequence++, $document_buff);
+        printf("<document sequence=\"%d\">\n%s</document>\n"."\n", $sequence++, $document_buff);
     }
 
-    // 다운로드
-    procDownload($filename, "<root target=\"module\">\n".$xml_buff."</root>");
+    print '</root>';
 ?>
