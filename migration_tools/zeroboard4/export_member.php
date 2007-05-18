@@ -52,8 +52,7 @@
         if(file_exists($image_mark_file)) $member_buff .= sprintf("<image_mark>%s</image_mark>\n", getFileContentByBase64Encode($image_mark_file));
 
     
-        $xml_buff .= sprintf("<member user_id=\"%s\">\n%s</member>\n", addXmlQuote(iconv('EUC-KR','UTF-8',$member_info->user_id)), $member_buff);
-        print $xml_buff;
+        printf("<member user_id=\"%s\">\n%s</member>\n", addXmlQuote(iconv('EUC-KR','UTF-8',$member_info->user_id)), $member_buff);
     }
 
     print '</root>';
