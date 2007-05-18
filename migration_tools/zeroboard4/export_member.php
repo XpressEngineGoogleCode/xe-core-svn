@@ -56,5 +56,5 @@
         print $xml_buff;
     }
 
-    print '</root>";
+    print '</root>';
 ?>
