@@ -68,7 +68,7 @@
                 $uploaded_count ++;
             }
             $document_buff .= sprintf("<uploaded_count>%d</uploaded_count>\n", $uploaded_count);
-            $document_buff .= sprintf("<content>%s</content>\n", $content);
+            $document_buff .= sprintf("<content>%s</content>\n", addXmlQuote($content));
             $document_buff .= sprintf("<files count=\"%d\">%s</files>\n", $uploaded_count, $attches_xml_buff);
         }
 
