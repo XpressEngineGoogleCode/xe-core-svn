@@ -56,7 +56,7 @@
         if($document_info->file_cnt) {
             $file_query = "select * from {$db_prefix}file where article_srl = '{$article_srl}'";
             $file_result = mysql_query($file_query) or die(mysql_error());
-            $attches_xml_buff = '';
+            $attaches_xml_buff = '';
             $uploaded_count = 0;
             while($file_info = mysql_fetch_object($file_result)) {
                 if($file_info->is_used != 'Y' || eregi('\.php$',$file_info->s_filename)) continue;
@@ -69,7 +69,7 @@
             }
             $document_buff .= sprintf("<uploaded_count>%d</uploaded_count>\n", $uploaded_count);
             $document_buff .= sprintf("<content>%s</content>\n", addXmlQuote($content));
-            $document_buff .= sprintf("<files count=\"%d\">%s</files>\n", $uploaded_count, $attches_xml_buff);
+            $document_buff .= sprintf("<files count=\"%d\">%s</files>\n", $uploaded_count, $attaches_xml_buff);
         }
 
         // 코멘트 목록을 구해옴
