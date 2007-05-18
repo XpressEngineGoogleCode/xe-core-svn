@@ -8,9 +8,21 @@
     // id를 구함
     $module_srl = ereg_replace('^module\_','',$target_module);
 
+    // 다운로드 헤더 출력
+    printDownloadHeader($filename);
+
+    // 게시물의 수를 구함
+    $query = sprintf("select count(*) as count from %sarticles where module_srl = '%d'", $db_prefix, $module_srl);
+    $count_result = mysql_query($query) or die(mysql_error());
+    $count_info = mysql_fetch_object($count_result);
+    $total_count = $count_info->count;
+
     // 게시물을 구함
-    $query = sprintf("select * from {$db_prefix}articles where module_srl = '{$module_srl}' and listorder < 0");
+    $query = sprintf("select * from %sarticles where module_srl = '%d'", $db_prefix, $module_srl);
     $document_result = mysql_query($query) or die(mysql_error());
+
+    // 헤더 정보 출력
+    printf("<root type=\"%s\" module_srl=\"%s\" count=\"%d\">", 'module', $module_srl, $total_count);
 
     $xml_buff = '';
     $sequence = 0;
@@ -45,13 +57,12 @@
             $attches_xml_buff = '';
             $uploaded_count = 0;
             while($file_info = mysql_fetch_object($file_result)) {
-                if($file_info->is_used != 'Y') continue;
+                if($file_info->is_used != 'Y' || eregi('\.php$',$file_info->s_filename)) continue;
                 $attach_filename = sprintf('%s/%s', $path, $file_info->path);
                 if(!file_exists($attach_filename)) continue;
-                $attches_xml_buff .= sprintf('<file name="%s">', addXmlQuote($file_info->s_filename));
-                $attches_xml_buff .= sprintf('<downloaded_count>%d</downloaded_count>', $file_info->download_cnt);
-                $attches_xml_buff .= sprintf('<buff><![CDATA[%s]]></buff>', getFileContentByBase64Encode($attach_filename));
-                $attches_xml_buff .= '</file>';
+
+                $attaches_xml_buff .= sprintf("<file><filename>%s</filename>\n<url>%s%s</url>\n<download_count>%d</download_count>\n</file>\n", addXmlQuote($file_info->s_filename), $url, $attach_file, $attach_files[$i]['download_count']);
+
                 $uploaded_count ++;
             }
             $document_buff .= sprintf('<uploaded_count>%d</uploaded_count>', $uploaded_count);
@@ -94,11 +105,8 @@
         }
         $document_buff .= sprintf('<trackbacks count="%d">%s</trackbacks>', $document_info->trackback_count, $trackback_xml_buff);
     
-        $xml_buff .= sprintf('<document sequence="%d">%s</document>'."\n", $sequence++, base64_encode($document_buff));
+        printf('<document sequence="%d">%s</document>'."\n", $sequence++, base64_encode($document_buff));
     }
 
-    $xml_buff = sprintf('<root target="module">%s</root>', $xml_buff);
-
-    // 다운로드
-    procDownload($filename, $xml_buff);
+    print '</root>';
 ?>

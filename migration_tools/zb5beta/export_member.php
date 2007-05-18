@@ -9,9 +9,21 @@
     $image_nickname_path = sprintf('%s/icon/private_name/',$path);
     $image_mark_path = sprintf('%s/icon/private_icon/',$path);
 
+    // 다운로드 헤더 출력
+    printDownloadHeader($filename);
+
+    // 회원의 수를 구함
+    $query = sprintf("select count(*) as count from %smember_list", $db_prefix);
+    $count_result = mysql_query($query) or die(mysql_error());
+    $count_info = mysql_fetch_object($count_result);
+    $total_count = $count_info->count;
+
     // 회원정보를 구함
-    $query = "select * from zb_member_list";
+    $query = sprintF("select * from %smember_list", $db_prefix);
     $member_result = mysql_query($query) or die(mysql_error());
+
+    // 헤더 정보 출력
+    printf("<root type=\"%s\" count=\"%d\">", 'member', $total_count);
 
     $xml_buff = '';
     while($member_info = mysql_fetch_object($member_result)) {
@@ -42,11 +54,8 @@
             if(file_exists($image_mark_file)) $member_buff .= sprintf("<image_mark>%s</image_mark>\n", getFileContentByBase64Encode($image_mark_file));
         }
     
-        $xml_buff .= sprintf("<member user_id=\"%s\">\n%s</member>\n", addXmlQuote($member_info->user_id), $member_buff);
+        printf("<member user_id=\"%s\">\n%s</member>\n", addXmlQuote($member_info->user_id), $member_buff);
     }
 
-    $xml_buff = sprintf("<root target=\"member\">\n%s</root>\n", $xml_buff);
-
-    // 다운로드
-    procDownload($filename, $xml_buff);
+    print '</root>';
 ?>

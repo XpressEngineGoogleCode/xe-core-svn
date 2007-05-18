@@ -47,7 +47,7 @@
 	    return null;
     }
 
-    function procDownload($filename, $content) {
+    function printDownloadHeader($filename) {
         if(strstr($_SERVER['HTTP_USER_AGENT'], "MSIE")) {
             $filename = urlencode($filename);
             $filename = preg_replace('/\./', '%2e', $filename, substr_count($filename, '.') - 1);
@@ -59,10 +59,8 @@
         header("Cache-Control: no-store, no-cache, must-revalidate");
         header("Cache-Control: post-check=0, pre-check=0", false);
         header("Pragma: no-cache");
-        header("Content-Length: " .strlen($content));
+        //header("Content-Length: " .strlen($content));
         header('Content-Disposition: attachment; filename="'.$filename.'"');
         header("Content-Transfer-Encoding: binary");
-
-        print $content; 
     }
 ?>
