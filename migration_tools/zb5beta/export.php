@@ -14,6 +14,12 @@
     
         $action_file = 'export_board.php';
         $target_title = $module_info->title;
+
+        preg_match("/([a-zA-Z\_]+)\.php/i", $_SERVER['PHP_SELF'], $match);
+        $filename = $match[0];
+        $query_url = str_replace($filename, '', $_SERVER['PHP_SELF']);
+
+        $module_url = sprintf("http://%s%s",$hostname, $query_url);
     }
 ?>
 
@@ -28,6 +34,17 @@
             <div class="header">백업 대상</div>
             <div class="tail"><?=$target_title?></div>
         </div>
+
+<?php
+    if($module_url) {
+?>
+        <div class="content">
+            <div class="header">게시판 URL</div>
+            <div class="tail"><input type="text" class="input_text" name="url" value="<?=$module_url?>" /></div>
+        </div>
+<?
+    }
+?>
 
         <div class="content">
             <div class="header">파일 이름</div>

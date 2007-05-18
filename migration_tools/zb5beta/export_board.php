@@ -4,6 +4,8 @@
     include "lib.php";
 
     $filename = $_POST['filename'];
+    $url = $_POST['url'];
+    if(substr($url,-1)!='/') $url .= '/';
 
     // id를 구함
     $module_srl = ereg_replace('^module\_','',$target_module);
