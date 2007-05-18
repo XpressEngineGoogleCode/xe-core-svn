@@ -23,6 +23,9 @@
     $query = sprintf('select a.*, b.user_id from zetyx_board_%s a left outer join zetyx_member_table b on a.ismember = b.no where a.headnum < 0 and a.arrangenum >=0  order by a.reg_date', $id);
     $document_result = mysql_query($query) or die(mysql_error());
 
+    // 헤더 정보 출력
+    printf("<root type=\"%s\" id=\"%s\" count=\"%d\">", 'module', $id, $total_count);
+
     $xml_buff = '';
     $sequence = 0;
     while($document_info = mysql_fetch_object($document_result)) {
