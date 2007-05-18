@@ -107,7 +107,7 @@
         }
         $document_buff .= sprintf('<trackbacks count="%d">%s</trackbacks>', $document_info->trackback_count, $trackback_xml_buff);
     
-        printf('<document sequence="%d">%s</document>'."\n", $sequence++, base64_encode($document_buff));
+        printf('<document sequence="%d">%s</document>'."\n", $sequence++, $document_buff);
     }
 
     print '</root>';
