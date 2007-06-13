@@ -33,7 +33,7 @@
 
         // 기본 정보
         if($document_info->headnum <= -2000000000) $document_buff .= sprintf("<is_notice>Y</is_notice>\n");
-        if($document_buff->is_secret) $document_buff .= sprintf("<is_secret>Y</is_secret>\n");
+        if($document_info->is_secret) $document_buff .= sprintf("<is_secret>Y</is_secret>\n");
         $document_buff .= sprintf("<title>%s</title>\n", addXmlQuote(iconv('EUC-KR','UTF-8',$document_info->subject)));
         $document_buff .= sprintf("<readed_count>%d</readed_count>\n", $document_info->hit);
         $document_buff .= sprintf("<voted_count>%d</voted_count>\n", $document_info->vote);
