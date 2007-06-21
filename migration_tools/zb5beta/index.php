@@ -6,7 +6,7 @@
 
         <div class="content">
             <div class="header">path</div>
-            <div class="tail"><input type="text" name="path" class="input_text"value="/home1/DOMAINS/BETA.ZB5.ZEROBOARD.COM" /></div>
+            <div class="tail"><input type="text" name="path" class="input_text"value="" /></div>
             <div class="tail"><input type="submit" class="input_submit"value="next" /></div>
         </div>
     </form>
