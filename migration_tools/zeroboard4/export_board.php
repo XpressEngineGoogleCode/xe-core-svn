@@ -10,6 +10,20 @@
     // id를 구함
     $id = ereg_replace('^module\_','',$target_module);
 
+    // 게시판 정보를 구함
+    $query = "select * from zetyx_admin_table where id='".$id."'";
+    $result = mysql_query($query) or die(mysql_error());
+    $module_info = mysql_fetch_object($result);
+
+    // 카테고리를 사용시에 카테고리 정보를 구함
+    if($module_info->use_category) {
+        $query = "select * from zetyx_board_category_".$id;
+        $result = mysql_query($query) or die(mysql_error());
+        while($tmp = mysql_fetch_object($result)) {
+            $category_list[$tmp->no] = $tmp->name;
+        }
+    }
+
     // 다운로드 헤더 출력
     printDownloadHeader($filename);
 
@@ -26,6 +40,15 @@
     // 헤더 정보 출력
     printf("<root type=\"%s\" id=\"%s\" count=\"%d\">", 'module', $id, $total_count);
 
+    // 카테고리를 사용중이면 카테고리 정보 출력
+    if($module_info->use_category && count($category_list)) {
+        print("<categories>\n");
+        foreach($category_list as $key => $val) {
+            printf("<category>%s</category>", addXmlQuote(iconv('EUC-KR','UTF-8',$val)) );
+        }
+        print("</categories>\n");
+    }
+
     $xml_buff = '';
     $sequence = 0;
     while($document_info = mysql_fetch_object($document_result)) {
@@ -34,6 +57,10 @@
         // 기본 정보
         if($document_info->headnum <= -2000000000) $document_buff .= sprintf("<is_notice>Y</is_notice>\n");
         if($document_info->is_secret) $document_buff .= sprintf("<is_secret>Y</is_secret>\n");
+
+        if($module_info->use_category && $document_info->category && $category_list[$document_info->category]) {
+            $document_buff .= sprintf("<category>%s</category>\n", addXmlQuote(iconv('EUC-KR','UTF-8',$category_list[$document_info->category])));
+        }
         $document_buff .= sprintf("<title>%s</title>\n", addXmlQuote(iconv('EUC-KR','UTF-8',$document_info->subject)));
         $document_buff .= sprintf("<readed_count>%d</readed_count>\n", $document_info->hit);
         $document_buff .= sprintf("<voted_count>%d</voted_count>\n", $document_info->vote);
