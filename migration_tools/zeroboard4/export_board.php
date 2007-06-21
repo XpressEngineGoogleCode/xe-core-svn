@@ -11,7 +11,7 @@
     $id = ereg_replace('^module\_','',$target_module);
 
     // 게시판 정보를 구함
-    $query = "select * from zetyx_admin_table where id='".$id."'";
+    $query = "select * from zetyx_admin_table where name='".$id."'";
     $result = mysql_query($query) or die(mysql_error());
     $module_info = mysql_fetch_object($result);
 
