@@ -51,6 +51,7 @@
         // 첨부파일 정리와 내용 변경을 위한 작업들..
         $content = $document_info->article;
         $article_srl = $document_info->article_srl;
+        $document_buff .= sprintf("<content>%s</content>\n", addXmlQuote($content));
 
         // 첨부파일 목록 가져옴
         if($document_info->file_cnt) {
@@ -68,7 +69,6 @@
                 $uploaded_count ++;
             }
             $document_buff .= sprintf("<uploaded_count>%d</uploaded_count>\n", $uploaded_count);
-            $document_buff .= sprintf("<content>%s</content>\n", addXmlQuote($content));
             $document_buff .= sprintf("<files count=\"%d\">%s</files>\n", $uploaded_count, $attaches_xml_buff);
         }
 
