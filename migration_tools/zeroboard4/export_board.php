@@ -34,7 +34,7 @@
     $total_count = $count_info->count;
 
     // 게시물을 구함
-    $query = sprintf('select a.*, b.user_id from zetyx_board_%s a left outer join zetyx_member_table b on a.ismember = b.no where a.headnum < 0 and a.arrangenum >=0  order by a.reg_date', $id);
+    $query = sprintf('select a.*, b.user_id from zetyx_board_%s a left outer join zetyx_member_table b on a.ismember = b.no where a.headnum < 0 order by a.headnum, a.arrangenum', $id);
     $document_result = mysql_query($query) or die(mysql_error());
 
     // 헤더 정보 출력
