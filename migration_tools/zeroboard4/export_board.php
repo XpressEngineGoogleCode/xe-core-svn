@@ -1,6 +1,9 @@
 <?php 
     set_time_limit(0);
 
+    $source_charset = "EUC-KR";
+    $target_charset = "UTF-8";
+
     include "lib.php";
 
     $filename = $_POST['filename'];
@@ -44,7 +47,7 @@
     if($module_info->use_category && count($category_list)) {
         print("<categories>\n");
         foreach($category_list as $key => $val) {
-            printf("<category>%s</category>", addXmlQuote(iconv('EUC-KR','UTF-8',$val)) );
+            printf("<category>%s</category>", addXmlQuote(iconv($source_charset,$target_charset,$val)) );
         }
         print("</categories>\n");
     }
@@ -59,18 +62,18 @@
         if($document_info->is_secret) $document_buff .= sprintf("<is_secret>Y</is_secret>\n");
 
         if($module_info->use_category && $document_info->category && $category_list[$document_info->category]) {
-            $document_buff .= sprintf("<category>%s</category>\n", addXmlQuote(iconv('EUC-KR','UTF-8',$category_list[$document_info->category])));
+            $document_buff .= sprintf("<category>%s</category>\n", addXmlQuote(iconv($source_charset,$target_charset,$category_list[$document_info->category])));
         }
-        $document_buff .= sprintf("<title>%s</title>\n", addXmlQuote(iconv('EUC-KR','UTF-8',$document_info->subject)));
+        $document_buff .= sprintf("<title>%s</title>\n", addXmlQuote(iconv($source_charset,$target_charset,$document_info->subject)));
         $document_buff .= sprintf("<readed_count>%d</readed_count>\n", $document_info->hit);
         $document_buff .= sprintf("<voted_count>%d</voted_count>\n", $document_info->vote);
         $document_buff .= sprintf("<comment_count>%d</comment_count>\n", $document_info->total_comment);
         $document_buff .= sprintf("<password>%s</password>\n", addXmlQuote($document_info->password));
-        $document_buff .= sprintf("<user_id>%s</user_id>\n", addXmlQuote(iconv('EUC-KR','UTF-8',$document_info->user_id)));
-        if($document_info->user_id) $document_buff .= sprintf("<user_name>%s</user_name>\n", addXmlQuote(iconv('EUC-KR','UTF-8',$document_info->name)));
-        $document_buff .= sprintf("<nick_name>%s</nick_name>\n", addXmlQuote(iconv('EUC-KR','UTF-8',$document_info->name)));
-        $document_buff .= sprintf("<email_address>%s</email_address>\n", addXmlQuote(iconv('EUC-KR','UTF-8',$document_info->email)));
-        $document_buff .= sprintf("<homepage>%s</homepage>\n", addXmlQuote(iconv('EUC-KR','UTF-8',$document_info->homepage)));
+        $document_buff .= sprintf("<user_id>%s</user_id>\n", addXmlQuote(iconv($source_charset,$target_charset,$document_info->user_id)));
+        if($document_info->user_id) $document_buff .= sprintf("<user_name>%s</user_name>\n", addXmlQuote(iconv($source_charset,$target_charset,$document_info->name)));
+        $document_buff .= sprintf("<nick_name>%s</nick_name>\n", addXmlQuote(iconv($source_charset,$target_charset,$document_info->name)));
+        $document_buff .= sprintf("<email_address>%s</email_address>\n", addXmlQuote(iconv($source_charset,$target_charset,$document_info->email)));
+        $document_buff .= sprintf("<homepage>%s</homepage>\n", addXmlQuote(iconv($source_charset,$target_charset,$document_info->homepage)));
         $document_buff .= sprintf("<regdate>%s</regdate>\n", date("YmdHis", $document_info->reg_date));
         $document_buff .= sprintf("<ipaddress>%s</ipaddress>\n", $document_info->ip);
         $document_buff .= sprintf("<allow_comment>%s</allow_comment>\n", 'Y');
@@ -122,7 +125,7 @@
 
         // 첨부된 파일 또는 이미지박스를 이용한 파일목록을 구함
         $document_buff .= sprintf("<uploaded_count>%d</uploaded_count>\n", $uploaded_count);
-        $document_buff .= sprintf("<content>%s</content>\n", addXmlQuote(iconv('EUC-KR','UTF-8',$content)));
+        $document_buff .= sprintf("<content>%s</content>\n", addXmlQuote(iconv($source_charset,$target_charset,$content)));
 
         // 첨부파일을 읽어서 xml파일에 추가
         $attaches_xml_buff = null;
@@ -132,7 +135,7 @@
             $tmp_arr = explode('/',$attach_file);
             $attach_filename = $tmp_arr[count($tmp_arr)-1];
 
-            $attaches_xml_buff .= sprintf("<file><filename>%s</filename>\n<url>%s%s</url>\n<download_count>%d</download_count>\n</file>\n", addXmlQuote(iconv('EUC-KR','UTF-8',$attach_filename)), $url, $attach_file, $attach_files[$i]['download_count']);
+            $attaches_xml_buff .= sprintf("<file><filename>%s</filename>\n<url>%s%s</url>\n<download_count>%d</download_count>\n</file>\n", addXmlQuote(iconv($source_charset,$target_charset,$attach_filename)), addXmlQuote($source_charset, $target_charset, $url), $attach_file, $attach_files[$i]['download_count']);
         }
         $document_buff .= sprintf("<files count=\"%d\">\n%s</files>\n", $uploaded_count, $attaches_xml_buff);
 
@@ -142,11 +145,11 @@
         $comment_xml_buff = '';
         while($comment_info = mysql_fetch_object($comment_result)) {
             $comment_buff = '';
-            $comment_buff .= sprintf("<content>%s</content>\n", addXmlQuote(iconv('EUC-KR','UTF-8',nl2br($comment_info->memo))));
+            $comment_buff .= sprintf("<content>%s</content>\n", addXmlQuote(iconv($source_charset,$target_charset,nl2br($comment_info->memo))));
             $comment_buff .= sprintf("<password>%s</password>\n", addXmlQuote($comment_info->password));
-            $comment_buff .= sprintf("<user_id>%s</user_id>\n", addXmlQuote(iconv('EUC-KR','UTF-8',$comment_info->user_id)));
-            if($comment_info->user_id) $comment_buff .= sprintf("<user_name>%s</user_name>\n", addXmlQuote(iconv('EUC-KR','UTF-8',$comment_info->name)));
-            $comment_buff .= sprintf("<nick_name>%s</nick_name>\n", addXmlQuote(iconv('EUC-KR','UTF-8',$comment_info->name)));
+            $comment_buff .= sprintf("<user_id>%s</user_id>\n", addXmlQuote(iconv($source_charset,$target_charset,$comment_info->user_id)));
+            if($comment_info->user_id) $comment_buff .= sprintf("<user_name>%s</user_name>\n", addXmlQuote(iconv($source_charset,$target_charset,$comment_info->name)));
+            $comment_buff .= sprintf("<nick_name>%s</nick_name>\n", addXmlQuote(iconv($source_charset,$target_charset,$comment_info->name)));
             $comment_buff .= sprintf("<member_srl>%d</member_srl>\n", $comment_info->ismember);
             $comment_buff .= sprintf("<ipaddress>%s</ipaddress>\n", addXmlQuote($comment_info->ip));
             $comment_buff .= sprintf("<regdate>%s</regdate>\n", date('YmdHis', $comment_info->reg_date));
