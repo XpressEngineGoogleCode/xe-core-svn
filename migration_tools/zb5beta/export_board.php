@@ -20,7 +20,7 @@
     $total_count = $count_info->count;
 
     // 게시물을 구함
-    $query = sprintf("select * from %sarticles where module_srl = '%d' and listorder < 0 order by listorder", $db_prefix, $module_srl);
+    $query = sprintf("select * from %sarticles where module_srl = '%d' and listorder < 0 order by listorder desc", $db_prefix, $module_srl);
     $document_result = mysql_query($query) or die(mysql_error());
 
     // 헤더 정보 출력
