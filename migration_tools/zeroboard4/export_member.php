@@ -30,12 +30,12 @@
         $member_buff = null;
 
         // 기본정보들
-        $member_buff .= sprintf("<user_id>%s</user_id>\n", addXmlQuote(iconv('EUC-KR','UTF-8',$member_info->user_id)));
+        $member_buff .= sprintf("<user_id>%s</user_id>\n", addXmlQuote($member_info->user_id));
         $member_buff .= sprintf("<password>%s</password>\n", addXmlQuote($member_info->password));
-        $member_buff .= sprintf("<user_name>%s</user_name>\n", addXmlQuote(iconv('EUC-KR','UTF-8',$member_info->name)));
-        $member_buff .= sprintf("<email_address>%s</email_address>\n", addXmlQuote(iconv('EUC-KR','UTF-8',$member_info->email)));
-        $member_buff .= sprintf("<homepage>%s</homepage>\n", addXmlQuote(iconv('EUC-KR','UTF-8',$member_info->homepage)));
-        $member_buff .= sprintf("<nick_name>%s</nick_name>\n", addXmlQuote(iconv('EUC-KR','UTF-8',$member_info->name)));
+        $member_buff .= sprintf("<user_name>%s</user_name>\n", addXmlQuote($member_info->name));
+        $member_buff .= sprintf("<email_address>%s</email_address>\n", addXmlQuote($member_info->email));
+        $member_buff .= sprintf("<homepage>%s</homepage>\n", addXmlQuote($member_info->homepage));
+        $member_buff .= sprintf("<nick_name>%s</nick_name>\n", addXmlQuote($member_info->name));
         $member_buff .= sprintf("<birthday>%s</birthday>\n", date('YmdHis', $member_info->birth));
         $member_buff .= sprintf("<regdate>%s</regdate>\n", date('YmdHis', $member_info->reg_date));
         if($member_info->mailing!=0) $allow_mailing = 'Y';
@@ -51,7 +51,7 @@
         $image_mark_file = sprintf('%s%d.gif',$image_mark_path,$member_info->no);
         if(file_exists($image_mark_file)) $member_buff .= sprintf("<image_mark>%s</image_mark>\n", getFileContentByBase64Encode($image_mark_file));
     
-        printf("<member user_id=\"%s\">\n%s</member>\n", addXmlQuote(iconv('EUC-KR','UTF-8',$member_info->user_id)), $member_buff);
+        printf("<member user_id=\"%s\">\n%s</member>\n", addXmlQuote($member_info->user_id), $member_buff);
     }
 
     print '</root>';

@@ -5,6 +5,9 @@
         <div class="desc">제로보드가 설치된 경로를 입력해 주세요.</div>
 
         <div class="content">
+            <div class="header">Charset</div>
+            <div class="tail"><select name="charset"><option value="EUC-KR">EUC-KR</option><option value="UTF-8">UTF-8</option></select></div>
+            <div class="clear"></div>
             <div class="header">path</div>
             <div class="tail"><input type="text" name="path" class="input_text"value="" /></div>
             <div class="tail"><input type="submit" class="input_submit"value="next" /></div>

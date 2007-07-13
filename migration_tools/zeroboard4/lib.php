@@ -2,6 +2,9 @@
     $path = $_POST['path'];
     $target_module = $_POST['target_module'];
 
+    $source_charset = $_POST['charset'];
+    $target_charset = "UTF-8";
+
     unset($connect);
 
     if($path) {
@@ -25,7 +28,9 @@
     }
 
     function addXmlQuote($val) {
-        return str_replace(array('&','<','>'),array('&amp;','&lt;','&gt;'),trim($val));
+        global $source_charset, $target_charset;
+        $val = str_replace(array('&','<','>'),array('&amp;','&lt;','&gt;'),trim($val));
+        return iconv($source_charset, $target_charset, $val);
     }
 
     function getFileContentByBase64Encode($filename) {

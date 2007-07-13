@@ -36,6 +36,8 @@ body, div, td, p, a {
     width:80px;
     font-weight:bold;
     float:left;
+    clear:left;
+    margin-bottom:10px;
 }
 
 .tail {
