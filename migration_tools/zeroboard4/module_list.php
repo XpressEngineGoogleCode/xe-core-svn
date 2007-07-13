@@ -10,6 +10,7 @@
 
     <form action="./export.php" method="post">
     <input type="hidden" name="path" value="<?=$path?>" />
+    <input type="hidden" name="charset" value="<?=$charset?>" />
 
         <div class="title">Step 2. 백업할 대상을 선택해주세요. (회원정보 또는 게시판)</div>
         <div class="desc">제로보드4는 회원정보와 그외 게시판으로 종류를 나누어 백업하실 수 있습니다.</div>

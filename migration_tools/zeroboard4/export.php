@@ -24,6 +24,7 @@
 
     <form action="./<?=$action_file?>" method="post">
     <input type="hidden" name="path" value="<?=$path?>" />
+    <input type="hidden" name="charset" value="<?=$charset?>" />
     <input type="hidden" name="target_module" value="<?=$target_module?>" />
 
         <div class="title">Step 3. 백업할 파일 이름을 선택해주세요.</div>

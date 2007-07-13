@@ -2,7 +2,7 @@
     $path = $_POST['path'];
     $target_module = $_POST['target_module'];
 
-    $source_charset = $_POST['charset'];
+    $source_charset = $charset = $_POST['charset'];
     $target_charset = "UTF-8";
 
     unset($connect);
