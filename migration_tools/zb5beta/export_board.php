@@ -48,6 +48,9 @@
         $document_buff .= sprintf("<allow_comment>%s</allow_comment>\n", $document_info->allow_comment);
         $document_buff .= sprintf("<allow_trackback>%s</allow_trackback>\n", $document_info->allow_trackback);
 
+        if($document_info->summary) $document_buff .= sprintf("<extra_vars1>%s</extra_vars1>\n", addXmlQuote($document_info->summary));
+        if($document_info->summary_div) $document_buff .= sprintf("<extra_vars2>%s</extra_vars2>\n", addXmlQuote($document_info->summary_div));
+
         // 첨부파일 정리와 내용 변경을 위한 작업들..
         $content = $document_info->article;
         $article_srl = $document_info->article_srl;
