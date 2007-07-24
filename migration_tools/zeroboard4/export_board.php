@@ -80,8 +80,8 @@
         // 첨부파일 정리와 내용 변경을 위한 작업들..
         $content = stripslashes($document_info->memo);
 
-        if($document_info->sitelink1) $content = sprintf('<a href="%s">%s</a><br />', $document_info->sitelink1, $document_info->sitelink1, $content);
-        if($document_info->sitelink2) $content = sprintf('<a href="%s">%s</a><br />', $document_info->sitelink2, $document_info->sitelink2, $content);
+        if($document_info->sitelink1) $content = sprintf('<a href="%s">%s</a>%s<br />', $document_info->sitelink1, $document_info->sitelink1, $content);
+        if($document_info->sitelink2) $content = sprintf('<a href="%s">%s</a>%s<br />', $document_info->sitelink2, $document_info->sitelink2, $content);
         $member_srl = $document_info->ismember;
 
         // use_html옵션에 따른 컨텐츠 정리
