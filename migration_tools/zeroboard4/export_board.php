@@ -88,8 +88,8 @@
          * 추가 변수에 대한 정리
          * 필요에 따라 추가하면 됨
          **/
-        if($document_info->x) $document_buff .= sprintf("<extra_var1>%s</extra_var1>\n", addXmlQuote($document_info->x));
-        if($document_info->y) $document_buff .= sprintf("<extra_var2>%s</extra_var2>\n", addXmlQuote($document_info->y));
+        if($document_info->x) $document_buff .= sprintf("<extra_vars1>%s</extra_vars1>\n", addXmlQuote($document_info->x));
+        if($document_info->y) $document_buff .= sprintf("<extra_vars2>%s</extra_vars2>\n", addXmlQuote($document_info->y));
 
         // use_html옵션에 따른 컨텐츠 정리
         switch($document_info->use_html) {
