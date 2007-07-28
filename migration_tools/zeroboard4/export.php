@@ -35,17 +35,6 @@
             <div class="tail"><?=$target_title?></div>
         </div>
 
-<?php
-    if($module_url) {
-?>
-        <div class="content">
-            <div class="header">게시판 URL</div>
-            <div class="tail"><input type="text" class="input_text" name="url" value="<?=$module_url?>" /></div>
-        </div>
-<?
-    }
-?>
-
         <div class="content">
             <div class="header">파일 이름</div>
             <div class="tail"><input type="text" class="input_text" name="filename" value="<?=eregi_replace('^module_','',$target_module)?>_<?=date("Ymd_His")?>.xml" /></div>

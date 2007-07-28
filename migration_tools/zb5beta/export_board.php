@@ -67,7 +67,7 @@
                 $attach_filename = sprintf('%s/%s', $path, $file_info->path);
                 if(!file_exists($attach_filename)) continue;
 
-                $attaches_xml_buff .= sprintf("<file><filename>%s</filename>\n<url>%s%s</url>\n<download_count>%d</download_count>\n</file>\n", addXmlQuote($file_info->s_filename), addXmlQuote($url), addXmlQuote($file_info->path), $attach_files[$i]['download_count']);
+                $attaches_xml_buff .= sprintf("<file><filename>%s</filename>\n<path>%s/%s</path>\n<download_count>%d</download_count>\n</file>\n", addXmlQuote($file_info->s_filename), addXmlQuote($path), addXmlQuote($file_info->path), $attach_files[$i]['download_count']);
 
                 $uploaded_count ++;
             }
