@@ -1,10 +1,12 @@
 <?php 
+
     set_time_limit(0);
 
     include "lib.php";
 
     $filename = $_POST['filename'];
     $url = $_POST['url'];
+    $category_srl = $_POST['category_srl'];
     if(substr($url,-1)!='/') $url .= '/';
 
     // id를 구함
@@ -15,8 +17,8 @@
     $result = mysql_query($query) or die(mysql_error());
     $module_info = mysql_fetch_object($result);
 
-    // 카테고리를 사용시에 카테고리 정보를 구함
-    if($module_info->use_category) {
+    // 특정 카테고리가 지정되어 있지 않다면 카테고리를 사용시에 카테고리 정보를 구함
+    if($module_info->use_category && !$category_srl) {
         $query = "select * from zetyx_board_category_".$id;
         $result = mysql_query($query) or die(mysql_error());
         while($tmp = mysql_fetch_object($result)) {
@@ -29,19 +31,20 @@
 
     // 게시물의 수를 구함
     $query = sprintf("select count(*) as count from zetyx_board_%s", $id);
+    if($category_srl) $query .= " where category = ".$category_srl;
     $count_result = mysql_query($query) or die(mysql_error());
     $count_info = mysql_fetch_object($count_result);
     $total_count = $count_info->count;
 
     // 게시물을 구함
-    $query = sprintf('select a.*, b.user_id from zetyx_board_%s a left outer join zetyx_member_table b on a.ismember = b.no order by a.headnum desc, a.arrangenum desc', $id);
+    $query = sprintf('select a.*, b.user_id from zetyx_board_%s a left outer join zetyx_member_table b on a.ismember = b.no %s order by a.headnum desc, a.arrangenum desc', $id, $category_srl?"where category = ".$category_srl:"");
     $document_result = mysql_query($query) or die(mysql_error());
 
     // 헤더 정보 출력
     printf("<root type=\"%s\" id=\"%s\" count=\"%d\">", 'module', $id, $total_count);
 
     // 카테고리를 사용중이면 카테고리 정보 출력
-    if($module_info->use_category && count($category_list)) {
+    if($module_info->use_category && !$category_srl && count($category_list)) {
         print("<categories>\n");
         foreach($category_list as $key => $val) {
             printf("<category>%s</category>", addXmlQuote($val) );
@@ -61,7 +64,7 @@
         if($module_info->use_category && $document_info->category && $category_list[$document_info->category]) {
             $document_buff .= sprintf("<category>%s</category>\n", addXmlQuote($category_list[$document_info->category]));
         }
-        $document_buff .= sprintf("<title>%s</title>\n", addXmlQuote($document_info->subject));
+        $document_buff .= sprintf("<title>%s</title>\n", addXmlQuote(strip_tags($document_info->subject)));
         $document_buff .= sprintf("<readed_count>%d</readed_count>\n", $document_info->hit);
         $document_buff .= sprintf("<voted_count>%d</voted_count>\n", $document_info->vote);
         $document_buff .= sprintf("<comment_count>%d</comment_count>\n", $document_info->total_comment);
@@ -139,7 +142,7 @@
             $tmp_arr = explode('/',$attach_file);
             $attach_filename = $tmp_arr[count($tmp_arr)-1];
 
-            $attaches_xml_buff .= sprintf("<file><filename>%s</filename>\n<path>%s/%s</path>\n<download_count>%d</download_count>\n</file>\n", addXmlQuote($attach_filename), addXmlQuote($path), addXmlQuote($attach_file), $attach_files[$i]['download_count']);
+            $attaches_xml_buff .= sprintf("<file><filename>%s</filename>\n<path>%s</path>\n<download_count>%d</download_count>\n</file>\n", addXmlQuote($attach_filename), addXmlQuote($attach_file), $attach_files[$i]['download_count']);
         }
         $document_buff .= sprintf("<files count=\"%d\">\n%s</files>\n", $uploaded_count, $attaches_xml_buff);
 

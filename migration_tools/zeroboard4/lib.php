@@ -29,7 +29,7 @@
 
     function addXmlQuote($val) {
         global $source_charset, $target_charset;
-        $val = str_replace(array('&','<','>'),array('&amp;','&lt;','&gt;'),trim($val));
+        $val = str_replace(array('&','<','>'),array('&amp;','&lt;','&gt;'),trim(stripslashes($val)));
         return iconv($source_charset, $target_charset, $val);
     }
 

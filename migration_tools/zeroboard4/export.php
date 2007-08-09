@@ -19,6 +19,12 @@
         $query_url = str_replace($filename, '', $_SERVER['PHP_SELF']);
 
         $module_url = sprintf("http://%s%s",$hostname, $query_url);
+
+        $query = sprintf("select * from zetyx_board_category_%s",  substr($target_module, 7));
+        $result = mysql_query($query);
+        while($tmp = mysql_fetch_object($result)) {
+          $category_list[$tmp->no] = iconv($source_charset, $target_charset, $tmp->name)." (".$tmp->num.")";
+        }
     }
 ?>
 
@@ -34,6 +40,24 @@
             <div class="header">백업 대상</div>
             <div class="tail"><?=$target_title?></div>
         </div>
+
+<?
+  if(count($category_list)) {
+?>
+        <div class="content">
+            <div class="header">카테고리</div>
+            <div class="tail">
+              <select name="category_srl">
+              <option value="">전체</option>
+<? foreach($category_list as $key => $val) {?>
+            <option value="<?=$key?>"><?=$val?></option>
+<? } ?>
+              </select>
+            </div>
+        </div>
+<?
+  }
+?>
 
         <div class="content">
             <div class="header">파일 이름</div>
