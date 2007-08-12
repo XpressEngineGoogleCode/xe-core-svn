@@ -1,6 +1,0 @@
-<query id="getModuleCategories" action="select">
-    <tables>
-        <table name="module_categories" />
-    </tables>
-    <columns />
-</query>
