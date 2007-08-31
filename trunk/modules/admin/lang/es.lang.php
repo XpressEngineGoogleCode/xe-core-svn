@@ -1,0 +1,70 @@
+<?php
+    /**
+     * @archivo   es.lang.php
+     * @autor zero (zero@nzeo.com)
+     * @sumario  Paquete del idioma español (sólo los básicos)
+     **/
+
+    $lang->newest_news = "Nuevas Noticias";
+    
+    $lang->env_setup = "Configuración";
+	
+    $lang->item_module = "Lista de Módulo";
+    $lang->item_addon  = "Lista de Addon";
+    $lang->item_widget = "Lista de Widget";
+    $lang->item_layout = "Liasta de Diseño";
+
+    $lang->module_name = "Nombre de Módulo";
+    $lang->addon_name = "Nombre de Addon";
+    $lang->version = "Versión";
+    $lang->author = "Autor";
+    $lang->table_count = "Número de Tabla";
+    $lang->installed_path = "Ruta de instalación";
+
+    $lang->cmd_shortcut_management = "Editar el Menú";
+
+    $lang->msg_is_not_administrator = 'Sólo administrador puede entrar.';
+    $lang->msg_manage_module_cannot_delete = 'No se puede eliminar acceso directo de Módulo, Addon, Diseño y Widget.';
+    $lang->msg_default_act_is_null = 'No se puede registrar acceso directo por no estar determinado la acción del administrador por defecto.';
+	
+    $lang->welcome_to_zeroboard_xe = 'Esta es la página del Administrador de Zeroboard XE';
+    $lang->about_admin_page = "La página del Administrador aún está en desarrollo.";
+
+    $lang->zeroboard_xe_user_links = 'Enlaces para los usuarios ';
+    $lang->zeroboard_xe_developer_links = 'Enlace para los desarrolladores';
+
+    $lang->xe_user_links = array(
+        'Página web oficial' => 'http://www.zeroboard.com',
+        //'Sitio versión beta' => 'http://spring.zeroboard.com',
+        //'Más Módulos´ => 'http://www.zeroboard.com',
+        //'Más Addon' => 'http://www.zeroboard.com',
+        //'Más Widgets' => 'http://www.zeroboard.com',
+        //'Más temas de módulos' => 'http://www.zeroboard.com',
+        //'Más temas de widget' => 'http://www.zeroboard.com',
+        //'Más temas de diseño' => 'http://www.zeroboard.com',
+    );
+
+    $lang->xe_developer_links = array(
+        //'Manuales' => 'http://www.zeroboard.com/wiki/manual',
+        'Foro Abierto para los desarrolladores' => 'http://spring.zeroboard.com',
+        'Huellas de distribuciones' => 'http://trac.zeroboard.com',
+        'Repositorio de SVN' => 'http://svn.zeroboard.com',
+        'Documento doxygen' => 'http://doc.zeroboard.com',
+        'Documentación en PDF' => 'http://doc.zeroboard.com/zeroboard_xe.pdf',
+    );
+
+    $lang->zeroboard_xe_usefulness_module = 'Módulos útiles';
+    $lang->xe_usefulness_modules = array(
+        'dispEditorAdminIndex' => 'Manejo del Editor',
+        'dispDocumentAdminList' => 'Manejo de Documentos',
+        'dispCommentAdminList' => 'Manejo de Commentarios',
+        'dispFileAdminList' => 'Manejo de archivos',
+        'dispPollAdminList' => 'Manejo de recomendaciones',
+        'dispSpamfilterAdminConfig' => 'Manejo Filtro de Spam',
+        'dispCounterAdminIndex' => 'Manejo de contador',
+
+    );
+
+    $lang->xe_license = 'ZeroBoard XE está bajo la Licencia de GPL';
+    $lang->about_shortcut = 'Puede Eliminar los accesos directos de módulos, los cuales fueron registrados en la lista de módulos usados frecuentemente';
+?>
