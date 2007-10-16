@@ -66,7 +66,6 @@
         'email_address' => '메일주소',
         'regdate' => '가입일시',
         'last_login' => '최근로그인일시',
-        'last_login' => '최근로그인일시',
         'extra_vars' => '확장변수',
     );
 

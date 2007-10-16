@@ -12,7 +12,7 @@
     $lang->cmd_delete_all_thumbnail = 'Delete all thumbnails';
     $lang->move_target_module = "Target module for changing position";
 
-	$lang->cmd_toggle_checked_document = '선택항목 반전';
+	$lang->cmd_toggle_checked_document = 'Reverse selected items';
     $lang->cmd_delete_checked_document = 'Delete selected';
 
     $lang->msg_cart_is_null = 'Select the articles you wish to delete';
