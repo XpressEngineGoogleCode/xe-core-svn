@@ -65,7 +65,7 @@
             <td>{htmlspecialchars($val->title)}</td>
             <td class="tahoma">{zdate($val->regdate,"Y-m-d")}</td>
             <td class="tahoma">{$val->ipaddress}</td>
-            <td class="blue"><a href="{getUrl('','document_srl',$val->document_srl)}#trackback_{$val->trackback_srl}')" onclick="window.open(this.href);return false;">{$lang->cmd_move}</a></td>
+            <td class="blue"><a href="{getUrl('','document_srl',$val->document_srl)}#trackback_{$val->trackback_srl}" onclick="window.open(this.href);return false;">{$lang->cmd_move}</a></td>
         </tr>
         <tr>
             <td colspan="6">
