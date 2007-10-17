@@ -25,7 +25,7 @@ a.button, span.button, del.button {
     vertical-align:middle;	
 
     padding-top:-2px;
-    position:relative;
+    _position:relative;
     _width:10px;	
     _overflow-y:hidden;
 }
