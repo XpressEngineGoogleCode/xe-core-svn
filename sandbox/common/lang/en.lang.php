@@ -37,6 +37,7 @@
     $lang->cmd_select = 'Select';
     $lang->cmd_select_all = 'Select All';
     $lang->cmd_unselect_all = 'Deselect All';
+    $lang->cmd_reverse_all = 'Reverse';
     $lang->cmd_close_all = 'Close All';
     $lang->cmd_open_all = 'Open All';
     $lang->cmd_reload = 'Reload';
