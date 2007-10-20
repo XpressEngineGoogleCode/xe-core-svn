@@ -7,7 +7,7 @@
     $lang->cmd_delete_checked_comment = 'Delete selected item';
 
     $lang->msg_cart_is_null = 'Please select an article to delete';
-    $lang->msg_checked_comment_is_deleted = '%d comments were deleted successfully';
+    $lang->msg_checked_comment_is_deleted = '%d comment(s) is(are) successfully deleted.';
 
     $lang->search_target_list = array(
         'content' => 'Content',
