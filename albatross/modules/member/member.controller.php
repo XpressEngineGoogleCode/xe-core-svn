@@ -790,6 +790,55 @@
             $this->setMessage('success_leaved');
         }
 
+        /**
+         * @brief 프로필 이미지 추가 
+         **/
+        function procMemberInsertProfileImage() {
+            // 정상적으로 업로드 된 파일인지 검사
+            $file = $_FILES['profile_image'];
+            if(!is_uploaded_file($file['tmp_name'])) return $this->stop('msg_not_uploaded_profile_image');
+
+            // 회원 정보를 검사해서 회원번호가 없거나 관리자가 아니고 회원번호가 틀리면 무시
+            $member_srl = Context::get('member_srl');
+            if(!$member_srl) return $this->stop('msg_not_uploaded_profile_image');
+
+            $logged_info = Context::get('logged_info');
+            if($logged_info->is_admin != 'Y' && $logged_info->member_srl != $member_srl) return $this->stop('msg_not_uploaded_profile_image');
+
+            // 회원 모듈 설정에서 이미지 이름 사용 금지를 하였을 경우 관리자가 아니면 return;
+            $oModuleModel = &getModel('module');
+            $config = $oModuleModel->getModuleConfig('member');
+            if($logged_info->is_admin != 'Y' && $config->profile_image != 'Y') return $this->stop('msg_not_uploaded_profile_image');
+
+            $this->insertProfileImage($member_srl, $file['tmp_name']);
+
+            // 페이지 리프레쉬
+            $this->setRefreshPage();
+        }
+
+        function insertProfileImage($member_srl, $target_file) {
+            $oModuleModel = &getModel('module');
+            $config = $oModuleModel->getModuleConfig('member');
+
+            // 정해진 사이즈를 구함
+            $max_width = $config->profile_image_max_width;
+            if(!$max_width) $max_width = "90";
+            $max_height = $config->profile_image_max_height;
+            if(!$max_height) $max_height = "20";
+
+            // 저장할 위치 구함
+            $target_path = sprintf('files/member_extra_info/profile_image/%s/', getNumberingPath($member_srl));
+            FileHandler::makeDir($target_path);
+
+            $target_filename = sprintf('%s%d.gif', $target_path, $member_srl);
+
+            // 파일 정보 구함
+            list($width, $height, $type, $attrs) = @getimagesize($target_file);
+
+            // 지정된 사이즈보다 크거나 gif가 아니면 변환
+            if($width > $max_width || $height > $max_height || $type!=1) FileHandler::createImageFile($target_file, $target_filename, $max_width, $max_height, 'gif');
+            else @copy($target_file, $target_filename);
+        }
 
         /**
          * @brief 이미지 이름을 추가 
@@ -839,6 +888,26 @@
             // 지정된 사이즈보다 크거나 gif가 아니면 변환
             if($width > $max_width || $height > $max_height || $type!=1) FileHandler::createImageFile($target_file, $target_filename, $max_width, $max_height, 'gif');
             else @copy($target_file, $target_filename);
+        }
+        
+        /**
+         * @brief 프로필 이미지를 삭제
+         **/
+        function procMemberDeleteProfileImage() {
+            $member_srl = Context::get('member_srl');
+            if(!$member_srl) return new Object(0,'success');
+
+            $oModuleModel = &getModel('module');
+            $config = $oModuleModel->getModuleConfig('member');
+            if($config->profile_image == 'N') return new Object(0,'success');
+
+            $logged_info = Context::get('logged_info');
+            if($logged_info->is_admin == 'Y' || $logged_info->member_srl == $member_srl) {
+                $oMemberModel = &getModel('member');
+                $profile_image = $oMemberModel->getProfileImage($member_srl);
+                @unlink($profile_image->file);
+            } 
+            return new Object(0,'success');
         }
 
         /**
@@ -1474,7 +1543,7 @@
         }
 
         /**
-         * @brief 최종 출력물에서 서명을 변경
+         * @brief 최종 출력물에서 서명을 변경, 프로필 이미지도 같이 적용함
          * member_extra_info 애드온에서 요청이 됨
          **/
         function transSignature($matches) {
@@ -1485,28 +1554,15 @@
             if(!isset($GLOBALS['_transSignatureList'][$member_srl])) {
                 $oMemberModel = &getModel('member');
 
+                // 서명을 구해옴
                 $signature = $oMemberModel->getSignature($member_srl);
 
-                // 서명이 없으면 빈 내용을 등록
-                if(!$signature) {
-                    $GLOBALS['_transSignatureList'][$member_srl] = null;
-					
-                // 서명이 있으면 글의 내용 다음에 추가
-                } else {
-					$oContext = &Context::getInstance();
-					
-					$signature = preg_replace_callback('!<div([^\>]*)editor_component=([^\>]*)>(.*?)\<\/div\>!is', array($oContext, '_transEditorComponent'), $signature);
-					$signature = preg_replace_callback('!<img([^\>]*)editor_component=([^\>]*?)\>!is', array($oContext, '_transEditorComponent'), $signature);
+                // 프로필 이미지를 구해옴
+                $profile_image = $oMemberModel->getProfileImage($member_srl);
+                if($profile_image->src) $signature = sprintf('<img src="%s" width="%d" height="%d" alt="" class="member_profile_image" />%s', $profile_image->src, $profile_image->width, $profile_image->height, $signature);
 
-					// <br> 코드 변환
-					$signature = preg_replace('/<br([^>\/]*)(\/>|>)/i','<br$1 />', $signature);
-		
-					// <img ...> 코드를 <img ... /> 코드로 변환
-					$signature = preg_replace('/<img(.*?)(\/){0,1}>/i','<img$1 />', $signature);
-				
-                    $document = $matches[0].'<div class="member_signature">'.$signature.'</div>';
-                    $GLOBALS['_transSignatureList'][$member_srl] = $document;
-                }
+                if($signature) $GLOBALS['_transSignatureList'][$member_srl] = sprintf('<div class="member_signature">%s<div class="clear"></div></div>', $signature);
+                else $GLOBALS['_transSignatureList'][$member_srl] = null;
             }
 
             return $GLOBALS['_transSignatureList'][$member_srl].$matches[0];

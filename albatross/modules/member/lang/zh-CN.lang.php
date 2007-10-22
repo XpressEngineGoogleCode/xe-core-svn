@@ -32,6 +32,9 @@
     $lang->group_title = '用户组标题';
     $lang->group_srl = '用户组编号';
     $lang->signature = '签名';
+    $lang->profile_image = '프로필 사진';
+    $lang->profile_image_max_width = '가로 제한 크기';
+    $lang->profile_image_max_height = '세로 제한 크기';
     $lang->image_name = '昵称图片';
     $lang->image_name_max_width = '宽度限制';
     $lang->image_name_max_height = '高度限制';
@@ -179,6 +182,7 @@
 
     $lang->about_image_name = '用户昵称可以用小图片来替代显示。';
     $lang->about_image_mark = '显示在用户昵称前的小图标。';
+    $lang->about_profile_image = '사용자의 프로필 이미지를 사용할 수 있게 합니다';
     $lang->about_accept_agreement = '已阅读全部条款并同意。'; 
 
     $lang->about_member_default = '将成为注册会员时的默认用户组。';

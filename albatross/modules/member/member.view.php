@@ -105,7 +105,7 @@
                 $option->allow_fileupload = false;
                 $option->enable_autosave = false;
                 $option->enable_default_component = true;
-                $option->enable_component = true;
+                $option->enable_component = false;
                 $option->resizable = false;
                 $option->height = 200;
                 $editor = $oEditorModel->getEditor($member_info->member_srl, $option);

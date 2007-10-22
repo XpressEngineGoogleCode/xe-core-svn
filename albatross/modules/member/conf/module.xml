@@ -44,8 +44,10 @@
         <action name="procMemberModifyPassword" type="controller" standalone="true" />
         <action name="procMemberLeave" type="controller" standalone="true" />
         <action name="procMemberOpenIDLeave" type="controller" standalone="true" />
+        <action name="procMemberInsertProfileImage" type="controller" standalone="true" />
         <action name="procMemberInsertImageName" type="controller" standalone="true" />
         <action name="procMemberInsertImageMark" type="controller" standalone="true" />
+        <action name="procMemberDeleteProfileImage" type="controller" standalone="true" />
         <action name="procMemberDeleteImageName" type="controller" standalone="true" />
         <action name="procMemberDeleteImageMark" type="controller" standalone="true" />
 

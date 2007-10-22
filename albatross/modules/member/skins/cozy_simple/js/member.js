@@ -54,7 +54,12 @@ function _doUploadImage(fo_obj, act) {
     fo_obj.submit();
 }
 
-/* 이미지 이름/마크 등록 */
+/* 프로필 이미지/ 이미지 이름/마크 등록 */
+function doUploadProfileImage() {
+    var fo_obj = xGetElementById("fo_insert_member");
+    if(!fo_obj.profile_image.value) return;
+    _doUploadImage(fo_obj, 'procMemberInsertProfileImage');
+}
 function doUploadImageName() {
     var fo_obj = xGetElementById("fo_insert_member");
     if(!fo_obj.image_name.value) return;
@@ -103,7 +108,13 @@ function completeOpenIDLogin(ret_obj, response_tags) {
 }
 
 
-/* 이미지 이름, 마크 삭제 */
+/* 프로필 이미지/이미지 이름, 마크 삭제 */
+function doDeleteProfileImage(member_srl) {
+        var fo_obj = xGetElementById("fo_insert_member");
+        fo_obj.member_srl.value = member_srl;
+        procFilter(fo_obj, delete_profile_image);
+}
+
 function doDeleteImageName(member_srl) {
         var fo_obj = xGetElementById("fo_insert_member");
         fo_obj.member_srl.value = member_srl;

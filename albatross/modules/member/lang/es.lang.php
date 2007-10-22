@@ -32,6 +32,9 @@
     $lang->group_title = 'Nombre del grupo';
     $lang->group_srl = 'Número del grupo';
     $lang->signature = 'Firma';
+    $lang->profile_image = '프로필 사진';
+    $lang->profile_image_max_width = '가로 제한 크기';
+    $lang->profile_image_max_height = '세로 제한 크기';
     $lang->image_name = 'Nombre de la imagen';
     $lang->image_name_max_width = 'Ancho Máximo';
     $lang->image_name_max_height = 'Altura Máxima';
@@ -179,6 +182,7 @@
 
     $lang->about_image_name = "Permitir a los usuarios el uso de imagen del nombre en ves del nombre del usuario";
     $lang->about_image_mark = "Permitir a los usuarios el uso de imagen de marca delante de sus nombres";
+    $lang->about_profile_image = '사용자의 프로필 이미지를 사용할 수 있게 합니다';
     $lang->about_accept_agreement = "Yo he leído todo el acuerdo y acepto"; 
 
     $lang->about_member_default = 'Al registrar se configura como grupo predefinido';
