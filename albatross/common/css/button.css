@@ -44,13 +44,14 @@ a.button span, span.button button, span.button input, del.button span {
     display:inline-block;
     line-height:1;
     letter-spacing:0 !important;
+    font-family:sans-serif !important;
     font-size:12px !important;
     font-style:normal;    
     background-color:transparent;
     background-position:100% -3px;
     background-repeat:no-repeat;
     height:24px;
-    padding:4px 11px 0 7px;
+    padding:6px 11px 0 7px;
     margin:0 -18px 0 6px;
     border:none;
     vertical-align:text-top;
