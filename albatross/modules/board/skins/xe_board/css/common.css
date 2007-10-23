@@ -183,21 +183,6 @@ Jeong, Chan Myeong 070601~070630
 .boardRead .replyAndTrackback a#toggleTrackback { background:url(../images/common/buttonToggleReply.gif) no-repeat right -13px;}
 .boardRead .replyAndTrackback .listButton { position:relative; right: 10px; top:-7px; _top:-6px; float:right;}
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 /* extraVars list */
 .extraVarsList { width:100%; border:1px solid #e0e1db; clear:both; margin-bottom:1em; margin-top:1em;}
 .extraVarsList tr.notice { background:#f8f8f8;}
@@ -206,8 +191,6 @@ Jeong, Chan Myeong 070601~070630
 .extraVarsList tr.bg2 { background:#fbfbfb;}
 .extraVarsList th { color:#3e3f3e; font-weight:bold; padding:.8em .5em .5em .5em; border-bottom:1px solid #eff0ed; border-right:1px solid #eff0ed;}
 .extraVarsList td { border-bottom:1px solid #eff0ed; padding:.5em .5em .5em 1em;}
-
-
 
 #trackbacks { padding:.6em .6em; color:#666666; border:1px solid #e0e1db;;margin-top:.5em;}
 #trackbacks li { padding:.6em .8em .6em .6em; line-height:1.25em; border-bottom:1px dotted #EEEEEE; list-style:none;}
