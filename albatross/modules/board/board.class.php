@@ -14,7 +14,6 @@
         var $page_count = 10; ///< 페이지의 수
         var $category_list = NULL; ///< 카테고리 목록
 
-        var $editor = 'default'; ///< 에디터 종류
 
         /**
          * @brief 설치시 추가 작업이 필요할시 구현
