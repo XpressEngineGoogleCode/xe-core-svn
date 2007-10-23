@@ -69,8 +69,11 @@
             else $editor_height = $option->height;
 
             // 스킨 설정
-            if(!$option->skin) $skin = 'default';
-            else $skin = $option->skin;
+            if(!$option->skin) {
+                $module_srl = Context::get('module_srl');
+                $skin = $this->getEditorConfig($module_srl);
+                
+            } else $skin = $option->skin;
 
             /**
              * 자동백업 기능 체크 (글 수정일 경우는 사용하지 않음)
