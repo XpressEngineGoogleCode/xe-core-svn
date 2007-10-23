@@ -22,7 +22,21 @@
          **/
 
         /**
-         * 에디터 template을 return
+         * @brief 모듈별 에디터 설정을 return
+         **/
+        function getEditorConfig($module_srl) {
+            // 선택된 모듈의 trackback설정을 가져옴
+            $oModuleModel = &getModel('module');
+            $config = $oModuleModel->getModuleConfig('editor');
+
+            $editor_skin = $config->module_config[$module_serl];
+            if(!$editor_skin) $editor_skin = "default";
+
+            return $editor_skin;
+        }
+
+        /**
+         * @brief 에디터 template을 return
          * upload_target_srl은 글의 수정시 호출하면 됨.
          * 이 upload_target_srl은 첨부파일의 유무를 체크하기 위한 루틴을 구현하는데 사용됨.
          **/
