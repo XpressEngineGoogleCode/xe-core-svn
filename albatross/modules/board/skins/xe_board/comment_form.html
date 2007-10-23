@@ -7,8 +7,8 @@
 
 <!-- 만약 댓글의 답을 다는 것이라면 원문 보여줌 -->
 <!--@if($source_comment)-->
-<ul id="reply">
-    <li>
+<div class="replyBox">
+    <div class="replyItem">
         <div class="member_{$source_comment->member_srl} author">{htmlspecialchars($source_comment->nick_name)}</div>
         <div class="date">
             {zdate($source_comment->regdate, "Y.m.d H:i")}
@@ -20,8 +20,8 @@
         <div class="replyContent">
         {$source_comment->content}
         </div>
-    </li>
-</ul>
+    </div>
+</div>
 <!--@end-->
 
 <!-- 글쓰기 폼 -->

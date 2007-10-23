@@ -26,4 +26,4 @@
 /* replyAndTrackback */
 .replyAndTrackback { background:url(../images/purple/bgBoardListTh.gif) repeat-x left 0px; }
 .replyAndTrackback a strong { color:#b1ae00;}
-#reply li .fileAttached li { border:0px; display:inline; margin-right:.75em; line-height:1.5em; padding:.1em 0 .1em 1.5em; background:url(../images/purple/iconFile.gif) no-repeat left;}
+.replyBox .fileAttached li { border:0px; display:inline; margin-right:.75em; line-height:1.5em; padding:.1em 0 .1em 1.5em; background:url(../images/purple/iconFile.gif) no-repeat left;}
