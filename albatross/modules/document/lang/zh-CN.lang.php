@@ -11,6 +11,8 @@
     $lang->thumbnail_ratio = '比例';
     $lang->cmd_delete_all_thumbnail = '删除全部缩略图';
     $lang->move_target_module = "移动目标模块";
+    $lang->title_bold = '제목 굵게';
+    $lang->title_color = '제목 색깔';
 
     $lang->cmd_toggle_checked_document = '反选';
     $lang->cmd_delete_checked_document = '删除所选';

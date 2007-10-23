@@ -25,6 +25,12 @@
             $obj->module_srl = $this->module_srl;
             if($obj->is_notice!='Y'||!$this->grant->manager) $obj->is_notice = 'N';
 
+            // 관리자가 아니라면 게시글 색상/굵기 제거
+            if(!$this->grant->manager) {
+                unset($obj->title_color);
+                unset($obj->title_bold);
+            }
+
             // document module의 model 객체 생성
             $oDocumentModel = &getModel('document');
 

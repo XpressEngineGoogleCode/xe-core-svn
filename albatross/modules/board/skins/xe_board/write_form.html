@@ -42,6 +42,17 @@
             <dl class="option">
                 <dt>{$lang->cmd_option}</dt>
                 <!--@if($grant->manager)-->
+                {@ $_color = array('555555','222288','226622','2266EE','8866CC','88AA66','EE2222','EE6622','EEAA22','EEEE22') }
+                <dd><select name="title_color" id="title_color" <!--@if($oDocument->get('title_color'))-->style="background-color:#{$oDocument->get('title_color')};"<!--@end--> onchange="this.style.backgroundColor=this.options[this.selectedIndex].style.backgroundColor;">
+                        <option value="" style="background-color:none;">{$lang->title_color}</option>
+                        <!--@foreach($_color as $_col)-->
+                        <option value="{$_col}" style="background-color:#{$_col}" <!--@if($oDocument->get('title_color')==$_col)-->selected="selected"<!--@end-->>{$lang->title_color}</option>
+                        <!--@end-->
+                    </select></dd>
+                <dd>
+                    <input type="checkbox" name="title_bold" id="title_bold" value="Y" <!--@if($oDocument->get('title_bold')=='Y')-->checked="checked"<!--@end--> />
+                    <label for="title_bold">{$lang->title_bold}</label>
+                </dd>
                 <dd>
                     <input type="checkbox" name="is_notice" value="Y" <!--@if($oDocument->isNotice())-->checked="checked"<!--@end--> id="is_notice" />
                     <label for="is_notice">{$lang->notice}</label>

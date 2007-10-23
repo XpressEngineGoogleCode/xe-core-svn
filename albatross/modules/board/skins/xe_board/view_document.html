@@ -12,7 +12,7 @@
         <div class="readHeader">
             <div class="titleAndCategory">
 
-                <h4>{$oDocument->getTitleText()}</h4>
+                <h4>{$oDocument->getTitle()}</h4>
 
                 <!--@if($module_info->use_category == "Y" && $oDocument->get('category_srl'))-->
                 <span class="vr">|</span><span class="category">{$category_list[$oDocument->get('category_srl')]->title}</span>

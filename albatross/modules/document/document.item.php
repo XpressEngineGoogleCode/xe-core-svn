@@ -171,15 +171,23 @@
         }
         
         function getTitleText($cut_size = 0, $tail='...') {
-            return htmlspecialchars($this->getTitle($cut_size, $tail));
+            if($this->isSecret() && !$this->isGranted()) return Context::getLang('msg_is_secret');
+
+            if($cut_size) $title = cut_str($this->get('title'), $cut_size, $tail);
+            else $title = $this->get('title');
+
+            return $title;
         }
 
         function getTitle($cut_size = 0, $tail='...') {
-            if($this->isSecret() && !$this->isGranted()) return Context::getLang('msg_is_secret');
+            $title = $this->getTitleText($cut_size, $tail);
 
-            if($cut_size) return cut_str($this->get('title'), $cut_size, $tail);
+            $attrs = array();
+            if($this->get('title_bold')=='Y') $attrs[] = "font-weight:bold;";
+            if($this->get('title_color')) $attrs[] = "color:#".$this->get('title_color');
 
-            return $this->get('title');
+            if(count($attrs)) return sprintf("<span style=\"%s\">%s</span>", implode(';',$attrs), htmlspecialchars($title));
+            else return htmlspecialchars($title);
         }
 
         function getContentText($strlen = 0) {

@@ -11,6 +11,8 @@
     $lang->thumbnail_ratio = 'Ratio';
     $lang->cmd_delete_all_thumbnail = 'Delete all thumbnails';
     $lang->move_target_module = "Target module for changing position";
+    $lang->title_bold = '제목 굵게';
+    $lang->title_color = '제목 색깔';
 
 	$lang->cmd_toggle_checked_document = 'Reverse selected items';
     $lang->cmd_delete_checked_document = 'Delete selected';

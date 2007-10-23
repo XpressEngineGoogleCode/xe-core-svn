@@ -64,7 +64,9 @@
     <div class="boardInformation">
 
         <!-- 게시물 수 -->
+        <!--@if($total_count)-->
         <div class="articleNum">{$lang->document_count} <strong>{number_format($total_count)}</strong></div>
+        <!--@end-->
 
         <!-- 로그인 정보 -->
         <ul class="accountNavigation">
