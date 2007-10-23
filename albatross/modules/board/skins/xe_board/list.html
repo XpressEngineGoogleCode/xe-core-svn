@@ -23,7 +23,7 @@
         <!--@if($grant->is_admin)-->
             <a href="{getUrl('','module','document','act','dispDocumentAdminManageDocument')}" onclick="popopen(this.href,'manageDocument'); return false;" class="button"><span>{$lang->cmd_manage_document}</span></a>
         <!--@end-->
-        <a href="{getUrl('','mid',$mid,'page',$page,'document_srl','')}" class="button"><span>{$lang->cmd_list}</span></a>
+        <a href="{getUrl('','mid',$mid,'page',$page,'document_srl','','listStyle',$listStyle)}" class="button"><span>{$lang->cmd_list}</span></a>
     </div>
 
     <div class="rightButtonBox">
@@ -59,7 +59,7 @@
                 <option value="{$key}" <!--@if($search_target==$key)-->selected="selected"<!--@end-->>{$val}</option>
                 <!--@end-->
             </select>
-            <input type="text" name="search_keyword" value="{htmlspecialchars($search_keyword)}" class="inputTypeText"/><a href="#" onclick="xGetElementById('fo_search').submit();return false;" class="button"><span>{$lang->cmd_search}</span></a><a href="{getUrl('','mid',$mid)}" class="button"><span>{$lang->cmd_cancel}</span></a>
+            <input type="text" name="search_keyword" value="{htmlspecialchars($search_keyword)}" class="inputTypeText"/><a href="#" onclick="xGetElementById('fo_search').submit();return false;" class="button"><span>{$lang->cmd_search}</span></a><a href="{getUrl('','mid',$mid,'listStyle',$listStyle)}" class="button"><span>{$lang->cmd_cancel}</span></a>
 
         </form>
     </div>
