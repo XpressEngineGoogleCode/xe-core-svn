@@ -197,7 +197,6 @@
 
             $oDocumentModel = &getModel('document');
             $oDocumentController = &getController('document');
-            $oFileController = &getController('file');
 
             $oDB = &DB::getInstance();
             $oDB->begin();
@@ -223,6 +222,7 @@
                         $file_info = array();
                         $file_info['tmp_name'] = $val->uploaded_filename;
                         $file_info['name'] = $val->source_filename;
+                        $oFileController = &getController('file');
                         $oFileController->insertFile($file_info, $module_srl, $obj->document_srl, 0, true);
                     }
                 }
