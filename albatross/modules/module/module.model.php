@@ -244,10 +244,13 @@
                 if(!is_array($extra_vars)) $extra_vars = array($extra_vars);
 
                 foreach($extra_vars as $var) {
+                    unset($obj);
+
                     $name = $var->attrs->name;
                     $type = $var->attrs->type;
                     $title = $var->title->body;
                     $description = $var->description->body;
+
                     if($var->default) {
                         unset($default);
                         if(is_array($var->default)) {

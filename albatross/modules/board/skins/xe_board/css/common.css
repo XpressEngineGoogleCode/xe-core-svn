@@ -27,8 +27,8 @@ Jeong, Chan Myeong 070601~070630
 .accountNavigation li.setup a { background:url(../images/common/iconSetup.gif) no-repeat left top; padding-left:14px; }
 .accountNavigation li.admin a { background:url(../images/common/iconAdmin.gif) no-repeat left top; padding-left:12px; }
 .accountNavigation li.listType { margin-left:5px; }
-.accountNavigation li.loginAndLogout { background:url(../images/common/line_1x10_e0e0e0.gif) no-repeat left 5px; padding-left:8px; _padding-top:4px;}
-*:first-child+html li.loginAndLogout { padding-top:4px; }
+.accountNavigation li.loginAndLogout { background:url(../images/common/line_1x10_e0e0e0.gif) no-repeat left 5px; padding-left:8px; _padding-top:5px;}
+*:first-child+html li.loginAndLogout { padding-top:5px; }
 
 /* gallery sub menu */
 .boardSubMenu { margin:0 0 .5em 0; padding:1em 0 .5em .5em; border-bottom:1px solid #e0e1db;}

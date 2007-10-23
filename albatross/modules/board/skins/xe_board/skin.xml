@@ -65,7 +65,6 @@
     <extra_vars>
         <var name="default_style" type="select">
             <title xml:lang="ko">기본 형태</title>
-            <type>select</type>
             <description xml:lang="ko">목록형, 웹진형, 갤러리형의 기본 스타일을 지정할 수 있습니다.</description>
             <default>list</default>
             <default>webzine</default>
@@ -76,7 +75,6 @@
             <title xml:lang="jp">ソート対象</title>
             <title xml:lang="zh-CN">排序对象</title>
             <title xml:lang="en">Align Target</title>
-            <type>select</type>
             <description xml:lang="ko">등록된 순서 또는 변경된 순서로 정렬을 할 수 있습니다.</description>
             <description xml:lang="jp">登録された順、変更された順でソートできます。</description>
             <description xml:lang="zh-CN">可对主题按发表顺或最后更新顺进行排序。</description>
