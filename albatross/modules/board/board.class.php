@@ -31,6 +31,9 @@
             $oModuleController->insertActionForward('board', 'view', 'dispBoardAdminBoardAdditionSetup');
             $oModuleController->insertActionForward('board', 'controller', 'procBoardAdminUpdateSkinInfo');
 
+            // 2007. 10. 17 아이디 클릭시 나타나는 팝업메뉴에 작성글 보기 기능 추가
+            $oModuleController->insertTrigger('member.getMemberMenu', 'board', 'controller', 'triggerMemberMenu', 'after');
+
             // 기본 게시판 생성
             $output = executeQuery('module.getDefaultMidInfo');
             if($output->data) return new Object();
@@ -55,9 +58,6 @@
                 $oBoardController = &getAdminController('board');
                 $oBoardController->procBoardAdminInsertBoard($args);
             }
-
-            // 2007. 10. 17 아이디 클릭시 나타나는 팝업메뉴에 작성글 보기 기능 추가
-            $oModuleController->insertTrigger('member.getMemberMenu', 'board', 'controller', 'triggerMemberMenu', 'after');
 
             return new Object();
         }
