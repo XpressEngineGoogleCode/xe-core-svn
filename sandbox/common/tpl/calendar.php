@@ -163,11 +163,11 @@ $before_month_month_day = convertDatetoDay( $month == 1 ? $year - 1 : $year, $mo
             <div class="calendar">
                 <div class="yymm">
                     <div class="yy">
-                        <a href="./calendar.php?fo_id=<?php echo $fo_id?>&amp;year=<?php echo $year?>&amp;month=<?php echo $month?>&amp;method=prev_year&amp;callback_func=<?php echo $callback_func?>" class="left"><img src="./images/buttonLeft2.gif" alt="<?php echo $year - 1?>" width="11" height="11" /></a><?php echo $year?><a href="./calendar.php?fo_id=<?php echo $fo_id?>&amp;year=<?php echo $year?>&amp;month=<?php echo $month?>&amp;method=next_year&amp;callback_func=<?php echo $callback_func?>" class="right"><img src="./images/buttonRight2.gif" alt="<?php echo $year + 1?>" width="11" height="11" /></a>
+                        <a href="./calendar.php?fo_id=<?php echo $fo_id?>&year=<?php echo $year?>&month=<?php echo $month?>&method=prev_year&callback_func=<?php echo $callback_func?>" class="left"><img src="./images/buttonLeft2.gif" alt="<?php echo $year - 1?>" width="11" height="11" /></a><?php echo $year?><a href="./calendar.php?fo_id=<?php echo $fo_id?>&year=<?php echo $year?>&month=<?php echo $month?>&method=next_year&callback_func=<?php echo $callback_func?>" class="right"><img src="./images/buttonRight2.gif" alt="<?php echo $year + 1?>" width="11" height="11" /></a>
                     </div>
                     <div class="mm">
                         <p><?php echo $monthLongName[$month]?></p>
-                            <a href="./calendar.php?fo_id=<?php echo $fo_id?>&amp;year=<?php echo $year?>&amp;month=<?php echo $month?>&amp;method=prev_month&amp;callback_func=<?php echo $callback_func?>" class="left"><img src="./images/buttonLeft2.gif" alt="prev" width="11" height="11" /></a><span><?php echo $month?></span><a href="./calendar.php?fo_id=<?php echo $fo_id?>&amp;year=<?php echo $year?>&amp;month=<?php echo $month?>&amp;method=next_month&amp;callback_func=<?php echo $callback_func?>" class="right"><img src="./images/buttonRight2.gif" alt="next" width="11" height="11" /></a>
+                            <a href="./calendar.php?fo_id=<?php echo $fo_id?>&year=<?php echo $year?>&month=<?php echo $month?>&method=prev_month&callback_func=<?php echo $callback_func?>" class="left"><img src="./images/buttonLeft2.gif" alt="prev" width="11" height="11" /></a><span><?php echo $month?></span><a href="./calendar.php?fo_id=<?php echo $fo_id?>&year=<?php echo $year?>&month=<?php echo $month?>&method=next_month&callback_func=<?php echo $callback_func?>" class="right"><img src="./images/buttonRight2.gif" alt="next" width="11" height="11" /></a>
 
                     </div>
 
@@ -184,7 +184,7 @@ $before_month_month_day = convertDatetoDay( $month == 1 ? $year - 1 : $year, $mo
                         </select>
                     </div>
                     <br /><br />
-                    <center><a href="./calendar.php" class="button"><span>Go Today</span></a></center>
+                    <center><a href="./calendar.php?fo_id=<?php echo $fo_id?>&callback_func=<?php echo $callback_func?>" class="button"><span>Go Today</span></a></center>
                 </div>
 
                 <table cellspacing="0" class="dd">
