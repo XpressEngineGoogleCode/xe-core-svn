@@ -110,9 +110,6 @@
 
             // 현재 모듈의 정보를 세팅
             Context::set('current_module_info', $module_info);
-
-            // 설치가 안되어 있다면 trigger call을 하지 않고 바로 return
-            if(!Context::isInstalled()) return;
                 
             // 실제 동작을 하기 전에 trigger 호출
             $output = ModuleHandler::triggerCall('display', 'before', $content);
@@ -351,6 +348,9 @@
          * @brief trigger_name, called_position을 주고 trigger 호출
          **/
         function triggerCall($trigger_name, $called_position, &$obj) {
+            // 설치가 안되어 있다면 trigger call을 하지 않고 바로 return
+            if(!Context::isInstalled()) return new Object();
+
             $oModuleModel = &getModel('module');
 
             $cache_dir = sprintf("./files/cache/triggers/");

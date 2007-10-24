@@ -23,7 +23,7 @@
      * 2 : 1 + DB 쿼리
      * 3 : 모든 로그
      **/
-    define('__DEBUG__', 1);
+    define('__DEBUG__', 0);
 
     /**
      * @brief 디버그 메세지의 출력 장소 
@@ -37,7 +37,7 @@
      * 0 : 출력하지 않음
      * 1 : files/_debug_db_query.php 에 연결하여 출력
      **/
-    define('__DEBUG_DB_OUTPUT__', 1);
+    define('__DEBUG_DB_OUTPUT__', 0);
 
     /**
      * @brief DB 쿼리중 정해진 시간을 넘기는 쿼리의 로그 남김
@@ -45,7 +45,7 @@
      * 0 이상 : 단위를 초로 하여 지정된 초 이상의 실행시간이 걸린 쿼리를 로그로 남김
      * 로그파일은 ./files/_db_slow_query.php 파일로 저장됨
      **/
-    define('__LOG_SLOW_QUERY__', 4);
+    define('__LOG_SLOW_QUERY__', 0);
 
     /**
      * @brief ob_gzhandler를 이용한 압축 기능을 강제로 사용하거나 끄는 옵션
