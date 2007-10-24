@@ -256,19 +256,22 @@
 
             // 해당 댓글를 찾아본다
             $oCommentModel = &getModel('comment');
-            $source_comment = $oCommentModel->getComment($parent_srl, $this->grant->manager);
+            $oSourceComment = $oCommentModel->getComment($parent_srl, $this->grant->manager);
 
             // 댓글이 없다면 오류
-            if(!$source_comment) return $this->dispBlogMessage('msg_invalid_request');
+            if(!$oSourceComment->isExists()) return $this->dispBoardMessage('msg_invalid_request');
+
+            // 대상 댓글을 생성
+            $oComment = $oCommentModel->getComment();
+            $oComment->add('parent_srl', $parent_srl);
+            $oComment->add('document_srl', $oSourceComment->get('document_srl'));
 
             // 필요한 정보들 세팅
-            Context::set('document_srl',$source_comment->document_srl);
-            Context::set('parent_srl',$parent_srl);
-            Context::set('comment_srl',NULL);
-            Context::set('source_comment',$source_comment);
+            Context::set('oSourceComment',$oSourceComment);
+            Context::set('oComment',$oComment);
 
             // 댓글 에디터 세팅 
-            Context::set('editor', $this->getCommentEditor($document_srl, 0, 400));
+            $this->setCommentEditor(0, 400);
 
             $this->setTemplateFile('comment_form');
         }
@@ -289,22 +292,20 @@
 
             // 해당 댓글를 찾아본다
             $oCommentModel = &getModel('comment');
-            $comment = $oCommentModel->getComment($comment_srl, $this->grant->manager);
+            $oComment = $oCommentModel->getComment($comment_srl, $this->grant->manager);
 
             // 댓글이 없다면 오류
-            if(!$comment) return $this->dispBlogMessage('msg_invalid_request');
-
-            Context::set('document_srl',$comment->document_srl);
+            if(!$oComment->isExists()) return $this->dispBoardMessage('msg_invalid_request');
 
             // 글을 수정하려고 할 경우 권한이 없는 경우 비밀번호 입력화면으로
-            if($comment_srl&&$comment&&!$comment->is_granted) return $this->setTemplateFile('input_password_form');
+            if(!$oComment->isGranted()) return $this->setTemplateFile('input_password_form');
 
             // 필요한 정보들 세팅
-            Context::set('comment_srl',$comment_srl);
-            Context::set('comment', $comment);
+            Context::set('oSourceComment', $oCommentModel->getComment());
+            Context::set('oComment', $oComment);
 
             // 댓글 에디터 세팅 
-            Context::set('editor', $this->getCommentEditor($document_srl, $comment_srl, 400));
+            $this->setCommentEditor($comment_srl, 301);
 
             $this->setTemplateFile('comment_form');
         }
@@ -319,10 +320,10 @@
             // 삭제할 댓글번호를 가져온다
             $comment_srl = Context::get('comment_srl');
 
-            // 삭제하려는 댓글가 있는지 확인
+            // 삭제하려는 댓글이 있는지 확인
             if($comment_srl) {
                 $oCommentModel = &getModel('comment');
-                $comment = $oCommentModel->getComment($comment_srl, $this->grant->manager);
+                $oComment = $oCommentModel->getComment($comment_srl, $this->grant->manager);
             }
 
             // 삭제하려는 글이 없으면 에러

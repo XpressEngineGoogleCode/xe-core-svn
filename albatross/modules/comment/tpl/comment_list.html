@@ -1,7 +1,5 @@
 <!--%import("filter/delete_checked.xml")-->
-<!--%import("js/comment_admin.js")-->
-
-<h3>{$lang->comment} <span class="gray">{$lang->cmd_management}</span></h3>
+<!--#include("./header.html")-->
 
 <!-- 정보 -->
 <div class="tableSummaryType1">
@@ -36,9 +34,7 @@
     <tbody>
         <!--@foreach($comment_list as $no => $val)-->
         <tr>
-            <td rowspan="2" class="tahoma">
-                {$no}
-            </td>
+            <td rowspan="2" class="tahoma">{$no}</td>
             <td class="blue"><a href="./?mid={$module_list[$val->module_srl]->mid}" onclick="window.open(this.href);return false">{htmlspecialchars($module_list[$val->module_srl]->browser_title)}</a></td>
             <td><div class="member_{$val->member_srl}">{htmlspecialchars($val->nick_name)}</div></td>
             <td class="tahoma">{zdate($val->regdate,"Y-m-d")}</td>

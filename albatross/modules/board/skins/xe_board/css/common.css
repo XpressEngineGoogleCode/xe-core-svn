@@ -126,8 +126,8 @@ Jeong, Chan Myeong 070601~070630
 
 /* Search Form */
 .boardSearch { margin-left:auto; margin-right:auto; clear:both; text-align:center;}
-.boardSearch select { height:20px; vertical-align:middle; }
-.boardSearch input { height:18px; vertical-align:middle; }
+.boardSearch select { height:20px; }
+.boardSearch input { height:18px; }
 
 /* boardRead */
 .boardRead { padding:0; margin:0; border:1px solid #e0e1db; border-bottom:2px solid #666760; }
@@ -206,6 +206,7 @@ Jeong, Chan Myeong 070601~070630
 .replyBox p { display:inline; margin-bottom:1em;}
 .replyBox .author { float:left; padding:0 .3em 0 0; font-size:.9em; color:#3074a5; margin:0 .3em .5em 0;}
 .replyBox .author a { color:#3074a5; margin-right:.3em; text-decoration:none; }
+.replyBox .voted { float:left; font-size:.9em; color:#AAAAAA; margin:0 .3em .5em 1em;}
 .replyBox .date { float:right; font:.8em Tahoma; color:#cccccc; margin:.3em 0 .5em 0;}
 
 .replyBox .replyOption { float:right; white-space:nowrap; margin-left:.2em;}
@@ -222,6 +223,8 @@ Jeong, Chan Myeong 070601~070630
 .replyBox .fileAttached ul { float:left; padding:.3em 1em .2em 0; margin-left:.5em; _margin-left:.25em;}
 .replyBox .fileAttached li a { font-size:.9em; white-space:nowrap; position:relative; color:#444444; }
 .replyBox .fileAttached li a:visited { color:#777777;}
+
+.commentButton { margin-top:.5em; }
 
 /* boardEditor */
 .boardEditor { padding:.5em 0 1em 0; width:100%; overflow:hidden;}
@@ -276,5 +279,5 @@ Jeong, Chan Myeong 070601~070630
 
 
 /* 게시물의 팝업 메뉴 */
-.document_popup_menu { text-align:right; margin-top:2em; clear:both; display:block;  background:url(../images/common/document_menu.gif) no-repeat right top; padding-right:16px;  height:18px; }
-.document_popup_menu span { cursor:pointer; display:inline; background:none; padding:0 0 0 0; margin:0 0 0 0; }
+.comment_popup_menu, .document_popup_menu { text-align:right; margin-top:3em; clear:both; display:block;  background:url(../images/common/document_menu.gif) no-repeat right top; padding-right:16px;  height:18px; }
+.comment_popup_menu span, .document_popup_menu span { cursor:pointer; display:inline; background:none; padding:0 0 0 0; margin:0 0 0 0; }

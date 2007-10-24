@@ -310,7 +310,8 @@
             if(!$this->isGranted() && $this->isSecret()) return;
 
             $oCommentModel = &getModel('comment');
-            return $oCommentModel->getCommentList($this->document_srl, $is_admin);
+            $output = $oCommentModel->getCommentList($this->document_srl, $is_admin);
+            return $output;
         }
 
         function getTrackbackCount() {

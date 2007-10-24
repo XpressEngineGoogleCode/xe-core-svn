@@ -23,7 +23,7 @@
         /**
          * @brief 문서 가져오기
          **/
-        function getDocument($document_srl, $is_admin = false) {
+        function getDocument($document_srl=0, $is_admin = false) {
             $oDocument = new documentItem($document_srl);
             if($is_admin) $oDocument->setGrant();
 

@@ -23,8 +23,13 @@ a.button, span.button, del.button{
 	
     padding-top:-2px;
 	_position:relative;
+    _top:-4px;
 	_width:10px;	
 	_overflow-y:hidden;
+}
+*:first-child+html a.button, *:first-child+html span.button,*:first-child+html del.button {
+	position:relative;
+    top:-4px;
 }
 
 

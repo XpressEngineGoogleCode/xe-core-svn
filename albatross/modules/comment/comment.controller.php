@@ -14,6 +14,48 @@
         }
 
         /**
+         * @breif 댓글의 추천을 처리하는 action (Up)
+         **/
+        function procCommentVoteUp() {
+            $comment_srl = Context::get('target_srl');
+            if(!$comment_srl) return new Object(-1, 'msg_invalid_request');
+
+            $point = 1;
+            return $this->updateVotedCount($comment_srl, $point);
+        }
+
+        /**
+         * @breif 댓글의 추천을 처리하는 action (Down)
+         **/
+        function procCommentVoteDown() {
+            $comment_srl = Context::get('target_srl');
+            if(!$comment_srl) return new Object(-1, 'msg_invalid_request');
+
+            $point = -1;
+            return $this->updateVotedCount($comment_srl, $point);
+        }
+
+        /**
+         * @brief 댓글이 신고될 경우 호출되는 action
+         **/
+        function procCommentDeclare() {
+            $comment_srl = Context::get('target_srl');
+            if(!$comment_srl) return new Object(-1, 'msg_invalid_request');
+
+            // 이미 신고되었는지 검사
+            $args->comment_srl = $comment_srl;
+            $output = executeQuery('comment.getDeclaredComment', $args);
+            if(!$output->toBool()) return $output;
+
+            // 신고글 추가
+            if($output->data->declared_count > 0) $output = executeQuery('comment.updateDeclaredComment', $args);
+            else $output = executeQuery('comment.insertDeclaredComment', $args);
+            if(!$output->toBool()) return $output;
+
+            $this->setMessage('success_declared');
+        }
+
+        /**
          * @brief document삭제시 해당 document의 댓글을 삭제하는 trigger
          **/
         function triggerDeleteDocumentComments(&$obj) {
@@ -129,8 +171,17 @@
             // commit
             $oDB->commit();
 
-            // 원본글에 알림(notify_message)가 설정되어 있으면 메세지 보냄
-            if(!$manual_inserted) $oDocument->notify(Context::getLang('comment'), $obj->content);
+            if(!$manual_inserted) {
+                // 원본글에 알림(notify_message)가 설정되어 있으면 메세지 보냄
+                $oDocument->notify(Context::getLang('comment'), $obj->content);
+
+                // 원본 댓글이 있고 원본 댓글에 알림(notify_message)가 있으면 메세지 보냄
+                if($obj->parent_srl) {
+                    $oParent = $oCommentModel->getComment($obj->parent_srl);
+                    $oParent->notify(Context::getLang('comment'), $obj->content);
+                }
+            }
+
 
             $output->add('comment_srl', $obj->comment_srl);
             return $output;
@@ -149,6 +200,13 @@
 
             // 원본 데이터를 가져옴
             $source_obj = $oCommentModel->getComment($obj->comment_srl);
+            if(!$source_obj->getMemberSrl()) {
+                $obj->member_srl = $source_obj->get('member_srl');
+                $obj->user_name = $source_obj->get('user_name');
+                $obj->nick_name = $source_obj->get('nick_name');
+                $obj->email_address = $source_obj->get('email_address');
+                $obj->homepage = $source_obj->get('homepage');
+            }
 
             // 권한이 있는지 확인
             if(!$is_admin && !$source_obj->is_granted) return new Object(-1, 'msg_not_permitted');
@@ -169,12 +227,12 @@
             }
 
             // 로그인한 유저가 작성한 글인데 nick_name이 없을 경우
-            if($source_obj->member_srl && !$obj->nick_name) {
-                $obj->member_srl = $source_obj->member_srl;
-                $obj->user_name = $source_obj->user_name;
-                $obj->nick_name = $source_obj->nick_name;
-                $obj->email_address = $source_obj->email_address;
-                $obj->homepage = $source_obj->homepage;
+            if($source_obj->get('member_srl')&& !$obj->nick_name) {
+                $obj->member_srl = $source_obj->get('member_srl');
+                $obj->user_name = $source_obj->get('user_name');
+                $obj->nick_name = $source_obj->get('nick_name');
+                $obj->email_address = $source_obj->get('email_address');
+                $obj->homepage = $source_obj->get('homepage');
             }
 
             // 내용에서 제로보드XE만의 태그를 삭제
@@ -286,6 +344,65 @@
             $args->document_srl = $document_srl;
             $output = executeQuery('comment.deleteComments', $args);
             return $output;
+        }
+
+        /**
+         * @brief 해당 comment의 추천수 증가
+         **/
+        function updateVotedCount($comment_srl, $point = 1) {
+            // 세션 정보에 추천 정보가 있으면 중단
+            if($_SESSION['voted_comment'][$comment_srl]) return new Object(-1, 'failed_voted');
+
+            // 문서 원본을 가져옴
+            $oCommentModel = &getModel('comment');
+            $oComment = $oCommentModel->getComment($comment_srl, false, false);
+
+            // 글의 작성 ip와 현재 접속자의 ip가 동일하면 패스
+            if($oComment->get('ipaddress') == $_SERVER['REMOTE_ADDR']) {
+                $_SESSION['voted_comment'][$comment_srl] = true;
+                return new Object(-1, 'failed_voted');
+            }
+
+            // comment의 작성자가 회원일때 조사
+            if($oComment->get('member_srl')) {
+                // member model 객체 생성
+                $oMemberModel = &getModel('member');
+                $member_srl = $oMemberModel->getLoggedMemberSrl();
+
+                // 글쓴이와 현재 로그인 사용자의 정보가 일치하면 읽었다고 생각하고 세션 등록후 패스
+                if($member_srl && $member_srl == $oComment->get('member_srl')) {
+                    $_SESSION['voted_comment'][$comment_srl] = true;
+                    return new Object(-1, 'failed_voted');
+                }
+            }
+
+            // 로그인 사용자이면 member_srl, 비회원이면 ipaddress로 판단
+            if($member_srl) {
+                $args->member_srl = $member_srl;
+            } else {
+                $args->ipaddress = $_SERVER['REMOTE_ADDR'];
+            }
+            $args->comment_srl = $comment_srl;
+            $output = executeQuery('comment.getCommentVotedLogInfo', $args);
+
+            // 로그 정보에 추천 로그가 있으면 세션 등록후 패스
+            if($output->data->count) {
+                $_SESSION['voted_comment'][$comment_srl] = true;
+                return new Object(-1, 'failed_voted');
+            }
+
+            // 추천수 업데이트
+            $args->voted_count = $oComment->get('voted_count') + $point;
+            $output = executeQuery('comment.updateVotedCount', $args);
+
+            // 로그 남기기
+            $output = executeQuery('comment.insertCommentVotedLog', $args);
+
+            // 세션 정보에 남김
+            $_SESSION['voted_comment'][$comment_srl] = true;
+
+            // 결과 리턴
+            return new Object(0, 'success_voted');
         }
 
     }
