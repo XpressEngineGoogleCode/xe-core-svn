@@ -332,14 +332,21 @@
 
         function getThumbnail($width = 80, $height = 0, $thumbnail_type = '') {
             if(!$height) $height = $width;
+            
+            // 문서 모듈의 기본 설정에서 Thumbnail의 생성 방법을 구함
+            if(!in_array($thumbnail_type, array('crop','ratio'))) {
+                $oDocumentModel = &getModel('document');
+                $config = $oDocumentModel->getDocumentConfig();
+                $thumbnail_type = $config->thumbnail_type;
+            }
 
             // 문서의 이미지 첨부파일 위치를 구함
             $document_path = sprintf('./files/attach/images/%d/%d/',$this->get('module_srl'), $this->get('document_srl'));
             if(!is_dir($document_path)) FileHandler::makeDir($document_path);
 
             // 썸네일 임시 파일명을 구함
-            if($width != $height) $thumbnail_file = sprintf('%sthumbnail_%dx%d.jpg', $document_path, $width, $height);
-            else $thumbnail_file = sprintf('%sthumbnail_%d.jpg', $document_path, $width);
+            if($width != $height) $thumbnail_file = sprintf('%sthumbnail_%dx%d_%s.jpg', $document_path, $width, $height, $thumbnail_type);
+            else $thumbnail_file = sprintf('%sthumbnail_%d_%s.jpg', $document_path, $width, $thumbnail_type);
 
             // 썸네일이 있더라도 글의 수정시간과 비교해서 다르면 다시 생성함
             if(file_exists($thumbnail_file)) {
@@ -353,13 +360,6 @@
             // 썸네일 파일이 있으면 url return
             if(file_exists($thumbnail_file)) return Context::getRequestUri().$thumbnail_file;
 
-            // 문서 모듈의 기본 설정에서 Thumbnail의 생성 방법을 구함
-            if(!in_array($thumbnail_type, array('crop','ratio'))) {
-                $oDocumentModel = &getModel('document');
-                $config = $oDocumentModel->getDocumentConfig();
-                $thumbnail_type = $config->thumbnail_type;
-            }
-            
             // 생성 시작
             FileHandler::writeFile($thumbnail_file, '', 'w');
 
