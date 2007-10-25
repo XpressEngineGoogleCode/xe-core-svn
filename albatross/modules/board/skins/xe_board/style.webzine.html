@@ -49,7 +49,7 @@
 
         <tbody>
 
-        <!--@if(!$document_list)-->
+        <!--@if(!$document_list || !$notice_list)-->
             <!-- 게시물이 없으면 등록된 글이 없음을 표시 -->
             <tr class="bg0">
                 <td colspan="{$_col_count}" class="title">
@@ -57,11 +57,8 @@
                 </td>
             </tr>
         <!--@else-->
-            <!-- 게시물이 있으면 표시 -->
-
-            <!--@foreach($document_list as $no => $document)-->
-
-                <!--@if($document->isNotice())-->
+            <!-- 공지사항 출력 -->
+            <!--@foreach($notice_list as $no => $document)-->
                 <tr class="notice">
                     <!--@if($module_info->display_number!='N')--><td class="notice">{$lang->notice}</td><!--@end-->
                     <!--@if($grant->is_admin)--><td class="checkbox"><input type="checkbox" name="cart" value="{$document->document_srl}" onclick="doAddDocumentCart(this)" <!--@if($document->isCarted())-->checked="checked"<!--@end--> /></td><!--@end-->
@@ -88,9 +85,10 @@
                     <!--@if($module_info->display_regdate!='N')--><td class="date">{$document->getRegdate('Y-m-d')}</td><!--@end-->
                     <!--@if($module_info->display_last_update=='Y')--><td class="date">{zdate($document->get('last_update'),'Y-m-d H:i')}</td><!--@end-->
                 </tr>
+            <!--@end-->
 
-                <!--@else-->
-
+            <!-- 일반 글 출력 -->
+            <!--@foreach($document_list as $no => $document)-->
                 <tr class="bg{($no+1)%2+1}">
 
                     <!--@if($module_info->display_number!='N')--><td rowspan="2" class="num"><!--@if($document_srl == $document->document_srl)--><img src="./images/common/iconArrowD8.gif" border="0" alt="" /><!--@else-->{$no}<!--@end--></td><!--@end-->
@@ -127,7 +125,6 @@
                 <tr class="bg{($no+1)%2+1}">
                     <td colspan="{$_col_count-1}" class="summary"><a href="{getUrl('','document_srl',$document->document_srl)}">{$document->getSummary(120)}</a>&nbsp;</td>
                 </tr>
-                <!--@end-->
             <!--@end-->
         <!--@end-->
         </tbody>

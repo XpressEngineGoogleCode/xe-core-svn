@@ -47,7 +47,7 @@
                 $search_option[$this->search_option[$i]] = Context::getLang($this->search_option[$i]);
             }
 
-            // 확장변수에서도 검색이 설정되어 있는지 확인
+            // 모듈정보를 확인하여 확장변수에서도 검색이 설정되어 있는지 확인
             for($i=1;$i<=20;$i++) {
                 $ex_name = $this->module_info->extra_vars[$i]->name;
                 $ex_search = $this->module_info->extra_vars[$i]->search;
@@ -144,9 +144,12 @@
                 $args->page = $page;
             }
 
+            // 먼저 공지사항을 구해옴
+            $notice_output = $oDocumentModel->getNoticeList($args);
+            Context::set('notice_list', $notice_output->data);
 
-            // 목록 구함, document->getDocumentList 에서 걍 알아서 다 해버리는 구조이다... (아.. 이거 나쁜 버릇인데.. ㅡ.ㅜ 어쩔수 없다)
-            $output = $oDocumentModel->getDocumentList($args);
+            // 목록 구함
+            $output = $oDocumentModel->getDocumentList($args, true);
 
             // 템플릿에 쓰기 위해서 document_model::getDocumentList() 의 return object에 있는 값들을 세팅
             Context::set('total_count', $output->total_count);

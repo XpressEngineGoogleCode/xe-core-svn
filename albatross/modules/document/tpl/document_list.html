@@ -47,7 +47,7 @@
             <td><input type="checkbox" name="cart" value="{$oDocument->document_srl}" onclick="doAddDocumentCart(this)" <!--@if($oDocument->isCarted())-->checked="checked"<!--@end-->/></td>
             <td class="left subject">
                 <a href="{getUrl('','mid',$module_list[$oDocument->get('module_srl')]->mid)}" class="blue" onclick="window.open(this.href);return false">[{htmlspecialchars($module_list[$oDocument->get('module_srl')]->browser_title)}]</a><br />
-                <a href="{getUrl('','document_srl',$oDocument->document_srl)}" onclick="window.open(this.href);return false">{$oDocument->getTitleText()}</a>
+                <a href="{getUrl('','document_srl',$oDocument->document_srl)}" onclick="window.open(this.href);return false">{$oDocument->getTitle()}</a>
 
                 <!--@if($oDocument->getCommentCount())-->
                     [{$oDocument->getCommentCount()}]

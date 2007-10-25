@@ -114,7 +114,7 @@
         /**
          * @brief module_srl값을 가지는 문서의 목록을 가져옴
          **/
-        function getDocumentList($obj) {
+        function getDocumentList($obj, $except_notice = false) {
             // 정렬 대상과 순서 체크 
             if(!in_array($obj->sort_index, array('list_order','regdate','last_update','update_order','readed_count','voted_count'))) $obj->sort_index = 'list_order'; 
             if(!in_array($obj->order_type, array('desc','asc'))) $obj->order_type = 'asc'; 
@@ -139,6 +139,7 @@
             $args->page_count = $obj->page_count?$obj->page_count:10;
             $args->start_date = $obj->start_date?$obj->start_date:null;
             $args->end_date = $obj->end_date?$obj->end_date:null;
+            if($except_notice) $args->s_is_notice = 'N';
 
             $query_id = 'document.getDocumentList';
 
@@ -231,6 +232,34 @@
 
             // document.getDocumentList 쿼리 실행
             $output = executeQuery($query_id, $args);
+
+            // 결과가 없거나 오류 발생시 그냥 return
+            if(!$output->toBool()||!count($output->data)) return $output;
+
+            foreach($output->data as $key => $attribute) {
+                $document_srl = $attribute->document_srl;
+
+                $oDocument = null;
+                $oDocument = new documentItem();
+                $oDocument->setAttribute($attribute);
+                if($is_admin) $oDocument->setGrant();
+
+                $output->data[$key] = $oDocument;
+            
+            }
+            return $output;
+        }
+
+        /**
+         * @brief module_srl값을 가지는 문서의 공지사항만 가져옴
+         **/
+        function getNoticeList($obj) {
+            $args->module_srl = $obj->module_srl;
+            $args->category_srl = $obj->category_srl;
+            $args->sort_index = 'list_order';
+            $args->order_type = 'asc';
+
+            $output = executeQuery('document.getNoticeList', $args);
 
             // 결과가 없거나 오류 발생시 그냥 return
             if(!$output->toBool()||!count($output->data)) return $output;

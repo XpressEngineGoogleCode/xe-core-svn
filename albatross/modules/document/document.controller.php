@@ -115,8 +115,6 @@
             // 수동입력을 대비해서 비밀번호의 hash상태를 점검, 수동입력이 아니면 무조건 md5 hash
             if($obj->password && !$obj->password_is_hashed) $obj->password = md5($obj->password);
 
-            // 공지사항일 경우 list_order에 무지막지한 값;;을 입력
-            if($obj->is_notice=='Y') $obj->list_order = $this->notice_list_order;
 
             // 수동 등록이 아니고 로그인 된 회원일 경우 회원의 정보를 입력
             if(Context::get('is_logged')&&!$manual_inserted) {
@@ -196,10 +194,6 @@
 
             // 수정 순서를 조절
             $obj->update_order = getNextSequence() * -1;
-
-            // 공지사항일 경우 list_order에 무지막지한 값을, 그렇지 않으면 document_srl*-1값을
-            if($obj->is_notice=='Y') $obj->list_order = $this->notice_list_order;
-            else $obj->list_order = $obj->document_srl*-1;
 
             // 비밀번호가 있으면 md5 hash
             if($obj->password) $obj->password = md5($obj->password);

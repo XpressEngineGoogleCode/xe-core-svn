@@ -9,9 +9,6 @@
 
     class document extends ModuleObject {
 
-        // 공지사항용 값
-        var $notice_list_order = -2100000000;
-
         // 관리자페이지에서 사용할 검색 옵션
         var $search_option = array('title','content','title_content','user_name',); ///< 검색 옵션
 

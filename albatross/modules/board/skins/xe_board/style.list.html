@@ -51,7 +51,7 @@
 
         <tbody>
 
-        <!--@if(!$document_list)-->
+        <!--@if(!$document_list && !$notice_list)-->
             <!-- 게시물이 없으면 등록된 글이 없음을 표시 -->
             <tr class="bg0 tCenter">
                 <td colspan="{$_col_count}" class="title">
@@ -59,16 +59,40 @@
                 </td>
             </tr>
         <!--@else-->
-            <!-- 게시물이 있으면 표시 -->
-            <!--@foreach($document_list as $no => $document)-->
-
-                <!--@if($document->isNotice())-->
+            <!-- 공지사항 출력 -->
+            <!--@foreach($notice_list as $no => $document)-->
                 <tr class="notice">
-                    <!--@if($module_info->display_number!='N')--><td class="notice">{$lang->notice}</td><!--@end-->
-                <!--@else-->
+                    <!--@if($module_info->display_number!='N')--><td class="notice"><!--@if($document_srl == $document->document_srl)--><img src="./images/common/iconArrowD8.gif" border="0" alt="" /><!--@else-->{$lang->notice}<!--@end--></td><!--@end-->
+                    <!--@if($grant->is_admin)--><td class="checkbox"><input type="checkbox" name="cart" value="{$document->document_srl}" onclick="doAddDocumentCart(this)" <!--@if($document->isCarted())-->checked="checked"<!--@end--> /></td><!--@end-->
+                    <td class="title">
+                        <!--@if($module_info->use_category == "Y" && $document->get('category_srl'))-->
+                        <strong class="category">{$category_list[$document->get('category_srl')]->title}</strong>
+                        <!--@end-->
+
+                        <a href="{getUrl('document_srl',$document->document_srl, 'listStyle', $listStyle)}">{$document->getTitle($module_info->subject_cut_size)}</a>
+                        
+                        <!--@if($document->getCommentCount())-->
+                            <span class="replyAndTrackback" title="Replies"><img src="./images/common/iconReply.gif" alt="" width="12" height="12" class="icon" /> <strong>{$document->getCommentCount()}</strong></span>
+                        <!--@end-->
+
+                        <!--@if($document->getTrackbackCount())-->
+                            <span class="replyAndTrackback" title="Trackbacks"><img src="./images/common/iconTrackback.gif" alt="" width="12" height="13" class="trackback icon" /> <strong>{$document->getTrackbackCount()}</strong></span>
+                        <!--@end-->
+
+                        {$document->printExtraImages(60*60*$module_info->duration_new)}
+                    </td>
+                    <!--@if($module_info->display_author!='N')--><td class="author"><div class="member_{$document->get('member_srl')}">{$document->getNickName()}</div></td><!--@end-->
+                    <!--@if($module_info->display_readed_count!='N')--><td class="reading">{$document->get('readed_count')>0?$document->get('readed_count'):'&nbsp;'}</td><!--@end-->
+                    <!--@if($module_info->display_voted_count!='N')--><td class="recommend">{$document->get('voted_count')!=0?$document->get('voted_count'):'&nbsp;'}</td><!--@end-->
+                    <!--@if($module_info->display_regdate!='N')--><td class="date">{$document->getRegdate('Y-m-d')}</td><!--@end-->
+                    <!--@if($module_info->display_last_update=='Y')--><td class="date">{zdate($document->get('last_update'),'Y-m-d H:i')}</td><!--@end-->
+                </tr>
+            <!--@end-->
+
+            <!-- 일반 글 출력 -->
+            <!--@foreach($document_list as $no => $document)-->
                 <tr class="bg{($no+1)%2+1}">
                     <!--@if($module_info->display_number!='N')--><td class="num"><!--@if($document_srl == $document->document_srl)--><img src="./images/common/iconArrowD8.gif" border="0" alt="" /><!--@else-->{$no}<!--@end--></td><!--@end-->
-                <!--@end-->
                     <!--@if($grant->is_admin)--><td class="checkbox"><input type="checkbox" name="cart" value="{$document->document_srl}" onclick="doAddDocumentCart(this)" <!--@if($document->isCarted())-->checked="checked"<!--@end--> /></td><!--@end-->
                     <td class="title">
                         <!--@if($module_info->use_category == "Y" && $document->get('category_srl'))-->
