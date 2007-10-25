@@ -111,7 +111,7 @@
             }
 
             // 모듈의 목록을 가져옴
-            $args->select_module = "'board','blog'";
+            //$args->select_module = "'board','blog'";
             $output = executeQuery('document.getAllModules', $args);
             $module_list = $output->data;
 
