@@ -42,17 +42,7 @@
             $document_srl = Context::get('target_srl');
             if(!$document_srl) return new Object(-1, 'msg_invalid_request');
 
-            // 이미 신고되었는지 검사
-            $args->document_srl = $document_srl;
-            $output = executeQuery('document.getDeclaredDocument', $args);
-            if(!$output->toBool()) return $output;
-
-            // 신고글 추가
-            if($output->data->declared_count > 0) $output = executeQuery('document.updateDeclaredDocument', $args);
-            else $output = executeQuery('document.insertDeclaredDocument', $args);
-            if(!$output->toBool()) return $output;
-
-            $this->setMessage('success_declared');
+            return $this->declaredDocument($document_srl);
         }
 
         /**
@@ -426,6 +416,70 @@
 
             // 결과 리턴
             return new Object(0, 'success_voted');
+        }
+
+        /**
+         * @brief 게시글 신고
+         **/
+        function declaredDocument($document_srl) {
+            // 세션 정보에 신고 정보가 있으면 중단
+            if($_SESSION['declared_document'][$document_srl]) return new Object(-1, 'failed_declared');
+
+            // 이미 신고되었는지 검사
+            $args->document_srl = $document_srl;
+            $output = executeQuery('document.getDeclaredDocument', $args);
+            if(!$output->toBool()) return $output;
+
+            // 문서 원본을 가져옴
+            $oDocumentModel = &getModel('document');
+            $oDocument = $oDocumentModel->getDocument($document_srl, false, false);
+
+            // 글의 작성 ip와 현재 접속자의 ip가 동일하면 패스
+            if($oDocument->get('ipaddress') == $_SERVER['REMOTE_ADDR']) {
+                $_SESSION['declared_document'][$document_srl] = true;
+                return new Object(-1, 'failed_declared');
+            }
+
+            // document의 작성자가 회원일때 조사
+            if($oDocument->get('member_srl')) {
+                // member model 객체 생성
+                $oMemberModel = &getModel('member');
+                $member_srl = $oMemberModel->getLoggedMemberSrl();
+
+                // 글쓴이와 현재 로그인 사용자의 정보가 일치하면 읽었다고 생각하고 세션 등록후 패스
+                if($member_srl && $member_srl == $oDocument->get('member_srl')) {
+                    $_SESSION['declared_document'][$document_srl] = true;
+                    return new Object(-1, 'failed_declared');
+                }
+            }
+
+            // 로그인 사용자이면 member_srl, 비회원이면 ipaddress로 판단
+            if($member_srl) {
+                $args->member_srl = $member_srl;
+            } else {
+                $args->ipaddress = $_SERVER['REMOTE_ADDR'];
+            }
+            $args->document_srl = $document_srl;
+            $output = executeQuery('document.getDocumentDeclaredLogInfo', $args);
+
+            // 로그 정보에 신고 로그가 있으면 세션 등록후 패스
+            if($output->data->count) {
+                $_SESSION['declared_document'][$document_srl] = true;
+                return new Object(-1, 'failed_declared');
+            }
+
+            // 신고글 추가
+            if($output->data->declared_count > 0) $output = executeQuery('document.updateDeclaredDocument', $args);
+            else $output = executeQuery('document.insertDeclaredDocument', $args);
+            if(!$output->toBool()) return $output;
+
+            // 로그 남기기
+            $output = executeQuery('document.insertDocumentDeclaredLog', $args);
+
+            // 세션 정보에 남김
+            $_SESSION['declared_document'][$document_srl] = true;
+
+            $this->setMessage('success_declared');
         }
 
         /**

@@ -180,6 +180,7 @@
     $lang->fail_to_move = 'N\'a pas pu être déplacé';
 
     $lang->failed_voted = 'La demande de voter a échoué';
+    $lang->failed_declared = '신고를 하실 수 없습니다';
     $lang->fail_to_delete_have_children = 'Une ou plusieurs reponses existent et ne pourraient pas être supprimees ainsi';
 
     $lang->confirm_submit = 'Etes-vous sur vous voulez-vous soumettre?';

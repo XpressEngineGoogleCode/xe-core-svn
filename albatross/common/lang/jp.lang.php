@@ -185,6 +185,7 @@
     $lang->fail_to_move = '移動に失敗しました。';
 
     $lang->failed_voted = '推薦できません。';
+    $lang->failed_declared = '신고를 하실 수 없습니다';
     $lang->fail_to_delete_have_children = '返信の書き込みがあり、削除できません。';
 
     $lang->confirm_submit = '登録しますか？';

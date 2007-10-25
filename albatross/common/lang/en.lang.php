@@ -186,6 +186,7 @@
     $lang->fail_to_move = 'Could not be moved';
 
     $lang->failed_voted = 'Could not vote';
+    $lang->failed_declared = '신고를 하실 수 없습니다';
     $lang->fail_to_delete_have_children = 'Please try again after removing replies first';
 
     $lang->confirm_submit = 'Are you sure to submit?';

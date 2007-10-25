@@ -184,6 +184,7 @@
     $lang->fail_to_move = 'No puede ser movido';
 
     $lang->failed_voted = 'No puede ser recomendado';
+    $lang->failed_declared = '신고를 하실 수 없습니다';
     $lang->fail_to_delete_have_children = 'No puede ser borrado, ya que el mensaje posee respuestas ';
 
     $lang->confirm_submit = '¿Está seguro que desea enviar?';

@@ -186,6 +186,7 @@
     $lang->fail_to_move = '이동 실패하였습니다';
 
     $lang->failed_voted = '추천하실 수 없습니다';
+    $lang->failed_declared = '신고를 하실 수 없습니다';
     $lang->fail_to_delete_have_children = '답글이 있어서 삭제할 수 없습니다';
 
     $lang->confirm_submit = '등록하시겠습니까?';

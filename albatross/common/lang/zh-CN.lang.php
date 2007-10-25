@@ -186,6 +186,7 @@
     $lang->fail_to_move = '移动成功！';
 	
     $lang->failed_voted = '您不能推荐！';
+    $lang->failed_declared = '신고를 하실 수 없습니다';
     $lang->fail_to_delete_have_children = '不能删除有回复的评论！';
 
     $lang->confirm_submit = '确定要提交吗?';
