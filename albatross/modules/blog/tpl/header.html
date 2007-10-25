@@ -15,9 +15,12 @@
 <h3>{$lang->blog} <span class="gray">{$lang->cmd_management}</span></h3>
 
 <!--@if($module_info)-->
-<div class="header4">
-    <!--@if($module_info->mid)-->
-    <h4>{$module_info->mid} <!--@if($module_info->is_default=='N')--><span class="bracket">({$lang->is_default})</span><!--@end--> <span class="vr">|</span> <a href="{getUrl('','mid',$module_info->mid)}" onclick="window.open(this.href); return false;" class="view">View</a></h4>
+    <!--@if($module=="admin")-->
+    <div class="header4">
+        <!--@if($module_info->mid)-->
+        <h4>{$module_info->mid} <!--@if($module_info->is_default=='N')--><span class="bracket">({$lang->is_default})</span><!--@end--> <span class="vr">|</span> <a href="{getUrl('','mid',$module_info->mid)}" onclick="window.open(this.href); return false;" class="view">View</a></h4>
+        <!--@end-->
+    </div>
     <!--@end-->
 
     <ul class="localNavigation">
@@ -34,5 +37,6 @@
             <!--@end-->
         <!--@end-->
     </ul>
-</div>
+
+    <div class="clear"></div>
 <!--@end-->
