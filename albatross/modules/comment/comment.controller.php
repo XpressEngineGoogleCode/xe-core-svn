@@ -201,7 +201,7 @@
             }
 
             // 권한이 있는지 확인
-            if(!$is_admin && !$source_obj->is_granted) return new Object(-1, 'msg_not_permitted');
+            if(!$is_admin && !$source_obj->isGranted()) return new Object(-1, 'msg_not_permitted');
 
             if($obj->password) $obj->password = md5($obj->password);
             if($obj->homepage &&  !eregi('^http:\/\/',$obj->homepage)) $obj->homepage = 'http://'.$obj->homepage;
@@ -279,7 +279,7 @@
             if($child_count>0) return new Object(-1, 'fail_to_delete_have_children');
 
             // 권한이 있는지 확인
-            if(!$is_admin && !$comment->is_granted) return new Object(-1, 'msg_not_permitted');
+            if(!$is_admin && !$comment->isGranted()) return new Object(-1, 'msg_not_permitted');
 
             // begin transaction
             $oDB = &DB::getInstance();
