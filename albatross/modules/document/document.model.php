@@ -231,7 +231,7 @@
             }
 
             // document.getDocumentList 쿼리 실행
-            $output = executeQuery($query_id, $args);
+            $output = executeQueryArray($query_id, $args);
 
             // 결과가 없거나 오류 발생시 그냥 return
             if(!$output->toBool()||!count($output->data)) return $output;
@@ -259,7 +259,7 @@
             $args->sort_index = 'list_order';
             $args->order_type = 'asc';
 
-            $output = executeQuery('document.getNoticeList', $args);
+            $output = executeQueryArray('document.getNoticeList', $args);
 
             // 결과가 없거나 오류 발생시 그냥 return
             if(!$output->toBool()||!count($output->data)) return $output;
@@ -270,7 +270,6 @@
                 $oDocument = null;
                 $oDocument = new documentItem();
                 $oDocument->setAttribute($attribute);
-                if($is_admin) $oDocument->setGrant();
 
                 $output->data[$key] = $oDocument;
             
