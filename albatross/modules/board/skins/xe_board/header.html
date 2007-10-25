@@ -35,15 +35,14 @@
         {@ $order_type = "desc"; }
     <!--@end-->
 
-<!-- 사용자가 선택한 게시판 형태에 따른 설정 -->
-<!--@if($listStyle=='gallery')-->
-    {@ $module_info->default_style = 'gallery'}
-<!--@elseif($listStyle=='webzine')-->
-    {@ $module_info->default_style = 'webzine'}
+<!-- 사용자가 선택한 게시판 형태에 따른 설정(포럼형은 적용 안됨) -->
+<!--@if($module_info->default_style != 'forum')-->
+    <!--@if($listStyle=='gallery')-->
+        {@ $module_info->default_style = 'gallery'}
+    <!--@elseif($listStyle=='webzine')-->
+        {@ $module_info->default_style = 'webzine'}
+    <!--@end-->
 <!--@end-->
-
-
-
 
 <!-- 상단 텍스트 출력 -->
     {$module_info->header_text}
@@ -102,9 +101,11 @@
 
             <li class="skin_info"><a href="{getUrl('','module','module','act','dispModuleSkinInfo','selected_module',$module_info->module, 'skin', $module_info->skin)}" onclick="popopen(this.href,'skinInfo'); return false;"><img src="./images/common/buttonHelp.gif" alt="Skin Info" width="13" height="13"/></a></li>
 
-        <!-- 목록형태 -->
+        <!-- 목록형태 (포럼형이 기본으로 되어 있을 경우 다른 형태를 지정 못하게 함) -->
+            <!--@if($module_info->default_style != 'forum')-->
             <li class="listType"><a href="{getUrl('listStyle','')}"><img src="./images/common/typeList.gif" border="0" width="13" height="13" alt="List" /></a></li>
             <li class="listType"><a href="{getUrl('listStyle','webzine')}"><img src="./images/common/typeWebzine.gif" border="0" width="13" height="13" alt="Webzine" /></a></li>
             <li class="listType"><a href="{getUrl('listStyle','gallery')}"><img src="./images/common/typeGallery.gif" border="0" width="13" height="13" alt="Gallery" /></a></li>
+            <!--@end-->
         </ul>
     </div>

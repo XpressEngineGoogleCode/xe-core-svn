@@ -78,6 +78,8 @@
     $lang->browser_title = 'Titre de Navigateur';
     $lang->title = 'Titre';
     $lang->title_content = 'Titre + Contenu';
+    $lang->topic = '주제';
+    $lang->replies = '응답';
     $lang->content = 'Contenu';
     $lang->document = 'Article';
     $lang->comment = 'Commentaire';
@@ -119,6 +121,7 @@
     $lang->date = 'Date';
     $lang->regdate = 'Date d\'Enregistrement';
     $lang->last_update = 'La Dernière Mise a Jour';
+    $lang->last_post = '최근 등록';
     $lang->signup_date = 'Date d\'Enregistrement';
     $lang->last_login = 'La Dernière Ouverture';
     $lang->first_page = 'Première Page';

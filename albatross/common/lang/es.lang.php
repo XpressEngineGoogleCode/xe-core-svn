@@ -81,6 +81,8 @@
     $lang->browser_title = 'Título del navegador';
     $lang->title = 'Título';
     $lang->title_content = 'Título+Contenido';
+    $lang->topic = '주제';
+    $lang->replies = '응답';
     $lang->content = 'Contenidos';
     $lang->document = 'Documentos';
     $lang->comment = 'Commentarios';
@@ -123,6 +125,7 @@
     $lang->date = 'Fecha';
     $lang->regdate = 'Fecha publicada';
     $lang->last_update = 'Ultima actualización';
+    $lang->last_post = '최근 등록';
     $lang->signup_date = 'Fecha del registro';
     $lang->last_login = 'Ultima conección';
     $lang->first_page = 'Primera página';

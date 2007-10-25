@@ -83,6 +83,8 @@
     $lang->browser_title = '브라우저 제목';
     $lang->title = '제목';
     $lang->title_content = '제목+내용';
+    $lang->topic = '주제';
+    $lang->replies = '응답';
     $lang->content = '내용';
     $lang->document = '게시물';
     $lang->comment = '댓글';
@@ -124,7 +126,8 @@
     $lang->member_count = '회원수';
     $lang->date = '날짜';
     $lang->regdate = '등록일';
-    $lang->last_update = '최근수정일';
+    $lang->last_update = '최근 수정일';
+    $lang->last_post = '최근 등록';
     $lang->signup_date = '가입일';
     $lang->last_login = '최근로그인';
     $lang->first_page = '첫페이지';

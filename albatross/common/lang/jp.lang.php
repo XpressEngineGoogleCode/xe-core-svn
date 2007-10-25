@@ -82,6 +82,8 @@
     $lang->browser_title = 'ブラウザタイトル';
     $lang->title = 'タイトル';
     $lang->title_content = 'タイトル＋内容';
+    $lang->topic = '주제';
+    $lang->replies = '응답';
     $lang->content = '内容';
     $lang->document = '書き込み';
     $lang->comment = 'コメント';
@@ -124,6 +126,7 @@
     $lang->date = '年月日';
     $lang->regdate = '登録日';
     $lang->last_update = '最近修正日';
+    $lang->last_post = '최근 등록';
     $lang->signup_date = '加入日';
     $lang->last_login = '最近ログイン';
     $lang->first_page = '最初のページ';

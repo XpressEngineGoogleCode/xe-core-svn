@@ -478,12 +478,16 @@
 
         /**
          * @brief 해당 document의 댓글 수 증가
+         * 댓글수를 증가시키면서 수정 순서와 수정일, 수정자를 등록
          **/
-        function updateCommentCount($document_srl, $comment_count, $comment_inserted = false) {
+        function updateCommentCount($document_srl, $comment_count, $last_updater, $comment_inserted = false) {
             $args->document_srl = $document_srl;
             $args->comment_count = $comment_count;
 
-            if($comment_inserted) $args->update_order = -1*getNextSequence();
+            if($comment_inserted) {
+                $args->update_order = -1*getNextSequence();
+                $args->last_updater = $last_updater;
+            }
 
             return executeQuery('document.updateCommentCount', $args);
         }

@@ -83,6 +83,8 @@
     $lang->browser_title = '浏览器标题';
     $lang->title = '标题';
     $lang->title_content = '标题+内容';
+    $lang->topic = '주제';
+    $lang->replies = '응답';
     $lang->content = '内容';
     $lang->document = '文章';
     $lang->comment = '评论';
@@ -125,6 +127,7 @@
     $lang->date = '日期';
     $lang->regdate = '登录日期';
     $lang->last_update = '最后更新';
+    $lang->last_post = '최근 등록';
     $lang->signup_date = '注册日期';
     $lang->last_login = '最近登录';
     $lang->first_page = '第一页';
