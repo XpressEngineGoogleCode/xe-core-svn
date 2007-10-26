@@ -47,7 +47,7 @@
         <ul id="blogAccountNavigation">
             <!--@if(!$is_logged)-->
                 <!-- 비로그인 상태 -->
-                <li class="join"><a href="{getUrl('act','dispMemberSignUpForm')}">{$lang->cmd_signup}</a></li>
+                <li class="join"><a href="{getUrl('mid',$layout_info->mid,'act','dispMemberSignUpForm')}">{$lang->cmd_signup}</a></li>
                 <li class="loginAndLogout"><a href="{getUrl('act','dispMemberLoginForm')}">{$lang->cmd_login}</a></li>
 
             <!--@else-->
@@ -56,7 +56,7 @@
                 <!-- 관리자이면 설정 버튼 출력 -->
                 <!--@if($grant->is_admin)-->
                 <li class="write"><a href="{getUrl('mid', $layout_info->mid, 'act','dispBlogWrite','document_srl','')}">{$lang->cmd_write}</a></li>
-                <li class="setup"><a href="{getUrl('act','dispBlogAdminBlogInfo')}">{$lang->cmd_setup}</a></li>
+                <li class="setup"><a href="{getUrl('mid',$layout_info->mid,'act','dispBlogAdminBlogInfo')}">{$lang->cmd_setup}</a></li>
                 <!--@end-->
 
                 <!-- 최고관리자이면 관리자 페이지 버튼 출력 -->
