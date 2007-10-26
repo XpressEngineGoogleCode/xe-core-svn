@@ -121,7 +121,6 @@
          * @brief 로그 남김 
          **/
         function actStart($query) {
-            debugPrint($query);
             $this->setError(0,'success');
             $this->query = $query;
             $this->act_start = getMicroTime();

@@ -24,7 +24,7 @@
     <div class="gap1">
         <form id="fo_category" action="./" method="get" onsubmit="return procFilter(this, insert_category)">
         <input type="hidden" name="module_srl" value="{$module_info->module_srl}" />
-        <input type="hidden" name="xml_file" value="{$category_info->xml_file}" />
+        <input type="hidden" name="xml_file" value="{$category_xml_file}" />
 
                 <table class="menuListZone">
                 <tr>
@@ -50,7 +50,7 @@
         </form>
 
         <script type="text/javascript">
-            loadTreeMenu("{$category_info->xml_file}", "category", "zone_category", category_title, '', doGetCategoryInfo, 0, doMoveTree); 
+            loadTreeMenu("{$category_xml_file}", "category", "zone_category", category_title, '', doGetCategoryInfo, 0, doMoveTree); 
         </script>
     </div>
 

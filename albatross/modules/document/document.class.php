@@ -33,6 +33,7 @@
             // 2007. 10. 17 모듈이 삭제될때 등록된 글도 모두 삭제하는 트리거 추가
             $oModuleController->insertTrigger('module.deleteModule', 'document', 'controller', 'triggerDeleteModuleDocuments', 'after');
 
+
             return new Object();
         }
 
@@ -74,6 +75,11 @@
              * 2007. 10. 18 : 관리자 페이지의 신고된 목록 보기 action 추가
              **/
             if(!$oModuleModel->getActionForward('dispDocumentAdminDeclared')) return true;
+
+            // 2007. 10. 25 문서 분류에 parent_srl, expand를 추가
+            if(!$oDB->isColumnExists("document_categories","parent_srl")) return true;
+            if(!$oDB->isColumnExists("document_categories","expand")) return true;
+            if(!$oDB->isColumnExists("document_categories","group_srls")) return true;
 
             return false;
         }
@@ -139,6 +145,11 @@
              **/
             if(!$oModuleModel->getActionForward('dispDocumentAdminDeclared')) 
                 $oModuleController->insertActionForward('document', 'view', 'dispDocumentAdminDeclared');
+
+            // 2007. 10. 25 문서 분류에 parent_srl, expand를 추가
+            if(!$oDB->isColumnExists("document_categories","parent_srl")) $oDB->addColumn('document_categories',"parent_srl","number",12,0);
+            if(!$oDB->isColumnExists("document_categories","expand")) $oDB->addColumn('document_categories',"expand","char",1,"N");
+            if(!$oDB->isColumnExists("document_categories","group_srls")) $oDB->addColumn('document_categories',"group_srls","text");
 
             return new Object(0,'success_updated');
         }

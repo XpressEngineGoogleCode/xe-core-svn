@@ -300,15 +300,19 @@ function editorReplaceHTML(iframe_obj, html) {
 
     } else {
 
-        if(iframe_obj.contentWindow.getSelection().focusNode.tagName == "HTML") {
-            var range = iframe_obj.contentDocument.createRange();
-            range.setStart(iframe_obj.contentDocument.body,0);
-            range.setEnd(iframe_obj.contentDocument.body,0);
-            range.insertNode(range.createContextualFragment(html));
-        } else {
-            var range = iframe_obj.contentWindow.getSelection().getRangeAt(0);
-            range.deleteContents();
-            range.insertNode(range.createContextualFragment(html));
+        try {
+            if(iframe_obj.contentWindow.getSelection().focusNode.tagName == "HTML") {
+                var range = iframe_obj.contentDocument.createRange();
+                range.setStart(iframe_obj.contentDocument.body,0);
+                range.setEnd(iframe_obj.contentDocument.body,0);
+                range.insertNode(range.createContextualFragment(html));
+            } else {
+                var range = iframe_obj.contentWindow.getSelection().getRangeAt(0);
+                range.deleteContents();
+                range.insertNode(range.createContextualFragment(html));
+            }
+        } catch(e) {
+            xInnerHtml(iframe_obj.contentWindow.document.body, html+xInnerHtml(iframe_obj.contentWindow.document.body));
         }
 
     }

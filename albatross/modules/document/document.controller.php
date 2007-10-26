@@ -53,11 +53,12 @@
             if(!$module_srl) return new Object();
 
             // document 삭제
-            $oDocumentController = &getAdminController('document');
-            $output = $oDocumentController->deleteModuleDocument($module_srl);
+            $oDocumentAdminController = &getAdminController('document');
+            $output = $oDocumentAdminController->deleteModuleDocument($module_srl);
             if(!$output->toBool()) return $output;
 
             // category 삭제
+            $oDocumentController = &getController('document');
             $output = $oDocumentController->deleteModuleCategory($module_srl);
             if(!$output->toBool()) return $output;
 
@@ -502,6 +503,18 @@
             return executeQuery('document.updateTrackbackCount', $args);
         }
 
+        /**
+         * @brief 카테고리 추가
+         **/
+        function insertCategory($obj) {
+            $obj->list_order = $obj->category_srl = getNextSequence();
+
+            $output = executeQuery('document.insertCategory', $obj);
+            if($output->toBool()) $output->add('category_srl', $obj->category_srl);
+
+            return $output;
+        }
+
         /** 
          * @brief 카테고리에 문서의 숫자를 변경
          **/
@@ -513,6 +526,130 @@
             $args->category_srl = $category_srl;
             $args->document_count = $document_count;
             return executeQuery('document.updateCategoryCount', $args);
+        }
+
+        /**
+         * @brief 카테고리의 정보를 수정
+         **/
+        function updateCategory($obj) {
+            return executeQuery('document.updateCategory', $obj);
+        }
+
+        /**
+        /**
+         * @brief 카테고리 삭제
+         **/
+        function deleteCategory($category_srl) {
+            $args->category_srl = $category_srl;
+
+            // 카테고리 정보를 삭제
+            $output = executeQuery('document.deleteCategory', $args);
+            if(!$output->toBool()) return $output;
+
+            // 현 카테고리 값을 가지는 문서들의 category_srl을 0 으로 세팅
+            unset($args);
+
+            $args->target_category_srl = 0;
+            $args->source_category_srl = $category_srl;
+            $output = executeQuery('document.updateDocumentCategory', $args);
+            return $output;
+        }
+
+        /**
+         * @brief 특정 모듈의 카테고리를 모두 삭제
+         **/
+        function deleteModuleCategory($module_srl) {
+            $args->module_srl = $module_srl;
+            $output = executeQuery('document.deleteModuleCategory', $args);
+            return $output;
+        }
+
+        /**
+         * @brief 카테고리를 상단으로 이동
+         **/
+        function moveCategoryUp($category_srl) {
+            $oDocumentModel = &getModel('document');
+
+            // 선택된 카테고리의 정보를 구한다
+            $args->category_srl = $category_srl;
+            $output = executeQuery('document.getCategory', $args);
+
+            $category = $output->data;
+            $list_order = $category->list_order;
+            $module_srl = $category->module_srl;
+
+            // 전체 카테고리 목록을 구한다
+            $category_list = $oDocumentModel->getCategoryList($module_srl);
+            $category_srl_list = array_keys($category_list);
+            if(count($category_srl_list)<2) return new Object();
+
+            $prev_category = NULL;
+            foreach($category_list as $key => $val) {
+                if($key==$category_srl) break;
+                $prev_category = $val;
+            }
+
+            // 이전 카테고리가 없으면 그냥 return
+            if(!$prev_category) return new Object(-1,Context::getLang('msg_category_not_moved'));
+
+            // 선택한 카테고리가 가장 위의 카테고리이면 그냥 return
+            if($category_srl_list[0]==$category_srl) return new Object(-1,Context::getLang('msg_category_not_moved'));
+
+            // 선택한 카테고리의 정보
+            $cur_args->category_srl = $category_srl;
+            $cur_args->list_order = $prev_category->list_order;
+            $cur_args->title = $category->title;
+            $this->updateCategory($cur_args);
+
+            // 대상 카테고리의 정보
+            $prev_args->category_srl = $prev_category->category_srl;
+            $prev_args->list_order = $list_order;
+            $prev_args->title = $prev_category->title;
+            $this->updateCategory($prev_args);
+
+            return new Object();
+        }
+
+        /** 
+         * @brief 카테고리를 아래로 이동
+         **/
+        function moveCategoryDown($category_srl) {
+            $oDocumentModel = &getModel('document');
+
+            // 선택된 카테고리의 정보를 구한다
+            $args->category_srl = $category_srl;
+            $output = executeQuery('document.getCategory', $args);
+
+            $category = $output->data;
+            $list_order = $category->list_order;
+            $module_srl = $category->module_srl;
+
+            // 전체 카테고리 목록을 구한다
+            $category_list = $oDocumentModel->getCategoryList($module_srl);
+            $category_srl_list = array_keys($category_list);
+            if(count($category_srl_list)<2) return new Object();
+
+            for($i=0;$i<count($category_srl_list);$i++) {
+                if($category_srl_list[$i]==$category_srl) break;
+            }
+
+            $next_category_srl = $category_srl_list[$i+1];
+            if(!$category_list[$next_category_srl]) return new Object(-1,Context::getLang('msg_category_not_moved'));
+            $next_category = $category_list[$next_category_srl];
+
+            // 선택한 카테고리의 정보
+            $cur_args->category_srl = $category_srl;
+            $cur_args->list_order = $next_category->list_order;
+            $cur_args->title = $category->title;
+            $this->updateCategory($cur_args);
+
+            // 대상 카테고리의 정보
+            $next_args->category_srl = $next_category->category_srl;
+            $next_args->list_order = $list_order;
+            $next_args->title = $next_category->title;
+            $this->updateCategory($next_args);
+
+            return new Object();
         }
 
         /**
@@ -534,6 +671,94 @@
 
             $js_code = "<script type=\"text/javascript\">//<![CDATA[\n".$js_code."\n//]]></script>";
             Context::addHtmlHeader($js_code);
+        }
+
+        /**
+         * @brief 카테고리를 xml파일로 저장
+         **/
+        function makeCategoryXmlFile($module_srl) {
+            // xml파일 생성시 필요한 정보가 없으면 그냥 return
+            if(!$module_srl) return;
+
+            if(!is_dir('./files/cache/document_category')) FileHandler::makeDir('./files/cache/document_category');
+
+            // 캐시 파일의 이름을 지정
+            $xml_file = sprintf("./files/cache/document_category/%s.xml.php", $module_srl);
+
+            // DB에서 module_srl 에 해당하는 카테고리 목록을 listorder순으로 구해옴 
+            $oDocumentModel = &getModel('document');
+            $list = $oDocumentModel->getCategoryList($module_srl);
+
+            // 구해온 데이터가 없다면 노드데이터가 없는 xml 파일만 생성
+            if(!$list) {
+                $xml_buff = "<root />";
+                FileHandler::writeFile($xml_file, $xml_buff);
+                return $xml_file;
+            }
+
+            // 구해온 데이터가 하나라면 array로 바꾸어줌
+            if(!is_array($list)) $list = array($list);
+
+            // 루프를 돌면서 tree 구성
+            foreach($list as $category_srl => $node) {
+                $parent_srl = (int)$node->parent_srl;
+                $tree[$parent_srl][$category_srl] = $node;
+            }
+
+            // 세션 디렉토리 변경 구문
+            $php_script = "";
+            if(!ini_get('session.auto_start')) {
+                if(!is_dir("./files/sessions")) {
+                    FileHandler::makeDir("./files/sessions");
+                    @chmod("./files/sessions",  0777);
+                }
+
+                $php_script = 'session_cache_limiter("no-cache, must-revalidate"); ini_set("session.gc_maxlifetime", "18000"); if(is_dir("../../sessions")) session_save_path("../../sessions/"); session_start();';
+            }
+
+            // xml 캐시 파일 생성
+            $xml_buff = sprintf('<?php %s header("Content-Type: text/xml; charset=UTF-8"); header("Expires: Mon, 26 Jul 1997 05:00:00 GMT"); header("Last-Modified: " . gmdate("D, d M Y H:i:s") . " GMT"); header("Cache-Control: no-store, no-cache, must-revalidate"); header("Cache-Control: post-check=0, pre-check=0", false); header("Pragma: no-cache"); @session_start(); ?><root>%s</root>', $php_script, $this->getXmlTree($tree[0], $tree));
+
+            // 파일 저장
+            FileHandler::writeFile($xml_file, $xml_buff);
+            return $xml_file;
+        }
+
+        /**
+         * @brief array로 정렬된 노드들을 parent_srl을 참조하면서 recursive하게 돌면서 xml 데이터 생성
+         * 메뉴 xml파일은 node라는 tag가 중첩으로 사용되며 이 xml doc으로 관리자 페이지에서 메뉴를 구성해줌\n
+         * (tree_menu.js 에서 xml파일을 바로 읽고 tree menu를 구현)
+         **/
+        function getXmlTree($source_node, $tree) {
+            if(!$source_node) return;
+            foreach($source_node as $category_srl => $node) {
+                $child_buff = "";
+
+                // 자식 노드의 데이터 가져옴
+                if($category_srl && $tree[$category_srl]) $child_buff = $this->getXmlTree($tree[$category_srl], $tree);
+
+                // 변수 정리 
+                $title = str_replace(array('&','"','<','>'),array('&amp;','&quot;','&lt;','&gt;'),$node->title);
+                $expand = $node->expand;
+                $group_srls = $node->group_srls;
+
+                // node->group_srls값이 있으면 
+                if($group_srls) $group_check_code = sprintf('($_SESSION["is_admin"]==true||(is_array($_SESSION["group_srls"])&&count(array_intersect($_SESSION["group_srls"], array(%s)))))',$group_srls);
+                else $group_check_code = "true";
+
+                $attribute = sprintf(
+                        'node_srl="%s" text="<?=(%s?"%s":"")?>" url="%s" expand="%s" ',
+                        $category_srl,
+                        $group_check_code,
+                        $title,
+                        getUrl('','mid',$this->module_info->mid,'category',$category_srl),
+                        $expand
+                );
+                
+                if($child_buff) $buff .= sprintf('<node %s>%s</node>', $attribute, $child_buff);
+                else $buff .=  sprintf('<node %s />', $attribute);
+            }
+            return $buff;
         }
     }
 ?>

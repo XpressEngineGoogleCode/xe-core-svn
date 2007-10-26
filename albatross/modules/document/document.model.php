@@ -323,7 +323,20 @@
         function getCategory($category_srl) {
             $args->category_srl = $category_srl;
             $output = executeQuery('document.getCategory', $args);
-            return $output->data;
+
+            $node = $output->data;
+            if($node->group_srls) $node->group_srls = explode(',',$node->group_srls);
+            else $node->group_srls = array();
+            return $node;
+        }
+
+        /**
+         * @brief 특정 카테고리에 child가 있는지 체크
+         **/
+        function getCategoryChlidCount($category_srl) {
+            $output = executeQuery('document.getChildCategoryCount');
+            if($output->data->count > 0) return true;
+            return false;
         }
 
         /**
@@ -355,6 +368,18 @@
             $output = executeQuery('document.getCategoryDocumentCount', $args);
             return (int)$output->data->count;
         }
+
+        /**
+         * @brief 문서 category정보의 xml 캐시 파일을 return
+         **/
+        function getCategoryXmlFile($module_srl) {
+            $xml_file = sprintf('files/cache/document_category/%s.xml.php',$module_srl);
+            if(!file_exists($xml_file)) {
+                $oDocumentController = &getController('document');
+                $oDocumentController->makeCategoryXmlFile($module_srl);
+            }
+            return $xml_file;
+        } 
 
         /**
          * @brief 월별 글 보관현황을 가져옴

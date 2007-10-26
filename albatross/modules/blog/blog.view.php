@@ -44,7 +44,7 @@
             if(file_exists($edited_layout)) $this->setEditedLayoutFile($edited_layout);
 
             // 카테고리 xml 파일 위치 지정
-            $this->module_info->category_xml_file = sprintf('%s/files/cache/blog_category/%d.xml.php', getUrl(), $this->module_info->module_srl);
+            $this->module_info->category_xml_file = getUrl().$oDocumentModel->getCategoryXmlFile($this->module_info->module_srl);
 
             // 메뉴 등록시 메뉴 정보를 구해옴
             if($this->module_info->menu) {
@@ -68,6 +68,16 @@
         function dispBlogContent() {
             // 권한 체크
             if(!$this->grant->list) return $this->dispBlogMessage('msg_not_permitted');
+
+            // 모듈정보를 확인하여 확장변수에서도 검색이 설정되어 있는지 확인
+            for($i=1;$i<=20;$i++) {
+                $ex_name = $this->module_info->extra_vars[$i]->name;
+                $ex_search = $this->module_info->extra_vars[$i]->search;
+                if($ex_name && $ex_search == 'Y') {
+                    $search_option['extra_vars'.$i] = $ex_name;
+                }
+            }
+            Context::set('search_option', $search_option);
 
             // 목록 구현에 필요한 변수들을 가져온다
             $document_srl = Context::get('document_srl');
@@ -271,7 +281,7 @@
             Context::set('oComment',$oComment);
 
             // 댓글 에디터 세팅 
-            $this->setCommentEditor(0, 400);
+            Context::set('editor', $this->getCommentEditor($document_srl, 0, 400));
 
             $this->setTemplateFile('comment_form');
         }
@@ -305,7 +315,7 @@
             Context::set('oComment', $oComment);
 
             // 댓글 에디터 세팅 
-            $this->setCommentEditor($comment_srl, 301);
+            Context::set('editor', $this->getCommentEditor($document_srl, $comment_srl, 400));
 
             $this->setTemplateFile('comment_form');
         }

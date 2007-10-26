@@ -195,10 +195,10 @@
             $module_srl = $this->module_info->module_srl;
 
             // 카테고리 정보를 가져옴
-            $oBlogModel = &getModel('blog');
-            $category_info = $oBlogModel->getCategory($module_srl);
+            $oDocumentModel = &getModel('document');
+            $category_xml_file = $oDocumentModel->getCategoryXmlFile($module_srl);
 
-            Context::set('category_info', $category_info);
+            Context::set('category_xml_file', $category_xml_file);
             Context::addJsFile('./common/js/tree_menu.js');
 
             Context::set('layout','none');
