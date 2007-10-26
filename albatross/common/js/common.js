@@ -629,8 +629,9 @@ function doDocumentPreview(obj) {
         fo_obj = fo_obj.parentNode;
     }
     if(fo_obj.nodeName != "FORM") return;
+    var editor_sequence = fo_obj.getAttribute('editor_sequence');
 
-    var content = fo_obj.content.value;
+    var content = editorGetContent(editor_sequence);
 
     var win = window.open("","previewDocument","toolbars=no,width=700px;height=800px,scrollbars=yes,resizable=yes");
 
