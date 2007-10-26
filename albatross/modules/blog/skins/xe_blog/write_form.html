@@ -25,8 +25,6 @@
             <!--@end-->
 
             <div class="title">
-                <label for="title" class="title">{$lang->title}</label>
-
                 <select name="category_srl" >
                     <option value="">{$lang->category}</option>
                     <!--@foreach($category_list as $val)-->
@@ -38,7 +36,6 @@
             </div>
 
             <dl class="option">
-                <dt>{$lang->cmd_option}</dt>
                 <!--@if($grant->manager)-->
                 {@ $_color = array('555555','222288','226622','2266EE','8866CC','88AA66','EE2222','EE6622','EEAA22','EEEE22') }
                 <dd><select name="title_color" id="title_color" <!--@if($oDocument->get('title_color'))-->style="background-color:#{$oDocument->get('title_color')};"<!--@end--> onchange="this.style.backgroundColor=this.options[this.selectedIndex].style.backgroundColor;">
@@ -50,10 +47,6 @@
                 <dd>
                     <input type="checkbox" name="title_bold" id="title_bold" value="Y" <!--@if($oDocument->get('title_bold')=='Y')-->checked="checked"<!--@end--> />
                     <label for="title_bold">{$lang->title_bold}</label>
-                </dd>
-                <dd>
-                    <input type="checkbox" name="is_notice" value="Y" <!--@if($oDocument->isNotice())-->checked="checked"<!--@end--> id="is_notice" />
-                    <label for="is_notice">{$lang->notice}</label>
                 </dd>
                 <dd>
                     <input type="checkbox" name="lock_comment" value="Y" <!--@if($oDocument->isLocked())-->checked="checked"<!--@end--> id="lock_comment" />
