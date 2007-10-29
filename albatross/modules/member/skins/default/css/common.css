@@ -12,7 +12,7 @@
 
 .memberSmallBox .header { position:relative; _width:100%; background:#ffffff url(../images/common/bgH3.gif) no-repeat left bottom; overflow:hidden;}
 
-.boardInformation { font:normal 11px Tahoma; width:100%; clear:both; margin:1em 0 .5em 0; overflow:hidden; color:#666666; height:25px;}
+.boardInformation { font:normal 11px Tahoma; width:100%; clear:both; margin:1em 0 .5em 0; overflow:hidden; color:#666666; height:28px;}
 .boardInformation strong { font:bold 11px Tahoma; color:#ff6600;}
 
 .boardHeader { position:relative; _width:100%; border-top:1px solid #e1e1dd; border-bottom:none; background:#ffffff url(../images/common/bgH3.gif) no-repeat right bottom; overflow:hidden;}
