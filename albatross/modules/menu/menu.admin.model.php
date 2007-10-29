@@ -96,9 +96,14 @@
                 }
             // 값이 있다면 혹시나 빠진 부분의 언어가 있는지 체크
             } else {
-                $source_name = array_values($name);
+                $values = array_values($name);
+                $title_name = '';
+                for($i=0;$i<count($values);$i++) {
+                    $title_name = trim($values[$i]);
+                    if($title_name) break;;
+                }
                 foreach($lang_supported as $key => $val) {
-                    if(!$name[$key]) $name[$key] = $source_name[0];
+                    if(!$name[$key]) $name[$key] = $title_name;
                 }
             }
 
