@@ -86,6 +86,20 @@
             <default>newest</default>
             <default>updated</default>
         </var>
+        <var name="order_type" type="select">
+            <title xml:lang="ko">정렬 방법</title>
+            <title xml:lang="zh-CN">排序方式</title>
+            <title xml:lang="jp">ソートタイプ</title>
+            <title xml:lang="en">Sorting Type</title>
+			<title xml:lang="es">Tipo de ordenamiento</title>
+            <description xml:lang="ko">정렬대상을 내림차순 또는 올림차순으로 정렬할 수 있습니다.</description>
+            <description xml:lang="zh-CN">对其排序对象可进行升序/降序方式排序。</description>
+            <description xml:lang="jp">ソートタイプを、降順、昇順にソートできます。</description>
+            <description xml:lang="en">You can sort target articles by asending or desending order.</description>
+			<description xml:lang="es">Usted puede ordenar los documentos en orden acendente o en orden descendente.</description>
+            <default>asc</default>
+            <default>desc</default>
+        </var>
         <var name="title" type="text">
             <title xml:lang="ko">게시판 제목</title>
             <title xml:lang="jp">掲示板タイトル</title>
