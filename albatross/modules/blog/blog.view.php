@@ -337,14 +337,14 @@
             }
 
             // 삭제하려는 글이 없으면 에러
-            if(!$comment) return $this->dispBlogContent();
+            if(!$oComment->isExists()) return $this->dispBlogContent();
 
             Context::set('document_srl',$comment->document_srl);
 
             // 권한이 없는 경우 비밀번호 입력화면으로
-            if($comment_srl&&$comment&&!$comment->is_granted) return $this->setTemplateFile('input_password_form');
+            if(!$oComment->isGranted()) return $this->setTemplateFile('input_password_form');
 
-            Context::set('comment',$comment);
+            Context::set('oComment',$oComment);
 
             $this->setTemplateFile('delete_comment_form');
         }
