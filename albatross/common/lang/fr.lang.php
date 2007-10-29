@@ -21,6 +21,7 @@
     $lang->cmd_comment_registration = 'Ajouter le Commentaire';
     $lang->cmd_insert = 'Insérer';
     $lang->cmd_save = 'Economiser';
+    $lang->cmd_load = '불러오기';
     $lang->cmd_input = 'Entrer';
     $lang->cmd_search = 'Rechercher';
     $lang->cmd_cancel = 'Decommander';
@@ -52,6 +53,11 @@
     $lang->cmd_open_calendar = 'Choisir la Date';
     $lang->cmd_send = 'Envoyer';
     $lang->cmd_print = 'Imprimer';
+    $lang->cmd_scrap = '스크랩';
+    $lang->cmd_preview = '미리 보기';
+    $lang->cmd_reset = '초기화';
+    $lang->cmd_remake_cache = "캐시파일 재생성";
+    $lang->cmd_publish = "발행";
 
     $lang->enable = 'Permettre';
     $lang->disable = 'Neutraliser';
@@ -178,6 +184,7 @@
     $lang->success_sended = 'Avec succès envoyé';
     $lang->success_reset = 'Avec succès remisé';
     $lang->success_leaved = 'Avec succès fait cécession';
+    $lang->success_saved = '저장되었습니다';
 
     $lang->fail_to_delete = 'N\'a pas pu être supprimé.';
     $lang->fail_to_move = 'N\'a pas pu être déplacé';

@@ -97,6 +97,7 @@
     $lang->cmd_manage_form = 'Manejo de forma del registro';
     $lang->cmd_view_own_document = 'Ver documentos escritos';
     $lang->cmd_view_scrapped_document = 'Ver Scraps';
+    $lang->cmd_view_saved_document = '저장함 보기';
     $lang->cmd_send_email = 'Enviar Email';
     $lang->cmd_send_message = 'Enviar Mensaje';
     $lang->cmd_reply_message = 'Responder el mensaje';

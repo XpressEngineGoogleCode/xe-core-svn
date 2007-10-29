@@ -402,6 +402,58 @@
         }
 
         /**
+         * @brief 게시글 저장
+         **/
+        function procMemberSaveDocument() {
+            // 로그인 정보 체크
+            if(!Context::get('is_logged')) return new Object(-1, 'msg_not_logged');
+
+            $logged_info = Context::get('logged_info');
+
+            // form 정보를 모두 받으a
+            $obj = Context::getRequestVars();
+
+            // 글의 대상 모듈을 회원 정보로 변경
+            $obj->module_srl = $logged_info->member_srl;
+
+            $oDocumentModel = &getModel('document');
+            $oDocumentController = &getController('document');
+
+            // 이미 존재하는 글인지 체크
+            $oDocument = $oDocumentModel->getDocument($obj->document_srl, $this->grant->manager);
+
+            // 이미 존재하는 경우 수정
+            if($oDocument->isExists() && $oDocument->document_srl == $obj->document_srl) {
+                $output = $oDocumentController->updateDocument($oDocument, $obj);
+                $msg_code = 'success_updated';
+
+            // 그렇지 않으면 신규 등록
+            } else {
+                $output = $oDocumentController->insertDocument($obj);
+                $msg_code = 'success_registed';
+                $obj->document_srl = $output->get('document_srl');
+            }
+
+            $this->setMessage('success_saved');
+        }
+
+        /**
+         * @brief 저장된 글 삭제
+         **/
+        function procMemberDeleteSavedDocument() {
+            // 로그인 정보 체크
+            if(!Context::get('is_logged')) return new Object(-1, 'msg_not_logged');
+            $logged_info = Context::get('logged_info');
+
+            $document_srl = (int)Context::get('document_srl');
+            if(!$document_srl) return new Object(-1,'msg_invalid_request');
+
+            // 변수 정리
+            $oDocumentController = &getController('document');
+            $oDocumentController->deleteDocument($document_srl, true);
+        }
+
+        /**
          * @brief 친구 추가
          **/
         function procMemberAddFriend() {
@@ -1192,6 +1244,7 @@
             $menu_list['dispMemberFriend'] = 'cmd_view_friend';
             $menu_list['dispMemberMessages'] = 'cmd_view_message_box';
             $menu_list['dispMemberScrappedDocument'] = 'cmd_view_scrapped_document';
+            $menu_list['dispMemberSavedDocument'] = 'cmd_view_saved_document';
             $menu_list['dispMemberOwnDocument'] = 'cmd_view_own_document';
             return $menu_list;
         }

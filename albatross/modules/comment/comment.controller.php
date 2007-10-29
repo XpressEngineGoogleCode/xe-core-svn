@@ -114,7 +114,7 @@
             if(!$obj->comment_srl) $obj->comment_srl = getNextSequence();
 
             // 순서를 정함
-            $obj->list_order = $obj->comment_srl * -1;
+            $obj->list_order = getNextSequence() * -1;
 
             // 내용에서 제로보드XE만의 태그를 삭제
             $obj->content = preg_replace('!<\!--(Before|After)Document\(([0-9]+),([0-9]+)\)-->!is', '', $obj->content);

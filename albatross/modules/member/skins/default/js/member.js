@@ -240,3 +240,12 @@ function doDeleteScrap(document_srl) {
 function completeFindMemberAccount(ret_obj, response_tags) {
     alert(ret_obj['message']);
 }
+
+/* 저장글 삭제 */
+function doDeleteSavedDocument(document_srl, confirm_message) {
+    if(!confirm(confirm_message)) return false;
+
+    var params = new Array();
+    params['document_srl'] = document_srl;
+    exec_xml('member', 'procMemberDeleteSavedDocument', params, function() { location.reload(); });
+}

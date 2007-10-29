@@ -655,6 +655,49 @@ function doDocumentPreview(obj) {
     }
 }
 
+/* 게시글 저장 */
+function doDocumentSave(obj) {
+    var editor_sequence = obj.form.getAttribute('editor_sequence');
+    var prev_content = editorRelKeys[editor_sequence]['content'].value;
+    if(typeof(editor_sequence)!='undefined' && editor_sequence && typeof(editorRelKeys)!='undefined' && typeof(editorGetContent)=='function') {
+        var content = editorGetContent(editor_sequence);
+        editorRelKeys[editor_sequence]['content'].value = content;
+    }
+
+    var oFilter = new XmlJsFilter(obj.form, "member", "procMemberSaveDocument", completeDocumentSave);
+    oFilter.addResponseItem("error");
+    oFilter.addResponseItem("message");
+    oFilter.proc();
+
+    editorRelKeys[editor_sequence]['content'].value = prev_content;
+    return false;
+}
+
+function completeDocumentSave(ret_obj) {
+    alert(ret_obj['message']);
+}
+
+/* 저장된 게시글 불러오기 */
+var objForSavedDoc = null;
+function doDocumentLoad(obj) {
+    // 저장된 게시글 목록 불러오기
+    objForSavedDoc = obj.form;
+    popopen(request_uri.setQuery('module','member').setQuery('act','dispSavedDocumentList'));
+}
+
+/* 저장된 게시글의 선택 */
+function doDocumentSelect(document_srl) {
+    if(!opener || !opener.objForSavedDoc) {
+        window.close();
+        return;
+    }
+
+    // 게시글을 가져와서 등록하기
+    opener.location.href = opener.current_url.setQuery('document_srl', document_srl);
+    window.close();
+}
+
+
 /* 스킨 정보 */
 function viewSkinInfo(module, skin) {
     popopen("./?module=module&act=dispModuleSkinInfo&selected_module="+module+"&skin="+skin, 'SkinInfo');

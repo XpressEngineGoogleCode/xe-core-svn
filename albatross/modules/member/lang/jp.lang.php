@@ -97,6 +97,7 @@
     $lang->cmd_manage_form = '加入フォーム管理';
     $lang->cmd_view_own_document = 'プレビュー';
     $lang->cmd_view_scrapped_document = 'スクラップ表示';
+    $lang->cmd_view_saved_document = '저장함 보기';
     $lang->cmd_send_email = 'メール送信';
     $lang->cmd_send_message = 'メッセージ送信';
     $lang->cmd_reply_message = 'メッセージへの返信';

@@ -21,6 +21,7 @@
     $lang->cmd_comment_registration = 'コメント登録';
     $lang->cmd_insert = '挿入';
     $lang->cmd_save = '保存';
+    $lang->cmd_load = '불러오기';
     $lang->cmd_input = '入力';
     $lang->cmd_search = '検索';
     $lang->cmd_cancel = 'キャンセル';
@@ -56,6 +57,7 @@
     $lang->cmd_preview = 'プレビュー';
     $lang->cmd_reset = '初期化';
     $lang->cmd_remake_cache = "キャッシュファイル再生成";
+    $lang->cmd_publish = "발행";
 
     $lang->enable = '可能';
     $lang->disable = '不可';
@@ -183,6 +185,7 @@
     $lang->success_sended = '送信しました。';
     $lang->success_reset = '初期化しました。';
     $lang->success_leaved = '脱会しました。';
+    $lang->success_saved = '저장되었습니다';
 
     $lang->fail_to_delete = '削除に失敗しました。';
     $lang->fail_to_move = '移動に失敗しました。';

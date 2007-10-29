@@ -21,6 +21,7 @@
     $lang->cmd_comment_registration = 'Add Comment';
     $lang->cmd_insert = 'Insert';
     $lang->cmd_save = 'Save';
+    $lang->cmd_load = '불러오기';
     $lang->cmd_input = 'Input';
     $lang->cmd_search = 'Search';
     $lang->cmd_cancel = 'Cancel';
@@ -57,6 +58,7 @@
     $lang->cmd_preview = 'Preview';
     $lang->cmd_reset = 'Reset';
     $lang->cmd_remake_cache = "Re-create cache file";
+    $lang->cmd_publish = "발행";
 
     $lang->enable = 'Enable';
     $lang->disable = 'Disable';
@@ -184,6 +186,7 @@
     $lang->success_sended = 'Sent successfully';
     $lang->success_reset = 'Reset successfully';
     $lang->success_leaved = 'All member data have been deleted completely.';
+    $lang->success_saved = '저장되었습니다';
 
     $lang->fail_to_delete = 'Could not be deleted';
     $lang->fail_to_move = 'Could not be moved';

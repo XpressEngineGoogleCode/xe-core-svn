@@ -169,7 +169,7 @@
         function getNickName() {
             return htmlspecialchars($this->get('nick_name'));
         }
-        
+
         function getTitleText($cut_size = 0, $tail='...') {
             if($this->isSecret() && !$this->isGranted()) return Context::getLang('msg_is_secret');
 

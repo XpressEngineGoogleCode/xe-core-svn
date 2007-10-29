@@ -21,6 +21,7 @@
     $lang->cmd_comment_registration = '提交评论';
     $lang->cmd_insert = '添加';
     $lang->cmd_save = '保存';
+    $lang->cmd_load = '불러오기';
     $lang->cmd_input = '输入';
     $lang->cmd_search = '搜索';
     $lang->cmd_cancel = '取消';
@@ -57,6 +58,7 @@
     $lang->cmd_preview = '预览';
     $lang->cmd_reset = '初始化';
     $lang->cmd_remake_cache = "重新生成缓冲文件";
+    $lang->cmd_publish = "발행";
 
     $lang->enable = '可用';
     $lang->disable = '禁用';
@@ -184,6 +186,7 @@
     $lang->success_sended = '发送成功！';
     $lang->success_reset = '初始化成功';
     $lang->success_leaved = '注销成功！';
+    $lang->success_saved = '저장되었습니다';
 	
     $lang->fail_to_delete = '删除成功！';
     $lang->fail_to_move = '移动成功！';

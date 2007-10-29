@@ -111,7 +111,7 @@
 
             // 조회수, 등록순서 설정
             if(!$obj->readed_count) $obj->readed_count = 0;
-            $obj->update_order = $obj->list_order = $obj->document_srl * -1;
+            $obj->update_order = $obj->list_order = getNextSequence() * -1;
 
             // 수동입력을 대비해서 비밀번호의 hash상태를 점검, 수동입력이 아니면 무조건 md5 hash
             if($obj->password && !$obj->password_is_hashed) $obj->password = md5($obj->password);

@@ -26,6 +26,7 @@
 
             // template path 지정
             $tpl_path = sprintf('%sskins/%s', $this->module_path, $skin);
+            if(!is_dir($tpl_path)) $tpl_path = sprintf('%sskins/%s', $this->module_path, 'default');
             $this->setTemplatePath($tpl_path);
         }
 
@@ -165,6 +166,31 @@
         }
 
         /**
+         * @brief 회원의 저장함 보기
+         **/
+        function dispMemberSavedDocument() {
+            $oMemberModel = &getModel('member');
+
+            // 로그인 되어 있지 않을 경우 로그인 되어 있지 않다는 메세지 출력
+            if(!$oMemberModel->isLogged()) return $this->stop('msg_not_logged');
+
+            // 저장함에 보관된 글을 가져옴 (저장함은 module_srl이 member_srl로 세팅되어 있음)
+            $logged_info = Context::get('logged_info');
+            $args->module_srl = $logged_info->member_srl;
+            $args->page = (int)Context::get('page');
+
+            $oDocumentModel = &getModel('document');
+            $output = $oDocumentModel->getDocumentList($args, true);
+            Context::set('total_count', $output->total_count);
+            Context::set('total_page', $output->total_page);
+            Context::set('page', $output->page);
+            Context::set('document_list', $output->data);
+            Context::set('page_navigation', $output->page_navigation);
+
+            $this->setTemplateFile('saved_list');
+        }
+
+        /**
          * @brief 로그인 폼 출력
          **/
         function dispMemberLoginForm() {
@@ -272,6 +298,34 @@
             Context::set('page_navigation', $output->page_navigation);
 
             $this->setTemplateFile('member_messages');
+        }
+
+        /**
+         * @brief 저장된 글 목록을 보여줌
+         **/
+        function dispSavedDocumentList() {
+            $this->setLayoutFile('popup_layout');
+
+            $oMemberModel = &getModel('member');
+
+            // 로그인 되어 있지 않을 경우 로그인 되어 있지 않다는 메세지 출력
+            if(!$oMemberModel->isLogged()) return $this->stop('msg_not_logged');
+
+            // 저장함에 보관된 글을 가져옴 (저장함은 module_srl이 member_srl로 세팅되어 있음)
+            $logged_info = Context::get('logged_info');
+            $args->module_srl = $logged_info->member_srl;
+            $args->page = (int)Context::get('page');
+            $args->list_count = 10;
+
+            $oDocumentModel = &getModel('document');
+            $output = $oDocumentModel->getDocumentList($args, true);
+            Context::set('total_count', $output->total_count);
+            Context::set('total_page', $output->total_page);
+            Context::set('page', $output->page);
+            Context::set('document_list', $output->data);
+            Context::set('page_navigation', $output->page_navigation);
+
+            $this->setTemplateFile('saved_list_popup');
         }
 
         /**

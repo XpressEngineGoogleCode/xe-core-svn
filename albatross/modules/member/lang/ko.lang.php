@@ -97,6 +97,7 @@
     $lang->cmd_manage_form = '가입폼관리';
     $lang->cmd_view_own_document = '작성글 보기';
     $lang->cmd_view_scrapped_document = '스크랩 보기';
+    $lang->cmd_view_saved_document = '저장함 보기';
     $lang->cmd_send_email = '메일 보내기';
     $lang->cmd_send_message = '쪽지 보내기';
     $lang->cmd_reply_message = '쪽지 답장';

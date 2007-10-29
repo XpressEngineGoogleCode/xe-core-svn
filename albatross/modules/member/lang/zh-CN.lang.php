@@ -97,6 +97,7 @@
     $lang->cmd_manage_form = '注册表单管理';
     $lang->cmd_view_own_document = '查看我的帖子';
     $lang->cmd_view_scrapped_document = '查看收藏';
+    $lang->cmd_view_saved_document = '저장함 보기';
     $lang->cmd_send_email = '发送邮件';
     $lang->cmd_send_message = '发送短消息';
     $lang->cmd_reply_message = '回复短消息';

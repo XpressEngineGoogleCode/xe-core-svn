@@ -97,6 +97,7 @@
     $lang->cmd_manage_form = 'Manage Join Form';
     $lang->cmd_view_own_document = 'View Written Articles';
     $lang->cmd_view_scrapped_document = 'Scraps';
+    $lang->cmd_view_saved_document = '저장함 보기';
     $lang->cmd_send_email = 'Send Mail';
     $lang->cmd_send_message = 'Send Message';
     $lang->cmd_reply_message = 'Reply Message';

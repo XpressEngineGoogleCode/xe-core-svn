@@ -23,6 +23,7 @@
             $oModuleController->insertActionForward('member', 'view', 'dispMemberLogout');
             $oModuleController->insertActionForward('member', 'view', 'dispMemberOwnDocument');
             $oModuleController->insertActionForward('member', 'view', 'dispMemberScrappedDocument');
+            $oModuleController->insertActionForward('member', 'view', 'dispMemberSavedDocument');
             $oModuleController->insertActionForward('member', 'view', 'dispMemberFindAccount');
 
             $oModuleController->insertActionForward('member', 'view', 'dispMemberMessages');
@@ -153,6 +154,10 @@
             $act = $oModuleModel->getActionForward('procMemberDeleteProfileImage');
             if(!$act) return true;
 
+            // dispMemberSavedDocument act의 여부 체크 (2007. 10. 29)
+            $act = $oModuleModel->getActionForward('dispMemberSavedDocument');
+            if(!$act) return true;
+
             return false;
         }
 
@@ -164,6 +169,7 @@
             $oModuleController = &getController('module');
             $oModuleController->insertActionForward('member', 'view', 'dispMemberOwnDocument');
             $oModuleController->insertActionForward('member', 'view', 'dispMemberScrappedDocument');
+            $oModuleController->insertActionForward('member', 'view', 'dispMemberSavedDocument');
             $oModuleController->insertActionForward('member', 'view', 'dispMemberOpenIDLeave');
             $oModuleController->insertActionForward('member', 'view', 'dispMemberFindAccount');
             $oModuleController->insertActionForward('member', 'controller', 'procMemberInsertProfileImage');

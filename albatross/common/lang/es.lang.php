@@ -21,6 +21,7 @@
     $lang->cmd_comment_registration = 'Agregar commentarios';
     $lang->cmd_insert = 'Insertar';
     $lang->cmd_save = 'Guardar';
+    $lang->cmd_load = '불러오기';
     $lang->cmd_input = 'Ingresar';
     $lang->cmd_search = 'Buscar';
     $lang->cmd_cancel = 'Cancelar';
@@ -55,6 +56,8 @@
     $lang->cmd_scrap = 'Scrap';
     $lang->cmd_preview = 'Previo';
     $lang->cmd_reset = 'Rehacer';
+    $lang->cmd_remake_cache = "캐시파일 재생성";
+    $lang->cmd_publish = "발행";
 
     $lang->enable = 'Activar';
     $lang->disable = 'Desactivar';
@@ -182,6 +185,7 @@
     $lang->success_sended = 'Enviado con éxito';
     $lang->success_reset = 'Reajustado con éxito';
     $lang->success_leaved = 'Abandonado con éxito';
+    $lang->success_saved = '저장되었습니다';
 
     $lang->fail_to_delete = 'No puede ser borrado';
     $lang->fail_to_move = 'No puede ser movido';
