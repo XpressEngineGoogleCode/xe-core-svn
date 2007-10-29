@@ -131,6 +131,9 @@
             // 내용에서 제로보드XE만의 태그를 삭제
             $obj->content = preg_replace('!<\!--(Before|After)Document\(([0-9]+),([0-9]+)\)-->!is', '', $obj->content);
 
+            // 세션에서 최고 관리자가 아니면 iframe, script 제거
+            if($logged_info->is_admin != 'Y') $obj->content = removeHackTag($obj->content);
+
             // DB에 입력
             $output = executeQuery('document.insertDocument', $obj);
             if(!$output->toBool()) {
@@ -222,6 +225,9 @@
 
             // 내용에서 제로보드XE만의 태그를 삭제
             $obj->content = preg_replace('!<\!--(Before|After)Document\(([0-9]+),([0-9]+)\)-->!is', '', $obj->content);
+
+            // 세션에서 최고 관리자가 아니면 iframe, script 제거
+            if($logged_info->is_admin != 'Y') $obj->content = removeHackTag($obj->content);
 
             // DB에 입력
             $output = executeQuery('document.updateDocument', $obj);
