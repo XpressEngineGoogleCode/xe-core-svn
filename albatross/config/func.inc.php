@@ -198,13 +198,17 @@
      * 손쉽고 확실한 변환을 위해 2byte unicode로 변형한후 처리를 한다
      **/
     function cut_str($string, $cut_size, $tail='...') {
-        if(!function_exists('iconv')) return $string;
         if(!$string || !$cut_size) return $string;
-        $unicode_str = iconv("UTF-8","UCS-2",$string);
-        if(strlen($unicode_str) < $cut_size*2) return $string;
 
-        $output_str = substr($unicode_str, 0, $cut_size*2);
-        return iconv("UCS-2","UTF-8",$output_str).$tail;
+        if(function_exists('iconv')) {
+            $unicode_str = iconv("UTF-8","UCS-2",$string);
+            if(strlen($unicode_str) < $cut_size*2) return $string;
+            $output_str = substr($unicode_str, 0, $cut_size*2);
+            return iconv("UCS-2","UTF-8",$output_str).$tail;
+        }
+
+        $arr = array();
+        return preg_match('/.{'.$cut_size.'}/su', $string, $arr) ? $arr[0].$tail : $string; 
     }
 
     /**
