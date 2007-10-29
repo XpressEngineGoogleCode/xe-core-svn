@@ -282,6 +282,7 @@
         function setLangType($lang_type = 'ko') {
             $oContext = &Context::getInstance();
             $oContext->_setLangType($lang_type);
+            $_SESSION['lang_type'] = $lang_type;
         }
 
         /**
