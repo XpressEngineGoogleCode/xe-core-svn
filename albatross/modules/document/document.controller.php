@@ -686,6 +686,11 @@
             // xml파일 생성시 필요한 정보가 없으면 그냥 return
             if(!$module_srl) return;
 
+            // 모듈 정보를 가져옴 (mid를 구하기 위해)
+            $oModuleModel = &getModel('module');
+            $module_info = $oModuleModel->getModuleInfoByModuleSrl($module_srl);
+            $mid = $module_info->mid;
+
             if(!is_dir('./files/cache/document_category')) FileHandler::makeDir('./files/cache/document_category');
 
             // 캐시 파일의 이름을 지정
@@ -707,6 +712,7 @@
 
             // 루프를 돌면서 tree 구성
             foreach($list as $category_srl => $node) {
+                $node->mid = $mid;
                 $parent_srl = (int)$node->parent_srl;
                 $tree[$parent_srl][$category_srl] = $node;
             }
@@ -737,6 +743,7 @@
          **/
         function getXmlTree($source_node, $tree) {
             if(!$source_node) return;
+
             foreach($source_node as $category_srl => $node) {
                 $child_buff = "";
 
@@ -757,7 +764,7 @@
                         $category_srl,
                         $group_check_code,
                         $title,
-                        getUrl('','mid',$this->module_info->mid,'category',$category_srl),
+                        getUrl('','mid',$node->mid,'category',$category_srl),
                         $expand
                 );
                 
