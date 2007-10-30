@@ -7,8 +7,8 @@
 <col width="*" />
 <!--@if($item_info->parent_menu_name)-->
 <tr>
-    <th scope="row">{$lang->parent_menu_name}</th>
-    <td>{$item_info->parent_menu_name}</td>
+    <th scope="row" colspan="2">{$lang->parent_menu_name}</th>
+    <td>{$item_info->parent_menu_name[$lang_type]}</td>
 </tr>
 <!--@end-->
 

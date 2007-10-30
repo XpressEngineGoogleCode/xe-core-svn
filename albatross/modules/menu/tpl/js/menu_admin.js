@@ -77,12 +77,10 @@ function hideCategoryInfo() {
 function completeGetMenuItemTplInfo(ret_obj, response_tags) {
     var obj = xGetElementById('menu_zone_info');
 
-    if(xScrollTop()>140) {
-        obj.style.position = 'absolute';
-        obj.style.top = (xScrollTop()+20)+'px';
+    if(xScrollTop()>200) {
+        obj.style.marginTop = xScrollTop()+'px';
     } else {
-        obj.style.position = 'static';
-        obj.style.top = '0px;';
+        obj.style.marginTop = '0px;';
     }
 
     var tpl = ret_obj['tpl'];
