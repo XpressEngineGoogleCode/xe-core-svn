@@ -142,7 +142,7 @@
             }
 
             // 성공하였을 경우 category_srl이 있으면 카테고리 update
-            if($obj->category_srl) $this->updateCategoryCount($obj->category_srl);
+            if($obj->category_srl) $this->updateCategoryCount($obj->module_srl, $obj->category_srl);
 
             // trigger 호출 (after)
             if($output->toBool()) {
@@ -238,8 +238,8 @@
 
             // 성공하였을 경우 category_srl이 있으면 카테고리 update
             if($source_obj->get('category_srl')!=$obj->category_srl) {
-                if($source_obj->get('category_srl')) $this->updateCategoryCount($source_obj->get('category_srl'));
-                if($obj->category_srl) $this->updateCategoryCount($obj->category_srl);
+                if($source_obj->get('category_srl')) $this->updateCategoryCount($obj->module_srl, $source_obj->get('category_srl'));
+                if($obj->category_srl) $this->updateCategoryCount($obj->module_srl, $obj->category_srl);
             }
 
             // trigger 호출 (after)
@@ -290,7 +290,7 @@
             }
 
             // 카테고리가 있으면 카테고리 정보 변경
-            if($oDocument->get('category_srl')) $this->updateCategoryCount($oDocument->get('category_srl'));
+            if($oDocument->get('category_srl')) $this->updateCategoryCount($oDocument->get('module_srl'),$oDocument->get('category_srl'));
 
             // 신고 삭제
             executeQuery('document.deleteDeclared', $args);
@@ -524,14 +524,17 @@
         /** 
          * @brief 카테고리에 문서의 숫자를 변경
          **/
-        function updateCategoryCount($category_srl, $document_count = 0) {
+        function updateCategoryCount($module_srl, $category_srl, $document_count = 0) {
             // document model 객체 생성
             $oDocumentModel = &getModel('document');
             if(!$document_count) $document_count = $oDocumentModel->getCategoryDocumentCount($category_srl);
 
             $args->category_srl = $category_srl;
             $args->document_count = $document_count;
-            return executeQuery('document.updateCategoryCount', $args);
+            $output = executeQuery('document.updateCategoryCount', $args);
+            if($output->toBool()) $this->makeCategoryXmlFile($module_srl);
+
+            return $output;
         }
 
         /**
@@ -760,12 +763,13 @@
                 else $group_check_code = "true";
 
                 $attribute = sprintf(
-                        'node_srl="%s" text="<?=(%s?"%s":"")?>" url="%s" expand="%s" ',
+                        'node_srl="%s" text="<?=(%s?"%s":"")?>" url="%s" expand="%s" document_count="%d" ',
                         $category_srl,
                         $group_check_code,
                         $title,
                         getUrl('','mid',$node->mid,'category',$category_srl),
-                        $expand
+                        $expand,
+                        $node->document_count
                 );
                 
                 if($child_buff) $buff .= sprintf('<node %s>%s</node>', $attribute, $child_buff);

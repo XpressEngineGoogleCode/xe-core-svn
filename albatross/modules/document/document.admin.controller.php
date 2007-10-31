@@ -156,8 +156,8 @@
 
                 // 카테고리가 변경되었으면 검사후 없는 카테고리면 0으로 세팅
                 if($source_category_srl != $category_srl) {
-                    if($source_category_srl) $oDocumentController->updateCategoryCount($source_category_srl);
-                    if($category_srl) $oDocumentController->updateCategoryCount($category_srl);
+                    if($source_category_srl) $oDocumentController->updateCategoryCount($oDocument->get('module_srl'), $source_category_srl);
+                    if($category_srl) $oDocumentController->updateCategoryCount($module_srl, $category_srl);
                 }
             }
 
