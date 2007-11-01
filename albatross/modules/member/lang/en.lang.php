@@ -59,7 +59,7 @@
     $lang->webmaster_name = "Webmaster's Name";
     $lang->webmaster_email = "Webmaster's Email";
 
-    $lang->about_webmaster_name = "Please input webmaster's name which will be used for authentication mails or other site administration. (기본 : webmaster)";
+    $lang->about_webmaster_name = "Please input webmaster's name which will be used for authentication mails or other site administration. (default : webmaster)";
     $lang->about_webmaster_email = "Please input webmaster's email address.";
 
     $lang->search_target_list = array(
