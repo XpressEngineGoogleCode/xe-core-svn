@@ -6,7 +6,7 @@
      **/
 
     $lang->admin_info = '관리자 정보';
-    $lang->summary = '요약 정보';
+    $lang->admin_index = '관리자 초기 페이지';
 
     $lang->module_category_title = array(
         'service' => '서비스형 모듈',
