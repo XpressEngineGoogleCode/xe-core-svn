@@ -144,6 +144,7 @@
             $oModuleController->updateModuleSkinVars($module_srl, $skin_vars);
 
             // 레이아웃 확장변수 수정
+            $layout_args->mid = $obj->mid;
             $layout_args->extra_vars = $skin_vars;
             $layout_args->layout_srl = $module_srl;
             $oLayoutAdminController = &getAdminController('layout');
@@ -265,6 +266,7 @@
                 }
 
                 // 레이아웃 수정
+                $layout_args->mid = $args->mid;
                 $layout_args->layout_srl = $layout_args->module_srl = $module_srl = $output->get('module_srl');
                 $layout_args->title = $args->browser_title;
                 $layout_args->layout_path = sprintf('./modules/blog/skins/%s/layout.html', $args->skin);
