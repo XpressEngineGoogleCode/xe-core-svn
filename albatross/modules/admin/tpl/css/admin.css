@@ -15,11 +15,11 @@ IE7 Only
 
 */
 
-h3 { background:url("../images/top_head_title_bg.gif") repeat-x left top; font-size:1em; border:1px solid #E3E3E2; padding:9px; color:#555555; }
+h3 { background:url("../images/top_head_title_bg.gif") repeat-x left top; font-size:1em; border:1px solid #E3E3E2; padding:9px 9px 9px 25px; color:#555555; }
 h3 .gray { color:#9d9d9d;}
 
 .adminTable { width:100%;  border-left:1px solid #E3E3E2; border-top:1px solid #E3E3E2; margin-bottom:10px; table-layout:fixed;}
-.adminTable caption { background:url("../images/s_application.gif") no-repeat left 5px; padding:6px 5px 4px 18px; text-align:left; border:1px solid #E3E3E2; border-bottom:none; font-weight:bold; background-color:#F9F8F5; color:#5E6266; }
+.adminTable caption { background:url("../images/s_application.gif") no-repeat 3px 5px; padding:6px 5px 4px 22px; text-align:left; border:1px solid #E3E3E2; border-bottom:none; font-weight:bold; background-color:#F9F8F5; color:#5E6266; }
 .adminTable th { background-color:#FAF8F4; padding:5px; font-weight:normal; text-align:left; padding-left:10px; color:#606060; border-right:1px solid #E3E3E2; border-bottom:1px solid #E3E3E2; white-space:nowrap; }
 
 .adminTable th.button { text-align:right; }
