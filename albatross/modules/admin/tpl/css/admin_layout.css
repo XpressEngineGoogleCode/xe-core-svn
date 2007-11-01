@@ -35,3 +35,6 @@ body { background:url("../images/admin_background.gif") repeat-x left top; backg
 #adminMenuContent li.on a { color:#000000; }
 
 
+#adminLayoutCopyright { width:1000px; text-align:right; margin-top:10px; font-size:.8em; font-family:tahoma; color:#888888; padding-bottom:50px; }
+#adminLayoutCopyright a { color:#666666; text-decoration:none; }
+#adminLayoutCopyright a span.red { color:#9A1827; }
