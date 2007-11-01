@@ -15,7 +15,7 @@ IE7 Only
 
 */
 
-h3 { background:url("../images/top_head_title_bg.gif") repeat-x left top; font-size:1em; border:1px solid #E3E3E2; padding:9px 9px 9px 25px; color:#555555; }
+h3 { background:url("../images/top_head_title_bg.gif") repeat-x left top; font-size:1em; border:1px solid #E3E3E2; padding:11px 9px 7px 25px; color:#555555; }
 h3 .gray { color:#9d9d9d;}
 
 .adminTable { width:100%;  border-left:1px solid #E3E3E2; border-top:1px solid #E3E3E2; margin-bottom:10px; table-layout:fixed;}
