@@ -4,23 +4,22 @@
 
 <h3>{$lang->trackback} <span class="gray">{$lang->cmd_management}</span></h3>
 
+<div class="gap1"></div>
+
 <form action="./" method="get" onsubmit="return procFilter(this, insert_config)">
-    <table cellspacing="0" class="tableType2 gap1">
+    <table cellspacing="0" class="adminTable">
     <col width="150" />
     <col />
+    <col width="100" />
     <tr>
         <th scope="col">{$lang->enable_trackback}</th>
         <td>
             <input type="checkbox" name="enable_trackback" value="Y" size="3" <!--@if($config->enable_trackback!='N')-->checked="checked"<!--@end-->/> {$lang->cmd_use}
             <p>{$lang->about_enable_trackback}</p>
         </td>
+        <th scope="col" class="centerButton"><span class="button"><input type="submit" value="{$lang->cmd_registration}" accesskey="s" /></span></th>
     </tr>
     </table>
-
-    <!-- 버튼 -->
-    <div class="tRight gap1">
-        <span class="button"><input type="submit" value="{$lang->cmd_registration}" accesskey="s" /></span>
-    </div>
 </form>
 
 <!-- 정보 -->
@@ -32,7 +31,14 @@
 <input type="hidden" name="page" value="{$page}" />
 
     <!-- 목록 -->
-    <table cellspacing="0" class="tableType4">
+    <table cellspacing="0" class="adminTable">
+    <col width="50" />
+    <col />
+    <col />
+    <col />
+    <col width="80" />
+    <col width="70" />
+    <col width="50" />
     <thead>
         <tr>
             <th scope="col">{$lang->no}</th>

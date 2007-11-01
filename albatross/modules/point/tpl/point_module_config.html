@@ -3,9 +3,9 @@
 <form action="./" method="get" onsubmit="return procFilter(this, insert_point_module_config);" id="fo_point">
     <input type="hidden" name="target_module_srl" value="{$module_config['module_srl']}" />
 
-    <table cellspacing="0" class="tableType2 gap1">
+    <table cellspacing="0" class="adminTable">
+    <caption>{$lang->point}</caption>
     <tr>
-        <th rowspan="2">{$lang->point}</th>
         <th>{$lang->point_insert_document}</th>
         <th>{$lang->point_insert_comment}</th>
         <th>{$lang->point_upload_file}</th>
@@ -17,11 +17,12 @@
         <td><input type="text" name="upload_file" value="{$module_config['upload_file']}" class="inputTypeText w80" /> {$module_config['point_name']}</td>
         <td><input type="text" name="download_file" value="{$module_config['download_file']}" class="inputTypeText w80" /> {$module_config['point_name']}</td>
     </tr>
+    <tr>
+        <th colspan="4" class="button"><span class="button"><input type="submit" value="{$lang->cmd_save}" /></span></th>
+    </tr>
     </table>
 
     <!-- 버튼 -->
-    <div class="tRight gap1">
-        <span class="button"><input type="submit" value="{$lang->cmd_save}" /></span>
-    </div>
 
 </form>
+    <div class="gap1"></div>

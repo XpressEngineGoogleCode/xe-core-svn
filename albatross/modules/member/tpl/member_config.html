@@ -6,8 +6,8 @@
 <input type="hidden" name="temp_srl" value="" />
 <input type="hidden" name="agreement" value="{htmlspecialchars($config->agreement)}" />
 
-<table cellspacing="0" class="tableType2 gap1">
-<col width="150" />
+<table cellspacing="0" class="adminTable">
+<col width="180" />
 <col />
     <tr>
         <th scope="row">{$lang->webmaster_name}</th>
@@ -105,14 +105,15 @@
         <th scope="row">{$lang->colorset}</th>
         <td><div id="member_colorset"></div></td>
     </tr>
+    <tr>
+        <th scope="row" colspan="2" class="button">
+            <span class="button"><input type="submit" value="{$lang->cmd_registration}" /></span>
+            <!--@if($module=="admin")-->
+            <a href="{getUrl('act','dispMemberAdminList')}" class="button"><span>{$lang->cmd_back}</span></a>
+            <!--@end-->
+        </th>
+    </tr>
     </table>
-
-    <div class="tRight gap1">
-        <span class="button"><input type="submit" value="{$lang->cmd_registration}" /></span>
-        <!--@if($module=="admin")-->
-        <a href="{getUrl('act','dispMemberAdminList')}" class="button"><span>{$lang->cmd_back}</span></a>
-        <!--@end-->
-    </div>
 
 </form>
 

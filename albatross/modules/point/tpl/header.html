@@ -1,5 +1,10 @@
 <!--%import("js/point_admin.js")-->
 <h3>{$lang->point} <span class="gray">{$lang->cmd_management}</span></h3>
+<!--@if($act=="dispPointAdminModuleConfig")-->
+<div class="infoText">{$lang->about_module_point}</div>
+<!--@else-->
+<div class="infoText">{$lang->about_point_module}</div>
+<!--@end-->
 
 <!--@if($module=='admin')-->
 <div class="header4">

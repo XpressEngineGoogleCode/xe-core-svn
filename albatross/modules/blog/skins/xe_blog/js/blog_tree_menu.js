@@ -220,7 +220,7 @@ function blogDrawNode(parent_node, depth) {
         if(document_count) document_count_text = '<span class="document_count">('+document_count+')</span>';
 
         // 왼쪽 폴더/페이지와 텍스트 위치를 맞추기 위해;;; table태그 일단 사용. 차후 바꾸자..
-        html += '<div id="'+zone_id+'" class="node_item">'+
+        html += '<div id="'+zone_id+'" class="node_item" style="overflow:hidden;white-space:nowrap;">'+
                     '<div id="'+zone_id+'_line" class="'+line_class+'">'+
                         '<table border="0" cellspacing="0" cellpadding="0"><tr><td height="19"><img src="'+request_uri+'/common/tpl/images/blank.gif" width="18" height="18" alt="" id="'+zone_id+'_folder" '+click_str+' /></td>'+
                         '<td><a href="#" id="'+zone_id+'_node" class="'+text_class+'" onclick="blogSelectNode(\''+url+'\');return false;">'+text+'</a>'+document_count_text+'</td></tr></table>'+

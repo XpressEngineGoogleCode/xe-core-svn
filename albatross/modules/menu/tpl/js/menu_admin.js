@@ -80,7 +80,7 @@ function completeGetMenuItemTplInfo(ret_obj, response_tags) {
     if(xScrollTop()>200) {
         obj.style.marginTop = xScrollTop()+'px';
     } else {
-        obj.style.marginTop = '0px;';
+        obj.style.marginTop = '0px';
     }
 
     var tpl = ret_obj['tpl'];

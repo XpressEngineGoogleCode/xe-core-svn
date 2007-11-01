@@ -12,11 +12,11 @@
 
     <div id="popBody">
 
-        <div class="infoText">{nl2br($lang->about_widget_code)}</div>
 
-        <table cellspacing="0" class="tableType5">
+        <table cellspacing="0" class="adminTable">
         <col width="100" />
         <col />
+        <caption>{nl2br($lang->about_widget_code)}</caption>
         <tr>
             <th scope="row">{$lang->widget}</th>
             <td>{$widget_info->title} ver {$widget_info->version}</td>
@@ -86,16 +86,16 @@
         <tr>
             <th scope="row">{$lang->widget_margin}</th>
             <td>
-                <table border="0" cellspacing="1">
+                <table cellspacing="0" class="adminTable">
                 <tr>
-                    <td colspan="2" align="center">{$lang->widget_margin_top} <input type="text" name="widget_margin_top" value="0" size="2" class="inputTypeText" />px</td>
+                    <td class="tCenter" colspan="2">{$lang->widget_margin_top} <input type="text" name="widget_margin_top" value="0" size="2" class="inputTypeText" />px</td>
                 </tr>
                 <tr>
-                    <td>{$lang->widget_margin_left} <input type="text" name="widget_margin_left" value="0" size="2" class="inputTypeText"/>px</td>
-                    <td align="right">{$lang->widget_margin_right} <input type="text" name="widget_margin_right" value="0" size="2" class="inputTypeText" />px</td>
+                    <td class="tCenter">{$lang->widget_margin_left} <input type="text" name="widget_margin_left" value="0" size="2" class="inputTypeText"/>px</td>
+                    <td class="tCenter">{$lang->widget_margin_right} <input type="text" name="widget_margin_right" value="0" size="2" class="inputTypeText" />px</td>
                 </tr>
                 <tr>
-                    <td colspan="2" align="center">{$lang->widget_margin_bottom} <input type="text" name="widget_margin_bottom" value="0" size="2" class="inputTypeText" />px</td>
+                    <td colspan="2" class="tCenter">{$lang->widget_margin_bottom} <input type="text" name="widget_margin_bottom" value="0" size="2" class="inputTypeText" />px</td>
                 </tr>
                 </table>
                 <p>{$lang->about_widget_margin}</p>

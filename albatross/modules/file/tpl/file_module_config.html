@@ -3,9 +3,10 @@
 <form action="./" method="get" onsubmit="return procFilter(this, insert_file_module_config)">
 <input type="hidden" name="target_module_srl" value="{$file_config->module_srl}" />
 
-    <table cellspacing="0" class="tableType2 gap1">
-    <col width="140" />
+    <table cellspacing="0" class="adminTable">
+    <col width="150" />
     <col width="*" />
+    <caption>{$lang->file}</caption>
     <tr>
         <th scope="col">{$lang->allowed_filesize}</th>
         <td>
@@ -40,10 +41,13 @@
             <!--@end-->
         </td>
     </tr>
+    <tr>
+        <th colspan="2" class="button">
+            <span class="button"><input type="submit" value="{$lang->cmd_save}" /></span>
+        </th>
+    </tr>
     </table>
 
-    <!-- 버튼 -->
-    <div class="tRight gap1">
-        <span class="button"><input type="submit" value="{$lang->cmd_save}" /></span>
-    </div>
 </form>
+
+    <div class="gap1"></div>

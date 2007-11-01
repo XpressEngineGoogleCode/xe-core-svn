@@ -464,6 +464,8 @@
             // 작성자 정보
             $module_info->title = $xml_obj->title->body;
             $module_info->version = $xml_obj->attrs->version;
+            $module_info->category = $xml_obj->attrs->category;
+            if(!$module_info->category) $module_info->category = 'service';
             $module_info->author->name = $xml_obj->author->name->body;
             $module_info->author->email_address = $xml_obj->author->attrs->email_address;
             $module_info->author->homepage = $xml_obj->author->attrs->link;
@@ -582,6 +584,7 @@
                 unset($obj);
 
                 $info->module = $module_name;
+                $info->category = $info->category;
                 $info->created_table_count = $created_table_count;
                 $info->table_count = $table_count;
                 $info->path = $path;

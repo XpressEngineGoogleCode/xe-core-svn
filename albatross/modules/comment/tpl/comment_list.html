@@ -10,7 +10,14 @@
 <input type="hidden" name="page" value="{$page}" />
 
     <!-- 목록 -->
-    <table cellspacing="0" class="tableType4">
+    <table cellspacing="0" class="adminTable">
+    <col width="50" />
+    <col />
+    <col width="120" />
+    <col width="80" />
+    <col width="100" />
+    <col width="70" />
+    <col width="50" />
     <thead>
         <tr>
             <th scope="col"><input type="checkbox" onclick="checkboxSelectAll(this.form, 'cart'); return false;" /></th>
@@ -44,7 +51,7 @@
             <td class="blue"><a href="{getUrl('','document_srl',$val->document_srl)}#comment_{$val->comment_srl}" onclick="window.open(this.href);return false;">{$lang->cmd_move}</a></td>
         </tr>
         <tr>
-            <td colspan="7" class="left">
+            <td colspan="6" class="left">
                 <input type="checkbox" name="cart" value="{$val->comment_srl}" />
                 {cut_str(htmlspecialchars(strip_tags($val->content)),100,'...')}
             </td>

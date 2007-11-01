@@ -3,8 +3,7 @@
 
 <form action="./" method="get" onsubmit="return procFilter(this, insert_config);">
 
-    <div class="infoText">{$lang->about_point_module}</div>
-    <table cellspacing="0" class="tableType2 gap1">
+    <table cellspacing="0" class="adminTable">
     <col width="180" />
     <col width="120" />
     <col width="120" />
@@ -53,7 +52,7 @@
     </tr>
     <tr>
         <th scope="col">{$lang->level_icon}</th>
-        <td colspan="2">
+        <td colspan="3">
             <select name="level_icon">
             <!--@foreach($level_icon_list as $key => $val)-->
                 <option value="{$val}" <!--@if($config->level_icon == $val)-->selected="selected"<!--@end-->>{$val}</option>
