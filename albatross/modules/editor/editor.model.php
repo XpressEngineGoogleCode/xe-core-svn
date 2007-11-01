@@ -29,7 +29,7 @@
             $oModuleModel = &getModel('module');
             $config = $oModuleModel->getModuleConfig('editor');
 
-            $editor_skin = $config->module_config[$module_serl];
+            $editor_skin = $config->module_config[$module_srl];
             if(!$editor_skin) $editor_skin = "default";
 
             return $editor_skin;
