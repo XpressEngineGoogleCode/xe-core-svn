@@ -10,4 +10,4 @@
 </head>
 <body>
 
-<div class="main_title">zeroboard4 data export tool ver 0.1</div>
+<div class="main_title">zeroboard4 data export tool ver 0.2</div>

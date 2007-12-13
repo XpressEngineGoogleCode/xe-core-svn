@@ -32,6 +32,12 @@ body, div, td, p, a {
     clear:both;
 }
 
+.module_list {
+    margin-top:10px;
+    margin-left:25px; 
+    width:400px; 
+}
+
 .header {
     width:80px;
     font-weight:bold;

@@ -1,7 +1,16 @@
 <?php 
+    /**
+     * @brief xml 데이터를export하는 파일
+     **/
+
+    // 일단 많은 수의 회원이 있을 수 있기에 time limit을 0으로 세팅
     set_time_limit(0);
 
-    include "lib.php";
+    // zMigration class파일 load
+    require_once("./classes/zMigration.class.php");
+
+    // library 파일 load
+    require_once("lib/lib.php");
 
     $filename = $_POST['filename'];
 
