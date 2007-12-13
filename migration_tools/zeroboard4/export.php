@@ -261,7 +261,7 @@
                 $files[] = $file_obj;
 
                 // 이미지 파일이라면 내용 상단에 이미지 추가
-                if(eregi('\.(jpg|gif|jpeg|png)$', $file_name1)) $obj->content = sprintf('<img src="%s" border="0" alt="" /><br />%s', $filename,  $obj->content);
+                if(eregi('\.(jpg|gif|jpeg|png)$', $file_name)) $obj->content = sprintf('<img src="%s" border="0" alt="" /><br />%s', $filename,  $obj->content);
             }
 
             $obj->attaches = $files;
