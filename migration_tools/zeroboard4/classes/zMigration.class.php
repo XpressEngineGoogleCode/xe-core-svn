@@ -146,7 +146,7 @@
         }
 
         function printPostItem($sequence, $obj) {
-            printf('<post sequence="%d">%s', $sequence, "\n");
+            print "<post>\r\n";
             // extra_vars, trackbacks, comments, attaches 정보를 별도로 분리
             $extra_vars = $obj->extra_vars;
             unset($obj->extra_vars);

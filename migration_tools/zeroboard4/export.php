@@ -19,10 +19,10 @@
     $target_module = $_POST['target_module'];
     $module_id = $_POST['module_id'];
 
-    //$charset = "EUC-KR";
-    //$path = "../bbs";
-    //$target_module = "module";
-    //$module_id = "movie";
+    $charset = "EUC-KR";
+    $path = "../bbs";
+    $target_module = "module";
+    $module_id = "yewon";
 
     // 입력받은 path를 이용하여 db 정보를 구함
     $db_info = getDBInfo($path);
