@@ -127,7 +127,7 @@
         $oMigration->printCategoryItem($category_list);
 
         // 게시글은 역순(오래된 순서)으로 구함
-        $query = sprintf('select a.*, b.user_id from zetyx_board_%s a left outer join zetyx_member_table b on a.ismember = b.no order by a.headnum desc, a.arrangenum desc limit 0, 30', $module_id);
+        $query = sprintf('select a.*, b.user_id from zetyx_board_%s a left outer join zetyx_member_table b on a.ismember = b.no order by a.headnum desc, a.arrangenum desc', $module_id);
         $document_result = $oMigration->query($query);
 
         while($document_info = mysql_fetch_object($document_result)) {
@@ -182,7 +182,7 @@
 
             // 게시글의 댓글을 구함
             $comments = array();
-            $query = sprintf('select a.*, b.user_id from zetyx_board_comment_%s a left outer join zetyx_member_table b on a.ismember = b.no where a.parent = %d', $module_id, $document_info->no);
+            $query = sprintf('select a.*, b.user_id from zetyx_board_comment_%s a left outer join zetyx_member_table b on a.ismember = b.no where a.parent = %d order by no asc', $module_id, $document_info->no);
             $comment_result = $oMigration->query($query);
             while($comment_info = mysql_fetch_object($comment_result)) {
                 $comment_obj = null;
