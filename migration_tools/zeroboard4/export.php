@@ -19,6 +19,11 @@
     $target_module = $_POST['target_module'];
     $module_id = $_POST['module_id'];
 
+    //$charset = "EUC-KR";
+    //$path = "../bbs";
+    //$target_module = "module";
+    //$module_id = "movie";
+
     // 입력받은 path를 이용하여 db 정보를 구함
     $db_info = getDBInfo($path);
     if(!$db_info) doError("입력하신 경로가 잘못되었거나 dB 정보를 구할 수 있는 파일이 없습니다");
@@ -117,10 +122,12 @@
         $oMigration->printHeader();
 
         // 카테고리를 구함
-        $query = "select * from zetyx_board_category_".$module_id;
-        $category_result = $oMigration->query($query);
-        while($category_info= mysql_fetch_object($category_result)) {
-            $category_list[$category_info->no] = strip_tags($category_info->name);
+        if($module_info->use_category) {
+            $query = "select * from zetyx_board_category_".$module_id;
+            $category_result = $oMigration->query($query);
+            while($category_info= mysql_fetch_object($category_result)) {
+                $category_list[$category_info->no] = strip_tags($category_info->name);
+            }
         }
 
         // 카테고리 정보 출력
@@ -133,7 +140,7 @@
         while($document_info = mysql_fetch_object($document_result)) {
             $obj = null;
 
-            if($document_info->category) $obj->category = $category_list[$document_info->category];
+            if($module_info->use_category && $document_info->category) $obj->category = $category_list[$document_info->category];
             $obj->title = $document_info->subject;
             $obj->content = $document_info->memo;
             $obj->readed_count = $document_info->hit;

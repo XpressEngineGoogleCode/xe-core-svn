@@ -76,6 +76,7 @@
         }
 
         function printString($string) {
+            $string = stripslashes($string);
             if($this->source_charset == 'UTF-8') print base64_encode($string);
             else print base64_encode(iconv($this->source_charset, $this->target_charset, $string));
         }
@@ -88,7 +89,7 @@
             if($fp) {
                 while(!feof($fp)) {
                     $buff .= fgets($fp, 1024);
-                    if(sizeof($buff)>1024*1024) {
+                    if(strlen($buff)>1024*512) {
                         print "\r\n<buff>"; print base64_encode($buff); print "</buff>";
                         $buff = null;
                     }
