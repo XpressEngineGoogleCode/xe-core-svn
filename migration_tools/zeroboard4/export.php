@@ -157,6 +157,7 @@
             $obj->is_secret = trim($document_info->is_secret)?'Y':'N';
             $obj->regdate =  date("YmdHis", $document_info->reg_date);
             $obj->update = null;
+            $obj->tags = '';
 
             // use_html옵션에 따른 컨텐츠 정리
             if($document_info->use_html != 2) $obj->content = nl2br($obj->content);
