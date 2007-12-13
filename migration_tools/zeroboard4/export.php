@@ -71,7 +71,7 @@
 
             // 이미지이름, 이미지마크, 프로필이미지등은 경로를 입력
             $obj->image_nickname = sprintf("%s%d.gif", $image_nickname_path, $member_info->no);
-            $obj->image_mark = sprintf("%s%d.gif", $image_nickname_mark, $member_info->no);
+            $obj->image_mark = sprintf("%s%d.gif", $image_mark_mark, $member_info->no);
             $obj->profile_image = '';
 
             // 확장변수 칸에 입력된 변수들은 제로보드XE의 멤버 확장변수를 통해서 사용될 수 있음
