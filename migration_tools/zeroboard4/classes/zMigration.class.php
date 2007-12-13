@@ -119,13 +119,13 @@
                 printf("<%s>", $key); $this->printString($val); printf("</%s>\r\n", $key);
             }
 
-            if(count($extra_vars)) {
+            if(count($obj->extra_vars)) {
                 print("<extra_vars>\r\n");
-                foreach($extra_vars as $key => $val) {
+                foreach($obj->extra_vars as $key => $val) {
                     if(!$val) continue;
                     printf("<%s>", $key); $this->printString($val); printf("</%s>\r\n", $key);
                 } 
-                print("<extra_vars>\r\n");
+                print("</extra_vars>\r\n");
             }
 
             // member 태그 닫음
