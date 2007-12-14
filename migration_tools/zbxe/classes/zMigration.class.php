@@ -55,19 +55,19 @@
                         mysql_query("set names 'utf8'");
                     break;
                 case 'cubrid' :
-                        $this->connect = @cubrid_connect($this->db_info->hostname, $this->db_info->port, $this->db_info->database, $this->db_info->userid, $this->db_info->password);
+                        $this->connect = @cubrid_connect($this->db_info->hostname, $this->db_info->port, $this->db_info->db_database, $this->db_info->userid, $this->db_info->password);
                         if(!$this->connect) return 'database connect fail';
                     break;
                 case 'sqlite3_pdo' :
-                        if(!file_exists($this->db_info->database)) return "database file not found";
-                        $this->connect = sqlite_open($this->db_info->database, 0666, &$error);
-                        if($error) return $error;
-                        $this->handler = new PDO('sqlite:'.$this->db_info->database);
-                        if(!file_exists($this->db_info->database) || $error) return 'permission denied to access database';
+                        if(substr($this->db_info->db_database,0,1)!='/') $this->db_info->db_database = $this->path.'/'.$this->db_info->db_database;
+                        if(!file_exists($this->db_info->db_database)) return "database file not found";
+                        $this->handler = new PDO('sqlite:'.$this->db_info->db_database);
+                        if(!file_exists($this->db_info->db_database) || $error) return 'permission denied to access database';
                     break;
                 case 'sqlite' :
-                        if(!file_exists($this->db_info->database)) return "database file not found";
-                        $this->connect = sqlite_open($this->db_info->database, 0666, &$error);
+                        if(substr($this->db_info->db_database,0,1)!='/') $this->db_info->db_database = $this->path.'/'.$this->db_info->db_database;
+                        if(!file_exists($this->db_info->db_database)) return "database file not found";
+                        $this->connect = @sqlite_open($this->db_info->db_database, 0666, &$error);
                         if($error) return $error;
                     break;
             }
