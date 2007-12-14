@@ -1,66 +1,38 @@
 <?php
-    $path = $_POST['path'];
-    $target_module = $_POST['target_module'];
 
-    unset($connect);
-
-    if($path) {
-
+    /**
+     * @brief 제로보드4의 경로를 이용하여 DB정보를 얻어옴
+     * @author zero@zeroboard.com
+     **/
+    function getDBInfo($path) {
         if(substr($path,-1)=='/') $path = substr($path, 0, strlen($path)-1);
         $config_file = sprintf('%s/files/db_config.inc.php',$path);
 
-        if(file_exists($config_file)) {
+        if(!file_exists($config_file)) return;
 
-            $file_buff = file($config_file);
-            $db_info = explode("\n",base64_decode(trim($file_buff[1])));
+        $file_buff = file($config_file);
+        $db_info = explode("\n",base64_decode(trim($file_buff[1])));
 
-            for($i=0;$i<count($db_info);$i++) {
-                $buff[$i+1] = base64_decode($db_info[$i]);
-            }
-
-            $connect = mysql_connect(trim($buff[1]), trim($buff[2]), trim($buff[3])) or die(mysql_error());
-            mysql_select_db(trim($buff[4]), $connect) or die(mysql_error());
-            mysql_query("SET NAMES 'utf8';", $connect);
-
-            $db_prefix = $buff[5];
+        for($i=0;$i<count($db_info);$i++) {
+            $buff[$i+1] = base64_decode($db_info[$i]);
         }
+
+        $output->hostname = trim($buff[1]);
+        $output->userid = trim($buff[2]);
+        $output->password = trim($buff[3]);
+        $output->database = trim($buff[4]);
+        $output->db_prefix = $buff[5];
+        return $output;
     } 
 
-    if(!$connect) {
-        header("location:./");
+    /**
+     * @brief javascript로 에러 메세지 출력
+     **/
+    function doError($message) {
+        include "./tpl/header.php"; 
+        printf('<script type="text/javascript">alert("%s"); location.href="./";</script>', $message);
+        include "./tpl/footer.php"; 
         exit();
     }
 
-    function addXmlQuote($val) {
-        return str_replace(array('&','<','>'),array('&amp;','&lt;','&gt;'),trim($val));
-    }
-
-    function getFileContentByBase64Encode($filename) {
-        $fp = fopen($filename,"r");
-        if($fp) {
-            while(!feof($fp)) {
-                $buff .= fgets($fp, 1024);
-            }
-            fclose($fp);
-            return base64_encode($buff);
-        }
-	    return null;
-    }
-
-    function printDownloadHeader($filename) {
-        if(strstr($_SERVER['HTTP_USER_AGENT'], "MSIE")) {
-            $filename = urlencode($filename);
-            $filename = preg_replace('/\./', '%2e', $filename, substr_count($filename, '.') - 1);
-        }
-
-        header("Content-Type: application/octet-stream");
-        header("Expires: Mon, 26 Jul 1997 05:00:00 GMT");
-        header("Last-Modified: " . gmdate("D, d M Y H:i:s") . " GMT");
-        header("Cache-Control: no-store, no-cache, must-revalidate");
-        header("Cache-Control: post-check=0, pre-check=0", false);
-        header("Pragma: no-cache");
-        //header("Content-Length: " .strlen($content));
-        header('Content-Disposition: attachment; filename="'.$filename.'"');
-        header("Content-Transfer-Encoding: binary");
-    }
 ?>
