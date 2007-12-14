@@ -15,6 +15,8 @@
         var $module_type = 'member';
         var $module_id = '';
 
+        var $filename = '';
+
         var $item_count = 0;
 
         var $source_charset = 'EUC-KR';
@@ -30,6 +32,10 @@
 
         function setItemCount($count) {
             $this->item_count = $count;
+        }
+
+        function setFilename($filename) {
+            $this->filename = $filename;
         }
 
         function dbConnect($db_info) {
@@ -48,7 +54,8 @@
         }
 
         function printHeader() {
-            $filename = sprintf("%s%s.xml", $this->module_type=='member'?'member':'', $this->module_id?'.'.$this->module_id:'');
+            if(!$this->filename) $filename = sprintf("%s%s.xml", $this->module_type=='member'?'member':'', $this->module_id?'.'.$this->module_id:'');
+            else $filename = $this->filename;
 
             if(strstr($_SERVER['HTTP_USER_AGENT'], "MSIE")) {
                 $filename = urlencode($filename);

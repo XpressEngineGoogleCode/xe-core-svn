@@ -19,11 +19,6 @@
     $target_module = $_POST['target_module'];
     $module_id = $_POST['module_id'];
 
-    //$charset = "EUC-KR";
-    //$path = "../bbs";
-    //$target_module = "module";
-    //$module_id = "yewon";
-
     // 입력받은 path를 이용하여 db 정보를 구함
     $db_info = getDBInfo($path);
     if(!$db_info) doError("입력하신 경로가 잘못되었거나 dB 정보를 구할 수 있는 파일이 없습니다");
