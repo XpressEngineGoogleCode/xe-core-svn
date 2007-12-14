@@ -153,8 +153,8 @@
 
             printf('<?xml version="1.0" encoding="utf-8" ?>%s',"\r\n");
 
-            if($this->module_type == 'member') printf('<members count="%d" pubDate="%s">%s', $this->item_count, date("YYYYMMDDHHIISS"), "\r\n");
-             else printf('<posts count="%d" id="%s" pubDate="%s">%s', $this->item_count, $this->module_id, date("YYYYMMDDHHIISS"), "\r\n");
+            if($this->module_type == 'member') printf('<members count="%d" pubDate="%s">%s', $this->item_count, date("YmdHis"), "\r\n");
+             else printf('<posts count="%d" id="%s" pubDate="%s">%s', $this->item_count, $this->module_id, date("YmdHis"), "\r\n");
         }
 
         function printFooter() { 
@@ -329,7 +329,7 @@
                 foreach($extra_vars as $key => $val) {
                     print "<key>";
                     $this->printString($val);
-                    print "</key>";
+                    print "</key>\r\n";
                 }
                 print "</extra_vars>\r\n";
             }
