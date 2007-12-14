@@ -208,10 +208,6 @@
                 $comment_obj->regdate = date('YmdHis', $comment_info->reg_date);
                 $comment_obj->ipaddress = $comment_info->ip;
 
-                // 댓글의 첨부파일을 구함 (제로보드4에는 없기에 pass~)
-                $files = array();
-                $comment_obj->attaches = $files;
-
                 $comments[] = $comment_obj;
 
             }
