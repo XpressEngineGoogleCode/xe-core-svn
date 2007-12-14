@@ -54,7 +54,7 @@
         }
 
         function printHeader() {
-            if(!$this->filename) $filename = sprintf("%s%s.xml", $this->module_type=='member'?'member':'', $this->module_id?'.'.$this->module_id:'');
+            if(!$this->filename) $filename = sprintf("%s%s.xml", $this->module_type=='member'?'member':'', $this->module_id?$this->module_id:'');
             else $filename = $this->filename;
 
             if(strstr($_SERVER['HTTP_USER_AGENT'], "MSIE")) {
