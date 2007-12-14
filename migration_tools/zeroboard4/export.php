@@ -200,13 +200,13 @@
                 $comment_obj->voted_count = 0;
                 $comment_obj->notify_message = 'N';
                 $comment_obj->password = $comment_info->password;
-                $comment_obj->user_id = $comment_obj->user_id;
-                $comment_obj->nick_name = $comment_obj->name;
-                $comment_obj->email = $comment_obj->email;
-                $comment_obj->homepage = $comment_obj->homepage;
-                $comment_obj->update = $comment_obj->update;
+                $comment_obj->user_id = $comment_info->user_id;
+                $comment_obj->nick_name = $comment_info->name;
+                $comment_obj->email = $comment_info->email;
+                $comment_obj->homepage = $comment_info->homepage;
+                $comment_obj->update = $comment_info->update;
                 $comment_obj->regdate = date('YmdHis', $comment_info->reg_date);
-                $comment_obj->ipaddress = $comment_obj->ip;
+                $comment_obj->ipaddress = $comment_info->ip;
 
                 // 댓글의 첨부파일을 구함 (제로보드4에는 없기에 pass~)
                 $files = array();

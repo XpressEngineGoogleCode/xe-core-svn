@@ -184,7 +184,7 @@
                 $comment_obj->is_secret = $comment_info->is_secret;
                 $comment_obj->content = $comment_info->content;
                 $comment_obj->voted_count = $comment_info->voted_count;
-                $comment_obj->notify_message = $comment_obj->notify_message;
+                $comment_obj->notify_message = $comment_info->notify_message;
                 $comment_obj->password = $comment_info->password;
                 $comment_obj->user_id = $comment_info->user_id;
                 $comment_obj->nick_name = $comment_info->nick_name;
