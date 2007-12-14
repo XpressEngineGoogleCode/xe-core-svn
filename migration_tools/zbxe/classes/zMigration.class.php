@@ -109,20 +109,24 @@
                     break;
                 case 'sqlite3_pdo' :
                         $tmp = $result->fetch(PDO::FETCH_ASSOC);
-                        foreach($tmp as $key => $val) {
-                            $pos = strpos($key, '.');
-                            if($pos) $key = substr($key, $pos+1);
-                            $obj->{$key} = str_replace("''","'",$val);
+                        if($tmp) {
+                            foreach($tmp as $key => $val) {
+                                $pos = strpos($key, '.');
+                                if($pos) $key = substr($key, $pos+1);
+                                $obj->{$key} = str_replace("''","'",$val);
+                            }
                         }
                         return $obj;
                     break;
                 case 'sqlite' :
                         $tmp = sqlite_fetch_array($result, SQLITE_ASSOC);
                         unset($obj);
-                        foreach($tmp as $key => $val) {
-                            $pos = strpos($key, '.');
-                            if($pos) $key = substr($key, $pos+1);
-                            $obj->{$key} = $val;
+                        if($tmp) {
+                            foreach($tmp as $key => $val) {
+                                $pos = strpos($key, '.');
+                                if($pos) $key = substr($key, $pos+1);
+                                $obj->{$key} = $val;
+                            }
                         }
                         return $obj;
                     break;
