@@ -3,6 +3,8 @@
      * @brief 회원 또는 모듈 데이터 export
      **/
 
+    set_time_limit(0);
+
     // zMigration class파일 load
     require_once("./classes/zMigration.class.php");
 
@@ -157,8 +159,6 @@
 
             // 게시글의 엮인글을 구함 
             $query = sprintf("select * from %strackback where article_srl = '%s' order by listorder", $db_info->db_prefix, $document_info->article_srl);
-            $trackback_result = $oMigration->query($query) or die(mysql_error());
-
             $trackbacks = array();
             $trackback_result = $oMigration->query($query);
             while($trackback_info = mysql_fetch_object($trackback_result)) {
@@ -192,7 +192,7 @@
                 $comment_obj->user_id = $comment_info->user_id;
                 $comment_obj->nick_name = $comment_info->writer;
                 $comment_obj->regdate = $comment_info->reg_date;
-                $comment_obj->ipaddress = $comment_info->reg_date;
+                $comment_obj->ipaddress = $comment_info->ipaddress;
 
                 $comments[] = $comment_obj;
             }
