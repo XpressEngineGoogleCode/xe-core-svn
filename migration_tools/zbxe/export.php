@@ -107,6 +107,57 @@
         $oMigration->printFooter();
 
     /**
+     * 쪽지 정보
+     * 쪽지의 경우 받은 쪽지함+보관함을 모두 받아와서 처리함.
+     **/
+    } else if($target_module == 'message') {
+
+        // 전체 대상을 구해서 설정
+        $query = sprintf("select count(*) as count from %s_member_message where message_type = 'S'", $db_info->db_table_prefix);
+        $count_result = $oMigration->query($query);
+        $count_info = $oMigration->fetch($count_result);
+        $oMigration->setItemCount($count_info->count);
+
+        // 헤더 정보를 출력
+        $oMigration->printHeader();
+
+        // 쪽지 정보를 오래된 순부터 구해옴
+        $query = sprintf("
+                select 
+                    b.user_id as sender,
+                    c.user_id as receiver,
+                    a.title as title,
+                    a.content as content,
+                    a.readed as readed,
+                    a.regdate as regdate,
+                    a.readed_date as readed_date
+                from 
+                    %s_member_message a,
+                    %s_member b,
+                    %s_member c
+                where 
+                    a.sender_srl = b.member_srl and
+                    a.receiver_srl = c.member_srl and 
+                    a.message_type = 'S'
+                order by a.message_srl
+                ",
+                $db_info->db_table_prefix,
+                $db_info->db_table_prefix,
+                $db_info->db_table_prefix
+        );
+
+        $message_result = $oMigration->query($query);
+
+        // 쪽지를 하나씩 돌면서 migration format에 맞춰서 변수화 한후에 printMessageItem 호출
+        while($obj = $oMigration->fetch($message_result)) {
+            $oMigration->printMessageItem($obj);
+        }
+
+        // 헤더 정보를 출력
+        $oMigration->printFooter();
+
+
+    /**
      * 게시판 정보 export일 경우
      **/
     } else {

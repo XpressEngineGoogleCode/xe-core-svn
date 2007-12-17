@@ -43,10 +43,14 @@
             <label for="member">회원정보</label>
         </div>
         <div class="content">
+            <input type="radio" name="target_module" value="message" id="message" />
+            <label for="message">쪽지</label>
+        </div>
+        <div class="content">
             <input type="radio" name="target_module" value="module" id="module" />
             <label for="module">
                 게시판<br />
-                <select name="module_id" size="10" class="module_list" onclick="this.form.target_module[1].checked=true;">
+                <select name="module_id" size="10" class="module_list" onclick="this.form.target_module[2].checked=true;">
     <?php
         while($module_info = $oMigration->fetch($module_list_result)) {
     ?>
