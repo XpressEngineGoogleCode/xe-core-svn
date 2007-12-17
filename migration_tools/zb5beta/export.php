@@ -112,6 +112,52 @@
         $oMigration->printFooter();
 
     /**
+     * 쪽지 정보
+     * 쪽지의 경우 받은 쪽지함+보관함을 모두 받아와서 처리함.
+     **/
+    } else if($target_module == 'message') {
+
+        // 전체 대상을 구해서 설정
+        $query = sprintf("select count(*) as count from %smessage where message_type = 'S'", $db_info->db_prefix);
+        $count_result = $oMigration->query($query);
+        $count_info = mysql_fetch_object($count_result);
+        $oMigration->setItemCount($count_info->count);
+
+        // 헤더 정보를 출력
+        $oMigration->printHeader();
+
+        // 쪽지 정보를 오래된 순부터 구해옴
+        $query = sprintf("
+                select 
+                    sender_user_id as sender,
+                    receiver_user_id as receiver,
+                    title as title,
+                    message as content,
+                    is_readed as readed,
+                    regdate as regdate
+                from 
+                    %smessage
+                where 
+                    message_type = 'S'
+                order by message_srl
+                ",
+                $db_info->db_prefix
+        );
+
+        $message_result = $oMigration->query($query) or die(mysql_error());
+
+        // 쪽지를 하나씩 돌면서 migration format에 맞춰서 변수화 한후에 printMessageItem 호출
+        while($obj = mysql_fetch_object($message_result)) {
+            // 일반 변수들
+            if($obj->readed == 'Y') $obj->readed_date = $obj->regdate;
+            $oMigration->printMessageItem($obj);
+        }
+
+        // 헤더 정보를 출력
+        $oMigration->printFooter();
+
+
+    /**
      * 게시판 정보 export일 경우
      **/
     } else {
