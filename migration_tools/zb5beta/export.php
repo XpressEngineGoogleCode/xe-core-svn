@@ -69,7 +69,7 @@
             $obj->email = $member_info->email_address;
             $obj->homepage = $member_info->homepage;
             $obj->blog = $member_info->blog;
-            $obj->birthday = date("YmdHis", $member_info->birth);
+            $obj->regdate = $member_info->regdate;
             $obj->allow_mailing = $member_info->mailing;
             $obj->point = $member_info->point;
             $obj->signature = $member_info->sign;

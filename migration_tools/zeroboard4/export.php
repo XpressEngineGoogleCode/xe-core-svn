@@ -67,6 +67,7 @@
             $obj->birthday = date("YmdHis", $member_info->birth);
             $obj->allow_mailing = $member_info->user_id!=0?'Y':'N';
             $obj->point = $member_info->point1+$member_info->point2;
+            $obj->regdate = date("YmdHis", $member_info->reg_date);
             $obj->signature = '';
 
             // 이미지이름, 이미지마크, 프로필이미지등은 경로를 입력

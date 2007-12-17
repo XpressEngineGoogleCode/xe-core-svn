@@ -69,6 +69,7 @@
             $obj->blog = $member_info->blog;
             $obj->birthday = $member_info->birthday;
             $obj->allow_mailing = $member_info->mailing;
+            $obj->regdate = $member_info->regdate;
 
             // 이미지네임
             $image_name_file = sprintf('%s/files/member_extra_info/image_name/%s%d.gif', $path, getNumberingPath($member_info->member_srl), $member_info->member_srl);
