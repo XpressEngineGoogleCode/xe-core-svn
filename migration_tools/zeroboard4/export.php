@@ -96,6 +96,60 @@
         $oMigration->printFooter();
 
     /**
+     * 쪽지 정보
+     * 쪽지의 경우 받은 쪽지함+보관함을 모두 받아와서 처리함.
+     **/
+    } else if($target_module == 'message') {
+
+        // 전체 대상을 구해서 설정
+        $query = "select count(*) as count from zetyx_get_memo";
+        $count_result = $oMigration->query($query);
+        $count_info = mysql_fetch_object($count_result);
+        $oMigration->setItemCount($count_info->count);
+
+        // 헤더 정보를 출력
+        $oMigration->printHeader();
+
+        // 쪽지 정보를 오래된 순부터 구해옴
+        $query = '
+            select 
+                b.user_id as receiver, 
+                c.user_id as sender,
+                a.subject as title,
+                a.memo as content,
+                a.readed as readed,
+                a.reg_date as regdate,
+                a.reg_date as readed_date
+            from 
+                zetyx_get_memo a, 
+                zetyx_member_table b, 
+                zetyx_member_table c 
+            where 
+                a.member_no = b.no and 
+                a.member_from = c.no 
+            order by a.no
+        ';
+
+        $message_result = $oMigration->query($query) or die(mysql_error());
+
+        // 쪽지를 하나씩 돌면서 migration format에 맞춰서 변수화 한후에 printMessageItem 호출
+        while($obj = mysql_fetch_object($message_result)) {
+
+            // 일반 변수들
+            if($obj->readed) $obj->readed = 'Y'; 
+            else $obj->readed = 'N';
+            $obj->regdate = date("YmdHis", $obj->regdate);
+            $obj->readed_date = date("YmdHis", $obj->readed_date);
+            $obj->content = nl2br($obj->content);
+
+
+            $oMigration->printMessageItem($obj);
+        }
+
+        // 헤더 정보를 출력
+        $oMigration->printFooter();
+
+    /**
      * 게시판 정보 export일 경우
      **/
     } else {

@@ -54,8 +54,11 @@
         }
 
         function printHeader() {
-            if(!$this->filename) $filename = sprintf("%s%s.xml", $this->module_type=='member'?'member':'', $this->module_id?$this->module_id:'');
-            else $filename = $this->filename;
+            if(!$this->filename) {
+                if($this->module_type == 'member') $filename = 'member.xml';
+                elseif($this->module_type == 'message') $filename = 'message.xml';
+                else $filename = sprintf("%s.xml", $this->module_id);
+            } else $filename = $this->filename;
 
             if(strstr($_SERVER['HTTP_USER_AGENT'], "MSIE")) {
                 $filename = urlencode($filename);
@@ -74,12 +77,14 @@
             printf('<?xml version="1.0" encoding="utf-8" ?>%s',"\r\n");
 
             if($this->module_type == 'member') printf('<members count="%d" pubDate="%s">%s', $this->item_count, date("YmdHis"), "\r\n");
-             else printf('<posts count="%d" id="%s" pubDate="%s">%s', $this->item_count, $this->module_id, date("YmdHis"), "\r\n");
+            else if($this->module_type == 'message') printf('<messages count="%d" pubDate="%s">%s', $this->item_count, date("YmdHis"), "\r\n");
+            else printf('<posts count="%d" id="%s" pubDate="%s">%s', $this->item_count, $this->module_id, date("YmdHis"), "\r\n");
         }
 
         function printFooter() { 
             if($this->module_type == 'member') print('</members>');
-             else print('</posts>');
+            elseif($this->module_type == 'message') print('</messages>');
+            else print('</posts>');
         }
 
         function printString($string) {
@@ -138,6 +143,18 @@
 
             // member 태그 닫음
             print "</member>\r\n";
+        }
+
+        function printMessageItem($obj) {
+            // member 태그 시작
+            print "<message>\r\n";
+
+            foreach($obj as $key => $val) {
+                printf("<%s>", $key); $this->printString($val); printf("</%s>\r\n", $key);
+            }
+
+            // member 태그 닫음
+            print "</message>\r\n";
         }
 
         function printCategoryItem($obj) {
