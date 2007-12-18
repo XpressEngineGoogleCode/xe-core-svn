@@ -199,7 +199,7 @@
             $obj->lock_comment = 'N';
             $obj->allow_trackback = $document_info->allow_trackback;
             $obj->is_secret = 'N';
-            $obj->regdate =  $document_info->reg_date;
+            $obj->regdate =  $document_info->regdate;
             $obj->update = null;
             $obj->tags = $document_info->tag;
 
@@ -237,7 +237,7 @@
                 $comment_obj->password = $comment_info->passwd;
                 $comment_obj->user_id = $comment_info->user_id;
                 $comment_obj->nick_name = $comment_info->writer;
-                $comment_obj->regdate = $comment_info->reg_date;
+                $comment_obj->regdate = $comment_info->regdate;
                 $comment_obj->ipaddress = $comment_info->ipaddress;
 
                 $comments[] = $comment_obj;
