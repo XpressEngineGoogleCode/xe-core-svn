@@ -180,6 +180,16 @@
         // 헤더 정보를 출력
         $oMigration->printHeader();
 
+        // 카테고리를 구함
+        $query = sprintf("select * from %s_document_categories where module_srl = '%d' order by list_order", $db_info->db_table_prefix, $module_srl);
+        $category_result = $oMigration->query($query);
+        while($category_info= $oMigration->fetch($category_result)) {
+            $category_list[$category_info->category_srl] = strip_tags($category_info->title);
+        }
+
+        // 카테고리 정보 출력
+        $oMigration->printCategoryItem($category_list);
+
         // 게시글은 역순(오래된 순서)으로 구함
         $query = sprintf("select * from %s_documents where module_srl = '%d' order by document_srl", $db_info->db_table_prefix, $module_srl);
         $document_result = $oMigration->query($query);
@@ -187,6 +197,7 @@
         while($document_info = $oMigration->fetch($document_result)) {
             $obj = null;
 
+            if($document_info->category_srl) $obj->category = $category_list[$document_info->category_srl];
             $obj->title = $document_info->title;
             $obj->content = $document_info->content;
             $obj->readed_count = $document_info->readed_count;

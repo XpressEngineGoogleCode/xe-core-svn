@@ -108,7 +108,7 @@
                         return cubrid_fetch($result, CUBRID_OBJECT);
                     break;
                 case 'sqlite3_pdo' :
-                        $tmp = $result->fetch(PDO::FETCH_ASSOC);
+                        $tmp = $result->fetch(2);
                         if($tmp) {
                             foreach($tmp as $key => $val) {
                                 $pos = strpos($key, '.');
