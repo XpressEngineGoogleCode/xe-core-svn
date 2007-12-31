@@ -41,6 +41,7 @@
         function dbConnect($db_info) {
             $this->connect =  @mysql_connect($db_info->hostname, $db_info->userid, $db_info->password);
             if(!mysql_error()) @mysql_select_db($db_info->database, $this->connect);
+            if($this->source_charset == 'UTF-8') mysql_query("set names 'utf8'");
             return mysql_error();
         }
 
