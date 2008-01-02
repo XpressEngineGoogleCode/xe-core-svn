@@ -60,7 +60,9 @@
             $obj->password = $member_info->mb_password;
             $obj->user_name = $member_info->mb_name;
             $obj->nick_name = $member_info->mb_nick;
+            if(!$obj->nick_name) $obj->nick_name = $obj->user_name;
             $obj->email = $member_info->mb_email;
+            if(!$obj->email) $obj->email = $obj->user_id.'@'.$obj->user_id.'.temp';
             $obj->homepage = $member_info->mb_homepage;
             $obj->blog = $member_info->mb_blog;
             $obj->birthday = $member_info->mb_birth.'000000';
@@ -71,7 +73,7 @@
 
             // 이미지이름, 이미지마크, 프로필이미지등은 경로를 입력
             $image_mark = sprintf("%s/%s/%s.gif", $image_mark_path, substr($member_info->mb_id,0,2), $member_info->mb_id);
-	    if(file_exists($image_mark)) $obj->image_mark = $image_mark;
+            if(file_exists($image_mark)) $obj->image_mark = $image_mark;
 
             $obj->extra_vars = array(
                 'tel' => $member_info->mb_tel,
@@ -79,7 +81,7 @@
                 'address' => $member_info->mb_addr1.' '.$member_info->mb_addr2.' '.$member_info->mb_zip1.'-'.$member_info->mb_zip2,
             );
 
-	    for($i=1;$i<=10;$i++) $obj->extra_vars['mb_'.$i] = $member_info->{'mb_'.$i};
+            for($i=1;$i<=10;$i++) $obj->extra_vars['mb_'.$i] = $member_info->{'mb_'.$i};
 
             $oMigration->printMemberItem($obj);
         }
@@ -134,7 +136,7 @@
         $module_info_result = $oMigration->query($query);
         $module_info = mysql_fetch_object($module_info_result);
 
-	$table_name = sprintf("%s%s",$db_info->g4['write_prefix'],$module_id);
+        $table_name = sprintf("%s%s",$db_info->g4['write_prefix'],$module_id);
 
         // 게시물의 수를 구함
         $query = sprintf("select count(*) as count from %s where wr_is_comment = 0", $table_name);
@@ -158,21 +160,27 @@
         $oMigration->printCategoryItem($category_list);
 
         // 게시글은 역순(오래된 순서)으로 구함
-        $query = sprintf("select * from %s where wr_is_comment = 0 order by wr_num desc", $table_name);
+        $query = sprintf("select * from %s where wr_is_comment = 0 order by wr_num desc, wr_reply desc", $table_name);
         $document_result = $oMigration->query($query);
 
         while($document_info = mysql_fetch_object($document_result)) {
             $obj = null;
 
+            $title_header = '';
+            if($document_info->wr_reply) {
+              $depth = strlen($document_info->wr_reply);
+                  for($i=0;$i<$depth;$i++) $title_header .= '[re]';
+                  $title_header .= ' ';
+            }
+
             $obj->category = $document_info->ca_name;
-            $obj->title = $document_info->wr_subject;
-
+            $obj->title = $title_header.$document_info->wr_subject;
             $obj->content = nl2br($document_info->wr_content);
-
             $obj->readed_count = $document_info->wr_hit;
             $obj->voted_count = $document_info->wr_good + $document_info->wr_nogood;
             $obj->user_id = $document_info->mb_id;
             $obj->nick_name = $document_info->wr_name;
+            if(!$obj->nick_name) $obj->nick_name = '-';
             $obj->email = $document_info->wr_email;
             $obj->homepage = $document_info->wr_homepage;
             $obj->password = $document_info->wr_password;
