@@ -154,6 +154,13 @@
      **/
     } else {
 
+	// dqrevolution 스킨 사용하는지 테이블 검사
+        $query = "show tables like 'dq_revolution'";
+	$result = $oMigration->query($query);
+        $tmp = mysql_fetch_array($result);
+	if($tmp[0]) $use_dq = true;
+	else $use_dq = false;
+
         // 그림창고, 첨부파일 디렉토리 경로를 미리 구함
         $image_box_path = sprintf('%s/icon/member_image_box',$path);
 
@@ -292,6 +299,8 @@
                 $obj->content = preg_replace('/\[img:([^\.]*)\.(jpg|gif|png|jpeg),align=([^,]*),width=([^,]*),height=([^,]*),vspace=([^,]*),hspace=([^,]*),border=([^\]]*)\]/i', '<img src="\\1.\\2" align="\\3" width="\\4" height="\\5" border="\\8" alt="\\1.\\2" />', $obj->content);
             }
 
+	    $image_header = '';
+
             // 첨부파일 처리 (기본 2개인데 일단 20개로 만들어 보았음)
             for($i=1;$i<=20;$i++) {
                 $file_name = $document_info->{"file_name".$i};
@@ -308,8 +317,35 @@
                 $files[] = $file_obj;
 
                 // 이미지 파일이라면 내용 상단에 이미지 추가
-                if(eregi('\.(jpg|gif|jpeg|png)$', $file_name)) $obj->content = sprintf('<img src="%s" border="0" alt="" /><br />%s', $filename,  $obj->content);
+                if(eregi('\.(jpg|gif|jpeg|png)$', $file_name)) $image_header .= sprintf('<img src="%s" border="0" alt="" /><br /><br />', $filename);
             }
+
+	    // dq revolution 확장 이미지 정리 
+            if($use_dq) {
+		$dq_query = sprintf("select file_names, s_file_names from dq_revolution where zb_id = '%s' and zb_no = '%d'", $module_id, $document_info->no);
+		$dq_result = mysql_query($dq_query);
+		while($dq_item = mysql_fetch_object($dq_result)) {
+			$tmp_filenames = explode(',',$dq_item->file_names);
+			$tmp_s_filenames = explode(',',$dq_item->s_file_names);
+			$dq_count = count($tmp_filenames);
+			for($i=0;$i<$dq_count;$i++) {
+				$filename = trim($tmp_filenames[$i]);
+				$s_filename = trim($tmp_s_filenames[$i]);
+				if(!$filename) continue;
+
+				$file = sprintf("%s/%s", $path, $filename);
+				$file_obj = null;
+				$file_obj->filename = $s_filename;
+				$file_obj->file = $file;
+				$file_obj->download_count = 0;
+				$files[] = $file_obj;
+				
+				if(eregi('\.(jpg|gif|jpeg|png)$', $s_filename)) $image_header .= sprintf('<img src="%s" border="0" alt="" /><br /><br />', $s_filename);
+			}
+		}
+	    }
+
+	    $obj->content = $image_header . $obj->content;
 
             $obj->attaches = $files;
 
