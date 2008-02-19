@@ -1,0 +1,34 @@
+<!--%import("css/widget.css")-->
+<!--%import("../../admin/tpl/css/admin.css")-->
+
+<div id="popBody">
+    <table cellspacing="0" class="adminTable">
+    <col width="100" />
+    <col />
+    <caption>{$lang->widget_maker}</caption>
+    <tr>
+        <th scope="row">{$lang->title}</th>
+        <td>{$widget_info->title} ver {$widget_info->version}</td>
+    </tr>
+    <tr>
+        <th scope="row">{$lang->author}</th>
+        <td><a href="mailto:{$widget_info->author->email_address}">{$widget_info->author->name}</a></td>
+    </tr>
+    <tr>
+        <th scope="row">{$lang->homepage}</th>
+        <td><a href="{$widget_info->author->homepage}" onclick="window.open(this.href);return false;">{$widget_info->author->homepage}</a></td>
+    </tr>
+    <tr>
+        <th scope="row">{$lang->regdate}</th>
+        <td>{$widget_info->author->date}</td>
+    </tr>
+    <tr>
+        <th scope="row">{$lang->description}</th>
+        <td>{nl2br(trim($widget_info->author->description))}</td>
+    </tr>
+    </table>
+</div>
+
+<div id="popFooter" class="tCenter gap1">
+    <a href="#" onclick="window.close(); return false;" class="button"><span>{$lang->cmd_close}</span></a>
+</div>
