@@ -211,6 +211,7 @@
             $obj->allow_comment = $document_info->allow_comment;
             $obj->lock_comment = $document_info->lock_comment;
             $obj->allow_trackback = $document_info->allow_trackback;
+            $obj->is_notice = $document_info->is_notice;
             $obj->is_secret = $document_info->is_secret;
             $obj->regdate =  $document_info->regdate;
             $obj->update = $document_info->last_update;
