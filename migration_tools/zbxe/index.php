@@ -28,6 +28,7 @@
             $errMsg = "입력하신 경로가 잘못되었거나 dB 정보를 구할 수 있는 파일이 없습니다";
         } else {
             $oMigration->setDBInfo($db_info);
+            $oMigration->setCharset('UTF-8', 'UTF-8');
             $message = $oMigration->dbConnect();
             if($message) $errMsg = $message;
             else $step = 2;
@@ -37,7 +38,6 @@
     // 2차 체크
     if($step == 2) {
         // charset을 맞춤
-        $oMigration->setCharset('UTF-8', 'UTF-8');
 
         // 모듈 목록을 구해옴
         $query = "select * from {$db_info->db_table_prefix}_modules where module in ('board')";

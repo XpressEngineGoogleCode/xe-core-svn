@@ -1,61 +1,77 @@
 <?php 
     /**
-     * @brief 회원 또는 모듈 데이터 export
+     * @brief zb5beta export tool
+     * @author zero (zero@zeroboard.com)
      **/
+    @set_time_limit(0);
 
-    set_time_limit(0);
+    // zMigration class require
+    require_once('./lib.inc.php');
+    require_once('./zMigration.class.php');
+    $oMigration = new zMigration();
 
-    // zMigration class파일 load
-    require_once("./classes/zMigration.class.php");
-
-    // library 파일 load
-    require_once("lib/lib.php");
-
-    // 입력받은 post 변수를 구함
-    $path = $_POST['path'];
+    // 사용되는 변수의 선언
+    $path = $_GET['path'];
     if(substr($path,-1)=='/') $path = substr($path,0,strlen($path)-1);
-    $target_module = $_POST['target_module'];
-    $module_id = $_POST['module_id'];
+    $target_module = $_GET['target_module'];
+    $module_id = $_GET['module_id'];
+    $start = $_GET['start'];
+    $limit_count = $_GET['limit_count'];
+    $exclude_attach = $_GET['exclude_attach']=='Y'?'Y':'N';
+    $filename = $_GET['filename'];
 
     // 입력받은 path를 이용하여 db 정보를 구함
     $db_info = getDBInfo($path);
-    if(!$db_info) doError("입력하신 경로가 잘못되었거나 dB 정보를 구할 수 있는 파일이 없습니다");
+    if(!$db_info) {
+        header("HTTP/1.0 404 Not Found");
+        exit();
+    }
 
-    // zMigration 객체 생성
-    $oMigration = new zMigration($path, $target_module, $module_id, 'UTF-8');
+    // zMigration DB 정보 설정
+    $db_info->db_type = 'mysql';
+    $oMigration->setDBInfo($db_info);
+
+    // 대상 정보 설정
+    $oMigration->setModuleType($target_module, $module_id);
+
+    // 언어 설정
+    $oMigration->setCharset('UTF-8', 'UTF-8');
+
+    // 다운로드 파일명 설정
+    $oMigration->setFilename($filename);
+
+    // 경로 지정
+    $oMigration->setPath($path);
 
     // db 접속
-    $message = $oMigration->dbConnect($db_info);
-    if($message) doError($message);
+    if($oMigration->dbConnect()) {
+        header("HTTP/1.0 404 Not Found");
+        exit();
+    }
 
-    $oMigration->query("set names 'utf8'");
+    // limit쿼리 생성 (mysql외에도 적용하기 위함)
+    $limit_query = $oMigration->getLimitQuery($start, $limit_count);
     
     /**
      * 회원 정보 export일 회원 관련 정보를 모두 가져와서 처리
      **/
     if($target_module == 'member') {
 
-        // 전체 대상을 구해서 설정
-        $query = sprintf("select count(*) as count from %smember_list", $db_info->db_prefix);
-        $count_result = $oMigration->query($query);
-        $count_info = mysql_fetch_object($count_result);
-        $oMigration->setItemCount($count_info->count);
-
         // 헤더 정보를 출력
+        $oMigration->setItemCount($limit_count);
         $oMigration->printHeader();
 
         // 회원정보를 구함
-        $query = sprintF("select * from %smember_list order by member_srl", $db_info->db_prefix);
+        $query = sprintf("select * from %smember_list order by member_srl %s", $db_info->db_prefix, $limit_query);
         $member_result = $oMigration->query($query) or die(mysql_error());
 
         // 추가폼 정보를 구함
-        $query = sprintF("select * from %smember_signup_manager", $db_info->db_prefix);
+        $query = sprintf("select * from %smember_signup_manager", $db_info->db_prefix);
         $form_result = $oMigration->query($query) or die(mysql_error());
         while($form_item = mysql_fetch_object($form_result)) {
             if(in_array($form_item->name, array('homepage','blog'))) continue;
             $form[] = $form_item->name;
         }
-        
 
         // 회원정보를 하나씩 돌면서 migration format에 맞춰서 변수화 한후에 printMemberItem 호출
         while($member_info = mysql_fetch_object($member_result)) {
@@ -70,6 +86,7 @@
             $obj->homepage = $member_info->homepage;
             $obj->blog = $member_info->blog;
             $obj->regdate = $member_info->regdate;
+            $obj->last_login = $member_info->last_signin;
             $obj->allow_mailing = $member_info->mailing;
             $obj->point = $member_info->point;
             $obj->signature = $member_info->sign;
@@ -108,7 +125,7 @@
             $oMigration->printMemberItem($obj);
         }
 
-        // 헤더 정보를 출력
+        // 푸터 정보를 출력
         $oMigration->printFooter();
 
     /**
@@ -117,13 +134,8 @@
      **/
     } else if($target_module == 'message') {
 
-        // 전체 대상을 구해서 설정
-        $query = sprintf("select count(*) as count from %smessage where message_type = 'S'", $db_info->db_prefix);
-        $count_result = $oMigration->query($query);
-        $count_info = mysql_fetch_object($count_result);
-        $oMigration->setItemCount($count_info->count);
-
         // 헤더 정보를 출력
+        $oMigration->setItemCount($limit_count);
         $oMigration->printHeader();
 
         // 쪽지 정보를 오래된 순부터 구해옴
@@ -140,8 +152,10 @@
                 where 
                     message_type = 'S'
                 order by message_srl
+                %s
                 ",
-                $db_info->db_prefix
+                $db_info->db_prefix,
+                $limit_query
         );
 
         $message_result = $oMigration->query($query) or die(mysql_error());
@@ -153,7 +167,7 @@
             $oMigration->printMessageItem($obj);
         }
 
-        // 헤더 정보를 출력
+        // 푸터 정보를 출력
         $oMigration->printFooter();
 
 
@@ -169,19 +183,13 @@
         $module_info_result = $oMigration->query($query);
         $module_info = mysql_fetch_object($module_info_result);
         $module_title = $module_info->title;
-        $oMigration->setFilename($module_title.'.xml');
-        
-        // 게시물의 수를 구함
-        $query = sprintf("select count(*) as count from %sarticles where module_srl = '%d'", $db_info->db_prefix, $module_srl);
-        $count_result = $oMigration->query($query) or die(mysql_error());
-        $count_info = mysql_fetch_object($count_result);
-        $oMigration->setItemCount($count_info->count);
 
         // 헤더 정보를 출력
+        $oMigration->setItemCount($limit_count);
         $oMigration->printHeader();
 
         // 게시글은 역순(오래된 순서)으로 구함
-        $query = sprintf("select * from %sarticles where module_srl = '%d' order by article_srl", $db_info->db_prefix, $module_srl);
+        $query = sprintf("select * from %sarticles where module_srl = '%d' order by article_srl %s", $db_info->db_prefix, $module_srl, $limit_query);
         $document_result = $oMigration->query($query) or die(mysql_error());
 
         while($document_info = mysql_fetch_object($document_result)) {
@@ -268,10 +276,10 @@
 
             $obj->attaches = $files;
 
-            $oMigration->printPostItem($document_info->article_srl, $obj);
+            $oMigration->printPostItem($document_info->article_srl, $obj, $exclude_attach);
         }
 
-        // 헤더 정보를 출력
+        // 푸터 정보를 출력
         $oMigration->printFooter();
     }
 ?>
