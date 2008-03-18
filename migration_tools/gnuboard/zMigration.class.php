@@ -7,6 +7,7 @@
     class zMigration {
 
         var $connect;
+        var $handler;
 
         var $errno = 0;
         var $error = null;
@@ -22,12 +23,27 @@
         var $source_charset = 'EUC-KR';
         var $target_charset = 'UTF-8';
 
-        function zMigration($path, $module_type = 'member', $module_id = '', $source_charset = 'EUC-KR', $target_charset = 'UTF-8') {
+        var $db_info = null;
+
+        function zMigration() {
+        }
+
+        function setPath($path) {
             $this->path = $path;
+        }
+
+        function setModuleType($module_type = 'member', $module_id = null) {
             $this->module_type = $module_type;
             if($this->module_type == 'module') $this->module_id = $module_id;
+        }
+
+        function setCharset($source_charset = 'EUC-KR', $target_charset = 'UTF-8') {
             $this->source_charset = $source_charset;
             $this->target_charset = $target_charset;
+        }
+
+        function setDBInfo($db_info) {
+            $this->db_info = $db_info;
         }
 
         function setItemCount($count) {
@@ -38,11 +54,32 @@
             $this->filename = $filename;
         }
 
-        function dbConnect($db_info) {
-            $this->connect =  @mysql_connect($db_info->hostname, $db_info->userid, $db_info->password);
-            if(!mysql_error()) @mysql_select_db($db_info->database, $this->connect);
-	    if($this->source_charset == 'UTF-8') mysql_query("set names 'utf8'", $this->connect);
-            return mysql_error();
+        function dbConnect() {
+            switch($this->db_info->db_type) {
+                case 'mysql' :
+                case 'mysql_innodb' :
+                        $this->connect =  @mysql_connect($this->db_info->db_hostname, $this->db_info->db_userid, $this->db_info->db_password);
+                        if(!mysql_error()) @mysql_select_db($this->db_info->db_database, $this->connect);
+                        if(mysql_error()) return mysql_error();
+                        if($this->source_charset == 'UTF-8') mysql_query("set names 'utf8'");
+                    break;
+                case 'cubrid' :
+                        $this->connect = @cubrid_connect($this->db_info->hostname, $this->db_info->port, $this->db_info->db_database, $this->db_info->userid, $this->db_info->password);
+                        if(!$this->connect) return 'database connect fail';
+                    break;
+                case 'sqlite3_pdo' :
+                        if(substr($this->db_info->db_database,0,1)!='/') $this->db_info->db_database = $this->path.'/'.$this->db_info->db_database;
+                        if(!file_exists($this->db_info->db_database)) return "database file not found";
+                        $this->handler = new PDO('sqlite:'.$this->db_info->db_database);
+                        if(!file_exists($this->db_info->db_database) || $error) return 'permission denied to access database';
+                    break;
+                case 'sqlite' :
+                        if(substr($this->db_info->db_database,0,1)!='/') $this->db_info->db_database = $this->path.'/'.$this->db_info->db_database;
+                        if(!file_exists($this->db_info->db_database)) return "database file not found";
+                        $this->connect = @sqlite_open($this->db_info->db_database, 0666, &$error);
+                        if($error) return $error;
+                    break;
+            }
         }
 
         function dbClose() {
@@ -50,8 +87,71 @@
             mysql_close($this->connect);
         }
 
+        function getLimitQuery($start, $limit_count) {
+            switch($this->db_info->db_type) {
+                case 'postgresql' :
+                        return sprintf(" offset %d limit %d ", $start, $limit_count);
+                case 'cubrid' :
+                        return sprintf(" for ordeby_num() between %d and %d ", $start, $limit_count);
+                default :
+                        return sprintf(" limit %d, %d ", $start, $limit_count);
+                    break;
+            }
+        }
+
         function query($query) {
-            return mysql_query($query);
+            switch($this->db_info->db_type) {
+                case 'mysql' :
+                case 'mysql_innodb' :
+                        return mysql_query($query);
+                    break;
+                case 'cubrid' :
+                        return @cubrid_execute($this->connect, $query);
+                    break;
+                case 'sqlite3_pdo' :
+                        $stmt = $this->handler->prepare($query);
+                        $stmt->execute();
+                        return $stmt;
+                    break;
+                case 'sqlite' :
+                        return sqlite_query($query, $this->connect);
+                    break;
+            }
+        }
+
+        function fetch($result) {
+            switch($this->db_info->db_type) {
+                case 'mysql' :
+                case 'mysql_innodb' :
+                        return mysql_fetch_object($result);
+                    break;
+                case 'cubrid' :
+                        return cubrid_fetch($result, CUBRID_OBJECT);
+                    break;
+                case 'sqlite3_pdo' :
+                        $tmp = $result->fetch(2);
+                        if($tmp) {
+                            foreach($tmp as $key => $val) {
+                                $pos = strpos($key, '.');
+                                if($pos) $key = substr($key, $pos+1);
+                                $obj->{$key} = str_replace("''","'",$val);
+                            }
+                        }
+                        return $obj;
+                    break;
+                case 'sqlite' :
+                        $tmp = sqlite_fetch_array($result, SQLITE_ASSOC);
+                        unset($obj);
+                        if($tmp) {
+                            foreach($tmp as $key => $val) {
+                                $pos = strpos($key, '.');
+                                if($pos) $key = substr($key, $pos+1);
+                                $obj->{$key} = $val;
+                            }
+                        }
+                        return $obj;
+                    break;
+            }
         }
 
         function printHeader() {
@@ -158,6 +258,7 @@
             print "</message>\r\n";
         }
 
+
         function printCategoryItem($obj) {
             if(!count($obj)) return;
 
@@ -170,7 +271,7 @@
             print("</categories>\r\n");
         }
 
-        function printPostItem($sequence, $obj) {
+        function printPostItem($sequence, $obj, $exclude_attach = 'N') {
             print "<post>\r\n";
             // extra_vars, trackbacks, comments, attaches 정보를 별도로 분리
             $extra_vars = $obj->extra_vars;
@@ -207,14 +308,45 @@
             $comment_count = count($comments);
             if($comment_count) {
                 printf('<comments count="%d">%s', $comment_count, "\r\n");
+
                 foreach($comments as $key => $val) {
+
+                    $att = null;
+                    $att = $val->attaches;
+                    unset($val->attaches);
+
                     print "<comment>\r\n";
-                        foreach($val as $k => $v) {
-                            if(!$v) continue;
-                            printf("<%s>", $k); $this->printString($v); printf("</%s>\r\n", $k);
+
+                    foreach($val as $k => $v) {
+                        if(!$v) continue;
+                        printf("<%s>", $k); $this->printString($v); printf("</%s>\r\n", $k);
+                    }
+
+                    $file_count = count($att);
+                    if($file_count) {
+                        printf('<attaches count="%d">%s', $file_count, "\r\n");
+                        foreach($att as $k=> $v) {
+                            if(!file_exists($v->file)) continue;
+
+                            print "<attach>\r\n";
+
+                            print "<filename>"; $this->printString($v->filename); print "</filename>\r\n";
+                            print "<download_count>"; $this->printString($v->download_count); print "</download_count>\r\n";
+
+                            if($exclude_attach=='Y') {
+                                print "<url>"; $this->printString($this->getFileUrl($v->file)); print "</url>\r\n";
+                                print "<path>"; $this->printString($v->file); print "</path>\r\n";
+                            } else {
+                                print "<file>"; $this->printBinary($v->file); print "</file>\r\n";
+                            }
+
+                            print "</attach>\r\n";
                         }
+                        print "</attaches>\r\n";
+                    }
                     print "</comment>\r\n";
                 }
+
                 print "</comments>\r\n";
             }
 
@@ -229,7 +361,12 @@
 
                     print "<filename>"; $this->printString($val->filename); print "</filename>\r\n";
                     print "<download_count>"; $this->printString($val->download_count); print "</download_count>\r\n";
-                    print "<file>"; $this->printBinary($val->file); print "</file>\r\n";
+                    if($exclude_attach=='Y') {
+                        print "<url>"; $this->printString($this->getFileUrl($val->file)); print "</url>\r\n";
+                        print "<path>"; $this->printString($val->file); print "</path>\r\n";
+                    } else {
+                        print "<file>"; $this->printBinary($val->file); print "</file>\r\n";
+                    }
 
                     print "</attach>\r\n";
                 }
@@ -248,6 +385,21 @@
             }
 
             print "</post>\r\n";
+        }
+
+        // zbxe에서 경로 설정시 사용되는 함수
+        function getNumberingPath($no, $size=3) {
+            $mod = pow(10,$size);
+            $output = sprintf('%0'.$size.'d/', $no%$mod);
+            if($no >= $mod) $output .= $this->getNumberingPath((int)$no/$mod, $size);
+            return $output;
+        }
+
+        // 첨부파일의 절대경로를 구함
+        function getFileUrl($file) {
+            $doc_root = $_SERVER['DOCUMENT_ROOT'];
+            $file = str_replace($doc_root.'/', '', realpath($file));
+            return 'http://'.$_SERVER['HTTP_HOST'].'/'.$file;
         }
     }
 ?>
