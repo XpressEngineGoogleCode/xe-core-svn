@@ -340,7 +340,7 @@
 
             $obj->attaches = $files;
 
-            $oMigration->printPostItem($document_info->no, $obj);
+            $oMigration->printPostItem($document_info->no, $obj, $exclude_attach);
         }
 
         // 헤더 정보를 출력
