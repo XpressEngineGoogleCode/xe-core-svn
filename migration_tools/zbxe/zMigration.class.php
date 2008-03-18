@@ -61,7 +61,7 @@
                         $this->connect =  @mysql_connect($this->db_info->db_hostname, $this->db_info->db_userid, $this->db_info->db_password);
                         if(!mysql_error()) @mysql_select_db($this->db_info->db_database, $this->connect);
                         if(mysql_error()) return mysql_error();
-                        mysql_query("set names 'utf8'");
+                        if($this->source_charset == 'UTF-8') mysql_query("set names 'utf8'");
                     break;
                 case 'cubrid' :
                         $this->connect = @cubrid_connect($this->db_info->hostname, $this->db_info->port, $this->db_info->db_database, $this->db_info->userid, $this->db_info->password);
