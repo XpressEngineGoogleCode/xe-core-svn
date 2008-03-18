@@ -1,51 +1,63 @@
 <?php 
     /**
-     * @brief 회원 또는 모듈 데이터 export
+     * @brief zbxe export tool
+     * @author zero (zero@zeroboard.com)
      **/
+    @set_time_limit(0);
+    // zMigration class require
+    require_once('./lib.inc.php');
+    require_once('./zMigration.class.php');
+    $oMigration = new zMigration();
 
-    set_time_limit(0);
-
-    // zMigration class파일 load
-    require_once("./classes/zMigration.class.php");
-
-    // library 파일 load
-    require_once("lib/lib.php");
-
-    // 입력받은 post 변수를 구함
-    $path = $_POST['path'];
+    // 사용되는 변수의 선언
+    $path = $_GET['path'];
     if(substr($path,-1)=='/') $path = substr($path,0,strlen($path)-1);
-    $target_module = $_POST['target_module'];
-    $module_id = $_POST['module_id'];
+    $target_module = $_GET['target_module'];
+    $module_id = $_GET['module_id'];
+    $start = $_GET['start'];
+    $limit_count = $_GET['limit_count'];
+    $exclude_attach = $_GET['exclude_attach']=='Y'?'Y':'N';
+    $filename = $_GET['filename'];
 
     // 입력받은 path를 이용하여 db 정보를 구함
     $db_info = getDBInfo($path);
-    if(!$db_info) doError("입력하신 경로가 잘못되었거나 dB 정보를 구할 수 있는 파일이 없습니다");
+    if(!$db_info) {
+        header("HTTP/1.0 404 Not Found");
+        exit();
+    }
 
-    // zMigration 객체 생성
-    $oMigration = new zMigration($path, $target_module, $module_id, 'UTF-8');
+    // zMigration DB 정보 설정
     $oMigration->setDBInfo($db_info);
 
+    // 대상 정보 설정
+    $oMigration->setModuleType($target_module, $module_id);
+
+    // 언어 설정
+    $oMigration->setCharset('UTF-8', 'UTF-8');
+
+    // 다운로드 파일명 설정
+    $oMigration->setFilename($filename);
+
+    // 경로 지정
+    $oMigration->setPath($path);
+
     // db 접속
-    $message = $oMigration->dbConnect();
-    if($message) doError($message);
+    if($oMigration->dbConnect()) {
+        header("HTTP/1.0 404 Not Found");
+        exit();
+    }
+
+    // limit쿼리 생성 (mysql외에도 적용하기 위함)
+    $limit_query = $oMigration->getLimitQuery($start, $limit_count);
     
     /**
-     * 회원 정보 export일 회원 관련 정보를 모두 가져와서 처리
+     * 회원 정보 추출
      **/
     if($target_module == 'member') {
 
-        // 전체 대상을 구해서 설정
-        $query = sprintf("select count(*) as count from %s_member", $db_info->db_table_prefix);
-        $count_result = $oMigration->query($query);
-        $count_info = $oMigration->fetch($count_result);
-        $oMigration->setItemCount($count_info->count);
-
         // 헤더 정보를 출력
+        $oMigration->setItemCount($limit_count);
         $oMigration->printHeader();
-
-        // 회원정보를 구함
-        $query = sprintF("select * from %s_member order by member_srl", $db_info->db_table_prefix);
-        $member_result = $oMigration->query($query);
 
         // 추가폼 정보를 구함
         $query = sprintF("select * from %s_member_join_form", $db_info->db_table_prefix);
@@ -53,8 +65,11 @@
         while($form_item = $oMigration->fetch($form_result)) {
             $form[] = $form_item->column_name;
         }
-        
 
+        // 회원정보를 구함
+        $query = sprintF("select * from %s_member order by member_srl %s", $db_info->db_table_prefix, $limit_query);
+        $member_result = $oMigration->query($query);
+        
         // 회원정보를 하나씩 돌면서 migration format에 맞춰서 변수화 한후에 printMemberItem 호출
         while($member_info = $oMigration->fetch($member_result)) {
             $obj = null;
@@ -72,19 +87,19 @@
             $obj->regdate = $member_info->regdate;
 
             // 이미지네임
-            $image_name_file = sprintf('%s/files/member_extra_info/image_name/%s%d.gif', $path, getNumberingPath($member_info->member_srl), $member_info->member_srl);
+            $image_name_file = sprintf('%s/files/member_extra_info/image_name/%s%d.gif', $path, $oMigration->getNumberingPath($member_info->member_srl), $member_info->member_srl);
             if(file_exists($image_name_file)) $obj->image_nickname = $image_name_file;
 
             // 이미지마크
-            $image_mark_file = sprintf('%s/files/member_extra_info/image_mark/%s%d.gif', $path, getNumberingPath($member_info->member_srl), $member_info->member_srl);
+            $image_mark_file = sprintf('%s/files/member_extra_info/image_mark/%s%d.gif', $path, $oMigration->getNumberingPath($member_info->member_srl), $member_info->member_srl);
             if(file_exists($image_mark_file)) $obj->image_mark = $image_mark_file;
 
             // 프로필 이미지
-            $image_profile_file = sprintf('%s/files/member_extra_info/profile_image/%s%d.gif', $path, getNumberingPath($member_info->member_srl), $member_info->member_srl);
+            $image_profile_file = sprintf('%s/files/member_extra_info/profile_image/%s%d.gif', $path, $oMigration->getNumberingPath($member_info->member_srl), $member_info->member_srl);
             if(file_exists($image_profile_file)) $obj->profile_image = $image_profile_file;
 
             // 서명
-            $sign_filename = sprintf('%s/files/member_extra_info/signature/%s%d.signature.php', $path, getNumberingPath($member_info->member_srl), $member_info->member_srl);
+            $sign_filename = sprintf('%s/files/member_extra_info/signature/%s%d.signature.php', $path, $oMigration->getNumberingPath($member_info->member_srl), $member_info->member_srl);
             if(file_exists($sign_filename)) {
                 $f = fopen($sign_filename, "r");
                 $signature = trim(fread($f, filesize($sign_filename)));
@@ -112,13 +127,8 @@
      **/
     } else if($target_module == 'message') {
 
-        // 전체 대상을 구해서 설정
-        $query = sprintf("select count(*) as count from %s_member_message where message_type = 'S'", $db_info->db_table_prefix);
-        $count_result = $oMigration->query($query);
-        $count_info = $oMigration->fetch($count_result);
-        $oMigration->setItemCount($count_info->count);
-
         // 헤더 정보를 출력
+        $oMigration->setItemCount($limit_count);
         $oMigration->printHeader();
 
         // 쪽지 정보를 오래된 순부터 구해옴
@@ -140,10 +150,12 @@
                     a.receiver_srl = c.member_srl and 
                     a.message_type = 'S'
                 order by a.message_srl
+                %s
                 ",
                 $db_info->db_table_prefix,
                 $db_info->db_table_prefix,
-                $db_info->db_table_prefix
+                $db_info->db_table_prefix,
+                $limit_query
         );
 
         $message_result = $oMigration->query($query);
@@ -169,15 +181,8 @@
         $module_info_result = $oMigration->query($query);
         $module_info = $oMigration->fetch($module_info_result);
         $module_title = $module_info->browser_title;
-        $oMigration->setFilename($module_title.'.xml');
         
-        // 게시물의 수를 구함
-        $query = sprintf("select count(*) as count from %s_documents where module_srl = '%d'", $db_info->db_table_prefix, $module_srl);
-        $count_result = $oMigration->query($query);
-        $count_info = $oMigration->fetch($count_result);
-        $oMigration->setItemCount($count_info->count);
-
-        // 헤더 정보를 출력
+        $oMigration->setItemCount($limit_count);
         $oMigration->printHeader();
 
         // 카테고리를 구함
@@ -191,7 +196,7 @@
         $oMigration->printCategoryItem($category_list);
 
         // 게시글은 역순(오래된 순서)으로 구함
-        $query = sprintf("select * from %s_documents where module_srl = '%d' order by document_srl", $db_info->db_table_prefix, $module_srl);
+        $query = sprintf("select * from %s_documents where module_srl = '%d' order by document_srl %s", $db_info->db_table_prefix, $module_srl, $limit_query);
         $document_result = $oMigration->query($query);
 
         while($document_info = $oMigration->fetch($document_result)) {
@@ -266,7 +271,7 @@
                 while($file_info = $oMigration->fetch($file_result)) {
                     $filename = $file_info->source_filename;
                     $download_count = $file_info->download_count;
-                    $file = sprintf("%s/%s", $path, $file_info->uploaded_filename);
+                    $file = realpath(sprintf("%s/%s", $path, $file_info->uploaded_filename));
 
                     $file_obj = null;
                     $file_obj->filename = $filename;
@@ -311,7 +316,7 @@
             while($file_info = $oMigration->fetch($file_result)) {
                 $filename = $file_info->source_filename;
                 $download_count = $file_info->download_count;
-                $file = sprintf("%s/%s", $path, $file_info->uploaded_filename);
+                $file = realpath(sprintf("%s/%s", $path, $file_info->uploaded_filename));
 
                 $file_obj = null;
                 $file_obj->filename = $filename;
@@ -341,7 +346,7 @@
             }
             $obj->attaches = $files;
 
-            $oMigration->printPostItem($document_info->document_srl, $obj);
+            $oMigration->printPostItem($document_info->document_srl, $obj, $exclude_attach);
         }
 
         // 헤더 정보를 출력

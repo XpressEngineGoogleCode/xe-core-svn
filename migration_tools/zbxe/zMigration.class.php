@@ -25,10 +25,19 @@
 
         var $db_info = null;
 
-        function zMigration($path, $module_type = 'member', $module_id = '', $source_charset = 'EUC-KR', $target_charset = 'UTF-8') {
+        function zMigration() {
+        }
+
+        function setPath($path) {
             $this->path = $path;
+        }
+
+        function setModuleType($module_type = 'member', $module_id = null) {
             $this->module_type = $module_type;
             if($this->module_type == 'module') $this->module_id = $module_id;
+        }
+
+        function setCharset($source_charset = 'EUC-KR', $target_charset = 'UTF-8') {
             $this->source_charset = $source_charset;
             $this->target_charset = $target_charset;
         }
@@ -76,6 +85,18 @@
         function dbClose() {
             if(!$this->connect) return;
             mysql_close($this->connect);
+        }
+
+        function getLimitQuery($start, $limit_count) {
+            switch($this->db_info->db_type) {
+                case 'postgresql' :
+                        return sprintf(" offset %d limit %d ", $start, $limit_count);
+                case 'cubrid' :
+                        return sprintf(" for ordeby_num() between %d and %d ", $start, $limit_count);
+                default :
+                        return sprintf(" limit %d, %d ", $start, $limit_count);
+                    break;
+            }
         }
 
         function query($query) {
@@ -250,7 +271,7 @@
             print("</categories>\r\n");
         }
 
-        function printPostItem($sequence, $obj) {
+        function printPostItem($sequence, $obj, $exclude_attach = 'N') {
             print "<post>\r\n";
             // extra_vars, trackbacks, comments, attaches 정보를 별도로 분리
             $extra_vars = $obj->extra_vars;
@@ -311,7 +332,13 @@
 
                             print "<filename>"; $this->printString($v->filename); print "</filename>\r\n";
                             print "<download_count>"; $this->printString($v->download_count); print "</download_count>\r\n";
-                            print "<file>"; $this->printBinary($v->file); print "</file>\r\n";
+
+                            if($exclude_attach=='Y') {
+                                print "<url>"; $this->printString($this->getFileUrl($v->file)); print "</url>\r\n";
+                                print "<path>"; $this->printString($v->file); print "</path>\r\n";
+                            } else {
+                                print "<file>"; $this->printBinary($v->file); print "</file>\r\n";
+                            }
 
                             print "</attach>\r\n";
                         }
@@ -334,7 +361,12 @@
 
                     print "<filename>"; $this->printString($val->filename); print "</filename>\r\n";
                     print "<download_count>"; $this->printString($val->download_count); print "</download_count>\r\n";
-                    print "<file>"; $this->printBinary($val->file); print "</file>\r\n";
+                    if($exclude_attach=='Y') {
+                        print "<url>"; $this->printString($this->getFileUrl($val->file)); print "</url>\r\n";
+                        print "<path>"; $this->printString($val->file); print "</path>\r\n";
+                    } else {
+                        print "<file>"; $this->printBinary($val->file); print "</file>\r\n";
+                    }
 
                     print "</attach>\r\n";
                 }
@@ -353,6 +385,21 @@
             }
 
             print "</post>\r\n";
+        }
+
+        // zbxe에서 경로 설정시 사용되는 함수
+        function getNumberingPath($no, $size=3) {
+            $mod = pow(10,$size);
+            $output = sprintf('%0'.$size.'d/', $no%$mod);
+            if($no >= $mod) $output .= $this->getNumberingPath((int)$no/$mod, $size);
+            return $output;
+        }
+
+        // 첨부파일의 절대경로를 구함
+        function getFileUrl($file) {
+            $doc_root = $_SERVER['DOCUMENT_ROOT'];
+            $file = str_replace($doc_root.'/', '', realpath($file));
+            return 'http://'.$_SERVER['HTTP_HOST'].'/'.$file;
         }
     }
 ?>
