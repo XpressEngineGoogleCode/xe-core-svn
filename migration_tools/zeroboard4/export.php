@@ -1,34 +1,59 @@
 <?php 
     /**
-     * @brief xml 데이터를export하는 파일
+     * @brief zeroboard4 export tool
+     * @author zero (zero@zeroboard.com)
      **/
 
-    // 일단 많은 수의 회원이 있을 수 있기에 time limit을 0으로 세팅
-    set_time_limit(0);
+    @set_time_limit(0);
+    // zMigration class require
+    require_once('./lib.inc.php');
+    require_once('./zMigration.class.php');
+    $oMigration = new zMigration();
 
-    // zMigration class파일 load
-    require_once("./classes/zMigration.class.php");
-
-    // library 파일 load
-    require_once("lib/lib.php");
-
-    // 입력받은 post 변수를 구함
-    $charset = $_POST['charset'];
-    $path = $_POST['path'];
+    // 사용되는 변수의 선언
+    $path = $_GET['path'];
     if(substr($path,-1)=='/') $path = substr($path,0,strlen($path)-1);
-    $target_module = $_POST['target_module'];
-    $module_id = $_POST['module_id'];
+    $target_module = $_GET['target_module'];
+    $module_id = $_GET['module_id'];
+    $start = $_GET['start'];
+    $limit_count = $_GET['limit_count'];
+    $exclude_attach = $_GET['exclude_attach']=='Y'?'Y':'N';
+    $filename = $_GET['filename'];
+    $charset = $_GET['charset'];
+    $db_type = $_GET['db_type'];
 
     // 입력받은 path를 이용하여 db 정보를 구함
     $db_info = getDBInfo($path);
-    if(!$db_info) doError("입력하신 경로가 잘못되었거나 dB 정보를 구할 수 있는 파일이 없습니다");
+    if(!$db_info) {
+        header("HTTP/1.0 404 Not Found");
+        exit();
+    }
 
-    // zMigration 객체 생성
-    $oMigration = new zMigration($path, $target_module, $module_id, $charset);
+    $db_info->db_type = $db_type;
+
+    // zMigration DB 정보 설정
+    $oMigration->setDBInfo($db_info);
+
+    // 대상 정보 설정
+    $oMigration->setModuleType($target_module, $module_id);
+
+    // 언어 설정
+    $oMigration->setCharset($charset, 'UTF-8');
+
+    // 다운로드 파일명 설정
+    $oMigration->setFilename($filename);
+
+    // 경로 지정
+    $oMigration->setPath($path);
 
     // db 접속
-    $message = $oMigration->dbConnect($db_info);
-    if($message) doError($message);
+    if($oMigration->dbConnect()) {
+        header("HTTP/1.0 404 Not Found");
+        exit();
+    }
+
+    // limit쿼리 생성 (mysql외에도 적용하기 위함)
+    $limit_query = $oMigration->getLimitQuery($start, $limit_count);
 
     /**
      * 회원 정보 export일 회원 관련 정보를 모두 가져와서 처리
@@ -39,18 +64,13 @@
         $image_nickname_path = sprintf('%s/icon/private_name/',$path);
         $image_mark_path = sprintf('%s/icon/private_icon/',$path);
 
-        // 전체 대상을 구해서 설정
-        $query = "select count(*) as count from zetyx_member_table";
-        $count_result = $oMigration->query($query);
-        $count_info = mysql_fetch_object($count_result);
-        $oMigration->setItemCount($count_info->count);
-
         // 헤더 정보를 출력
+        $oMigration->setItemCount($limit_count);
         $oMigration->printHeader();
 
         // 회원정보를 역순(오래된 순)으로 구해옴
-        $query = "select * from zetyx_member_table order by no asc";
-        $member_result = $oMigration->query($query) or die(mysql_error());
+        $query = "select * from zetyx_member_table order by no asc ".$limit_query;
+        $member_result = $oMigration->query($query);
 
         // 회원정보를 하나씩 돌면서 migration format에 맞춰서 변수화 한후에 printMemberItem 호출
         while($member_info = mysql_fetch_object($member_result)) {
@@ -101,13 +121,8 @@
      **/
     } else if($target_module == 'message') {
 
-        // 전체 대상을 구해서 설정
-        $query = "select count(*) as count from zetyx_get_memo";
-        $count_result = $oMigration->query($query);
-        $count_info = mysql_fetch_object($count_result);
-        $oMigration->setItemCount($count_info->count);
-
         // 헤더 정보를 출력
+        $oMigration->setItemCount($limit_count);
         $oMigration->printHeader();
 
         // 쪽지 정보를 오래된 순부터 구해옴
@@ -127,10 +142,9 @@
             where 
                 a.member_no = b.no and 
                 a.member_from = c.no 
-            order by a.no
-        ';
+            order by a.no '.$limit_query;
 
-        $message_result = $oMigration->query($query) or die(mysql_error());
+        $message_result = $oMigration->query($query);
 
         // 쪽지를 하나씩 돌면서 migration format에 맞춰서 변수화 한후에 printMessageItem 호출
         while($obj = mysql_fetch_object($message_result)) {
@@ -141,7 +155,6 @@
             $obj->regdate = date("YmdHis", $obj->regdate);
             $obj->readed_date = date("YmdHis", $obj->readed_date);
             $obj->content = nl2br($obj->content);
-
 
             $oMigration->printMessageItem($obj);
         }
@@ -154,12 +167,13 @@
      **/
     } else {
 
-	// dqrevolution 스킨 사용하는지 테이블 검사
+        // dqrevolution 스킨 사용하는지 테이블 검사
         $query = "show tables like 'dq_revolution'";
-	$result = $oMigration->query($query);
+        $result = $oMigration->query($query);
         $tmp = mysql_fetch_array($result);
-	if($tmp[0]) $use_dq = true;
-	else $use_dq = false;
+
+        if($tmp[0]) $use_dq = true;
+        else $use_dq = false;
 
         // 그림창고, 첨부파일 디렉토리 경로를 미리 구함
         $image_box_path = sprintf('%s/icon/member_image_box',$path);
@@ -169,13 +183,8 @@
         $module_info_result = $oMigration->query($query);
         $module_info = mysql_fetch_object($module_info_result);
 
-        // 게시물의 수를 구함
-        $query = sprintf("select count(*) as count from zetyx_board_%s", $module_id);
-        $count_info_result = $oMigration->query($query);
-        $count_info = mysql_fetch_object($count_info_result);
-        $oMigration->setItemCount($count_info->count);
-
         // 헤더 정보를 출력
+        $oMigration->setItemCount($limit_count);
         $oMigration->printHeader();
 
         // 카테고리를 구함
@@ -191,7 +200,7 @@
         $oMigration->printCategoryItem($category_list);
 
         // 게시글은 역순(오래된 순서)으로 구함
-        $query = sprintf('select a.*, b.user_id from zetyx_board_%s a left outer join zetyx_member_table b on a.ismember = b.no order by a.headnum desc, a.arrangenum desc', $module_id);
+        $query = sprintf('select a.*, b.user_id from zetyx_board_%s a left outer join zetyx_member_table b on a.ismember = b.no order by a.headnum desc, a.arrangenum desc %s', $module_id, $limit_query);
         $document_result = $oMigration->query($query);
 
         while($document_info = mysql_fetch_object($document_result)) {
@@ -226,24 +235,6 @@
             // 게시판의 기타 정보를 구함 (다른 기타 정보가 있을 경우 추가하면 됨 (20개까지 가능)
             if($document_info->x) $obj->extra_vars[] = $document_info->x;
             if($document_info->y) $obj->extra_vars[] = $document_info->y;
-
-            // 게시글의 엮인글을 구함 (제로보드4는 엮인글이 없어서 기본으로 데이터를 입력하지 않음)
-            /*
-            $trackbacks = array();
-            $query = sprintf("select * from 테이블 where article_srl = '{$article_srl}' order by listorder");
-            $trackback_result = $oMigration->query($query);
-            while($trackback_info = mysql_fetch_object($trackback_result)) {
-                $trackback_obj = null;
-                $trackback_obj->url = $trackback_info->url;
-                $trackback_obj->title = $trackback_info->title;
-                $trackback_obj->blog_name = $trackback_info->blog_name;
-                $trackback_obj->excerpt = $trackback_info->excerpt;
-                $trackback_obj->regdate = $trackback_info->regdate;
-                $trackback_obj->ipaddress = $trackback_info->ipaddress;
-                $trackbacks[] = $trackback_obj;
-            }
-            $obj->trackbacks = $trackbacks;
-            */
 
             // 게시글의 댓글을 구함
             $comments = array();
@@ -299,7 +290,7 @@
                 $obj->content = preg_replace('/\[img:([^\.]*)\.(jpg|gif|png|jpeg),align=([^,]*),width=([^,]*),height=([^,]*),vspace=([^,]*),hspace=([^,]*),border=([^\]]*)\]/i', '<img src="\\1.\\2" align="\\3" width="\\4" height="\\5" border="\\8" alt="\\1.\\2" />', $obj->content);
             }
 
-	    $image_header = '';
+            $image_header = '';
 
             // 첨부파일 처리 (기본 2개인데 일단 20개로 만들어 보았음)
             for($i=1;$i<=20;$i++) {
@@ -320,32 +311,32 @@
                 if(eregi('\.(jpg|gif|jpeg|png)$', $file_name)) $image_header .= sprintf('<img src="%s" border="0" alt="" /><br /><br />', $filename);
             }
 
-	    // dq revolution 확장 이미지 정리 
+            // dq revolution 확장 이미지 정리 
             if($use_dq) {
-		$dq_query = sprintf("select file_names, s_file_names from dq_revolution where zb_id = '%s' and zb_no = '%d'", $module_id, $document_info->no);
-		$dq_result = mysql_query($dq_query);
-		while($dq_item = mysql_fetch_object($dq_result)) {
-			$tmp_filenames = explode(',',$dq_item->file_names);
-			$tmp_s_filenames = explode(',',$dq_item->s_file_names);
-			$dq_count = count($tmp_filenames);
-			for($i=0;$i<$dq_count;$i++) {
-				$filename = trim($tmp_filenames[$i]);
-				$s_filename = trim($tmp_s_filenames[$i]);
-				if(!$filename) continue;
+                $dq_query = sprintf("select file_names, s_file_names from dq_revolution where zb_id = '%s' and zb_no = '%d'", $module_id, $document_info->no);
+                $dq_result = mysql_query($dq_query);
+                while($dq_item = mysql_fetch_object($dq_result)) {
+                    $tmp_filenames = explode(',',$dq_item->file_names);
+                    $tmp_s_filenames = explode(',',$dq_item->s_file_names);
+                    $dq_count = count($tmp_filenames);
+                    for($i=0;$i<$dq_count;$i++) {
+                        $filename = trim($tmp_filenames[$i]);
+                        $s_filename = trim($tmp_s_filenames[$i]);
+                        if(!$filename) continue;
 
-				$file = sprintf("%s/%s", $path, $filename);
-				$file_obj = null;
-				$file_obj->filename = $s_filename;
-				$file_obj->file = $file;
-				$file_obj->download_count = 0;
-				$files[] = $file_obj;
-				
-				if(eregi('\.(jpg|gif|jpeg|png)$', $s_filename)) $image_header .= sprintf('<img src="%s" border="0" alt="" /><br /><br />', $s_filename);
-			}
-		}
-	    }
+                        $file = sprintf("%s/%s", $path, $filename);
+                        $file_obj = null;
+                        $file_obj->filename = $s_filename;
+                        $file_obj->file = $file;
+                        $file_obj->download_count = 0;
+                        $files[] = $file_obj;
+                        
+                        if(eregi('\.(jpg|gif|jpeg|png)$', $s_filename)) $image_header .= sprintf('<img src="%s" border="0" alt="" /><br /><br />', $s_filename);
+                    }
+                }
+            }
 
-	    $obj->content = $image_header . $obj->content;
+            $obj->content = $image_header . $obj->content;
 
             $obj->attaches = $files;
 
