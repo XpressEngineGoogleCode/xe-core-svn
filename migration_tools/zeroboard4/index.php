@@ -32,11 +32,11 @@
     // 1차 체크
     if($path) {
         $db_info = getDBInfo($path);
-        $db_info->db_type = $db_type;
 
         if(!$db_info) {
             $errMsg = "입력하신 경로가 잘못되었거나 dB 정보를 구할 수 있는 파일이 없습니다";
         } else {
+            $db_info->db_type = $db_type;
             $oMigration->setDBInfo($db_info);
             $message = $oMigration->dbConnect();
             if($message) $errMsg = $message;
@@ -121,7 +121,7 @@
 </head>
 <body>
 
-    <h1>zeroboard4 data export tool ver 1.2</h1>
+    <h1>zeroboard4 data export tool ver 0.2</h1>
 
     <?php
         if($errMsg) {

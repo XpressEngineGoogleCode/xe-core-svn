@@ -112,7 +112,7 @@
             $oMigration->printMemberItem($obj);
         }
 
-        // 헤더 정보를 출력
+        // 푸터 정보를 출력
         $oMigration->printFooter();
 
     /**

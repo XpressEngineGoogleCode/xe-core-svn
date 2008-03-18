@@ -118,7 +118,7 @@
             $oMigration->printMemberItem($obj);
         }
 
-        // 헤더 정보를 출력
+        // 푸터 정보를 출력
         $oMigration->printFooter();
 
     /**
@@ -165,7 +165,7 @@
             $oMigration->printMessageItem($obj);
         }
 
-        // 헤더 정보를 출력
+        // 푸터 정보를 출력
         $oMigration->printFooter();
 
 
@@ -182,6 +182,7 @@
         $module_info = $oMigration->fetch($module_info_result);
         $module_title = $module_info->browser_title;
         
+        // 헤더 정보를 출력
         $oMigration->setItemCount($limit_count);
         $oMigration->printHeader();
 
@@ -349,7 +350,7 @@
             $oMigration->printPostItem($document_info->document_srl, $obj, $exclude_attach);
         }
 
-        // 헤더 정보를 출력
+        // 푸터 정보를 출력
         $oMigration->printFooter();
     }
 ?>
