@@ -1,7 +1,7 @@
 <?php 
     /**
-     * @brief gnuboardd4 export tool
-     * @author zero (zero@gnuboardd.com)
+     * @brief gnuboard4 export tool
+     * @author zero (zero@zeroboard.com)
      **/
 
     @set_time_limit(0);
