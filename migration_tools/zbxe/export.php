@@ -286,7 +286,7 @@
 
                     // 이미지등의 파일일 경우 직접 링크를 수정
                     if($file_info->direct_download == 'Y') {
-                        preg_match_all('/("|\')([^"^\']*?)('.preg_quote(urlencode($filename)).')("|\')/i',$comment_obj->content,$matches);
+                        preg_match_all('/("|\')([^"^\']*?)('.preg_quote(($filename)).')("|\')/i',$comment_obj->content,$matches);
                         $mat = $matches[0];
                         if(count($mat)) {
                             foreach($mat as $m) {
@@ -295,7 +295,7 @@
                         }
                     // binary 파일일 경우 역시 링클르 변경
                     } else {
-                        preg_match_all('/("|\')([^"^\']*?)('.preg_quote(urlencode($file_info->sid)).')("|\')/i',$comment_obj->content,$matches);
+                        preg_match_all('/("|\')([^"^\']*?)('.preg_quote(($file_info->sid)).')("|\')/i',$comment_obj->content,$matches);
                         $mat = $matches[0];
                         if(count($mat)) {
                             foreach($mat as $m) {
@@ -331,7 +331,7 @@
 
                 // 이미지등의 파일일 경우 직접 링크를 수정
                 if($file_info->direct_download == 'Y') {
-                    preg_match_all('/("|\')([^"^\']*?)('.preg_quote(urlencode($filename)).')("|\')/i',$obj->content,$matches);
+                    preg_match_all('/("|\')([^"^\']*?)('.preg_quote(($filename)).')("|\')/i',$obj->content,$matches);
                     $mat = $matches[0];
                     if(count($mat)) {
                         foreach($mat as $m) {
@@ -340,7 +340,7 @@
                     }
                 // binary 파일일 경우 역시 링클르 변경
                 } else {
-                    preg_match_all('/("|\')([^"^\']*?)('.preg_quote(urlencode($file_info->sid)).')("|\')/i',$obj->content,$matches);
+                    preg_match_all('/("|\')([^"^\']*?)('.preg_quote(($file_info->sid)).')("|\')/i',$obj->content,$matches);
                     $mat = $matches[0];
                     if(count($mat)) {
                         foreach($mat as $m) {
