@@ -121,7 +121,7 @@
         $oMigration->printHeader();
 
         // 쪽지 정보를 오래된 순부터 구해옴
-        $query = sprintf("select me_recv_mb_id as receiver, me_send_mb_id as sender, me_send_datetime as regdate, me_read_datetime as readed_date, memosub as title, me_memo as content from %s order by me_send_datetime", $db_info->g4['memo_table']);
+        $query = sprintf("select me_recv_mb_id as receiver, me_send_mb_id as sender, me_send_datetime as regdate, me_read_datetime as readed_date, me_memo as content from %s order by me_send_datetime", $db_info->g4['memo_table']);
 
         $message_result = $oMigration->query($query) or die(mysql_error());
 
@@ -133,7 +133,7 @@
             else $obj->readed = 'N';
             $obj->regdate = str_replace(array('-',':',' '),'', $obj->regdate);
             $obj->readed_date = str_replace(array('-',':',' '),'', $obj->readed_date);
-            if(!$obj->title) $obj->title = preg_match('/.{10}/su', $obj->content, $arr) ? $arr[0].'...' : $obj->content;
+            $obj->title = preg_match('/.{10}/su', $obj->content, $arr) ? $arr[0].'...' : $obj->content;
             $obj->content = nl2br($obj->content);
 
             $oMigration->printMessageItem($obj);
