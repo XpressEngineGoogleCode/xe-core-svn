@@ -264,8 +264,8 @@
 
             print("<categories>\r\n");
             foreach($obj as $key => $val) {
-                print "<category>";
-                $this->printString($val); 
+                printf("<category sequence=\"%d\" parent=\"%d\">", $val->sequence, $val->parent);
+                $this->printString($val->title); 
                 print "</category>\r\n";
             }
             print("</categories>\r\n");
