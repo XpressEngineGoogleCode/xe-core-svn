@@ -159,12 +159,10 @@
         $oMigration->printHeader();
 
         // 카테고리를 구함
-        if($module_info->use_category) {
-            $query = sprintf("select ca_name from %s group by ca_name", $table_name);
-            $category_result = $oMigration->query($query);
-            while($category_info= mysql_fetch_object($category_result)) {
-                $category_list[] = $category_info->ca_name;
-            }
+        $query = sprintf("select ca_name from %s group by ca_name", $table_name);
+        $category_result = $oMigration->query($query);
+        while($category_info= mysql_fetch_object($category_result)) {
+            $category_list[] = $category_info->ca_name;
         }
 
         // 카테고리 정보 출력
