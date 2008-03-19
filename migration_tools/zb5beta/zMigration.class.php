@@ -398,7 +398,8 @@
         // 첨부파일의 절대경로를 구함
         function getFileUrl($file) {
             $doc_root = $_SERVER['DOCUMENT_ROOT'];
-            $file = str_replace($doc_root.'/', '', realpath($file));
+            $file = str_replace($doc_root, '', realpath($file));
+            if(substr($file,0,1)==1) $file = substr($file,1);
             return 'http://'.$_SERVER['HTTP_HOST'].'/'.$file;
         }
     }
