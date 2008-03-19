@@ -69,7 +69,7 @@
         $oMigration->printHeader();
 
         // 회원정보를 역순(오래된 순)으로 구해옴
-        $query = sprintf("select * from %s", $db_info->g4['member_table']);
+        $query = sprintf("select * from %s %s", $db_info->g4['member_table'], $limit_query);
         $member_result = $oMigration->query($query) or die(mysql_error());
 
         // 회원정보를 하나씩 돌면서 migration format에 맞춰서 변수화 한후에 printMemberItem 호출
@@ -121,7 +121,7 @@
         $oMigration->printHeader();
 
         // 쪽지 정보를 오래된 순부터 구해옴
-        $query = sprintf("select me_recv_mb_id as receiver, me_send_mb_id as sender, me_send_datetime as regdate, me_read_datetime as readed_date, me_memo as content from %s order by me_send_datetime", $db_info->g4['memo_table']);
+        $query = sprintf("select me_recv_mb_id as receiver, me_send_mb_id as sender, me_send_datetime as regdate, me_read_datetime as readed_date, me_memo as content from %s order by me_send_datetime %s", $db_info->g4['memo_table'], $limit_query);
 
         $message_result = $oMigration->query($query) or die(mysql_error());
 
@@ -171,7 +171,7 @@
         $oMigration->printCategoryItem($category_list);
 
         // 게시글은 역순(오래된 순서)으로 구함
-        $query = sprintf("select * from %s where wr_is_comment = 0 order by wr_num desc, wr_reply desc", $table_name);
+        $query = sprintf("select * from %s where wr_is_comment = 0 order by wr_num desc, wr_reply desc %s", $table_name, $limit_query);
         $document_result = $oMigration->query($query);
 
         while($document_info = mysql_fetch_object($document_result)) {
