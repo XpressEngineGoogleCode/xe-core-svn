@@ -187,7 +187,7 @@
         $oMigration->printHeader();
 
         // 카테고리를 구함
-        $query = sprintf("select * from %s_document_categories where module_srl = '%d' order by list_order", $db_info->db_table_prefix, $module_srl);
+        $query = sprintf("select * from %s_document_categories where module_srl = '%d' order by list_order asc, parent_srl asc", $db_info->db_table_prefix, $module_srl);
         $category_result = $oMigration->query($query);
         while($category_info= $oMigration->fetch($category_result)) {
             $obj = null;
