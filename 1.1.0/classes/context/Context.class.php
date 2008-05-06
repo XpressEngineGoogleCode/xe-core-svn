@@ -184,9 +184,12 @@
             else $db_info->qmail_compatibility = 'Y';
 
             $this->_setDBInfo($db_info);
-            
+
             $GLOBALS['_time_zone'] = $db_info->time_zone;
             $GLOBALS['_qmail_compatibility'] = $db_info->qmail_compatibility;
+
+            // zDatetime의 공용 timezone 설정
+            zDatetime::calculatePublicTimezone();
         }
 
         /**

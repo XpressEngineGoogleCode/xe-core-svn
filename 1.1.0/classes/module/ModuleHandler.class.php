@@ -114,7 +114,7 @@
 
             // 현재 모듈의 정보를 세팅
             Context::set('current_module_info', $module_info);
-                
+
             // 실제 동작을 하기 전에 trigger 호출
             $output = ModuleHandler::triggerCall('display', 'before', $content);
             if(!$output->toBool()) die($output->getMessage());
