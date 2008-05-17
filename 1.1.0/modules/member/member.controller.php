@@ -59,7 +59,7 @@
             $openid->SetTrustRoot('http://' . $_SERVER["HTTP_HOST"]);
 
             $openid->SetRequiredFields(array('email'));
-            $openid->SetOptionalFields(array('dob'));
+            $openid->SetOptionalFields(array('dob','timezone'));
 
             if (!$openid->GetOpenIDServer()) {
                 $error = $openid->GetError();

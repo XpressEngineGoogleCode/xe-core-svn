@@ -269,9 +269,9 @@ class SimpleOpenID{
 	function Redirect(){
 		$redirect_to = $this->GetRedirectURL();
 		if (headers_sent()){ // Use JavaScript to redirect if content has been previously sent (not recommended, but safe)
-			echo '<script language="JavaScript" type="text/javascript">window.location=\'';
+			echo '<script type="text/javascript">/* <![CDATA[ */window.location=\'';
 			echo $redirect_to;
-			echo '\';</script>';
+			echo '\';/*]]>*/</script>';
 		}else{	// Default Header Redirect
 			header('Location: ' . $redirect_to);
 		}

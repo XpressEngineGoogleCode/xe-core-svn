@@ -88,6 +88,17 @@
         </td>
     </tr>
     <tr>
+        <th scope="row">{$lang->member_time_zone}</th>
+        <td>
+            <select name="member_time_zone">
+                <!--@foreach($time_zone_list as $key => $val)-->
+                <option value="{$key}" <!--@if((!is_null($member_info->member_time_zone)&&$member_info->member_time_zone==$key)||$time_zone==$key)-->selected="selected"<!--@end-->>{$val}</option>
+                <!--@end-->
+            </select>
+            <p>{$lang->about_member_time_zone}</p>
+        </td>
+    </tr>
+    <tr>
         <th scope="row">{$lang->allow_mailing}</th>
         <td>
             <input type="checkbox" name="allow_mailing" value="Y" <!--@if($member_info->allow_mailing!='N')-->checked="checked"<!--@end-->/>
@@ -243,7 +254,7 @@
                 <div class="display_date" id="str_{$val->column_name}">{zdate($val->value,"Y-m-d")}</div>
 
                 <script type="text/javascript">
-                    Calendar.setup( { firstDay : 0, inputField : "date_{$val->column_name}", ifFormat : "%Y%m%d", displayArea : "str_{$val->column_name}", daFormat : "%Y-%m-%d"});
+                    DyCalendar.setup( { firstDay : 0, inputField : "date_{$val->column_name}", ifFormat : "%Y%m%d", displayArea : "str_{$val->column_name}", daFormat : "%Y-%m-%d"});
                 </script>
 
 

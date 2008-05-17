@@ -54,7 +54,7 @@ class zDatetime
     function calculatePublicTimezone()
     {
         // TODO: Calculating from member's timezone
-        $timezone = intval($GLOBALS['_time_zone']);
+        $timezone = intval(str_replace(':', '', $GLOBALS['_time_zone']));
         $GLOBALS['zDatetimePublicTimezone'] = intval($timezone / 100) * 60 + $timezone % 100;
     }
 

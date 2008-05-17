@@ -187,6 +187,8 @@
 
             $GLOBALS['_time_zone'] = $db_info->time_zone;
             $GLOBALS['_qmail_compatibility'] = $db_info->qmail_compatibility;
+			Context::set('time_zone', $db_info->time_zone);
+			Context::set('time_zone_list', $GLOBALS['time_zone']);
 
             // zDatetime의 공용 timezone 설정
             zDatetime::calculatePublicTimezone();

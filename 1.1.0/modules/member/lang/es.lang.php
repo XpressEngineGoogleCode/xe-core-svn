@@ -61,12 +61,13 @@
     $lang->member_info = 'Información del Usuario';
     $lang->current_password = 'Contraseña actual';
     $lang->openid = 'OpenID';
+    $lang->member_time_zone = '지역 시간대';
 
     $lang->webmaster_name = 'Nombre del Webmaster';
     $lang->webmaster_email = 'Correo electrónico Webmaster';
 
     $lang->about_keep_signed = '브라우저를 닫더라도 로그인이 계속 유지될 수 있습니다.\n\n로그인 유지 기능을 사용할 경우 다음 접속부터는 로그인을 하실 필요가 없습니다.\n\n단, 게임방, 학교 등 공공장소에서 이용시 개인정보가 유출될 수 있으니 꼭 로그아웃을 해주세요';
-	$lang->about_webmaster_name = 'Por favor, webmaster de entrada el nombre que se utilizará para la autenticación de los correos u otros sitio de la administración. (Por defecto: webmaster)';
+    $lang->about_webmaster_name = 'Por favor, webmaster de entrada el nombre que se utilizará para la autenticación de los correos u otros sitio de la administración. (Por defecto: webmaster)';
     $lang->about_webmaster_email = 'Introduzca la dirección de correo electrónico webmaster.';
 
     $lang->search_target_list = array(
@@ -174,6 +175,7 @@
     $lang->about_homepage = 'Ingresar su sitio web, si es que lo tiene';
     $lang->about_blog_url = 'Ingresar su blog, si es que lo tiene';
     $lang->about_birthday = 'Ingresar su fecha de nacimiento';
+    $lang->about_member_time_zone = '사용하시려는 지역 시간대를 선택해주세요';
     $lang->about_allow_mailing = "Si usted no se ha registrado el envío de email, usted no podrá recibir el email del grupo";
     $lang->about_allow_message = 'Usted puede decidir la recepción del mensaje';
     $lang->about_denied = 'Si selecciona esta opción prohibirá el uso del ID';

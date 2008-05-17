@@ -22,6 +22,7 @@
         <column name="last_login" var="last_login" default="curdate()" />
         <column name="is_admin" var="is_admin" default="N" />
         <column name="description" var="description" />
+        <column name="member_time_zone" var="member_time_zone" />
         <column name="extra_vars" var="extra_vars" />
     </columns>
 </query>

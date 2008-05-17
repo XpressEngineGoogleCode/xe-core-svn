@@ -62,6 +62,7 @@
     $lang->member_info = '회원 정보';
     $lang->current_password = '현재 비밀번호';
     $lang->openid = 'OpenID';
+    $lang->member_time_zone = '지역 시간대';
 
     $lang->webmaster_name = '웹마스터 이름';
     $lang->webmaster_email = '웹마스터 메일주소';
@@ -176,6 +177,7 @@
     $lang->about_homepage = '홈페이지가 있을 경우 입력해주세요';
     $lang->about_blog_url = '운영하는 블로그가 있을 경우 입력해주세요';
     $lang->about_birthday = '생년월일을 입력해주세요';
+    $lang->about_member_time_zone = '사용하시려는 지역 시간대를 선택해주세요';
     $lang->about_allow_mailing = '메일링 가입이 체크되지 않으면 단체메일 발송시 메일을 받지 않습니다';
     $lang->about_allow_message = '쪽지 수신 여부를 결정할 수 있습니다';
     $lang->about_denied = '체크시 아이디를 사용할 수 없도록 합니다';

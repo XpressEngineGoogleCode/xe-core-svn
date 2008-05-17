@@ -142,6 +142,8 @@
             $info->image_name = $this->getImageName($info->member_srl);
             $info->image_mark = $this->getImageMark($info->member_srl);
             $info->signature = $this->getSignature($info->member_srl);
+            if(!isset($info->timezone) || is_null($info->timezone))
+                $info->timezone = $GLOBALS['_time_zone'];
 
             $extra_vars = unserialize($info->extra_vars);
             unset($info->extra_vars);

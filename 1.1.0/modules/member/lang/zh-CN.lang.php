@@ -62,12 +62,13 @@
     $lang->member_info = '会员信息';
     $lang->current_password = '当前密码';
     $lang->openid = 'OpenID';
+    $lang->member_time_zone = '지역 시간대';
 
     $lang->webmaster_name = '管理员名';
     $lang->webmaster_email = '管理员电子邮件';
 
     $lang->about_keep_signed = '关闭浏览器后也将维持登录状态。\n\n使用自动登录功能，可解决每次访问都要输入用户名及密码的麻烦。\n\n为防止个人信息泄露，在网吧，学校等公共场所请务必要确认解除登录状态。';
-	$lang->about_webmaster_name = '请输入认证所需的电子邮件地址或管理其他网站时要使用的网站管理员名称。(默认 : webmaster)';
+    $lang->about_webmaster_name = '请输入认证所需的电子邮件地址或管理其他网站时要使用的网站管理员名称。(默认 : webmaster)';
     $lang->about_webmaster_email = '请输入网站管理员的电子邮件地址。';
 
     $lang->search_target_list = array(
@@ -103,7 +104,7 @@
     $lang->cmd_send_mail = '发送邮件';
     $lang->cmd_manage_id = '禁止用户名管理';
     $lang->cmd_manage_form = '注册表单管理';
-    $lang->cmd_view_own_document = '查看我的帖子';
+    $lang->cmd_view_own_document = '查看发表主题';
     $lang->cmd_view_scrapped_document = '查看收藏';
     $lang->cmd_view_saved_document = '查看临时保存箱';
     $lang->cmd_send_email = '发送邮件';
@@ -176,6 +177,7 @@
     $lang->about_homepage = '请输入您的主页地址。';
     $lang->about_blog_url = '请输入博客地址。';
     $lang->about_birthday = '请输入您的出生年月日。';
+    $lang->about_member_time_zone = '사용하시려는 지역 시간대를 선택해주세요';
     $lang->about_allow_mailing = '如不选择此项，以后不能接收站内发送的重要信息。';
     $lang->about_allow_message = '可以选择短消息接收与否。';
     $lang->about_denied = '选择时不能使用此用户名。';

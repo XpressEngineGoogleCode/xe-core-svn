@@ -109,6 +109,10 @@
     <td>{zdate($member_info->birthday,'Y-m-d')}&nbsp;</td>
 </tr>
 <tr>
+    <th scope="row">{$lang->member_time_zone}</th>
+    <td>{$time_zone_list[$member_info->member_time_zone]}&nbsp;</td>
+</tr>
+<tr>
     <th scope="row">{$lang->allow_mailing}</th>
     <td>{$member_info->allow_mailing}&nbsp;</td>
 </tr>

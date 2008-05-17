@@ -18,5 +18,6 @@
     <column name="last_login" type="date" index="idx_last_login" />
     <column name="is_admin" type="char" size="1" default="N" index="idx_is_admin" />
     <column name="description" type="text" />
+    <column name="member_time_zone" type="char" size="5" />
     <column name="extra_vars" type="text" />
 </table>

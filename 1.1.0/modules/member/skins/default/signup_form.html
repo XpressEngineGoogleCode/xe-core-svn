@@ -14,9 +14,9 @@
 
 <!--#include("./common_header.html")-->
 
-	<div class="boardHeader">
-		<h3>{$lang->cmd_signup}</h3>
-	</div>
+    <div class="boardHeader">
+        <h3>{$lang->cmd_signup}</h3>
+    </div>
 
     <form id="fo_insert_member" action="./" method="get" onsubmit="return procFilter(this, signup)">
     <input type="hidden" name="mid" value="{$mid}" />
@@ -90,6 +90,17 @@
             <input type="hidden" name="birthday" id="date_birthday" value="" />
             <div class="display_date" id="str_birthday"></div>
             <p>{$lang->about_birthday}</p>
+        </td>
+    </tr>
+    <tr>
+        <th scope="row">{$lang->member_time_zone}</th>
+        <td>
+             <select name="member_time_zone">
+                <!--@foreach($time_zone_list as $key => $val)-->
+                <option value="{$key}" <!--@if($time_zone==$key)-->selected="selected"<!--@end-->>{$val}</option>
+                <!--@end-->
+            </select>
+            <p>{$lang->about_member_time_zone}</p>
         </td>
     </tr>
     <tr>

@@ -132,6 +132,17 @@
         </td>
     </tr>
     <tr>
+        <th scope="row">{$lang->member_time_zone}</th>
+        <td>
+             <select name="member_time_zone">
+                <!--@foreach($time_zone_list as $key => $val)-->
+                <option value="{$key}" <!--@if((!is_null($member_info->member_time_zone)&&$member_info->member_time_zone==$key)||$time_zone==$key)-->selected="selected"<!--@end-->>{$val}</option>
+                <!--@end-->
+            </select>
+            <p>{$lang->about_member_time_zone}</p>
+        </td>
+    </tr>
+    <tr>
         <th scope="row">{$lang->allow_mailing}</th>
         <td><input type="checkbox" name="allow_mailing" value="Y" class="checkbox" <!--@if($member_info->allow_mailing!='N')-->checked="checked"<!--@end--> /> <p>{$lang->about_allow_mailing}</p></td>
     </tr>
