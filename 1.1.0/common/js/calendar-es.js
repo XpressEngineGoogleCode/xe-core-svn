@@ -2,9 +2,9 @@
 
 // DyCalendar KO language
 // Author: Mihai Bazon, <mihai_bazon@yahoo.com>
-// Translation: Yourim Yi <yyi@yourim.net>
+// Translation: Bradly1, <bradly1@paran.com>
 // Encoding: UTF-8
-// lang : ko
+// lang : es
 // Distributed under the same terms as the calendar itself.
 
 // For translators: please use UTF-8 if possible.  We strongly believe that
@@ -14,14 +14,14 @@
 // full day names
 
 DyCalendar._DN = new Array
-("일요일",
- "월요일",
- "화요일",
- "수요일",
- "목요일",
- "금요일",
- "토요일",
- "일요일");
+("Domingo",
+ "Lunes",
+ "Martes",
+ "Miércoles",
+ "Jueves",
+ "Viernes",
+ "Sábado",
+ "Domingo");
 
 // Please note that the following array of short day names (and the same goes
 // for short month names, _SMN) isn't absolutely necessary.  We give it here
@@ -37,48 +37,52 @@ DyCalendar._DN = new Array
 
 // short day names
 DyCalendar._SDN = new Array
-("일",
- "월",
- "화",
- "수",
- "목",
- "금",
- "토",
- "일");
+("Domingo",
+ "Lunes",
+ "Martes",
+ "Miércoles",
+ "Jueves",
+ "Viernes",
+ "Sábado",
+ "Domingo");
+
+// First day of the week. "0" means display Sunday first, "1" means display
+// Monday first, etc.
+DyCalendar._FD = 0;
 
 // full month names
 DyCalendar._MN = new Array
-("1월",
- "2월",
- "3월",
- "4월",
- "5월",
- "6월",
- "7월",
- "8월",
- "9월",
- "10월",
- "11월",
- "12월");
+("Enero",
+ "Febrero",
+ "Marzo",
+ "Abril",
+ "Mayo",
+ "Junio",
+ "Julio",
+ "Agosto",
+ "Septiembre",
+ "Octubre",
+ "Noviembre",
+ "Diciembre");
 
 // short month names
 DyCalendar._SMN = new Array
-("1",
- "2",
- "3",
- "4",
- "5",
- "6",
- "7",
- "8",
- "9",
- "10",
- "11",
- "12");
+("Enero",
+ "Febrero",
+ "Marzo",
+ "Abril",
+ "Mayo",
+ "Junio",
+ "Julio",
+ "Agosto",
+ "Septiembre",
+ "Octubre",
+ "Noviembre",
+ "Diciembre");
 
 // tooltips
 DyCalendar._TT = {};
-DyCalendar._TT["INFO"] = "calendar 소개";
+DyCalendar._TT["INFO"] = "Sobre el calendario";
 
 DyCalendar._TT["ABOUT"] =
 "DHTML Date/Time Selector\n" +
@@ -99,26 +103,31 @@ DyCalendar._TT["ABOUT_TIME"] = "\n\n" +
 "- Shift 키와 함께 누르면 감소합니다\n" +
 "- 누른 상태에서 마우스를 움직이면 좀 더 빠르게 값이 변합니다.\n";
 
-DyCalendar._TT["PREV_YEAR"] = "지난 해 (길게 누르면 목록)";
-DyCalendar._TT["PREV_MONTH"] = "지난 달 (길게 누르면 목록)";
-DyCalendar._TT["GO_TODAY"] = "오늘 날짜로";
-DyCalendar._TT["NEXT_MONTH"] = "다음 달 (길게 누르면 목록)";
-DyCalendar._TT["NEXT_YEAR"] = "다음 해 (길게 누르면 목록)";
-DyCalendar._TT["SEL_DATE"] = "날짜를 선택하세요";
-DyCalendar._TT["DRAG_TO_MOVE"] = "마우스 드래그로 이동 하세요";
-DyCalendar._TT["PART_TODAY"] = " (오늘)";
+DyCalendar._TT["PREV_YEAR"] = "Prev. año (mantener para menu)";
+DyCalendar._TT["PREV_MONTH"] = "Prev. mes (mantener para menu)";
+DyCalendar._TT["GO_TODAY"] = "Ir Hoy";
+DyCalendar._TT["NEXT_MONTH"] = "El mes próximo (mantener para menu)";
+DyCalendar._TT["NEXT_YEAR"] = "El año que viene (mantener para menu)";
+DyCalendar._TT["SEL_DATE"] = "Seleccionar fecha";
+DyCalendar._TT["DRAG_TO_MOVE"] = "Arrastra para mover";
+DyCalendar._TT["PART_TODAY"] = " (hoy)";
 
-DyCalendar._TT["DAY_FIRST"] = "%s 먼저 표시";
+// the following is to inform that "%s" is to be the first day of week
+// %s will be replaced with the day name.
+DyCalendar._TT["DAY_FIRST"] = "Mostrar% s primero";
 
+// This may be locale-dependent.  It specifies the week-end days, as an array
+// of comma-separated numbers.  The numbers are from 0 to 6: 0 means Sunday, 1
+// means Monday, etc.
 DyCalendar._TT["WEEKEND"] = "0,6";
 
-DyCalendar._TT["CLOSE"] = "닫기";
-DyCalendar._TT["TODAY"] = "오늘";
-DyCalendar._TT["TIME_PART"] = "(Shift-)클릭 또는 드래그 하세요";
+DyCalendar._TT["CLOSE"] = "Cerrar";
+DyCalendar._TT["TODAY"] = "Hoy";
+DyCalendar._TT["TIME_PART"] = "(Shift-) Haga clic o arrastre para cambiar el valor";
 
 // date formats
 DyCalendar._TT["DEF_DATE_FORMAT"] = "%Y-%m-%d";
-DyCalendar._TT["TT_DATE_FORMAT"] = "%b/%e [%a]";
+DyCalendar._TT["TT_DATE_FORMAT"] = "%a, %b %e";
 
-DyCalendar._TT["WK"] = "주";
-DyCalendar._TT["TIME"] = "시:";
+DyCalendar._TT["WK"] = "wk";
+DyCalendar._TT["TIME"] = "Tiempo:";

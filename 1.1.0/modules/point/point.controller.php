@@ -352,6 +352,41 @@
         }
 
         /**
+         * @brief 추천/비추천 시 포인트 적용
+         **/
+
+        function triggerUpdateVotedCount(&$obj) {
+            $module_srl = $obj->module_srl;
+            $member_srl = $obj->member_srl;
+            if(!$module_srl || !$member_srl) return new Object();
+
+            $oModuleModel = &getModel('module');
+            $config = $oModuleModel->getModuleConfig('point');
+
+            $oPointModel = &getModel('point');
+            $cur_point = $oPointModel->getPoint($member_srl, true);
+
+            if( $obj->point > 0 )
+            {
+                $point = $config->module_point[$module_srl]['voted'];
+                if(!isset($point)) $point = $config->voted;
+            }
+            else
+            {
+                $point = $config->module_point[$module_srl]['blamed'];
+                if(!isset($point)) $point = $config->blamed;
+            }
+
+            if(!$point) return new Object();
+
+            // 포인트 증감
+            $cur_point += $point;
+            $this->setPoint($member_srl,$cur_point);
+
+            return new Object();
+        }
+
+        /**
          * @brief 포인트 설정
          **/
         function setPoint($member_srl, $point, $mode = null) {

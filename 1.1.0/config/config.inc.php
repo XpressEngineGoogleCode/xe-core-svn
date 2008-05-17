@@ -14,7 +14,7 @@
      * 이 내용은 제로보드XE의 버전을 관리자 페이지에 표시하기 위한 용도이며
      * config.inc.php의 수정이 없더라도 공식 릴리즈시에 수정되어 함께 배포되어야 함
      **/
-    define('__ZBXE_VERSION__', '1.0.2');
+    define('__ZBXE_VERSION__', '1.0.3');
 
     /**
      * @brief 디버깅 메세지 출력
@@ -69,6 +69,7 @@
      * php5 기반으로 바꾸게 되면 _autoload를 이용할 수 있기에 제거 대상
      **/
     if(__DEBUG__) define('__ClassLoadStartTime__', getMicroTime());
+	require_once('./classes/datetime/zDatetime.class.php');
     require_once('./classes/object/Object.class.php');
     require_once('./classes/handler/Handler.class.php');
     require_once('./classes/xml/XmlParser.class.php');

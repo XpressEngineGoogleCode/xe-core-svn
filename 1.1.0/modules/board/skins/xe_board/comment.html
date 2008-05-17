@@ -40,10 +40,10 @@
             <!--@end-->
             </div>
 
-            <!--@if($comment->get('voted_count')!=0)-->
+            <!--@if($comment->get('voted_count')!=0 || $comment->get('blamed_count') != 0)-->
             <div class="voted">
                 ({$lang->voted_count}:
-                <strong>{$comment->get('voted_count')}</strong>)
+                <strong>{$comment->get('voted_count')?$comment->get('voted_count'):0}</strong> / <strong>{$comment->get('blamed_count')?$comment->get('blamed_count'):0}</strong>)
             </div>
             <!--@end-->
 
@@ -66,7 +66,14 @@
                     <!--@if($comment->getProfileImage())-->
                     <img src="{$comment->getProfileImage()}" alt="profile" class="commentProfileImage" />
                     <!--@end-->
-                    {$comment->getContent(true)}
+                    {@
+$content = $comment->getContent(true);
+$pattern = '/<div class="comment_popup_menu"><span class="comment_[0-9]+">[^<]+<\/span><\/div>/i';
+preg_match($pattern, $content, $matches);
+$content = preg_replace($pattern, '', str_replace("\n", '', str_replace("\r", '', str_replace("\r\n", '', $content))));
+}
+{nl2br(trim(strip_tags(preg_replace('/<br[^>]*\/?>/i', "\n", $content))))}
+{$matches[0]}
                 <!--@end-->
                 <div class="clear"></div>
             </div>

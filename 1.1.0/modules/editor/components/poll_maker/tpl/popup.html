@@ -4,9 +4,17 @@
 <!--%import("../lang")-->
 
 <!-- calendar -->
-<!--%import("../../../../../common/js/calendar.js",optimized=false)-->
+<!--%import("../../../../../common/js/calendar.min.js",optimized=false)-->
 <!--@if($lang_type == 'ko')-->
     <!--%import("../../../../../common/js/calendar-ko.js",optimized=false)-->
+<!--@elseif($lang_type == 'es')-->
+    <!--%import("../../../../../common/js/calendar-es.js",optimized=false)-->
+<!--@elseif($lang_type == 'ge')-->
+    <!--%import("../../../../../common/js/calendar-ge.js",optimized=false)-->
+<!--@elseif($lang_type == 'ru')-->
+    <!--%import("../../../../../common/js/calendar-ru.js",optimized=false)-->
+<!--@elseif($lang_type == 'zh-CN')-->
+    <!--%import("../../../../../common/js/calendar-zh-CN.js",optimized=false)-->
 <!--@else-->
     <!--%import("../../../../../common/js/calendar-en.js",optimized=false)-->
 <!--@end-->
@@ -39,7 +47,7 @@
             <td>
                 <div class="display_date" id="display_date">{date("Y-m-d",time()+60*60*24*30)}</div>
                 <script type="text/javascript">
-                    Calendar.setup( { firstDay : 0, inputField : "stop_date", ifFormat : "%Y%m%d", displayArea : "display_date", daFormat : "%Y-%m-%d"});
+                    DyCalendar.setup( { firstDay : 0, inputField : "stop_date", ifFormat : "%Y%m%d", displayArea : "display_date", daFormat : "%Y-%m-%d"});
                 </script>
             </td>
         </tr>
