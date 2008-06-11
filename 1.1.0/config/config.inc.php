@@ -69,6 +69,7 @@
      * php5 기반으로 바꾸게 되면 _autoload를 이용할 수 있기에 제거 대상
      **/
     if(__DEBUG__) define('__ClassLoadStartTime__', getMicroTime());
+	require_once('./classes/psm/PSM.class.php');
 	require_once('./classes/datetime/zDatetime.class.php');
     require_once('./classes/object/Object.class.php');
     require_once('./classes/handler/Handler.class.php');
