@@ -1,16 +1,5 @@
 <?php
 /**
- * @class  zDatetime
- * @author HNO3 (wdlee91@gmail.com)
- * @brief  날짜/시간 데이터 저장
- *
- * 날짜/시간의 관리와 계산을 쉽게 하도록 돕는 class.
- * DB의 datetime 형은 모두 이 class의 instance로 반환된다.
- * 내부적으로는 UTC와 지역 시간을 자유자재로 변환하여 사용하나,
- * serialize와 unserialize의 경우 무조건 UTC 기준으로 실행된다.
- **/
-
-/**
  * @brief byte 단위로 문자열을 치환
  **/
 function replaceChar($from, $to, $string)
@@ -28,14 +17,19 @@ function replaceChar($from, $to, $string)
 }
 
 /**
- * @brief 공용 timezone. 현재 로그인되어있는 회원 또는 zbxe의 기본 timezone을 저장.
+ * @class  zDatetime
+ * @author HNO3 (wdlee91@gmail.com)
+ * @brief  날짜/시간 데이터 저장
+ *
+ * 날짜/시간의 관리와 계산을 쉽게 하도록 돕는 class.
+ * DB의 datetime 형은 모두 이 class의 instance로 반환된다.
+ * 내부적으로는 UTC와 지역 시간을 자유자재로 변환하여 사용하나,
+ * serialize와 unserialize의 경우 무조건 UTC 기준으로 실행된다.
  **/
-$zDatetimePublicTimezone = null;
-
 class zDatetime
 {
     var $year, $month, $date, $hour, $minute, $second;
-    var $is_local = false;
+    var $isLocal = false;
     var $timezone;
 
     // static utilities
@@ -45,7 +39,7 @@ class zDatetime
      **/
     function getPublicTimezone()
     {
-        return $GLOBALS['zDatetimePublicTimezone'];
+        return PSM::v('publicTimezone');
     }
 
     /**
@@ -53,9 +47,11 @@ class zDatetime
      **/
     function calculatePublicTimezone()
     {
+        $publicTimezone = &PSM::v('publicTimezone');
+
         // TODO: Calculating from member's timezone
         $timezone = intval(str_replace(':', '', $GLOBALS['_time_zone']));
-        $GLOBALS['zDatetimePublicTimezone'] = intval($timezone / 100) * 60 + $timezone % 100;
+        $publicTimezone = intval($timezone / 100) * 60 + $timezone % 100;
     }
 
     /**
@@ -63,7 +59,8 @@ class zDatetime
      **/
     function setPublicTimezone($timezone)
     {
-        $GLOBALS['zDatetimePublicTimezone'] = $timezone;
+        $publicTimezone = &PSM::v('publicTimezone');
+        $publicTimezone = $timezone;
     }
 
     /**
@@ -203,7 +200,7 @@ class zDatetime
      **/
     function zDatetime($yearOrStringOrObject = null, $month = null, $date = null, $hour = null, $minute = null, $second = null, $utc = false)
     {
-        $this->timezone = $GLOBALS['zDatetimePublicTimezone'];
+        $this->timezone = PSM::v('publicTimezone');
 
         if(is_null($yearOrStringOrObject))
             $this->setFromString(gmdate('YmdHis'), true);
