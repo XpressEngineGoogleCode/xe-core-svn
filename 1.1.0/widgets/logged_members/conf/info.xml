@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<widget version="0.1">
+    <title xml:lang="ko">로그인 사용자 출력 위젯</title>
+    <author email_address="zero@zeroboard.com" link="http://www.zeroboard.com" date="2008. 6. 18">
+        <name xml:lang="ko">zero</name>
+        <description xml:lang="ko">
+            로그인 사용자를 출력하는 위젯입니다.
+        </description>
+    </author>
+    <extra_vars>
+        <var id="list_count">
+            <name xml:lang="ko">목록수</name>
+            <type>text</type>
+            <description xml:lang="ko">출력될 목록의 수를 정하실 수 있습니다. (기본 5개)</description>
+        </var>
+        <var id="use_mid">
+            <name xml:lang="ko">대상 지정</name>
+            <type>select</type>
+            <description xml:lang="ko">대상을 전체로 하면 홈페이지 접속자 모두가 출력되고 Mid 구분으로 하게 되면 접속한 Mid에 같이 접속한 회원만 출력이 됩니다.</description>
+            <options>
+                <name xml:lang="ko">전체</name>
+                <value>total</value>
+            </options>
+            <options>
+                <name xml:lang="ko">Mid 구분</name>
+                <value>mid</value>
+            </options>
+        </var>
+    </extra_vars>
+</widget>

@@ -37,7 +37,7 @@ class zDatetime
     /**
      * @brief 공용 timezone을 얻어옴
      **/
-    function getPublicTimezone()
+    /*static */function getPublicTimezone()
     {
         return PSM::v('publicTimezone');
     }
@@ -45,7 +45,7 @@ class zDatetime
     /**
      * @brief 공용 timezone을 계산하여 설정
      **/
-    function calculatePublicTimezone()
+    /*static */function calculatePublicTimezone()
     {
         $publicTimezone = &PSM::v('publicTimezone');
 
@@ -57,7 +57,7 @@ class zDatetime
     /**
      * @brief 공용 timezone을 임의로 설정. 기존에 생성된 zDatetime instance에는 영향을 주지 않는다.
      **/
-    function setPublicTimezone($timezone)
+    /*static */function setPublicTimezone($timezone)
     {
         $publicTimezone = &PSM::v('publicTimezone');
         $publicTimezone = $timezone;
@@ -66,7 +66,7 @@ class zDatetime
     /**
      * @brief 인자로 주어진 timezone을 +0900 형태로 변환
      **/
-    function getTimezoneHour($timezone)
+    /*static */function getTimezoneHour($timezone)
     {
         return sprintf('%s%02d%02d', ($timezone < 0 ? '-' : '+'), intval($timezone / 60), $timezone % 60);
     }
@@ -74,7 +74,7 @@ class zDatetime
     /**
      * @brief 인자로 주어진 timezone을 +09:00 형태로 변환
      **/
-    function getTimezoneHourMinute($timezone)
+    /*static */function getTimezoneHourMinute($timezone)
     {
         return sprintf('%s%02d:%02d', ($timezone < 0 ? '-' : '+'), intval($timezone / 60), $timezone % 60);
     }
@@ -82,7 +82,7 @@ class zDatetime
     /**
      * @brief 윤년 여부를 계산
      **/
-    function isLeapYear($year)
+    /*static */function isLeapYear($year)
     {
         return (($year % 4 == 0) && ($year % 100 != 0)) || ($year % 400 == 0);
     }
@@ -90,7 +90,7 @@ class zDatetime
     /**
      * @brief 해당 연도의 일수를 반환
      **/
-    function getYearDateCount($year)
+    /*static */function getYearDateCount($year)
     {
         return 365 + intval(zDatetime::isLeapYear($year));
     }
@@ -98,7 +98,7 @@ class zDatetime
     /**
      * @brief 해당 월의 영문 이름을 반환
      **/
-    function getMonthString($month)
+    /*static */function getMonthString($month)
     {
         static $string = array(1 => 'January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December');
 
@@ -108,7 +108,7 @@ class zDatetime
     /**
      * @brief 해당 연도의 월의 일수를 반환
      **/
-    function getMonthDateCount($year, $month)
+    /*static */function getMonthDateCount($year, $month)
     {
         static $dates = array(1 => 31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31);
 
@@ -123,7 +123,7 @@ class zDatetime
     /**
      * @brief 해당 연월일이 해당 연도의 몇 번째 날인지 계산
      **/
-    function getYearDate($year, $month, $date)
+    /*static */function getYearDate($year, $month, $date)
     {
         $order = 0;
 
@@ -137,7 +137,7 @@ class zDatetime
     /**
      * @brief 해당 연월일의 요일 계산. 일요일(0) - 토요일(6)
      **/
-    function getWeekday($year, $month, $date)
+    /*static */function getWeekday($year, $month, $date)
     {
         $datediff = 0;
         $cyear = 2000;
@@ -169,7 +169,7 @@ class zDatetime
     /**
      * @brief 해당 요일의 영문 이름을 반환. Sunday(0) - Saturday(6)
      **/
-    function getWeekdayString($weekday)
+    /*static */function getWeekdayString($weekday)
     {
         static $string = array('Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday');
 
@@ -179,7 +179,7 @@ class zDatetime
     /**
      * @brief 일요일을 한 주의 시작으로 하는 해당 연월일의 해당 연도에서의 주 번호를 계산
      **/
-    function getYearWeek($year, $month, $date) // week starts from sunday
+    /*static */function getYearWeek($year, $month, $date) // week starts from sunday
     {
         $first_weekday = zDatetime::getWeekday($year, 1, 1);
         if($first_weekday == 0)
@@ -427,6 +427,20 @@ class zDatetime
     }
 
     /**
+     * @brief 현재 시간에 대하여 format을 실행한다.
+     **/
+    /*static */function formatNow($format = 'C', $utc = false)
+    {
+        $date = zDatetime::now();
+        if($utc)
+            $date->setUTC();
+        else
+            $date->setLocal();
+
+        return $date->format($format);
+    }
+
+    /**
      * @brief 현재 instance의 날짜/시간을 저장할 수 있는 문자열 형태로 변환
      **/
     function serialize()
@@ -545,7 +559,7 @@ class zDatetime
     /**
      * @brief YYYYMMDDHHIISS의 시간값으로 zDatetime instance 생성
      **/
-    function fromString($string, $utc = false)
+    /*static */function fromString($string, $utc = false)
     {
         return new zDatetime(strval($string), null, null, null, null, null, $utc);
     }
@@ -553,7 +567,7 @@ class zDatetime
     /**
      * @brief Unix timestamp로 zDatetime instance 생성
      **/
-    function fromTimestamp($timestamp, $utc = false)
+    /*static */function fromTimestamp($timestamp, $utc = false)
     {
         return new zDatetime(date('YmdHis', $timestamp), null, null, null, null, null, $utc);
     }
@@ -561,7 +575,7 @@ class zDatetime
     /**
      * @brief 현재 시간으로 zDatetime instance 생성
      **/
-    function now()
+    /*static */function now()
     {
         return new zDatetime();
     }

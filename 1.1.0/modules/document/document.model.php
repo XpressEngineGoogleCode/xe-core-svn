@@ -111,10 +111,15 @@
          * @brief 여러개의 문서들을 가져옴 (페이징 아님)
          **/
         function getDocuments($document_srls, $is_admin = false) {
-            if(is_array($document_srls)) $document_srls = implode(',',$document_srls);
-
-            // DB에서 가져옴
+            if(is_array($document_srls)) {
+                $list_count = count($document_srls);
+                $document_srls = implode(',',$document_srls);
+            } else {
+                $list_count = 1;
+            }
             $args->document_srls = $document_srls;
+            $args->list_count = $list_count;
+
             $output = executeQuery('document.getDocuments', $args);
             $document_list = $output->data;
             if(!$document_list) return;
@@ -406,15 +411,36 @@
         /**
          * @brief 해당 document의 page 가져오기, module_srl이 없으면 전체에서..
          **/
-        function getDocumentPage($document_srl, $module_srl=0, $list_count) {
-            // 변수 설정
-            $args->document_srl = $document_srl;
-            $args->module_srl = $module_srl;
+        function getDocumentPage($oDocument, $opt) {
+            // 정렬 형식에 따라서 query args 변경
+            switch($opt->sort_index) {
+                case 'update_order' :
+                        if($opt->order_type == 'desc') $args->rev_update_order = $oDocument->get('update_order');
+                        else $args->update_order = $oDocument->get('update_order');
+                    break;
+                case 'regdate' :
+                        if($opt->order_type == 'desc') $args->rev_regdate = $oDocument->get('regdate');
+                        else $args->regdate = $oDocument->get('regdate');
+                    break;
+                case 'voted_count' :
+                case 'readed_count' :
+                case 'comment_count' :
+                case 'title' :
+                        return 1;
+                    break;
+                default :
+                        if($opt->order_type == 'desc') $args->rev_list_order = $oDocument->get('list_order');
+                        else $args->list_order = $oDocument->get('list_order');
+                    break;
+            }
+            $args->module_srl = $oDocument->get('module_srl');
+            $args->sort_index = $opt->sort_index;
+            $args->order_type = $opt->order_type;
 
             // 전체 갯수를 구한후 해당 글의 페이지를 검색
             $output = executeQuery('document.getDocumentPage', $args);
             $count = $output->data->count;
-            $page = (int)(($count-1)/$list_count)+1;
+            $page = (int)(($count-1)/$opt->list_count)+1;
             return $page;
         }
 
