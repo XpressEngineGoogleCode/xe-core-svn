@@ -84,31 +84,6 @@
 
             if(!$xml_obj) return;
 
-            $info->title = $xml_obj->title->body;
-
-            // 작성자 정보
-            $addon_info->addon_name = $addon;
-            $addon_info->title = $xml_obj->title->body;
-            $addon_info->version = $xml_obj->attrs->version;
-            $addon_info->author->name = $xml_obj->author->name->body;
-            $addon_info->author->email_address = $xml_obj->author->attrs->email_address;
-            $addon_info->author->homepage = $xml_obj->author->attrs->link;
-            $addon_info->author->date = $xml_obj->author->attrs->date;
-            $addon_info->author->description = trim($xml_obj->author->description->body);
-
-            // history
-            if(!is_array($xml_obj->history->author)) $history[] = $xml_obj->history->author;
-            else $history = $xml_obj->history->author;
-
-            foreach($history as $item) {
-                unset($obj);
-                $obj->name = $item->name->body;
-                $obj->email_address = $item->attrs->email_address;
-                $obj->homepage = $item->attrs->link;
-                $obj->date = $item->attrs->date;
-                $obj->description = $item->description->body;
-                $addon_info->history[] = $obj;
-            }
 
             // DB에 설정된 내역을 가져온다
             $db_args->addon = $addon;
@@ -121,42 +96,169 @@
                 $addon_info->mid_list = array();
             }
 
-            if($xml_obj->extra_vars) {
+
+            // 애드온 정보
+            if($xml_obj->version && $xml_obj->attrs->version == '0.2') {
+                // addon format v0.2
+                sscanf($xml_obj->date->body, '%d-%d-%d', $date_obj->y, $date_obj->m, $date_obj->d);
+                $addon_info->date = sprintf('%04d%02d%02d', $date_obj->y, $date_obj->m, $date_obj->d);
+
+                $addon_info->addon_name = $addon;
+                $addon_info->title = $xml_obj->title->body;
+                $addon_info->description = trim($xml_obj->description->body);
+                $addon_info->version = $xml_obj->version->body;
+                $addon_info->homepage = $xml_obj->link->body;
+                $addon_info->license = $xml_obj->license->body;
+                $addon_info->license_link = $xml_obj->license->attrs->link;
+
+                if(!is_array($xml_obj->author)) $author_list[] = $xml_obj->author;
+                else $author_list = $xml_obj->author;
+
+                foreach($author_list as $author) {
+                    unset($author_obj);
+                    $author_obj->name = $author->name->body;
+                    $author_obj->email_address = $author->attrs->email_address;
+                    $author_obj->homepage = $author->attrs->link;
+                    $addon_info->author[] = $author_obj;
+                }
+
                 // 확장변수를 정리
-                $extra_var_groups = $xml_obj->extra_vars->group;
-                if(!$extra_var_groups) $extra_var_groups = $xml_obj->extra_vars;
-                if(!is_array($extra_var_groups)) $extra_var_groups = array($extra_var_groups);
-                foreach($extra_var_groups as $group) {
-                    $extra_vars = $group->var;
-                    if(!is_array($group->var)) $extra_vars = array($group->var);
+                if($xml_obj->extra_vars) {
+                    $extra_var_groups = $xml_obj->extra_vars->group;
+                    if(!$extra_var_groups) $extra_var_groups = $xml_obj->extra_vars;
+                    if(!is_array($extra_var_groups)) $extra_var_groups = array($extra_var_groups);
 
-                    foreach($extra_vars as $key => $val) {
+                    foreach($extra_var_groups as $group) {
+                        $extra_vars = $group->var;
+                        if(!is_array($group->var)) $extra_vars = array($group->var);
+
+                        foreach($extra_vars as $key => $val) {
+                            unset($obj);
+                            if(!$val->attrs->type) { $val->attrs->type = 'text'; }
+
+                            $obj->group = $group->title->body;
+                            $obj->name = $val->attrs->name;
+                            $obj->title = $val->title->body;
+                            $obj->type = $val->attrs->type;
+                            $obj->description = $val->description->body;
+                            $obj->value = $extra_vals->{$obj->name};
+                            if(strpos($obj->value, '|@|') != false) { $obj->value = explode('|@|', $obj->value); }
+                            if($obj->type == 'mid_list' && !is_array($obj->value)) { $obj->value = array($obj->value); }
+
+                            // 'select'type에서 option목록을 구한다.
+                            if(is_array($val->options)) {
+                                $option_count = count($val->options);
+
+                                for($i = 0; $i < $option_count; $i++) {
+                                    $obj->options[$i]->title = $val->options[$i]->title->body;
+                                    $obj->options[$i]->value = $val->options[$i]->attrs->value;
+                                }
+                            } else {
+                                $obj->options[0]->title = $val->options[0]->title->body;
+                                $obj->options[0]->value = $val->options[0]->attrs->value;
+                            }
+
+                            $addon_info->extra_vars[] = $obj;
+                        }
+                    }
+                }
+
+                // history
+                if($xml_obj->history) {
+                    if(!is_array($xml_obj->history)) $history[] = $xml_obj->history;
+                    else $history = $xml_obj->history;
+
+                    foreach($history as $item) {
                         unset($obj);
-                        if(!$val->type->body) { $val->type->body = 'text'; }
 
-                        $obj->group = $group->title->body;
-                        $obj->name = $val->attrs->name;
-                        $obj->title = $val->title->body;
-                        $obj->type = $val->type->body;
-                        $obj->description = $val->description->body;
-                        $obj->value = $extra_vals->{$obj->name};
-                        if(strpos($obj->value, '|@|') != false) { $obj->value = explode('|@|', $obj->value); }
-                        if($obj->type == 'mid_list' && !is_array($obj->value)) { $obj->value = array($obj->value); }
+                        if($item->author) {
+                            (!is_array($item->author)) ? $obj->author_list[] = $item->author : $obj->author_list = $item->author;
 
-                        // 'select'type에서 option목록을 구한다.
-                        if(is_array($val->options)) {
-                            $option_count = count($val->options);
-
-                            for($i = 0; $i < $option_count; $i++) {
-                                $obj->options[$i]->title = $val->options[$i]->title->body;
-                                $obj->options[$i]->value = $val->options[$i]->value->body;
+                            foreach($obj->author_list as $author) {
+                                unset($author_obj);
+                                $author_obj->name = $author->name->body;
+                                $author_obj->email_address = $author->attrs->email_address;
+                                $author_obj->homepage = $author->attrs->link;
+                                $obj->author[] = $author_obj;
                             }
                         }
 
-                        $addon_info->extra_vars[] = $obj;
+                        $obj->name = $item->name->body;
+                        $obj->email_address = $item->attrs->email_address;
+                        $obj->homepage = $item->attrs->link;
+                        $obj->version = $item->attrs->version;
+                        $obj->date = $item->attrs->date;
+                        $obj->description = $item->description->body;
+
+                        if($item->log) {
+                            (!is_array($item->log)) ? $obj->log[] = $item->log : $obj->log = $item->log;
+
+                            foreach($obj->log as $log) {
+                                unset($log_obj);
+                                $log_obj->text = $log->body;
+                                $log_obj->link = $log->attrs->link;
+                                $obj->logs[] = $log_obj;
+                            }
+                        }
+
+                        $addon_info->history[] = $obj;
                     }
                 }
+
+
+            } else {
+                // addon format 0.1
+                $addon_info->addon_name = $addon;
+                $addon_info->title = $xml_obj->title->body;
+                $addon_info->description = trim($xml_obj->author->description->body);
+                $addon_info->version = $xml_obj->attrs->version;
+                sscanf($xml_obj->author->attrs->date, '%d. %d. %d', $date_obj->y, $date_obj->m, $date_obj->d);
+                $addon_info->date = sprintf('%04d%02d%02d', $date_obj->y, $date_obj->m, $date_obj->d);
+                $author_obj->name = $xml_obj->author->name->body;
+                $author_obj->email_address = $xml_obj->author->attrs->email_address;
+                $author_obj->homepage = $xml_obj->author->attrs->link;
+                $addon_info->author[] = $author_obj;
+
+                if($xml_obj->extra_vars) {
+                    // 확장변수를 정리
+                    $extra_var_groups = $xml_obj->extra_vars->group;
+                    if(!$extra_var_groups) $extra_var_groups = $xml_obj->extra_vars;
+                    if(!is_array($extra_var_groups)) $extra_var_groups = array($extra_var_groups);
+                    foreach($extra_var_groups as $group) {
+                        $extra_vars = $group->var;
+                        if(!is_array($group->var)) $extra_vars = array($group->var);
+
+                        foreach($extra_vars as $key => $val) {
+                            unset($obj);
+                            if(!$val->type->body) { $val->type->body = 'text'; }
+
+                            $obj->group = $group->title->body;
+                            $obj->name = $val->attrs->name;
+                            $obj->title = $val->title->body;
+                            $obj->type = $val->type->body;
+                            $obj->description = $val->description->body;
+                            $obj->value = $extra_vals->{$obj->name};
+                            if(strpos($obj->value, '|@|') != false) { $obj->value = explode('|@|', $obj->value); }
+                            if($obj->type == 'mid_list' && !is_array($obj->value)) { $obj->value = array($obj->value); }
+
+                            // 'select'type에서 option목록을 구한다.
+                            if(is_array($val->options)) {
+                                $option_count = count($val->options);
+
+                                for($i = 0; $i < $option_count; $i++) {
+                                    $obj->options[$i]->title = $val->options[$i]->title->body;
+                                    $obj->options[$i]->value = $val->options[$i]->value->body;
+                                }
+                            }
+
+                            $addon_info->extra_vars[] = $obj;
+                        }
+                    }
+                }
+
             }
+
+
 
             return $addon_info;
         }

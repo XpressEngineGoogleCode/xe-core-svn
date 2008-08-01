@@ -12,6 +12,7 @@
     $lang->add_shortcut = "管理者メニューに追加する";
     $lang->module_action = "動作";
     $lang->module_maker = "モジュール作者";
+    $lang->module_license = 'License';
     $lang->module_history = "変更内容 ";
     $lang->category_title = "カテゴリ名";
     $lang->header_text = 'ヘッダー内容';
@@ -20,8 +21,9 @@
     $lang->category_title = 'カテゴリ名';
     $lang->checked_count = '選択された書き込み数';
     $lang->skin_default_info = 'スキン基本情報';
-    $lang->skin_maker = 'スキン作者';
-    $lang->skin_maker_homepage = '作者ホームページ';
+    $lang->skin_author = 'スキン作者';
+    $lang->skin_license = 'License';
+    $lang->skin_history = '変更内容';
     $lang->module_copy = "モジュールコピー";
 
     $lang->header_script = "ヘッダースクリプト";
@@ -59,7 +61,7 @@
     $lang->about_page_count = 'リストの下段に移動できるページのリンク数が指定できます（デフォルト１０個）。';
     $lang->about_admin_id = '該当するモジュールに対して最高権限を持つ管理者を指定することができます。「,（コンマ）」で区切って多数のＩＤが指定できます（管理者ページへのアクセスはできません）。';
     $lang->about_grant = '特定権限の対象をすべて解除するとログインしていない会員ユーザまで権限が与えられます。';
-    $lang->about_module = "ゼロボードXEは、基本ライブラリの他は、すべてモジュールで構成されています。モジュール管理用のモジュールはインストールされたすべてを表示し、管理できるようにします。頻繁に使うモジュールは、【ショットカット追加】で行うと管理しやすなります。";
+    $lang->about_module = "ゼロボードXEは、基本ライブラリの他は、すべてモジュールで構成されています。モジュール管理用のモジュールはインストールされたすべてを表示し、管理できるようにします。";
 
     $lang->about_extra_vars_default_value = '多重・単一選択などのデフォルト値が、複数必要な場合は、「, （コンマ）」で区切って追加することができます。';
 ?>

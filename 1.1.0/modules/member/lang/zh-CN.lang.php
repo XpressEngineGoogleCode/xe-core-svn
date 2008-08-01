@@ -88,8 +88,8 @@
     $lang->cmd_manage_id = '禁止用户名管理';
     $lang->cmd_manage_form = '注册表单管理';
     $lang->cmd_view_own_document = '查看发表主题';
-    $lang->cmd_trace_document = 'Trace Written Articles';
-    $lang->cmd_trace_comment = 'Trace Written Comments';
+    $lang->cmd_trace_document = '主题追踪';
+    $lang->cmd_trace_comment = '评论追踪';
     $lang->cmd_view_scrapped_document = '查看收藏';
     $lang->cmd_view_saved_document = '查看临时保存箱';
     $lang->cmd_send_email = '发送邮件';
@@ -151,7 +151,7 @@
     $lang->about_allow_mailing = '如不选择此项，以后不能接收站内发送的重要信息。';
     $lang->about_denied = '选择时不能使用此用户名。';
     $lang->about_is_admin = '选择时将具有最高管理权限。';
-    $lang->about_description = '管理员对会员的笔记。';
+    $lang->about_member_description = '管理员对会员的笔记。';
     $lang->about_group = '一个用户名可属多个用户组。';
 
     $lang->about_column_type = '请选择要添加的注册表单格式。';

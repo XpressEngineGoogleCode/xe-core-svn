@@ -12,6 +12,7 @@
     $lang->add_shortcut = "Añadir en el menú del administrador";
     $lang->module_action = "Acción";
     $lang->module_maker = "Módulo del desarrollador";
+    $lang->module_license = 'License';
     $lang->module_history = "Historia de actualización";
     $lang->category_title = "Título de categoría";
     $lang->header_text = 'Encabezado';
@@ -20,8 +21,9 @@
     $lang->category_title = 'Título de categoría';
     $lang->checked_count = 'Múmero de los documentos selecionados';
     $lang->skin_default_info = 'información del tema predefinido';
-    $lang->skin_maker = 'Desarrollador de temas';
-    $lang->skin_maker_homepage = "Página Web del desarrollador de temas";
+    $lang->skin_author = 'Desarrollador de tema';
+    $lang->skin_license = 'License';
+    $lang->skin_history = 'Historia de actualización';
     $lang->module_copy = "Copy Module";
 
     $lang->header_script = "헤더 스크립트";
@@ -59,7 +61,7 @@
     $lang->about_page_count = 'Usted puede definir el número de página enlazada para mover páginas en un botón de la página.(Predefinido es 10)';
     $lang->about_admin_id = 'Usted puede definir el administrador de atribuciones superiores al módulo.\n Usted puede asignar múltiples IDs,<br />utilizando una ","(coma) \n(pero el administrador del módulo no puede acceder al sitio de la pógina del administrador.)';
     $lang->about_grant = 'Si usted desea desactivar a todos los objetos teniendo atribuciones especificas, incluso el usuario no conectado pueden tener atribuciones.';
-    $lang->about_module = "Zeroboard XE consiste de módulos excepto la librería básica.\n Módulo del Manejo del Módulo muestra todos los módulos instalados y ayuda el manejo de ellos.\nLos módulos usados frecuentemente puede manejar fácilmente a través de función de [Añadir acceso directo].";
+    $lang->about_module = "Zeroboard XE consiste de módulos excepto la librería básica.\n Módulo del Manejo del Módulo muestra todos los módulos instalados y ayuda el manejo de ellos.";
 
 	$lang->about_extra_vars_default_value = 'Si múltiples valores predefinidos son requeridos, usted puede enlazar con la coma(,).';
 ?>

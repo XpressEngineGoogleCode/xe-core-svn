@@ -55,7 +55,7 @@
             if(count($cache_list)) {
                 foreach($cache_list as $cache_file) {
                     $pos = strpos($cache_file, $menu_srl.'_');
-                    if($pos>0) unlink($cache_file);
+                    if($pos>0)FileHandler::removeFile($cache_file);
                 }
             }
 
@@ -196,9 +196,9 @@
             $xml_file = $this->makeXmlFile($args->menu_srl);
 
             // 이미지 버튼 모두 삭제
-            if($item_info->normal_btn) @unlink($item_info->normal_btn);
-            if($item_info->hover_btn) @unlink($item_info->hover_btn);
-            if($item_info->active_btn) @unlink($item_info->active_btn);
+            if($item_info->normal_btn) FileHandler::removeFile($item_info->normal_btn);
+            if($item_info->hover_btn) FileHandler::removeFile($item_info->hover_btn);
+            if($item_info->active_btn) FileHandler::removeFile($item_info->active_btn);
 
             $this->add('xml_file', $xml_file);
             $this->add('menu_title', $menu_title);
@@ -305,7 +305,7 @@
             $menu_item_srl = Context::get('menu_item_srl');
             $target = Context::get('target');
             $filename = Context::get('filename');
-            @unlink($filename);
+            FileHandler::removeFile($filename);
 
             $this->add('target', $target);
         }
@@ -354,8 +354,9 @@
                 '$lang_type = Context::getLangType(); '.
                 '$is_logged = Context::get(\'is_logged\'); '.
                 '$logged_info = Context::get(\'logged_info\'); '.
-                'if($is_logged && $logged_info->is_admin=="Y") { '.
-                    '$is_admin = true; '.
+                'if($is_logged) {'.
+                    'if($logged_info->is_admin=="Y") $is_admin = true; '.
+                    'else $is_admin = false; '.
                     '$group_srls = array_keys($logged_info->group_list); '.
                 '} else { '.
                     '$is_admin = false; '.
@@ -421,7 +422,7 @@
                 // 변수 정리 
                 $names = $oMenuAdminModel->getMenuItemNames($node->name);
                 foreach($names as $key => $val) {
-                    $name_arr_str .= sprintf('"%s"=>"%s",',$key, htmlspecialchars($val));
+                    $name_arr_str .= sprintf('"%s"=>"%s",',$key, str_replace('\\','\\\\',htmlspecialchars($val)));
                 }
                 $name_str = sprintf('$_names = array(%s); print $_names[$lang_type];', $name_arr_str);
 
@@ -504,7 +505,7 @@
                 // 변수 정리 
                 $names = $oMenuAdminModel->getMenuItemNames($node->name);
                 foreach($names as $key => $val) {
-                    $name_arr_str .= sprintf('"%s"=>"%s",',$key, htmlspecialchars($val));
+                    $name_arr_str .= sprintf('"%s"=>"%s",',$key, str_replace('\\','\\\\',htmlspecialchars($val)));
                 }
                 $name_str = sprintf('$_menu_names[%d] = array(%s); %s', $node->menu_item_srl, $name_arr_str, $child_output['name']);
 

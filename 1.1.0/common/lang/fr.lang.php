@@ -2,13 +2,13 @@
     /**
      * @file   common/lang/fr.lang.php
      * @author zero (zero@nzeo.com)   Traduit par Pierre Duvent(PierreDuvent@gamil.com)
-     * @brief  Paquet de La Langue  Francaise (Mots de base seulement) 
+     * @brief  Paque du langage primaire 
      **/
 
-    // 	verbes et mots de base decrivant des actions 
+    // 	verbes et mots fondamentaux qui décrivent des actions 
     $lang->cmd_write = 'Ecrire';
     $lang->cmd_reply = 'Répondre';
-    $lang->cmd_delete = 'Effacer';
+    $lang->cmd_delete = 'Supprimer';
     $lang->cmd_modify = 'Modifier';
     $lang->cmd_edit = 'Editer';
     $lang->cmd_view = 'Voir';
@@ -58,11 +58,11 @@
     $lang->cmd_scrap = 'Coupure';
     $lang->cmd_preview = 'Avant-première';
     $lang->cmd_reset = 'Restaurer';
-    $lang->cmd_remake_cache = "Recréer la Cachette du Fichier";
+    $lang->cmd_remake_cache = "Recréer l'antémémoire du Fichier";
     $lang->cmd_publish = "Publier";
     $lang->cmd_layout_setup = 'Configurer la Mise en page';
     $lang->cmd_layout_edit = 'Editer la Mise en page';
-    $lang->cmd_search_by_ipaddress = 'IP주소로 검색';
+    $lang->cmd_search_by_ipaddress = 'Recherce par l\'Address IP';
 
     $lang->enable = 'Valide';
     $lang->disable = 'Invalide';
@@ -81,9 +81,9 @@
     $lang->password2 = 'Confirmer du Mot de Passe';
     $lang->admin_id = 'Compte d\'Administrateur';
     $lang->writer = 'Auteur';
-    $lang->user_name = 'Nom d\'utilisateur';
+    $lang->user_name = 'Nom';
     $lang->nick_name = 'Surnom';
-    $lang->email_address = 'Courriel';
+    $lang->email_address = 'Mél';
     $lang->homepage = 'Page d\'accueil';
     $lang->blog = 'Blogue';
     $lang->birthday = 'Anniversaire';
@@ -118,9 +118,9 @@
 
     $lang->mid = 'Nom';
     $lang->layout = 'Mise en Page';
-    $lang->widget = 'Widget';
+    $lang->widget = 'Gadget';
     $lang->module = 'Module';
-    $lang->skin = 'Thème';
+    $lang->skin = 'Habillage';
     $lang->colorset = 'Arrangement de couleur';
     $lang->extra_vars = 'Variables Supplémentaires';
 
@@ -131,29 +131,29 @@
 
     $lang->document_count = ' Documents';
     $lang->page_count = 'Pages';
-    $lang->list_count = 'Items';
+    $lang->list_count = 'Item';
     $lang->search_list_count = 'Trouvés';
     $lang->readed_count = ' Vues';
     $lang->voted_count = 'Recommandés';
-    $lang->comment_count = 'Commentairesés';
+    $lang->comment_count = 'Commentaires';
     $lang->member_count = 'Membres';
     $lang->date = 'Jour';
     $lang->regdate = 'Enrégistré';
     $lang->last_update = 'Dernière Mise à Jour';
     $lang->last_post = 'Dernière Affichage';
-    $lang->signup_date = 'Jour de s\'inscrire';
+    $lang->signup_date = 'Inscription';
     $lang->last_login = 'Dernière connexion';
     $lang->first_page = 'Première Page';
     $lang->last_page = 'Dernière Page';
-    $lang->search_target = 'Cible à Rechercher';
-    $lang->search_keyword = 'Mot-clé à Recherche';
+    $lang->search_target = 'Champ à Rechercher';
+    $lang->search_keyword = 'Mot-clé à Rechercher';
     $lang->is_default = 'Par Défaut';
 
-    $lang->no_documents = 'Aucun Document';
+    $lang->no_documents = 'Nul Document';
 
-    $lang->board_manager = 'Arrangements des Panneau';
-    $lang->member_manager = 'Arrangements des Membres';
-    $lang->layout_manager = 'Arrangements de Mise en Page';
+    $lang->board_manager = 'Administration des Panneaux';
+    $lang->member_manager = 'Administration des Membres';
+    $lang->layout_manager = 'Administration des Mises en Page';
 
     $lang->use = 'Utiliser';
     $lang->notuse = 'Pas Utilisé';
@@ -171,23 +171,23 @@
     $lang->unit_year = 'année';;
 
     // Descriptions et information
-    $lang->about_tag = 'Vous pouvez enrégistrer plusieurs tags en utilisant ,(virgule) entre chaque tag';
+    $lang->about_tag = 'Vous pouvez enrégistrer plusieurs balises en utilisant ,(virgule) entre chaque balise';
     $lang->about_layout = 'Le Mise en Page décore l\'apparence des modules. Vous pouvez les configurer avec le menu de Mise en Page en haut';
 
     // Messages et alertes
-    $lang->msg_call_server = 'En demandant sur le serveur, attendez svp.';
-    $lang->msg_db_not_setted = 'La configuration de DB n\'est pas été établie.';
-    $lang->msg_invalid_queryid = 'La valeur spécifiée de query ID est invalide.';
+    $lang->msg_call_server = 'En demandant sur le serveur, attendez S.V.P.';
+    $lang->msg_db_not_setted = 'La configuration de Base de Données n\'a pas été établie.';
+    $lang->msg_invalid_queryid = 'La valeur spécifiée d\'identite de query est invalide.';
     $lang->msg_not_permitted = 'Vous n\'avez pas le droit d\'accès.';
     $lang->msg_input_password = 'Veuillez entrer votre mot de passe.';
-    $lang->msg_invalid_document = 'Nombre de Document invalide';
+    $lang->msg_invalid_document = 'Numéro de Document invalide';
     $lang->msg_invalid_request = 'Requête invalide';
     $lang->msg_invalid_password = 'Mot de passe invalide';
     $lang->msg_error_occured = 'Une erreur a lieu';
-    $lang->msg_not_founded = 'La cible n\'est pas trouvée.';
-    $lang->msg_no_result = 'Aucun Résultat';
+    $lang->msg_not_founded = 'L\'objet n\'est pas trouvé.';
+    $lang->msg_no_result = 'Nul Résultat';
 
-    $lang->msg_not_permitted_act = 'Vous n\'êtes pas autorisés à exécuter l\'action que vous demandez.';
+    $lang->msg_not_permitted_act = 'Vous n\'êtes pas autorisés à exécuter l\'action que vous avez demandé.';
     $lang->msg_module_is_not_exists = 'Le module demandé n\'a pas été trouvé.';
     $lang->msg_module_is_not_standalone = 'Le module demandé ne peut pas être exécuté indépendamment.';
 
@@ -196,7 +196,7 @@
     $lang->success_updated = 'Mise à jour avec succès';
     $lang->success_deleted = 'Supprimé avec succès';
     $lang->success_voted = 'Voté avec succès';
-    $lang->success_blamed = 'Blamed success_blamed';
+    $lang->success_blamed = 'Blâmé avec succès';
     $lang->success_moved = 'Bougé avec succès';
     $lang->success_sended = 'Envoyé avec succès';
     $lang->success_reset = 'Restauré avec succès';
@@ -207,11 +207,11 @@
     $lang->fail_to_move = 'N\'a pas pu être bougé';
 
     $lang->failed_voted = 'N\'a pas pu recommander';
-    $lang->failed_blamed = 'Could not blame';
+    $lang->failed_blamed = 'N\'a pas pu blâmer';
     $lang->failed_declared = 'N\'a pas pu accuser';
-    $lang->fail_to_delete_have_children = 'Essayez encore après avoir suprimé les reponses, SVP';
+    $lang->fail_to_delete_have_children = 'Essayez encore une fois après avoir suprimé les reponses, S.V.P.';
 
-    $lang->confirm_submit = 'Vous voulez sûrement valider?';
+    $lang->confirm_submit = 'Vous voulez sûrement soumettre?';
     $lang->confirm_logout = 'Vous voulez sûrement fermer la session?';
     $lang->confirm_vote = 'Vous voulez recommander?';
     $lang->confirm_delete = 'Vous voulez sûrement supprimer?';
@@ -219,10 +219,10 @@
     $lang->confirm_reset = 'Vous voulez sûrement restaurer?';
     $lang->confirm_leave = 'Vous voulez sûrement supprimer votre compte?';
 
-    $lang->column_type = 'Types des colonnes';
+    $lang->column_type = 'Types de la colonne';
     $lang->column_type_list['text'] = 'Texte en une seul ligne';
     $lang->column_type_list['homepage'] = 'URL';
-    $lang->column_type_list['email_address'] = 'Courriel';
+    $lang->column_type_list['email_address'] = 'Mél';
     $lang->column_type_list['tel'] = 'Numéro de Telephone';
     $lang->column_type_list['textarea'] = 'Texte en plusieurs lignes';
     $lang->column_type_list['checkbox'] = 'Case à cocher (multichoix)';
@@ -234,18 +234,18 @@
     $lang->column_title = 'Titre de la colonne';
     $lang->default_value = 'Valeur par défaut';
     $lang->is_active = 'Actif';
-    $lang->is_required = 'Champ obligatoire';
+    $lang->is_required = 'Item essentielle';
 
     // Messages d\'alerte de le Javascript qui est utilisé dans les filtres en XML
     $lang->filter->isnull = 'Entrez une valeur pour %s';
     $lang->filter->outofrange = 'Aligner la longueur du texte de %s';
     $lang->filter->equalto = "La valeur de %s est invalide.";
     $lang->filter->invalid_email = "Le format de %s est invalide. ex) zbxe@zeroboard.com";
-    $lang->filter->invalid_user_id = $lang->filter->invalid_userid = "La format de %s n\'est pas convenable.\\nToutes les lettres devraient se composer des alphabets, des nombres ou du soulignage(_) Et la première lettre doit être un des alphabet.";
+    $lang->filter->invalid_user_id = $lang->filter->invalid_userid = "La format de %s n\'est pas convenable.\\nToutes les lettres devraient se composer des alphabets, des chiffres ou du soulignage(_) Et la première lettre doit être un de l'alphabet.";
     $lang->filter->invalid_homepage = "La format de %s n\'est pas convenable. ex) http://www.zeroboard.com";
-    $lang->filter->invalid_korean = "La format de %s n\'est pas convenable. Entrez seulement en coréen, SVP";
-    $lang->filter->invalid_korean_number = "La format de %s n\'est pas convenable. Entrez seulement en alphabet coréen ou en nombres, SVP.";
-    $lang->filter->invalid_alpha = "La format de %s n\'est pas convenable. Entrez seulement en alphabet, SVP.";
-    $lang->filter->invalid_alpha_number = "La format de %s n\'est pas convenable. Entrez seulement en alphabet ou en nombres.";
-    $lang->filter->invalid_number = "La format de %s n\'est pas convenable. Entrez seulement en numéros.";
+    $lang->filter->invalid_korean = "La format de %s n\'est pas convenable. Entrez seulement en coréen, S.V.P.";
+    $lang->filter->invalid_korean_number = "La format de %s n\'est pas convenable. Entrez seulement des lettres d'alphabet coréen ou des chiffres, S.V.P.";
+    $lang->filter->invalid_alpha = "La format de %s n\'est pas convenable. Entrez seulement en alphabet, S.V.P.";
+    $lang->filter->invalid_alpha_number = "La format de %s n\'est pas convenable. Entrez seulement des lettres d'alphabet ou des chiffres.";
+    $lang->filter->invalid_number = "La format de %s n\'est pas convenable. Entrez seulement des chiffres.";
 ?>

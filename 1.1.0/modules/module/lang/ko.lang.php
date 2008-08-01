@@ -12,7 +12,8 @@
     $lang->add_shortcut = "관리자 메뉴에 추가";
     $lang->module_action = "동작";
     $lang->module_maker = "모듈 제작자";
-    $lang->module_history = "변경 사항 ";
+    $lang->module_license = '라이선스';
+    $lang->module_history = '변경 이력 ';
     $lang->category_title = "분류 이름";
     $lang->header_text = '상단 내용';
     $lang->footer_text = '하단 내용';
@@ -20,8 +21,9 @@
     $lang->category_title = '분류명';
     $lang->checked_count = '선택된 글 수';
     $lang->skin_default_info = '스킨 기본정보';
-    $lang->skin_maker = '스킨제작자';
-    $lang->skin_maker_homepage = '제작자 홈페이지';
+    $lang->skin_author = '스킨 제작자';
+    $lang->skin_license = '라이선스';
+    $lang->skin_history = '변경 이력';
     $lang->module_copy = "모듈 복사";
 
     $lang->header_script = "헤더 스크립트";
@@ -59,7 +61,7 @@
     $lang->about_page_count = '목록 하단 페이지 이동 하는 링크의 수를 지정하실 수 있습니다. (기본 10개)';
     $lang->about_admin_id = '해당 모듈에 대해 최고 권한을 가지는 관리자를 지정할 수 있습니다.<br />,(콤마)로 다수 아이디 지정이 가능합니다. (관리자페이지 접근은 불가능)';
     $lang->about_grant = '특정 권한의 대상을 모두 해제하시면 로그인하지 않은 회원까지 권한을 가질 수 있습니다';
-    $lang->about_module = "제로보드XE는 기본 라이브러리를 제외한 나머지는 모두 모듈로 구성되어 있습니다.\n모듈관리 모듈은 설치된 모든 모듈을 보여주고 관리를 도와줍니다.\n자주 쓰는 모듈은 [바로가기 추가]를 통해서 편하게 관리하실 수 있습니다.";
+    $lang->about_module = "제로보드XE는 기본 라이브러리를 제외한 나머지는 모두 모듈로 구성되어 있습니다.\n모듈관리 모듈은 설치된 모든 모듈을 보여주고 관리를 도와줍니다.";
 
     $lang->about_extra_vars_default_value = '다중/단일 선택등 기본값이 여러개가 필요한 경우 , (콤마)로 연결하시면 됩니다';
 ?>
