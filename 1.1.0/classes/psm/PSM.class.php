@@ -1,12 +1,18 @@
 <?php
 /**
+ * @breif PSM에서 지정된 변수들을 저장할 전역 변수
+ **/
+$PSM_var = array();
+
+/**
  * @class  PSM
  * @author HNO3 (wdlee91@gmail.com)
  * @brief  php4에서 static member 변수 흉내
  *
  * zbxe에서는 현재 php4도 지원 상태에 있기에, php4에서 지원하지 않는 static member 변수를 흉내낼 수 있도록 하는 class.
+ * 개발 플랫폼이 php5 전용으로 넘어가면 이 클래스도 삭제될 것이다.
  * 사용 예:
- * <div style="margin-left: 3em;"><pre><code>class Foo {
+ * <pre style="margin-left: 3em;"><code>class Foo {
  *     function bar() {
  *         $someVar = &PSM::v('someVar');
  *         if($someVar === null) $someVar = 1; // initializing
@@ -14,14 +20,8 @@
  *     }
  * }
  * $FooSomeVar = &PSM::vc('Foo', 'someVar');
- * // use $FooSomeVar like Foo::$someVar</code></pre></div>
+ * // use $FooSomeVar like Foo::$someVar</code></pre>
  **/
-
-/**
- * @breif PSM에서 지정된 변수들을 저장할 전역 변수
- **/
-$PSM_var = array();
-
 class PSM // Pseudo Static Member
 {
     /**
