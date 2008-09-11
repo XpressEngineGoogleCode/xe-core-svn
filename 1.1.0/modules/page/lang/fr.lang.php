@@ -2,7 +2,7 @@
     /**
      * @file   modules/page/lang/fr.lang.php
      * @author zero (zero@nzeo.com) Traduit par Pierre Duvent (PierreDuvent@gmail.com)
-     * @brief  Paquet du langage fondamental pour le module de Page
+     * @brief  Paquet du langage en français pour le module de Page
      **/
 
     $lang->page = "Page";

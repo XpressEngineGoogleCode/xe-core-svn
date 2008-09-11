@@ -2,7 +2,7 @@
     /**
      * @file   modules/comment/lang/fr.lang.php
      * @author zero <zero@nzeo.com>  Traduit par Pierre Duvent <PierreDuvent@gmail.com>
-     * @brief  Paque du langage primaire pour le module de Commentaire
+     * @brief  Paquet du langage en français pour le module de Commentaire
      **/
 	
     $lang->cmd_comment_do = 'Vous voudriez...';
@@ -23,10 +23,10 @@
         'user_name' => 'Nom',
         'nick_name' => 'Surnom',
         'member_srl' => 'Numéro de Série du Membre',
-        'email_adresse' => 'Mél',
+        'email_address' => 'Mél',
         'homepage' => 'Page d\'Accueil',
         'regdate' => 'Jour',
         'last_update' => 'Mise à Jour',
-        'ipadresse' => 'Adresse IP',
+        'ipaddress' => 'Adresse IP',
     );
 ?>

@@ -1,8 +1,8 @@
 <?php
     /**
      * @file   modules/message/lang/fr.lang.php
-     * @author zero <zero@nzeo.com> traduit par Pierre Duvent <pierreduvent@gamil.com>
-     * @brief  Paque du langage primaire pour le module de Message
+     * @author zero <zero@nzeo.com> traduit par Pierre Duvent <PierreDuvent@gamil.com>
+     * @brief  Paque du langage en français pour le module de Message
      **/
 
     $lang->message = 'Montrer Erreurs';

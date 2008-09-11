@@ -2,7 +2,7 @@
     /**
      * @file   modules/menu/lang/fr.lang.php
      * @author zero <zero@nzeo.com> Traduit par Pierre Duvent <PierreDuvent@gamail.com>
-     * @brief Paque du langage primaire pour le module de Menu
+     * @brief Paque du langage en français pour le module de Menu
      **/
 
     $lang->cmd_menu_insert = 'Créer un Menu';

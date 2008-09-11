@@ -2,10 +2,10 @@
     /**
      * @file   modules/integration_search/lang/fr.lang.php
      * @author zero <zero@nzeo.com>  Traduit par Pierre Duvent <PierreDuvent@gmail.com>
-     * @brief  Paque du langage primaire pour le module de Recherch Uni
+     * @brief  Paquet du langage en français pour le module de Recherche Unie
      **/
 
-    $lang->integration_search = "Recherche Uni";
+    $lang->integration_search = "Recherche Unie";
 
     $lang->sample_code = "Code d\'échantillon";
     $lang->about_target_module = "Les modules choisis seulement seront les objectifs. Faites attention quand vous mettez la permission, S.V.P.";

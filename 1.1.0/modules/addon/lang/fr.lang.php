@@ -2,7 +2,7 @@
     /**
      * @file   modules/addon/lang/fr.lang.php
      * @author zero (zero@nzeo.com)  Traduit par Pierre Duvent(PierreDuvent@gamil.com)
-     * @brief  Paque du langage primaire pour le module de Compagnon
+     * @brief  Paquet du langage en français pour le module de Compagnon
      **/
 
     $lang->addon = "Compagnon";

@@ -2,7 +2,7 @@
     /**
      * @file   modules/layout/lang/fr.lang.php
      * @author zero <zero@nzeo.com>  Traduit par Pierre Duvent <PierreDuvent@gmail.com>
-     * @brief  Paque du langage primaire pour le module de Mise en Page
+     * @brief  Paquet du langage en français pour le module de Mise en Page
      **/
 
     $lang->cmd_layout_management = 'Configuration du Mise en Page';
