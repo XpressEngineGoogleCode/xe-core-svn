@@ -65,26 +65,6 @@
     </td>
 </tr>
 <tr>
-<<<<<<< .working
-    <th scope="row">{$lang->time_zone}</th>
-    <td>
-        <select name="time_zone" class="time_zone">
-            <!--@foreach($time_zone_list as $key => $val)-->
-            <option value="{$key}" <!--@if($time_zone==$key)-->selected="selected"<!--@end-->>{$val}</option>
-            <!--@end-->
-        </select>
-        <p>{$lang->about_time_zone}</p>
-    </td>
-</tr>
-<tr>
-    <th scope="row">{$lang->qmail_compatibility}</th>
-    <td>
-        <input type="checkbox" name="qmail_compatibility" value="Y"  <!--@if($qmail_compatibility=='Y')-->checked="checked"<!--@end--> />
-        <p>{$lang->about_qmail_compatibility}</p>
-    </td>
-</tr>
-<tr>
-=======
     <th scope="row">{$lang->time_zone}</th>
     <td>
         <select name="time_zone" class="time_zone">
@@ -103,7 +83,6 @@
     </td>
 </tr>
 <tr>
->>>>>>> .merge-right.r4429
     <th colspan="2" class="button">
         <span class="button"><input type="button" value="{$lang->cmd_remake_cache}" onclick="doRecompileCacheFile(); return false;"/></span>
         <span class="button"><input type="submit" value="{$lang->cmd_save}" /></span>
