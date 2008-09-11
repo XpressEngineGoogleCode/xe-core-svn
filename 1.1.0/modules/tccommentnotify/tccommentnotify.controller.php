@@ -32,7 +32,7 @@
             }
         }
 
-        function insertParent($obj, $siteid, $module_srl)
+        function insertParent(&$obj, $siteid, $module_srl)
         {
             $parentid = getNextSequence();
             $args->notified_srl = $parentid;
@@ -205,14 +205,14 @@
 
             $oModuleModel = &getModel('module');
             $module_info = $oModuleModel->getModuleInfoByDocumentSrl($document_srl);
-            if($this->SendNotifyRequest($parentHomepage, &$module_info, &$oDocument, &$oParent, $parentHomepage, &$oChild, $childHomepage) != 200)
+            if($this->SendNotifyRequest($parentHomepage, $module_info, $oDocument, $oParent, $parentHomepage, $oChild, $childHomepage) != 200)
             {
                 $indexedPage = rtrim($parentHomepage, '/').'/index.php';
-                $this->SendNotifyRequest($indexedPage, &$module_info, &$oDocument, &$oParent, $parentHomepage, &$oChild, $childHomepage);
+                $this->SendNotifyRequest($indexedPage, $module_info, $oDocument, $oParent, $parentHomepage, $oChild, $childHomepage);
             }
         }
 
-        function SendNotifyRequest($target, $module_info, $oDocument, $oParent, $parentHomepage, $oChild, $childHomepage)
+        function SendNotifyRequest($target, &$module_info, &$oDocument, &$oParent, $parentHomepage, &$oChild, $childHomepage)
         {
             $oReq = new HTTP_Request();
             $oReq->setURL($target);
@@ -267,7 +267,7 @@
             return $code;
         }
 
-        function insertCommentNotify($obj, $siteid, $parentid, $module_srl)
+        function insertCommentNotify(&$obj, $siteid, $parentid, $module_srl)
         {
             $myid = getNextSequence();
             $args->notified_srl = $myid;
@@ -331,7 +331,7 @@
             }
             else if ( $parentid == -1 )
             {
-                $parentid = $this->insertParent( &$obj, $siteid, $module_srl );
+                $parentid = $this->insertParent( $obj, $siteid, $module_srl );
                 if($parentid == -1)
                 {
                     $oDB->rollback();
@@ -349,7 +349,7 @@
                $this->updateParent($parentid); 
             }
 
-            if(!$this->insertCommentNotify(&$obj, $siteid, $parentid, $module_srl))
+            if(!$this->insertCommentNotify($obj, $siteid, $parentid, $module_srl))
             {
                 $oDB->rollback();
                 return;
