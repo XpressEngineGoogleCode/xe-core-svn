@@ -31,9 +31,14 @@
             if(Context::getRequestMethod() == 'XMLRPC') $content = $this->_toXmlDoc($oModule);
             else $content = $this->_toHTMLDoc($oModule);
 
+
             // 요청방식에 따라 출력을 별도로
-            if(Context::getResponseMethod()!="XMLRPC") {
-                
+            if(Context::getResponseMethod() == 'Feed') {
+
+                $output = $content;
+
+            } else if(Context::getResponseMethod() != 'XMLRPC') {
+
                 Context::set('content', $content);
 
                 // 레이아웃을 컴파일
@@ -60,7 +65,7 @@
 
                 if(__DEBUG__==3) $GLOBALS['__trans_widget_editor_elapsed__'] = getMicroTime()-$start;
 
-                // 최종 결과를 common_layout에 넣어버림 
+                // 최종 결과를 common_layout에 넣어버림
                 Context::set('zbxe_final_content', $zbxe_final_content);
                 $output = $oTemplate->compile('./common/tpl', 'common_layout');
 
@@ -200,7 +205,7 @@
             $buff .= sprintf("\tTotal elapsed time \t\t: %0.5f sec", $end-__StartTime__);
 
             if(__DEBUG_OUTPUT__==1 && Context::getResponseMethod()=='HTML') return "<!--\r\n".$buff."\r\n-->";
-            
+
             if(__DEBUG_OUTPUT__==0) debugPrint($buff, false);
         }
 
