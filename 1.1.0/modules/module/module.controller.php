@@ -27,6 +27,19 @@
             return $output;
         }
 
+
+        /**
+         * @brief action forward 삭제
+         **/
+        function deleteActionForward($module, $type, $act) {
+            $args->module = $module;
+            $args->type = $type;
+            $args->act = $act;
+
+            $output = executeQuery('module.deleteActionFoward', $args);
+            return $output;
+        }
+
         /**
          * @brief module trigger 추가
          * module trigger는 trigger 대상이 등록된 대상을 호출하는 방법이다.
