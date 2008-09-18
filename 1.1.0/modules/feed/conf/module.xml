@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<module>
+    <grants />
+    <actions>
+        <action name="rss" type="view" standalone="true" />
+        <action name="atom" type="view" standalone="true" />
+
+        <action name="dispFeedAdminContent" type="view" standalone="true" admin_index="true" />
+
+        <action name="procFeedAdminInsertModuleConfig" type="controller" standalone="true" />
+    </actions>
+</module>

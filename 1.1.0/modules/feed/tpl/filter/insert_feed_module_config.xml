@@ -1,0 +1,7 @@
+<filter name="insert_feed_module_config" module="feed" act="procFeedAdminInsertModuleConfig" confirm_msg_code="confirm_submit">
+    <form />
+    <response>
+        <tag name="error" />
+        <tag name="message" />
+    </response>
+</filter>

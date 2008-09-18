@@ -1,0 +1,11 @@
+{'<?xml version="1.0" encoding="UTF-8" ?>'}
+
+<feed>
+    <title>ATOM<![CDATA[{$info->title}]]></title>
+    <updated>{$info->date}</updated>
+        <!--@foreach($document_list as $oDocument)-->
+        <entry>
+            <title><![CDATA[{$oDocument->getTitleText()}]]></title>
+        </entry>
+        <!--@end-->
+</feed>

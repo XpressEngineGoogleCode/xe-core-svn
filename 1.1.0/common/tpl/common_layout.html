@@ -28,7 +28,7 @@
 <!--@if($js_file['targetie'])-->
     <![endif]-->
 <!--@end-->
-<!--@end-->
+<!--@endforeach-->
 
 {@ $css_files = Context::getCssFile() }
 <!--@foreach($css_files as $key => $css_file)-->
@@ -39,23 +39,31 @@
 <!--@if($css_file['targetie'])-->
     <![endif]-->
 <!--@end-->
-<!--@end-->
+<!--@endforeach-->
+
+<!--// RSS / ATOM -->
 <!--@if($rss_url)-->
     <link rel="alternate" type="application/rss+xml" title="RSS 2.0" href="{$rss_url}" />
 <!--@end-->
+<!--@if($atom_url)-->
+    <link rel="alternate" type="application/atom+xml" title="ATOM 1.0" href="{$atom_url}" />
+<!--@end-->
 
 {@ $ssl_actions = Context::getSSLActions() }
-    <script type="text/javascript">//<![CDATA[
-        var current_url = "{$current_url}";
-        var request_uri = "{$request_uri}";
-        var current_mid = "{$mid}";
-        var waiting_message = "{$lang->msg_call_server}";
-        var ssl_actions = new Array(<!--@if(count($ssl_actions))-->"{implode('","',$ssl_actions)}"<!--@end-->);
-    //]]></script>
+    <script type="text/javascript">
+    //<![CDATA[
+        var current_url = '{$current_url}';
+        var request_uri = '{$request_uri}';
+        var current_mid = '{$mid}';
+        var waiting_message = '{$lang->msg_call_server}';
+        var ssl_actions = new Array(<!--@if(count($ssl_actions))-->"{implode('","', $ssl_actions)}"<!--@end-->);
+    //]]>
+    </script>
 
     {Context::getHtmlHeader()}
 
 </head>
+
 <body>
 {$zbxe_final_content}
 {Context::getHtmlFooter()}

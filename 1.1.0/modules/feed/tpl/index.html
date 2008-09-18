@@ -1,0 +1,36 @@
+<!--#include("header.html")-->
+
+<!--// 정보 -->
+<div class="tableSummaryType1">
+    {$lang_open_feed_types['Y']} <strong>{number_format($feed_count['Y'])}</strong>
+    /
+    {$lang_open_feed_types['H']} <strong>{number_format($feed_count['H'])}</strong>
+    /
+    {$lang_open_feed_types['N']} <strong>{number_format($feed_count['N'])}</strong>
+</div>
+
+<table cellspacing="0" class="adminTable">
+<col />
+<col width="150" />
+<col width="150" />
+<tr>
+    <th scope="row">{$lang->mid} / {$lang->browser_title}</th>
+    <th scope="row">설정</th>
+    <th scope="row">피드 보기</th>
+</tr>
+<!--@foreach($module_list as $module)-->
+<tr>
+    <td>{$module->mid} / {$module->browser_title}</td>
+    <td>{$module->open_feed}</td>
+    <td>
+        <a href="{getUrl('', 'module', 'feed', 'act', 'rss')}" onclick="">RSS</a>
+        /
+        <a href="{getUrl('', 'module', 'feed', 'act', 'atom')}" onclick="">ATOM</a>
+    </td>
+</tr>
+<!--@end-->
+</table>
+
+
+
+

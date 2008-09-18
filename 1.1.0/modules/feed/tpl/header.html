@@ -1,0 +1,15 @@
+<!--%import("js/feed_admin.js")-->
+
+<h3>{$lang->feed} <span class="gray">{$lang->cmd_management}</span></h3>
+
+<div class="infoText">{nl2br($lang->about_feed)}</div>
+
+<!--@if($module_info)-->
+<div class="header4">
+
+    <ul class="localNavigation">
+        <li <!--@if($act == 'dispFeedAdminContent')-->class="on"<!--@end-->><a href="{getUrl('act','dispFeedAdminContent','module_srl','')}">{$lang->cmd_board_list}</a></li>
+    </ul>
+</div>
+<!--@end-->
+
