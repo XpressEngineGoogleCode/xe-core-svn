@@ -1,0 +1,58 @@
+<!--%import("css/admin_layout.css")-->
+<!--%import("js/admin.js")-->
+
+<div id="adminLayout">
+
+    <div id="adminMenuContent">
+
+            <div class="adminInfoBox">
+                <div class="adminInfo">
+                    <div class="fl">{$lang->admin_info}</div>
+                    <div class="expandButton"><a href="#" onclick="toggleDisplay('adminMemberInfo','block'); return false;"><img src="./images/expand.gif" alt="toggle" /></a></div>
+                    <div class="clear"></div>
+                </div>
+                <div id="adminMemberInfo" style="display:none;">
+                    {$logged_info->nick_name} ({$logged_info->user_id})
+                </div>
+                <div class="logoutButton">
+                    <a href="{getUrl('','module','admin','act','dispMemberLogout')}" class="button"><span>{$lang->cmd_logout}</span></a>
+                </div>
+            </div>
+
+            <h3 class="summary">
+                <span><a href="{getUrl('','module','admin')}">{$lang->admin_index}</a></span>
+            </h3>
+
+        <!--@foreach($lang->module_category_title as $key => $val)-->
+            <h3 class="{$key}">
+                <span><a href="#" onclick="toggleAdminMenu('amm_{$key}'); return false;">{$val}</a></span>
+            </h3>
+
+            <ul id="amm_{$key}" style="display:{$_COOKIE['amm_'.$key]}">
+            <!--@foreach($installed_module_list as $k => $v)-->
+                <!--@if($v->category == $key)-->
+                    <!--@if($v->admin_index_act)-->
+                    <li <!--@if(in_array($act, $v->actions))-->class="on"<!--@end--> onclick="location.href='{getUrl('','module','admin','act',$v->admin_index_act)}'; return false;">
+                            <a href="{getUrl('','module','admin','act',$v->admin_index_act)}" title="{trim($v->description)}">{$v->title}</a>
+                    </li>
+                    <!--@endif-->
+                <!--@endif-->
+            <!--@endforeach-->
+            </ul>
+        <!--@endforeach-->
+    </div>
+
+    <div id="adminContentBody">{$content}</div>
+
+    <div class="clear"></div>
+</div>
+
+<div id="adminLayoutBottom"></div>
+
+<div id="adminLayoutCopyright">
+    © 2007 <a href="http://www.zeroboard.com"><strong>zeroboard <span class="red">XE</span></strong></a>
+</div>
+
+<script type="text/javascript">
+    xAddEventListener(window,"load",setMenuContentScale);
+</script>

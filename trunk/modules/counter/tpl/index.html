@@ -1,0 +1,125 @@
+<!--%import("js/counter_admin.js")-->
+
+<!--// calendar -->
+<!--%import("../../common/js/calendar.min.js",optimized=false)-->
+<!--@if($lang_type == 'ko')-->
+    <!--%import("../../common/js/calendar-ko.js",optimized=false)-->
+<!--@elseif($lang_type == 'es')-->
+    <!--%import("../../common/js/calendar-es.js",optimized=false)-->
+<!--@elseif($lang_type == 'ge')-->
+    <!--%import("../../common/js/calendar-ge.js",optimized=false)-->
+<!--@elseif($lang_type == 'ru')-->
+    <!--%import("../../common/js/calendar-ru.js",optimized=false)-->
+<!--@elseif($lang_type == 'zh-CN')-->
+    <!--%import("../../common/js/calendar-zh-CN.js",optimized=false)-->
+<!--@else-->
+    <!--%import("../../common/js/calendar-en.js",optimized=false)-->
+<!--@end-->
+<!--%import("../../common/js/calendar-setup.js",optimized=false)-->
+<!--%import("../../common/css/calendar-system.css",optimized=false)-->
+
+<script type="text/javascript">
+    function moveDate() {
+        xGetElementById('fo_calendar').submit();
+        return true;
+    }
+</script>
+
+
+<h3>{$lang->counter} <span class="gray">{$lang->cmd_management}</span></h3>
+
+<div class="header4 gap1">
+
+    <form action="./index.php" method="get" id="fo_calendar">
+    <input type="hidden" name="module" value="{$module}" />
+    <input type="hidden" name="act" value="{$act}" />
+    <input type="hidden" name="selected_date" id="selected_date" value="{zDate('Ymd',$selected_date)}" />
+
+    <table cellspacing="0" class="summary">
+    <col width="124" />
+    <col />
+    <col width="164" />
+    <col />
+    <tr>
+        <th scope="row">{$lang->total_counter}</th>
+        <td>Visitor <strong>{number_format($total_counter->unique_visitor)}</strong> &nbsp;/&nbsp; Pageview : <strong>{number_format($total_counter->pageview)}</strong></td>
+        <th scope="row">
+            <span id="str_selected_date">{zdate($selected_date, "Y-m-d")}</span> <span class="vr">|</span>
+            <img src="./images/buttonCalendar.gif" alt="calendar" width="16" height="13" id="trigger_calendar" />
+            <script type="text/javascript">
+                DyCalendar.setup( { firstDay : 0, inputField : "selected_date", ifFormat : "%Y%m%d", displayArea : "str_selected_date", daFormat : "%Y-%m-%d" , button : "trigger_calendar", onClose: moveDate } );
+            </script>
+        </th>
+        <td>Visitor : <strong>{number_format($selected_day_counter->unique_visitor)}</strong> &nbsp;/&nbsp; Pageview : <strong>{number_format($selected_day_counter->pageview)}</strong></td>
+    </tr>
+    </table>
+
+    </form>
+
+    <ul class="localNavigation">
+        <!--@foreach($lang->cmd_select_counter_type as $key => $val)-->
+        <li <!--@if($type==$key || (!$type && $key == "hour"))-->class="on"<!--@end-->><a href="{getUrl('type',$key)}">{$val}</a></li>
+        <!--@end-->
+    </ul>
+</div>
+
+
+<!-- 일자를 옮기는 form -->
+<form action="./" method="get" id="fo_counter">
+    <input type="hidden" name="module" value="{$module}" />
+    <input type="hidden" name="act" value="{$act}" />
+    <input type="hidden" name="selected_date" value="{$selected_date}" />
+</form>
+
+
+<!-- unique visitor 그래프 -->
+<table cellspacing="0" class="adminTable counter">
+<col width="124" />
+<col />
+<!--@foreach($detail_status->list as $key => $val)-->
+    <!--@if($detail_status->sum>0)-->
+        {@$percent = sprintf("%0.2f", $val / $detail_status->sum * 100 )}
+        {@$img_width = sprintf("%0.0f", $val / $detail_status->max * 100 )}
+    <!--@else-->
+        {@$percent = 0}
+        {@$img_width = 1}
+    <!--@end-->
+<tr>
+    <!--@if(Context::getLangType()=='en')-->
+    <th scope="row">
+        <!--// 시간대별 -->
+        <!--@if($type == 'year')-->
+            <em>{$key}</em>
+        <!--@elseif($type == 'month')-->
+            <em>{$key}</em>
+        <!--@elseif($type == 'day')-->
+            <em>{$key}</em> {$lang->unit_day}
+        <!--@else-->
+            <em>{$key}</em>
+        <!--@end-->
+    </th>
+    <!--@else-->
+    <th scope="row">
+        <!--// 시간대별 -->
+        <!--@if($type == 'year')-->
+            <em>{$key}</em> {$lang->unit_year}
+        <!--@elseif($type == 'month')-->
+            <em>{$key}</em> {$lang->unit_month}
+        <!--@elseif($type == 'day')-->
+            <em>{$key}</em> {$lang->unit_day}
+        <!--@else-->
+            <em>{$key}</em> {$lang->unit_hour}
+        <!--@end-->
+    </th>
+    <!--@end-->
+    <td>
+        <div class="graph">
+            <img src="./images/iconBar.gif" alt="" width="12" height="6" class="bar" />
+            <div class="num" style="left:{$percent}%;width:{100-$percent}%;">
+                <strong>{number_format($val)}</strong> ({$percent}%)
+            </div>
+        </div>
+    </td>
+</tr>
+<!--@end-->
+</table>
