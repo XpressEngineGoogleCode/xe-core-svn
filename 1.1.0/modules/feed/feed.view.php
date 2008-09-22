@@ -1,13 +1,9 @@
 <?php
 /**
+ * @brief  feed module의 view class
  * @class  feedView
  * @author zero (zero@nzeo.com)
- * @brief  feed module의 view class
- *
- * RSS 2.0형식으로 문서 출력
- *
  **/
-
 class feedView extends feed {
 
     /**
@@ -17,7 +13,7 @@ class feedView extends feed {
     }
 
     /**
-     * @brief RSS 출력
+     * @brief RSS Feed
      **/
     function rss() {
         Context::setResponseMethod('Feed');
@@ -63,7 +59,7 @@ class feedView extends feed {
 
 
     /**
-     * @brief RSS 출력
+     * @brief ATOM Feed
      **/
     function atom() {
         Context::setResponseMethod('Feed');
@@ -83,6 +79,7 @@ class feedView extends feed {
         $info->total_page = $output->total_page;
         $info->date = date('D, d M Y H:i:s').' '.$GLOBALS['_time_zone'];
         $info->language = Context::getLangType();
+        $info->uuid = $oFeedModel->getUuid(getUrl('','mid',Context::get('mid')),act,'atom');
 
         // RSS 출력물에서 사용될 변수 세팅
         Context::set('info', $info);

@@ -7,7 +7,6 @@
  * RSS 2.0형식으로 문서 출력
  *
  **/
-
 class feedModel extends feed {
 
     /**
@@ -113,7 +112,25 @@ class feedModel extends feed {
         $output = $oDocumentModel->getDocumentList($args);
         $document_list = $output->data;
 
+        if($document_list) {
+            foreach($document_list as $document) {
+                $document->uuid = $this->getUuid($document->getPermanentUrl());
+            }
+        }
+
         return $document_list;
+    }
+
+
+    function getUuid($id_text) {
+        $md5 = md5($id_text);
+        $uuid = 'urn:uuid:'
+            .substr($md5,  0,  8).chr(45)
+            .substr($md5,  8,  4).chr(45)
+            .substr($md5, 12,  4).chr(45)
+            .substr($md5, 16,  4).chr(45)
+            .substr($md5, 20);
+        return $uuid;
     }
 
 

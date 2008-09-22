@@ -1,11 +1,18 @@
 {'<?xml version="1.0" encoding="UTF-8" ?>'}
 
-<feed>
-    <title>ATOM<![CDATA[{$info->title}]]></title>
+<feed xmlns="http://www.w3.org/2005/Atom">
+    <title><![CDATA[{$info->title}]]></title>
+    <link href="{$info->link}"/>
     <updated>{$info->date}</updated>
-        <!--@foreach($document_list as $oDocument)-->
-        <entry>
-            <title><![CDATA[{$oDocument->getTitleText()}]]></title>
-        </entry>
-        <!--@end-->
+    <id>{$info->uuid}</id>
+
+    <!--@foreach($document_list as $oDocument)-->
+    <entry>
+        <title><![CDATA[{$oDocument->getTitleText()}]]></title>
+        <link href="{$oDocument->getPermanentUrl()}"/>
+        <id>{$oDocument->uuid}</id>
+        <updated>2003-12-13T18:30:02Z</updated>
+        <summary>Some text.</summary>
+    </entry>
+    <!--@end-->
 </feed>
