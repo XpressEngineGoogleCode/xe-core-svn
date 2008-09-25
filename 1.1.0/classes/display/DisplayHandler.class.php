@@ -163,50 +163,108 @@
 
             $end = getMicroTime();
 
-            // debug string 작성 시작
-            $buff  = "\n\n** Debug at ".date('Y-m-d H:i:s')." ************************************************************\n";
+            if(__DEBUG_OUTPUT__ != 2) {
+                // debug string 작성 시작
+                $buff  = "\n\n** Debug at ".date('Y-m-d H:i:s')." ************************************************************\n";
 
-            // Request/Response 정보 작성
-            $buff .= "\n- Request/ Response info\n";
-            $buff .= sprintf("\tRequest URI \t\t\t: %s:%s%s%s%s\n", $_SERVER['SERVER_NAME'], $_SERVER['SERVER_PORT'], $_SERVER['PHP_SELF'], $_SERVER['QUERY_STRING']?'?':'', $_SERVER['QUERY_STRING']);
-            $buff .= sprintf("\tRequest method \t\t\t: %s\n", $_SERVER['REQUEST_METHOD']);
-            $buff .= sprintf("\tResponse method \t\t: %s\n", Context::getResponseMethod());
-            $buff .= sprintf("\tResponse contents size\t\t: %d byte\n", $this->getContentSize());
+                // Request/Response 정보 작성
+                $buff .= "\n- Request/ Response info\n";
+                $buff .= sprintf("\tRequest URI \t\t\t: %s:%s%s%s%s\n", $_SERVER['SERVER_NAME'], $_SERVER['SERVER_PORT'], $_SERVER['PHP_SELF'], $_SERVER['QUERY_STRING']?'?':'', $_SERVER['QUERY_STRING']);
+                $buff .= sprintf("\tRequest method \t\t\t: %s\n", $_SERVER['REQUEST_METHOD']);
+                $buff .= sprintf("\tResponse method \t\t: %s\n", Context::getResponseMethod());
+                $buff .= sprintf("\tResponse contents size\t\t: %d byte\n", $this->getContentSize());
 
-            // DB 로그 작성
-            if(__DEBUG__>1) {
-                if($GLOBALS['__db_queries__']) {
-                    $buff .= "\n- DB Queries\n";
-                    $buff .= $GLOBALS['__db_queries__'];
+                // DB 로그 작성
+                if(__DEBUG__>1) {
+                    if($GLOBALS['__db_queries__']) {
+                        $buff .= "\n- DB Queries\n";
+						$num = 0;
+						foreach($GLOBALS['__db_queries__'] as $query) {
+							$buff .= sprintf("\t%02d. %s (%0.6f sec)\n", ++$num, $query['query'], $query['elapsed_time']);
+							if($query['result'] == 'Success') {
+								$buff .= "\t    Query Success\n";
+							} else {
+								$buff .= sprintf("\t    Query $s : %d\n\t\t\t   %s\n", $query['result'], $query['errno'], $query['errstr']);
+							}
+						}
+                    }
+                    $buff .= "\n- Elapsed time\n";
+
+                    if($GLOBALS['__db_elapsed_time__']) $buff .= sprintf("\tDB queries elapsed time\t\t: %0.5f sec\n", $GLOBALS['__db_elapsed_time__']);
                 }
-                $buff .= "\n- Elapsed time\n";
 
-                if($GLOBALS['__db_elapsed_time__']) $buff .= sprintf("\tDB queries elapsed time\t\t: %0.5f sec\n", $GLOBALS['__db_elapsed_time__']);
+                // 기타 로그 작성
+                if(__DEBUG__==3) {
+                    $buff .= sprintf("\tclass file load elapsed time \t: %0.5f sec\n", $GLOBALS['__elapsed_class_load__']);
+                    $buff .= sprintf("\tTemplate compile elapsed time\t: %0.5f sec (%d called)\n", $GLOBALS['__template_elapsed__'], $GLOBALS['__TemplateHandlerCalled__']);
+                    $buff .= sprintf("\tXmlParse compile elapsed time\t: %0.5f sec\n", $GLOBALS['__xmlparse_elapsed__']);
+                    $buff .= sprintf("\tPHP elapsed time \t\t: %0.5f sec\n", $end-__StartTime__-$GLOBALS['__template_elapsed__']-$GLOBALS['__xmlparse_elapsed__']-$GLOBALS['__db_elapsed_time__']-$GLOBALS['__elapsed_class_load__']);
+
+                    // 위젯 실행 시간 작성
+                    $buff .= sprintf("\n\tWidgets elapsed time \t\t: %0.5f sec", $GLOBALS['__widget_excute_elapsed__']);
+
+                    // 레이아웃 실행 시간
+                    $buff .= sprintf("\n\tLayout compile elapsed time \t: %0.5f sec", $GLOBALS['__layout_compile_elapsed__']);
+
+                    // 위젯, 에디터 컴포넌트 치환 시간
+                    $buff .= sprintf("\n\tTrans widget&editor elapsed time: %0.5f sec\n\n", $GLOBALS['__trans_widget_editor_elapsed__']);
+                }
+
+                // 전체 실행 시간 작성
+                $buff .= sprintf("\tTotal elapsed time \t\t: %0.5f sec", $end-__StartTime__);
             }
-
-            // 기타 로그 작성
-            if(__DEBUG__==3) {
-                $buff .= sprintf("\tclass file load elapsed time \t: %0.5f sec\n", $GLOBALS['__elapsed_class_load__']);
-                $buff .= sprintf("\tTemplate compile elapsed time\t: %0.5f sec (%d called)\n", $GLOBALS['__template_elapsed__'], $GLOBALS['__TemplateHandlerCalled__']);
-                $buff .= sprintf("\tXmlParse compile elapsed time\t: %0.5f sec\n", $GLOBALS['__xmlparse_elapsed__']);
-                $buff .= sprintf("\tPHP elapsed time \t\t: %0.5f sec\n", $end-__StartTime__-$GLOBALS['__template_elapsed__']-$GLOBALS['__xmlparse_elapsed__']-$GLOBALS['__db_elapsed_time__']-$GLOBALS['__elapsed_class_load__']);
-
-                // 위젯 실행 시간 작성
-                $buff .= sprintf("\n\tWidgets elapsed time \t\t: %0.5f sec", $GLOBALS['__widget_excute_elapsed__']);
-
-                // 레이아웃 실행 시간
-                $buff .= sprintf("\n\tLayout compile elapsed time \t: %0.5f sec", $GLOBALS['__layout_compile_elapsed__']);
-
-                // 위젯, 에디터 컴포넌트 치환 시간
-                $buff .= sprintf("\n\tTrans widget&editor elapsed time: %0.5f sec\n\n", $GLOBALS['__trans_widget_editor_elapsed__']);
-            }
-
-            // 전체 실행 시간 작성
-            $buff .= sprintf("\tTotal elapsed time \t\t: %0.5f sec", $end-__StartTime__);
 
             if(__DEBUG_OUTPUT__==1 && Context::getResponseMethod()=='HTML') return "<!--\r\n".$buff."\r\n-->";
 
             if(__DEBUG_OUTPUT__==0) debugPrint($buff, false);
+
+            if(__DEBUG_OUTPUT__ == 2) {
+                debugPrint(
+                    array('Request / Response info',
+                        array(
+                            array('', ''),
+                            array('Request URI', sprintf("%s:%s%s%s%s", $_SERVER['SERVER_NAME'], $_SERVER['SERVER_PORT'], $_SERVER['PHP_SELF'], $_SERVER['QUERY_STRING']?'?':'', $_SERVER['QUERY_STRING'])),
+                            array('Request method', $_SERVER['REQUEST_METHOD']),
+                            array('Response method', Context::getResponseMethod()),
+                            array('Response contents size', $this->getContentSize().' byte')
+                        )
+                    ),
+                    FirePHP::TABLE
+                );
+
+                if(__DEBUG__ > 1) {
+                    debugPrint(
+                        array('DB Queries',
+                            array(
+                                array('', ''),
+                                array('DB Queries', $GLOBALS['__db_queries__']),
+                                array('DB queries elapsed time', sprintf('%0.5f sec', $GLOBALS['__db_elapsed_time__']))
+                            )
+                        ),
+                        FirePHP::TABLE
+                    );
+                }
+
+                // 기타 로그 작성
+                if(__DEBUG__ == 3 || __DEBUG__ == 1) {
+                    debugPrint(
+                        array('Elapsed time',
+                            array(
+                                array('', ''),
+                                array('DB queries', sprintf('%0.5f sec', $GLOBALS['__db_elapsed_time__'])),
+                                array('class file load', sprintf('%0.5f sec', $GLOBALS['__elapsed_class_load__'])),
+                                array('Template compile', sprintf('%0.5f sec (%d called)', $GLOBALS['__template_elapsed__'], $GLOBALS['__TemplateHandlerCalled__'])),
+                                array('XmlParse compile', sprintf('%0.5f sec', $GLOBALS['__xmlparse_elapsed__'])),
+                                array('PHP', sprintf('%0.5f sec', $end-__StartTime__-$GLOBALS['__template_elapsed__']-$GLOBALS['__xmlparse_elapsed__']-$GLOBALS['__db_elapsed_time__']-$GLOBALS['__elapsed_class_load__'])),
+                                array('Widgets', sprintf('%0.5f sec', $GLOBALS['__widget_excute_elapsed__'])),
+                                array('Trans widget&editor', sprintf('%0.5f sec', $GLOBALS['__trans_widget_editor_elapsed__'])),
+                                array('Total', sprintf('%0.5f sec', $end - __StartTime__))
+                            )
+                        ),
+                        FirePHP::TABLE
+                    );
+                }
+            }
         }
 
         /**

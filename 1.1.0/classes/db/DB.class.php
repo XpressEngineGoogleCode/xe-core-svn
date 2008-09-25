@@ -129,7 +129,7 @@
         }
 
         /**
-         * @brief 로그 남김 
+         * @brief 로그 남김
          **/
         function actStart($query) {
             $this->setError(0,'success');
@@ -145,13 +145,16 @@
             $this->elapsed_time = $elapsed_time;
             $GLOBALS['__db_elapsed_time__'] += $elapsed_time;
 
-            $str = sprintf("\t%02d. %s (%0.6f sec)\n", ++$GLOBALS['__dbcnt'], $this->query, $elapsed_time);
+            $log['query'] = $this->query;
+            $log['elapsed_time'] = $elapsed_time;
 
             // 에러 발생시 에러 로그를 남김 (__DEBUG_DB_OUTPUT__이 지정되어 있을경우)
             if($this->isError()) {
-                $str .= sprintf("\t    Query Failed : %d\n\t\t\t   %s\n", $this->errno, $this->errstr); 
+                $log['result'] = 'Failed';
+                $log['errno'] = $this->errno;
+                $log['errstr'] = $this->errstr;
 
-                if(__DEBUG_DB_OUTPUT__==1)  {
+                if(__DEBUG_DB_OUTPUT__ == 1)  {
                     $debug_file = _XE_PATH_."files/_debug_db_query.php";
                     $buff = sprintf("%s\n",print_r($str,true));
 
@@ -162,9 +165,9 @@
                     fclose($fp);
                 }
             } else {
-                $str .= "\t    Query Success\n";
+                $log['result'] = 'Success';
             }
-            $GLOBALS['__db_queries__'] .= $str;
+            $GLOBALS['__db_queries__'][] = $log;
 
             // __LOG_SLOW_QUERY__ 가 정해져 있다면 시간 체크후 쿼리 로그 남김
             if(__LOG_SLOW_QUERY__>0 && $elapsed_time > __LOG_SLOW_QUERY__) {
@@ -207,7 +210,7 @@
         /**
          * @brief query xml 파일을 실행하여 결과를 return
          *
-         * query_id = module.queryname 
+         * query_id = module.queryname
          * query_id에 해당하는 xml문(or 캐싱파일)을 찾아서 컴파일 후 실행
          **/
         function executeQuery($query_id, $args = NULL) {
@@ -236,7 +239,7 @@
 
             // 캐시 파일이 없거나 시간 비교하여 최근것이 아니면 원본 쿼리 xml파일을 찾아서 파싱을 한다
             if($cache_time<filemtime($xml_file) || $cache_time < filemtime(_XE_PATH_.'classes/db/DB.class.php')) {
-                require_once(_XE_PATH_.'classes/xml/XmlQueryParser.class.php');   
+                require_once(_XE_PATH_.'classes/xml/XmlQueryParser.class.php');
                 $oParser = new XmlQueryParser();
                 $oParser->parse($query_id, $xml_file, $cache_file);
             }
@@ -349,13 +352,13 @@
             $value = preg_replace('/(^\'|\'$){1}/','',$value);
 
             switch($operation) {
-                case 'like_prefix' : 
+                case 'like_prefix' :
                         $value = $value.'%';
                     break;
-                case 'like_tail' : 
+                case 'like_tail' :
                         $value = '%'.$value;
                     break;
-                case 'like' : 
+                case 'like' :
                         $value = '%'.$value.'%';
                     break;
                 case 'in' :
@@ -388,28 +391,28 @@
                         if(!isset($value)) return;
                         return $name.' <= '.$value;
                     break;
-                case 'below' : 
+                case 'below' :
                         if(!isset($value)) return;
                         return $name.' < '.$value;
                     break;
-                case 'like_tail' : 
-                case 'like_prefix' : 
-                case 'like' : 
+                case 'like_tail' :
+                case 'like_prefix' :
+                case 'like' :
                         if(!isset($value)) return;
                         return $name.' like '.$value;
                     break;
-                case 'in' : 
+                case 'in' :
                         if(!isset($value)) return;
                         return $name.' in ('.$value.')';
                     break;
-                case 'notequal' : 
+                case 'notequal' :
                         if(!isset($value)) return;
                         return $name.' <> '.$value;
                     break;
-                case 'notnull' : 
+                case 'notnull' :
                         return $name.' is not null';
                     break;
-                case 'null' : 
+                case 'null' :
                         return $name.' is null';
                     break;
             }
@@ -445,7 +448,7 @@
 
             if(!is_array($tables)) $tables_str = $tables;
             else $tables_str = implode('.',$tables);
-            
+
             $cache_path = sprintf('%s/%s%s', $this->count_cache_path, $this->prefix, $tables_str);
             if(!is_dir($cache_path)) FileHandler::makeDir($cache_path);
 

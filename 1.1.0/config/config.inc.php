@@ -37,6 +37,7 @@
      * @brief DB 오류 메세지 출력 정의
      * 0 : 출력하지 않음
      * 1 : files/_debug_db_query.php 에 연결하여 출력
+     * 2 : Firebug 콘솔에 출력 (firebug / firephp 플러그인 필요)
      **/
     define('__DEBUG_DB_OUTPUT__', 0);
 
