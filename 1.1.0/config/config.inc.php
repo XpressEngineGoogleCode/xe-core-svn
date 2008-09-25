@@ -62,6 +62,11 @@
     define('_XE_PATH_', str_replace('config/config.inc.php', '', str_replace('\\', '/', __FILE__)));
 
     /**
+     * @brief Firebug 콘솔 출력 사용시 관련 파일 require
+     **/
+    if(__DEBUG_OUTPUT__ == 2) require_once _XE_PATH_.'libs/FirePHPCore/FirePHP.class.php';
+
+    /**
      * @brief 간단하게 사용하기 위한 함수 정의한 파일 require
      **/
     require_once(_XE_PATH_.'config/func.inc.php');

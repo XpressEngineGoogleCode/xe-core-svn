@@ -339,6 +339,7 @@
      * tail -f ./files/_debug_message.php 하여 계속 살펴 볼 수 있다
      **/
     function debugPrint($buff = null, $display_line = true) {
+        static $firephp;
         $bt = debug_backtrace();
         if(is_array($bt)) $first = array_shift($bt);
         $file_name = array_pop(explode(DIRECTORY_SEPARATOR, $first['file']));
@@ -346,18 +347,16 @@
 
         if(__DEBUG_OUTPUT__ == 0) {
             $debug_file = _XE_PATH_.'files/_debug_message.php';
-            $buff = sprintf("[%s %s:%d]\n%s\n", date("Y-m-d H:i:s"), $file_name, $line_num, print_r($buff, true));
+            $buff = sprintf("[%s %s:%d]\n%s\n", date('Y-m-d H:i:s'), $file_name, $line_num, print_r($buff, true));
 
             if($display_line) $buff = "\n====================================\n".$buff."------------------------------------\n";
 
             if(@!$fp = fopen($debug_file, 'a')) return;
             fwrite($fp, $buff);
             fclose($fp);
+
         } elseif(__DEBUG_OUTPUT__ == 2) {
-            $bt = debug_backtrace();
-            if(is_array($bt)) $first = array_shift($bt);
-            require_once _XE_PATH_.'libs/FirePHPCore/FirePHP.class.php';
-            $firephp = FirePHP::getInstance(true);
+            if(!isset($firephp)) $firephp = FirePHP::getInstance(true);
             $label = sprintf('%s:%d', $file_name, $line_num);
             $firephp->fb($buff, $label);
         }
