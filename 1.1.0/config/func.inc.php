@@ -29,7 +29,7 @@
         ');
     }
 
-    
+
     // time zone
     $time_zone = array(
         '-1200' => '[GMT -12:00] Baker Island Time',
@@ -90,7 +90,7 @@
      * @return module controller instance
      **/
     function &getController($module_name) {
-        return getModule($module_name, 'controller'); 
+        return getModule($module_name, 'controller');
     }
 
     /**
@@ -99,7 +99,7 @@
      * @return module admin controller instance
      **/
     function &getAdminController($module_name) {
-        return getModule($module_name, 'controller','admin'); 
+        return getModule($module_name, 'controller','admin');
     }
 
     /**
@@ -108,7 +108,7 @@
      * @return module view instance
      **/
     function &getView($module_name) {
-        return getModule($module_name, 'view'); 
+        return getModule($module_name, 'view');
     }
 
     /**
@@ -117,7 +117,7 @@
      * @return module admin view instance
      **/
     function &getAdminView($module_name) {
-        return getModule($module_name, 'view','admin'); 
+        return getModule($module_name, 'view','admin');
     }
 
     /**
@@ -126,7 +126,7 @@
      * @return module model instance
      **/
     function &getModel($module_name) {
-        return getModule($module_name, 'model'); 
+        return getModule($module_name, 'model');
     }
 
     /**
@@ -135,7 +135,7 @@
      * @return module admin model instance
      **/
     function &getAdminModel($module_name) {
-        return getModule($module_name, 'model','admin'); 
+        return getModule($module_name, 'model','admin');
     }
 
     /**
@@ -144,7 +144,7 @@
      * @return module class instance
      **/
     function &getClass($module_name) {
-        return getModule($module_name, 'class'); 
+        return getModule($module_name, 'class');
     }
 
     /**
@@ -208,10 +208,10 @@
      * @param tail 잘라졌을 경우 문자열의 제일 뒤에 붙을 꼬리
      * @return string
      **/
-    function cut_str($string,$cut_size=0,$tail = '...') { 
+    function cut_str($string,$cut_size=0,$tail = '...') {
         if($cut_size<1 || !$string) return $string;
 
-        $char_width = Array(5,10,11,16,14,16,16,10,11,11,12,13,10,13,10,12,13,13,13,13,13,13,13,13,13,13,10,10,14,13,14,13,16,15,15,16,15,15,14,16,15,8,13,15,14,16,16,16,15,16,15,15,14,16,15,16,16,15,15,13,16,13,13,11,10,14,14,14,14,14,10,14,14,8,9,13,8,16,14,15,14,14,10,14,10,14,13,16,14,13,14,14,14,14,16); 
+        $char_width = Array(5,10,11,16,14,16,16,10,11,11,12,13,10,13,10,12,13,13,13,13,13,13,13,13,13,13,10,10,14,13,14,13,16,15,15,16,15,15,14,16,15,8,13,15,14,16,16,16,15,16,15,15,14,16,15,16,16,15,15,13,16,13,13,11,10,14,14,14,14,14,10,14,14,8,9,13,8,16,14,15,14,14,10,14,10,14,13,16,14,13,14,14,14,14,16);
         $unicode_width = 21;
 
         $max_width = $cut_size*$unicode_width/2;
@@ -251,7 +251,7 @@
         $g_min = $t_min - $c_min;
         $g_hour = $t_hour - $c_hour;
 
-        $gap = $g_min*60 + $g_hour*60*60; //TODO : 연산 우선순위에 따라 코드를 묶어줄 필요가 있음
+        $gap = $g_min*60 + $g_hour*60*60;
         return $gap;
     }
 
@@ -339,16 +339,28 @@
      * tail -f ./files/_debug_message.php 하여 계속 살펴 볼 수 있다
      **/
     function debugPrint($buff = null, $display_line = true) {
-        $debug_file = _XE_PATH_."files/_debug_message.php";
         $bt = debug_backtrace();
         if(is_array($bt)) $first = array_shift($bt);
-        $buff = sprintf("[%s %s:%d]\n%s\n", date("Y-m-d H:i:s"), array_pop(explode(DIRECTORY_SEPARATOR, $first["file"])), $first["line"], print_r($buff,true));
+        $file_name = array_pop(explode(DIRECTORY_SEPARATOR, $first['file']));
+        $line_num = $first['line'];
 
-        if($display_line) $buff = "\n====================================\n".$buff."------------------------------------\n";
+        if(__DEBUG_OUTPUT__ == 0) {
+            $debug_file = _XE_PATH_.'files/_debug_message.php';
+            $buff = sprintf("[%s %s:%d]\n%s\n", date("Y-m-d H:i:s"), $file_name, $line_num, print_r($buff, true));
 
-        if(@!$fp = fopen($debug_file,"a")) return;
-        fwrite($fp, $buff);
-        fclose($fp);
+            if($display_line) $buff = "\n====================================\n".$buff."------------------------------------\n";
+
+            if(@!$fp = fopen($debug_file, 'a')) return;
+            fwrite($fp, $buff);
+            fclose($fp);
+        } elseif(__DEBUG_OUTPUT__ == 2) {
+            $bt = debug_backtrace();
+            if(is_array($bt)) $first = array_shift($bt);
+            require_once _XE_PATH_.'libs/FirePHPCore/FirePHP.class.php';
+            $firephp = FirePHP::getInstance(true);
+            $label = sprintf('%s:%d', $file_name, $line_num);
+            $firephp->fb($buff, $label);
+        }
     }
 
     /**
@@ -360,7 +372,7 @@
         return (float)$time1 + (float)$time2;
     }
 
-    /** 
+    /**
      * @brief 첫번째 인자로 오는 object var에서 2번째 object의 var들을 제거
      * @param target_obj 원 object
      * @param del_obj 원 object의 vars에서 del_obj의 vars를 제거한다
@@ -388,9 +400,9 @@
         return $return_obj;
     }
 
-    /** 
+    /**
      * @brief php5 이상에서 error_handing을 debugPrint로 변경
-     * @param errno 
+     * @param errno
      * @param errstr
      * @return file
      * @return line
@@ -514,7 +526,7 @@
                        'green' => 0xFF & ($int >> 0x8),
                        'blue' => 0xFF & $int);
         }
-            
+
     }
 
     /**
@@ -554,9 +566,9 @@
         return $url;
     }
 
-    /** 
+    /**
      * javascript의 escape의 php unescape 함수
-     * Function converts an Javascript escaped string back into a string with specified charset (default is UTF-8). 
+     * Function converts an Javascript escaped string back into a string with specified charset (default is UTF-8).
      * Modified function from http://pure-essence.net/stuff/code/utf8RawUrlDecode.phps
      **/
     function utf8RawUrlDecode ($source) {

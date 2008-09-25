@@ -29,6 +29,7 @@
      * @brief 디버그 메세지의 출력 장소
      * 0 : files/_debug_message.php 에 연결하여 출력
      * 1 : Response Method 가 XML 형식이 아닐 경우 브라우저에 최상단에 주석으로 표시
+     * 2 : Firebug 콘솔에 출력 (firebug / firephp 플러그인 필요)
      **/
     define('__DEBUG_OUTPUT__', 0);
 
