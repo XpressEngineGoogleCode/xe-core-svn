@@ -218,29 +218,30 @@
 
             if(__DEBUG_OUTPUT__==0) debugPrint($buff, false);
 
+            // Firebug 콘솔 출력
             if(__DEBUG_OUTPUT__ == 2) {
                 debugPrint(
-                    array('Request / Response info',
+                    array('Request / Response info >>> '.Context::getResponseMethod().' / '.$_SERVER['REQUEST_METHOD'],
                         array(
-                            array('', ''),
-                            array('Request URI', sprintf("%s:%s%s%s%s", $_SERVER['SERVER_NAME'], $_SERVER['SERVER_PORT'], $_SERVER['PHP_SELF'], $_SERVER['QUERY_STRING']?'?':'', $_SERVER['QUERY_STRING'])),
-                            array('Request method', $_SERVER['REQUEST_METHOD']),
-                            array('Response method', Context::getResponseMethod()),
-                            array('Response contents size', $this->getContentSize().' byte')
+                            array('Request URI', 'Request method', 'Response method', 'Response contents size'),
+                            array(
+                                sprintf("%s:%s%s%s%s", $_SERVER['SERVER_NAME'], $_SERVER['SERVER_PORT'], $_SERVER['PHP_SELF'], $_SERVER['QUERY_STRING']?'?':'', $_SERVER['QUERY_STRING']),
+                                $_SERVER['REQUEST_METHOD'],
+                                Context::getResponseMethod(),
+                                $this->getContentSize().' byte'
+                            )
                         )
                     ),
                     FirePHP::TABLE
                 );
 
                 if(__DEBUG__ > 1) {
+                    $queries_output = array(array('Query', 'Elapsed time', 'Result'));
+                    foreach($GLOBALS['__db_queries__'] as $query) {
+                        array_push($queries_output, array($query['query'], sprintf('%0.5f', $query['elapsed_time']), $query['result']));
+                    }
                     debugPrint(
-                        array('DB Queries',
-                            array(
-                                array('', ''),
-                                array('DB Queries', $GLOBALS['__db_queries__']),
-                                array('DB queries elapsed time', sprintf('%0.5f sec', $GLOBALS['__db_elapsed_time__']))
-                            )
-                        ),
+                        array('DB Queries >>> '.count($GLOBALS['__db_queries__']).' Queries, '.sprintf('%0.5f sec', $GLOBALS['__db_elapsed_time__']), $queries_output),
                         FirePHP::TABLE
                     );
                 }
@@ -248,17 +249,17 @@
                 // 기타 로그 작성
                 if(__DEBUG__ == 3 || __DEBUG__ == 1) {
                     debugPrint(
-                        array('Elapsed time',
-                            array(
-                                array('', ''),
-                                array('DB queries', sprintf('%0.5f sec', $GLOBALS['__db_elapsed_time__'])),
-                                array('class file load', sprintf('%0.5f sec', $GLOBALS['__elapsed_class_load__'])),
-                                array('Template compile', sprintf('%0.5f sec (%d called)', $GLOBALS['__template_elapsed__'], $GLOBALS['__TemplateHandlerCalled__'])),
-                                array('XmlParse compile', sprintf('%0.5f sec', $GLOBALS['__xmlparse_elapsed__'])),
-                                array('PHP', sprintf('%0.5f sec', $end-__StartTime__-$GLOBALS['__template_elapsed__']-$GLOBALS['__xmlparse_elapsed__']-$GLOBALS['__db_elapsed_time__']-$GLOBALS['__elapsed_class_load__'])),
-                                array('Widgets', sprintf('%0.5f sec', $GLOBALS['__widget_excute_elapsed__'])),
-                                array('Trans widget&editor', sprintf('%0.5f sec', $GLOBALS['__trans_widget_editor_elapsed__'])),
-                                array('Total', sprintf('%0.5f sec', $end - __StartTime__))
+                        array('Elapsed time >>> Total : '.sprintf('%0.5f sec', $end - __StartTime__),
+                            array(array('DB queries', 'class file load', 'Template compile', 'XmlParse compile', 'PHP', 'Widgets', 'Trans widget&editor'),
+                                array(
+                                    sprintf('%0.5f sec', $GLOBALS['__db_elapsed_time__']),
+                                    sprintf('%0.5f sec', $GLOBALS['__elapsed_class_load__']),
+                                    sprintf('%0.5f sec (%d called)', $GLOBALS['__template_elapsed__'], $GLOBALS['__TemplateHandlerCalled__']),
+                                    sprintf('%0.5f sec', $GLOBALS['__xmlparse_elapsed__']),
+                                    sprintf('%0.5f sec', $end-__StartTime__-$GLOBALS['__template_elapsed__']-$GLOBALS['__xmlparse_elapsed__']-$GLOBALS['__db_elapsed_time__']-$GLOBALS['__elapsed_class_load__']),
+                                    sprintf('%0.5f sec', $GLOBALS['__widget_excute_elapsed__']),
+                                    sprintf('%0.5f sec', $GLOBALS['__trans_widget_editor_elapsed__'])
+                                )
                             )
                         ),
                         FirePHP::TABLE
