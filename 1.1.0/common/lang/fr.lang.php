@@ -171,6 +171,30 @@
     $lang->unit_month = 'mois';
     $lang->unit_year = 'année';;
 
+    $lang->unit_week = array(
+        'Monday' => 'Lundi',
+        'Tuesday' => 'Mardi',
+        'Wednesday' => 'Mer.',
+        'Thursday' => 'Jeu.',
+        'Friday' => 'Vendredi',
+        'Saturday' => 'Samedi',
+        'Sunday' => 'Dimanche',
+    );
+
+    $lang->unit_meridiem = array(
+        'am' => 'am',
+        'pm' => 'pm',
+        'AM' => 'AM',
+        'PM' => 'PM',
+    );
+
+    $lang->time_gap = array(
+        'min' => '%d heure',
+        'mins' => 'Il ya %d minutes',
+        'hour' => 'Il ya %d jour',
+        'hours' => 'Il ya %d jours',
+    );
+
     // Descriptions et information
     $lang->about_tag = 'Vous pouvez enrégistrer plusieurs balises en utilisant ,(virgule) entre chaque balise';
     $lang->about_layout = 'Le Mise en Page décore l\'apparence des modules. Vous pouvez les configurer avec le menu de Mise en Page en haut';

@@ -63,7 +63,7 @@
     $lang->cmd_layout_setup = '布局设置';
     $lang->cmd_layout_edit = '编辑布局';
     $lang->cmd_search_by_ipaddress = '以IP地址搜索';
-    $lang->cmd_add_ip_to_spamfilter = 'Add IP to spamfilter';
+    $lang->cmd_add_ip_to_spamfilter = '禁止IP';
 
     $lang->enable = '可用';
     $lang->disable = '禁用';
@@ -171,6 +171,30 @@
     $lang->unit_month = '月';
     $lang->unit_year = '年';
 
+    $lang->unit_week = array(
+        'Monday' => '星期一',
+        'Tuesday' => '星期二',
+        'Wednesday' => '星期三',
+        'Thursday' => '星期四',
+        'Friday' => '星期五',
+        'Saturday' => '星期六',
+        'Sunday' => '星期日',
+    );
+
+    $lang->unit_meridiem = array(
+        'am' => '上午',
+        'pm' => '下午',
+        'AM' => '上午',
+        'PM' => '下午',
+    );
+
+    $lang->time_gap = array(
+        'min' => '%d minute ago',
+        'mins' => '%d minutes ago',
+        'hour' => '%d hour ago',
+        'hours' => '%d hours ago',
+    );
+
     // 说明
     $lang->about_tag = '用逗号分隔多个标签';
     $lang->about_layout = '布局是布置模块的外观，在上端布局菜里单可以进行管理';
@@ -241,17 +265,17 @@
     $lang->ftp_form_title = '输入FTP信息';
     $lang->ftp = 'FTP';
     $lang->ftp_port = 'FTP port';
-    $lang->cmd_check_ftp_connect = '确认FTP连接';
+    $lang->cmd_check_ftp_connect = '测试FTP连接';
     $lang->about_ftp_info = "
-        相关FTP信息应用于如下几种状况<br/>
-        1. 当PHP的safe_mode=On时，使程序工作正常。<br/>
+        相关FTP信息，应用于如下几种状况:<br/>
+        1. 当PHP的safe_mode=On时，也能使程序工作正常。<br/>
         2. 可以应用于自动更新。<br/>
         此FTP信息将保存在files/config/ftp.config.php文件当中。<br/>
         安装程序后可在管理页面对FTP信息进行修改或删除操作。<br />
     ";
 
     $lang->msg_safe_mode_ftp_needed = "当PHP的safe_mode=On时，请必须输入相关FTP信息，否则将无法正常安装或使用XE程序。";
-    $lang->msg_ftp_not_connected = "发生本地(localhost)FTP连接错误。请确认ftp端口号或是否支持ftp服务。";
+    $lang->msg_ftp_not_connected = "发生本地(localhost)FTP连接错误。请确认ftp端口号及支持ftp服务与否。";
     $lang->msg_ftp_invalid_auth_info = "FTP登录失败。请确认输入的FTP信息。";
     $lang->msg_ftp_mkdir_fail = "新建文件夹失败。请确认 FTP服务器设置。";
     $lang->msg_ftp_chmod_fail = "修改文件夹属性失败。请确认 FTP服务器设置。";

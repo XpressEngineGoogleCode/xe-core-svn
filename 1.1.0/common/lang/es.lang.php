@@ -170,6 +170,30 @@
     $lang->unit_month = 'mes';
     $lang->unit_year = 'año';
 
+    $lang->unit_week = array(
+        'Monday' => 'Lunes',
+        'Tuesday' => 'Martes',
+        'Wednesday' => 'Miércoles ',
+        'Thursday' => 'Jueves',
+        'Friday' => 'Viernes',
+        'Saturday' => 'Sábado',
+        'Sunday' => 'Domingo',
+    );
+
+    $lang->unit_meridiem = array(
+        'am' => 'am',
+        'pm' => 'pm',
+        'AM' => 'AM',
+        'PM' => 'PM',
+    );
+
+    $lang->time_gap = array(
+        'min' => 'Hace %d minuto',
+        'mins' => '%d minutos',
+        'hour' => '%d día',
+        'hours' => '%d días',
+    );
+
     // Relacionado a la Descripción 
     $lang->about_tag = 'Tú puedes agregar múltiples etiquetas colocando una coma(,) entre cada etiqueta';
     $lang->about_layout = 'El diseño decora la apariencia de tus módulos, lo cual podrás configurar en el menú de Diseño en la parte                           superior';

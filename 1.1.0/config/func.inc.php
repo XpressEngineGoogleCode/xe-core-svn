@@ -278,6 +278,21 @@
     }
 
     /**
+     * @brief YmdHis의 시간 형식을 지금으로 부터 몇분/몇시간전, 1일 이상 차이나면 format string return
+     **/
+    function getTimeGap($date, $format = 'Y.m.d') {
+        $gap = time() - ztime($date);
+
+        $lang_time_gap = Context::getLang('time_gap');
+        if($gap<60) $buff = sprintf($lang_time_gap['min'], (int)($gap / 60)+1);
+        elseif($gap<60*60) $buff =  sprintf($lang_time_gap['mins'], (int)($gap / 60)+1);
+        elseif($gap<60*60*2) $buff =  sprintf($lang_time_gap['hour'], (int)($gap / 60 /60)+1);
+        elseif($gap<60*60*24) $buff =  sprintf($lang_time_gap['hours'], (int)($gap / 60 /60)+1);
+        else $buff =  zdate($date, $format);
+        return $buff;
+    }
+
+    /**
      * @brief 월이름을 return
      **/
     function getMonthName($month, $short = true) {
@@ -318,15 +333,22 @@
             $year = (int)substr($str,0,4);
             $month = (int)substr($str,4,2);
             $day = (int)substr($str,6,2);
-            return str_replace(
+            $string = str_replace(
                         array('Y','m','d','H','h','i','s','a','M', 'F'),
                         array($year,$month,$day,$hour,$hour/12,$min,$sec,($hour <= 12) ? 'am' : 'pm',getMonthName($month), getMonthName($month,false)),
                         $format
                     );
+        } else {
+            // 1970년 이후라면 ztime()함수로 unixtime을 구하고 date함수로 처리
+            $string = date($format, ztime($str));
         }
 
-        // 1970년 이후라면 ztime()함수로 unixtime을 구하고 date함수로 처리
-        return date($format, ztime($str));
+        // 요일, am/pm을 각 언어에 맞게 변경
+        $unit_week = Context::getLang('unit_week');
+        $unit_meridiem = Context::getLang('unit_meridiem');
+        $string = str_replace(array('Monday','Tuesday','Wednesday','Thursday','Friday','Saturday','Sunday'),$unit_week, $string);
+        $string = str_replace(array('am','pm','AM','PM'), $unit_meridiem, $string);
+        return $string;
     }
 
     /**

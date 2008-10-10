@@ -13,7 +13,8 @@
 	<description xml:lang="en">This widget displays newest articles with webzine style.</description>
 	<description xml:lang="es">Este widget muestra más reciente de artículos con webzine estilo.</description>
 	<description xml:lang="ru">Этот виджет отображает последние статьи в стиле webzine.</description>
-	<description xml:lang="zh-TW">以雜誌類型顯示最新主題。</description><version>0.1</version>
+	<description xml:lang="zh-TW">以雜誌類型顯示最新主題。</description>
+	<version>0.1</version>
 	<date>2007-02-28</date>
 
 	<author email_address="zero@zeroboard.com" link="http://www.zeroboard.com">
@@ -41,7 +42,8 @@
 			<description xml:lang="en">It will be the title of the newest articles.</description>
 			<description xml:lang="es">Este será el título de los documentos recientes.</description>
 			<description xml:lang="ru">Это будет заголовком последних статей.</description>
-			<description xml:lang="zh-TW">顯示最新主題的標題。</description></var>
+			<description xml:lang="zh-TW">顯示最新主題的標題。</description>
+		</var>
 		<var id="order_target">
 			<type>select</type>
 			<name xml:lang="ko">정렬 대상</name>
@@ -57,7 +59,8 @@
 			<description xml:lang="en">The list of newewst articles may be sorted by submitted order or modified order.</description>
 			<description xml:lang="es">La lista de los documentos recientes pueden ser ordenados en el orden del agregado o en el de modificados.</description>
 			<description xml:lang="ru">Список последних статей может быть отсортирован по дате размещения или изменения.</description>
-			<description xml:lang="zh-TW">按照指定順序進行排列。</description><options>
+			<description xml:lang="zh-TW">按照指定順序進行排列。</description>
+			<options>
 				<value>list_order</value>
 				<name xml:lang="ko">최신 등록순</name>
 				<name xml:lang="zh-CN">最新发表顺</name>
@@ -93,7 +96,8 @@
 			<description xml:lang="en">You can sort target articles by asending or desending order.</description>
 			<description xml:lang="es">Usted puede ordenar los documentos en orden acendente o en orden descendente.</description>
 			<description xml:lang="ru">Вы можете сортировать статьи в порядке возрастания или убывания.</description>
-			<description xml:lang="zh-TW">可選擇升冪/降冪的方式對所選目標進行排列。</description><options>
+			<description xml:lang="zh-TW">可選擇升冪/降冪的方式對所選目標進行排列。</description>
+			<options>
 				<value>desc</value>
 				<name xml:lang="ko">내림차순</name>
 				<name xml:lang="zh-CN">降序</name>
@@ -129,7 +133,8 @@
 			<description xml:lang="en">You may set the duration for indication of new item for newest article. (unit is hour)</description>
 			<description xml:lang="es">Usted puede configurar la duración de la indicación de un nuevo tema. (Unidad es hora)</description>
 			<description xml:lang="ru">Вы можете установить длительность индикации для нового объекта. (единица - час)</description>
-			<description xml:lang="zh-TW">可設置最新更新主題的new圖案顯示時間。</description></var>
+			<description xml:lang="zh-TW">可設置最新更新主題的new圖案顯示時間。</description>
+		</var>
 		<var id="subject_cut_size">
 			<type>text</type>
 			<name xml:lang="ko">제목 글자수</name>
@@ -174,7 +179,7 @@
 			<name xml:lang="ru">Тип миниатюры</name>
 			<name xml:lang="zh-TW">縮圖建立方式</name>
 			<description xml:lang="ko">썸네일 생성 방법을 선택할 수 있습니다. (crop : 꽉 채우기, ratio : 비율 맞추기)</description>
-			<description xml:lang="jp">サムネールの生成方法を選択します(Crop : トリミング, Ratio : 比率)。</description>
+			<description xml:lang="jp">サムネールの生成方法を選択します(Crop : 刈り込み, Ratio : 比率)。</description>
 			<description xml:lang="zh-CN">可以选择缩略图生成方式。 (crop : 裁减, ratio : 比例)</description>
 			<description xml:lang="en">Thumbnail Type may be set here.</description>
 			<description xml:lang="es">Tipo de miniatura puede establecerse aquí.</description>
@@ -183,7 +188,7 @@
 			<options>
 				<value>crop</value>
 				<name xml:lang="ko">Crop (채우기)</name>
-				<name xml:lang="jp">Crop (トリミング)</name>
+				<name xml:lang="jp">Crop (刈り込み)</name>
 				<name xml:lang="zh-CN">Crop (裁减)</name>
 				<name xml:lang="en">Crop</name>
 				<name xml:lang="es">Cultivos</name>
@@ -238,14 +243,14 @@
 		<var id="cols_list_count">
 			<type>text</type>
 			<name xml:lang="ko">가로 이미지 수</name>
-			<name xml:lang="jp">イメージ数</name>
+			<name xml:lang="jp">横並びイメージ数</name>
 			<name xml:lang="zh-CN">横向图片数</name>
 			<name xml:lang="en">Number of Images (Horizontal)</name>
 			<name xml:lang="es">Número de imágenes</name>
 			<name xml:lang="ru">Число изображений (колонка)</name>
 			<name xml:lang="zh-TW">橫向圖片數</name>
 			<description xml:lang="ko">출력될 가로 이미지의 수를 정하실 수 있습니다. (기본 1개)</description>
-			<description xml:lang="jp">表示されるイメージの横並びの数を指定します（デフォルト1個）。</description>
+			<description xml:lang="jp">表示する横並びびのイメージ数を指定します（デフォルト1個）。</description>
 			<description xml:lang="zh-CN">可以指定要显示的横向图片个数。(默认为1个)</description>
 			<description xml:lang="en">You can set the number of images to display. (1 as default)</description>
 			<description xml:lang="es">Usted puede definir el múmero de imágenes a mostrar. (predefinido: 1)</description>
@@ -255,14 +260,14 @@
 		<var id="rows_list_count">
 			<type>text</type>
 			<name xml:lang="ko">세로 이미지 수</name>
-			<name xml:lang="jp">イメージ数</name>
+			<name xml:lang="jp">縦並びイメージ数</name>
 			<name xml:lang="zh-CN">纵向图片数</name>
 			<name xml:lang="en">Number of Images (Vertical)</name>
 			<name xml:lang="es">Número de imágenes</name>
 			<name xml:lang="ru">Число изображений (ряд)</name>
 			<name xml:lang="zh-TW">縱向圖片數</name>
 			<description xml:lang="ko">출력될 세로 이미지의 수를 정하실 수 있습니다. (기본 5개)</description>
-			<description xml:lang="jp">表示されるイメージの縦並びの数を指定することができます（デフォルト5個）。</description>
+			<description xml:lang="jp">表示する縦並びのイメージ数を指定することができます（デフォルト5個）。</description>
 			<description xml:lang="zh-CN">可以指定要显示的纵向图片个数。(默认为1个)</description>
 			<description xml:lang="en">You can set the number of images to display. (5 as default)</description>
 			<description xml:lang="es">Usted puede definir el número de imágenes a mostrar. (predefinido: 5 )</description>
@@ -334,7 +339,7 @@
 		<var id="display_readed_count">
 			<type>select</type>
 			<name xml:lang="ko">조회수 표시</name>
-			<name xml:lang="jp">照合数表示</name>
+			<name xml:lang="jp">閲覧数表示</name>
 			<name xml:lang="zh-CN">查看</name>
 			<name xml:lang="en">Display Hit</name>
 			<name xml:lang="es">Mostrar Ayuda</name>

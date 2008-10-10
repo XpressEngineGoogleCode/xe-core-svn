@@ -40,7 +40,7 @@
     $lang->height_resizable = '高度調整';
     $lang->editor_height = '編輯器高度';
 
-    $lang->about_editor_skin = '可以選擇編輯器面版。';
+    $lang->about_editor_skin = '選擇編輯器面版。';
     $lang->about_upload_file_grant = '可以設置上傳檔案的權限(全部解除為無限制)。';
     $lang->about_default_component_grant = '可以設置編輯器預設組件的使用權限(全部解除為無限制)。';
     $lang->about_editor_height = '可以指定編輯器的預設高度。';
@@ -52,6 +52,7 @@
     $lang->edit->fontsize = '大小';
     $lang->edit->use_paragraph = '段落功能';
     $lang->edit->fontlist = array(
+
 
     "標楷體",
     "細明體",
@@ -73,6 +74,10 @@
 
     $lang->edit->submit = '確認';
 
+	$lang->edit->help_remove_format = "刪除所選區域的標籤";
+    $lang->edit->help_strike_through = "文字刪除線";
+    $lang->edit->help_align_full = "左右對齊";
+
     $lang->edit->help_fontcolor = "文字顏色";
     $lang->edit->help_fontbgcolor = "背景顏色";
     $lang->edit->help_bold = "粗體";
@@ -86,16 +91,16 @@
     $lang->edit->help_align_right = "靠右對齊";
     $lang->edit->help_add_indent = "縮排";
     $lang->edit->help_remove_indent = "移除縮排";
-    $lang->edit->help_list_number = "有序列表";
-    $lang->edit->help_list_bullet = "無序列表";
-    $lang->edit->help_use_paragrapth = "分段請按 ctrl+backspace． (發表主題快捷鍵：alt＋S)";
+    $lang->edit->help_list_number = "編號";
+    $lang->edit->help_list_bullet = "清單符號";
+    $lang->edit->help_use_paragrapth = "換段落請按 ctrl+backspace． (發表主題快捷鍵：alt＋S)";
 
     $lang->edit->upload = '上傳';
     $lang->edit->upload_file = '上傳附件'; 
     $lang->edit->link_file = '插入內容';
     $lang->edit->delete_selected = '刪除所選';
 
-    $lang->edit->icon_align_article = '佔一個段落';
+    $lang->edit->icon_align_article = '段落';
     $lang->edit->icon_align_left = '文字左側';
     $lang->edit->icon_align_middle = '置中對齊';
     $lang->edit->icon_align_right = '文字右側';

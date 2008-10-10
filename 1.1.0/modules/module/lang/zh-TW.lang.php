@@ -5,8 +5,8 @@
      * @brief  正體中文語言包
      **/
 
-    $lang->module_list = "模組目錄";
-    $lang->module_index = "模組目錄";
+    $lang->module_list = "模組列表";
+    $lang->module_index = "模組列表";
     $lang->module_category = "模組分類";
     $lang->module_info = "模組資料";
     $lang->add_shortcut = "新增到快捷選單";
@@ -18,8 +18,8 @@
     $lang->header_text = '頂端內容';
     $lang->footer_text = '底端內容';
     $lang->use_category = '使用分類';
-    $lang->category_title = '分類名';
-    $lang->checked_count = '被選擇的主題數';
+    $lang->category_title = '分類名稱';
+    $lang->checked_count = '所選擇的主題數';
     $lang->skin_default_info = '面版預設資料';
     $lang->skin_author = '面版作者';
     $lang->skin_license = '版權';
@@ -27,7 +27,7 @@
     $lang->module_copy = "複製模組";
 
     $lang->header_script = "檔案頭部腳本";
-    $lang->about_header_script = "可以直接輸入插入到html中&lt;head&gt;區的代碼。<br />可使用&lt;script, &lt;style 或 &lt;meta 等標籤。";
+    $lang->about_header_script = "可以直接輸入，並插入到HTML的&lt;head&gt;之間。<br />可使用&lt;script&gt;, &lt;style&gt; 或 &lt;meta&gt; 等標籤。";
 
     $lang->cmd_add_shortcut = "新增到快捷選單";
     $lang->cmd_install = "安裝";
@@ -46,7 +46,7 @@
     $lang->msg_move_failed = '移動失敗！';
     $lang->msg_cannot_delete_for_child = '不能刪除有子分類的分類！';
 
-    $lang->about_browser_title = "顯示在瀏覽器視窗的標題值。 在RSS/Trackback也可以使用。";
+    $lang->about_browser_title = "顯示在瀏覽器視窗的標題。在 RSS/Trackback也可以使用。";
     $lang->about_mid = "模組名稱只允許使用英文，數字和底線。";
     $lang->about_default = "用沒有mid值的網址訪問網站時，將會顯示預設。";
     $lang->about_module_category = "可以分類管理模組。 模組分類可以在 <a href=\"./?module=admin&amp;act=dispModuleAdminCategory\">模組管理 > 模組分類 </a>中進行管理。";
@@ -63,5 +63,5 @@
     $lang->about_grant = '全部解除特定權限的對象時，沒有登錄的會員也將具有相關權限。';
     $lang->about_module = "除基本library以外Zeroboard XE全部由模組組成。\n模組管理中列出所有已安裝的模組，因此易於管理。";
 
-    $lang->about_extra_vars_default_value = '復選/單選預設值需要多個時，用,(逗號)來分隔。';
+    $lang->about_extra_vars_default_value = '復選/單選預設值需要多個時，用，(逗號)來分隔。';
 ?>

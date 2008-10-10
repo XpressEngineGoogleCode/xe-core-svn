@@ -171,6 +171,30 @@
     $lang->unit_month = 'month';
     $lang->unit_year = 'year';
 
+    $lang->unit_week = array(
+        'Monday' => 'Monday',
+        'Tuesday' => 'Tuesday',
+        'Wednesday' => 'Wednesday',
+        'Thursday' => 'Thursday',
+        'Friday' => 'Friday',
+        'Saturday' => 'Saturday',
+        'Sunday' => 'Sunday',
+    );
+
+    $lang->unit_meridiem = array(
+        'am' => 'am',
+        'pm' => 'pm',
+        'AM' => 'AM',
+        'PM' => 'PM',
+    );
+
+    $lang->time_gap = array(
+        'min' => '%d minute ago',
+        'mins' => '%d minutes ago',
+        'hour' => '%d hour ago',
+        'hours' => '%d hours ago',
+    );
+
     // Descriptions
     $lang->about_tag = 'You may submit multiple tags by inserting commas(,) between each tag';
     $lang->about_layout = 'Layouts decorate the appearance of your modules. you can configure them from Layout menu on the top';

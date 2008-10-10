@@ -171,6 +171,30 @@
     $lang->unit_month = 'мес.';
     $lang->unit_year = 'г.';
 
+    $lang->unit_week = array(
+        'Monday' => 'Monday',
+        'Tuesday' => 'Tuesday',
+        'Wednesday' => 'Wednesday',
+        'Thursday' => 'Thursday',
+        'Friday' => 'Friday',
+        'Saturday' => 'Saturday',
+        'Sunday' => 'Sunday',
+    );
+
+    $lang->unit_meridiem = array(
+        'am' => 'am',
+        'pm' => 'pm',
+        'AM' => 'AM',
+        'PM' => 'PM',
+    );
+
+    $lang->time_gap = array(
+        'min' => '%d minute ago',
+        'mins' => '%d minutes ago',
+        'hour' => '%d hour ago',
+        'hours' => '%d hours ago',
+    );
+
     // Описания
     $lang->about_tag = 'Вы можете применить несколько тегов, разделенных запятыми (,)';
     $lang->about_layout = 'Лейауты украшают внешний вид Ваших модулей. Вы можете сконфигирировать их с помощью меню Лейаут сверху';
