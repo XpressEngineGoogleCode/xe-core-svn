@@ -19,7 +19,7 @@ class feedView extends feed {
         Context::setResponseMethod('Feed');
 
         $oFeedModel = &getModel('feed');
-        $document_list = $oFeedModel->getFeedDodumentList();
+        $feed_data = $oFeedModel->getFeedDodumentList();
 
         // feed 제목 및 정보등을 추출
         if($this->mid) {
@@ -37,8 +37,8 @@ class feedView extends feed {
 
         // RSS 출력물에서 사용될 변수 세팅
         Context::set('info', $info);
-        Context::set('mid_list', $mid_list);
-        Context::set('document_list', $document_list);
+        Context::set('mid_list', $feed_data->mid_list);
+        Context::set('document_list', $feed_data->document_list);
 
         // 결과물을 얻어와서 에디터 컴포넌트등의 전처리 기능을 수행시킴
         $path = $this->module_path.'tpl/';
@@ -65,7 +65,7 @@ class feedView extends feed {
         Context::setResponseMethod('Feed');
 
         $oFeedModel = &getModel('feed');
-        $document_list = $oFeedModel->getFeedDodumentList();
+        $feed_data = $oFeedModel->getFeedDodumentList();
 
         // feed 제목 및 정보등을 추출
         if($this->mid) {
@@ -83,8 +83,8 @@ class feedView extends feed {
 
         // RSS 출력물에서 사용될 변수 세팅
         Context::set('info', $info);
-        Context::set('mid_list', $mid_list);
-        Context::set('document_list', $document_list);
+        Context::set('mid_list', $feed_data->mid_list);
+        Context::set('document_list', $feed_data->document_list);
 
         // 결과물을 얻어와서 에디터 컴포넌트등의 전처리 기능을 수행시킴
         $path = $this->module_path.'tpl/';

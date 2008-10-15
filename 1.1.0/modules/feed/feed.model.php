@@ -118,7 +118,10 @@ class feedModel extends feed {
             }
         }
 
-        return $document_list;
+		$return_data->document_list = $document_list;
+		$return_data->mid_list = $mid_list;
+
+        return $return_data;
     }
 
 
