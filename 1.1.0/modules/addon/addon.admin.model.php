@@ -19,7 +19,7 @@
         function getAddonPath($addon_name) {
             $class_path = sprintf('./addons/%s/', $addon_name);
             if(is_dir($class_path)) return $class_path;
-            return "";
+            return '';
         }
 
         /**
@@ -35,7 +35,7 @@
             if(!$searched_count) return;
             sort($searched_list);
 
-            for($i=0;$i<$searched_count;$i++) {
+            for($i=0; $i < $searched_count; $i++) {
                 // 애드온의 이름
                 $addon_name = $searched_list[$i];
 
@@ -74,16 +74,14 @@
             $addon_path = $this->getAddonPath($addon);
             if(!$addon_path) return;
 
-            // 현재 선택된 모듈의 스킨의 정보 xml 파일을 읽음
+            // XML 파일을 읽음
             $xml_file = sprintf("%sconf/info.xml", $addon_path);
             if(!file_exists($xml_file)) return;
 
             $oXmlParser = new XmlParser();
-            $tmp_xml_obj = $oXmlParser->loadXmlFile($xml_file);
-            $xml_obj = $tmp_xml_obj->addon;
+            $xml_obj = &$oXmlParser->loadXmlFile($xml_file)->addon;
 
             if(!$xml_obj) return;
-
 
             // DB에 설정된 내역을 가져온다
             $db_args->addon = $addon;
@@ -91,19 +89,20 @@
             $extra_vals = unserialize($output->data->extra_vars);
 
             if($extra_vals->mid_list) {
+                // TODO : mid_list. 애드온 실행대상 mid. 의미있는 이름으로 변경 필요.
                 $addon_info->mid_list = $extra_vals->mid_list;
             } else {
                 $addon_info->mid_list = array();
             }
 
+            $addon_info->addon_name = $addon;
 
             // 애드온 정보
-            if($xml_obj->version && $xml_obj->attrs->version == '0.2') {
-                // addon format v0.2
-                sscanf($xml_obj->date->body, '%d-%d-%d', $date_obj->y, $date_obj->m, $date_obj->d);
-                $addon_info->date = sprintf('%04d%02d%02d', $date_obj->y, $date_obj->m, $date_obj->d);
+            if($xml_obj->version && version_compare($xml_obj->attrs->version, '0.2', '>=')) {
+                sscanf($xml_obj->date->body, '%d-%d-%d', $date_parse->y, $date_parse->m, $date_parse->d);
+                $addon_info->date = sprintf('%04d%02d%02d', $date_parse->y, $date_parse->m, $date_parse->d);
 
-                $addon_info->addon_name = $addon;
+                // 기본정보
                 $addon_info->title = $xml_obj->title->body;
                 $addon_info->description = trim($xml_obj->description->body);
                 $addon_info->version = $xml_obj->version->body;
@@ -111,8 +110,12 @@
                 $addon_info->license = $xml_obj->license->body;
                 $addon_info->license_link = $xml_obj->license->attrs->link;
 
-                if(!is_array($xml_obj->author)) $author_list[] = $xml_obj->author;
-                else $author_list = $xml_obj->author;
+                // 제작자 정보
+                if(!is_array($xml_obj->author)) {
+                    $author_list[] = $xml_obj->author;
+                } else {
+                    $author_list = $xml_obj->author;
+                }
 
                 foreach($author_list as $author) {
                     unset($author_obj);
@@ -124,6 +127,7 @@
 
                 // 확장변수를 정리
                 if($xml_obj->extra_vars) {
+                    // TODO 그룹, 비그룹 혼용 가능토록 개선 필요. 애매하네 근데...
                     $extra_var_groups = $xml_obj->extra_vars->group;
                     if(!$extra_var_groups) $extra_var_groups = $xml_obj->extra_vars;
                     if(!is_array($extra_var_groups)) $extra_var_groups = array($extra_var_groups);
@@ -208,7 +212,6 @@
 
             } else {
                 // addon format 0.1
-                $addon_info->addon_name = $addon;
                 $addon_info->title = $xml_obj->title->body;
                 $addon_info->description = trim($xml_obj->author->description->body);
                 $addon_info->version = $xml_obj->attrs->version;
@@ -258,8 +261,6 @@
 
             }
 
-
-
             return $addon_info;
         }
 
@@ -273,7 +274,7 @@
             if(!is_array($output->data)) $output->data = array($output->data);
 
             $activated_count = count($output->data);
-            for($i=0;$i<$activated_count;$i++) {
+            for($i=0; $i < $activated_count; $i++) {
                 $addon = $output->data[$i];
                 $addon_list[$addon->addon] = $addon;
             }
@@ -286,7 +287,7 @@
         function isActivatedAddon($addon) {
             $args->addon = $addon;
             $output = executeQuery('addon.getAddonIsActivated', $args);
-            if($output->data->count>0) return true;
+            if($output->data->count > 0) return true;
             return false;
         }
 
