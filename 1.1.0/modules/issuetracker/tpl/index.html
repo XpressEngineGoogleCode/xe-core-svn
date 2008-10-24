@@ -43,14 +43,14 @@
                 {$module_category[$val->module_category_srl]->title}
             <!--@end-->
         </td>
-        <td><a href="{getUrl('act','dispIssuetrackerAdminProjectInfo','module_srl',$val->module_srl)}" class="blue">{htmlspecialchars($val->mid)}</a></td>
-        <td><a href="{getUrl('act','dispIssuetrackerAdminProjectInfo','module_srl',$val->module_srl)}" class="blue">{htmlspecialchars($val->browser_title)}</a></td>
+        <td><a href="{getUrl('act','dispIssuetrackerAdminProjectInfo','module_srl',$val->module_srl)}">{htmlspecialchars($val->mid)}</a></td>
+        <td><a href="{getUrl('act','dispIssuetrackerAdminProjectInfo','module_srl',$val->module_srl)}">{htmlspecialchars($val->browser_title)}</a></td>
         <td class="date center nowrap">{zdate($val->regdate,"Y-m-d")}</td>
         <td class="view"><a href="{getUrl('','mid',$val->mid)}" onclick="window.open(this.href); return false;">{$lang->cmd_view}</a></td>
         <td class="delete"><!--@if($val->is_default!='Y')--><a href="{getUrl('act','dispIssuetrackerAdminDeleteIssuetracker','module_srl', $val->module_srl)}">{$lang->cmd_delete}</a><!--@else-->&nbsp;<!--@end--></td>
     </tr>
     <!--@end-->
-    <tr>
+    <tr class="row2">
         <td colspan="7" class="right">
             <a href="{getUrl('act','dispIssuetrackerAdminInsertProject','module_srl','')}" class="button"><span>{$lang->cmd_make}</span></a>
         </td>
@@ -60,14 +60,14 @@
 </form>
 
 <!-- 페이지 네비게이션 -->
-<div class="pageNavigation">
-    <a href="{getUrl('page','','module_srl','')}" class="goToFirst"><img src="../../admin/tpl/images/bottomGotoFirst.gif" alt="{$lang->first_page}" width="7" height="5" /></a> 
+<div class="pagination a1">
+    <a href="{getUrl('page','','module_srl','')}" class="prevEnd">{$lang->first_page}</a> 
     <!--@while($page_no = $page_navigation->getNextPage())-->
         <!--@if($page == $page_no)-->
-            <span class="current">{$page_no}</span> 
+            <strong>{$page_no}</strong> 
         <!--@else-->
             <a href="{getUrl('page',$page_no,'module_srl','')}">{$page_no}</a> 
         <!--@end-->
     <!--@end-->
-    <a href="{getUrl('page',$page_navigation->last_page,'module_srl','')}" class="goToLast"><img src="../../admin/tpl/images/bottomGotoLast.gif" alt="{$lang->last_page}" width="7" height="5" /></a>
+    <a href="{getUrl('page',$page_navigation->last_page,'module_srl','')}" class="nextEnd">{$lang->last_page}</a>
 </div>

@@ -1,7 +1,7 @@
 <?php
     /**
      * @file   zh-TW.lang.php
-     * @author zero (zero@nzeo.com)
+     * @author zero (zero@nzeo.com) 翻譯：royallin
      * @brief  正體中文語言 (包含基本內容)
      **/
 
@@ -46,15 +46,15 @@
 
     $lang->welcome_to_xe = 'XE 管理頁面';
     $lang->about_admin_page = "後台管理頁面未完成";
-    $lang->about_lang_env = "可以設置顯示語言給首次訪問的使用者。修改語言環境後請點擊 [儲存] 按鈕進行儲存。";
+    $lang->about_lang_env = "可以設置顯示語言給首次訪問的使用者。修改語言環境後，請點擊 [儲存] 按鈕進行儲存。";
 
     $lang->xe_license = 'XE遵循 GPL協議';
     $lang->about_shortcut = '可以刪除新增到常用模組中的快捷選單。';
 
-    $lang->yesterday = "Yesterday";
-    $lang->today = "Today";
+    $lang->yesterday = "昨天";
+    $lang->today = "今天";
 
-    $lang->cmd_lang_select = "언어선택";
-    $lang->about_cmd_lang_select = "선택된 언어들만 서비스 됩니다";
-    $lang->about_recompile_cache = "쓸모없어졌거나 잘못된 캐시파일들을 정리할 수 있습니다";
+    $lang->cmd_lang_select = "選擇語言";
+    $lang->about_cmd_lang_select = "只提供所選擇的語言服務";
+    $lang->about_recompile_cache = "可有效的整理錯誤的暫存檔";
 ?>

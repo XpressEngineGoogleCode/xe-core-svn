@@ -52,7 +52,13 @@
     $lang->member_info = '会员信息';
     $lang->current_password = '当前密码';
     $lang->openid = 'OpenID';
-    $lang->member_time_zone = '지역 시간대';
+    $lang->allow_message = '쪽지 허용';
+    $lang->allow_message_type = array(
+            'Y' => '모두 허용',
+            'F' => '등록된 친구들만 허용',
+            'N' => '모두 금지',
+    );
+    $lang->about_allow_message = '쪽지 허용 방법 및 대상을 지정할 수 있습니다';
 
     $lang->webmaster_name = '管理员名';
     $lang->webmaster_email = '管理员电子邮件';
@@ -147,7 +153,6 @@
     $lang->about_homepage = '请输入您的主页地址。';
     $lang->about_blog_url = '请输入博客地址。';
     $lang->about_birthday = '请输入您的出生年月日。';
-    $lang->about_member_time_zone = '사용하시려는 지역 시간대를 선택해주세요';
     $lang->about_allow_mailing = '如不选择此项，以后不能接收站内发送的重要信息。';
     $lang->about_denied = '选择时不能使用此用户名。';
     $lang->about_is_admin = '选择时将具有最高管理权限。';

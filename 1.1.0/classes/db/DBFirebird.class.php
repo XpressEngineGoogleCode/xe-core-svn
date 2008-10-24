@@ -102,7 +102,7 @@
             }
 
             if($ver < "2.0") {
-                $this->setError(-1, "Zeroboard XE cannot be installed under the version of firebird 2.0. Current firebird version is ".$ver);
+                $this->setError(-1, "XE cannot be installed under the version of firebird 2.0. Current firebird version is ".$ver);
                 return;
             }
 
@@ -589,10 +589,12 @@
         function getCondition($output) {
             if(!$output->conditions) return;
 
-            foreach($output->conditions as $key => $val) {
+            foreach($output->conditions as $val) {
                 $sub_condition = '';
-                foreach($val['condition'] as $k =>$v) {
-                    if(!isset($v['value']) || $v['value'] === '') continue;
+                foreach($val['condition'] as $v) {
+                    if(!isset($v['value'])) continue;
+                    if($v['value'] === '') continue;
+                    if(!in_array(gettype($v['value']), array('string', 'integer'))) continue;
 
                     $name = $v['column'];
                     $operation = $v['operation'];

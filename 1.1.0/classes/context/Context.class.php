@@ -150,7 +150,13 @@
                 if($this->get_vars) {
                     foreach($this->get_vars as $key => $val) {
                         if(!$val) continue;
-                        $url .= ($url?'&':'').$key.'='.urlencode($val);
+                        if(is_array($val)&&count($val)) {
+                            foreach($val as $k => $v) {
+                                $url .= ($url?'&':'').$key.'['.$k.']='.urlencode($v);
+                            }
+                        } else {
+                            $url .= ($url?'&':'').$key.'='.urlencode($val);
+                        }
                     }
                     Context::set('current_url',sprintf('%s?%s', $this->getRequestUri(), $url));
                 } else {
@@ -708,9 +714,9 @@
                     case 'mid.search_keyword.search_target' :
                             switch($get_vars['search_target']) {
                                 case 'tag' : 
-                                    return sprintf('%s%s/tag/%s',$path,$get_vars['mid'],str_replace(' ','-',$get_vars['search_keyword']));
+                                    return sprintf('%s%s/tag/%s',$path,$get_vars['mid'],str_replace(' ','+',$get_vars['search_keyword']));
                                 case 'nick_name' : 
-                                    return sprintf('%s%s/writer/%s',$path,$get_vars['mid'],str_replace(' ','-',$get_vars['search_keyword']));
+                                    return sprintf('%s%s/writer/%s',$path,$get_vars['mid'],str_replace(' ','+',$get_vars['search_keyword']));
                                 case 'regdate' : 
                                     if(strlen($get_vars['search_keyword'])==8) return sprintf('%s%s/%04d/%02d/%02d',$path,$get_vars['mid'],substr($get_vars['search_keyword'],0,4),substr($get_vars['search_keyword'],4,2),substr($get_vars['search_keyword'],6,2));
                                     elseif(strlen($get_vars['search_keyword'])==6) return sprintf('%s%s/%04d/%02d',$path,$get_vars['mid'],substr($get_vars['search_keyword'],0,4),substr($get_vars['search_keyword'],4,2)); 
@@ -724,7 +730,13 @@
             // rewrite 모듈을 사용하지 않고 인자의 값이 2개 이상이거나 rewrite모듈을 위한 인자로 적당하지 않을 경우
             foreach($get_vars as $key => $val) {
                 if(!isset($val)) continue;
-                $url .= ($url?'&':'').$key.'='.urlencode($val);
+                if(is_array($val) && count($val)) {
+                    foreach($val as $k => $v) {
+                        $url .= ($url?'&':'').$key.'['.$k.']='.urlencode($v);
+                    }
+                } else {
+                    $url .= ($url?'&':'').$key.'='.urlencode($val);
+                }
             }
 
             return $path.'?'.htmlspecialchars($url);

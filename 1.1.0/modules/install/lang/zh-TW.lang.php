@@ -1,18 +1,13 @@
 <?php
     /**
      * @file   zh-TW.lang.php
-     * @author zero (zero@nzeo.com)
+     * @author zero (zero@nzeo.com) 翻譯：royallin
      * @brief  正體中文語言(包含基本內容)
      **/
 
-    $lang->introduce_title = '安裝 Zeroboard XE';
+    $lang->introduce_title = '安裝 XE';
     $lang->license = <<<EndOfLicense
-- 程式名稱 : zeroboard XE (zeroboardXE)
-- 版權資訊 : GNU GENERAL PUBLIC LICENSE
-- 官方網址 : <a href="http://www.zeroboard.com">http://www.zeroboard.com</a>
-- 原作者 : zero (zero@zeroboard.com, http://www.zeroboard.com)
-
-zeroboard XE遵循 通用公共許可證(GNU General Public License) 開發，任何人都可以永久免費安裝使用。
+XE遵循 通用公共許可證(GNU General Public License) 開發，任何人都可以永久免費安裝使用。
 
 <b>GNU通用公共許可證</b> -  翻譯文
 1991．6第二版
@@ -203,8 +198,8 @@ EndOfLicense;
         );
 
     $lang->install_checklist_desc = array(
-	        'php_version' => '[需求] 由於 PHP 5.2.2 版本的BUG，無法安裝 zeroboard XE。',
-            'permission' => '[需求] zeroboard的安裝路徑或 ./files目錄權限必須是707',
+	        'php_version' => '[需求] 由於 PHP 5.2.2 版本的BUG，無法安裝 XE。',
+            'permission' => '[需求] XE的安裝路徑或 ./files目錄權限必須是707',
             'xml' => '[需求]為了 XML通訊，將需要安裝XML',
             'session' => '[需求] 為了使用暫存功能，必須在php.ini當中設置 session.auto_start=0',
             'iconv' => '為了UTF-8和其他語言環境之間的互相轉換，必須安裝iconv',
@@ -241,7 +236,7 @@ EndOfLicense;
     $lang->select_db_type = '請選擇要使用的資料庫。';
     $lang->db_hostname = '主機名稱';
     $lang->db_port = '資料庫埠口';
-    $lang->db_userid = '用戶名';
+    $lang->db_userid = '用戶名稱';
     $lang->db_password = '密碼';
     $lang->db_database = '資料庫名稱';
     $lang->db_database_file = '資料庫檔案';
@@ -250,8 +245,8 @@ EndOfLicense;
     $lang->admin_title = '管理員資料';
 
     $lang->env_title = '環境設置';
-    $lang->use_optimizer = '使用Optimizer';
-    $lang->about_optimizer = '使用Optimizer可以對大部分的CSS/ JS檔案進行整合/壓縮傳送使之加快網站訪問速度。<br />只是有時會發生小小的問題。這時候請暫時不要使用Optimizer。';
+    $lang->use_optimizer = '使用 Optimizer';
+    $lang->about_optimizer = '使用 Optimizer可以對大部分的 CSS/JS檔案進行整合/壓縮傳送使之加快網站訪問速度。<br />只是有時會發生小小的問題。這時候請暫時不要使用Optimizer。';
     $lang->use_rewrite = '使用rewrite模組';
     $lang->about_rewrite = '如主機支援rewrite模組並選擇此項，可以簡化複雜的網址。<br />例如，http://域名/?document_srl=123可簡化成http://域名/123。';
     $lang->time_zone = '時區';

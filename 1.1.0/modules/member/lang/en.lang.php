@@ -52,13 +52,19 @@
     $lang->member_info = 'Member Info';
     $lang->current_password = 'Current Password';
     $lang->openid = 'OpenID';
-    $lang->member_time_zone = '지역 시간대';
+    $lang->allow_message = '쪽지 허용';
+    $lang->allow_message_type = array(
+            'Y' => '모두 허용',
+            'F' => '등록된 친구들만 허용',
+            'N' => '모두 금지',
+    );
+    $lang->about_allow_message = '쪽지 허용 방법 및 대상을 지정할 수 있습니다';
 
     $lang->webmaster_name = "Webmaster's Name";
     $lang->webmaster_email = "Webmaster's Email";
 
     $lang->about_keep_signed = 'Though the browser is closed, you might be kept signed.\n\nIf you use this feature at the shared computer, your personal information might be accessed by others, thus do not use this feature at the shared computer. ';
-    $lang->about_webmaster_name = "Please input webmaster's name which will be used for certification mails or other site administration. (default : webmaster)";
+	$lang->about_webmaster_name = "Please input webmaster's name which will be used for certification mails or other site administration. (default : webmaster)";
     $lang->about_webmaster_email = "Please input webmaster's email address.";
 
     $lang->search_target_list = array(
@@ -146,7 +152,6 @@
     $lang->about_homepage = 'Please input if you have your websites';
     $lang->about_blog_url = 'Please input if you have your blogs';
     $lang->about_birthday = 'Please input your birth date';
-    $lang->about_member_time_zone = '사용하시려는 지역 시간대를 선택해주세요';
     $lang->about_allow_mailing = "If you don't join mailing, you will not able to receive group mail";
     $lang->about_denied = 'Check to prohibit the ID';
     $lang->about_is_admin = 'Check to give Superadmin permission';

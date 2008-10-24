@@ -1,7 +1,7 @@
 <?php
     /**
      * @file   modules/editor/lang/zh-TW.lang.php
-     * @author zero <zero@nzeo.com>
+     * @author zero <zero@nzeo.com> 翻譯：royallin
      * @brief  網頁編輯器(editor) 模組語言
      **/
 
@@ -11,7 +11,7 @@
     $lang->component_author = "作者";
     $lang->component_link = "連結";
     $lang->component_date = "編寫日期";
-    $lang->component_license = '更新記錄';
+    $lang->component_license = '版權';
     $lang->component_history = "紀錄";
     $lang->component_description = "說明";
     $lang->component_extra_vars = "變數設置";
@@ -25,13 +25,13 @@
     $lang->msg_component_is_inserted = '您選擇的組件已插入！';
     $lang->msg_component_is_first_order = '您選擇的組件已達最頂端位置！';
     $lang->msg_component_is_last_order = '您選擇的組件已達最底端位置！';
-    $lang->msg_load_saved_doc = "有自動儲存的內容， 確定要恢復嗎？\n儲存內容後，自動儲存的內容將會被刪除。";
+    $lang->msg_load_saved_doc = "有自動儲存的內容，確定要恢復嗎?\n儲存內容後，自動儲存的內容將會被刪除。";
     $lang->msg_auto_saved = "已自動儲存！";
 
     $lang->cmd_disable = "暫停";
     $lang->cmd_enable = "啟動";
 
-    $lang->editor_skin = '編輯器面版';
+    $lang->editor_skin = '編輯器面板';
     $lang->upload_file_grant = '檔案上傳權限'; 
     $lang->enable_default_component_grant = '預設組件使用權限';
     $lang->enable_component_grant = '組件使用權限';
@@ -40,20 +40,19 @@
     $lang->height_resizable = '高度調整';
     $lang->editor_height = '編輯器高度';
 
-    $lang->about_editor_skin = '選擇編輯器面版。';
+    $lang->about_editor_skin = '選擇編輯器面板。';
     $lang->about_upload_file_grant = '可以設置上傳檔案的權限(全部解除為無限制)。';
     $lang->about_default_component_grant = '可以設置編輯器預設組件的使用權限(全部解除為無限制)。';
     $lang->about_editor_height = '可以指定編輯器的預設高度。';
     $lang->about_editor_height_resizable = '允許用戶拖曳編輯器高度。';
-    $lang->about_enable_html_grant = 'HTML代碼編輯權限設置。';
+    $lang->about_enable_html_grant = 'HTML原始碼編輯權限設置。';
     $lang->about_enable_autosave = '發表主題時，啟動內容自動儲存功能。';
 
     $lang->edit->fontname = '字體';
     $lang->edit->fontsize = '大小';
     $lang->edit->use_paragraph = '段落功能';
     $lang->edit->fontlist = array(
-
-
+    "新細明體",
     "標楷體",
     "細明體",
     "times",
@@ -93,11 +92,11 @@
     $lang->edit->help_remove_indent = "移除縮排";
     $lang->edit->help_list_number = "編號";
     $lang->edit->help_list_bullet = "清單符號";
-    $lang->edit->help_use_paragrapth = "換段落請按 ctrl+backspace． (發表主題快捷鍵：alt＋S)";
+    $lang->edit->help_use_paragrapth = "換段落請按 ctrl+backspace． (發表主題快捷鍵：alt+S)";
 
     $lang->edit->upload = '上傳';
-    $lang->edit->upload_file = '上傳附件'; 
-    $lang->edit->link_file = '插入內容';
+    $lang->edit->upload_file = '上傳附檔';
+    $lang->edit->link_file = '插入圖片';
     $lang->edit->delete_selected = '刪除所選';
 
     $lang->edit->icon_align_article = '段落';

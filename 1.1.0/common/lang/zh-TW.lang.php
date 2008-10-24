@@ -1,8 +1,8 @@
 <?php
     /**
      * @file   common/lang/zh-TW.lang.php
-     * @author zero (zero@nzeo.com)
-     * @brief  正體中文語言包 (包含基本內容)
+     * @author zero (zero@nzeo.com) 翻譯：royallin
+     * @brief  正體中文語言(包含基本內容)
      **/
 
     // 基本使用的語言
@@ -18,7 +18,7 @@
     $lang->cmd_next = '下一頁';
     $lang->cmd_send_trackback = '發送引用';
     $lang->cmd_registration = $lang->cmd_submit = '確定';
-    $lang->cmd_comment_registration = '提交評論';
+    $lang->cmd_comment_registration = '送出評論';
     $lang->cmd_insert = '插入';
     $lang->cmd_save = '儲存';
     $lang->cmd_load = '讀取';
@@ -75,7 +75,7 @@
     $lang->category = $lang->category_srl = '分類';
     $lang->none_category = '無分類';
     $lang->document_srl = '文章編號';
-    $lang->user_id = '用戶名稱';
+    $lang->user_id = '帳號';
     $lang->author = '作者';
     $lang->password = '密碼';
     $lang->password1 = '密碼';
@@ -102,7 +102,7 @@
     $lang->allow_comment = '允許評論';
     $lang->lock_comment = '關閉評論';
     $lang->allow_trackback = '允許引用';
-    $lang->uploaded_file = '附件';
+    $lang->uploaded_file = '附加檔案';
     $lang->grant = '權限';
     $lang->target = '目標';
     $lang->total = '全部';
@@ -113,7 +113,7 @@
     $lang->friend = '好友';
     $lang->notify = '公告';
     $lang->order_target = '排列目標';
-    $lang->order_type = '排序方式';
+    $lang->order_type = '排列方式';
     $lang->order_asc = '升冪';
     $lang->order_desc = '降冪';
 
@@ -134,7 +134,7 @@
     $lang->page_count = '頁數';
     $lang->list_count = '列表數';
     $lang->search_list_count = '搜尋列表數';
-    $lang->readed_count = '檢視';
+    $lang->readed_count = '點閱';
     $lang->voted_count = '推薦';
     $lang->comment_count = '評論';
     $lang->member_count = '會員數';
@@ -182,10 +182,10 @@
     );
 
     $lang->unit_meridiem = array(
-        'am' => 'am',
-        'pm' => 'pm',
-        'AM' => 'AM',
-        'PM' => 'PM',
+        'am' => '上午',
+        'pm' => '下午',
+        'AM' => '上午',
+        'PM' => '下午',
     );
 
     $lang->time_gap = array(
@@ -202,6 +202,7 @@
     // 訊息
     $lang->msg_call_server = '系統正在連結服務器，請稍後。';
     $lang->msg_db_not_setted = '還沒有設定資料庫';
+    $lang->msg_dbconnect_failed = "連接資料庫時發生錯誤。\n請重新確認資料庫資訊。";
     $lang->msg_invalid_queryid = 'Query ID值指定錯誤';
     $lang->msg_not_permitted = '沒有權限';
     $lang->msg_input_password = '請輸入密碼';
@@ -216,7 +217,7 @@
     $lang->msg_module_is_not_exists = '找不到您查詢的模組';
     $lang->msg_module_is_not_standalone = '您請求的模組不能單獨執行';
 
-    $lang->success_registed = '提交成功！';
+    $lang->success_registed = '成功送出！';
     $lang->success_declared = '檢舉成功！';
     $lang->success_updated = '修改成功！';
     $lang->success_deleted = '刪除成功！';
@@ -224,7 +225,7 @@
     $lang->success_blamed = '反對成功！';
     $lang->success_moved = '移動成功！';
     $lang->success_sended = '發送成功！';
-    $lang->success_reset = '重設成功 !';
+    $lang->success_reset = '重設成功！';
     $lang->success_leaved = '成功退出！';
     $lang->success_saved = '儲存成功！';
 	
@@ -236,12 +237,12 @@
     $lang->failed_declared = '您沒有檢舉權限！';
     $lang->fail_to_delete_have_children = '不能刪除有回覆的評論！';
 
-    $lang->confirm_submit = '確定要提交嗎?';
+    $lang->confirm_submit = '確定要送出嗎?';
     $lang->confirm_logout = '確定要登出嗎?';
     $lang->confirm_vote = '確定要推薦嗎?';
     $lang->confirm_delete = '確定要刪除嗎?';
     $lang->confirm_move = '確定要移動嗎?';
-    $lang->confirm_reset = '確定要初始化嗎?';
+    $lang->confirm_reset = '確定要重置嗎?';
     $lang->confirm_leave = '確定要退出嗎?';
 
     $lang->column_type = '格式';

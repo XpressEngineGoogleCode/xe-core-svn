@@ -1,7 +1,7 @@
 <?php
     /**
      * @file   /modules/editor/components/emoticon/lang/zh-TW.lang.php
-     * @author zero <zero@nzeo.com>
+     * @author zero <zero@nzeo.com> 翻譯：royallin
      * @brief  網頁編輯器(editor) 模組 >  引用 (quotation) 組件語言
      **/
 
@@ -35,6 +35,6 @@
 
     $lang->quotation_opener = "開啟連結名稱";
     $lang->quotation_opener = "關閉連結名稱";
-    $lang->quotation_cmd_opener = "更多...";
+    $lang->quotation_cmd_opener = "展開";
     $lang->quotation_cmd_closer = "關閉";
 ?>

@@ -46,8 +46,8 @@
                 {$module_category[$val->module_category_srl]->title}
             <!--@end-->
         </td>
-        <td><a href="{getUrl('act','dispOpageAdminInsert','module_srl',$val->module_srl)}" class="blue">{htmlspecialchars($val->mid)}</a></td>
-        <td><a href="{getUrl('act','dispOpageAdminInsert','module_srl',$val->module_srl)}" class="blue">{htmlspecialchars($val->browser_title)}</a></td>
+        <td><a href="{getUrl('act','dispOpageAdminInsert','module_srl',$val->module_srl)}">{htmlspecialchars($val->mid)}</a></td>
+        <td><a href="{getUrl('act','dispOpageAdminInsert','module_srl',$val->module_srl)}">{htmlspecialchars($val->browser_title)}</a></td>
         <td class="date nowrap center">{zdate($val->regdate,"Y-m-d")}</td>
         <td class="view center"><a href="{getUrl('','mid',$val->mid)}"  onclick="window.open(this.href); return false;">{$lang->cmd_view}</a></td>
         <td class="copy center"><a href="./?module=module&act=dispModuleAdminCopyModule&module_srl={$val->module_srl}" onclick="popopen(this.href);return false;">{$lang->cmd_copy}</a></td>
@@ -64,14 +64,14 @@
 
 
 <!-- 페이지 네비게이션 -->
-<div class="pageNavigation">
-    <a href="{getUrl('page','','module_srl','')}" class="goToFirst"><img src="../../admin/tpl/images/bottomGotoFirst.gif" alt="{$lang->first_page}" width="7" height="5" /></a> 
+<div class="pagination a1">
+    <a href="{getUrl('page','','module_srl','')}" class="prevEnd">{$lang->first_page}</a> 
     <!--@while($page_no = $page_navigation->getNextPage())-->
         <!--@if($page == $page_no)-->
-            <span class="current">{$page_no}</span> 
+            <strong>{$page_no}</strong> 
         <!--@else-->
             <a href="{getUrl('page',$page_no,'module_srl','')}">{$page_no}</a> 
         <!--@end-->
     <!--@end-->
-    <a href="{getUrl('page',$page_navigation->last_page,'module_srl','')}" class="goToLast"><img src="../../admin/tpl/images/bottomGotoLast.gif" alt="{$lang->last_page}" width="7" height="5" /></a>
+    <a href="{getUrl('page',$page_navigation->last_page,'module_srl','')}" class="nextEnd">{$lang->last_page}</a>
 </div>

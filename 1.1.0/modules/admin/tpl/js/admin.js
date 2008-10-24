@@ -4,7 +4,7 @@
  * @brief  admin 모듈의 javascript
  **/
 
-xAddEventListener(document,'mouseup',showXESubMenu);
+xAddEventListener(document,'click',showXESubMenu);
 var openedSubMenus = null;
 function showXESubMenu(evt) {
     var e = new xEvent(evt);
@@ -18,9 +18,9 @@ function showXESubMenu(evt) {
             return;
         }
         openedSubMenus = obj;
-        xLeft(obj, xPageX(e.target) + (xWidth(e.target)-xWidth(obj))/2);
-        if(xLeft(obj) + xWidth(obj) + 10 > xClientWidth()) xLeft(obj, xClientWidth() - xWidth(obj) - 10);
-        xTop(obj, xPageY(e.target)+28);
+        //xLeft(obj, xPageX(e.target) + (xWidth(e.target)-xWidth(obj))/2);
+        //if(xLeft(obj) + xWidth(obj) + 10 > xClientWidth()) xLeft(obj, xClientWidth() - xWidth(obj) - 10);
+        //xTop(obj, xPageY(e.target)+28);
         obj.style.visibility = 'visible';
         return;
     } else if(openedSubMenus) {
@@ -32,9 +32,15 @@ function showXESubMenu(evt) {
 // open/close Main Navigator
 function toggleXEMainNavigator() {
     var obj = xGetElementsByClassName('xeAdmin')[0];
+    var btnObj = xGetElementById('btnFolder');
     if(!obj) return;
-    if(obj.style.display == 'none') obj.style.display = 'block';
-    else obj.style.display = 'none';
+    if(obj.style.display == 'none') {
+        obj.style.display = 'block';
+        btnObj.src = btnObj.src.replace(/btn_off.png/,'btn.png');
+    } else {
+        obj.style.display = 'none';
+        btnObj.src = btnObj.src.replace(/btn.png/,'btn_off.png');
+    }
     var expire = new Date();
     expire.setTime(expire.getTime()+ (7000 * 24 * 3600000));
     xSetCookie('XEMN', obj.style.display, expire);
