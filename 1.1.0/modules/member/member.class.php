@@ -167,14 +167,14 @@
             if(!$act) return true;
 
             // member 디렉토리 체크 (2007. 8. 11 추가)
-            if(!is_dir("./files/member_extra_info")) return true;
+            if(!is_dir('./files/member_extra_info')) return true;
 
             // dispMemberFindAccount act의 여부 체크 (2007. 10. 15)
             $act = $oModuleModel->getActionForward('dispMemberFindAccount');
             if(!$act) return true;
 
             // member 디렉토리 체크 (2007. 10. 22 추가)
-            if(!is_dir("./files/member_extra_info/profile_image")) return true;
+            if(!is_dir('./files/member_extra_info/profile_image')) return true;
 
             // procMemberInsertProfileImage, procMemberDeleteProfileImage act의 여부 체크 (2007. 10. 22)
             $act = $oModuleModel->getActionForward('procMemberInsertProfileImage');
@@ -187,7 +187,11 @@
             if(!$act) return true;
 
             // member_auth_mail 테이블에 is_register 필드 추가 (2008. 04. 22)
-            $act = $oDB->isColumnExists("member_auth_mail", "is_register");
+            $act = $oDB->isColumnExists('member_auth_mail', 'is_register');
+            if(!$act) return true;
+
+            // member 테이블에 member_time_zone 필드 추가
+            $act = $oDB->isColumnExists('member', 'member_time_zone');
             if(!$act) return true;
 
             return false;
@@ -216,8 +220,13 @@
             FileHandler::makeDir('./files/member_extra_info/profile_image');
 
             // DB 필드 추가
-            if (!$oDB->isColumnExists("member_auth_mail", "is_register")) {
-                $oDB->addColumn("member_auth_mail", "is_register", "char", 1, "N", true);
+            if (!$oDB->isColumnExists('member_auth_mail', 'is_register')) {
+                $oDB->addColumn('member_auth_mail', 'is_register', 'char', 1, 'N', true);
+            }
+
+            // DB 필드 추가
+            if (!$oDB->isColumnExists('member', 'member_time_zone')) {
+                $oDB->addColumn('member', 'member_time_zone', 'char', 5, '', true);
             }
 
             return new Object(0, 'success_updated');
