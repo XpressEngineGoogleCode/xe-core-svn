@@ -635,4 +635,13 @@
         if($num<2097152)return chr(($num>>18)+240).chr((($num>>12)&63)+128).chr((($num>>6)&63)+128) .chr(($num&63)+128);
         return '';
     }
+
+    
+    /**
+     * @brief 변수를 Array로 반환
+     */
+    function convertArray(&$var) {
+        if(!$var) return array();
+        if(!is_array($var)) $var = array($var);
+    }
 ?>
