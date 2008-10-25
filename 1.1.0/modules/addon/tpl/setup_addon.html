@@ -10,7 +10,9 @@
 <input type="hidden" name="addon_name" value="{$addon_info->addon_name}" />
 
     <div id="popBody">
+        <!--// 제작자 정보 -->
         <table cellspacing="0" class="adminTable">
+        <caption>{$lang->addon_info}</caption>
         <tr class="row2">
             <th scope="row"><div><label for="textfield1">{$lang->title}</label></div></th>
             <td>{$addon_info->title} ver. {$addon_info->version} ({zdate($addon_info->date, 'Y-m-d')})</td>
@@ -28,17 +30,16 @@
             <td class="blue"><a href="{$addon_info->homepage}" onclick="window.open(this.href);return false;">{$addon_info->homepage}</a>&nbsp;</td>
         </tr>
 
-        <!--@foreach($addon_info->extra_vars as $id => $var)-->
-
-        <!--@if($var->group && ((!$group) || $group != $var->group))-->
-        {@$group = $var->group}
+        <!--// 확장변수 -->
+        <!--@foreach($addon_info->extra_vars as $group_no => $group)-->
         </table>
+
         <table cellspacing="0" class="adminTable">
         <col width="100" />
         <col width="*" />
-        <caption>{$group}</caption>
-        <!--@end-->
+        <!--@if($group->title)--><caption>{$group->title}</caption><!--@endif-->
 
+        <!--@foreach($group->vars as $var)-->
         <tr class="row{$cycle_idx}">
             <th scope="row"><div>{$var->title}</div></th>
             <td>
@@ -52,19 +53,21 @@
                 <select name="{$var->name}">
                     <!--@foreach($var->options as $val)-->
                     <option value="{$val->value}"<!--@if($var->value == $val->value)--> selected="selected"<!--@end-->>{$val->title}</option>
-                    <!--@end-->
+                    <!--@endforeach-->
                 </select>
-                <!--@end-->
+                <!--@endif-->
                 <p class="clear">{nl2br($var->description)}</p>
             </td>
         </tr>
-        <!--@end-->
-
-        <!--@if($group)-->
+        <!--@endforeach-->
+        <!--@endforeach-->
         </table>
-        <table cellspacing="0" class="adminTable">
-        <!--@end-->
 
+        <!--// 활성 대상 모듈 -->
+        <table cellspacing="0" class="adminTable">
+        <col width="100" />
+        <col width="*" />
+        <caption>{$lang->target_module}</caption>
         <tr>
             <th scope="row"><div>
                 {$lang->module}

@@ -97,6 +97,7 @@
 
             $addon_info->addon_name = $addon;
 
+
             // 애드온 정보
             if($xml_obj->version && version_compare($xml_obj->attrs->version, '0.2', '>=')) {
                 sscanf($xml_obj->date->body, '%d-%d-%d', $date_parse->y, $date_parse->m, $date_parse->d);
@@ -126,44 +127,55 @@
                 }
 
                 // 확장변수를 정리
-                if($xml_obj->extra_vars) {
-                    // TODO 그룹, 비그룹 혼용 가능토록 개선 필요. 애매하네 근데...
-                    $extra_var_groups = $xml_obj->extra_vars->group;
-                    if(!$extra_var_groups) $extra_var_groups = $xml_obj->extra_vars;
-                    if(!is_array($extra_var_groups)) $extra_var_groups = array($extra_var_groups);
+                if($xml_obj->extra_vars->group || $xml_obj->extra_vars->var) {
+                    $groups = $xml_obj->extra_vars->group;
+                    convertArray($groups);
 
-                    foreach($extra_var_groups as $group) {
+                    // 그룹, 비그룹 혼용을 위해 비그룹 변수들을 이름없는 그룹으로 묶음
+                    if($xml_obj->extra_vars->var) {
+                        convertArray($xml_obj->extra_vars->var);
+                        $none_group->var = $xml_obj->extra_vars->var;
+                        if($groups) {
+                        	array_unshift($groups, $none_group);
+                        } else {
+                        	$groups = $none_group;
+                        }
+                    }
+
+                    foreach($groups as $key => $group) {
+                        unset($var_list);
+                        if(!$group->var) continue;
                         $extra_vars = $group->var;
-                        if(!is_array($group->var)) $extra_vars = array($group->var);
+                        convertArray($extra_vars);
 
-                        foreach($extra_vars as $key => $val) {
+                        foreach($extra_vars as $val) {
                             unset($obj);
-                            if(!$val->attrs->type) { $val->attrs->type = 'text'; }
+                            if(!$val->attrs->type) $val->attrs->type = 'text';
 
-                            $obj->group = $group->title->body;
                             $obj->name = $val->attrs->name;
                             $obj->title = $val->title->body;
                             $obj->type = $val->attrs->type;
+                            $obj->max = $val->attrs->max;
+                            $obj->min = $val->attrs->min;
                             $obj->description = $val->description->body;
                             $obj->value = $extra_vals->{$obj->name};
-                            if(strpos($obj->value, '|@|') != false) { $obj->value = explode('|@|', $obj->value); }
-                            if($obj->type == 'mid_list' && !is_array($obj->value)) { $obj->value = array($obj->value); }
+                            if(strpos($obj->value, '|@|') != false) $obj->value = explode('|@|', $obj->value);
+                            if(in_array($obj->type, array('mid_list'))) convertArray($obj->value);
 
-                            // 'select'type에서 option목록을 구한다.
-                            if(is_array($val->options)) {
+                            if($val->options) {
+	                            convertArray($val->options);
                                 $option_count = count($val->options);
 
                                 for($i = 0; $i < $option_count; $i++) {
                                     $obj->options[$i]->title = $val->options[$i]->title->body;
                                     $obj->options[$i]->value = $val->options[$i]->attrs->value;
                                 }
-                            } else {
-                                $obj->options[0]->title = $val->options[0]->title->body;
-                                $obj->options[0]->value = $val->options[0]->attrs->value;
                             }
-
-                            $addon_info->extra_vars[] = $obj;
+                            $var_list[] = $obj;
                         }
+
+                        $addon_info->extra_vars[$key]->title = $group->title->body;
+                        $addon_info->extra_vars[$key]->vars = $var_list;
                     }
                 }
 
@@ -231,7 +243,7 @@
                         $extra_vars = $group->var;
                         if(!is_array($group->var)) $extra_vars = array($group->var);
 
-                        foreach($extra_vars as $key => $val) {
+                        foreach($extra_vars as $val) {
                             unset($obj);
                             if(!$val->type->body) { $val->type->body = 'text'; }
 
@@ -241,13 +253,15 @@
                             $obj->type = $val->type->body;
                             $obj->description = $val->description->body;
                             $obj->value = $extra_vals->{$obj->name};
-                            if(strpos($obj->value, '|@|') != false) { $obj->value = explode('|@|', $obj->value); }
-                            if($obj->type == 'mid_list' && !is_array($obj->value)) { $obj->value = array($obj->value); }
+                            if(strpos($obj->value, '|@|') !== false) {
+                                $obj->value = explode('|@|', $obj->value);
+                                convertArray($obj->value);
+                            }
 
-                            // 'select'type에서 option목록을 구한다.
-                            if(is_array($val->options)) {
+                            // option 목록을 구한다
+                            if($val->options) {
+                                convertArray($val->options);
                                 $option_count = count($val->options);
-
                                 for($i = 0; $i < $option_count; $i++) {
                                     $obj->options[$i]->title = $val->options[$i]->title->body;
                                     $obj->options[$i]->value = $val->options[$i]->value->body;
