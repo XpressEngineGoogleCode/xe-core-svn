@@ -1,11 +1,8 @@
 <?php
     /**
      * @class  pointView
-     * @author zero (zero@nzeo.com)
+     * @author zero <zero@zeroboard.com>
      * @brief  point module의 view class
-     *
-     * POINT 2.0형식으로 문서 출력
-     *
      **/
 
     class pointView extends point {
@@ -35,8 +32,9 @@
             $oModuleModel = &getModel('module');
             $config = $oModuleModel->getModuleConfig('point');
 
-            if($config->module_point[$current_module_srl]) $module_config = $config->module_point[$current_module_srl];
-            else {
+            if($config->module_point[$current_module_srl]) {
+                $module_config = $config->module_point[$current_module_srl];
+            } else {
                 $module_config['insert_document'] = $config->insert_document;
                 $module_config['insert_comment'] = $config->insert_comment;
                 $module_config['upload_file'] = $config->upload_file;
@@ -50,7 +48,7 @@
 
             $module_config['module_srl'] = $current_module_srl;
             $module_config['point_name'] = $config->point_name;
-            
+
             Context::set('module_config', $module_config);
 
             // 템플릿 파일 지정

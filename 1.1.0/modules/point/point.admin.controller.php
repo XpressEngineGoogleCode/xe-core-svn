@@ -1,7 +1,7 @@
 <?php
     /**
      * @class  pointAdminController
-     * @author zero (zero@nzeo.com)
+     * @author zero <zero@zeroboard.com>
      * @brief  point모듈의 admin controller class
      **/
 
@@ -41,8 +41,8 @@
 
             // 최고 레벨
             $config->max_level = $args->max_level;
-            if($config->max_level>1000) $config->max_level = 1000;
-            if($config->max_level<1) $config->max_level = 1;
+            if($config->max_level > 1000) $config->max_level = 1000;
+            if($config->max_level < 1) $config->max_level = 1;
 
             // 레벨 아이콘 설정
             $config->level_icon = $args->level_icon;
@@ -62,8 +62,8 @@
 
             // 레벨별 포인트 설정
             unset($config->level_step);
-            for($i=1;$i<=$config->max_level;$i++) {
-                $key = "level_step_".$i;
+            for($i=1; $i <= $config->max_level; $i++) {
+                $key = 'level_step_'.$i;
                 $config->level_step[$i] = (int)$args->{$key};
             }
 
@@ -95,7 +95,7 @@
                 if(!$matches[1]) continue;
                 $name = $matches[1];
                 $module_srl = $matches[2];
-                if(strlen($val)==0) unset($config->module_point[$module_srl][$name]);
+                if(strlen($val) == 0) unset($config->module_point[$module_srl][$name]);
                 else $config->module_point[$module_srl][$name] = (int)$val;
             }
 
@@ -116,7 +116,7 @@
             if(!$module_srl) return new Object(-1, 'msg_invalid_request');
 
             // 여러개의 모듈 일괄 설정일 경우
-            if(preg_match('/^([0-9,]+)$/',$module_srl)) $module_srl = explode(',',$module_srl);
+            if(preg_match('/^([0-9,]+)$/', $module_srl)) $module_srl = explode(',', $module_srl);
             else $module_srl = array($module_srl);
 
             // 설정 정보 가져오기
@@ -124,7 +124,7 @@
             $config = $oModuleModel->getModuleConfig('point');
 
             // 설정 저장
-            for($i=0;$i<count($module_srl);$i++) {
+            for($i=0; $i < count($module_srl); $i++) {
                 $srl = trim($module_srl[$i]);
                 if(!$srl) continue;
                 $config->module_point[$srl]['insert_document'] = (int)Context::get('insert_document');
@@ -184,6 +184,7 @@
 
         /**
          * @brief 전체글/ 댓글/ 첨부파일과 가입정보를 바탕으로 포인트를 재계산함. 단 로그인 점수는 1번만 부여됨
+         * @todo 포인트 재계산을 포인트 로그 테이블을 이용하여 계산하도록 변경 필요
          **/
         function procPointAdminReCal() {
             set_time_limit(0);
@@ -194,7 +195,7 @@
 
             // 회원의 포인트 저장을 위한 변수
             $member = array();
-            
+
             // 게시글 정보를 가져옴
             $output = executeQueryArray('point.getDocumentPoint');
             if(!$output->toBool()) return $output;
@@ -244,11 +245,11 @@
             $output = null;
 
             // 모든 회원의 포인트를 0으로 세팅
-            $output = executeQuery("point.initMemberPoint");
+            $output = executeQuery('point.initMemberPoint');
             if(!$output->toBool()) return $output;
 
             // 임시로 파일 저장
-            $f = fopen("./files/cache/pointRecal.txt","w");
+            $f = fopen('./files/cache/pointRecal.txt', 'w');
             foreach($member as $key => $val) {
                 $val += (int)$config->signup_point;
                 fwrite($f, $key.','.$val."\r\n");
@@ -262,6 +263,7 @@
 
         /**
          * @brief 파일로 저장한 회원 포인트를 5000명 단위로 적용
+         * @todo 제거 대상. 포인트 재계산을 포인트 로그 테이블을 이용하여 계산하도록 변경 필요
          **/
         function procPointAdminApplyPoint() {
             $position = (int)Context::get('position');
@@ -270,18 +272,18 @@
             if(!file_exists('./files/cache/pointRecal.txt')) return new Object(-1, 'msg_invalid_request');
 
             $idx = 0;
-            $f = fopen("./files/cache/pointRecal.txt","r");
+            $f = fopen('./files/cache/pointRecal.txt', 'r');
             while(!feof($f)) {
                 $str = trim(fgets($f, 1024));
                 $idx ++;
                 if($idx > $position) {
-                    list($member_srl, $point) = explode(',',$str);
+                    list($member_srl, $point) = explode(',', $str);
 
                     $args = null;
                     $args->member_srl = $member_srl;
                     $args->point = $point;
-                    $output = executeQuery('point.insertPoint',$args);
-                    if($idx%5000==0) break;
+                    $output = executeQuery('point.insertPoint', $args);
+                    if($idx % 5000 == 0) break;
                 }
             }
 
@@ -289,7 +291,7 @@
                 FileHandler::removeFile('./files/cache/pointRecal.txt');
                 $idx = $total;
 
-                FileHandler::rename('./files/member_extra_info/point','./files/member_extra_info/point.old');
+                FileHandler::rename('./files/member_extra_info/point', './files/member_extra_info/point.old');
 
                 FileHandler::removeDir('./files/member_extra_info/point.old');
             }
@@ -321,7 +323,7 @@
                     $config->download_file_act
             );
 
-            $act_cache_file = "./files/cache/point.act.cache";
+            $act_cache_file = './files/cache/point.act.cache';
             FileHandler::writeFile($act_cache_file, $act_list);
         }
 

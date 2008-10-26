@@ -1,7 +1,7 @@
 <?php
     /**
      * @class  pointController
-     * @author zero (zero@nzeo.com)
+     * @author zero <zero@zeroboard.com>
      * @brief  point모듈의 Controller class
      **/
 
@@ -38,7 +38,7 @@
 
             // 포인트 증감
             $cur_point += $point;
-            $this->setPoint($member_srl,$cur_point, 'signup');
+            $this->setPoint($member_srl, $cur_point, 'signup');
 
             return new Object();
         }
@@ -50,8 +50,8 @@
             $member_srl = $obj->member_srl;
             if(!$member_srl) return new Object();
 
-            // 바로 이전 로그인이 오늘이 아니어야 포인트를 줌 
-            if(substr($obj->last_login,0,8)==date("Ymd")) return new Object();
+            // 바로 이전 로그인이 오늘이 아니어야 포인트를 줌
+            if(substr($obj->last_login, 0, 8) == date('Ymd')) return new Object();
 
             // point 모듈 정보 가져옴
             $oModuleModel = &getModel('module');
@@ -65,7 +65,7 @@
 
             // 포인트 증감
             $cur_point += $point;
-            $this->setPoint($member_srl,$cur_point);
+            $this->setPoint($member_srl, $cur_point);
 
             return new Object();
         }
@@ -96,7 +96,7 @@
             if($obj->uploaded_count) $cur_point += $point * $obj->uploaded_count;
 
             // 포인트 증감
-            $this->setPoint($member_srl,$cur_point);
+            $this->setPoint($member_srl, $cur_point);
 
             return new Object();
         }
@@ -117,7 +117,7 @@
             if(!isset($comment_point)) $comment_point = $config->insert_comment;
 
             // 댓글 포인트가 있으면 증감(+) 이면 차감 시도
-            if($comment_point>0) return new Object();
+            if($comment_point > 0) return new Object();
 
             // 해당 글에 포함된 모든 댓글을 추출
             $cp_args->document_srl = $document_srl;
@@ -129,8 +129,8 @@
             // 대상 회원 번호를 정리
             $member_srls = array();
             $cnt = count($output->data);
-            for($i=0;$i<$cnt;$i++) {
-                if($output->data[$i]->member_srl<1) continue;
+            for($i=0; $i < $cnt; $i++) {
+                if($output->data[$i]->member_srl < 1) continue;
                 $member_srls[$output->data[$i]->member_srl] = $output->data[$i]->count;
             }
 
@@ -146,7 +146,7 @@
             foreach($member_srls as $member_srl => $cnt) {
                 $cur_point = $oPointModel->getPoint($member_srl, true);
                 $cur_point -= $cnt * $comment_point;
-                $this->setPoint($member_srl,$cur_point);
+                $this->setPoint($member_srl, $cur_point);
             }
 
             return new Object();
@@ -187,7 +187,7 @@
             if($obj->uploaded_count) $cur_point -= $point * $obj->uploaded_count;
 
             // 포인트 증감
-            $this->setPoint($member_srl,$cur_point);
+            $this->setPoint($member_srl, $cur_point);
 
             return new Object();
         }
@@ -204,7 +204,7 @@
             $document_srl = $obj->document_srl;
             $oDocumentModel = &getModel('document');
             $oDocument = $oDocumentModel->getDocument($document_srl);
-            if(!$oDocument->isExists() || $oDocument->get('member_srl')==$member_srl) return new Object();
+            if(!$oDocument->isExists() || $oDocument->get('member_srl') == $member_srl) return new Object();
 
             // point 모듈 정보 가져옴
             $oModuleModel = &getModel('module');
@@ -219,7 +219,7 @@
 
             // 포인트 증감
             $cur_point += $point;
-            $this->setPoint($member_srl,$cur_point);
+            $this->setPoint($member_srl, $cur_point);
 
             return new Object();
         }
@@ -276,7 +276,7 @@
 
             // 포인트 증감
             $cur_point += $point;
-            $this->setPoint($member_srl,$cur_point);
+            $this->setPoint($member_srl, $cur_point);
 
             return new Object();
         }
@@ -305,7 +305,7 @@
 
             // 포인트 증감
             $cur_point -= $point;
-            $this->setPoint($member_srl,$cur_point);
+            $this->setPoint($member_srl, $cur_point);
 
             return new Object();
         }
@@ -319,7 +319,7 @@
             $config = $oModuleModel->getModuleConfig('point');
 
             // 포인트가 없으면 다운로드가 안되도록 하였으면 비로그인 회원일 경우 중지
-            if(!Context::get('is_logged') && $config->disable_download == 'Y') return new Object(-1,'msg_not_permitted_download');
+            if(!Context::get('is_logged') && $config->disable_download == 'Y') return new Object(-1, 'msg_not_permitted_download');
 
             // 로그인 상태일때만 실행
             $logged_info = Context::get('logged_info');
@@ -338,7 +338,7 @@
             if(!isset($point)) $point = $config->download_file;
 
             // 포인트가 0보다 작고 포인트가 없으면 파일 다운로드가 안되도록 했다면 오류
-            if($cur_point + $point < 0 && $config->disable_download == 'Y') return new Object(-1,'msg_not_permitted_download');
+            if($cur_point + $point < 0 && $config->disable_download == 'Y') return new Object(-1, 'msg_not_permitted_download');
 
             return new Object();
         }
@@ -369,7 +369,7 @@
 
             // 포인트 증감
             $cur_point += $point;
-            $this->setPoint($member_srl,$cur_point);
+            $this->setPoint($member_srl, $cur_point);
 
             return new Object();
         }
@@ -408,10 +408,10 @@
 
             // 읽은 기록이 없으면 기록 남김
             $output = executeQuery('document.insertDocumentReadedLog', $args);
-            
+
             // 포인트 증감
             $cur_point += $point;
-            $this->setPoint($member_srl,$cur_point);
+            $this->setPoint($member_srl, $cur_point);
 
             return new Object();
         }
@@ -431,13 +431,10 @@
             $oPointModel = &getModel('point');
             $cur_point = $oPointModel->getPoint($member_srl, true);
 
-            if( $obj->point > 0 )
-            {
+            if($obj->point > 0) {
                 $point = $config->module_point[$module_srl]['voted'];
                 if(!isset($point)) $point = $config->voted;
-            }
-            else
-            {
+            } else {
                 $point = $config->module_point[$module_srl]['blamed'];
                 if(!isset($point)) $point = $config->blamed;
             }
@@ -446,13 +443,14 @@
 
             // 포인트 증감
             $cur_point += $point;
-            $this->setPoint($member_srl,$cur_point);
+            $this->setPoint($member_srl, $cur_point);
 
             return new Object();
         }
 
         /**
          * @brief 포인트 설정
+         * @todo $point 값을 증/감 포인트로 넘겨 받도록 수정 필요
          **/
         function setPoint($member_srl, $point, $mode = null) {
             if($point < 0) $point = 0;
@@ -474,10 +472,10 @@
             // 포인트가 있는지 체크
             $oPointModel = &getModel('point');
             if($oPointModel->isExistsPoint($member_srl)) {
-                executeQuery("point.updatePoint", $args);
+                executeQuery('point.updatePoint', $args);
             } else {
                 if($mode != 'signup') $args->point += (int)$config->signup_point;
-                executeQuery("point.insertPoint", $args);
+                executeQuery('point.insertPoint', $args);
             }
 
             // 새로운 레벨을 구함
@@ -490,7 +488,7 @@
                 $point_group = $config->point_group;
 
                 // 포인트 그룹 정보가 있을때 시행
-                if($point_group && is_array($point_group) && count($point_group) ) { 
+                if($point_group && is_array($point_group) && count($point_group) ) {
 
                     // 기본 그룹을 구함
                     $default_group = $oMemberModel->getDefaultGroup();
@@ -515,7 +513,7 @@
 
                     // 일단 기존의 그룹을 모두 삭제
                     $del_group_args->member_srl = $member_srl;
-                    $del_group_args->group_srl = implode(',',$point_group_list);
+                    $del_group_args->group_srl = implode(',', $point_group_list);
                     $del_group_output = executeQuery('point.deleteMemberGroup', $del_group_args);
 
                     // 새로운 그룹을 부여

@@ -1,7 +1,7 @@
 <?php
     /**
      * @class  pointAdminView
-     * @author zero (zero@nzeo.com)
+     * @author zero <zero@zeroboard.com>
      * @brief  point모듈의 admin view class
      **/
 
@@ -27,7 +27,7 @@
          **/
         function dispPointAdminConfig() {
             // 레벨 아이콘 목록 구함
-            $level_icon_list = FileHandler::readDir("./modules/point/icons");
+            $level_icon_list = FileHandler::readDir('./modules/point/icons');
             Context::set('level_icon_list', $level_icon_list);
 
             // 그룹 목록 가져오기
@@ -36,7 +36,7 @@
             $selected_group_list = array();
             if(count($group_list)) {
                 foreach($group_list as $key => $val) {
-                    if($val->is_admin == 'Y' || $val->is_default == 'Y') continue;    
+                    if($val->is_admin == 'Y' || $val->is_default == 'Y') continue;
                     $selected_group_list[$key] = $val;
                 }
             }

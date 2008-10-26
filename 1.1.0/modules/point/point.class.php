@@ -1,7 +1,7 @@
 <?php
     /**
      * @class  point
-     * @author zero (zero@nzeo.com)
+     * @author zero <zero@zeroboard.com>
      * @brief  point모듈의 high class
      **/
 
@@ -27,8 +27,8 @@
             $config->max_level = 30;
 
             // 레벨별 점수
-            for($i=1;$i<=30;$i++) {
-                $config->level_step[$i] = pow($i,2)*90;
+            for($i=1; $i <= 30; $i++) {
+                $config->level_step[$i] = pow($i, 2) * 90;
             }
 
             // 회원가입
@@ -41,13 +41,13 @@
             $config->point_name = 'point';
 
             // 레벨 아이콘 디렉토리
-            $config->level_icon = "default";
+            $config->level_icon = 'default';
 
             // 점수가 없을때 다운로드 금지 기능
             $config->disable_download = false;
 
             /**
-             * 모듈별 기본 점수 및 각 action 정의 (게시판,블로그외에 어떤 모듈이 생길지 모르니 act값을 명시한다
+             * 모듈별 기본 점수 및 각 action 정의 (게시판, 블로그외에 어떤 모듈이 생길지 모르니 act값을 명시한다
              **/
 
             // 글작성
@@ -111,8 +111,10 @@
          * @brief 설치가 이상이 없는지 체크하는 method
          **/
         function checkUpdate() {
-            // point 모듈 정보 가져옴
+            $oDB = &DB::getInstance();
             $oModuleModel = &getModel('module');
+
+            // point 모듈 정보 가져옴
             $config = $oModuleModel->getModuleConfig('point');
 
             // 가입/글작성/댓글작성/파일업로드/다운로드에 대한 트리거 추가
@@ -133,6 +135,9 @@
             // 추천 / 비추천에 대한 트리거 추가 2008.05.13 haneul
             if(!$oModuleModel->getTrigger('document.updateVotedCount', 'point', 'controller', 'triggerUpdateVotedCount', 'after')) return true;
 
+            // 경험치 필드
+            if(!$oDB->isColumnExists('point', 'exp')) return true;
+
             return false;
         }
 
@@ -140,43 +145,50 @@
          * @brief 업데이트 실행
          **/
         function moduleUpdate() {
-            // point 모듈 정보 가져옴
+            $oDB = &DB::getInstance();
             $oModuleModel = &getModel('module');
+
+            // point 모듈 정보 가져옴
             $oModuleController = &getController('module');
 
             $config = $oModuleModel->getModuleConfig('point');
 
             // 가입/글작성/댓글작성/파일업로드/다운로드에 대한 트리거 추가
-            if(!$oModuleModel->getTrigger('member.insertMember', 'point', 'controller', 'triggerInsertMember', 'after')) 
+            if(!$oModuleModel->getTrigger('member.insertMember', 'point', 'controller', 'triggerInsertMember', 'after'))
                 $oModuleController->insertTrigger('member.insertMember', 'point', 'controller', 'triggerInsertMember', 'after');
-            if(!$oModuleModel->getTrigger('document.insertDocument', 'point', 'controller', 'triggerInsertDocument', 'after')) 
+            if(!$oModuleModel->getTrigger('document.insertDocument', 'point', 'controller', 'triggerInsertDocument', 'after'))
                 $oModuleController->insertTrigger('document.insertDocument', 'point', 'controller', 'triggerInsertDocument', 'after');
-            if(!$oModuleModel->getTrigger('document.deleteDocument', 'point', 'controller', 'triggerBeforeDeleteDocument', 'before')) 
+            if(!$oModuleModel->getTrigger('document.deleteDocument', 'point', 'controller', 'triggerBeforeDeleteDocument', 'before'))
                 $oModuleController->insertTrigger('document.deleteDocument', 'point', 'controller', 'triggerBeforeDeleteDocument', 'before');
-            if(!$oModuleModel->getTrigger('document.deleteDocument', 'point', 'controller', 'triggerDeleteDocument', 'after')) 
+            if(!$oModuleModel->getTrigger('document.deleteDocument', 'point', 'controller', 'triggerDeleteDocument', 'after'))
                 $oModuleController->insertTrigger('document.deleteDocument', 'point', 'controller', 'triggerDeleteDocument', 'after');
-            if(!$oModuleModel->getTrigger('comment.insertComment', 'point', 'controller', 'triggerInsertComment', 'after')) 
+            if(!$oModuleModel->getTrigger('comment.insertComment', 'point', 'controller', 'triggerInsertComment', 'after'))
                 $oModuleController->insertTrigger('comment.insertComment', 'point', 'controller', 'triggerInsertComment', 'after');
-            if(!$oModuleModel->getTrigger('comment.deleteComment', 'point', 'controller', 'triggerDeleteComment', 'after')) 
+            if(!$oModuleModel->getTrigger('comment.deleteComment', 'point', 'controller', 'triggerDeleteComment', 'after'))
                 $oModuleController->insertTrigger('comment.deleteComment', 'point', 'controller', 'triggerDeleteComment', 'after');
-            if(!$oModuleModel->getTrigger('file.insertFile', 'point', 'controller', 'triggerInsertFile', 'after')) 
+            if(!$oModuleModel->getTrigger('file.insertFile', 'point', 'controller', 'triggerInsertFile', 'after'))
                 $oModuleController->insertTrigger('file.insertFile', 'point', 'controller', 'triggerInsertFile', 'after');
-            if(!$oModuleModel->getTrigger('file.deleteFile', 'point', 'controller', 'triggerDeleteFile', 'after')) 
+            if(!$oModuleModel->getTrigger('file.deleteFile', 'point', 'controller', 'triggerDeleteFile', 'after'))
                 $oModuleController->insertTrigger('file.deleteFile', 'point', 'controller', 'triggerDeleteFile', 'after');
-            if(!$oModuleModel->getTrigger('file.downloadFile', 'point', 'controller', 'triggerBeforeDownloadFile', 'before')) 
+            if(!$oModuleModel->getTrigger('file.downloadFile', 'point', 'controller', 'triggerBeforeDownloadFile', 'before'))
                 $oModuleController->insertTrigger('file.downloadFile', 'point', 'controller', 'triggerBeforeDownloadFile', 'before');
-            if(!$oModuleModel->getTrigger('file.downloadFile', 'point', 'controller', 'triggerDownloadFile', 'after')) 
+            if(!$oModuleModel->getTrigger('file.downloadFile', 'point', 'controller', 'triggerDownloadFile', 'after'))
                 $oModuleController->insertTrigger('file.downloadFile', 'point', 'controller', 'triggerDownloadFile', 'after');
             if(!$oModuleModel->getTrigger('member.doLogin', 'point', 'controller', 'triggerAfterLogin', 'after'))
                 $oModuleController->insertTrigger('member.doLogin', 'point', 'controller', 'triggerAfterLogin', 'after');
-            if(!$oModuleModel->getTrigger('module.dispAdditionSetup', 'point', 'view', 'triggerDispPointAdditionSetup', 'after')) 
+            if(!$oModuleModel->getTrigger('module.dispAdditionSetup', 'point', 'view', 'triggerDispPointAdditionSetup', 'after'))
                 $oModuleController->insertTrigger('module.dispAdditionSetup', 'point', 'view', 'triggerDispPointAdditionSetup', 'after');
-            if(!$oModuleModel->getTrigger('document.updateReadedCount', 'point', 'controller', 'triggerUpdateReadedCount', 'after')) 
+            if(!$oModuleModel->getTrigger('document.updateReadedCount', 'point', 'controller', 'triggerUpdateReadedCount', 'after'))
                 $oModuleController->insertTrigger('document.updateReadedCount', 'point', 'controller', 'triggerUpdateReadedCount', 'after');
 
             // 추천 / 비추천에 대한 트리거 추가 2008.05.13 haneul
             if(!$oModuleModel->getTrigger('document.updateVotedCount', 'point', 'controller', 'triggerUpdateVotedCount', 'after'))
                 $oModuleController->insertTrigger('document.updateVotedCount', 'point', 'controller', 'triggerUpdateVotedCount', 'after');
+
+            // 경험치 필드 추가
+            if(!$oDB->isColumnExists('point', 'exp')) {
+                $oDB->addColumn('point', 'exp', 'number', 11, 0, true);
+            }
 
             return new Object(0, 'success_updated');
         }
@@ -218,7 +230,7 @@
                         $module_info = $oModuleModel->getModuleInfoByModuleSrl($args->target_module_srl);
                         if(!$module_info) return false;
 
-                        if($oModuleModel->isModuleAdmin($module_info, $logged_info)) return true; 
+                        if($oModuleModel->isModuleAdmin($module_info, $logged_info)) return true;
                     break;
             }
 

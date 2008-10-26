@@ -1,7 +1,7 @@
 <?php
     /**
      * @class  pointModel
-     * @author zero (zero@nzeo.com)
+     * @author zero <zero@zeroboard.com>
      * @brief  point 모듈의 model class
      **/
 
@@ -19,7 +19,9 @@
         function isExistsPoint($member_srl) {
             $args->member_srl = $member_srl;
             $output = executeQuery('point.getPoint', $args);
+
             if($output->data->member_srl == $member_srl) return true;
+
             return false;
         }
 
@@ -27,7 +29,7 @@
          * @brief 포인트를 구해옴
          **/
         function getPoint($member_srl, $from_db = false) {
-            $path = sprintf('./files/member_extra_info/point/%s',getNumberingPath($member_srl));
+            $path = sprintf('./files/member_extra_info/point/%s', getNumberingPath($member_srl));
             if(!is_dir($path)) FileHandler::makeDir($path);
             $cache_filename = sprintf('%s%d.cache.txt', $path, $member_srl);
 
@@ -48,8 +50,12 @@
          **/
         function getLevel($point, $level_step) {
             $level_count = count($level_step);
-            for($level=0;$level<=$level_count;$level++) if($point < $level_step[$level]) break;
-            $level --;
+
+            for($level=0; $level <= $level_count; $level++) {
+                if($point < $level_step[$level]) break;
+                $level--;
+            }
+
             return $level;
         }
 
@@ -59,8 +65,8 @@
         function getMemberList($args = null) {
 
             // 검색 옵션 정리
-            $args->is_admin = Context::get('is_admin')=='Y'?'Y':'';
-            $args->is_denied = Context::get('is_denied')=='Y'?'Y':'';
+            $args->is_admin = Context::get('is_admin') == 'Y' ? 'Y' : '';
+            $args->is_denied = Context::get('is_denied') == 'Y' ? 'Y' : '';
             $args->selected_group_srl = Context::get('selected_group_srl');
 
             $search_target = trim(Context::get('search_target'));
@@ -69,19 +75,19 @@
             if($search_target && $search_keyword) {
                 switch($search_target) {
                     case 'user_id' :
-                            if($search_keyword) $search_keyword = str_replace(' ','%',$search_keyword);
+                            if($search_keyword) $search_keyword = str_replace(' ', '%', $search_keyword);
                             $args->s_user_id = $search_keyword;
                         break;
                     case 'user_name' :
-                            if($search_keyword) $search_keyword = str_replace(' ','%',$search_keyword);
+                            if($search_keyword) $search_keyword = str_replace(' ', '%', $search_keyword);
                             $args->s_user_name = $search_keyword;
                         break;
                     case 'nick_name' :
-                            if($search_keyword) $search_keyword = str_replace(' ','%',$search_keyword);
+                            if($search_keyword) $search_keyword = str_replace(' ', '%', $search_keyword);
                             $args->s_nick_name = $search_keyword;
                         break;
                     case 'email_address' :
-                            if($search_keyword) $search_keyword = str_replace(' ','%',$search_keyword);
+                            if($search_keyword) $search_keyword = str_replace(' ', '%', $search_keyword);
                             $args->s_email_address = $search_keyword;
                         break;
                     case 'regdate' :
