@@ -53,8 +53,8 @@
 
             for($level=0; $level <= $level_count; $level++) {
                 if($point < $level_step[$level]) break;
-                $level--;
             }
+            $level--;
 
             return $level;
         }
