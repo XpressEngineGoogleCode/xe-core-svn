@@ -115,7 +115,6 @@
             $oModuleModel = &getModel('module');
 
             // point 모듈 정보 가져옴
-            $config = $oModuleModel->getModuleConfig('point');
 
             // 가입/글작성/댓글작성/파일업로드/다운로드에 대한 트리거 추가
             if(!$oModuleModel->getTrigger('member.insertMember', 'point', 'controller', 'triggerInsertMember', 'after')) return true;
@@ -150,8 +149,6 @@
 
             // point 모듈 정보 가져옴
             $oModuleController = &getController('module');
-
-            $config = $oModuleModel->getModuleConfig('point');
 
             // 가입/글작성/댓글작성/파일업로드/다운로드에 대한 트리거 추가
             if(!$oModuleModel->getTrigger('member.insertMember', 'point', 'controller', 'triggerInsertMember', 'after'))
