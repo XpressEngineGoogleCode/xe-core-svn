@@ -18,7 +18,10 @@
     $lang->about_level_icon = 'Путь иконок уровней "./module/point/icons/[level].gif" и максимальный уровень может меняться с набором иконок. Поэтому будте осторожны'; 
 
     $lang->point_name = 'Имя поинта';
-    $lang->about_point_name = 'Вы можете дать имя или единицу измерения для поинта'; 
+    $lang->about_point_name = 'Вы можете дать имя или единицу измерения для поинта';
+
+    $lang->activity_point_name = '활동 포인트 명칭';
+    $lang->aboutactivity_point_name = '활동 포인트의 이름이나 단위를 정하실 수 있습니다';
 
     $lang->level_point = 'Уровень поинтов';
     $lang->about_level_point = 'Уровень будет изменен, когда поинты достигают каждого уровня поинтов или падают ниже его'; 
@@ -51,11 +54,28 @@
     $lang->point_voted = '추천 받음';
     $lang->point_blamed = '비추천 받음';
 
+    $lang->point_action = array(
+        'signup' => '가입',
+        'login' => '로그인',
+        'insert_document' => '글 작성',
+        'delete_document' => '글 삭제',
+        'read_document' => '게시글 조회',
+        'insert_comment' => '코멘트 작성',
+        'delete_comment' => '코멘트 삭제',
+        'upload_file' => '파일 업로드',
+        'delete_file' => '파일 삭제',
+        'download_file' => '파일 내려받기',
+        'voted' => '추천 받음',
+        'blamed' => '비추천 받음',
+        'init' => '초기화',
+        'admin_set' => '관리자 설정'
+    );
 
     $lang->cmd_point_config = 'Настройки по умолчанию';
     $lang->cmd_point_module_config = 'Настройки модуля';
     $lang->cmd_point_act_config = 'Настройки действий';
     $lang->cmd_point_member_list = 'Список поинтов пользователей';
+    $lang->cmd_point_log_list = '포인트 내역';
 
     $lang->msg_cannot_download = "У Вас нет достаточного количества поитов, чтобы иметь разрешение скачивать файлы.";
 

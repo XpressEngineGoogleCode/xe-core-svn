@@ -1,0 +1,14 @@
+<query id="getLog" action="select">
+    <tables>
+        <table name="point_log" />
+    </tables>
+    <columns>
+        <column name="*" />
+    </columns>
+    <conditions>
+        <condition operation="equal" column="member_srl" var="member_srl" />
+        <condition operation="equal" column="target_srl" var="target_srl" pipe="and" />
+        <condition operation="equal" column="action" var="action" pipe="and" />
+        <condition operation="equal" column="mode" var="mode" pipe="and" />
+    </conditions>
+</query>

@@ -27,17 +27,30 @@
             // 포인트 이름 체크
             $config->point_name = $args->point_name;
             if(!$config->point_name) $config->point_name = 'point';
+            $config->activity_point_name = $args->activity_point_name;
+            if(!$config->activity_point_name) $config->activity_point_name = 'point';
 
             // 기본 포인트 지정
-            $config->signup_point = (int)$args->signup_point;
-            $config->login_point = (int)$args->login_point;
-            $config->insert_document = (int)$args->insert_document;
-            $config->read_document = (int)$args->read_document;
-            $config->insert_comment = (int)$args->insert_comment;
-            $config->upload_file = (int)$args->upload_file;
-            $config->download_file = (int)$args->download_file;
-            $config->voted = (int)$args->voted;
-            $config->blamed = (int)$args->blamed;
+            $config->point->signup = (int)$args->point_signup;
+            $config->point->login = (int)$args->point_login;
+            $config->point->insert_document = (int)$args->point_insert_document;
+            $config->point->read_document = (int)$args->point_read_document;
+            $config->point->insert_comment = (int)$args->point_insert_comment;
+            $config->point->upload_file = (int)$args->point_upload_file;
+            $config->point->download_file = (int)$args->point_download_file;
+            $config->point->voted = (int)$args->point_voted;
+            $config->point->blamed = (int)$args->point_blamed;
+
+            // 기본 활동 포인트 지정
+            $config->exp->signup = (int)$args->exp_signup;
+            $config->exp->login = (int)$args->exp_login;
+            $config->exp->insert_document = (int)$args->exp_insert_document;
+            $config->exp->read_document = (int)$args->exp_read_document;
+            $config->exp->insert_comment = (int)$args->exp_insert_comment;
+            $config->exp->upload_file = (int)$args->exp_upload_file;
+            $config->exp->download_file = (int)$args->exp_download_file;
+            $config->exp->voted = (int)$args->exp_voted;
+            $config->exp->blamed = (int)$args->exp_blamed;
 
             // 최고 레벨
             $config->max_level = $args->max_level;
@@ -86,17 +99,17 @@
             $args = Context::getRequestVars();
 
             foreach($args as $key => $val) {
-                preg_match("/^(insert_document|insert_comment|upload_file|download_file|read_document|voted|blamed)_([0-9]+)$/", $key, $matches);
+                preg_match("/^(point|exp)_([a-z_]+)_([0-9]+)$/", $key, $matches);
                 if(!$matches[1]) continue;
-                $name = $matches[1];
-                $module_srl = $matches[2];
-                if(strlen($val)>0) $module_config[$module_srl][$name] = (int)$val;
+                $name = $matches[2];
+                $module_srl = $matches[3];
+                if(strlen($val) > 0) $module_config[$module_srl][$matches[1]][$name] = (int)$val;
             }
 
             $oModuleController = &getController('module');
             if(count($module_config)) {
                 foreach($module_config as $module_srl => $config) {
-                    $oModuleController->insertModulePartConfig('point',$module_srl,$config);
+                    $oModuleController->insertModulePartConfig('point', $module_srl, $config);
                 }
             }
 
@@ -122,13 +135,22 @@
                 $srl = trim($module_srl[$i]);
                 if(!$srl) continue;
                 unset($config);
-                $config['insert_document'] = (int)Context::get('insert_document');
-                $config['insert_comment'] = (int)Context::get('insert_comment');
-                $config['upload_file'] = (int)Context::get('upload_file');
-                $config['download_file'] = (int)Context::get('download_file');
-                $config['read_document'] = (int)Context::get('read_document');
-                $config['voted'] = (int)Context::get('voted');
-                $config['blamed'] = (int)Context::get('blamed');
+                $config['point']['insert_document'] = Context::get('point_insert_document');
+                $config['point']['insert_comment'] = Context::get('point_insert_comment');
+                $config['point']['upload_file'] = Context::get('point_upload_file');
+                $config['point']['download_file'] = Context::get('point_download_file');
+                $config['point']['read_document'] = Context::get('point_read_document');
+                $config['point']['voted'] = Context::get('point_voted');
+                $config['point']['blamed'] = Context::get('point_blamed');
+
+                $config['exp']['insert_document'] = Context::get('exp_insert_document');
+                $config['exp']['insert_comment'] = Context::get('exp_insert_comment');
+                $config['exp']['upload_file'] = Context::get('exp_upload_file');
+                $config['exp']['download_file'] = Context::get('exp_download_file');
+                $config['exp']['read_document'] = Context::get('exp_read_document');
+                $config['exp']['voted'] = Context::get('exp_voted');
+                $config['exp']['blamed'] = Context::get('exp_blamed');
+
                 $oModuleController->insertModulePartConfig('point', $srl, $config);
             }
 
@@ -144,7 +166,18 @@
             $point = Context::get('point');
 
             $oPointController = &getController('point');
-            return $oPointController->setPoint($member_srl, (int)$point);
+            return $oPointController->setPoint($member_srl, (int)$point, 0, 'admin_set');
+        }
+
+        /**
+         * @brief 회원 포인트 변경
+         **/
+        function procPointAdminUpdateExp() {
+            $member_srl = Context::get('member_srl');
+            $exp = Context::get('exp');
+
+            $oPointController = &getController('point');
+            return $oPointController->setPoint($member_srl, 0, (int)$exp, 'admin_set');
         }
 
         /**
@@ -156,8 +189,6 @@
 
             // 모듈별 포인트 정보를 가져옴
             $oModuleModel = &getModel('module');
-            $config = $oModuleModel->getModuleConfig('point');
-
             $module_config = $oModuleModel->getModulePartConfigs('point');
 
             // 회원의 포인트 저장을 위한 변수
@@ -169,12 +200,16 @@
 
             if($output->data) {
                 foreach($output->data as $key => $val) {
-                    if($module_config[$val->module_srl]['insert_document']) $insert_point = $module_config[$val->module_srl]['insert_document'];
-                    else $insert_point = $config->insert_document;
+                    $insert_point = $module_config['point']['insert_document'];
+                    if(!$insert_point) $insert_point = $this->config->point->insert_document;
+                    $insert_exp = $module_config['exp']['insert_document'];
+                    if(!$insert_exp) $insert_exp = $this->config->exp->insert_document;
 
                     if(!$val->member_srl) continue;
                     $point = $insert_point * $val->count;
-                    $member[$val->member_srl] += $point;
+                    $exp = $insert_exp * $val->count;
+                    $member[$val->member_srl]['point'] += $point;
+                    $member[$val->member_srl]['exp'] += $exp;
                 }
             }
             $output = null;
@@ -185,12 +220,16 @@
 
             if($output->data) {
                 foreach($output->data as $key => $val) {
-                    if($module_config[$val->module_srl]['insert_comment']) $insert_point = $module_config[$val->module_srl]['insert_comment'];
-                    else $insert_point = $config->insert_comment;
+                    $insert_point = $module_config['point']['insert_comment'];
+                    if(!$insert_point) $insert_point = $config->point->insert_comment;
+                    $insert_exp = $module_config['exp']['insert_comment'];
+                    if(!$insert_exp) $insert_exp = $config->exp->insert_comment;
 
                     if(!$val->member_srl) continue;
                     $point = $insert_point * $val->count;
-                    $member[$val->member_srl] += $point;
+                    $exp = $insert_exp * $val->count;
+                    $member[$val->member_srl]['point'] += $point;
+                    $member[$val->member_srl]['exp'] += $exp;
                 }
             }
             $output = null;
@@ -201,12 +240,16 @@
 
             if($output->data) {
                 foreach($output->data as $key => $val) {
-                    if($module_config[$val->module_srl]['upload_file']) $insert_point = $module_config[$val->module_srl]['upload_file'];
-                    else $insert_point = $config->upload_file;
+                    $insert_point = $module_config['point']['upload_file'];
+                    if(!$insert_point) $insert_point = $config->point->upload_file;
+                    $insert_exp = $module_config['exp']['upload_file'];
+                    if(!$insert_exp) $insert_exp = $config->exp->upload_file;
 
                     if(!$val->member_srl) continue;
                     $point = $insert_point * $val->count;
-                    $member[$val->member_srl] += $point;
+                    $exp = $insert_exp * $val->count;
+                    $member[$val->member_srl]['point'] += $point;
+                    $member[$val->member_srl]['exp'] += $exp;
                 }
             }
             $output = null;
@@ -215,11 +258,16 @@
             $output = executeQuery('point.initMemberPoint');
             if(!$output->toBool()) return $output;
 
+            // 모든 포인트 로그를 삭제
+            $output = executeQuery('point.initPointLog');
+            if(!$output->toBool()) return $output;
+
             // 임시로 파일 저장
             $f = fopen('./files/cache/pointRecal.txt', 'w');
             foreach($member as $key => $val) {
-                $val += (int)$config->signup_point;
-                fwrite($f, $key.','.$val."\r\n");
+                $val['point'] += (int)$this->config->point->signup;
+                $val['exp'] += (int)$this->config->exp->signup;
+                fwrite($f, $key.','.$val['point'].','.$val['exp']."\r\n");
             }
             fclose($f);
 
@@ -233,6 +281,7 @@
          * @todo 제거 대상. 포인트 재계산을 포인트 로그 테이블을 이용하여 계산하도록 변경 필요
          **/
         function procPointAdminApplyPoint() {
+        	$oPointController = &getController('point');
             $position = (int)Context::get('position');
             $total = (int)Context::get('total');
 
@@ -244,13 +293,10 @@
                 $str = trim(fgets($f, 1024));
                 $idx ++;
                 if($idx > $position) {
-                    list($member_srl, $point) = explode(',', $str);
+                    list($member_srl, $point, $exp) = explode(',', $str);
 
-                    $args = null;
-                    $args->member_srl = $member_srl;
-                    $args->point = $point;
-                    $output = executeQuery('point.insertPoint', $args);
-                    if($idx % 5000 == 0) break;
+                    $output = $oPointController->SetPoint($member_srl, $point, $exp, 'init');
+                    if($idx % 100 == 0) break;
                 }
             }
 

@@ -6,17 +6,6 @@
 <div class="adminLeftContent">
 
     <table cellspacing="0" class="adminTable">
-    <caption>{$lang->cmd_point_recal}</caption>
-    <tr>
-        <td>
-            <p>{$lang->about_cmd_point_recal}</p>
-            <p id="pointReCal"></p>
-            <span class="button"><input type="button" value="{$lang->cmd_point_recal}" onclick="doPointRecal(); return false;"/></span>
-        </td>
-    </tr>
-    </table>
-
-    <table cellspacing="0" class="adminTable">
     <caption>{$lang->cmd_setup}</caption>
     <tr class="row2">
         <th scope="col"><div>{$lang->max_level}</div></th>
@@ -33,44 +22,62 @@
         </td>
     </tr>
     <tr class="row2">
-        <th scope="col" rowspan="9"><div>{$lang->is_default}</div></th>
-        <th colspan="2"><div>{$lang->point_signup}</div></th>
-        <td>
-            <input type="text" class="inputTypeText w80" value="{$config->signup_point}" name="signup_point" /> {$config->point_name}
-            <p>{$lang->about_point_signup}</p>
+        <th scope="col"><div>{$lang->activity_point_name}</div></th>
+        <td colspan="3">
+            <input type="text" class="inputTypeText w80" value="{$config->activity_point_name}" name="activity_point_name" />
+            <p>{$lang->about_activity_point_name}</p>
         </td>
     </tr>
-    <tr class="row2">
-        <th colspan="2"><div>{$lang->cmd_login}</div></th>
-        <td><input type="text" class="inputTypeText w80" value="{$config->login_point}" name="login_point" /> {$config->point_name}</td>
+    <tr>
+        <th scope="col" rowspan="10"><div>{$lang->is_default}</div></th>
+        <th></th>
+        <td class="center">{$lang->point}</td>
+        <td class="center">{$lang->activity_point}</td>
     </tr>
     <tr class="row2">
-        <th colspan="2"><div>{$lang->point_insert_document}</div></th>
-        <td><input type="text" name="insert_document" value="{$config->insert_document}" class="inputTypeText w80" /> {$config->point_name}</td>
+        <th><div>{$lang->point_signup}</div></th>
+        <td><input type="text" name="point_signup" value="{$config->point->signup}" class="inputTypeText w60" /> {$config->point_name}</td>
+        <td><input type="text" name="exp_signup" value="{$config->exp->signup}" class="inputTypeText w60" /> {$config->activity_point_name}</td>
     </tr>
     <tr>
-        <th colspan="2"><div>{$lang->point_insert_comment}</div></th>
-        <td><input type="text" name="insert_comment" value="{$config->insert_comment}" class="inputTypeText w80" /> {$config->point_name}</td>
+        <th><div>{$lang->cmd_login}</div></th>
+        <td><input type="text" name="point_login" value="{$config->point->login}" class="inputTypeText w60" /> {$config->point_name}</td>
+        <td><input type="text" name="exp_login" value="{$config->exp->login}" class="inputTypeText w60" /> {$config->activity_point_name}</td>
     </tr>
     <tr class="row2">
-        <th colspan="2"><div>{$lang->point_upload_file}</div></th>
-        <td><input type="text" name="upload_file" value="{$config->upload_file}" class="inputTypeText w80" /> {$config->point_name}</td>
+        <th><div>{$lang->point_insert_document}</div></th>
+        <td><input type="text" name="point_insert_document" value="{$config->point->insert_document}" class="inputTypeText w60" /> {$config->point_name}</td>
+        <td><input type="text" name="exp_insert_document" value="{$config->exp->insert_document}" class="inputTypeText w60" /> {$config->activity_point_name}</td>
     </tr>
     <tr>
-        <th colspan="2"><div>{$lang->point_download_file}</div></th>
-        <td><input type="text" name="download_file" value="{$config->download_file}" class="inputTypeText w80" /> {$config->point_name}</td>
+        <th><div>{$lang->point_insert_comment}</div></th>
+        <td><input type="text" name="point_insert_comment" value="{$config->point->insert_comment}" class="inputTypeText w60" /> {$config->point_name}</td>
+        <td><input type="text" name="exp_insert_comment" value="{$config->exp->insert_comment}" class="inputTypeText w60" /> {$config->activity_point_name}</td>
     </tr>
     <tr class="row2">
-        <th colspan="2"><div>{$lang->point_read_document}</div></th>
-        <td><input type="text" name="read_document" value="{$config->read_document}" class="inputTypeText w80" /> {$config->point_name}</td>
+        <th><div>{$lang->point_upload_file}</div></th>
+        <td><input type="text" name="point_upload_file" value="{$config->point->upload_file}" class="inputTypeText w60" /> {$config->point_name}</td>
+        <td><input type="text" name="exp_upload_file" value="{$config->exp->upload_file}" class="inputTypeText w60" /> {$config->activity_point_name}</td>
     </tr>
     <tr>
-        <th colspan="2"><div>{$lang->point_voted}</div></th>
-        <td><input type="text" name="voted" value="{$config->voted}" class="inputTypeText w80" /> {$config->point_name}</td>
+        <th><div>{$lang->point_download_file}</div></th>
+        <td><input type="text" name="point_download_file" value="{$config->point->download_file}" class="inputTypeText w60" /> {$config->point_name}</td>
+        <td><input type="text" name="exp_download_file" value="{$config->exp->download_file}" class="inputTypeText w60" /> {$config->activity_point_name}</td>
     </tr>
     <tr class="row2">
-        <th colspan="2"><div>{$lang->point_blamed}</div></th>
-        <td><input type="text" name="blamed" value="{$config->blamed}" class="inputTypeText w80" /> {$config->point_name}</td>
+        <th><div>{$lang->point_read_document}</div></th>
+        <td><input type="text" name="point_read_document" value="{$config->point->read_document}" class="inputTypeText w60" /> {$config->point_name}</td>
+        <td><input type="text" name="exp_read_document" value="{$config->exp->read_document}" class="inputTypeText w60" /> {$config->activity_point_name}</td>
+    </tr>
+    <tr>
+        <th><div>{$lang->point_voted}</div></th>
+        <td><input type="text" name="point_voted" value="{$config->point->voted}" class="inputTypeText w60" /> {$config->point_name}</td>
+        <td><input type="text" name="exp_voted" value="{$config->exp->voted}" class="inputTypeText w60" /> {$config->activity_point_name}</td>
+    </tr>
+    <tr class="row2">
+        <th><div>{$lang->point_blamed}</div></th>
+        <td><input type="text" name="point_blamed" value="{$config->point->blamed}" class="inputTypeText w60" /> {$config->point_name}</td>
+        <td><input type="text" name="exp_blamed" value="{$config->exp->blamed}" class="inputTypeText w60" /> {$config->activity_point_name}</td>
     </tr>
     <tr>
         <th scope="col"><div>{$lang->level_icon}</div></th>
@@ -83,7 +90,7 @@
             <p>{$lang->about_level_icon}</p>
         </td>
     </tr>
-    <tr>
+    <tr class="row2">
         <th scope="col"><div>{$lang->disable_download}</div></th>
         <td colspan="3">
             <input type="checkbox" name="disable_download" value="Y" <!--@if($config->disable_download=='Y')-->checked="checked"<!--@end--> />
@@ -122,13 +129,24 @@
     </tr>
     </tbody>
     </table>
+
+    <table cellspacing="0" class="adminTable">
+    <caption>{$lang->cmd_point_recal}</caption>
+    <tr>
+        <td>
+            <p>{$lang->about_cmd_point_recal}</p>
+            <p id="pointReCal"></p>
+            <span class="button"><input type="button" value="{$lang->cmd_point_recal}" onclick="doPointRecal(); return false;"/></span>
+        </td>
+    </tr>
+    </table>
 </div>
 
 <div class="adminRightExtra">
     <table cellspacing="0" class="adminTable">
     <tr>
         <th scope="col"><div>{$lang->level_point_calc}</div></th>
-        <td colspan="3"><input name="expression" value="{$config->expression}" size="4"/> <input type="button" onclick="exp_calc(this.form)" value="{$lang->cmd_exp_calc}" /> <input type="button" onclick="exp_calc(this.form, true)" value="{$lang->cmd_exp_reset}" /><p>{$lang->expression}</p>
+        <td colspan="3"><input name="expression" value="{$config->expression}" class="w100" /> <input type="button" onclick="exp_calc(this.form)" value="{$lang->cmd_exp_calc}" /> <input type="button" onclick="exp_calc(this.form, true)" value="{$lang->cmd_exp_reset}" /><p>{$lang->expression}</p>
         </td>
     </tr>
     <tr>

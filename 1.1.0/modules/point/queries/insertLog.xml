@@ -1,10 +1,14 @@
-<query id="insertPoint" action="insert">
+<query id="insertLog" action="insert">
     <tables>
-        <table name="point" />
+        <table name="point_log" />
     </tables>
     <columns>
         <column name="member_srl" var="member_srl" filter="number" notnull="notnull" />
+        <column name="target_srl" var="target_srl" filter="number" />
         <column name="point" var="point" filter="number" notnull="notnull" default="0" />
         <column name="exp" var="exp" filter="number" notnull="notnull" default="0" />
+        <column name="action" var="action" />
+        <column name="message" var="message" />
+        <column name="regdate" var="regdate" default="curdate()" />
     </columns>
 </query>

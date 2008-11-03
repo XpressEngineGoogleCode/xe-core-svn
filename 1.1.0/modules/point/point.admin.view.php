@@ -97,5 +97,34 @@
             // 템플릿 지정
             $this->setTemplateFile('member_list');
         }
+
+        /**
+         * @brief 회원 포인트순 목록 가져오기
+         **/
+        function dispPointAdminPointLogList() {
+            $oPointModel = &getModel('point');
+
+            $args->list_count = 20;
+            $args->page = Context::get('page');
+
+            $output = $oPointModel->getLogList($args);
+
+            // 템플릿에 쓰기 위해서 context::set
+            Context::set('total_count', $output->total_count);
+            Context::set('total_page', $output->total_page);
+            Context::set('page', $output->page);
+            Context::set('log_list', $output->data);
+            Context::set('page_navigation', $output->page_navigation);
+
+            // 멤버모델 객체 생성
+            $oMemberModel = &getModel('member');
+
+            // group 목록 가져오기
+            $this->group_list = $oMemberModel->getGroups();
+            Context::set('group_list', $this->group_list);
+
+            // 템플릿 지정
+            $this->setTemplateFile('log_list');
+        }
     }
 ?>

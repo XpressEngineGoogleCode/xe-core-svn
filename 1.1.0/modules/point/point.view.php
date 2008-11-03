@@ -32,20 +32,21 @@
 
             if($current_module_srl) {
                 $module_config = $oModuleModel->getModulePartConfig('point', $current_module_srl);
+                
                 if(!$module_config) {
-                    $config = $oModuleModel->getModuleConfig('point');
-                    $module_config['insert_document'] = $config->insert_document;
-                    $module_config['insert_comment'] = $config->insert_comment;
-                    $module_config['upload_file'] = $config->upload_file;
-                    $module_config['download_file'] = $config->download_file;
-                    $module_config['read_document'] = $config->read_document;
-                    $module_config['voted'] = $config->voted;
-                    $module_config['blamed'] = $config->blamed;
+                    $module_config['insert_document'] = $this->config->insert_document;
+                    $module_config['insert_comment'] = $this->config->insert_comment;
+                    $module_config['upload_file'] = $this->config->upload_file;
+                    $module_config['download_file'] = $this->config->download_file;
+                    $module_config['read_document'] = $this->config->read_document;
+                    $module_config['voted'] = $this->config->voted;
+                    $module_config['blamed'] = $this->config->blamed;
                 }
             }
 
             $module_config['module_srl'] = $current_module_srl;
-            $module_config['point_name'] = $config->point_name;
+            $module_config['point_name'] = $this->config->point_name;
+            $module_config['activity_point_name'] = $this->config->activity_point_name;
             Context::set('module_config', $module_config);
 
             // 템플릿 파일 지정

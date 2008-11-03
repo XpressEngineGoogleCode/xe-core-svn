@@ -1,4 +1,5 @@
 <!--%import("filter/update_point.xml")-->
+<!--%import("filter/update_exp.xml")-->
 <!--#include("header.html")-->
 
 <div class="summary">
@@ -13,20 +14,30 @@
         <th scope="col"><div>{$lang->user_name}</div></th>
         <th scope="col"><div>{$lang->nick_name}</div></th>
         <th scope="col"><div>{$lang->point}</div></th>
+        <th scope="col"><div>{$lang->activity_point}</div></th>
         <th scope="col"><div>{$lang->level}</div></th>
     </tr>
 </thead>
 <tbody>
     <!--@foreach($member_list as $no => $val)-->
-    <tr>
+    <tr class="row{$cycle_idx}">
         <td class="center number">{$no}</td>
         <td class="nowrap">{htmlspecialchars($val->user_id)}</td>
         <td class="nowrap">{htmlspecialchars($val->user_name)}</td>
         <td class="nowrap"><span class="member_{$val->member_srl}">{htmlspecialchars($val->nick_name)}</span></td>
-        <td class="nowrap">
+        <td class="nowrap right">
             <form action="./" method="get" onsubmit="return procFilter(this, update_point);">
+                <span>{$val->point}</span> +
                 <input type="hidden" name="member_srl" value="{$val->member_srl}" />
-                <input type="text" name="point" value="{$val->point}" class="inputTypeText w80" />
+                <input type="text" name="point" value="" class="inputTypeText w40" />
+                <span class="button"><input type="submit" value="{$lang->cmd_save}" /></span>
+            </form>
+        </td>
+        <td class="nowrap right">
+            <form action="./" method="get" onsubmit="return procFilter(this, update_exp);">
+                <span>{$val->exp}</span> +
+                <input type="hidden" name="member_srl" value="{$val->member_srl}" />
+                <input type="text" name="exp" value="" class="inputTypeText w40" />
                 <span class="button"><input type="submit" value="{$lang->cmd_save}" /></span>
             </form>
         </td>

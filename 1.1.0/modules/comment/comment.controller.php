@@ -398,15 +398,45 @@
             $oDocument = $oDocumentModel->getDocument($document_srl);
             if(!$oDocument->isExists() || !$oDocument->isGranted()) return new Object(-1, 'msg_not_permitted');
 
-            // 댓글 본문 삭제
+            // 트리거에 넘겨 줄 삭제 대상 댓글 목록 구함
             $args->document_srl = $document_srl;
-            $output = executeQuery('comment.deleteComments', $args);
-            if(!$output->toBool()) return $output;
+            $output = executeQueryArray('comment.getCommentListByDocumentSrl', $args);
+            if(!$output->data) return new Object();
+
+            $trigger_args->oDocument = $oDocument;
+            $trigger_args->comment_list = $output->data;
+
+            // trigger 호출 (before)
+            $before_trigger_output = ModuleHandler::triggerCall('comment.deleteComments', 'before', $trigger_args);
+            if(!$before_trigger_output->toBool()) return $before_trigger_output;
+
+            // begin transaction
+            $oDB = &DB::getInstance();
+            $oDB->begin();
 
             // 댓글 목록 삭제
+            $args->document_srl = $document_srl;
             $output = executeQuery('comment.deleteCommentsList', $args);
+            if(!$output->toBool()) return $output;
 
-            return $output;
+            // 댓글 본문 삭제
+            $output = executeQuery('comment.deleteComments', $args);
+            if(!$output->toBool()) {
+                $oDB->rollback();
+                return $output;
+            }
+
+            // trigger 호출 (before)
+            $after_trigger_output = ModuleHandler::triggerCall('comment.deleteComments', 'after', $trigger_args);
+            if(!$after_trigger_output->toBool()) {
+                $oDB->rollback();
+                return $after_trigger_output;
+            }
+
+            // commit
+            $oDB->commit();
+
+            return new Object();
         }
 
         /**

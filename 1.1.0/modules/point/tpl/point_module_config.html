@@ -5,28 +5,38 @@
 
 <table cellspacing="0" class="adminTable">
 <caption>{$lang->point}</caption>
-<tr>
-    <th><div>{$lang->point_insert_document}</div></th>
-    <td class="wide"><input type="text" name="insert_document" value="{$module_config['insert_document']}" class="inputTypeText w80" /> {$module_config['point_name']}</td>
+<tr class="row2">
+    <th></th>
+    <th class="half_wide">{$lang->point}</th>
+    <th class="half_wide">{$lang->activity_point}</th>
 </tr>
 <tr>
+    <th><div>{$lang->point_insert_document}</div></th>
+    <td><input type="text" name="point_insert_document" value="{$module_config['point']['insert_document']}" class="inputTypeText w80" /> {$module_config['point_name']}</td>
+    <td><input type="text" name="exp_insert_document" value="{$module_config['exp']['insert_document']}" class="inputTypeText w80" /> {$module_config['activity_point_name']}</td>
+</tr>
+<tr class="row2">
     <th><div>{$lang->point_insert_comment}</div></th>
-    <td><input type="text" name="insert_comment" value="{$module_config['insert_comment']}" class="inputTypeText w80" /> {$module_config['point_name']}</td>
+    <td><input type="text" name="point_insert_comment" value="{$module_config['point']['insert_comment']}" class="inputTypeText w80" /> {$module_config['point_name']}</td>
+    <td><input type="text" name="exp_insert_comment" value="{$module_config['exp']['insert_comment']}" class="inputTypeText w80" /> {$module_config['activity_point_name']}</td>
 </tr>
 <tr>
     <th><div>{$lang->point_upload_file}</div></th>
-    <td><input type="text" name="upload_file" value="{$module_config['upload_file']}" class="inputTypeText w80" /> {$module_config['point_name']}</td>
+    <td><input type="text" name="point_upload_file" value="{$module_config['point']['upload_file']}" class="inputTypeText w80" /> {$module_config['point_name']}</td>
+    <td><input type="text" name="exp_upload_file" value="{$module_config['exp']['upload_file']}" class="inputTypeText w80" /> {$module_config['activity_point_name']}</td>
 </tr>
-<tr>
+<tr class="row2">
     <th><div>{$lang->point_download_file}</div></th>
-    <td><input type="text" name="download_file" value="{$module_config['download_file']}" class="inputTypeText w80" /> {$module_config['point_name']}</td>
+    <td><input type="text" name="point_download_file" value="{$module_config['point']['download_file']}" class="inputTypeText w80" /> {$module_config['point_name']}</td>
+    <td><input type="text" name="exp_download_file" value="{$module_config['exp']['download_file']}" class="inputTypeText w80" /> {$module_config['activity_point_name']}</td>
 </tr>
 <tr>
     <th><div>{$lang->point_read_document}</div></th>
-    <td><input type="text" name="read_document" value="{$module_config['read_document']}" class="inputTypeText w80" /> {$module_config['point_name']}</td>
+    <td><input type="text" name="point_read_document" value="{$module_config['point']['read_document']}" class="inputTypeText w80" /> {$module_config['point_name']}</td>
+    <td><input type="text" name="exp_read_document" value="{$module_config['exp']['read_document']}" class="inputTypeText w80" /> {$module_config['activity_point_name']}</td>
 </tr>
 <tr>
-    <td colspan="2" class="right"><span class="button"><input type="submit" value="{$lang->cmd_save}" /></span></td>
+    <td colspan="3" class="right"><span class="button"><input type="submit" value="{$lang->cmd_save}" /></span></td>
 </tr>
 </table>
 

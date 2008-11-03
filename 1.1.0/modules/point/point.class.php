@@ -8,6 +8,20 @@
     class point extends ModuleObject {
 
         /**
+         * @berif point 설정
+         */
+        public $config;
+        public $cache_path = array(
+            'point' => './files/member_extra_info/point/',
+            'exp' => './files/member_extra_info/exp/'
+        );
+
+        function __construct() {
+            $oModuleModel = &getModel('module');
+            $this->config = $oModuleModel->getModuleConfig('point');
+        }
+
+        /**
          * @brief 설치시 추가 작업이 필요할시 구현
          **/
         function moduleInstall() {
@@ -17,67 +31,106 @@
             $oModuleController->insertActionForward('point', 'view', 'dispPointAdminModuleConfig');
             $oModuleController->insertActionForward('point', 'view', 'dispPointAdminActConfig');
             $oModuleController->insertActionForward('point', 'view', 'dispPointAdminPointList');
+            $oModuleController->insertActionForward('point', 'view', 'dispPointAdminPointLogList');
 
             // 포인트 정보를 기록할 디렉토리 생성
-            FileHandler::makeDir('./files/member_extra_info/point');
+            FileHandler::makeDir($this->cache_path['point']);
 
             $oModuleController = &getController('module');
+            $oModuleModel = &getModel('module');
+            $config = $oModuleModel->getModuleConfig('point');
 
             // 최고레벨
-            $config->max_level = 30;
+            $config->max_level = (isset($config->max_level)) ? $config->max_level : 30;
 
             // 레벨별 점수
             for($i=1; $i <= 30; $i++) {
                 $config->level_step[$i] = pow($i, 2) * 90;
             }
 
-            // 회원가입
-            $config->signup_point = 10;
-
-            // 로그인 가입
-            $config->login_point = 5;
-
             // 포인트 호칭
-            $config->point_name = 'point';
+            $config->point_name = (isset($config->point_name)) ? $config->point_name : 'point';
+            $config->activity_point_name = (isset($config->activity_point_name)) ? $config->activity_point_name : 'point';
 
             // 레벨 아이콘 디렉토리
-            $config->level_icon = 'default';
+            $config->level_icon = (isset($config->level_icon)) ? $config->level_icon : 'default';
 
             // 점수가 없을때 다운로드 금지 기능
-            $config->disable_download = false;
+            $config->disable_download = (isset($config->disable_download)) ? $config->disable_download : false;
 
             /**
              * 모듈별 기본 점수 및 각 action 정의 (게시판, 블로그외에 어떤 모듈이 생길지 모르니 act값을 명시한다
              **/
+            if(!isset($config->point) && isset($config->signup_point)) {
+                // 이전 설정이 있으면 가져오기. 추후 제거 대상
+                // 회원가입
+                $config->point->signup = $config->signup_point;
+                $config->exp->signup = $config->signup_point;
 
-            // 글작성
-            $config->insert_document = 10;
+                // 로그인
+                $config->point->login = $config->login_point;
+                $config->exp->login = $config->login_point;
 
-            $config->insert_document_act = 'procBoardInsertDocument';
-            $config->delete_document_act = 'procBoardDeleteDocument';
+                // 글 작성
+                $config->point->insert_document = $config->insert_document;
+                $config->exp->insert_document = $config->insert_document;
 
-            // 댓글작성
-            $config->insert_comment = 5;
+                // 댓글 작성
+                $config->point->insert_comment = $config->insert_comment;
+                $config->exp->insert_comment = $config->insert_comment;
 
-            $config->insert_comment_act = 'procBoardInsertComment,procBlogInsertComment';
-            $config->delete_comment_act = 'procBoardDeleteComment,procBlogDeleteComment';
+                // 업로드
+                $config->point->upload_file = $config->upload_file;
+                $config->exp->upload_file = $config->upload_file;
 
-            // 업로드
-            $config->upload_file = 5;
+                // 다운로드
+                $config->point->download_file = $config->download_file;
+                $config->exp->download_file = $config->download_file;
 
-            $config->upload_file_act = 'procFileUpload';
-            $config->delete_file_act = 'procFileDelete';
+                // 조회
+                $config->point->read_document = $config->read_document;
+                $config->exp->read_document = $config->read_document;
 
-            // 다운로드
-            $config->download_file = -5;
-            $config->download_file_act = 'procFileDownload';
+                // 추천 / 비추천
+                $config->point->voted = $config->voted;
+                $config->exp->voted = $config->voted;
+                $config->point->blamed = $config->blamed;
+                $config->exp->blamed = $config->blamed;
+            } else {
+                // 회원가입
+                $config->point->signup = 10;
+                $config->exp->signup = 10;
 
-            // 조회
-            $config->read_document = 0;
+                // 로그인
+                $config->point->login = 5;
+                $config->exp->login = 5;
 
-            // 추천 / 비추천
-            $config->voted = 0;
-            $config->blamed = 0;
+                // 글 작성
+                $config->point->insert_document = 10;
+                $config->exp->insert_document = 10;
+
+                // 댓글 작성
+                $config->point->insert_comment = 5;
+                $config->exp->insert_comment = 5;
+
+                // 업로드
+                $config->point->upload_file = 5;
+                $config->exp->upload_file = 5;
+
+                // 다운로드
+                $config->point->download_file = -5;
+                $config->exp->download_file = 0;
+
+                // 조회
+                $config->point->read_document = 0;
+                $config->exp->read_document = 0;
+
+                // 추천 / 비추천
+                $config->point->voted = 0;
+                $config->exp->voted = 0;
+                $config->point->blamed = 0;
+                $config->exp->blamed = 0;
+            }
 
             // 설정 저장
             $oModuleController->insertModuleConfig('point', $config);
@@ -89,7 +142,6 @@
             // 가입/글작성/댓글작성/파일업로드/다운로드에 대한 트리거 추가
             $oModuleController->insertTrigger('member.insertMember', 'point', 'controller', 'triggerInsertMember', 'after');
             $oModuleController->insertTrigger('document.insertDocument', 'point', 'controller', 'triggerInsertDocument', 'after');
-            $oModuleController->insertTrigger('document.deleteDocument', 'point', 'controller', 'triggerBeforeDeleteDocument', 'before');
             $oModuleController->insertTrigger('document.deleteDocument', 'point', 'controller', 'triggerDeleteDocument', 'after');
             $oModuleController->insertTrigger('comment.insertComment', 'point', 'controller', 'triggerInsertComment', 'after');
             $oModuleController->insertTrigger('comment.deleteComment', 'point', 'controller', 'triggerDeleteComment', 'after');
@@ -103,6 +155,9 @@
 
             // 추천 / 비추천에 대한 트리거 추가 2008.05.13 haneul
             $oModuleController->insertTrigger('document.updateVotedCount', 'point', 'controller', 'triggerUpdateVotedCount', 'after');
+
+            // 특정 문서의 모든 댓글 삭제 트리거
+            $oModuleController->insertTrigger('comment.deleteComments', 'point', 'controller', 'triggerDeleteComments', 'after');
 
             return new Object();
         }
@@ -119,7 +174,6 @@
             // 가입/글작성/댓글작성/파일업로드/다운로드에 대한 트리거 추가
             if(!$oModuleModel->getTrigger('member.insertMember', 'point', 'controller', 'triggerInsertMember', 'after')) return true;
             if(!$oModuleModel->getTrigger('document.insertDocument', 'point', 'controller', 'triggerInsertDocument', 'after')) return true;
-            if(!$oModuleModel->getTrigger('document.deleteDocument', 'point', 'controller', 'triggerBeforeDeleteDocument', 'before')) return true;
             if(!$oModuleModel->getTrigger('document.deleteDocument', 'point', 'controller', 'triggerDeleteDocument', 'after')) return true;
             if(!$oModuleModel->getTrigger('comment.insertComment', 'point', 'controller', 'triggerInsertComment', 'after')) return true;
             if(!$oModuleModel->getTrigger('comment.deleteComment', 'point', 'controller', 'triggerDeleteComment', 'after')) return true;
@@ -134,8 +188,14 @@
             // 추천 / 비추천에 대한 트리거 추가 2008.05.13 haneul
             if(!$oModuleModel->getTrigger('document.updateVotedCount', 'point', 'controller', 'triggerUpdateVotedCount', 'after')) return true;
 
-            // 경험치 필드
+            // exp 필드
             if(!$oDB->isColumnExists('point', 'exp')) return true;
+
+            // 대체된 트리거 삭제
+            if($oModuleModel->getTrigger('document.deleteDocument', 'point', 'controller', 'triggerBeforeDeleteDocument', 'before')) return true;
+            if(!$oModuleModel->getTrigger('comment.deletecomments', 'point', 'controller', 'triggerDeleteComments', 'after')) return true;
+
+            if(!$oModuleModel->getActionForward('dispPointAdminPointLogList')) return true;
 
             return false;
         }
@@ -185,6 +245,20 @@
             // 경험치 필드 추가
             if(!$oDB->isColumnExists('point', 'exp')) {
                 $oDB->addColumn('point', 'exp', 'number', 11, 0, true);
+            }
+
+            // 특정 문서의 모든 댓글 삭제 트리거 추가
+            if(!$oModuleModel->getTrigger('comment.deleteComments', 'point', 'controller', 'triggerDeleteComments', 'after')) {
+                $oModuleController->insertTrigger('comment.deleteComments', 'point', 'controller', 'triggerDeleteComments', 'after');
+            }
+
+            // 대체된 트리거 삭제
+            if($oModuleModel->getTrigger('document.deleteDocument', 'point', 'controller', 'triggerBeforeDeleteDocument', 'before')) {
+                $oModuleController->deleteTrigger('document.deleteDocument', 'point', 'controller', 'triggerBeforeDeleteDocument', 'before');
+            }
+
+            if(!$oModuleModel->getActionForward('dispPointAdminPointLogList')) {
+                $oModuleController->insertActionForward('point', 'view', 'dispPointAdminPointLogList');
             }
 
             return new Object(0, 'success_updated');

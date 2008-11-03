@@ -1,0 +1,5 @@
+<query id="initPointLog" action="delete">
+    <tables>
+        <table name="point_log" />
+    </tables>
+</query>

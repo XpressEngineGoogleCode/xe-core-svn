@@ -29,7 +29,7 @@
          * @brief 포인트를 구해옴
          **/
         function getPoint($member_srl, $from_db = false) {
-            $path = sprintf('./files/member_extra_info/point/%s', getNumberingPath($member_srl));
+            $path = $this->cache_path['point'].getNumberingPath($member_srl);
             if(!is_dir($path)) FileHandler::makeDir($path);
             $cache_filename = sprintf('%s%d.cache.txt', $path, $member_srl);
 
@@ -44,15 +44,35 @@
 
             return $point;
         }
+ 
+         /**
+         * @brief 활동 포인트를 구해옴
+         **/
+        function getExp($member_srl, $from_db = false) {
+            $path = $this->cache_path['exp'].getNumberingPath($member_srl);
+            if(!is_dir($path)) FileHandler::makeDir($path);
+            $cache_filename = sprintf('%s%d.cache.txt', $path, $member_srl);
+
+            if(!$from_db && file_exists($cache_filename)) return trim(FileHandler::readFile($cache_filename));
+
+            // DB에서 가져옴
+            $args->member_srl = $member_srl;
+            $output = executeQuery('point.getPoint', $args);
+            $exp = (int)$output->data->exp;
+
+            FileHandler::writeFile($cache_filename, $point);
+
+            return $exp;
+        }
 
         /**
          * @brief 레벨을 구함
          **/
-        function getLevel($point, $level_step) {
+        function getLevel($exp, $level_step) {
             $level_count = count($level_step);
 
             for($level=0; $level <= $level_count; $level++) {
-                if($point < $level_step[$level]) break;
+                if($exp < $level_step[$level]) break;
             }
             $level--;
 
@@ -116,9 +136,69 @@
                 $config = $oModuleModel->getModuleConfig('point');
 
                 foreach($output->data as $key => $val) {
-                    $output->data[$key]->level = $this->getLevel($val->point, $config->level_step);
+                    $output->data[$key]->level = $this->getLevel($val->exp, $config->level_step);
                 }
             }
+
+            return $output;
+        }
+
+         function getLog($args=null) {
+             $output = executeQuery('point.getLog', $args);
+             return $output->data;
+         }
+
+        /**
+         * @brief 포인트 순 회원목록 가져오기
+         **/
+        function getLogList($args = null) {
+
+            // 검색 옵션 정리
+            $args->is_admin = Context::get('is_admin') == 'Y' ? 'Y' : '';
+            $args->is_denied = Context::get('is_denied') == 'Y' ? 'Y' : '';
+            $args->selected_group_srl = Context::get('selected_group_srl');
+
+            $search_target = trim(Context::get('search_target'));
+            $search_keyword = trim(Context::get('search_keyword'));
+
+            if($search_target && $search_keyword) {
+                switch($search_target) {
+                    case 'user_id' :
+                            if($search_keyword) $search_keyword = str_replace(' ', '%', $search_keyword);
+                            $args->s_user_id = $search_keyword;
+                        break;
+                    case 'user_name' :
+                            if($search_keyword) $search_keyword = str_replace(' ', '%', $search_keyword);
+                            $args->s_user_name = $search_keyword;
+                        break;
+                    case 'nick_name' :
+                            if($search_keyword) $search_keyword = str_replace(' ', '%', $search_keyword);
+                            $args->s_nick_name = $search_keyword;
+                        break;
+                    case 'email_address' :
+                            if($search_keyword) $search_keyword = str_replace(' ', '%', $search_keyword);
+                            $args->s_email_address = $search_keyword;
+                        break;
+                    case 'regdate' :
+                            $args->s_regdate = $search_keyword;
+                        break;
+                    case 'last_login' :
+                            $args->s_last_login = $search_keyword;
+                        break;
+                    case 'extra_vars' :
+                            $args->s_extra_vars = $search_keyword;
+                        break;
+                }
+            }
+
+            // selected_group_srl이 있으면 query id를 변경 (table join때문에)
+            if($args->selected_group_srl) {
+                $query_id = 'point.getLogListWithinGroup';
+            } else {
+                $query_id = 'point.getLogList';
+            }
+
+            $output = executeQueryArray($query_id, $args);
 
             return $output;
         }

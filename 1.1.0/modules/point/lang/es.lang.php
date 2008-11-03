@@ -20,6 +20,9 @@
     $lang->point_name = 'Nombre del punto';
     $lang->about_point_name = 'Usted puede otorgar nombre o unidad de punto';
 
+    $lang->activity_point_name = '활동 포인트 명칭';
+    $lang->aboutactivity_point_name = '활동 포인트의 이름이나 단위를 정하실 수 있습니다';
+
     $lang->level_point = 'Nivel del punto';
     $lang->about_level_point = 'El nivel sera ajustado cuando los puntos alcancen a cada nivel de puntos o cuando disminuyen a cada nivel de puntos';
 
@@ -51,11 +54,28 @@
     $lang->point_voted = '추천 받음';
     $lang->point_blamed = '비추천 받음';
 
+    $lang->point_action = array(
+        'signup' => '가입',
+        'login' => '로그인',
+        'insert_document' => '글 작성',
+        'delete_document' => '글 삭제',
+        'read_document' => '게시글 조회',
+        'insert_comment' => '코멘트 작성',
+        'delete_comment' => '코멘트 삭제',
+        'upload_file' => '파일 업로드',
+        'delete_file' => '파일 삭제',
+        'download_file' => '파일 내려받기',
+        'voted' => '추천 받음',
+        'blamed' => '비추천 받음',
+        'init' => '초기화',
+        'admin_set' => '관리자 설정'
+    );
 
     $lang->cmd_point_config = 'Configuración predefinida';
     $lang->cmd_point_module_config = 'Configuración del módulo';
     $lang->cmd_point_act_config = 'Configuración de actos';
     $lang->cmd_point_member_list = 'Lista de puntos del usuario';
+    $lang->cmd_point_log_list = '포인트 내역';
 
     $lang->msg_cannot_download = "No tiene puntos suficientes para descagar";
 

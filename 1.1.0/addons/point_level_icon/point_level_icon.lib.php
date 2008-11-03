@@ -18,11 +18,11 @@
             if(!$GLOBALS['_pointModel']) $GLOBALS['_pointModel'] = getModel('point');
             $oPointModel = &$GLOBALS['_pointModel'];
 
-            // 포인트를 구함
-            $point = $oPointModel->getPoint($member_srl);
+            // 활동 포인트를 구함
+            $exp = $oPointModel->getExp($member_srl);
 
             // 레벨을 구함
-            $level = $oPointModel->getLevel($point, $config->level_step);
+            $level = $oPointModel->getLevel($exp, $config->level_step);
             $text = $matches[5];
 
             // 레벨 아이콘의 위치를 구함
@@ -34,7 +34,7 @@
                 if($next_point > 0) $per = (int)($point / $next_point*100);
             }
 
-            $title = sprintf('%s:%s%s %s, %s:%s/%s', Context::getLang('point'), $point, $config->point_name, $per?'('.$per.'%)':'', Context::getLang('level'), $level, $config->max_level);
+            $title = sprintf('%s : %s%s %s, %s : %s/%s', Context::getLang('activity_point'), $exp, $config->activity_point_name, $per?'('.$per.'%)':'', Context::getLang('level'), $level, $config->max_level);
             $alt = sprintf('[%s:%s]', Context::getLang('level'), $level);
 
             $text = sprintf('<span class="nowrap member_%s" style="cursor:pointer"><img src="%s" alt="%s" title="%s" style="vertical-align:middle;margin-right:3px"/>%s</span>', $member_srl, $level_icon, $alt, $title, $text);

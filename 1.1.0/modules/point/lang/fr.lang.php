@@ -18,7 +18,10 @@
     $lang->about_level_icon = 'Le Chemin d\'icône est "./module/point/icons/[niveau].gif" et le niveau le plus haut peut différer de l\'ensemble des icônes. Alors faites attention, S.V.P.'; 
 
     $lang->point_name = 'Nom de Point';
-    $lang->about_point_name = 'Vous pouvez nommer le point ou configurer l\'unité du point'; 
+    $lang->about_point_name = 'Vous pouvez nommer le point ou configurer l\'unité du point';
+
+    $lang->activity_point_name = '활동 포인트 명칭';
+    $lang->aboutactivity_point_name = '활동 포인트의 이름이나 단위를 정하실 수 있습니다';
 
     $lang->level_point = 'Point de niveau';
     $lang->about_level_point = 'Le Niveau sera ajusté quand le point devient les valeurs aux Points de Niveaux ci-dessous.'; 
@@ -51,11 +54,28 @@
     $lang->point_voted = 'Être Recommandé';
     $lang->point_blamed = 'Être Blâmé';
 
+    $lang->point_action = array(
+        'signup' => '가입',
+        'login' => '로그인',
+        'insert_document' => '글 작성',
+        'delete_document' => '글 삭제',
+        'read_document' => '게시글 조회',
+        'insert_comment' => '코멘트 작성',
+        'delete_comment' => '코멘트 삭제',
+        'upload_file' => '파일 업로드',
+        'delete_file' => '파일 삭제',
+        'download_file' => '파일 내려받기',
+        'voted' => '추천 받음',
+        'blamed' => '비추천 받음',
+        'init' => '초기화',
+        'admin_set' => '관리자 설정'
+    );
 
     $lang->cmd_point_config = 'Configuration primaire';
     $lang->cmd_point_module_config = 'Configuration du Module';
     $lang->cmd_point_act_config = 'Configuration des Actions de chaque fonction';
     $lang->cmd_point_member_list = 'Liste des Points des Membres';
+    $lang->cmd_point_log_list = '포인트 내역';
 
     $lang->msg_cannot_download = "Vous n'avez pas assez de point pour télécharger";
 

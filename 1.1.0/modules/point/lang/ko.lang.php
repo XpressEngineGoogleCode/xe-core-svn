@@ -5,8 +5,9 @@
      * @brief  포인트 (point) 모듈의 기본 언어팩
      **/
 
-    $lang->point = "포인트"; 
-    $lang->level = "레벨"; 
+    $lang->point = "포인트";
+    $lang->activity_point = "활동 포인트";
+    $lang->level = "레벨";
 
     $lang->about_point_module = "포인트 모듈은 글작성/댓글작성/업로드/다운로드등의 행동을 할때 포인트를 부여할 수 있습니다.<br />단 포인트 모듈에서는 설정만 할 뿐이고 포인트 애드온을 활성화 시켜야 포인트가 누적이 됩니다";
     $lang->about_act_config = "게시판,블로그등의 모듈마다 글작성/삭제/댓글작성/삭제등의 action이 있습니다.<br />게시판/블로그외의 모듈에 포인트 기능 연동을 하고 싶을때는 각 기능에 맞는 act값을 추가해주시면 됩니다.<br />연결은 ,(콤마)로 해주시면 됩니다.";
@@ -19,6 +20,9 @@
 
     $lang->point_name = '포인트 명칭';
     $lang->about_point_name = '포인트의 이름이나 단위를 정하실 수 있습니다';
+
+    $lang->activity_point_name = '활동 포인트 명칭';
+    $lang->aboutactivity_point_name = '활동 포인트의 이름이나 단위를 정하실 수 있습니다';
 
     $lang->level_point = '레벨 포인트';
     $lang->about_level_point = '아래 각 레벨별 포인트에 도달하거나 감소하게 되면 레벨이 조절됩니다';
@@ -51,10 +55,28 @@
     $lang->point_voted = '추천 받음';
     $lang->point_blamed = '비추천 받음';
 
+    $lang->point_action = array(
+        'signup' => '가입',
+        'login' => '로그인',
+        'insert_document' => '글 작성',
+        'delete_document' => '글 삭제',
+        'read_document' => '게시글 조회',
+        'insert_comment' => '코멘트 작성',
+        'delete_comment' => '코멘트 삭제',
+        'upload_file' => '파일 업로드',
+        'delete_file' => '파일 삭제',
+        'download_file' => '파일 내려받기',
+        'voted' => '추천 받음',
+        'blamed' => '비추천 받음',
+        'init' => '초기화',
+        'admin_set' => '관리자 설정'
+    );
+
     $lang->cmd_point_config = '기본 설정';
     $lang->cmd_point_module_config = '모듈별 설정';
     $lang->cmd_point_act_config = '기능별 act 설정';
     $lang->cmd_point_member_list = '회원 포인트 목록';
+    $lang->cmd_point_log_list = '포인트 내역';
 
     $lang->msg_cannot_download = '포인트가 부족하여 다운로드를 하실 수 없습니다';
 

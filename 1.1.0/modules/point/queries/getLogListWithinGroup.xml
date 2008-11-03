@@ -1,4 +1,4 @@
-<query id="getMemberListWithinGroup" action="select">
+<query id="getLogListWithinGroup" action="select">
     <tables>
         <table name="member" alias="member"/>
         <table name="point" alias="point"/>

@@ -1,14 +1,16 @@
-<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="UTF-8"?>
 <module>
     <grants />
     <actions>
         <action name="dispPointAdminConfig" type="view" admin_index="true" standalone="true" />
         <action name="dispPointAdminModuleConfig" type="view" standalone="true" />
         <action name="dispPointAdminPointList" type="view" standalone="true" />
+        <action name="dispPointAdminPointLogList" type="view" standalone="true" />
 
         <action name="procPointAdminInsertConfig" type="controller" standalone="true" />
         <action name="procPointAdminInsertModuleConfig" type="controller" standalone="true" />
         <action name="procPointAdminUpdatePoint" type="controller" standalone="true" />
+        <action name="procPointAdminUpdateExp" type="controller" standalone="true" />
         <action name="procPointAdminInsertPointModuleConfig" type="controller" standalone="true" />
         <action name="procPointAdminApplyPoint" type="controller" standalone="true" />
 

@@ -1,15 +1,14 @@
-<query id="getMemberList" action="select">
+<query id="getLogList" action="select">
     <tables>
-        <table name="member" alias="member"/>
-        <table name="point" alias="point"/>
+        <table name="point_log" alias="point_log" />
+        <table name="member" alias="member" />
     </tables>
     <columns>
-        <column name="member.*" />
-        <column name="point.point" />
-        <column name="point.exp" />
+        <column name="point_log.*" />
+        <column name="member.nick_name" />
     </columns>
     <conditions>
-        <condition operation="equal" column="member.member_srl" var="point.member_srl" />
+        <condition operation="equal" column="member.member_srl" var="point_log.member_srl" />
         <condition operation="equal" column="is_admin" var="is_admin" pipe="and" />
         <condition operation="equal" column="denied" var="is_denied" pipe="and" />
         <group pipe="and">
@@ -22,11 +21,8 @@
             <condition operation="like_prefix" column="last_login" var="s_last_login" pipe="or" />
         </group>
     </conditions>
-    <groups>
-        <group column="member.member_srl" />
-    </groups>
     <navigation>
-        <index var="sort_index" default="point" order="desc" />
+        <index var="sort_index" default="log_srl" order="desc" />
         <list_count var="list_count" default="20" />
         <page_count var="page_count" default="10" />
         <page var="page" default="1" />

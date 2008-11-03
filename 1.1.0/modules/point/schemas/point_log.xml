@@ -1,0 +1,9 @@
+<table name="point_log">
+    <column name="log_srl" type="number" size="11" notnull="notnull" index="idx_log_srl" auto_increment="true" />
+    <column name="member_srl" type="number" size="11" notnull="notnull" index="idx_member_srl" />
+    <column name="target_srl" type="number" size="11" notnull="notnull" />
+    <column name="point" type="number" size="11" notnull="notnull" default="0" />
+    <column name="exp" type="number" size="11" notnull="notnull" default="0" />
+    <column name="action" type="varchar" size="100" notnull="notnull" />
+    <column name="regdate" type="date" index="idx_regdate" />
+</table>
