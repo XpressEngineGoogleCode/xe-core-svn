@@ -240,10 +240,11 @@
             if(!isset($point)) $point = $htis->config->point->insert_comment;
 
             // 포인트가 마이너스 즉 댓글을 작성시 마다 차감되는 경우라면 댓글 삭제시 증가시켜주지 않도록 수정
-            if($point <= 0) return new Object();
-
-            // 포인트 증감
-            $this->setPoint($member_srl, $point, 0, 'delete_comment', $comment_srl);
+            if($point > 0) {
+	            // 포인트 증감
+	            $point = $point * -1;
+	            $this->setPoint($member_srl, $point, 0, 'delete_comment', $comment_srl);
+            }
 
             return new Object();
         }
@@ -280,16 +281,16 @@
 
             if($log) {
                 $point = $log->point;
-                $exp = $log->exp;
             } else {
                 $point = $module_config['point']['upload_file'];
-                $exp = $module_config['exp']['upload_file'];
             }
             if(!isset($point)) $point = $config->point->upload_file;
-            if(!isset($exp)) $exp = $config->exp->upload_file;
 
-            // 포인트 증감
-            $this->setPoint($member_srl, $point, $exp, $file_srl);
+            if($point > 0) {
+	            // 포인트 증감
+	            $point = $point * -1;
+	            $this->setPoint($member_srl, $point, 0, $file_srl);
+            }
 
             return new Object();
         }
@@ -462,7 +463,6 @@
             $log_args->point = $point;
             $log_args->exp = $exp;
             $log_args->action = $action;
-            $log_args->message = $message;
             $log_args->target_srl = $target_srl;
             $log_output = executeQuery('point.insertLog', $log_args);
 

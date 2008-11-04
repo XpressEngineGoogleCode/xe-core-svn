@@ -8,7 +8,6 @@
         <column name="point" var="point" filter="number" notnull="notnull" default="0" />
         <column name="exp" var="exp" filter="number" notnull="notnull" default="0" />
         <column name="action" var="action" />
-        <column name="message" var="message" />
         <column name="regdate" var="regdate" default="curdate()" />
     </columns>
 </query>
