@@ -389,11 +389,12 @@ function createPopupMenu(evt) {
 
 /* 클릭 이벤트 발생시 이벤트가 일어난 대상을 검사하여 적절한 규칙에 맞으면 처리 */
 function chkPopupMenu(evt) {
+
     // 이전에 호출되었을지 모르는 팝업메뉴 숨김
     var area = xGetElementById("popup_menu_area");
     if(!area) return;
 
-    if(area.style.visibility!="hidden") area.style.visibility="hidden";
+    if(area.style.visibility != "hidden") area.style.visibility = "hidden";
 
     // 이벤트 대상이 없으면 무시
     var e = new xEvent(evt);
@@ -403,24 +404,28 @@ function chkPopupMenu(evt) {
     var obj = e.target;
     if(!obj) return;
 
+
     // obj의 nodeName이 div나 span이 아니면 나올대까지 상위를 찾음
-    if(obj && obj.nodeName != 'DIV' && obj.nodeName != 'SPAN') obj = obj.parentNode;
-    if(!obj || (obj.nodeName != 'DIV' && obj.nodeName != 'SPAN')) return;
+    if(obj && obj.nodeName != 'DIV' && obj.nodeName != 'SPAN' && obj.nodeName != 'A') obj = obj.parentNode;
+    if(!obj || (obj.nodeName != 'DIV' && obj.nodeName != 'SPAN' && obj.nodeName != 'A')) return;
 
     // 객체의 className값을 구함
     var class_name = obj.className;
     if(!class_name) return;
-
     // className을 분리
     var class_name_list = class_name.split(' ');
+
     var menu_id = '';
-    var menu_id_regx = /^([a-zA-Z]+)_([0-9]+)$/ig;
-    for(var i in class_name_list) {
+    var menu_id_regx = /^([a-zA-Z]+)_([0-9]+)$/;
+
+
+    for(var i=0,c=class_name_list.length;i<c;i++) {
         if(menu_id_regx.test(class_name_list[i])) {
             menu_id = class_name_list[i];
-            break;
         }
     }
+
+
     if(!menu_id) return;
 
     // module명과 대상 번호가 없으면 return
@@ -447,18 +452,19 @@ function chkPopupMenu(evt) {
         displayPopupMenu(params, response_tags, params);
         return;
     }
-
     show_waiting_message = false;
     exec_xml(module_name, action_name, params, displayPopupMenu, response_tags, params);
     show_waiting_message = true;
+
 }
 
 function displayPopupMenu(ret_obj, response_tags, params) {
+	
     var target_srl = params["target_srl"];
     var menu_id = params["menu_id"];
     var menus = ret_obj['menus'];
     var html = "";
-
+/*
     if(loaded_popup_menus[menu_id]) {
         html = loaded_popup_menus[menu_id];
     } else {
@@ -507,6 +513,58 @@ function displayPopupMenu(ret_obj, response_tags, params) {
         if(xHeight(area)+xTop(area)>xClientHeight()+xScrollTop()) xTop(area, xClientHeight()-xHeight(area)+xScrollTop());
         area.style.visibility = "visible";
     }
+*/
+
+    if(loaded_popup_menus[menu_id]) {
+        html = loaded_popup_menus[menu_id];
+
+    } else {
+        if(menus) {
+            var item = menus['item'];
+            if(item.length<1) item = new Array(item);
+            if(item.length) {
+                for(var i=0;i<item.length;i++) {
+                    var url = item[i].url;
+                    var str = item[i].str;
+                    var icon = item[i].icon;
+                    var target = item[i].target;
+
+                    var styleText = "";
+                    var click_str = "";
+                    if(icon) styleText = " style=\"background-image:url('"+icon+"')\" ";
+                    switch(target) {
+                        case "popup" :
+                                click_str = " onclick=\"popopen(this.href,'"+target+"'); return false;\"";
+                            break;
+                        case "self" :
+                                //click_str = " onclick=\"location.href='"+url+"' return false;\"";
+                            break;
+                        case "javascript" :
+                                click_str = " onclick=\""+url+"; return false; \"";
+                                url="#";
+                            break;
+                        default :
+                                click_str = " onclick=\"window.open(this.href); return false;\"";
+                            break;
+                    }
+
+                    html += '<li '+styleText+'><a href="'+url+'"'+click_str+'>'+str+'</a></li> ';
+                }
+            }
+        }
+        loaded_popup_menus[menu_id] =  html;
+    }
+
+    // 레이어 출력
+    if(html) {
+        var area = xGetElementById("popup_menu_area");
+        xInnerHtml(area, "<ul>"+html+"</ul>");
+        xLeft(area, params["page_x"]);
+        xTop(area, params["page_y"]);
+        if(xWidth(area)+xLeft(area)>xClientWidth()+xScrollLeft()) xLeft(area, xClientWidth()-xWidth(area)+xScrollLeft());
+        if(xHeight(area)+xTop(area)>xClientHeight()+xScrollTop()) xTop(area, xClientHeight()-xHeight(area)+xScrollTop());
+        area.style.visibility = "visible";
+    }    
 }
 
 /**

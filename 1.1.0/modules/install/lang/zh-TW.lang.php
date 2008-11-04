@@ -52,15 +52,15 @@ c)如果修改的程式在運行時以交互方式讀取命令，你必須使它
 
 3．你可以以目標碼或可執行形式複製或發佈程式(或符合第2款的基於程式的作品)，只要你遵守前面的第 l，2款，並同時滿足下列3條中的1條。
 
-a)在通常用作軟體交換的媒體上，和目標碼一起附有機器可讀的完整的源碼。這些源碼的發佈應符合上面第1，2款的要求。或者
+a)在通常用作軟體交換的媒體上，和目標碼一起附有機器可讀的完整的原始碼。這些原始碼的發佈應符合上面第1，2款的要求。或者
 
-b)在通常用作軟體交換的媒體上，和目標碼一起，附有給第三方提供相應的機器可讀的源碼的書面報價。有效期不少於3年，費用不超過實際完成源程式發佈的實際成本。源碼的發佈應符合上面的第1，2款的要求。或者
+b)在通常用作軟體交換的媒體上，和目標碼一起，附有給第三方提供相應的機器可讀的原始碼的書面報價。有效期不少於3年，費用不超過實際完成源程式發佈的實際成本。原始碼的發佈應符合上面的第1，2款的要求。或者
 
-c)和目標碼一起，附有你收到的發佈源碼的報價信息。(這一條款只適用於非商業性發佈，而且你只收到程式的目標碼或可執行代碼和按 b)款要求提供的報價)。
+c)和目標碼一起，附有你收到的發佈原始碼的報價資訊。(這一條款只適用於非商業性發佈，而且你只收到程式的目標碼或可執行代碼和按 b)款要求提供的報價)。
 
-作品的源碼指的是對作品進行修改最優先擇取的形式。對可執行的作品講，完整的源碼包括：所有模塊的所有源程式，加上有關的接口的定義，加上控制可執行作品的安裝和編譯的 script。作為特殊例外，發佈的源碼不必包含任何常規發佈的供可執行代碼在上面運行的操作系統的主要組成部分(如編譯程式，內核等)。除非這些組成部分和可執行作品結合在一起。
+作品的原始碼指的是對作品進行修改最優先擇取的形式。對可執行的作品講，完整的原始碼包括：所有模組的原始程式，加上有關的接口的定義，加上控制可執行作品的安裝和編譯的 script。作為特殊例外，發佈的原始碼不必包含任何常規發佈的供可執行代碼在上面運行的操作系統的主要組成部分(如編譯程式，內核等)。除非這些組成部分和可執行作品結合在一起。
 
-如果採用提供對指定地點的訪問和複製的方式發佈可執行碼或目標碼，那麼，提供對同一地點的訪問和複製源碼可以算作源碼的發佈，即使第三方不強求與目標碼一起複製源碼。
+如果採用提供對指定地點的訪問和複製的方式發佈可執行碼或目標碼，那麼，提供對同一地點的訪問和複製原始碼可以算作原始碼的發佈，即使第三方不強求與目標碼一起複製原始碼。
 
 4．除非你明確按許可證提出的要求去做，否則你不能複製，修改，轉發許可證和發佈程式。任何試圖用其他方式複製，修改，轉發許可證和發佈程式是無效的。而且將自動結束許可證賦予你的權利。然而，對那些從你那裡按許可證條款得到副本和權利的人們，只要他們繼續全面履行條款，許可證賦予他們的權利仍然有效。
 
@@ -200,10 +200,10 @@ EndOfLicense;
     $lang->install_checklist_desc = array(
 	        'php_version' => '[需求] 由於 PHP 5.2.2 版本的BUG，無法安裝 XE。',
             'permission' => '[需求] XE的安裝路徑或 ./files目錄權限必須是707',
-            'xml' => '[需求]為了 XML通訊，將需要安裝XML',
-            'session' => '[需求] 為了使用暫存功能，必須在php.ini當中設置 session.auto_start=0',
-            'iconv' => '為了UTF-8和其他語言環境之間的互相轉換，必須安裝iconv',
-            'gd' => '為了使用圖片轉換功能，必須先得安裝GD',
+            'xml' => '[需求]為了 XML通訊，將需要安裝 XML',
+            'session' => '[需求] 為了使用暫存功能，必須在 php.ini當中設置 session.auto_start=0',
+            'iconv' => '為了 UTF-8和其他語言環境之間能互相轉換，必須安裝 iconv',
+            'gd' => '使用圖片轉換功能前，必須先得安裝 GD',
         );
 
     $lang->install_checklist_xml = '安裝 XML';
@@ -212,22 +212,22 @@ EndOfLicense;
     $lang->install_without_gd  = '還沒有安裝負責轉換圖片功能的 GD！';
     $lang->install_checklist_gd = '安裝 GD';
     $lang->install_without_iconv = '還沒有安裝負責處理字串的iconv！';
-    $lang->install_session_auto_start = 'PHP設置中設置成session.auto_start==1，可能處理session時發生錯誤。';
+    $lang->install_session_auto_start = 'PHP設置中設置成session.auto_start==1，可能在處理 session時會發生錯誤。';
     $lang->install_permission_denied = '安裝目錄權限不是707！';
 
-    $lang->cmd_agree_license = '使用條款';
+    $lang->cmd_agree_license = '同意使用條款';
     $lang->cmd_install_fix_checklist = '已設置了必要的安裝條件。';
     $lang->cmd_install_next = '開始進行安裝';
     $lang->cmd_ignore = '忽略';
 
     $lang->db_desc = array(
-        'mysql' => '利用php的 mysql*()函數使用mysql資料庫。<br />資料庫數據是以myisam建立，因此不能實現transaction。',
-        'mysql_innodb' => '利用innodb使用mysql資料庫。<br />innodb可以使用transaction。',
-        'sqlite2' => '支援用檔案形式保存數據的sqlite2。<br />安裝時，資料庫數據應建立在web無法訪問的地方。<br />(尚未通過安全測試)',
-        'sqlite3_pdo' => '用PHP的 PDO支援 sqlite3。<br />安裝時，資料庫數據應建立在web無法訪問的地方。',
-        'cubrid' => '使用CUBRID DB。',
-        'postgresql' => '使用PostgreSql DB。',
-        'firebird' => '使用Firebird DB。',
+        'mysql' => '利用 php的 mysql*()函數使用 mysql 資料庫。<br />資料庫數據是以 myisam 建立，因此不能實現 transaction。',
+        'mysql_innodb' => '利用innodb使用 mysql 資料庫。<br />innodb可以使用 transaction。',
+        'sqlite2' => '支援用檔案形式保存數據的 sqlite2。<br />安裝時，資料庫數據應建立在 web無法訪問的地方。<br />(尚未通過安全測試)',
+        'sqlite3_pdo' => '用 PHP的 PDO支援 sqlite3。<br />安裝時，資料庫數據應建立在 web無法訪問的地方。',
+        'cubrid' => '使用 CUBRID DB。',
+        'postgresql' => '使用 PostgreSql DB。',
+        'firebird' => '使用 Firebird DB。',
     );
 
     $lang->form_title = '輸入資料庫及管理員資訊';
@@ -235,8 +235,8 @@ EndOfLicense;
     $lang->db_type = '資料庫類型';
     $lang->select_db_type = '請選擇要使用的資料庫。';
     $lang->db_hostname = '主機名稱';
-    $lang->db_port = '資料庫埠口';
-    $lang->db_userid = '用戶名稱';
+    $lang->db_port = 'PORT';
+    $lang->db_userid = '使用者名稱';
     $lang->db_password = '密碼';
     $lang->db_database = '資料庫名稱';
     $lang->db_database_file = '資料庫檔案';
@@ -247,14 +247,14 @@ EndOfLicense;
     $lang->env_title = '環境設置';
     $lang->use_optimizer = '使用 Optimizer';
     $lang->about_optimizer = '使用 Optimizer可以對大部分的 CSS/JS檔案進行整合/壓縮傳送使之加快網站訪問速度。<br />只是有時會發生小小的問題。這時候請暫時不要使用Optimizer。';
-    $lang->use_rewrite = '使用rewrite模組';
-    $lang->about_rewrite = '如主機支援rewrite模組並選擇此項，可以簡化複雜的網址。<br />例如，http://域名/?document_srl=123可簡化成http://域名/123。';
+    $lang->use_rewrite = '使用 rewrite模組';
+    $lang->about_rewrite = '如主機支援 rewrite模組並選擇此項，可以簡化複雜的網址。<br />例如，http://域名/?document_srl=123可簡化成 http://域名/123。';
     $lang->time_zone = '時區';
     $lang->about_time_zone = '主機時間和您所處的時間有差異時，可以設置時區來滿足你所需要的時間顯示。';
     $lang->qmail_compatibility = 'Qmail互換';
-    $lang->about_qmail_compatibility = '支援無法識別CRLF為換行符的Qmail等MTA，也能發送電子郵件。';
+    $lang->about_qmail_compatibility = '支援無法識別 CRLF為換行符的 Qmail等 MTA，也能發送電子郵件。';
 
-    $lang->about_database_file = 'Sqlite是檔案裡保存資料。資料庫的檔案位置應該放在web不能訪問的地方。<br/><span style="color:red">資料檔案應放在具有707權限的位置。</span>';
+    $lang->about_database_file = 'Sqlite是保存資料於檔案中。資料庫的檔案位置應該放在web不能訪問的地方。<br/><span style="color:red">資料檔案應放在具有707權限的位置。</span>';
 
     $lang->success_installed = '已完成安裝。';
     $lang->success_updated = '已完成更新。';
