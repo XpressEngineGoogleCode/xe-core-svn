@@ -28,7 +28,7 @@ function XEUploaderStart(obj) {
 
     var btnObj = xGetElementById(obj["replaceButtonID"]);
     var btnWidth = xWidth(btnObj);
-    var btnHeight = xHeight(btnObj)*2;
+    var btnHeight = xHeight(btnObj);
     btnObj.style.position = "relative";
 
     var dummy = xCreateElement("span");
@@ -236,7 +236,7 @@ function completeReloadFileList(ret_obj, response_tags, settings) {
         listObj.remove(0);
     }
 
-    if(upload_target_srl) {
+    if(upload_target_srl && upload_target_srl != 0) {
         editorRelKeys[editor_sequence]["primary"].value = upload_target_srl;
         settings["uploadTargetSrl"] = upload_target_srl;
     }
