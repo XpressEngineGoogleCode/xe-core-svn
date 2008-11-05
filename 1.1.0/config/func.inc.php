@@ -621,6 +621,13 @@
         return '';
     }
 
+    /**
+     * @brief 변수를 Array로 반환
+     */
+    function convertArray(&$var) {
+        if(!$var) return array();
+        if(!is_array($var)) $var = array($var);
+    }
 
     function json_encode2($data) {
         switch (gettype($data)) {
