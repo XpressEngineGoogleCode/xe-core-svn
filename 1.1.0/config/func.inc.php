@@ -367,17 +367,33 @@
      * ./files/_debug_message.php 파일에 $buff 내용을 출력한다.
      * tail -f ./files/_debug_message.php 하여 계속 살펴 볼 수 있다
      **/
-    function debugPrint($buff = null, $display_line = true) {
-        $debug_file = _XE_PATH_."files/_debug_message.php";
+    function debugPrint($buff = null, $display_option = true) {
+        static $firephp;
         $bt = debug_backtrace();
         if(is_array($bt)) $first = array_shift($bt);
-        $buff = sprintf("[%s %s:%d]\n%s\n", date("Y-m-d H:i:s"), array_pop(explode(DIRECTORY_SEPARATOR, $first["file"])), $first["line"], print_r($buff,true));
+        $file_name = array_pop(explode(DIRECTORY_SEPARATOR, $first['file']));
+        $line_num = $first['line'];
 
-        if($display_line) $buff = "\n====================================\n".$buff."------------------------------------\n";
+        if(__DEBUG_OUTPUT__ == 0) {
+            $debug_file = _XE_PATH_.'files/_debug_message.php';
+            $buff = sprintf("[%s %s:%d]\n%s\n", date('Y-m-d H:i:s'), $file_name, $line_num, print_r($buff, true));
 
-        if(@!$fp = fopen($debug_file,"a")) return;
-        fwrite($fp, $buff);
-        fclose($fp);
+            if($display_option === true) $buff = "\n====================================\n".$buff."------------------------------------\n";
+
+            if(@!$fp = fopen($debug_file, 'a')) return;
+            fwrite($fp, $buff);
+            fclose($fp);
+
+        } elseif(__DEBUG_OUTPUT__ == 2) {
+            if(!isset($firephp)) $firephp = FirePHP::getInstance(true);
+            $label = sprintf('%s:%d', $file_name, $line_num);
+            // FirePHP 옵션
+            if($display_option === 'TABLE') {
+                $label = $display_option;
+            }
+
+            $firephp->fb($buff, $label);
+        }
     }
 
     /**
