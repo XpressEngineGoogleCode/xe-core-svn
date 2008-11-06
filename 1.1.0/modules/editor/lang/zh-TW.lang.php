@@ -105,4 +105,11 @@
     $lang->edit->icon_align_right = '靠右';
 
     $lang->about_dblclick_in_editor = '雙擊背景, 文字, 圖片, 引用，即可對其相關組件進行詳細設置。';
+
+
+    $lang->edit->rich_editor = '所見即所得';
+    $lang->edit->html_editor = 'HTML';
+    $lang->edit->extension ='延伸組件';
+    $lang->edit->help = '使用說明';
+    $lang->edit->help_command = '快速鍵指引';
 ?>
