@@ -91,7 +91,9 @@
             // 스킨 설정
             $skin = $option->skin;
             if(!$skin) $skin = 'default';
-
+            $colorset = $option->colorset;
+            Context::set('colorset', $colorset);
+            Context::set('skin', $skin);
             /**
              * 자동백업 기능 체크 (글 수정일 경우는 사용하지 않음)
              **/
@@ -191,6 +193,11 @@
              **/
             $tpl_path = sprintf('%sskins/%s/', $this->module_path, $skin);
             $tpl_file = 'editor.html';
+
+            if(!file_exists($tpl_path.$tpl_file)) {
+                $skin = 'default';
+                $tpl_path = sprintf('%sskins/%s/', $this->module_path, $skin);
+            }
             Context::set('editor_path', $tpl_path);
 
             // tpl 파일을 compile한 결과를 return
@@ -212,6 +219,7 @@
             // type에 따른 설정 정리
             if($type == 'document') {
                 $config->editor_skin = $editor_config->editor_skin;
+                $config->sel_editor_colorset = $editor_config->sel_editor_colorset;
                 $config->upload_file_grant = $editor_config->upload_file_grant;
                 $config->enable_default_component_grant = $editor_config->enable_default_component_grant;
                 $config->enable_component_grant = $editor_config->enable_component_grant;
@@ -221,6 +229,7 @@
                 $config->enable_autosave = $editor_config->enable_autosave;
             } else {
                 $config->editor_skin = $editor_config->comment_editor_skin;
+                $config->sel_editor_colorset = $editor_config->sel_comment_editor_colorset;
                 $config->upload_file_grant = $editor_config->comment_upload_file_grant;
                 $config->enable_default_component_grant = $editor_config->enable_comment_default_component_grant;
                 $config->enable_component_grant = $editor_config->enable_comment_component_grant;
@@ -240,6 +249,7 @@
 
             // 에디터 옵션 변수를 미리 설정
             $option->skin = $config->editor_skin;
+            $option->colorset = $config->sel_editor_colorset;
 
             // 파일 업로드 권한 체크
             $option->allow_fileupload = false;

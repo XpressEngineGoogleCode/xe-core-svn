@@ -7,6 +7,26 @@
         Front-end : Jeong, Chan Myeong (http://naradesign.net/)
         Back-end : Kim, Ye Sol (http://ngleader.com/)
     </description>
+    <description xml:lang="jp">
+        XE 預設面板。
+        Front-end : Jeong, Chan Myeong (http://naradesign.net/)
+        Back-end : Kim, Ye Sol (http://ngleader.com/)
+    </description>
+    <description xml:lang="zh-CN">
+        XE 預設面板。
+        Front-end : Jeong, Chan Myeong (http://naradesign.net/)
+        Back-end : Kim, Ye Sol (http://ngleader.com/)
+    </description>
+    <description xml:lang="en">
+        XE 預設面板。
+        Front-end : Jeong, Chan Myeong (http://naradesign.net/)
+        Back-end : Kim, Ye Sol (http://ngleader.com/)
+    </description>
+    <description xml:lang="es">
+        XE 預設面板。
+        Front-end : Jeong, Chan Myeong (http://naradesign.net/)
+        Back-end : Kim, Ye Sol (http://ngleader.com/)
+    </description>
     <description xml:lang="zh-TW">
         XE 預設面板。
         Front-end : Jeong, Chan Myeong (http://naradesign.net/)
@@ -21,6 +41,8 @@
     <author email_address="zero@zeroboard.com" link="http://ngleader.com">
         <name xml:lang="ko">sol</name>
     </author>
+
+    <license>GPL</license>
 
     <colorset>
         <color name="white" src="screenshot/white.gif">

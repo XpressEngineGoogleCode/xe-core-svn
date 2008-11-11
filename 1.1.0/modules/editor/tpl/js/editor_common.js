@@ -121,8 +121,8 @@ function editorDragStart(evt) {
 
     var iframe_obj = editorGetIFrame(editorDragObj.id);
     var textarea_obj = editorGetTextarea(editorDragObj.id);
-
-    editorDragObj.source_height = xHeight(iframe_obj);
+    var preview_obj = xGetElementById('editor_preview_'+editorDragObj.id);
+    editorDragObj.source_height = xHeight(iframe_obj) || xHeight(preview_obj);
     xGetElementById('xeEditorMask_' + editorDragObj.id).style.display='block';
 
     xAddEventListener(document, 'mousemove', editorDragMove, true);
@@ -146,11 +146,13 @@ function editorDragMove(evt) {
 
     var iframe_obj = editorGetIFrame(editorDragObj.id);
     var textarea_obj = editorGetTextarea(editorDragObj.id);
-    var height = xHeight(iframe_obj) || xHeight(textarea_obj);
+    var preview_obj = xGetElementById('editor_preview_'+editorDragObj.id);
+    var height = xHeight(iframe_obj) || xHeight(textarea_obj) || xHeight(preview_obj);
     height += h;
     xHeight(iframe_obj, height);
     xHeight(textarea_obj, height);
-    xHeight(iframe_obj.parentNode, height+10);
+    xHeight(preview_obj, height);
+//    xHeight(iframe_obj.parentNode, height+200);
 }
 
 function editorDragStop(evt) {
