@@ -41,8 +41,8 @@
             // 바로 이전 로그인이 오늘이 아니어야 포인트를 줌
             if(substr($obj->last_login, 0, 8) == date('Ymd')) return new Object();
 
-            $point = $this->config->point->signup;
-            $exp = $this->config->exp->signup;
+            $point = $this->config->point->login;
+            $exp = $this->config->exp->login;
 
             // 포인트 증감
             $this->setPoint($obj->member_srl, $point, $exp, 'login');
