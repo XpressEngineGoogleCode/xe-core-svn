@@ -14,7 +14,7 @@
      * XE 는 오픈 프로젝트로 개발되는 오픈 소스입니다.\n
      * 자세한 내용은 아래 링크를 참조하세요.
      * - 공식홈페이지        : http://www.zeroboard.com
-     * - zbXE 포럼           : http://www.zeroboard.com/forum_main
+     * - XE 포럼           : http://www.zeroboard.com/forum_main
      * - 이슈트래킹          : http://trac.zeroboard.com
      * - SVN Repository      : http://svn.zeroboard.com/zeroboard_xe/trunk
      * - document            : http://doc.zeroboard.com
@@ -60,7 +60,10 @@
      * 그리고 해당 모듈을 실행후 컨텐츠를 출력한다\n
      **/
     $oModuleHandler = new ModuleHandler();
-    $oModuleHandler->init();
-    $oModule = &$oModuleHandler->procModule();
-    $oModuleHandler->displayContent($oModule);
+    if($oModuleHandler->init()) {
+        $oModule = &$oModuleHandler->procModule();
+        $oModuleHandler->displayContent($oModule);
+    }
+
+    $oContext->close();
 ?>

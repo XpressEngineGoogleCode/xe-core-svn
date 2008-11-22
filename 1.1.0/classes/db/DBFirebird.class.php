@@ -70,13 +70,13 @@
          **/
         function _connect() {
             // db 정보가 없으면 무시
-            if(!$this->hostname || !$this->userid || !$this->password || !$this->database) return;
+            if(!$this->hostname || !$this->port || !$this->userid || !$this->password || !$this->database) return;
 
             //if(strpos($this->hostname, ':')===false && $this->port) $this->hostname .= ':'.$this->port;
 
             // 접속시도
 
-            $host = $this->hostname.":".$this->database;
+            $host = $this->hostname."/".$this->port.":".$this->database;
 
             $this->fd = @ibase_connect($host, $this->userid, $this->password);
             if(ibase_errmsg()) {
@@ -417,6 +417,15 @@
             //commit();
             @ibase_commit($this->fd);
         }
+
+        /**
+         * @brief 특정 테이블의 특정 인덱스 삭제
+         **/
+        function dropIndex($table_name, $index_name, $is_unique = false) {
+            $query = sprintf('DROP INDEX "%s" ON "%s%s"', $index_name, $this->prefix, $table_name);
+            $this->_query($query);
+        }
+
 
         /**
          * @brief 특정 테이블의 index 정보를 return

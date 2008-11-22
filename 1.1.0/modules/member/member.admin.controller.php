@@ -206,20 +206,19 @@
          * @brief 선택된 회원들을 일괄 삭제
          */
         function procMemberAdminDeleteMembers() {
-            $member_srl = Context::get('member_srl');
-            if(!$member_srl) return new Object(-1,'msg_invalid_request');
-            $member_srls = explode(',',$member_srl);
+            $target_member_srls = Context::get('target_member_srls');
+            if(!$target_member_srls) return new Object(-1, 'msg_invalid_request');
+            $member_srls = explode(',', $target_member_srls);
             $oMemberController = &getController('member');
-            foreach($member_srls as $member)
-            {
+
+            foreach($member_srls as $member) {
                 $output = $oMemberController->deleteMember($member);
-                if(!$output->toBool())
-                {
+                if(!$output->toBool()) {
                     $this->setMessage('failed_deleted');
                     return $output;
                 }
             }
-            
+
             $this->setMessage('success_deleted');
         }
 
@@ -336,11 +335,12 @@
          * @brief 그룹 등록
          **/
         function insertGroup($args) {
+            if(!$args->site_srl) $args->site_srl = 0;
             // is_default값을 체크, Y일 경우 일단 모든 is_default에 대해서 N 처리
             if($args->is_default!='Y') {
                 $args->is_default = 'N';
             } else {
-                $output = executeQuery('member.updateGroupDefaultClear');
+                $output = executeQuery('member.updateGroupDefaultClear', $args);
                 if(!$output->toBool()) return $output;
             }
 
@@ -354,7 +354,7 @@
             // is_default값을 체크, Y일 경우 일단 모든 is_default에 대해서 N 처리
             if($args->is_default!='Y') $args->is_default = 'N';
             else {
-                $output = executeQuery('member.updateGroupDefaultClear');
+                $output = executeQuery('member.updateGroupDefaultClear', $args);
                 if(!$output->toBool()) return $output;
             }
 
@@ -364,7 +364,7 @@
         /**
          * 그룹 삭제
          **/
-        function deleteGroup($group_srl) {
+        function deleteGroup($group_srl, $site_srl = null) {
             // 멤버모델 객체 생성
             $oMemberModel = &getModel('member');
 
@@ -375,7 +375,7 @@
             if($group_info->is_default == 'Y') return new Object(-1, 'msg_not_delete_default');
 
             // is_default == 'Y'인 그룹을 가져옴
-            $default_group = $oMemberModel->getDefaultGroup();
+            $default_group = $oMemberModel->getDefaultGroup($site_srl);
             $default_group_srl = $default_group->group_srl;
 
             // default_group_srl로 변경

@@ -67,6 +67,9 @@
             $oModuleController->insertActionForward('member', 'controller', 'procMemberDeleteImageName');
             $oModuleController->insertActionForward('member', 'controller', 'procMemberDeleteImageMark');
 
+            $oDB = &DB::getInstance();
+            $oDB->addIndex("member_group","idx_site_title", array("site_srl","title"),true);
+
             $oModuleModel = &getModel('module');
             $args = $oModuleModel->getModuleConfig('member');
 
@@ -194,6 +197,11 @@
             $act = $oDB->isColumnExists('member', 'member_time_zone');
             if(!$act) return true;
 
+            // member_group_member 테이블에 site_srl 추가 (2008. 11. 15)
+            if(!$oDB->isColumnExists("member_group_member", "site_srl")) return true;
+            if(!$oDB->isColumnExists("member_group", "site_srl")) return true;
+            if($oDB->isIndexExists("member_group","uni_member_group_title")) return true;
+
             return false;
         }
 
@@ -227,6 +235,19 @@
             // DB 필드 추가
             if (!$oDB->isColumnExists('member', 'member_time_zone')) {
                 $oDB->addColumn('member', 'member_time_zone', 'char', 5, '', true);
+            }
+
+            // member_group_member 테이블에 site_srl 추가 (2008. 11. 15)
+            if (!$oDB->isColumnExists("member_group_member", "site_srl")) {
+                $oDB->addColumn("member_group_member", "site_srl", "number", 11, 0, true);
+                $oDB->addIndex("member_group_member", "idx_site_srl", "site_srl", false);
+            }
+            if (!$oDB->isColumnExists("member_group", "site_srl")) {
+                $oDB->addColumn("member_group", "site_srl", "number", 11, 0, true);
+                $oDB->addIndex("member_group","idx_site_title", array("site_srl","title"),true);
+            }
+            if($oDB->isIndexExists("member_group","uni_member_group_title")) {
+                $oDB->dropIndex("member_group","uni_member_group_title",true);
             }
 
             return new Object(0, 'success_updated');
