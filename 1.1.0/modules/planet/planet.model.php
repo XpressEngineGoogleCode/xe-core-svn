@@ -29,6 +29,7 @@
                 $config->is_default = $dummy->is_default;
                 $config->module_srl = $dummy->module_srl;
                 $config->browser_title = $dummy->browser_title;
+                if($config->logo_image) $config->logo_image = context::getFixUrl($config->logo_image);
             }
             return $config;
         }
@@ -45,7 +46,8 @@
             $logged_info = Context::get('logged_info');
             if($logged_info->is_admin == 'Y') return true;
             $group_list = $logged_info->group_list;
-            $group_srls = array_keys($group_list);
+            if(count($group_list)) $group_srls = array_keys($group_list);
+            else return false;
 
             foreach($grant as $srl) if(in_array($srl, $group_srls)) return true;
             return false;
@@ -504,7 +506,8 @@
             if(!is_dir($path)) return sprintf("%s%s%s", Context::getRequestUri(), $this->module_path, 'tpl/images/blank_photo.gif');
             $filename = sprintf('%s/%d.jpg', $path, $module_srl);
             if(!file_exists($filename)) return sprintf("%s%s%s", Context::getRequestUri(), $this->module_path, 'tpl/images/blank_photo.gif');
-            return Context::getRequestUri().$filename."?rnd=".filemtime($filename);
+            $src = Context::getRequestUri().$filename."?rnd=".filemtime($filename);
+            return $src;
         }
 
         /**
@@ -540,6 +543,8 @@
             if($output->data) {
                 foreach($output->data as $key => $val) {
                     $output->data[$key]->content = preg_replace('/"([^"]*)":(http|ftp|https|mms)([^ ]+)/is','<a href="$2$3" onclick="window.open(this.href);return false;">$1</a>$4', $val->content);
+                    $output->data[$key]->content = str_replace('...', '…', $output->data[$key]->content);
+                    $output->data[$key]->content = str_replace('--', '—', $output->data[$key]->content);
 
                 }
             }

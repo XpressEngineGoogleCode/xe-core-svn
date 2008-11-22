@@ -37,6 +37,13 @@
             if($this->planet->isHome() && !in_array($this->act, array('dispPlanetCreate','dispPlanetLogin','dispPlanetTagSearch','dispPlanetContentSearch','dispPlanetContentTagSearch')) ) {
                 Context::set('act',$this->act = 'dispPlanetHome');
             }
+
+            $this->grant->access = $oPlanetModel->isAccessGranted();
+            $this->grant->create = $oPlanetModel->isCreateGranted();
+
+            // 플래닛은 별도 레이아웃 동작하지 않도록 변경
+            Context::set('layout', 'none');
+            if(!Context::get('mid')) Context::set('mid', $this->config->mid, true);
         }
 
         /**
@@ -345,6 +352,13 @@
             $oPlanetModel = &getModel('planet');
             $output = $oPlanetModel->getReplyList($document_srl,$page);
             Context::set('reply_list',$output->data);
+        }
+
+        function dispPlanetMessage($msg_code) {
+            $msg = Context::getLang($msg_code);
+            if(!$msg) $msg = $msg_code;
+            Context::set('message', $msg);
+            $this->setTemplateFile('message');
         }
 
     }

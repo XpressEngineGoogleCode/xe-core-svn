@@ -605,7 +605,7 @@
          * _srl, page, cpage등의 변수는 integer로 형변환
          **/
         function _filterRequestVar($key, $val) {
-            if($key == "page" || $key == "cpage" || substr($key,-3)=="srl") return (int)$val;
+            if( ($key == "page" || $key == "cpage" || substr($key,-3)=="srl")) return !preg_match('/^[0-9,]+$/',$val)?(int)$val:$val;
             if(is_array($val) && count($val) ) {
                 foreach($val as $k => $v) {
                     if(version_compare(PHP_VERSION, "5.9.0", "<") && get_magic_quotes_gpc()) $v = stripslashes($v);
@@ -803,9 +803,14 @@
             if($domain) {
                 $domain = preg_replace('/^(http|https):\/\//i','', trim($domain));
                 if(substr($domain,-1) != '/') $domain .= '/';
-            } else $domain = $_SERVER['HTTP_HOST'].getScriptPath();
+            } else {
+                $domain = preg_replace('/:'.$_SERVER['SERVER_PORT'].'$/','',$_SERVER['HTTP_HOST']).getScriptPath();
+            }
 
-            $url[$ssl_mode] = sprintf("%s://%s",$use_ssl?'https':'http',$domain);
+            $domain = sprintf("%s://%s",$use_ssl?'https':'http',$domain);
+
+            $url_info = parse_url($domain);
+            $url[$ssl_mode] = sprintf("%s://%s%s%s",$url_info['scheme'], $url_info['host'], $_SERVER['SERVER_PORT']!=80?':'.$_SERVER['SERVER_PORT']:'',$url_info['path']);
 
             return $url[$ssl_mode];
         }
@@ -1226,6 +1231,12 @@
                 extension_loaded('zlib')
             ) return true;
             return false;
+        }
+
+        function getFixUrl($url){
+            if(eregi("(http|https):\/\/",$url)) return $url;
+            if(ereg("^/",$url)) return $url;
+            return dirname($_SERVER['PHP_SELF']) . "/" . $url;
         }
 
     }

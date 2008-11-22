@@ -142,7 +142,7 @@ function winopen(url, target, attribute) {
 
 /**
  * @brief 팝업으로만 띄우기 
- * common/tpl/popup_layout.html이 요청되는 제로보드 XE내의 팝업일 경우에 사용
+ * common/tpl/popup_layout.html이 요청되는 XE내의 팝업일 경우에 사용
  **/
 function popopen(url, target) {
     if(typeof(target)=="undefined") target = "_blank";
@@ -384,6 +384,7 @@ function createPopupMenu(evt) {
     area = xCreateElement("div");
     area.id = "popup_menu_area";
     area.style.visibility = 'hidden';
+    area.style.zIndex = 9999;
     document.body.appendChild(area);
 }
 

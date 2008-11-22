@@ -129,6 +129,7 @@
                     break;
                 case 'update' :
                         $args = Context::gets('group_srl','title','description','is_default');
+                        $args->site_srl = 0;
                         $output = $this->updateGroup($args);
                         if(!$output->toBool()) return $output;
                         $msg_code = 'success_updated';
@@ -230,7 +231,7 @@
             if(!$member_srl) return new Object(-1,'msg_invalid_request');
             $member_srls = explode(',',$member_srl);
 
-            $group_srl = Context::get('group_srl');
+            $group_srl = Context::get('group_srls');
             $group_srls = explode('|@|', $group_srl);
             if(!$group_srl) return new Object(-1,'msg_check_group');
 
