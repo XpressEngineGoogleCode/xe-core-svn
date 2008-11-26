@@ -1,0 +1,21 @@
+<!--%import("./js/document_admin.js")-->
+<!--%import("./css/document.css")-->
+
+<div class="printContent">
+
+    <div><h3>{$oDocument->getTitleText()}</h3></div>
+
+    <div class="member_{$oDocument->get('member_srl')} gap1 fl">{$oDocument->get('nick_name')}</div>
+    <div class="gap1 fr">{$oDocument->getRegdate()}</div>
+
+    <div class="clear"></div>
+
+    <div class="gap1">{$oDocument->getContent(false, false)}</div>
+
+</div>
+
+<script type="text/javascript">//<![CDATA[
+    xAddEventListener(window,'load',function() { window.print(); } );
+//]]></script>
+
+
