@@ -1,0 +1,24 @@
+<!--%import("filter/update_category.xml")-->
+
+<!--#include("./header.html")-->
+
+<!-- 카테고리 수정 -->
+<!--@if($selected_category)-->
+<form action="./" method="post" onsubmit="return procFilter(this, update_category)" enctype="multipart/form-data">
+    <input type="hidden" name="module_category_srl" value="{$selected_category->module_category_srl}" />
+    <input type="hidden" name="mode" value="update" />
+
+    <table cellspacing="0" class="adminTable">
+    <tr>
+        <th scope="row"><div>{$lang->category_title}</div></th>
+        <td><input type="text" name="title" value="{$selected_category->title}" class="inputTypeText w300" /></td>
+    </tr>
+    <tr class="row2">
+        <td colspan="2" class="right">
+            <span class="button"><input type="submit" value="{$lang->cmd_registration}" accesskey="s" /></span>
+        </td>
+    </tr>
+    </table>
+
+</form>
+<!--@end-->
