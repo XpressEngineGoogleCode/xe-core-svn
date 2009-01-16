@@ -57,7 +57,9 @@ function getImage() {
         xGetElementById('image_margin').value = margin;
     }
 
-    xGetElementById("image_border").value = border;
+    if(border) {
+        xGetElementById("image_border").value = border;
+    }
 
     xGetElementById("width").value = width;
     xGetElementById("height").value = height;
