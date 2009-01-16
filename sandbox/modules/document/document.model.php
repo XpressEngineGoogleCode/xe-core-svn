@@ -24,16 +24,74 @@
          * @brief 문서 가져오기
          **/
         function getDocument($document_srl=0, $is_admin = false) {
+            static $document_list = array();
             if(!$document_srl) return new documentItem();
 
-            if(!$GLOBALS['__DocumentItem__'][$document_srl]) {
+            if(!isset($document_list[$document_srl])) {
                 $oDocument = new documentItem($document_srl);
-                if($is_admin) $oDocument->setGrant();
-                $GLOBALS['__DocumentItem__'][$document_srl] = $oDocument;
-            }
+                $document_list[$document_srl] = &$oDocument;
+            } else $oDocument = $document_list[$document_srl];
+            if($is_admin) $oDocument->setGrant();
 
-            return $GLOBALS['__DocumentItem__'][$document_srl];
-       }
+            return $oDocument;
+        }
+
+        /**
+         * @brief document의 확장 변수 키값을 가져오는 함수
+         **/
+        function getExtraKeys($module_srl) {
+            static $extra_keys = array();
+            if(!$module_srl) return;
+            if(!isset($extra_keys[$module_srl])) {
+                $obj->module_srl = $module_srl;
+                $output = executeQueryArray('document.getDocumentExtraKeys', $obj);
+                if(!$output->toBool() || !$output->data) {
+                    $extra_keys[$module_srl] = array();
+                } else {
+                    foreach($output->data as $key => $val) {
+                        $extra_keys[$module_srl][$val->idx] = $val;
+                    }
+                }
+            }
+            return $extra_keys[$module_srl];
+        }
+
+        /**
+         * @brief document의 확장 변수 값을 가져오는 함수
+         **/
+        function getExtraVars($module_srl, $document_srl, $extra_keys) {
+            static $extra_vars = array();
+
+            if(!isset($extra_vars[$document_srl])) {
+                $extra_keys = $this->getExtraKeys($module_srl);
+                if(count($extra_keys)) {
+                    $obj->module_srl = $module_srl;
+                    $obj->document_srl = $document_srl;
+                    $output = executeQueryArray('document.getDocumentExtraVars', $obj);
+                    if($output->toBool() && $output->data) {
+                        foreach($output->data as $key => $val) {
+                            $var_idx = $val->var_idx;
+                            $value = trim($val->value);
+                            if(!$value) continue;
+                            if(strpos($value, '|@|')) $value = explode('|@|', $value);
+                            $val->value = $value;
+                            $val->name = $extra_keys[$var_idx]->name;
+                            $val->type = $extra_keys[$var_idx]->type;
+                            if($val->type == 'homepage' && !preg_match('/^([a-z]+):\/\//i',$value)) $value = 'http://'.$value;
+                            $val->is_required = $extra_keys[$var_idx]->is_required;
+                            $val->search = $extra_keys[$var_idx]->search;
+                            $val->default = $extra_keys[$var_idx]->default;
+                            $val->desc = $extra_keys[$var_idx]->desc;
+                            $extra_vars[$document_srl][$var_idx] = $val;
+                        }
+                    }
+                } else {
+                    $extra_vars[$document_srl] = array();
+                }
+            }
+            return $extra_vars[$document_srl];
+        }
+
 
         /**
          * @brief 선택된 게시물의 팝업메뉴 표시
@@ -246,8 +304,9 @@
                     default :
                             preg_match('/^extra_vars([0-9]+)$/',$search_target,$matches);
                             if($matches[1]) {
-                                $args->{"s_extra_vars".$matches[1]} = $search_keyword;
-                                $use_division = true;
+                                $query_id = 'document.getDocumentListWithExtraVars';
+                                $args->var_idx = $matches[1];
+                                $args->var_value = str_replace(' ','%',$search_keyword);
                             }
                         break;
                 }
@@ -655,6 +714,7 @@
          * @brief 특정 모듈의 분류를 구함
          **/
         function getDocumentCategories() {
+            if(!Context::get('is_logged')) return new Object(-1,'msg_not_permitted');
             $module_srl = Context::get('module_srl');
             $categories= $this->getCategoryList($module_srl);
             $lang = Context::get('lang');
@@ -680,6 +740,34 @@
                 $GLOBLAS['__document_config__'] = $config;
             }
             return $GLOBLAS['__document_config__'];
+        }
+
+        /**
+         * @brief 공통 :: 모듈의 확장 변수 관리
+         * 모듈의 확장변수 관리는  모든 모듈에서 document module instance를 이용할때 사용할 수 있음
+         **/
+        function getExtraVarsHTML($module_srl) {
+            // 기존의 extra_keys 가져옴
+            $extra_keys = $this->getExtraKeys($module_srl);
+            Context::set('extra_keys', $extra_keys);
+
+            // grant 정보를 추출
+            $oTemplate = &TemplateHandler::getInstance();
+            return $oTemplate->compile($this->module_path.'tpl', 'extra_keys');
+        }
+
+        /**
+         * @brief 공통 :: 모듈의 카테고리 변수 관리
+         **/
+        function getCategoryHTML($module_srl) {
+            $category_xml_file = $this->getCategoryXmlFile($module_srl);
+
+            Context::set('category_xml_file', $category_xml_file);
+            Context::addJsFile('./common/js/tree_menu.js');
+
+            // grant 정보를 추출
+            $oTemplate = &TemplateHandler::getInstance();
+            return $oTemplate->compile($this->module_path.'tpl', 'category_list');
         }
     }
 ?>

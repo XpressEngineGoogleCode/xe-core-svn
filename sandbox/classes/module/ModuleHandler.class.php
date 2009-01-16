@@ -169,9 +169,8 @@
                 return;
             }
 
-            // type, grant 값 구함
+            // type, kind 값 구함
             $type = $xml_info->action->{$this->act}->type;
-            $grant = $xml_info->action->{$this->act}->grant;
             $kind = strpos(strtolower($this->act),'admin')!==false?'admin':'';
             if(!$kind && $this->module == 'admin') $kind = 'admin';
 
@@ -209,8 +208,8 @@
                 $this->error = 'msg_dbconnect_failed';
             }
 
-            // XMLRPC call 이 아니면 message view 객체 이용하도록
-            if(Context::getRequestMethod() != 'XMLRPC' && Context::getRequestMethod() != 'JSON') {
+            // HTML call 이면 message view 객체 이용하도록
+            if(!in_array(Context::getRequestMethod(),array('XMLRPC','JSON'))) {
                 // 에러가 발생하였을시 처리
                 if($this->error) {
                     // message 모듈 객체를 생성해서 컨텐츠 생성

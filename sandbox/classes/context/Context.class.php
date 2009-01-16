@@ -83,19 +83,6 @@
             );
             session_start();
 
-            // 쿠키로 설정된 언어타입 가져오기 
-            if($_COOKIE['lang_type']) $this->lang_type = $_COOKIE['lang_type'];
-            else $this->lang_type = $this->db_info->lang_type;
-            if(!in_array($this->lang_type, array_keys($lang_supported))) $this->lang_type = $this->db_info->lang_type;
-            if(!$this->lang_type) $this->lang_type = "en";
-
-            Context::set('lang_supported', $lang_supported);
-            $this->setLangType($this->lang_type);
-
-            // 기본 언어파일 로드
-            $this->lang = &$GLOBALS['lang'];
-            $this->_loadLang(_XE_PATH_."common/lang/");
-
             // Request Method 설정
             $this->_setRequestMethod();
 
@@ -128,6 +115,24 @@
                 $this->_set('is_logged', $oMemberModel->isLogged() );
                 $this->_set('logged_info', $oMemberModel->getLoggedInfo() );
             }
+
+            // 쿠키로 설정된 언어타입 가져오기 
+            if($_COOKIE['lang_type']) $this->lang_type = $_COOKIE['lang_type'];
+            else {
+                if($site_module_info && $site_module_info->default_language) {
+                    $this->db_info->lang_type = $site_module_info->default_language;
+                }
+                $this->lang_type = $this->db_info->lang_type;
+            }
+            if(!in_array($this->lang_type, array_keys($lang_supported))) $this->lang_type = $this->db_info->lang_type;
+            if(!$this->lang_type) $this->lang_type = "en";
+
+            Context::set('lang_supported', $lang_supported);
+            $this->setLangType($this->lang_type);
+
+            // 기본 언어파일 로드
+            $this->lang = &$GLOBALS['lang'];
+            $this->_loadLang(_XE_PATH_."common/lang/");
 
             // rewrite 모듈사용 상태 체크
             if(file_exists(_XE_PATH_.'.htaccess')&&$this->db_info->use_rewrite == 'Y') $this->allow_rewrite = true;
@@ -711,6 +716,9 @@
             /* member module중의 쪽지함/친구 관리 기능이 communication 모듈로 이전하여 하위 호환성을 위한 act값 변경 */
             if($get_vars['act'] == 'dispMemberFriend') $get_vars['act'] = 'dispCommunicationFriend';
             elseif($get_vars['act'] == 'dispMemberMessages') $get_vars['act'] = 'dispCommunicationMessages';
+            /* 기존의 action의 값이 바뀌어서 이를 강제 변경 */
+            elseif($get_vars['act'] == 'dispDocumentAdminManageDocument') $get_vars['act'] = 'dispDocumentManageDocument';
+            elseif($get_vars['act'] == 'dispModuleAdminSelectList') $get_vars['act'] = 'dispModuleSelectList';
 
             if($get_vars['act'] && $this->isExistsSSLAction($get_vars['act'])) $path = $this->getRequestUri(ENFORCE_SSL, $domain);
             else $path = $this->getRequestUri(RELEASE_SSL, $domain);

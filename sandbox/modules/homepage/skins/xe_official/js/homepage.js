@@ -131,11 +131,11 @@ function menuFormInsert(obj) {
 
     if(typeof(obj.open_window)!='undefined' && obj.open_window=='Y') fo_obj.menu_open_window.checked = true;
     if(typeof(obj.expand)!='undefined' && obj.expand=='Y') fo_obj.menu_expand.checked = true;
-
-    if(typeof(obj.group_srls)!='undefined' && obj.group_srls && typeof(obj.group_srls.item)!='undefined' && obj.group_srls.item) {
-        for(var j in obj.group_srls.item) {
+    if(typeof(obj.group_srls)!='undefined' && obj.group_srls.length) {
+        for(var j=0;j<obj.group_srls.length;j++) {
+            var group_srl = obj.group_srls[j];
             for(var i=0; i<fo_obj.group_srls.length;i++) {
-                if(obj.group_srls.item[j]==fo_obj.group_srls[i].value) fo_obj.group_srls[i].checked = true;
+                if(group_srl==fo_obj.group_srls[i].value) fo_obj.group_srls[i].checked = true;
             }
         }
     }

@@ -14,6 +14,18 @@
     $lang->title_bold = 'Bold';
     $lang->title_color = 'Color';
 
+    $lang->parent_category_title = 'Categoría Superior';
+    $lang->category_title = 'Nombre de la categoría';
+    $lang->category_color = '분류 폰트색깔';
+    $lang->expand = 'Expandir';
+    $lang->category_group_srls = 'Limitar el grupo';
+    $lang->cmd_make_child = 'Agregar sub categoría';
+    $lang->cmd_enable_move_category = "Cambiar la posición de la categoría. (arrastrar y soltar luego de haber selecionado)";
+    $lang->about_category_title = 'Ingresar el nombre de la categoría.';
+    $lang->about_expand = 'Si seleccionas esta opción, siempre estará expandido.';
+    $lang->about_category_group_srls = '선택하신 그룹만 현재 카테고리를 지정할 수 있도록 합니다';
+    $lang->about_category_color = '분류 폰트색깔을 지정합니다.';
+
     $lang->cmd_search_next = 'Buscar siguiente';
 
     $lang->cmd_temp_save = 'Guardar Temporales';

@@ -16,21 +16,24 @@
         function _loadFromDB() {
             if(!$this->document_srl) return;
             parent::_loadFromDB();
-
-            $this->add('postscript', $this->get('extra_vars20'));
         }
 
         function setAttribute($attribute) {
             parent::setAttribute($attribute);
-            $this->add('postscript', $attribute->extra_vars20);
+
+            // planet에서 사용하는 postscript의 경우 확장변수에 추가되기에 확장변수 체크
+            if(!$this->isExtraVarsExists()) {
+                $oDocumentController = &getController('document');
+                $oDocumentController->insertDocumentExtraKey($this->get('module_srl'), 20, 'postscript', 'text', 'N', 'N', '', '');
+            }
         }
 
 
         function getWriteInfo() {
-            static $planet_info = array();
-            if(!isset($planet_info[$this->get('module_srl')])) {
+            static $module_info = array();
+            if(!isset($module_info[$this->get('module_srl')])) {
                 $oPlanetModel = &getModel('planet');
-                $info = $planet_info[$this->get('module_srl')] = $oPlanetModel->getPlanet($this->get('module_srl'));
+                $info = $module_info[$this->get('module_srl')] = $oPlanetModel->getPlanet($this->get('module_srl'));
                 $this->add('planet_title', $info->getBrowserTitle());
                 $this->add('nick_name', $info->getNickName());
                 $this->add('user_name', $info->getUserName());
@@ -72,7 +75,7 @@
 
         
         function getPostScript() {
-            return $this->get('postscript');
+            return $this->getExtraValue(20);
         }
         
 		function getContent() {

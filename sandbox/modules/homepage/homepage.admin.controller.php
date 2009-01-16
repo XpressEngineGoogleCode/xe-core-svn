@@ -260,10 +260,8 @@
 
             // 메뉴 삭제
             $oMenuAdminController = &getAdminController('menu');
-            Context::set('menu_srl', $homepage_info->first_menu_srl);
-            $oMenuAdminController->procMenuAdminDelete();
-            Context::set('menu_srl', $homepage_info->second_menu_srl);
-            $oMenuAdminController->procMenuAdminDelete();
+            $oMenuAdminController->deleteMenu($homepage_info->first_menu_srl);
+            $oMenuAdminController->deleteMenu($homepage_info->second_menu_srl);
 
             // 레이아웃 삭제
             Context::set('layout_srl', $homepage_info->layout_srl);
@@ -272,16 +270,11 @@
 
             // 게시판 & 페이지 삭제
             $oModuleModel = &getModel('module');
+            $oModuleController =&getController('module');
             $mid_list = $oModuleModel->getMidList($args);
-            $oBoardAdminController = &getAdminController('board');
-            $oPageAdminController = &getAdminController('page');
             foreach($mid_list as $key => $val) {
-                Context::set('module_srl', $val->module_srl);
-                if($val->module == 'page') {
-                    $oPageAdminController->procPageAdminDelete();
-                } elseif($val->module == 'board') {
-                    $oBoardAdminController->procBoardAdminDeleteBoard();
-                }
+                $module_srl = $val->module_srl;
+                $oModuleController->deleteModule($module_srl);
             }
 
             $this->setMessage('success_deleted');

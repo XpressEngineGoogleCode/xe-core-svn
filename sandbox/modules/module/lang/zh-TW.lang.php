@@ -27,9 +27,20 @@
     $lang->skin_history = '更新事項';
     $lang->module_copy = "複製模組";
     $lang->module_selector = "Module Selector";
+    $lang->do_selected = "선택된 것들을...";
+    $lang->bundle_setup = "일괄 기본 설정";
+    $lang->bundle_addition_setup = "일괄 추가 설정";
+    $lang->bundle_grant_setup = "일괄 권한 설정";
 
     $lang->header_script = "Header Script";
     $lang->about_header_script = "可以直接輸入，並插入到 HTML的&lt;head&gt;之間。<br />可使用&lt;script&gt;, &lt;style&gt; 或 &lt;meta&gt; 等標籤。";
+
+    $lang->grant_access = "Access";
+    $lang->grant_manager = "Management";
+
+    $lang->grant_to_all = "All users";
+    $lang->grant_to_login_user = "Logged users";
+    $lang->grant_to_group = "Specification group users";
 
     $lang->cmd_add_shortcut = "新增到快捷選單";
     $lang->cmd_install = "安裝";
@@ -38,6 +49,7 @@
     $lang->cmd_manage_grant = '權限管理';
     $lang->cmd_manage_skin = '面板管理';
     $lang->cmd_manage_document = '主題管理';
+    $lang->cmd_find_module = '모듈 찾기';
 
     $lang->msg_new_module = "建立模組";
     $lang->msg_update_module = "修改模組";
@@ -62,7 +74,7 @@
     $lang->about_list_count = '可以指定每頁顯示的主題數。(預設為20個)';
     $lang->about_search_list_count = '可以指定搜尋或選擇分類時，每頁要顯示的文章數(預設為20個)。';
     $lang->about_page_count = '可以指定顯示在清單下方的頁面數(預設為10個)。 ';
-    $lang->about_admin_id = '可以對該模組指定最高管理權限。<br />有多名管理員時，可以用 (.) 區隔(無法訪問管理頁面)。 ';
+    $lang->about_admin_id = '可以對該模組指定最高管理權限。';
     $lang->about_grant = '全部解除特定權限的對象時，沒有登錄的會員也將具有相關權限。';
     $lang->about_module = "除基本函式庫以外XE全部由模組組成。\n模組管理中列出所有已安裝的模組，因此易於管理。";
 

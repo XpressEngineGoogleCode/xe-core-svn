@@ -14,7 +14,9 @@
 
         function init() {
             $oModuleModel = &getModel('module');
-            if(!$oModuleModel->isSiteAdmin()) return $this->stop('msg_not_permitted');
+
+            $logged_info = Context::get('logged_info');
+            if(!$oModuleModel->isSiteAdmin($logged_info)) return $this->stop('msg_not_permitted');
 
             // site_module_info값으로 홈페이지의 정보를 구함
             $this->site_module_info = Context::get('site_module_info');
@@ -26,6 +28,17 @@
             $oLayoutModel = &getModel('layout');
             $this->selected_layout = $oLayoutModel->getLayout($this->homepage_info->layout_srl);
 
+        }
+
+        function procHomepageChangeLanguage() {
+            $lang_code = Context::get('language');
+            if(!$lang_code) return;
+            $args->site_srl = $this->site_module_info->site_srl;
+            $args->index_module_srl= $this->site_module_info->index_module_srl;
+            $args->domain = $this->site_module_info->domain;
+            $args->default_language = $lang_code;
+            $oModuleController = &getController('module');
+            return $oModuleController->updateSite($args);
         }
 
         function procHomepageChangeLayout() {
@@ -283,16 +296,6 @@
             return $oMemberController->replaceMemberGroup($args);
         }
 
-        function procHomepageUpdateBoardSkin() {
-            $oBoardAdminController = &getAdminController('board');
-            $oBoardAdminController->procBoardAdminUpdateSkinInfo();
-
-            $this->setLayoutPath($oBoardAdminController->getLayoutPath());
-            $this->setLayoutFile($oBoardAdminController->getLayoutFile());
-            $this->setTemplatePath($oBoardAdminController->getTemplatePath());
-            $this->setTemplateFile($oBoardAdminController->getTemplateFile());
-        }
-
         function procHomepageInsertBoardGrant() {
             $module_srl = Context::get('module_srl');
 
@@ -348,7 +351,6 @@
 
             $oModuleController = &getController('module');
             $output = $oModuleController->updateSite($args);
-            debugPrint($output);
             return $output;
         }
     }

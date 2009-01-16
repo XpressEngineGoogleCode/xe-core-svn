@@ -132,7 +132,7 @@
                     }
 
                     $oModuleModel = &getModel('module');
-                    if($oModuleModel->isSiteAdmin()) $logged_info->is_site_admin = true;
+                    if($oModuleModel->isSiteAdmin($logged_info)) $logged_info->is_site_admin = true;
                     else $logged_info->is_site_admin = false;
                 } else {
                     $logged_info->is_site_admin = false;
@@ -153,7 +153,8 @@
 
             $args->user_id = $user_id;
             $output = executeQuery('member.getMemberInfo', $args);
-            if(!$output) return $output;
+            if(!$output->toBool()) return $output;
+            if(!$output->data) return;
 
             $member_info = $this->arrangeMemberInfo($output->data);
             $member_info->group_list = $this->getMemberGroups($member_info->member_srl);

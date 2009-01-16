@@ -76,10 +76,12 @@
             foreach($this->search_option as $opt) $search_option[$opt] = Context::getLang($opt);
 
             // 모듈정보를 확인하여 확장변수에서도 검색이 설정되어 있는지 확인
-            for($i=1;$i<=20;$i++) {
-                $ex_name = trim($this->module_info->extra_vars[$i]->name);
-                if(!$ex_name) continue;
-                if($this->module_info->extra_vars[$i]->search == 'Y') $search_option['extra_vars'.$i] = $ex_name;
+            $oDocumentModel = &getModel('document');
+            $extra_keys = $oDocumentModel->getExtraKeys($this->module_info->module_srl);
+            if(count($extra_keys)) {
+                foreach($extra_keys as $key => $val) {
+                    if($val->search == 'Y') $search_option['extra_vars'.$val->idx] = $val->name;
+                }
             }
             Context::set('search_option', $search_option);
 
@@ -160,12 +162,7 @@
                         if(!$oDocument->isSecret() || $oDocument->isGranted()) $oDocument->updateReadedCount();
 
                         // 비밀글일때 컨텐츠를 보여주지 말자.
-                        if($oDocument->isSecret() && !$oDocument->isGranted()){
-                           $oDocument->add('content',Context::getLang('thisissecret'));
-                            $obj = null;
-                            for($i=1;$i<=20;$i++) $obj->{"extra_vars".$i} = '';
-                            $oDocument->adds($obj);
-                         }
+                        if($oDocument->isSecret() && !$oDocument->isGranted()) $oDocument->add('content',Context::getLang('thisissecret'));
                     }
                 }
             }
@@ -298,7 +295,6 @@
              * 카테고리를 사용하는지 확인후 사용시 카테고리 목록을 구해와서 Context에 세팅, 권한도 함께 체크
              **/
             if($this->module_info->use_category=='Y') {
-
                 // 로그인한 사용자의 그룹 정보를 구함
                 if(Context::get('is_logged')) {
                     $logged_info = Context::get('logged_info');
@@ -327,39 +323,39 @@
 
             // GET parameter에서 document_srl을 가져옴
             $document_srl = Context::get('document_srl');
-
             $oDocument = $oDocumentModel->getDocument(0, $this->grant->manager);
             $oDocument->setDocument($document_srl);
             $oDocument->add('module_srl', $this->module_srl);
 
             // 글을 수정하려고 할 경우 권한이 없는 경우 비밀번호 입력화면으로
             if($oDocument->isExists()&&!$oDocument->isGranted()) return $this->setTemplateFile('input_password_form');
-            if(!$oDocument->isExists())
-            {
+            if(!$oDocument->isExists()) {
                 $oModuleModel = &getModel('module');
                 $point_config = $oModuleModel->getModulePartConfig('point',$this->module_srl);
                 $logged_info = Context::get('logged_info');
                 $oPointModel = &getModel('point');
                 $pointForInsert = $point_config["insert_document"];
-                if($pointForInsert < 0)
-                {
-                    if( !$logged_info )
-                    {
-                        return $this->dispBoardMessage('msg_not_permitted');
-                    }
-                    else if (($oPointModel->getPoint($logged_info->member_srl) + $pointForInsert )< 0 )
-                    {
-                        return $this->dispBoardMessage('msg_not_enough_point');
-                    }
+                if($pointForInsert < 0) {
+                    if( !$logged_info ) return $this->dispBoardMessage('msg_not_permitted');
+                    else if (($oPointModel->getPoint($logged_info->member_srl) + $pointForInsert )< 0 ) return $this->dispBoardMessage('msg_not_enough_point');
                 }
             }
+
 
             Context::set('document_srl',$document_srl);
             Context::set('oDocument', $oDocument);
 
-            // 확장변수처리를 위해 xml_js_filter를 직접 header에 적용
-            $oDocumentController = &getController('document');
-            $oDocumentController->addXmlJsFilter($this->module_info);
+
+            // 현재 모듈에 등록된 확장변수 추출
+            $extra_keys = $oDocumentModel->getExtraKeys($this->module_info->module_srl);
+            if(count($extra_keys)) {
+                // 글쓰기 폼에서 사용하기 위한 변수 설정
+                Context::set('extra_keys', $extra_keys);
+
+                // 확장변수처리를 위해 xml_js_filter를 직접 header에 적용
+                $oDocumentController = &getController('document');
+                $oDocumentController->addXmlJsFilter($extra_keys);
+            }
 
             $this->setTemplateFile('write_form');
         }

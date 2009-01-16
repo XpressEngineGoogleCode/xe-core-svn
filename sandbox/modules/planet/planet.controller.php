@@ -11,6 +11,12 @@
          * @brief 초기화
          **/
         function init() {
+            $oPlanetModel = &getModel('planet');
+            $oModuleModel = &getModel('module');
+
+            $module_info = $oPlanetModel->getPlanetConfig();
+            $grant = $oModuleModel->getGrant($module_info, $this->xml_info, Context::get('logged_info'));
+            $this->grant = $grant;
         }
 
         /**
@@ -53,8 +59,8 @@
             $planet = $oPlanetModel->getMemberPlanet();
             if($planet->isExists()) $url = getUrl('','mid',$planet->getMid());
             else {
-                $config = $oPlanetModel->getPlanetConfig();
-                $url = getUrl('','mid',$config->mid);
+                $module_info = $oPlanetModel->getPlanetConfig();
+                $url = getUrl('','mid',$module_info->mid);
             }
             Context::set('url',$url);
 
@@ -106,7 +112,7 @@
             if(Context::get('me2day_autopush')=='Y') {
                 $content = Context::get('content');
                 $tags = Context::get('tags');
-                $postscript = Context::get('extra_vars20');
+                $postscript = Context::get('postscript');
                 if($postscript) $content .= " (".$postscript.")";
                 if($tags) $tags = str_replace(',',' ',str_replace(' ','',$tags));
                 $this->doPostToMe2day($myplanet->getMe2dayUID(), $myplanet->getMe2dayUKey(), $content, $tags);
@@ -122,7 +128,7 @@
 
 
         function insertContent($obj,$manual_inserted=false){
-
+            // 게시글 등록
             $obj->content = str_replace(array('<','>'),array('&lt;','&gt;'),$obj->content);
             $obj->content = str_replace('...', '…', $obj->content);
             $obj->content = str_replace('--', '—', $obj->content);
@@ -131,6 +137,8 @@
             $oDocumentController = &getController('document');
             $output = $oDocumentController->insertDocument($obj,$manual_inserted);
             if(!$output->toBool()) return $output;
+
+            // 플래닛 최근 업데이트 적용
             $planet_args->latest_document_srl = $output->get('document_srl');
             $planet_args->module_srl = $obj->module_srl;
             $output = executeQuery('planet.updatePlanetLatestDocument', $planet_args);
@@ -658,8 +666,8 @@
                 $args->email_address = $output->email_address;
                 $args->homepage = $output->homepage;
                
-                $config = $oPlanetModel->getPlanetConfig();
-                $args->tags = join(',',$config->smstag);
+                $module_info = $oPlanetModel->getPlanetConfig();
+                $args->tags = join(',',$module_info->smstag);
 
                 $manual_inserted = true;
                 $output = $this->insertContent($args,$manual_inserted);
@@ -731,8 +739,8 @@
             $oPlanetModel = &getModel('planet');
             $output = $oPlanetModel->getSMSRecv($phone_number);
             if($output->data && is_array($output->data)){
-                $config = $oPlanetModel->getPlanetConfig();
-                $smstag = join(',',$config->smstag);
+                $module_info = $oPlanetModel->getPlanetConfig();
+                $smstag = join(',',$module_info->smstag);
                 for($i=0,$c=count($output->data);$i<$c;$i++){
                     unset($obj);
                     $obj->content = $output->data[$i]->message;

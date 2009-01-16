@@ -1,5 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <module>
+    <grants />
+    <permissions />
     <actions>
         <action name="dispAdminIndex" type="view" standalone="true" index="true"/>
         <action name="dispAdminConfig" type="view" standalone="true" />

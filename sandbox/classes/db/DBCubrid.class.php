@@ -223,6 +223,14 @@
         }
 
         /**
+         * @brief 특정 테이블에 특정 column 제거
+         **/
+        function dropColumn($table_name, $column_name) {
+            $query = sprintf("alter class %s%s drop %s ", $this->prefix, $table_name, $column_name);
+            $this->_query($query);
+        }
+
+        /**
          * @brief 특정 테이블의 column의 정보를 return
          **/
         function isColumnExists($table_name, $column_name) {

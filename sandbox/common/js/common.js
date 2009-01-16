@@ -516,37 +516,45 @@ function zbxe_folder_close(id) {
  * 팝업의 내용에 맞게 크기를 늘리는 것은... 쉽게 되지는 않음.. ㅡ.ㅜ
  * popup_layout 에서 window.onload 시 자동 요청됨.
  **/
+var _popupHeight = 0;
 function setFixedPopupSize() {
     var bodyObj = jQuery('#popBody');
 
     if(bodyObj.length) {
-        if(bodyObj.height() > 500) {
-            bodyObj.css({ overflowY:'scroll', overflowX:'hidden', height:500 });
+        if(bodyObj.height() > 400) {
+            bodyObj.css({ overflowY:'scroll', overflowX:'hidden', height:400 });
         }
     }
 
     var w = jQuery("#popup_content").width();
     var h = jQuery("#popup_content").height();
 
-    jQuery('div').each(function() {
-        var ww = jQuery(this).width();
-        if(jQuery.inArray(this.id, ['waitingforserverresponse', 'fororiginalimagearea', 'fororiginalimageareabg']) == -1) {
-            if(ww > w) w = ww;
+    if(h != _popupHeight)  {
+        _popupHeight = h;
+
+        jQuery('div').each(function() {
+            var ww = jQuery(this).width();
+            if(jQuery.inArray(this.id, ['waitingforserverresponse', 'fororiginalimagearea', 'fororiginalimageareabg']) == -1) {
+                if(ww > w) w = ww;
+            }
+        });
+
+        // 윈도우에서는 브라우저 상관없이 가로 픽셀이 조금 더 늘어나야 한다.
+        if(navigator.userAgent.toLowerCase().indexOf('windows') > 0) {
+            if(jQuery.browser.opera) w += 10;
+            else if(jQuery.browser.msie) w += 10;
+            else w += 10;
         }
-    });
+        window.resizeTo(w, h);
 
-    // 윈도우에서는 브라우저 상관없이 가로 픽셀이 조금 더 늘어나야 한다.
-    if(navigator.userAgent.toLowerCase().indexOf('windows') > 0) {
-        if(jQuery.browser.opera) w += 10;
-        else if(jQuery.browser.msie) w += 10;
-        else w += 6;
+        var h1 = jQuery(window).height();
+        window.resizeBy(0, h-h1);
+
+        window.scrollTo(0,0);
+
     }
-    window.resizeTo(w, h);
 
-    var h1 = jQuery(window).height();
-    window.resizeBy(0, h-h1);
-
-    window.scrollTo(0,0);
+    setTimeout(setFixedPopupSize, 300);
 }
 
 /**
@@ -683,7 +691,7 @@ function callAddDocumentCart(document_length) {
     if(addedDocument.length<1 || document_length != addedDocument.length) return;
     var params = new Array();
     params["srls"] = addedDocument.join(",");
-    exec_xml("document","procDocumentAdminAddCart", params, null);
+    exec_xml("document","procDocumentAddCart", params, null);
     addedDocument = new Array();
 }
 

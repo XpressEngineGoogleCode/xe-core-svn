@@ -144,8 +144,7 @@
             $oDocumentAdminView = &getAdminView('document');
             $oDocumentAdminView->dispDocumentAdminList();
 
-            Context::get('module_srl', $module_srl);
-
+            Context::set('module_srl', $module_srl);
             $this->setTemplateFile('document_list');
         }
 

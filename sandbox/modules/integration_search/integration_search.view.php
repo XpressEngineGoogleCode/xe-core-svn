@@ -36,6 +36,9 @@
          * @brief 통합 검색 출력
          **/
         function IS() {
+            // 권한 체크
+            if(!$this->grant->access) return new Object(-1,'msg_not_permitted');
+
             // 검색이 가능한 목록을 구하기 위해 전체 목록을 구해옴
             $oModuleModel = &getModel('module');
             $site_module_info = Context::get('site_module_info');

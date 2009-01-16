@@ -34,7 +34,7 @@
         <!--@if($val->module=='board')-->
         <td class="setup center"><a href="{getUrl('act','dispHomepageBoardInfo','module_srl',$val->module_srl)}">{$lang->cmd_setup}</a></td>
         <!--@else-->
-        <td class="setup center"><a href="{getUrl('act','dispHomepageBoardInfo','module_srl',$val->module_srl)}">{$lang->cmd_setup}</a></td>
+        <td class="setup center"><a href="{getUrl('act','dispHomepagePageGrant','module_srl',$val->module_srl)}">{$lang->cmd_setup}</a></td>
         <!--@end-->
         <td class="view center"><a href="{getSiteUrl($site_module_info->domain,'','mid',$val->mid)}" onclick="window.open(this.href); return false;">{$lang->cmd_view}</a></td>
     </tr>

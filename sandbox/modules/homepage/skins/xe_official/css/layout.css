@@ -6,16 +6,15 @@
 body { margin:2em; font-size:.75em; font-family:Sans-serif;  }
 .liquid hr { display:none; }
 .liquid address { font-style:normal; }
-.liquid h1.title { margin:0;}
-.liquid ul.gnb { position:absolute; right:0; top:0; margin:0; padding:0;}
-.liquid ul.gnb li { display:inline; margin:0; padding:0;}
 
 /* Container */
 #container { margin:0 auto; } /* alignCenter = margin:0 auto | alignLeft = margin:0 | alignRight = margin:0 0 0 auto  */
+.liquid .gnb { position:absolute; right:25px; top:22px; }
 
 /* Header */
-#header { margin-bottom:2em; border-bottom:3px solid #5E95BC; }
-#header h1 a { color:#000000; text-decoration:none; color:#27536C;}
+#header { margin-bottom:2em; border-bottom:3px solid #5E95BC; overflow:hidden; *zoom:1; height:30px;}
+#header .title { margin:0; float:left; }
+#header .title a { font-size:1.8em; text-decoration:none; color:#5E95BC; font-weight:bold;}
 
 /* Body */
 #body { *margin-bottom:2em; }

@@ -33,7 +33,7 @@
 						<dd>
 							{$comment->getRegdate('H:i:s')}
 						</dd>
-                        <!--@if($grant->is_admin || $module_info->display_ip_address!='N')-->
+                        <!--@if($grant->manager || $module_info->display_ip_address!='N')-->
 						<dd>
                             ({$comment->getIpaddress()})
 						</dd>

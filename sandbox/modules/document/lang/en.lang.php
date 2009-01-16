@@ -14,6 +14,20 @@
     $lang->title_bold = 'Bold';
     $lang->title_color = 'Color';
 
+    $lang->parent_category_title = 'Parent Category';
+    $lang->category_title = 'Category';
+    $lang->category_color = 'Category Font Color';
+    $lang->expand = 'Expand';
+    $lang->category_group_srls = 'Accessable Group';
+
+    $lang->cmd_make_child = 'Add Child Category';
+    $lang->cmd_enable_move_category = "Change Category Position (Drag the top menu after selection)";
+
+    $lang->about_category_title = 'Please input category name';
+    $lang->about_expand = 'By selecting this option, it will be always expanded';
+    $lang->about_category_group_srls = 'Only selected group will be able to use current category';
+    $lang->about_category_color = 'You can set font color of category.';
+
     $lang->cmd_search_next = 'Search Next';
 
     $lang->cmd_temp_save = 'Temporary Save';

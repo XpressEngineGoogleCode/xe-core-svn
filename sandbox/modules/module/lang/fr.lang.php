@@ -27,9 +27,20 @@
     $lang->skin_history = 'Histoire des Mises à jour';
     $lang->module_copy = "Copier un Module";
     $lang->module_selector = "Module Selector";
+    $lang->do_selected = "선택된 것들을...";
+    $lang->bundle_setup = "일괄 기본 설정";
+    $lang->bundle_addition_setup = "일괄 추가 설정";
+    $lang->bundle_grant_setup = "일괄 권한 설정";
 
     $lang->header_script = "Script en-tête";
     $lang->about_header_script = "Vous pouvez entrer un script en html par vous-même entre &lt;header&gt; et &lt;/header&gt;.<br />Vous pouvez utiliser &lt;script, &lt;style ou &lt;meta tag";
+
+    $lang->grant_access = "Access";
+    $lang->grant_manager = "Management";
+
+    $lang->grant_to_all = "All users";
+    $lang->grant_to_login_user = "Logged users";
+    $lang->grant_to_group = "Specification group users";
 
     $lang->cmd_add_shortcut = "Ajouter un raccourci";
     $lang->cmd_install = "Installer";
@@ -38,6 +49,7 @@
     $lang->cmd_manage_grant = 'Administrer des Permissions';
     $lang->cmd_manage_skin = 'Administrer des Habillages';
     $lang->cmd_manage_document = 'Administrer des Articles';
+    $lang->cmd_find_module = '모듈 찾기';
 
     $lang->msg_new_module = "Créer un module";
     $lang->msg_update_module = "Modifier un module";
@@ -61,7 +73,7 @@
     $lang->about_list_count = 'Vous pouvez configurer combien d\'articles soient exposés dans une page.(20 par défaut)';
 	$lang->about_search_list_count = 'Vous pouvez configurer combien d\'articles soient exposés quand vous utilisez la fonction de recherche ou de catégorie. (20 par défaut)';
     $lang->about_page_count = 'Vous pouvez configurer combien de liens pour les Pages à Bouger en bas de chaque page.(10 par défaut)';
-    $lang->about_admin_id = 'Vous pouvez désigner un directeur qui aura tous les permissions sur le module.\nVous pouvez entrer plusieurs compte en utilisant <br />,(virgule) \n(mais le directeur ne peut pas encore approcher de la page d\'administrer du site.)';
+    $lang->about_admin_id = 'Vous pouvez désigner un directeur qui aura tous les permissions sur le module.\nVous pouvez entrer plusieurs compte en utilisant.';
     $lang->about_grant = 'Si vous ne donnez pas la permission à aucune personne, même les membres qui n\'a pas ouvert la connexion auront la permission. '; 
     $lang->about_module = "XE se compose des modules sauf la bibliothèque fondamental.\nLe module [Administration des Modules] montera tous les modules installés et vous aidera les administrer.";
 

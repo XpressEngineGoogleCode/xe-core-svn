@@ -18,79 +18,23 @@
          * @brief 플래닛 기본 설정 return
          **/
         function getPlanetConfig() {
-            static $config = null;
-            if(is_null($config)) {
-                // module config의 값을 구함
+            static $module_info = null;
+            if(is_null($module_info)) {
+                // module module_info의 값을 구함
                 $oModuleModel = &getModel('module');
-                $config = $oModuleModel->getModuleConfig('planet');
+                $module_info = $oModuleModel->getModuleConfig('planet');
 
                 // planet dummy module의 is_default 값을 구함
-                $dummy = $oModuleModel->getModuleInfoByMid($config->mid);
-                $config->is_default = $dummy->is_default;
-                $config->module_srl = $dummy->module_srl;
-                $config->browser_title = $dummy->browser_title;
-                $config->layout_srl = $dummy->layout_srl;
-                if($config->logo_image) $config->logo_image = context::getFixUrl($config->logo_image);
+                $dummy = $oModuleModel->getModuleInfoByMid($module_info->mid);
+                $module_info->is_default = $dummy->is_default;
+                $module_info->module_srl = $dummy->module_srl;
+                $module_info->browser_title = $dummy->browser_title;
+                $module_info->layout_srl = $dummy->layout_srl;
+                if($module_info->logo_image) $module_info->logo_image = context::getFixUrl($module_info->logo_image);
+
+                unset($module_info->grants);
             }
-            return $config;
-        }
-
-        /**
-         * @brief 회원 - 플래닛 접속 권한 return
-         * 플래닛 서비스 컨텐츠에 대한 접속 권한을 확인
-         **/
-        function isAccessGranted() {
-            $config = $this->getPlanetConfig();
-            $grant = $config->grants['access'];
-            if(!$grant || !count($grant)) return true;
-
-            $logged_info = Context::get('logged_info');
-            if($logged_info->is_admin == 'Y') return true;
-            $group_list = $logged_info->group_list;
-            if(count($group_list)) $group_srls = array_keys($group_list);
-            else return false;
-
-            foreach($grant as $srl) if(in_array($srl, $group_srls)) return true;
-            return false;
-        }
-
-        /**
-         * @brief 회원 - 플래닛 생성 권한 return
-         **/
-        function isCreateGranted() {
-            if(!Context::get('is_logged')) return false;
-
-            $config = $this->getPlanetConfig();
-            $grant = $config->grants['create'];
-            if(!$grant || !count($grant)) return true;
-
-            $logged_info = Context::get('logged_info');
-            if($logged_info->is_admin == 'Y') return true;
-            $group_list = $logged_info->group_list;
-            $group_srls = array_keys($group_list);
-
-            foreach($grant as $srl) if(in_array($srl, $group_srls)) return true;
-            return false;
-        }
-
-        /**
-         * @brief 관리자 - 플래닛 모듈 전체 관리 권한 return
-         **/
-        function isManageGranted() {
-            if(!Context::get('is_logged')) return false;
-
-            $logged_info = Context::get('logged_info');
-            if($logged_info->is_admin == 'Y') return true;
-
-            $config = $this->getPlanetConfig();
-            $grant = $config->grants['manage'];
-            if(!$grant || !count($grant)) return false;
-
-            $group_list = $logged_info->group_list;
-            $group_srls = array_keys($group_list);
-
-            foreach($grant as $srl) if(in_array($srl, $group_srls)) return true;
-            return false;
+            return $module_info;
         }
 
         /**
@@ -459,8 +403,8 @@
             Context::set('planet', $planet);
 
             // 스킨 경로를 구함
-            $config = $this->getPlanetConfig();
-            if(!$this->module_info->skin) $this->module_info->skin = $config->planet_default_skin;
+            $module_info = $this->getPlanetConfig();
+            if(!$this->module_info->skin) $this->module_info->skin = $module_info->planet_default_skin;
             $template_path = sprintf("%sskins/%s/",$this->module_path, $this->module_info->skin);
 
             // template 파일을 직접 컴파일한후 tpl변수에 담아서 return한다.
@@ -481,8 +425,8 @@
             Context::set('planet', $planet);
 
             // 스킨 경로를 구함
-            $config = $this->getPlanetConfig();
-            if(!$this->module_info->skin) $this->module_info->skin = $config->planet_default_skin;
+            $module_info = $this->getPlanetConfig();
+            if(!$this->module_info->skin) $this->module_info->skin = $module_info->planet_default_skin;
             $template_path = sprintf("%sskins/%s/",$this->module_path, $this->module_info->skin);
 
             // template 파일을 직접 컴파일한후 tpl변수에 담아서 return한다.
@@ -595,8 +539,8 @@
             Context::set('reply_list', $output->data);
 
             // 스킨 경로를 구함
-            $config = $this->getPlanetConfig();
-            if(!$this->module_info->skin) $this->module_info->skin = $config->planet_default_skin;
+            $module_info = $this->getPlanetConfig();
+            if(!$this->module_info->skin) $this->module_info->skin = $module_info->planet_default_skin;
             $template_path = sprintf("%sskins/%s/",$this->module_path, $this->module_info->skin);
 
             // template 파일을 직접 컴파일한후 tpl변수에 담아서 return한다.

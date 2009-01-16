@@ -1,9 +1,17 @@
 <h3 class="title">{$lang->board} > {$module_info->browser_title} <span class="gray">{$lang->cmd_setup}</span></h3>
 
 <ul class="localNavigation">
-    <li><a href="{getUrl('act','dispHomepageBoardInfo','module_srl',$module_srl)}">{$lang->cmd_setup}</a></li>
-    <li><a href="{getUrl('act','dispHomepageBoardAddition','module_srl',$module_srl)}">{$lang->cmd_addition_setup}</a></li>
-    <li><a href="{getUrl('act','dispHomepageBoardGrant','module_srl',$module_srl)}">{$lang->grant}</a></li>
-    <li><a href="{getUrl('act','dispHomepageBoardSkin','module_srl',$module_srl)}">{$lang->skin}</a></li>
+    <li><a href="{getUrl('act','dispHomepageMidSetup','module_srl','')}">{$lang->cmd_list}</a></li>
+
+    <li <!--@if($act=='dispHomepageBoardInfo')-->class="on"<!--@end-->><a href="{getUrl('act','dispHomepageBoardInfo')}">{$lang->cmd_setup}</a></li>
+    <li <!--@if($act=='dispHomepageBoardCategoryInfo')-->class="on"<!--@end-->><a href="{getUrl('act','dispHomepageBoardCategoryInfo')}">{$lang->cmd_manage_category}</a></li>
+    <li <!--@if($act=='dispHomepageBoardExtraVars')-->class="on"<!--@end-->><a href="{getUrl('act','dispHomepageBoardExtraVars')}">{$lang->extra_vars}</a></li>
+    <li <!--@if($act=='dispHomepageBoardGrant')-->class="on"<!--@end-->><a href="{getUrl('act','dispHomepageBoardGrant')}">{$lang->cmd_manage_grant}</a></li>
+    <li <!--@if($act=='dispHomepageBoardAddition')-->class="on"<!--@end-->><a href="{getUrl('act','dispHomepageBoardAddition')}">{$lang->cmd_addition_setup}</a></li>
+    <li <!--@if($act=='dispHomepageBoardSkin')-->class="on"<!--@end-->><a href="{getUrl('act','dispHomepageBoardSkin')}">{$lang->cmd_manage_skin}</a></li>
+
+
+
+
     <li><a href="{getUrl('','mid',$module_info->mid)}" onclick="window.open(this.href); return false;">{$lang->cmd_view}</a></li>
 </ul>

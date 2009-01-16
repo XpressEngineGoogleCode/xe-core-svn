@@ -1,0 +1,1 @@
+vi ./insertSite.xml ./getModuleSites.xml ./deleteSiteAdmin.xml ./getSiteInfo.xml ./getSiteModules.xml ./updateSite.xml ./deleteSite.xml ./getSiteInfoByDomain.xml ./getSiteDefaultInfo.xml ./isSiteAdmin.xml ./getSiteAdmin.xml ./getSiteCount.xml ./insertSiteAdmin.xml

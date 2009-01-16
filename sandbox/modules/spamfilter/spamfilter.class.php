@@ -13,9 +13,6 @@
         function moduleInstall() {
             // action forward에 등록 (관리자 모드에서 사용하기 위함)
             $oModuleController = &getController('module');
-            $oModuleController->insertActionForward('spamfilter', 'view', 'dispSpamfilterAdminConfig');
-            $oModuleController->insertActionForward('spamfilter', 'view', 'dispSpamfilterAdminDeniedIPList');
-            $oModuleController->insertActionForward('spamfilter', 'view', 'dispSpamfilterAdminDeniedWordList');
 
             // 2007. 12. 7 글/ 댓글/ 엮인글이 등록될때 스팸필터링을 시도하는 트리거
             $oModuleController->insertTrigger('document.insertDocument', 'spamfilter', 'controller', 'triggerInsertDocument', 'before');

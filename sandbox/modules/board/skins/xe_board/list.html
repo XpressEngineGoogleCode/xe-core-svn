@@ -28,8 +28,8 @@
 
     <!-- 글쓰기, 목록 버튼 -->
         <div class="leftButtonBox">
-            <!--@if($grant->is_admin)-->
-                <a href="{getUrl('','module','document','act','dispDocumentAdminManageDocument')}" onclick="popopen(this.href,'manageDocument'); return false;" class="button {$btn_class}"><span>{$lang->cmd_manage_document}</span></a>
+            <!--@if($grant->manager)-->
+                <a href="{getUrl('','module','document','act','dispDocumentManageDocument')}" onclick="popopen(this.href,'manageDocument'); return false;" class="button {$btn_class}"><span>{$lang->cmd_manage_document}</span></a>
             <!--@end-->
             <!--@if($module_info->default_style != 'blog')-->
             <a href="{getUrl('','mid',$mid,'page',$page,'document_srl','','listStyle',$listStyle)}" class="button {$btn_class}"><span>{$lang->cmd_list}</span></a>

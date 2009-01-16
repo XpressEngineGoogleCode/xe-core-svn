@@ -49,7 +49,10 @@
          **/
         function procMenuAdminDelete() {
             $menu_srl = Context::get('menu_srl');
-
+            return $this->deleteMenu($menu_srl);
+        }
+        
+        function deleteMenu($menu_srl) {
             // 캐시 파일 삭제
             $cache_list = FileHandler::readDir("./files/cache/menu","",false,true);
             if(count($cache_list)) {
@@ -73,7 +76,7 @@
             $output = executeQuery("menu.deleteMenu", $args);
             if(!$output->toBool()) return $output;
 
-            $this->setMessage('success_deleted');
+            return new Object(0,'success_deleted');
         }
 
         /**

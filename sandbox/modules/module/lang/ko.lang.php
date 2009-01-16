@@ -27,9 +27,20 @@
     $lang->skin_history = '변경 이력';
     $lang->module_copy = "모듈 복사";
     $lang->module_selector = "모듈 선택기";
+    $lang->do_selected = "선택된 것들을...";
+    $lang->bundle_setup = "일괄 기본 설정";
+    $lang->bundle_addition_setup = "일괄 추가 설정";
+    $lang->bundle_grant_setup = "일괄 권한 설정";
 
     $lang->header_script = "헤더 스크립트";
     $lang->about_header_script = "html의 &lt;head&gt;와 &lt;/head&gt; 사이에 들어가는 코드를 직접 입력할 수 있습니다.<br />&lt;script, &lt;style 또는 &lt;meta 태그등을 이용하실 수 있습니다";
+
+    $lang->grant_access = "접근권한";
+    $lang->grant_manager = "관리권한";
+
+    $lang->grant_to_all = "모든 사용자";
+    $lang->grant_to_login_user = "로그인 사용자";
+    $lang->grant_to_group = "특정 그룹 사용자";
 
     $lang->cmd_add_shortcut = "바로가기 추가";
     $lang->cmd_install = "설치";
@@ -38,6 +49,7 @@
     $lang->cmd_manage_grant = '권한관리';
     $lang->cmd_manage_skin = '스킨관리';
     $lang->cmd_manage_document = '게시글 관리';
+    $lang->cmd_find_module = '모듈 찾기';
 
     $lang->msg_new_module = "모듈 생성";
     $lang->msg_update_module = "모듈 수정";
@@ -62,7 +74,7 @@
     $lang->about_list_count = '한페이지에 표시될 글의 수를 지정하실 수 있습니다. (기본 20개)';
     $lang->about_search_list_count = '검색 또는 카테고리 선택등을 할 경우 표시될 글의 수를 지정하실 수 있습니다. 기본(20개)';
     $lang->about_page_count = '목록 하단 페이지 이동 하는 링크의 수를 지정하실 수 있습니다. (기본 10개)';
-    $lang->about_admin_id = '해당 모듈에 대해 최고 권한을 가지는 관리자를 지정할 수 있습니다.<br />,(콤마)로 다수 아이디 지정이 가능합니다. (관리자페이지 접근은 불가능)';
+    $lang->about_admin_id = '해당 모듈에 대해 최고 권한을 가지는 관리자를 지정할 수 있습니다.';
     $lang->about_grant = '특정 권한의 대상을 모두 해제하시면 로그인하지 않은 회원까지 권한을 가질 수 있습니다';
     $lang->about_module = "XE는 기본 라이브러리를 제외한 나머지는 모두 모듈로 구성되어 있습니다.\n모듈관리 모듈은 설치된 모든 모듈을 보여주고 관리를 도와줍니다.";
     $lang->about_extra_vars_default_value = '다중/단일 선택등 기본값이 여러개가 필요한 경우 , (콤마)로 연결하시면 됩니다';

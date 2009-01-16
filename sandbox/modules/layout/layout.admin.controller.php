@@ -150,7 +150,10 @@
          **/
         function procLayoutAdminDelete() {
             $layout_srl = Context::get('layout_srl');
+            return $this->deleteLayout($layout_srl);
+        }
 
+        function deleteLayout($layout_srl) {
             // 캐시 파일 삭제 
             $cache_list = FileHandler::readDir("./files/cache/layout","",false,true);
             if(count($cache_list)) {
@@ -165,16 +168,10 @@
 
             // 레이아웃 삭제
             $args->layout_srl = $layout_srl;
-
-            $output = $this->deleteLayout($args);
+            $output = executeQuery("layout.deleteLayout", $args);
             if(!$output->toBool()) return $output;
 
-            $this->setMessage('success_deleted');
-        }
-
-        function deleteLayout($args) {
-            $output = executeQuery("layout.deleteLayout", $args);
-            return $output;
+            return new Object(0,'success_deleted');
         }
 
         /**

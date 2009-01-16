@@ -27,9 +27,20 @@
     $lang->skin_history = 'Historia de actualización';
     $lang->module_copy = "Copy Module";
     $lang->module_selector = "Module Selector";
+    $lang->do_selected = "선택된 것들을...";
+    $lang->bundle_setup = "일괄 기본 설정";
+    $lang->bundle_addition_setup = "일괄 추가 설정";
+    $lang->bundle_grant_setup = "일괄 권한 설정";
 
     $lang->header_script = "헤더 스크립트";
     $lang->about_header_script = "html의 &lt;header&gt;와 &lt;/header&gt; 사이에 들어가는 코드를 직접 입력할 수 있습니다.<br />&lt;script, &lt;style 또는 &lt;meta 태그등을 이용하실 수 있습니다";
+
+    $lang->grant_access = "Access";
+    $lang->grant_manager = "Management";
+
+    $lang->grant_to_all = "All users";
+    $lang->grant_to_login_user = "Logged users";
+    $lang->grant_to_group = "Specification group users";
 
     $lang->cmd_add_shortcut = "añadir acceso directo";
     $lang->cmd_install = "Instalar";
@@ -38,6 +49,7 @@
     $lang->cmd_manage_grant = 'Manejo de atribuciones';
     $lang->cmd_manage_skin = 'Manejo de temas';
     $lang->cmd_manage_document = 'Manejo de documentos';
+    $lang->cmd_find_module = '모듈 찾기';
 
     $lang->msg_new_module = "Crear un nuevo módulo";
     $lang->msg_update_module = "Modificar el módulo";
@@ -61,7 +73,7 @@
     $lang->about_list_count = 'Usted puede definir el número límite de los documentos a mostrar en una página.(Predefinido es 20)';
     $lang->about_search_list_count = 'Usted puede configurar el número de artículos que se exponen cuando se utiliza la función de búsqueda o categoría. (Por defecto es 20)';
     $lang->about_page_count = 'Usted puede definir el número de página enlazada para mover páginas en un botón de la página.(Predefinido es 10)';
-    $lang->about_admin_id = 'Usted puede definir el administrador de atribuciones superiores al módulo.\n Usted puede asignar múltiples IDs,<br />utilizando una ","(coma) \n(pero el administrador del módulo no puede acceder al sitio de la pógina del administrador.)';
+    $lang->about_admin_id = 'Usted puede definir el administrador de atribuciones superiores al módulo.\n Usted puede asignar múltiples IDs.';
     $lang->about_grant = 'Si usted desea desactivar a todos los objetos teniendo atribuciones especificas, incluso el usuario no conectado pueden tener atribuciones.';
     $lang->about_module = "XE consiste de módulos excepto la librería básica.\n Módulo del Manejo del Módulo muestra todos los módulos instalados y ayuda el manejo de ellos.";
 

@@ -13,6 +13,18 @@
     $lang->title_bold = 'タイトル太字';
     $lang->title_color = 'タイトルの色';
 
+    $lang->parent_category_title = '上位カテゴリ名';
+    $lang->category_title = 'カテゴリ名';
+    $lang->category_color = 'カテゴリフォント色';
+    $lang->expand = '拡張表示';
+    $lang->category_group_srls = 'グループ制限';
+    $lang->cmd_make_child = '下位カテゴリ追加';
+    $lang->cmd_enable_move_category = "カテゴリ位置変更（選択後上のメニューをドラッグして下さい）";
+    $lang->about_category_title = 'カテゴリ名を入力して下さい。';
+    $lang->about_expand = 'チェックすると常に展開された状態になります。';
+    $lang->about_category_group_srls = '選択したグループのみ、現在のカテゴリの指定が出来ます。';
+    $lang->about_category_color = 'カテゴリのフォント色を設定します。';
+
     $lang->cmd_search_next = '継続検索';
 
     $lang->cmd_temp_save = '一時保存';

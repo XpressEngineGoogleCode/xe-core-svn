@@ -14,6 +14,16 @@
     $lang->title_bold = 'Жирное название';
     $lang->title_color = 'Цвет названия';
 
+    $lang->parent_category_title = 'Родительская категория';
+    $lang->category_title = 'Категория';
+    $lang->category_color = '분류 폰트색깔';
+    $lang->expand = 'Расширить';
+    $lang->category_group_srls = 'Доступные группы';
+    $lang->about_category_title = 'Пожалуйста, введите название категории';
+    $lang->about_expand = 'Если эта опция выбрана, расширение будут применено всегда';
+    $lang->about_category_group_srls = '선택하신 그룹만 현재 카테고리를 지정할 수 있도록 합니다';
+
+    $lang->about_category_color = '분류 폰트색깔을 지정합니다.';
     $lang->cmd_temp_save = 'Сохранить временно';
 
 	$lang->cmd_toggle_checked_document = 'Перевернуть выбранные объекты';

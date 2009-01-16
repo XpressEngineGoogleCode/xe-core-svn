@@ -112,14 +112,12 @@
     <!--@end-->
     <!--@end-->
 
-    <!--@if($module_info->extra_vars)--><!--@foreach($module_info->extra_vars as $key => $val)-->
-        <!--@if($val->name)-->
+    <!--@foreach($extra_keys as $key => $val)-->
     <tr>
         <th><label>{$val->name} <!--@if($val->is_required=='Y')-->*<!--@end--> :</label></th>
         <td colspan="3"><!--#include("./extra_var_form.html")--></td>
     </tr>
-        <!--@end-->
-    <!--@end--><!--@end-->
+    <!--@end-->
 
     <tr>
         <th><label for="inputTags">{$lang->tag} :</label></th>

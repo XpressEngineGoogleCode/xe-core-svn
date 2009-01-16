@@ -17,8 +17,7 @@
     class issuetrackerModel extends issuetracker {
         var $oSvn = null;
 
-        function init()
-        {
+        function init() {
         }
 
         function &getProjectInfo($module_srl) {
@@ -96,7 +95,11 @@
                         break;
                     default :
                             preg_match('/^extra_vars([0-9]+)$/',$args->search_target,$matches);
-                            if($matches[1]) $args->{"s_extra_vars".$matches[1]} = $args->search_keyword;
+                            if($matches[1]) {
+                                $query_id = 'issuetracker.getIssueListWithExtraVars';
+                                $args->var_idx = $matches[1];
+                                $args->var_value = str_replace(' ','%',$args->search_keyword);
+                            }
                         break;
                 }
             }
@@ -127,6 +130,8 @@
                 }
             } else {
                 $output = executeQueryArray($query_id, $args);
+                debugPrint($args);
+                debugPrint($output);
             }
 
             // 결과가 없거나 오류 발생시 그냥 return
@@ -353,11 +358,9 @@
             return $release;
         }
 
-        function getGroupMembers($group_srls) {
-            if(!$group_srls) return;
-            if(!is_array($group_srls)) $group_srls = array($group_srls);
-
-            $args->group_srls = implode(',',$group_srls);
+        function getGroupMembers($module_srl, $grant_name) {
+            $args->module_srl = $module_srl;
+            $args->name = $grant_name;
             $output = executeQueryArray('issuetracker.getGroupMembers', $args);
             return $output->data;
         }

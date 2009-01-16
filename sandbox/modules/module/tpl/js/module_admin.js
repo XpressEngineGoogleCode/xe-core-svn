@@ -71,3 +71,64 @@ function insertModule(id, module_srl, mid, browser_title, multi_select) {
         window.close();
     }
 }
+
+/* 권한 선택용 */
+function doShowGrantZone() {
+    jQuery(".grant_default").each( function() {
+        var id = "#zone_"+this.name.replace(/_default$/,'');
+        if(!jQuery(this).val()) jQuery(id).css("display","block");
+        else jQuery(id).css("display","none");
+    } );
+}
+
+/* 권한 등록 후 알림 메세지 */
+function completeInsertGrant(ret_obj) {
+    alert(ret_obj['message']);
+    location.reload();
+}
+
+/* 관리자 아이디 등록/ 제거 */
+function doInsertAdmin() {
+    var fo_obj = xGetElementById("fo_obj");
+    var sel_obj = fo_obj._admin_member;
+    var admin_id = fo_obj.admin_id.value;
+    if(!admin_id) return;
+
+    var opt = new Option(admin_id,admin_id,true,true);
+    sel_obj.options[sel_obj.options.length] = opt;
+
+    fo_obj.admin_id.value = '';
+    sel_obj.size = sel_obj.options.length;
+    sel_obj.selectedIndex = -1;
+
+    var members = new Array();
+    for(var i=0;i<sel_obj.options.length;i++) {
+        members[members.length] = sel_obj.options[i].value;
+        
+    }
+    fo_obj.admin_member.value = members.join(',');
+
+    fo_obj.admin_id.focus();
+}
+
+function doDeleteAdmin() {
+    var fo_obj = xGetElementById("fo_obj");
+    var sel_obj = fo_obj._admin_member;
+    sel_obj.remove(sel_obj.selectedIndex);
+
+    sel_obj.size = sel_obj.options.length;
+    sel_obj.selectedIndex = -1;
+
+    var members = new Array();
+    for(var i=0;i<sel_obj.options.length;i++) {
+        members[members.length] = sel_obj.options[i].value;
+        
+    }
+    fo_obj.admin_member.value = members.join(',');
+}
+
+
+function completeModuleSetup(ret_obj) {
+    alert(ret_obj['message']);
+    window.close();
+}

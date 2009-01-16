@@ -1,12 +1,12 @@
 <?php
     /**
-     * @class  boardAdminModel
+     * @class  documentAdminModel
      * @author zero (zero@nzeo.com)
      * @version 0.1
-     * @brief  board 모듈의 admin model class
+     * @brief  document 모듈의 admin model class
      **/
 
-    class boardAdminModel extends board {
+    class documentAdminModel extends document {
 
         /**
          * @brief 초기화
@@ -18,14 +18,19 @@
          * @brief 특정 카테고리의 정보를 이용하여 템플릿을 구한후 return
          * 관리자 페이지에서 특정 메뉴의 정보를 추가하기 위해 서버에서 tpl을 컴파일 한후 컴파일 된 html을 직접 return
          **/
-        function getBoardAdminCategoryTplInfo() {
+        function getDocumentAdminCategoryTplInfo() {
             // 해당 메뉴의 정보를 가져오기 위한 변수 설정
+            $module_srl = Context::get('module_srl');
+
+            $oModuleModel = &getModel('module');
+            $module_info = $oModuleModel->getModuleInfoByModuleSrl($module_srl);
+
             $category_srl = Context::get('category_srl');
             $parent_srl = Context::get('parent_srl');
 
             // 회원 그룹의 목록을 가져옴
             $oMemberModel = &getModel('member');
-            $group_list = $oMemberModel->getGroups();
+            $group_list = $oMemberModel->getGroups($module_info->site_srl);
             Context::set('group_list', $group_list);
 
             $oDocumentModel = &getModel('document');
@@ -55,7 +60,7 @@
 
             // template 파일을 직접 컴파일한후 tpl변수에 담아서 return한다.
             $oTemplate = &TemplateHandler::getInstance();
-            $tpl = $oTemplate->compile($this->module_path.'tpl', 'category_info');
+            $tpl = $oTemplate->compile('./modules/document/tpl', 'category_info');
             $tpl = str_replace("\n",'',$tpl);
             // return 할 변수 설정
             $this->add('tpl', $tpl);

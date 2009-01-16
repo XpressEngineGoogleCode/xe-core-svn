@@ -151,3 +151,7 @@ function doDeleteSavedDocument(document_srl, confirm_message) {
     params['document_srl'] = document_srl;
     exec_xml('member', 'procMemberDeleteSavedDocument', params, function() { location.reload(); });
 }
+
+function insertSelectedModule(id, module_srl, mid, browser_title) {
+    location.href = current_url.setQuery('selected_module_srl',module_srl);
+}

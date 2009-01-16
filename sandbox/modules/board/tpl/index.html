@@ -42,7 +42,11 @@
         <td class="center"><input type="checkbox" name="cart" value="{$val->module_srl}" /></td>
         <td>
             <!--@if(!$val->module_category_srl)-->
+                <!--@if($val->site_srl)-->
+                {$lang->virtual_site}
+                <!--@else-->
                 {$lang->not_exists}
+                <!--@end-->
             <!--@else-->
                 {$module_category[$val->module_category_srl]->title}
             <!--@end-->
@@ -61,12 +65,15 @@
 
 <!-- 버튼 -->
 <div class="fl gap1">
-    <a href="#" onclick="doCartSetup('dispBoardAdminInsertBoard'); return false;" class="button"><span>{$lang->cmd_setup}</span></a>
-    <a href="#" onclick="doCartSetup('dispBoardAdminBoardAdditionSetup'); return false;" class="button"><span>{$lang->cmd_addition_setup}</span></a>
-    <a href="#" onclick="doCartSetup('dispBoardAdminGrantInfo'); return false;" class="button"><span>{$lang->cmd_manage_grant}</span></a>
+    {$lang->do_selected}
+    <div>
+        <a href="{getUrl('','module','module','act','dispModuleAdminModuleSetup')}" onclick="doCartSetup(this.href); return false;" class="button green"><span>{$lang->cmd_setup}</span></a>
+        <a href="{getUrl('','module','module','act','dispModuleAdminModuleAdditionSetup')}" onclick="doCartSetup(this.href); return false;" class="button red"><span>{$lang->cmd_addition_setup}</span></a>
+        <a href="{getUrl('','module','module','act','dispModuleAdminModuleGrantSetup')}" onclick="doCartSetup(this.href); return false;" class="button black"><span>{$lang->cmd_manage_grant}</span></a>
+    </div>
 </div>
 <div class="fr gap1">
-    <a href="{getUrl('act','dispBoardAdminInsertBoard','module_srl','')}" class="button"><span>{$lang->cmd_make}</span></a>
+    <a href="{getUrl('act','dispBoardAdminInsertBoard','module_srl','')}" class="button blue"><span>{$lang->cmd_make}</span></a>
 </div>
 
 <!-- 페이지 네비게이션 -->

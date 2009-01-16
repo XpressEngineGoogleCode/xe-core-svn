@@ -1,7 +1,7 @@
 /**
- * @file   modules/board/tpl/js/board_category.js
+ * @file   modules/document/tpl/js/document_category.js
  * @author sol (sol@ngleader.com)
- * @brief  board 모듈의 category tree javascript
+ * @brief  document 모듈의 category tree javascript
  **/
 
 function Tree(url){
@@ -88,7 +88,7 @@ function Tree(url){
                     parent_srl = 0;
                 }
 
-                jQuery.exec_json("board.procBoardAdminMoveCategory",{ "module_srl":module_srl,"parent_srl":parent_srl,"target_srl":target_srl,"source_srl":source_srl},
+                jQuery.exec_json("board.procDocumentAdminMoveCategory",{ "module_srl":module_srl,"parent_srl":parent_srl,"target_srl":target_srl,"source_srl":source_srl},
                 function(data){
                     jQuery('#category_info').html('');
                    if(data.error > 0) Tree(xml_url);
@@ -126,7 +126,7 @@ function addNode(node,e){
             ,"module_srl":jQuery("#fo_category [name=module_srl]").val()
             };
 
-    jQuery.exec_json('board.getBoardAdminCategoryTplInfo', params, function(data){
+    jQuery.exec_json('document.getDocumentAdminCategoryTplInfo', params, function(data){
         jQuery('#category_info').html(data.tpl);
     });
 }
@@ -138,7 +138,7 @@ function modifyNode(node,e){
             ,"module_srl":jQuery("#fo_category [name=module_srl]").val()
             };
 
-    jQuery.exec_json('board.getBoardAdminCategoryTplInfo', params, function(data){
+    jQuery.exec_json('document.getDocumentAdminCategoryTplInfo', params, function(data){
         jQuery('#category_info').html(data.tpl);
     });
 }
@@ -159,7 +159,7 @@ function deleteNode(node){
                 ,"module_srl":jQuery("#fo_category [name=module_srl]").val()
                 };
 
-        jQuery.exec_json('board.procBoardAdminDeleteCategory', params, function(data){
+        jQuery.exec_json('document.procDocumentAdminDeleteCategory', params, function(data){
             if(data.error==0) Tree(xml_url);
         });
     }
@@ -182,5 +182,5 @@ function doReloadTreeCategory(module_srl) {
 
     // 서버에 요청하여 해당 노드의 정보를 수정할 수 있도록 한다.
     var response_tags = new Array('error','message', 'xml_file');
-    exec_xml('board', 'procBoardAdminMakeXmlFile', params, completeInsertCategory, response_tags, params);
+    exec_xml('document', 'procDocumentAdminMakeXmlFile', params, completeInsertCategory, response_tags, params);
 }

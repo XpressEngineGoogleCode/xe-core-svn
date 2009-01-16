@@ -26,10 +26,21 @@
     $lang->skin_license = 'License';
     $lang->skin_history = 'История обновлений';
     $lang->module_selector = "Module Selector";
+    $lang->do_selected = "선택된 것들을...";
+    $lang->bundle_setup = "일괄 기본 설정";
+    $lang->bundle_addition_setup = "일괄 추가 설정";
+    $lang->bundle_grant_setup = "일괄 권한 설정";
     $lang->module_copy = "Копировать модуль";
 
     $lang->header_script = "헤더 스크립트";
     $lang->about_header_script = "html의 &lt;header&gt;와 &lt;/header&gt; 사이에 들어가는 코드를 직접 입력할 수 있습니다.<br />&lt;script, &lt;style 또는 &lt;meta 태그등을 이용하실 수 있습니다";
+
+    $lang->grant_access = "Access";
+    $lang->grant_manager = "Management";
+
+    $lang->grant_to_all = "All users";
+    $lang->grant_to_login_user = "Logged users";
+    $lang->grant_to_group = "Specification group users";
 
     $lang->cmd_add_shortcut = "Добавить ярлык";
     $lang->cmd_install = "Установить";
@@ -38,6 +49,7 @@
     $lang->cmd_manage_grant = 'Управление правами доступа';
     $lang->cmd_manage_skin = 'Управление скинами';
     $lang->cmd_manage_document = 'Управление статьями';
+    $lang->cmd_find_module = '모듈 찾기';
 
     $lang->msg_new_module = "Создать новый модуль";
     $lang->msg_update_module = "Изменить модуль";
@@ -61,7 +73,7 @@
     $lang->about_list_count = 'Вы можете установить лимит показа статей на страницу. (по умолчанию: 20)';
     $lang->about_search_list_count = '검색 또는 카테고리 선택등을 할 경우 표시될 글의 수를 지정하실 수 있습니다. 기본(20개)';
     $lang->about_page_count = 'Вы можете установить число страниц внизу. (по умолчанию: 10)';
-    $lang->about_admin_id = 'Вы можете разрешить менеджеру иметь полные права доступа к этому модулю.\nВы можете ввести несколько ID, используя <br />запятую \n(но менеджер модуля не имеет права доступа к странице администрирования сайта.)';
+    $lang->about_admin_id = 'Вы можете разрешить менеджеру иметь полные права доступа к этому модулю.\nВы можете ввести несколько ID, используя ';
     $lang->about_grant = 'Если Вы отключите все права доступа для отдельного объекта, не прошедшие процедуру входа на сайт пользователи получат доступ.'; 
     $lang->about_module = "XE состоит из модулей, за исключением базовой библиотеки.\n Управление модулем покажет все установленные модули и поможет управлять ими.";
 

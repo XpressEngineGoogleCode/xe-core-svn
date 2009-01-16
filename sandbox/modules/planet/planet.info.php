@@ -43,15 +43,15 @@
         }
 
         function isHome() {
-            $config = Context::get('config');
-            if($this->getModuleSrl() == $config->module_srl) return true;
+            $module_info = Context::get('module_info');
+            if($this->getModuleSrl() == $module_info->module_srl) return true;
             return false;
         }
 
         function getColorset() {
             if($this->isHome() || !$this->colorset) {
-                $config = Context::get('config');
-                return $config->colorset;
+                $module_info = Context::get('module_info');
+                return $module_info->colorset;
             }
             return $this->colorset;
 
@@ -187,8 +187,8 @@
             if(!$this->isExists()) return;
             if(is_null($open_rss)) {
                 $oRssModel = &getModel('rss');
-                $config = $oRssModel->getRssModuleConfig($this->getModuleSrl());
-                $open_rss = $config->open_rss;
+                $module_info = $oRssModel->getRssModuleConfig($this->getModuleSrl());
+                $open_rss = $module_info->open_rss;
             }
             return $open_rss=='Y'?true:false;
 

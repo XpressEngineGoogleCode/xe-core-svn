@@ -36,31 +36,23 @@
 
             $this->setTemplatePath($template_path);
 
-            // 권한에 따른 메뉴 제한
-            if(!$this->grant->access) {
-                $this->grant->ticket_view = $this->grant->ticket_write = $this->grant->timeline = $this->grant->browser_source = $this->grant->download = 0;
-                unset($GLOBALS['lang']->project_menus);
-            } else {
-                if(!$this->grant->ticket_view) unset($GLOBALS['lang']->project_menus['dispIssuetrackerViewIssue']);
-                if(!$this->grant->ticket_write) unset($GLOBALS['lang']->project_menus['dispIssuetrackerNewIssue']);
-                if(!$this->grant->timeline) unset($GLOBALS['lang']->project_menus['dispIssuetrackerTimeline']);
-                if(!$this->grant->browser_source) unset($GLOBALS['lang']->project_menus['dispIssuetrackerViewSource']);
-                if(!$this->grant->download) unset($GLOBALS['lang']->project_menus['dispIssuetrackerDownload']);
-            }
+            if(!$this->grant->ticket_view) unset($GLOBALS['lang']->project_menus['dispIssuetrackerViewIssue']);
+            if(!$this->grant->ticket_write) unset($GLOBALS['lang']->project_menus['dispIssuetrackerNewIssue']);
+            if(!$this->grant->timeline) unset($GLOBALS['lang']->project_menus['dispIssuetrackerTimeline']);
+            if(!$this->grant->browser_source) unset($GLOBALS['lang']->project_menus['dispIssuetrackerViewSource']);
+            if(!$this->grant->download) unset($GLOBALS['lang']->project_menus['dispIssuetrackerDownload']);
             if(!$this->grant->manager) unset($GLOBALS['lang']->project_menus['dispIssuetrackerAdminProjectSetting']);
 
             // 템플릿에서 사용할 검색옵션 세팅 (검색옵션 key값은 미리 선언되어 있는데 이에 대한 언어별 변경을 함)
-            $search_option = array();
-            foreach($this->search_option as $opt) {
-                $search_option[$opt] = Context::getLang($opt);
-            }
+            foreach($this->search_option as $opt) $search_option[$opt] = Context::getLang($opt);
 
             // 모듈정보를 확인하여 확장변수에서도 검색이 설정되어 있는지 확인
-            for($i=1;$i<=20;$i++) {
-                $ex_name = trim($this->module_info->extra_vars[$i]->name);
-                if(!$ex_name) continue;
-
-                if($this->module_info->extra_vars[$i]->search == 'Y') $search_option['extra_vars'.$i] = $ex_name;
+            $oDocumentModel = &getModel('document');
+            $extra_keys = $oDocumentModel->getExtraKeys($this->module_srl);
+            if(count($extra_keys)) {
+                foreach($extra_keys as $key => $val) {
+                    if($val->search == 'Y') $search_option['extra_vars'.$val->idx] = $val->name;
+                }
             }
             Context::set('search_option', $search_option);
 
@@ -273,7 +265,7 @@
 
                 // 목록을 구하기 위한 대상 모듈/ 페이지 수/ 목록 수/ 페이지 목록 수에 대한 옵션 설정
                 $args->page = Context::get('page');
-                $args->list_count = 50;
+                $args->list_count = 20;
                 $args->page_count = 10;
 
                 // issue 검색을 위한 변수 
@@ -298,10 +290,6 @@
                 $args->search_target = Context::get('search_target'); ///< 검색 대상 (title, contents...)
                 $args->search_keyword = Context::get('search_keyword'); ///< 검색어
 
-                // 커미터 목록 구함
-                $commiters = $oIssuetrackerModel->getGroupMembers($this->module_info->grants['commiter']);
-                Context::set('commiters', $commiters);
-
                 // 일반 글을 구해서 context set
                 $output = $oIssuetrackerModel->getIssueList($args);
                 Context::set('issue_list', $output->data);
@@ -322,12 +310,11 @@
                 // 스킨에서 사용하기 위해 context set
                 Context::set('oIssue', $oIssue);
 
-                // 커미터 목록을 추출
-                $commiters = $oIssuetrackerModel->getGroupMembers($this->module_info->grants['commiter']);
-                Context::set('commiters', $commiters);
-
                 $this->setTemplateFile('view_issue');
             }
+
+            // 커미터 목록을 추출
+            Context::set('commiters', $oIssuetrackerModel->getGroupMembers($this->module_info->module_srl,'commiter'));
         }
 
         /**
@@ -357,9 +344,17 @@
             Context::set('document_srl',$document_srl);
             Context::set('oIssue', $oIssue);
 
-            // 확장변수처리를 위해 xml_js_filter를 직접 header에 적용
-            $oDocumentController = &getController('document');
-            $oDocumentController->addXmlJsFilter($this->module_info);
+            // 현재 모듈에 등록된 확장변수 추출
+            $oDocumentModel = &getModel('document');
+            $extra_keys = $oDocumentModel->getExtraKeys($this->module_info->module_srl);
+            if(count($extra_keys)) {
+                // 글쓰기 폼에서 사용하기 위한 변수 설정
+                Context::set('extra_keys', $extra_keys);
+
+                // 확장변수처리를 위해 xml_js_filter를 직접 header에 적용
+                $oDocumentController = &getController('document');
+                $oDocumentController->addXmlJsFilter($extra_keys);
+            }
 
             $this->setTemplateFile('newissue');
         }

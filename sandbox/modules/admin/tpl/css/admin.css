@@ -94,7 +94,7 @@ ul.localNavigation li.on a { background-position:right top; padding:8px 15px 5px
 #popFooter { width:620px; background:#70A2C6; border-top:1px solid #e8e8e7; padding:.5em 0 .5em 0; overflow:hidden; }
 #popFooter .close { position:relative; left:50%; margin-left:-1em; float:left;}
 
-.adminSearch { text-align:right; clear:both; width:100%; margin:0 0 10px 0;}
+.adminSearch { text-align:right; margin:0 0 10px 0;}
 .adminSearch fieldset { border:none; display:inline; overflow:visible; padding:0;}
 .adminSearch * { vertical-align:middle;} 
 

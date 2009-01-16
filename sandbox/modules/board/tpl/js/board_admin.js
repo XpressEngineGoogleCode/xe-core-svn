@@ -57,29 +57,8 @@ function completeUpdateCategory(ret_obj) {
     location.href = url;
 }
 
-/* 권한 관련 */
-function completeInsertGrant(ret_obj) {
-    var error = ret_obj['error'];
-    var message = ret_obj['message'];
-    var page = ret_obj['page'];
-    var module_srl = ret_obj['module_srl'];
-
-    alert(message);
-}
-
-/* 카테고리 이동 */
-function doChangeCategory(fo_obj) {
-    var module_category_srl = fo_obj.module_category_srl.options[fo_obj.module_category_srl.selectedIndex].value;
-    if(module_category_srl==-1) {
-        location.href = current_url.setQuery('act','dispModuleAdminCategory');
-        return false;
-    }
-    return true;
-}
-
-
 /* 일괄 설정 */
-function doCartSetup(act_type) {
+function doCartSetup(url) {
     var module_srl = new Array();
     jQuery('#fo_list input[name=cart]:checked').each(function() {
         module_srl[module_srl.length] = jQuery(this).val();
@@ -87,6 +66,6 @@ function doCartSetup(act_type) {
 
     if(module_srl.length<1) return;
 
-    var url = current_url.setQuery('act',act_type).setQuery('module_srl','').setQuery('module_srls',module_srl.join(','));
-    location.href = url;
+    url += "&module_srls="+module_srl.join(',');
+    popopen(url,'modulesSetup');
 }

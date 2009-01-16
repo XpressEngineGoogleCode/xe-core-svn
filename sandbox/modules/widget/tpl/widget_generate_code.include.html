@@ -97,7 +97,7 @@
                     <input type="hidden" name="{$id}" id="{$id}" value="" />
                     <select name="_{$id}" id="_{$id}" size="8" class="w300 fl"></select>
                     <ul class="midCommand">
-                        <li><a href="{getUrl('','module','module','act','dispModuleAdminSelectList','id',$id)}" onclick="popopen(this.href, 'ModuleSelect');return false;" class="button blue"><span>{$lang->cmd_insert}</span></a></li>
+                        <li><a href="{getUrl('','module','module','act','dispModuleSelectList','id',$id)}" onclick="popopen(this.href, 'ModuleSelect');return false;" class="button blue"><span>{$lang->cmd_insert}</span></a></li>
                         <li><a href="#" onclick="midMoveUp('{$id}');return false;" class="button black"><span>{$lang->cmd_move_up}</span></a></li>
                         <li><a href="#" onclick="midMoveDown('{$id}');return false;" class="button black"><span>{$lang->cmd_move_down}</span></a></li>
                         <li><a href="#" onclick="midRemove('{$id}');return false;" class="button red"><span>{$lang->cmd_delete}</span></a></li>
@@ -109,7 +109,7 @@
                     </script>
                 <!--@elseif($var->type == "mid")-->
                     <input type="hidden" name="{$id}" id="{$id}" value="" />
-                    <input type="text" name="_{$id}" id="_{$id}" value="" class="inputTypeText w300" readonly="readonly"/><a href="{getUrl('','module','module','act','dispModuleAdminSelectList','id',$id,'type','single')}" onclick="popopen(this.href, 'ModuleSelect');return false;" class="button blue"><span>{$lang->cmd_select}</span></a>
+                    <input type="text" name="_{$id}" id="_{$id}" value="" class="inputTypeText w300" readonly="readonly"/><a href="{getUrl('','module','module','act','dispModuleSelectList','id',$id,'type','single')}" onclick="popopen(this.href, 'ModuleSelect');return false;" class="button blue"><span>{$lang->cmd_select}</span></a>
                     <script type="text/javascript">
                         if(typeof(getModuleSrlList)!=='undefined') {
                             doAddWindowLoadEventLoader( function() { getModuleSrl('{$id}'); });

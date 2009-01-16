@@ -37,35 +37,6 @@
         function moduleInstall() {
             // action forward에 등록 (관리자 모드에서 사용하기 위함)
             $oModuleController = &getController('module');
-            $oModuleController->insertActionForward('member', 'view', 'dispMemberInfo');
-            $oModuleController->insertActionForward('member', 'view', 'dispMemberSignUpForm');
-            $oModuleController->insertActionForward('member', 'view', 'dispMemberModifyInfo');
-            $oModuleController->insertActionForward('member', 'view', 'dispMemberModifyPassword');
-            $oModuleController->insertActionForward('member', 'view', 'dispMemberLeave');
-            $oModuleController->insertActionForward('member', 'view', 'dispMemberOpenIDLeave');
-            $oModuleController->insertActionForward('member', 'view', 'dispMemberLoginForm');
-            $oModuleController->insertActionForward('member', 'view', 'dispMemberLogout');
-            $oModuleController->insertActionForward('member', 'view', 'dispMemberOwnDocument');
-            $oModuleController->insertActionForward('member', 'view', 'dispMemberScrappedDocument');
-            $oModuleController->insertActionForward('member', 'view', 'dispMemberSavedDocument');
-            $oModuleController->insertActionForward('member', 'view', 'dispMemberFindAccount');
-
-            $oModuleController->insertActionForward('member', 'view', 'dispMemberAdminList');
-            $oModuleController->insertActionForward('member', 'view', 'dispMemberAdminConfig');
-            $oModuleController->insertActionForward('member', 'view', 'dispMemberAdminInsert');
-            $oModuleController->insertActionForward('member', 'view', 'dispMemberAdminDeleteForm');
-            $oModuleController->insertActionForward('member', 'view', 'dispMemberAdminGroupList');
-            $oModuleController->insertActionForward('member', 'view', 'dispMemberAdminJoinFormList');
-            $oModuleController->insertActionForward('member', 'view', 'dispMemberAdminInfo');
-            $oModuleController->insertActionForward('member', 'view', 'dispMemberAdminInsertJoinForm');
-            $oModuleController->insertActionForward('member', 'view', 'dispMemberAdminDeniedIDList');
-
-            $oModuleController->insertActionForward('member', 'controller', 'procMemberInsertProfileImage');
-            $oModuleController->insertActionForward('member', 'controller', 'procMemberInsertImageName');
-            $oModuleController->insertActionForward('member', 'controller', 'procMemberInsertImageMark');
-            $oModuleController->insertActionForward('member', 'controller', 'procMemberDeleteProfileImage');
-            $oModuleController->insertActionForward('member', 'controller', 'procMemberDeleteImageName');
-            $oModuleController->insertActionForward('member', 'controller', 'procMemberDeleteImageMark');
 
             $oDB = &DB::getInstance();
             $oDB->addIndex("member_group","idx_site_title", array("site_srl","title"),true);
@@ -157,37 +128,11 @@
             $oDB = &DB::getInstance();
             $oModuleModel = &getModel('module');
 
-            // dispMemberOwnDocument act의 여부 체크 (2007. 7. 24 추가)
-            $act = $oModuleModel->getActionForward('dispMemberOwnDocument');
-            if(!$act) return true;
-
-            // dispMemberScrappedDocument act의 여부 체크 (2007. 7. 25 추가)
-            $act = $oModuleModel->getActionForward('dispMemberScrappedDocument');
-            if(!$act) return true;
-
-            // dispMemberOpenIDLeave act의 여부 체크 (2007. 9. 19 추가)
-            $act = $oModuleModel->getActionForward('dispMemberOpenIDLeave');
-            if(!$act) return true;
-
             // member 디렉토리 체크 (2007. 8. 11 추가)
             if(!is_dir("./files/member_extra_info")) return true;
 
-            // dispMemberFindAccount act의 여부 체크 (2007. 10. 15)
-            $act = $oModuleModel->getActionForward('dispMemberFindAccount');
-            if(!$act) return true;
-
             // member 디렉토리 체크 (2007. 10. 22 추가)
             if(!is_dir("./files/member_extra_info/profile_image")) return true;
-
-            // procMemberInsertProfileImage, procMemberDeleteProfileImage act의 여부 체크 (2007. 10. 22)
-            $act = $oModuleModel->getActionForward('procMemberInsertProfileImage');
-            if(!$act) return true;
-            $act = $oModuleModel->getActionForward('procMemberDeleteProfileImage');
-            if(!$act) return true;
-
-            // dispMemberSavedDocument act의 여부 체크 (2007. 10. 29)
-            $act = $oModuleModel->getActionForward('dispMemberSavedDocument');
-            if(!$act) return true;
 
             // member_auth_mail 테이블에 is_register 필드 추가 (2008. 04. 22)
             $act = $oDB->isColumnExists("member_auth_mail", "is_register");
@@ -207,15 +152,6 @@
         function moduleUpdate() {
             $oDB = &DB::getInstance();
             $oModuleController = &getController('module');
-
-            // act 추가
-            $oModuleController->insertActionForward('member', 'view', 'dispMemberOwnDocument');
-            $oModuleController->insertActionForward('member', 'view', 'dispMemberScrappedDocument');
-            $oModuleController->insertActionForward('member', 'view', 'dispMemberSavedDocument');
-            $oModuleController->insertActionForward('member', 'view', 'dispMemberOpenIDLeave');
-            $oModuleController->insertActionForward('member', 'view', 'dispMemberFindAccount');
-            $oModuleController->insertActionForward('member', 'controller', 'procMemberInsertProfileImage');
-            $oModuleController->insertActionForward('member', 'controller', 'procMemberDeleteProfileImage');
 
             // member 디렉토리 체크
             FileHandler::makeDir('./files/member_extra_info/image_name');

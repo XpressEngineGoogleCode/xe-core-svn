@@ -13,6 +13,20 @@
     $lang->title_bold = '제목 굵게';
     $lang->title_color = '제목 색깔';
 
+    $lang->parent_category_title = '상위 카테고리명';
+    $lang->category_title = '분류명';
+    $lang->category_color = '분류 폰트색깔';
+    $lang->expand = '펼침';
+    $lang->category_group_srls = '그룹제한';
+
+    $lang->cmd_make_child = '하위 카테고리 추가';
+    $lang->cmd_enable_move_category = "카테고리 위치 변경 (선택후 위 메뉴를 드래그하세요)";
+
+    $lang->about_category_title = '카테고리 이름을 입력해주세요';
+    $lang->about_expand = '선택하시면 늘 펼쳐진 상태로 있게 합니다';
+    $lang->about_category_group_srls = '선택하신 그룹만 현재 카테고리를 지정할 수 있도록 합니다';
+    $lang->about_category_color = '분류 폰트색깔을 지정합니다.';
+
     $lang->cmd_search_next = '계속 검색';
 
     $lang->cmd_temp_save = '임시 저장';

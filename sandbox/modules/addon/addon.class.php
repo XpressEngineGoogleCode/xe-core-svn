@@ -13,10 +13,6 @@
          * @brief 설치시 추가 작업이 필요할시 구현
          **/
         function moduleInstall() {
-            // action forward에 등록 (관리자 모드에서 사용하기 위함)
-            $oModuleController = &getController('module');
-            $oModuleController->insertActionForward('addon', 'view', 'dispAddonAdminIndex');
-            
             // 몇가지 애드온을 등록
             $oAddonController = &getAdminController('addon');
             $oAddonController->doInsert('autolink');

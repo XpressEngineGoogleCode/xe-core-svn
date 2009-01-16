@@ -43,14 +43,14 @@
     </tr>
     <!--@end-->
 
-    <!--@if($module_info->extra_vars)--><!--@foreach($module_info->extra_vars as $key => $val)-->
-        <!--@if($val->name)-->
+    <!--@if($oIssue->isExtraVarsExists())-->
+        <!--@foreach($oIssue->getExtraValue() as $key => $val)-->
     <tr>
         <th>{$val->name} :</th>
         <td colspan="3"><!--#include("./extra_var_value.html")--></td>
     </tr>
         <!--@end-->
-    <!--@end--><!--@end-->
+    <!--@end-->
 
     {@ $tag_list = $oIssue->get('tag_list') }
     <!--@if(count($tag_list))-->

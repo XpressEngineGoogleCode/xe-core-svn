@@ -27,9 +27,20 @@
     $lang->skin_history = '更新日志';
     $lang->module_copy = "Copy Module";
     $lang->module_selector = "Module Selector";
+    $lang->do_selected = "선택된 것들을...";
+    $lang->bundle_setup = "일괄 기본 설정";
+    $lang->bundle_addition_setup = "일괄 추가 설정";
+    $lang->bundle_grant_setup = "일괄 권한 설정";
 
     $lang->header_script = "文件头部脚本";
     $lang->about_header_script = "可以直接输入插入到html中&lt;head&gt;区的代码。<br />可使用&lt;script, &lt;style 或 &lt;meta 等标签。";
+
+    $lang->grant_access = "Access";
+    $lang->grant_manager = "Management";
+
+    $lang->grant_to_all = "All users";
+    $lang->grant_to_login_user = "Logged users";
+    $lang->grant_to_group = "Specification group users";
 
     $lang->cmd_add_shortcut = "添加到快捷菜单";
     $lang->cmd_install = "安装";
@@ -38,6 +49,7 @@
     $lang->cmd_manage_grant = '权限管理';
     $lang->cmd_manage_skin = '皮肤管理';
     $lang->cmd_manage_document = '主题管理';
+    $lang->cmd_find_module = '모듈 찾기';
 
     $lang->msg_new_module = "模块生成";
     $lang->msg_update_module = "模块修改";
@@ -61,7 +73,7 @@
     $lang->about_list_count = '可以指定每页显示的主题数。(默认为20个)';
     $lang->about_search_list_count = '可以指定搜索或选择分类时每页要显示的帖子数(默认为20个)。';
     $lang->about_page_count = '可以指定显示在目录下方的页面数(默认为10个)。 ';
-    $lang->about_admin_id = '可以对该模块指定最高管理权限。<br />有多名管理员时，可以用,(逗号)来分隔(不能访问管理页面)。 ';
+    $lang->about_admin_id = '可以对该模块指定最高管理权限。';
     $lang->about_grant = '全部解除特定权限的对象时，没有登录的会员也将具有相关权限。';
     $lang->about_module = "除基本library以外XE全部由模块组成。\n模块管理中列出所有已安装的模块，因此易于管理。";
 

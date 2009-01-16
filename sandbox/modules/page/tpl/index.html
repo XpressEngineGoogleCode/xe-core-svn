@@ -7,13 +7,14 @@
 </div>
 
 <!-- 목록 -->
+<form action="./" method="get" onsubmit="return doChangeCategory(this);" id="fo_list">
 <table cellspacing="0" class="adminTable">
 <thead>
     <tr>
         <th scope="col"><div>{$lang->no}</div></th>
+        <th scope="col"><div><input type="checkbox" onclick="XE.checkboxToggleAll(); return false;" /></div></th>
         <th scope="col">
             <div>
-                <form action="./" method="get" onsubmit="return doChangeCategory(this);">
                     <input type="hidden" name="module" value="{$module}" />
                     <input type="hidden" name="act" value="{$act}" />
                     <select name="module_category_srl" class="w120">
@@ -25,13 +26,14 @@
                         <option value="-1">{$lang->cmd_management}</option>
                     </select>
                     <input type="submit" name="go_button" id="go_button" value="GO" class="buttonTypeGo" />
-                </form>
             </div>
         </th>
         <th scope="col" class="half_wide"><div>{$lang->mid}</div></th>
         <th scope="col" class="half_wide"><div>{$lang->browser_title}</div></th>
         <th scope="col"><div>{$lang->regdate}</div></th>
-        <th scope="col" colspan="3"><div>&nbsp;</div></th>
+        <th scope="col"><div>{$lang->cmd_view}</div></th>
+        <th scope="col"><div>{$lang->cmd_copy}</div></th>
+        <th scope="col"><div>{$lang->cmd_delete}</div></th>
     </tr>
 </thead>
 
@@ -39,9 +41,14 @@
     <!--@foreach($page_list as $no => $val)-->
     <tr class="row{$cycle_idx}">
         <td class="number center">{$no}</td>
+        <td class="center"><input type="checkbox" name="cart" value="{$val->module_srl}" /></td>
         <td>
             <!--@if(!$val->module_category_srl)-->
+                <!--@if($val->site_srl)-->
+                {$lang->virtual_site}
+                <!--@else-->
                 {$lang->not_exists}
+                <!--@end-->
             <!--@else-->
                 {$module_category[$val->module_category_srl]->title}
             <!--@end-->
@@ -54,13 +61,22 @@
         <td class="delete center"><!--@if($val->is_default!='Y')--><a href="{getUrl('act','dispPageAdminDelete','module_srl', $val->module_srl)}">{$lang->cmd_delete}</a><!--@else-->&nbsp;<!--@end--></td>
     </tr>
     <!--@end-->
-    <tr>
-        <td colspan="8" class="right">
-            <a href="{getUrl('act','dispPageAdminInsert','module_srl','')}" class="button"><span>{$lang->cmd_make}</span></a>
-        </td>
-    </tr>
 </tbody>
 </table>
+
+<!-- 버튼 -->
+<div class="fl gap1">
+    {$lang->do_selected}
+    <div>
+        <a href="{getUrl('','module','module','act','dispModuleAdminModuleSetup')}" onclick="doCartSetup(this.href); return false;" class="button green"><span>{$lang->cmd_setup}</span></a>
+        <a href="{getUrl('','module','module','act','dispModuleAdminModuleGrantSetup')}" onclick="doCartSetup(this.href); return false;" class="button black"><span>{$lang->cmd_manage_grant}</span></a>
+    </div>
+</div>
+<div class="fr gap1">
+    <a href="{getUrl('act','dispPageAdminInsert','module_srl','')}" class="button blue"><span>{$lang->cmd_make}</span></a>
+</div>
+
+</form>
 
 <!-- 페이지 네비게이션 -->
 <div class="pagination a1">

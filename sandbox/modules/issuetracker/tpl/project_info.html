@@ -49,10 +49,6 @@
     <th scope="row2"><div>{$lang->description}</div></th>
     <td>{nl2br(htmlspecialchars($module_info->description))}&nbsp;</td>
 </tr>
-<tr class="row">
-    <th scope="row2"><div>{$lang->admin_id}</div></th>
-    <td>{implode(",",$module_info->admin_id)}&nbsp;</td>
-</tr>
 <tr>
     <td colspan="2" class="right">
         <a href="{getUrl('act','dispIssuetrackerAdminInsertProject')}" class="button"><span>{$lang->cmd_modify}</span></a>

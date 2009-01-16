@@ -27,16 +27,14 @@
 	
 	</div>
 
-    <!--@if($module_info->extra_vars)-->
+    <!--@if(count($extra_keys))-->
     <table border="1" cellspacing="0" summary="Extra Form" class="extraVarsList">
 	<caption><em>*</em> : {$lang->is_required}</caption>
-    <!--@foreach($module_info->extra_vars as $key => $val)-->
-        <!--@if($val->name)-->
+    <!--@foreach($extra_keys as $key => $val)-->
     <tr>
         <th scope="row">{$val->name} <!--@if($val->is_required=='Y')--><em>*</em><!--@end--></th>
         <td><!--#include("./_extra_var_form.html")--></td>
     </tr>
-        <!--@endif-->
     <!--@endforeach-->
     </table>
     <!--@endif-->

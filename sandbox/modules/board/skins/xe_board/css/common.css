@@ -287,7 +287,7 @@ html:not([lang*=""]) .boardList th { height:33px; }
 .boardWrite .extraVarsList p { margin:5px 0 0 0; padding:0; }
 .boardWrite .extraVarsList ul { margin:0; padding:0; }
 
-.smallBox { border:1px solid #e0e1db; margin-left:auto; margin-right:auto; }
+.smallBox { border:1px solid #e0e1db; margin-left:auto; margin-right:auto; padding-bottom:10px; }
 .smallBox.w268 { width:268px;}
 .smallBox .header { margin:0; padding:0; position:relative; _width:100%; background:#ffffff url(../images/common/bgH3.gif) no-repeat left bottom; overflow:hidden;}
 .smallBox .header h3 { margin:0; padding:0; clear:both; font-size:1.2em; padding:.8em 2em .6em 1.2em; border-bottom:3px solid #fe3614; }
@@ -295,7 +295,7 @@ html:not([lang*=""]) .boardList th { height:33px; }
 .smallBox .inputPassword { position:relative; border:none; padding:2em 2em 1.5em 2em;}
 .smallBox .inputPassword .inputTypeText { float:left; margin-right:.5em; width:8em;}
 .smallBox .inputPassword legend { position:absolute; overflow:hidden; width:1px; height:1px; font-size:.001em; text-indent:-100em;}
-.smallBox .messageBox { background-color:#F3F3F3; padding:20px; border-bottom:1px solid #EEEEEE;}
+.smallBox .messageBox { background-color:#F3F3F3; padding:10px; border-bottom:1px solid #EEEEEE;}
 
 /* Pagination Reset */
 .pagination{ padding:15px 0; margin:0; text-align:center;}

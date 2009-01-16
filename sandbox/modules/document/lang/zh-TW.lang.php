@@ -14,6 +14,18 @@
     $lang->title_bold = '粗體';
     $lang->title_color = '標題顏色';
 
+    $lang->parent_category_title = '主分類';
+    $lang->category_title = '分類名稱';
+    $lang->category_color = '分類顏色';
+    $lang->expand = '展開';
+    $lang->category_group_srls = '用戶組';
+    $lang->cmd_make_child = '新增子分類';
+    $lang->cmd_enable_move_category = "分類順序(勾選後用滑鼠拖曳分類項目)";
+    $lang->about_category_title = '請輸入分類名稱。';
+    $lang->about_expand = '選擇此項將維持展開狀態。';
+    $lang->about_category_group_srls = '被選擇的用戶組才可以檢視此分類。';
+    $lang->about_category_color = '設定分類顏色。';
+
     $lang->cmd_search_next = '繼續搜尋';
 
     $lang->cmd_temp_save = '臨時儲存';

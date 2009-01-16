@@ -17,7 +17,6 @@
         function moduleInstall() {
             // action forward에 등록 (관리자 모드에서 사용하기 위함)
             $oModuleController = &getController('module');
-            $oModuleController->insertActionForward('tccommentnotify', 'view', 'dispCommentNotifyAdminIndex');
 
             // notify를 위한 트리거 추가
             $oModuleController->insertTrigger('comment.insertComment', 'tccommentnotify', 'controller', 'triggerInsertComment', 'after');
@@ -30,10 +29,7 @@
          **/
         function checkUpdate() {
             $oModuleModel = &getModel('module');
-            if(!$oModuleModel->getTrigger('comment.insertComment', 'tccommentnotify', 'controller', 'triggerInsertComment', 'after'))
-            {
-                return true;
-            }
+            if(!$oModuleModel->getTrigger('comment.insertComment', 'tccommentnotify', 'controller', 'triggerInsertComment', 'after')) return true;
 
             return false;
         }
@@ -44,10 +40,7 @@
         function moduleUpdate() {
             $oModuleModel = &getModel('module');
             $oModuleController = &getController('module');
-            if(!$oModuleModel->getTrigger('comment.insertComment', 'tccommentnotify', 'controller', 'triggerInsertComment', 'after'))
-            {
-                $oModuleController->insertTrigger('comment.insertComment', 'tccommentnotify', 'controller', 'triggerInsertComment', 'after');
-            }
+            if(!$oModuleModel->getTrigger('comment.insertComment', 'tccommentnotify', 'controller', 'triggerInsertComment', 'after')) $oModuleController->insertTrigger('comment.insertComment', 'tccommentnotify', 'controller', 'triggerInsertComment', 'after');
 
             return new Object(0, 'success_updated');
         }

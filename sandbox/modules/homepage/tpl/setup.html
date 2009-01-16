@@ -19,7 +19,7 @@
             <th scope="row"><div>{$lang->homepage_title}</div></th>
             <td>
                 <input type="text" name="homepage_title" value="{$homepage_info->title}" class="inputTypeText w200" />
-                <a href="{getSiteUrl($homepage_info->domain,'', 'act','dispHomepageManage')}" onclick="window.open(this.href); return false;" class="button blue"><span>{$lang->cmd_management}</span></a>
+                <a href="{getSiteUrl($homepage_info->domain,'', 'module','homepage','act','dispHomepageManage')}" onclick="window.open(this.href); return false;" class="button blue"><span>{$lang->cmd_management}</span></a>
                 <p>{$lang->about_homepage_title}</p>
             </td>
         </tr>

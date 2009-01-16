@@ -8,10 +8,10 @@
     <thead>
         <tr>
             <th scope="col"><div>{$lang->no}</div></th>
+            <th scope="col" class="quarter_wide"><div>{$lang->nick_name}</div></th>
             <th scope="col" class="quarter_wide"><div>{$lang->user_id}</div></th>
-            <th scope="col"><div>{$lang->user_name}</div></th>
-            <th scope="col"><div>{$lang->nick_name}</div></th>
-            <th scope="col"><div>{$lang->group}</div></th>
+            <th scope="col" class="quarter_wide"><div>{$lang->user_name}</div></th>
+            <th scope="col" class="quarter_wide"><div>{$lang->group}</div></th>
             <th scope="col"><div>{$lang->signup_date}</div></th>
             <th scope="col"><div>{$lang->last_login}</div></th>
         </tr>
@@ -20,10 +20,10 @@
         <!--@foreach($member_list as $no => $val)-->
         {@ $val->group_list = implode(', ', $val->group_list)}
         <tr class="row{$cycle_idx}">
-            <td class="center number" > <input type="checkbox" name="cart" value="{$val->member_srl}" /> {$no}</td>
-            <td><span class="member_{$val->member_srl}">{htmlspecialchars($val->user_id)}</span></td>
-            <td><span class="member_{$val->member_srl}">{htmlspecialchars($val->user_name)}</span></td>
-            <td><span class="member_{$val->member_srl}">{htmlspecialchars($val->nick_name)}</span></td>
+            <td class="center number"> <input type="checkbox" name="cart" value="{$val->member_srl}" /> {$no}</td>
+            <td class="nowrap"><span class="member_{$val->member_srl}">{htmlspecialchars($val->nick_name)}</span></td>
+            <td class="nowrap">{htmlspecialchars($val->user_id)}</td>
+            <td class="nowrap">{htmlspecialchars($val->user_name)}</td>
             <td class="nowrap">
                 <!--@if($members_groups[$val->member_srl])-->
                     {implode(',',$members_groups[$val->member_srl])}

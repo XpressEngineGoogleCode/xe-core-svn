@@ -63,5 +63,39 @@
             $this->setTemplateFile('preview_page');
         }
         
+        /**
+         * @brief 관리자가 선택한 문서에 대한 관리
+         **/
+        function dispDocumentManageDocument() {
+            if(!Context::get('is_logged')) return new Object(-1,'msg_not_permitted');
+
+            // 선택한 목록을 세션에서 가져옴
+            $flag_list = $_SESSION['document_management'];
+            if(count($flag_list)) {
+                foreach($flag_list as $key => $val) {
+                    if(!is_bool($val)) continue;
+                    $document_srl_list[] = $key;
+                }
+            }
+
+            if(count($document_srl_list)) {
+                $oDocumentModel = &getModel('document');
+                $document_list = $oDocumentModel->getDocuments($document_srl_list, $this->grant->is_admin);
+                Context::set('document_list', $document_list);
+            }
+
+            $oModuleModel = &getModel('module');
+
+            // 모듈 카테고리 목록과 모듈 목록의 조합
+            if(count($module_list)>1) Context::set('module_list', $module_categories);
+
+            // 팝업 레이아웃 선택
+            $this->setLayoutPath('./common/tpl');
+            $this->setLayoutFile('popup_layout');
+
+            $this->setTemplatePath($this->module_path.'tpl');
+            $this->setTemplateFile('checked_list');
+        }
+
     }
 ?>

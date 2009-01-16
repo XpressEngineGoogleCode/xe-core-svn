@@ -90,3 +90,21 @@ function insertSelectedModule(id, module_srl, mid, browser_title) {
     obj.value = browser_title+' ('+mid+')';
     doGetCategoryFromModule(module_srl);
 }
+
+function completeInsertExtraVar(ret_obj) {
+    alert(ret_obj['message']);
+    location.href = current_url.setQuery('selected_var_idx','');
+}
+
+function insertSelectedModule(id, module_srl, mid, browser_title) {
+    if(current_url.getQuery('act')=='dispDocumentManageDocument') {
+        var obj= xGetElementById('_'+id);
+        var sObj = xGetElementById(id);
+        sObj.value = module_srl;
+        obj.value = browser_title+' ('+mid+')';
+        doGetCategoryFromModule(module_srl);
+    } else {
+        location.href = current_url.setQuery('module_srl',module_srl);
+    }
+}
+

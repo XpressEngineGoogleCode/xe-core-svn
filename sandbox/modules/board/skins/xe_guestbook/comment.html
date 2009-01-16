@@ -35,7 +35,7 @@
 
                 <strong>{$comment->getRegdate('Y.m.d')}</strong> {$comment->getRegdate('H:i:s')}
 
-                <!--@if($grant->is_admin)-->
+                <!--@if($grant->manager)-->
                     ({$comment->get('ipaddress')})
                 <!--@end-->
             </div>

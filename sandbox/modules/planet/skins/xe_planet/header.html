@@ -23,10 +23,10 @@
 
     <div id="planet">
         <div id="planetHeader">
-			<!--@if($config->logo_image)-->
-                <h1><a href="{getUrl('','mid',$config->mid)}"><img src="{$config->logo_image}" alt="{$config->logo_title}" /></a></h1>
-			<!--@elseif($config->logo_title)-->
-                <h1><a href="{getUrl('','mid',$config->mid)}">{htmlspecialchars($config->logo_title)}</a></h1>
+			<!--@if($module_info->logo_image)-->
+                <h1><a href="{getUrl('','mid',$module_info->mid)}"><img src="{$module_info->logo_image}" alt="{$module_info->logo_title}" /></a></h1>
+			<!--@elseif($module_info->logo_title)-->
+                <h1><a href="{getUrl('','mid',$module_info->mid)}">{htmlspecialchars($module_info->logo_title)}</a></h1>
 			<!--@end-->
 
 			<!--@if($date && !($act=='dispPlanetLogin' || $act=='dispPlanetContentTagSearch' || $act=='dispPlanetTagSearch' || $act=='dispPlanetContentSearch'))-->
@@ -50,10 +50,10 @@
 
 			<div id="navigation">
 				<!-- GNB -->
-                <!--@if($config->display_menu!='N')-->
+                <!--@if($module_info->display_menu!='N')-->
 				<div class="gnb">
 					<ul>
-						<li class="first <!--@if($mid==$config->mid)-->active<!--@end-->"><a href="{getUrl('','mid',$config->mid)}">{$lang->planet_home}</a></li>
+						<li class="first <!--@if($mid==$module_info->mid)-->active<!--@end-->"><a href="{getUrl('','mid',$module_info->mid)}">{$lang->planet_home}</a></li>
 						<!--@if($myplanet->isExists())-->
 							<li <!--@if($myplanet->isMyPlanet($planet))-->class="active"<!--@end-->><a href="{getUrl('','mid',$myplanet->getMid())}">{$lang->planet_myplanet}</a></li>
 						<!--@end-->
@@ -61,7 +61,7 @@
 						<!--@if($is_logged)-->
 							<li class="last"><a href="#" onclick="doPlanetLogout()">{$lang->cmd_logout}</a></li>
 						<!--@else-->
-							<!--@if($config->use_signup=='Y')-->
+							<!--@if($module_info->use_signup=='Y')-->
 							<li><a href="{getUrl('','module','member','act','dispMemberSignupForm','popup',1)}" onclick="winopen(this.href, 'PlanetSignUp','width=600px,height=700px,toolbars=no,scrollbars=yes');return false;">{$lang->cmd_signup}</a></li>
 							<!--@end-->
 							<li class="last"><a href="{getUrl('act','dispPlanetLogin')}">{$lang->cmd_login}</a></li>
@@ -72,7 +72,7 @@
 				<!-- //GNB -->
 	
 				<!-- 검색 -->
-                <!--@if($config->display_search!='N')-->
+                <!--@if($module_info->display_search!='N')-->
 				<form action="{Context::getRequestUri()}" method="get" class="search">
 				<input type="hidden" name="mid" value="{$mid}" />
 				<input type="hidden" name="act" value="dispPlanetContentTagSearch" />
@@ -100,7 +100,7 @@
             <div id="planetContent">
                 <!--@if(!$myplanet->isExists() && $act == 'dispPlanetHome' && $grant->create)-->
                 <div class="tryPlanet">
-                    <p>{nl2br($config->create_message)}</p>
+                    <p>{nl2br($module_info->create_message)}</p>
                     <a href="{getUrl('','mid',$mid,'act','dispPlanetCreate')}" class="button large strong planetBlue"><span>{$lang->cmd_create_planet}</span></a>
                     <span class="leftCap"></span><span class="rightCap"></span>
                 </div>
@@ -122,9 +122,9 @@
                 <hr />
                 <!--@end-->
 
-                <!--@if($config->notice)-->
+                <!--@if($module_info->notice)-->
                 <div class="searchHeader">
-                    <p>{$config->notice}</p>
+                    <p>{$module_info->notice}</p>
                     <span class="leftCap"></span><span class="rightCap"></span>
                 </div>
                 <!--@end-->

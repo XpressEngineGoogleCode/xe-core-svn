@@ -7,7 +7,7 @@
         <div class="author"><div class="member_{$oSourceComment->getMemberSrl()}">{$oSourceComment->getNickName()}</div></div>
         <div class="date">
             {$oSourceComment->getRegdate("Y.m.d H:i")}
-            <!--@if($grant->is_admin)-->
+            <!--@if($grant->manager)-->
                 ({$oSourceComment->get('ipaddress')})
             <!--@end-->
         </div>

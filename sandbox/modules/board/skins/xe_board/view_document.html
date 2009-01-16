@@ -32,7 +32,7 @@
                 <div class="uri" title="{$lang->document_url}"><a href="{$oDocument->getPermanentUrl()}">{$oDocument->getPermanentUrl()}</a></div>
 
                 <div class="date" title="{$lang->regdate}">
-                    <strong>{$oDocument->getRegdate('Y.m.d')}</strong> {$oDocument->getRegdate('H:i:s')} <!--@if($grant->is_admin || $module_info->display_ip_address!='N')-->({$oDocument->getIpaddress()})<!--@end-->
+                    <strong>{$oDocument->getRegdate('Y.m.d')}</strong> {$oDocument->getRegdate('H:i:s')} <!--@if($grant->manager || $module_info->display_ip_address!='N')-->({$oDocument->getIpaddress()})<!--@end-->
                 </div>
 
                 <div class="readedCount" title="{$lang->readed_count}">{$oDocument->get('readed_count')}</div>
@@ -68,8 +68,7 @@
         <table cellspacing="0" summary="" class="extraVarsList">
         <col width="150" />
         <col />
-        <!--@foreach($module_info->extra_vars as $key => $val)-->
-            <!--@if($val->name)-->
+        <!--@foreach($oDocument->getExtraValue() as $key => $val)-->
         <tr>
             <th scope="row">{$val->name}</th>
             <td>
@@ -77,7 +76,6 @@
                 <!--#include("./extra_var_value.html")-->
             </td>
         </tr>
-            <!--@end-->
         <!--@end-->
         </table>
         <!--@end-->

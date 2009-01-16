@@ -13,6 +13,18 @@
     $lang->title_bold = 'Gras';
     $lang->title_color = 'Couleur';
 
+    $lang->parent_category_title = 'catégorie supérieure';
+    $lang->category_title = 'Catégorie';
+    $lang->category_color = '분류 폰트색깔';
+    $lang->expand = 'Etendre';
+    $lang->category_group_srls = 'Groupe Accessible';
+    $lang->cmd_make_child = 'Ajouter une catégorie inférieure';
+    $lang->cmd_enable_move_category = "Bouger la position de la catégorie (Cochez la case et puis glisser la catégorie que vous voulez déplacer)";
+    $lang->about_category_title = 'Entrez le nom de la catégorie, S.V.P.';
+    $lang->about_expand = 'Si vous cochez la case à cocher, ce sera toujours tendu';
+    $lang->about_category_group_srls = 'Le groupe choisi seulement pourra utiliser la catégorie courante';
+    $lang->about_category_color = 'You can set font color of category.';
+
     $lang->cmd_search_next = 'Recherche Suivante';
 
     $lang->cmd_temp_save = 'Conserver temporairement';
