@@ -110,7 +110,7 @@ function insertImage(obj) {
     if(height) text+= " height=\""+height+"\"";
     if(link_url) text+= " link_url=\""+link_url+"\"";
     if(open_window=='Y') text+= " open_window=\"Y\"";
-    if(align || border){
+    if(align || border || margin){
         text+= " style=\"";
         if(align) text+= align+"; ";
         if(border) text+= "border: solid "+border+"px; ";

@@ -66,8 +66,10 @@
                 $attr_output[] = "title=\"".$alt."\"";
             }
             if($margin) {
-                $style = preg_replace('/margin[: 0-9a-z]+\;/i','', $style);
-                $style .= 'margin:'.$margin.'px;';
+                $style = trim(preg_replace('/margin[ ]*:[ ]*[0-9a-z]+(;| )/i','', $style)).';';
+                $style = str_replace(';;',';',$style);
+                if($style == ';') $style = '';
+                $style .= ' margin:'.$margin.'px;';
             }
             if($align) $attr_output[] = "align=\"".$align."\"";
 
