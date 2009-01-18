@@ -47,7 +47,7 @@
         <td class="center number">{count($ip_list)-$no}</td>
         <td class="number">{$val->ipaddress}</td>
         <td class="date center nowrap">{zdate($val->regdate,"Y-m-d")}</td>
-        <td class="delete center"><a href="#" onclick="doDeleteDeniedIP('{$val->ipaddress}');return false;">{$lang->cmd_delete}</a></td>
+        <td class="delete center"><a href="#" onclick="doDeleteDeniedIP('{$val->ipaddress}');return false;" title="{$lang->cmd_delete}">{$lang->cmd_delete}</a></td>
     </tr>
     <!--@end-->
 </tbody>

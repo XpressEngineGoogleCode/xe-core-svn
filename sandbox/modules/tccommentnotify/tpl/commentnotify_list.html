@@ -33,7 +33,7 @@
         <td class="nowrap"><a href="{$parent->siteurl}" onclick="window.open(this.href);return false;">{$parent->title?$parent->title:"[No title]"}</a></td>
         <td class="nowrap">{$parent->name}</td>
         <td><a href="{$parent->entryurl}" onclick="window.open(this.href);return false;">{$parent->entrytitle}</a> <a href="{$parent->commenturl}" onclick="window.open(this.href);return false;">{$parent->comment}</a></td>
-        <td class="delete"><a href="#" onclick="deleteParent('{$parent->notified_srl}');">{$lang->cmd_delete}</a></td>
+        <td class="delete"><a href="#" onclick="deleteParent('{$parent->notified_srl}');" title="{$lang->cmd_delete}">{$lang->cmd_delete}</a></td>
     </tr>
     <!--@foreach($val->children as $child)-->
     <tr>

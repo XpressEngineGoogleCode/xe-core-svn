@@ -23,8 +23,8 @@
         <td><a href="{getUrl('module_srl',$val->getModuleSrl(),'act','dispPlanetAdminInsert')}">{$val->getMid()}</a></td>
         <td><a href="{getUrl('module_srl',$val->getModuleSrl(),'act','dispPlanetAdminInsert')}">{$val->getBrowserTitle()}</a></td>
         <td class="date center nowrap">{zdate($val->get('regdate'),"Y-m-d")}</td>
-        <td class="center view"><a href="{getUrl('','mid',$val->getMid())}" onclick="window.open(this.href); return false;">{$lang->cmd_view}</a></td>
-        <td class="center delete"><a href="{getUrl('act','dispPlanetAdminDelete','module_srl',$val->getModuleSrl())}">{$lang->cmd_delete}</a></td>
+        <td class="center view"><a href="{getUrl('','mid',$val->getMid())}" onclick="window.open(this.href); return false;" title="{htmlspecialchars($lang->cmd_view)}">{$lang->cmd_view}</a></td>
+        <td class="center delete"><a href="{getUrl('act','dispPlanetAdminDelete','module_srl',$val->getModuleSrl())}" title="{htmlspecialchars($lang->cmd_delete)}">{$lang->cmd_delete}</a></td>
     </tr>
     <!--@end-->
 </tbody>

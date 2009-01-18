@@ -48,7 +48,7 @@
         <td>{$val->word}</td>
         <td class="number date nowrap">{zdate($val->regdate,"Y-m-d")}</td>
         {@ $val->word = base64_encode($val->word);}
-        <td class="delete center"><a href="#" onclick="doDeleteDeniedWord('{$val->word}');return false;">{$lang->cmd_delete}</a></td>
+        <td class="delete center"><a href="#" onclick="doDeleteDeniedWord('{$val->word}');return false;" title="{$lang->cmd_delete}">{$lang->cmd_delete}</a></td>
     </tr>
     <!--@end-->
 </tbody>

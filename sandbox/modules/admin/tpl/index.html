@@ -56,7 +56,7 @@
         <tr>
             <td class="circle"><a href="{getUrl('','module','admin','act',$val->admin_index_act)}" title="{trim(htmlspecialchars($val->description))}">{$val->title}</a> ({$val->module})</td>
             <td class="view">
-                <a href="{getUrl('','module','module','act','dispModuleAdminInfo','selected_module',$val->module)}" onclick="popopen(this.href,'module_info');return false">{$lang->module_info}</a>
+                <a href="{getUrl('','module','module','act','dispModuleAdminInfo','selected_module',$val->module)}" onclick="popopen(this.href,'module_info');return false" title="{htmlspecialchars($lang->module_info)}">{$lang->module_info}</a>
             </td>
             <td class="number center">{$val->version}</td>
             <td class="nowrap">
@@ -69,9 +69,9 @@
             </td>
             <td class="nowrap center <!--@if($val->need_install || $val->need_update)-->alert<!--@end-->">
                 <!--@if($val->need_install)-->
-                    <a href="#" onclick="doInstallModule('{$val->module}');return false;">{$lang->cmd_install}</a>
+                    <a href="#" onclick="doInstallModule('{$val->module}');return false;" title="{htmlspecialchars($lang->cmd_install)}">{$lang->cmd_install}</a>
                 <!--@elseif($val->need_update)-->
-                    <a href="#" onclick="doUpdateModule('{$val->module}'); return false;">{$lang->cmd_update}</a>
+                    <a href="#" onclick="doUpdateModule('{$val->module}'); return false;" title="{htmlspecialchars($lang->cmd_update)}">{$lang->cmd_update}</a>
                 <!--@else-->
                     -
                 <!--@end-->
@@ -183,12 +183,12 @@
         <td class="circle">
             <a href="{getUrl('','module','addon','act','dispAddonAdminInfo','selected_addon',$val->addon)}" onclick="popopen(this.href,'addon_info');return false">{$val->title}</a>
         </td>
-        <td class="nowrap center"><a href="{getUrl('','module','addon','act','dispAddonAdminSetup','selected_addon',$val->addon)}" onclick="popopen(this.href,'addon_info');return false"><img src="./images/n_setup.gif" alt="setup" /></a></td>
+        <td class="nowrap center"><a href="{getUrl('','module','addon','act','dispAddonAdminSetup','selected_addon',$val->addon)}" onclick="popopen(this.href,'addon_info');return false"><img src="./images/n_setup.gif" alt="{htmlspecialchars($lang->cmd_setup)}" /></a></td>
         <td class="nowrap center <!--@if($val->activated)-->activated<!--@else-->deactivated<!--@end-->">
             <!--@if($val->activated)-->
-            <a href="#" onclick="doToggleAddon('{$val->addon}');return false;">{$lang->use}</a>
+            <a href="#" onclick="doToggleAddon('{$val->addon}');return false;" title="{htmlspecialchars($lang->use)}">{$lang->use}</a>
             <!--@else-->
-            <a href="#" onclick="doToggleAddon('{$val->addon}');return false;">{$lang->notuse}</a>
+            <a href="#" onclick="doToggleAddon('{$val->addon}');return false;" title="{htmlspecialchars($lang->notuse)}">{$lang->notuse}</a>
             <!--@end-->
         </td>
     </tr>

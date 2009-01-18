@@ -33,7 +33,7 @@
         <td class="number center">{$val->checkcount}</td>
         <td class="number center">{$val->poll_count}</td>
         <td class="date nowrap center">{zdate($val->regdate,"Y-m-d H:i")}</td>
-        <td class="center nowrap view"><a href="{getUrl('','module','poll','act','dispPollAdminResult','poll_srl',$val->poll_srl,'poll_index_srl',$val->poll_index_srl)}" onclick="popopen(this.href); return false;">{$lang->cmd_view}</a></td>
+        <td class="center nowrap view"><a href="{getUrl('','module','poll','act','dispPollAdminResult','poll_srl',$val->poll_srl,'poll_index_srl',$val->poll_index_srl)}" onclick="popopen(this.href); return false;" title="{htmlspecialchars($lang->cmd_view)}">{$lang->cmd_view}</a></td>
     </tr>
     <!--@end-->
 </tbody>

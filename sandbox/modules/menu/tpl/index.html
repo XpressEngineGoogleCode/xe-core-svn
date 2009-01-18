@@ -29,7 +29,7 @@
         <td class="number center">{$no}</td>
         <td><a href="{getUrl('act','dispMenuAdminManagement','menu_srl',$val->menu_srl)}">{htmlspecialchars($val->title)}</a></td>
         <td class="date center nowrap">{zdate($val->regdate,"Y-m-d")}</td>
-        <td class="delete center"><a href="#" onclick="doDeleteMenu('{$val->menu_srl}');return false;">{$lang->cmd_delete}</a></td>
+        <td class="delete center"><a href="#" onclick="doDeleteMenu('{$val->menu_srl}');return false;" title="{htmlspecialchars($lang->cmd_delete)}">{$lang->cmd_delete}</a></td>
     </tr>
     <!--@end-->
     <tr>
