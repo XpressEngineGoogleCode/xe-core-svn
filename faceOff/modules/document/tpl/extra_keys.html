@@ -1,0 +1,107 @@
+<!--%import("js/document_admin.js")-->
+
+<!--@if($selected_var_idx && $extra_keys[$selected_var_idx])-->
+    {@ $selected_var = $extra_keys[$selected_var_idx] }
+<!--@end-->
+
+<!--@if(!$selected_var)-->
+    <!--@foreach($extra_keys as $key => $val)-->
+    <form action="./" method="post" onsubmit="return procFilter(this, delete_extra_var)">
+    <input type="hidden" name="module_srl" value="{$module_srl}" />
+    <input type="hidden" name="var_idx" value="{$val->idx}" />
+        <div class="gap1"></div>
+        <table cellspacing="0" class="adminTable ">
+        <caption>{$lang->extra_vars} {$val->idx}</caption>
+        <tr>
+            <th><div>{$lang->column_name}</div></th>
+            <td class="wide">{$val->name}</td>
+        </tr>
+        <tr>
+            <th><div>{$lang->column_type}</div></th>
+            <td>
+                {$lang->column_type_list[$val->type]}
+            </td>
+        </tr>
+        <tr>
+            <th><div>{$lang->is_required}</div></th>
+            <td><!--@if($val->is_required=='Y')-->{$lang->is_required}<!--@else-->&nbsp;<!--@end--></td>
+        </tr>
+        <tr>
+            <th><div>{$lang->default_value}</div></th>
+            <td>{$val->default}&nbsp;</td>
+        </tr>
+        <tr>
+            <th><div>{$lang->description}</div></th>
+            <td>{$val->desc}&nbsp;</td>
+        </tr>
+        <tr>
+            <th><div>{$lang->cmd_search}</div></th>
+            <td><!--@if($val->search=='Y')-->{$lang->search_target}<!--@else-->&nbsp;<!--@end--></td>
+        </tr>
+        <tr>
+            <td colspan="2" class="right">
+                <a href="{getUrl('selected_var_idx',$val->idx)}" class="button green"><span>{$lang->cmd_modify}</span></a>
+                <span class="button red"><input type="submit" value="{$lang->cmd_delete}" /></span>
+            </th>
+        </tr>
+        </table>
+    </form>
+    <!--@end-->
+<!--@end-->
+
+<!--%import("filter/insert_extra_var.xml")-->
+<!--%import("filter/delete_extra_var.xml")-->
+<!--%import("js/module_admin.js")-->
+<form action="./" method="post" onsubmit="return procFilter(this, insert_extra_var)">
+<input type="hidden" name="module_srl" value="{$module_srl}" />
+<input type="hidden" name="var_idx" value="{$selected_var_idx}" />
+
+    <div class="gap1"></div>
+
+    <table cellspacing="0" class="adminTable ">
+    <caption>{$lang->extra_vars} {$selected_var_idx}</caption>
+    <tr>
+        <th><div>{$lang->column_name}</div></th>
+        <td class="wide"><input type="text" name="name" value="{$selected_var->name}" class="inputTypeText w200" /> </td>
+    </tr>
+    <tr>
+        <th><div>{$lang->column_type}</div></th>
+        <td>
+            <select name="type">
+                <!--@foreach($lang->column_type_list as $k => $v)-->
+                    <!--@if($key != 'kr_zip')-->
+                    <option value="{$k}" <!--@if($selected_var->type==$k)-->selected="selected"<!--@end-->>{$lang->column_type_list[$k]}</option>
+                    <!--@end-->
+                <!--@end-->
+            </select>
+        </td>
+    </tr>
+    <tr>
+        <th><div>{$lang->is_required}</div></th>
+        <td><input type="checkbox" name="is_required" value="Y" <!--@if($selected_var->is_required=='Y')-->checked="checked"<!--@end--> /></td>
+    </tr>
+    <tr>
+        <th><div>{$lang->default_value}</div></th>
+        <td><input type="text" name="default" value="{$selected_var->default}" class="inputTypeText w400" /><p>{$lang->about_extra_vars_default_value}</p></td>
+    </tr>
+    <tr>
+        <th><div>{$lang->description}</div></th>
+        <td><input type="text" name="desc" value="{$selected_var->desc}" class="inputTypeText w400" /></td>
+    </tr>
+    <tr>
+        <th><div>{$lang->cmd_search}</div></th>
+        <td><input type="checkbox" name="search" value="Y" <!--@if($selected_var->search=='Y')-->checked="checked"<!--@end--> /></td>
+    </tr>
+    <tr>
+        <td colspan="2" class="right">
+            <!--@if($selected_var)-->
+            <span class="button red"><input type="submit" value="{$lang->cmd_modify}" accesskey="s" /></span>
+            <a href="{getUrl('selected_var_idx','')}"  class="button black"><span>{$lang->cmd_back}</span></a>
+            <!--@else-->
+            <span class="button green"><input type="submit" value="{$lang->cmd_insert}" accesskey="s" /></span>
+            <!--@end-->
+        </th>
+    </tr>
+    </table>
+
+</form>
