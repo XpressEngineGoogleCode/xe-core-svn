@@ -13,6 +13,7 @@
         function init() {
         }
 
+
         function procIssuetrackerInsertIssue() {
             // 권한 체크
             if(!$this->grant->ticket_write) return new Object(-1, 'msg_not_permitted');
@@ -116,13 +117,22 @@
             if(!$output->toBool()) return $output;
 
             // 이슈 삭제
-            $args->target_srl = $document_srl;
-            $output = executeQuery('issuetracker.deleteIssue', $args);
 
             // 성공 메세지 등록
             $this->add('mid', Context::get('mid'));
             $this->add('page', $output->get('page'));
             $this->setMessage('success_deleted');
+        }
+
+        function triggerDeleteDocument(&$obj)
+        {
+            $args->target_srl = $obj->document_srl;
+            if(!$args->target_srl) return new Object();
+            $output = executeQuery('issuetracker.deleteIssue', $args);
+            if(!$output->toBool()) return $output;
+
+            $output = executeQuery('issuetracker.deleteHistories', $args);
+            return $output; 
         }
 
         function insertHistory($target_srl, $objs, $module_srl, $grant)

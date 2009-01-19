@@ -21,6 +21,7 @@
             // 아이디 클릭시 나타나는 팝업메뉴에 작성글 보기 기능 추가
             $oModuleController = &getController('module');
             $oModuleController->insertTrigger('member.getMemberMenu', 'issuetracker', 'controller', 'triggerMemberMenu', 'after');
+            $oModuleController->insertTrigger('document.deleteDocument', 'issuetracker', 'controller', 'triggerDeleteDocument', 'after');
 
             $oDB = &DB::getInstance();
             $oDB->addIndex("issue_changesets","idx_unique_revision", array("module_srl","revision"), true);
@@ -31,6 +32,7 @@
             $oModuleModel = &getModel('module');
             // 아이디 클릭시 나타나는 팝업메뉴에 작성글 보기 기능 추가
             if(!$oModuleModel->getTrigger('member.getMemberMenu', 'issuetracker', 'controller', 'triggerMemberMenu', 'after')) return true;
+            if(!$oModuleModel->getTrigger('document.deleteDocument', 'issuetracker', 'controller', 'triggerDeleteDocument', 'after')) return true;
             return false;
         }
 
@@ -41,7 +43,8 @@
             // 아이디 클릭시 나타나는 팝업메뉴에 작성글 보기 기능 추가
             if(!$oModuleModel->getTrigger('member.getMemberMenu', 'issuetracker', 'controller', 'triggerMemberMenu', 'after'))
                 $oModuleController->insertTrigger('member.getMemberMenu', 'issuetracker', 'controller', 'triggerMemberMenu', 'after');
-
+            if(!$oModuleModel->getTrigger('document.deleteDocument', 'issuetracker', 'controller', 'triggerDeleteDocument', 'after')) 
+                $oModuleController->insertTrigger('document.deleteDocument', 'issuetracker', 'controller', 'triggerDeleteDocument', 'after');
             return new Object(0, 'success_updated');
         }
     }
