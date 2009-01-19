@@ -34,7 +34,7 @@
      * 2 : 소요시간, Request/Response info 출력
      * 4 : DB 쿼리 내역 출력
      **/
-    if(!defined('__DEBUG__')) define('__DEBUG__', 0);
+    if(!defined('__DEBUG__')) define('__DEBUG__', 7);
 
     /**
      * @brief 디버그 메세지의 출력 장소
@@ -42,14 +42,14 @@
      * 1 : HTML 최하단에 주석으로 출력 (Response Method가 HTML 일 때)
      * 2 : Firebug 콘솔에 출력 (PHP >= 5.2.0. Firebug/FirePHP 플러그인 필요)
      **/
-    if(!defined('__DEBUG_OUTPUT__')) define('__DEBUG_OUTPUT__', 0);
+    if(!defined('__DEBUG_OUTPUT__')) define('__DEBUG_OUTPUT__', 2);
 
     /**
      * @brief FirePHP 콘솔 및 브라우저 주석 출력 보안
      * 0 : 제한 없음 (권장하지 않음)
      * 1 : 지정한 IP 주소에만 허용
      **/
-    if(!defined('__DEBUG_PROTECT__')) define('__DEBUG_PROTECT__', 1);
+    if(!defined('__DEBUG_PROTECT__')) define('__DEBUG_PROTECT__', 0);
     if(!defined('__DEBUG_PROTECT_IP__')) define('__DEBUG_PROTECT_IP__', '127.0.0.1');
 
     /**

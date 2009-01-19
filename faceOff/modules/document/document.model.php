@@ -44,6 +44,8 @@
             if(!$module_srl) return;
             if(!isset($extra_keys[$module_srl])) {
                 $obj->module_srl = $module_srl;
+                $obj->sort_index = var_idx;
+                $obj->order = 'asc';
                 $output = executeQueryArray('document.getDocumentExtraKeys', $obj);
                 if(!$output->toBool() || !$output->data) {
                     $extra_keys[$module_srl] = array();

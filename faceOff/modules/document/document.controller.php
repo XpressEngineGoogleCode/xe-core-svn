@@ -441,13 +441,15 @@
         /**
          * @breif documents 테이블의 확장 변수 값 등록
          **/
-        function insertDocumentExtraVar($module_srl, $document_srl, $var_idx, $value) {
+        function insertDocumentExtraVar($module_srl, $document_srl, $var_idx, $value, $lang_code = '') {
             if(!$module_srl || !$document_srl || !$var_idx || !$value) return new Object(-1,'msg_invalid_request');
+            if(!$lang_code) $lang_code = Context::getLangType();
     
             $obj->module_srl = $module_srl;
             $obj->document_srl = $document_srl;
             $obj->var_idx = $var_idx;
             $obj->value = $value;
+            $obj->lang_code = $lang_code ;
 
             $output = executeQuery('document.getDocumentExtraVars', $obj);
             if(!$output->data) return executeQuery('document.insertDocumentExtraVar', $obj);

@@ -1187,7 +1187,7 @@
          * 단순히 db config 파일의 존재 유무로 설치 여부를 체크한다
          **/
         function isInstalled() {
-            return file_exists(Context::getConfigFile());
+            return file_exists(Context::getConfigFile()) && filesize(Context::getConfigFile());
         }
 
         /**

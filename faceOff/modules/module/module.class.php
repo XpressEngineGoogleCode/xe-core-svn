@@ -119,12 +119,16 @@
             
             // document 확장변수의 확장을 위한 처리
             if(!$oDB->isTableExists('document_extra_vars')) $oDB->createTableByXmlFile('./modules/document/schemas/document_extra_vars.xml');
+
             if(!$oDB->isTableExists('document_extra_keys')) $oDB->createTableByXmlFile('./modules/document/schemas/document_extra_keys.xml');
 
             // 모든 모듈의 권한, 스킨정보, 확장정보, 관리자 아이디를 grants 테이블로 이전시키는 업데이트
             if($oDB->isColumnExists('modules', 'grants')) {
                 $oModuleController = &getController('module');
                 $oDocumentController = &getController('document');
+
+                // 현재 시스템 언어 코드값을 가져옴
+                $lang_code = Context::getLangType();
 
                 // 모든 모듈의 module_info를 가져옴
                 $output = executeQueryArray('module.getModuleInfos');
@@ -137,67 +141,6 @@
                         $grants = unserialize($module_info->grants);
                         if($grants) $oModuleController->insertModuleGrants($module_srl, $grants);
 
-                        // 플래닛모듈의 경우 직접 추가 변수 입력
-                        if($module_info->module == 'planet') {
-                            $oDocumentController->insertDocumentExtraKey($module_srl, 20, 'postscript', 'text','N','N','','');
-
-                            $doc_args->module_srl = $module_srl;
-                            $doc_args->list_count = 100;
-                            $doc_args->sort_index = 'list_order';
-                            $doc_args->order_type = 'asc';
-                            $doc_args->page = 1;
-                            while(true) {
-                                $output = executeQueryArray('document.getDocumentList', $doc_args);
-                                if(!$output->toBool() || !$output->data || $doc_args->page == $output->page_navigation->total_page) break;
-                                foreach($output->data as $document) {
-                                    if(!$document) continue;
-                                    $oDocumentController->insertDocumentExtraVar($module_srl, $document->document_srl, 20, $document->extra_vars20);
-                                }
-                                $doc_args->page++;
-                            }
-
-                        // 확장 변수 등록 (document 모듈의 확장변수는 실행코드의 번거로움으로 인해 여기서 업데이트)
-                        } else {
-                            $extra_vars = unserialize($module_info->extra_vars);
-                            $document_extra_vars = null;
-                            if($extra_vars->extra_vars && count($extra_vars->extra_vars)) {
-                                $document_extra_vars = $extra_vars->extra_vars;
-                                unset($extra_vars->extra_vars);
-                            }
-                            if($extra_vars) $oModuleController->insertModuleExtraVars($module_srl, $extra_vars);
-
-                            // document 모듈의 extra_vars 처리
-                            if($document_extra_vars && count($document_extra_vars)) {
-                                $extra_var_exists = false;
-                                foreach($document_extra_vars as $var_idx => $val) {
-                                    $oDocumentController->insertDocumentExtraKey($module_srl, $var_idx, $val->name, $val->type, $val->is_required, $val->search, $val->default, $val->desc);
-                                    $extra_var_exists = true;
-                                }
-
-                                // extra_vars 데이터도 이전
-                                if($extra_var_exists) {
-                                    $doc_args->module_srl = $module_srl;
-                                    $doc_args->list_count = 100;
-                                    $doc_args->sort_index = 'list_order';
-                                    $doc_args->order_type = 'asc';
-                                    $doc_args->page = 1;
-                                    while(true) {
-                                        $output = executeQueryArray('document.getDocumentList', $doc_args);
-                                        if(!$output->toBool() || !$output->data || $doc_args->page == $output->page_navigation->total_page) break;
-                                        foreach($output->data as $document) {
-                                            if(!$document) continue;
-                                            foreach($document as $key => $var) {
-                                                if(strpos($key,'extra_vars')!==0 || !trim($var) || $var== 'N;') continue;
-                                                $var_idx = str_replace('extra_vars','',$key);
-                                                $oDocumentController->insertDocumentExtraVar($module_srl, $document->document_srl, $var_idx, $var);
-                                            }
-                                        }
-                                        $doc_args->page++;
-                                    }
-                                }
-                            }
-                        }
-
                         // 스킨 변수 등록
                         $skin_vars = unserialize($module_info->skin_vars);
                         if($skin_vars) $oModuleController->insertModuleSkinVars($module_srl, $skin_vars);
@@ -206,8 +149,61 @@
                         $admin_id = trim($module_info->admin_id);
                         if($admin_id && $admin_id != 'Array') {
                             $admin_ids = explode(',',$admin_id);
-                            foreach($admin_ids as $admin_id) {
-                                $oModuleController->insertAdminId($module_srl, $admin_id);
+                            if(count($admin_id)) {
+                                foreach($admin_ids as $admin_id) {
+                                    $oModuleController->insertAdminId($module_srl, $admin_id);
+                                }
+                            }
+                        }
+
+                        // 모듈별 추가 설정 저장 (기본 modules에 없던 컬럼 데이터)
+                        $extra_vars = unserialize($module_info->extra_vars);
+                        $document_extra_keys = null;
+                        if($extra_vars->extra_vars && count($extra_vars->extra_vars)) {
+                            $document_extra_keys = $extra_vars->extra_vars;
+                            unset($extra_vars->extra_vars);
+                        }
+                        if($extra_vars) $oModuleController->insertModuleExtraVars($module_srl, $extra_vars);
+
+                        /**
+                         * 게시글 확장변수 이동 (documents모듈에서 해야 하지만 modules 테이블의 추가 변수들이 정리되기에 여기서 함)
+                         **/
+                        // 플래닛모듈의 경우 직접 추가 변수 입력
+                        if($module_info->module == 'planet') {
+                            if(!$document_extra_keys || !is_array($document_extra_keys)) $document_extra_keys = array();
+                            $planet_extra_keys->name = 'postscript';
+                            $planet_extra_keys->type = 'text';
+                            $planet_extra_keys->is_required = 'N';
+                            $planet_extra_keys->search = 'N';
+                            $planet_extra_keys->default = '';
+                            $planet_extra_keys->desc = '';
+                            $document_extra_keys[20] = $planet_extra_keys;
+                        }
+
+                        // 게시글 확장변수 키 등록
+                        if(count($document_extra_keys)) {
+                            foreach($document_extra_keys as $var_idx => $val) {
+                                $oDocumentController->insertDocumentExtraKey($module_srl, $var_idx, $val->name, $val->type, $val->is_required, $val->search, $val->default, $val->desc);
+                            }
+
+                            // 확장변수가 존재하면 확장변수 가져오기
+                            $doc_args = null;
+                            $doc_args->module_srl = $module_srl;
+                            $doc_args->list_count = 100;
+                            $doc_args->sort_index = 'list_order';
+                            $doc_args->order_type = 'asc';
+                            $doc_args->page = 1;
+                            $output = executeQueryArray('document.getDocumentList', $doc_args);
+                            if($output->toBool() && $output->data && count($output->data)) {
+                                foreach($output->data as $document) {
+                                    if(!$document) continue;
+                                    foreach($document as $key => $var) {
+                                        if(strpos($key,'extra_vars')!==0 || !trim($var) || $var== 'N;') continue;
+                                        $var_idx = str_replace('extra_vars','',$key);
+                                        $oDocumentController->insertDocumentExtraVar($module_srl, $document->document_srl, $var_idx, $var, $lang_code);
+                                    }
+                                }
+                                $doc_args->page++;
                             }
                         }
 
@@ -232,7 +228,6 @@
                 $oDB->addColumn('sites','default_language','varchar',255,0,false);
             }
 
-            // extra_vars* 컬럼 제거
             // extra_vars* 컬럼 제거
             for($i=1;$i<=20;$i++) {
                 if(!$oDB->isColumnExists("documents","extra_vars".$i)) continue;

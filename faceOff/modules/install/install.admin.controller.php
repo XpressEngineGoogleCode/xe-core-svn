@@ -67,25 +67,13 @@
             $db_info->qmail_compatibility = $qmail_compatibility;
             $db_info->use_rewrite = $use_rewrite;
             $db_info->use_optimizer = $use_optimizer;
-            $db_info->lang_type = Context::get('lang_type');
+            $db_info->lang_type = Context::get('change_lang_type');
             $db_info->use_ssl = $use_ssl;
-            if($http_port)
-            {
-                $db_info->http_port = (int) $http_port;
-            }
-            else if($db_info->http_port)
-            {
-                unset($db_info->http_port);
-            }
+            if($http_port) $db_info->http_port = (int) $http_port;
+            else if($db_info->http_port) unset($db_info->http_port);
 
-            if($https_port)
-            {
-                $db_info->https_port = (int) $https_port;
-            }
-            else if($db_info->https_port)
-            {
-                unset($db_info->https_port);
-            }
+            if($https_port) $db_info->https_port = (int) $https_port;
+            else if($db_info->https_port) unset($db_info->https_port);
 
             Context::setDBInfo($db_info);
 

@@ -20,12 +20,6 @@
 
         function setAttribute($attribute) {
             parent::setAttribute($attribute);
-
-            // planet에서 사용하는 postscript의 경우 확장변수에 추가되기에 확장변수 체크
-            if(!$this->isExtraVarsExists()) {
-                $oDocumentController = &getController('document');
-                $oDocumentController->insertDocumentExtraKey($this->get('module_srl'), 20, 'postscript', 'text', 'N', 'N', '', '');
-            }
         }
 
 

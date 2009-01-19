@@ -40,6 +40,10 @@
             $output = $this->insertPlanet($args);
             if(!$output->toBool()) return $output;
 
+            // planet에서 사용하는 postscript의 경우 확장변수에 추가되기에 확장변수 체크
+            $oDocumentController = &getController('document');
+            $oDocumentController->insertDocumentExtraKey($output->get('module_srl'), 20, 'postscript', 'text', 'N', 'N', '', '');
+
             $this->setError($output->getError());
             $this->setMessage($output->getMessage());
             $this->add('mid', $args->mid);
