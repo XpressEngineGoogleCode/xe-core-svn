@@ -42,7 +42,7 @@
     $lang->cmd_select = '선택';
     $lang->cmd_select_all = '모두선택';
     $lang->cmd_unselect_all = '모두해제';
-    $lang->cmd_reverse_all = "선택반전";
+    $lang->cmd_reverse_all = '선택반전';
     $lang->cmd_close_all = '모두닫기';
     $lang->cmd_open_all = '모두열기';
     $lang->cmd_reload = '다시읽기';
@@ -50,7 +50,7 @@
     $lang->cmd_open = '열기';
     $lang->cmd_setup = '설정';
     $lang->cmd_addition_setup = '추가 설정';
-	$lang->cmd_option = '옵션';
+    $lang->cmd_option = '옵션';
     $lang->cmd_apply = '적용';
     $lang->cmd_open_calendar = '날짜 선택';
     $lang->cmd_send = '발송';
@@ -58,8 +58,8 @@
     $lang->cmd_scrap = '스크랩';
     $lang->cmd_preview = '미리 보기';
     $lang->cmd_reset = '초기화';
-    $lang->cmd_remake_cache = "캐시파일 재생성";
-    $lang->cmd_publish = "발행";
+    $lang->cmd_remake_cache = '캐시파일 재생성';
+    $lang->cmd_publish = '발행';
     $lang->cmd_layout_setup = '레이아웃 설정';
     $lang->cmd_layout_edit = '레이아웃 편집';
     $lang->cmd_search_by_ipaddress = 'IP주소로 검색';
@@ -126,8 +126,8 @@
     $lang->colorset = '컬러셋';
     $lang->extra_vars = '확장변수';
 
-    $lang->domain = "도메인";
-    $lang->url = "URL";
+    $lang->domain = '도메인';
+    $lang->url = 'URL';
     $lang->document_url = '게시글 주소';
     $lang->trackback_url = '엮인글 주소';
     $lang->blog_name = '블로그이름';
