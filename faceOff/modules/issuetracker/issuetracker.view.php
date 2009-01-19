@@ -82,7 +82,15 @@
             $oController = &getController('issuetracker');
             $oController->syncChangeset($this->module_info);
             $oModel = &getModel('issuetracker');
-            $changesets = $oModel->getChangesets($this->module_info->module_srl);
+            $duration = Context::get('duration');
+            if(!$duration) $duration = 10;
+            $targets = Context::get('targets');
+            if(!$targets || !is_array($targets) || !count($targets))
+            {
+                $targets = array('issue_created', 'issue_changed', 'commit');
+                Context::set('targets', $targets);
+            }
+            $changesets = $oModel->getChangesets($this->module_info->module_srl, Context::get('enddate'), $duration, $targets);
             Context::set('changesets', $changesets);
             $issues = array();
             foreach($changesets as $changeset)

@@ -99,4 +99,11 @@
         'created' => 'created'
     );
     $lang->cmd_manage_issue = 'Manage issues';
+    $lang->msg_changes_from = 'View changes from';
+    $lang->duration = 'Duration';
+    $lang->target_list = array(
+        'issue_created' => 'Created issues',
+        'issue_changed' => 'Changed issues',
+        'commit' => 'Repository checkins'
+        );
 ?>

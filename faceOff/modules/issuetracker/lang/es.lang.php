@@ -100,4 +100,11 @@
     );
 
     $lang->cmd_manage_issue = 'Cuestiones de gestión';
+    $lang->msg_changes_from = 'View changes from';
+    $lang->duration = 'Duration';
+    $lang->target_list = array(
+        'issue_created' => 'Created issues',
+        'issue_changed' => 'Changed issues',
+        'commit' => 'Repository checkins'
+        );
 ?>

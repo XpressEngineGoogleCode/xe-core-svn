@@ -100,4 +100,11 @@
     );
 
     $lang->cmd_manage_issue = '이슈 관리';
+    $lang->msg_changes_from = '시작 날짜';
+    $lang->duration = '기간';
+    $lang->target_list = array(
+        'issue_created' => '생성된 이슈',
+        'issue_changed' => '변경된 이슈',
+        'commit' => '소스변경'
+        );
 ?>
