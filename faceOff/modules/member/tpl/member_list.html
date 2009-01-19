@@ -66,7 +66,7 @@
             <!--@if($val->homepage)--><a href="{$val->homepage}" class="homepage" onclick="window.open(this.href);return false;"><img src="./images/icon_homepage.gif" title="{$lang->homepage}" alt="{$lang->homepage}" /></a> <!--@end-->
             <!--@if($val->blog)--><a href="{$val->blog}" class="blog" onclick="window.open(this.href);return false;"><img src="./images/icon_blog.gif" title="{$lang->blog}" alt="{$lang->blog}" /></a> <!--@end-->&nbsp;
         </td>
-        <td class="delete center"><!--@if($val->is_admin != 'Y')--><a href="{getUrl('act','dispMemberAdminDeleteForm','member_srl', $val->member_srl)}">{$lang->cmd_delete}</a><!--@else--><img src="./images/icon_management.gif" title="{$lang->is_admin}" alt="{$lang->is_admin}" /><!--@end--></td>
+        <td class="delete center"><!--@if($val->is_admin != 'Y')--><a href="{getUrl('act','dispMemberAdminDeleteForm','member_srl', $val->member_srl)}" title="{$lang->cmd_delete}">{$lang->cmd_delete}</a><!--@else--><img src="./images/icon_management.gif" title="{$lang->is_admin}" alt="{$lang->is_admin}" /><!--@end--></td>
     </tr>
     <tr>
         <td colspan="8"><p>{$val->group_list}&nbsp;</p></td>
