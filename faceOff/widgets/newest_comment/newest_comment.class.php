@@ -62,6 +62,21 @@
 
             // 템플릿 파일에서 사용할 변수들을 세팅
             if(count($mid_list)==1) $widget_info->module_name = $mid_list[0];
+
+            // 모듈이 하나만 선택되었을 경우 대상 모듈 이름과 링크를 생성
+            if(count($module_srl)==1) {
+                $oModuleModel = &getModel('module');
+                $module_info = $oModuleModel->getModuleInfoByModuleSrl($module_srl[0]);
+                if($module_info->site_srl) {
+                    $site_info = $oModuleModel->getSiteInfo($module_info->site_srl);
+                    if($site_info->domain) {
+                        $widget_info->more_link = getSiteUrl('http://'.$site_info->domain, '','mid', $module_info->mid);
+                    }
+                } else {
+                    $widget_info->more_link = getUrl('','mid',$module_info->mid);
+                }
+                $widget_info->module_name = $module_info->mid;
+            }
             
             $widget_info->title = $title;
             $widget_info->comment_list = $output;

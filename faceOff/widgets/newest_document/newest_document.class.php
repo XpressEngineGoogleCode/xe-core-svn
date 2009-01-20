@@ -59,7 +59,7 @@
             // newest_document 위젯에서 정의한 query문을 직접 사용
             if(is_array($module_srl)) $obj->module_srl = implode(',',$module_srl);
             else $obj->module_srl = $module_srl;
-            $obj->sort_index = $order_target;
+            $obj->sort_index = 'documents.'.$order_target;
             $obj->order_type = $order_type=="desc"?"asc":"desc";
             $obj->list_count = $list_count;
             $output = executeQueryArray('widgets.newest_document.getNewestDocuments', $obj);
@@ -71,8 +71,12 @@
             if(!$output->toBool()) return;
 
             // 결과가 있으면 각 문서 객체화를 시킴
+            $modules = array();
             if(count($output->data)) {
                 foreach($output->data as $key => $attribute) {
+                    $modules[$attribute->module_srl]->mid = $attribute->mid;
+                    $modules[$attribute->module_srl]->site_srl = $attribute->site_srl;
+
                     $document_srl = $attribute->document_srl;
 
                     $oDocument = null;
@@ -87,9 +91,24 @@
                 
             }
 
-            // 템플릿 파일에서 사용할 변수들을 세팅
-            if(count($mid_list)==1) $widget_info->module_name = $mid_list[0];
-            
+            // 모듈이 하나만 선택되었을 경우 대상 모듈 이름과 링크를 생성
+            if(count($modules)==1) {
+                $info = array_shift($modules);
+                if($info) {
+                    $widget_info->mid = $info->mid;
+                    if($info->site_srl) {
+                        $oModuleModel = &getModel('module');
+                        $site_info = $oModuleModel->getSiteInfo($info->site_srl);
+                        if($site_info->domain) {
+                            $widget_info->more_link = getSiteUrl('http://'.$site_info->domain, '','mid', $widget_info->mid);
+                        }
+                    } else {
+                        $widget_info->more_link = getUrl('','mid',$info->mid);
+                        $widget_info->module_name = $info->mid;
+                    }
+                }
+            }
+
             $widget_info->title = $title;
             $widget_info->document_list = $document_list;
             $widget_info->subject_cut_size = $subject_cut_size;

@@ -99,6 +99,21 @@
             for($i=$document_count;$i<$total_count;$i++) $document_list[] = new DocumentItem();
             $widget_info->document_list = $document_list;
 
+            // 모듈이 하나만 선택되었을 경우 대상 모듈 이름과 링크를 생성
+            if(count($module_srl)==1) {
+                $oModuleModel = &getModel('module');
+                $module_info = $oModuleModel->getModuleInfoByModuleSrl($module_srl[0]);
+                if($module_info->site_srl) {
+                    $site_info = $oModuleModel->getSiteInfo($module_info->site_srl);
+                    if($site_info->domain) {
+                        $widget_info->more_link = getSiteUrl('http://'.$site_info->domain, '','mid', $module_info->mid);
+                    }
+                } else {
+                    $widget_info->more_link = getUrl('','mid',$module_info->mid);
+                }
+                $widget_info->module_name = $module_info->mid;
+            }
+
             Context::set('widget_info', $widget_info);
 
             // 템플릿의 스킨 경로를 지정 (skin, colorset에 따른 값을 설정)

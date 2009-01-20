@@ -76,7 +76,6 @@ function doRemoveWidgetCache(module_srl) {
 
 function completeRemoveWidgetCache(ret_obj) {
     var message = ret_obj['message'];
-    alert(message);
     location.reload(); 
 }
 

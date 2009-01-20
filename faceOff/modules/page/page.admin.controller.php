@@ -159,8 +159,6 @@
             // widget controller 의 캐시파일 재생성 실행
             $oWidgetController = &getController('widget');
             $oWidgetController->recompileWidget($content);
-
-            $this->setMessage('success_updated');
         }
 
     }

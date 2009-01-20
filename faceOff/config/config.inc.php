@@ -42,7 +42,7 @@
      * 1 : HTML 최하단에 주석으로 출력 (Response Method가 HTML 일 때)
      * 2 : Firebug 콘솔에 출력 (PHP >= 5.2.0. Firebug/FirePHP 플러그인 필요)
      **/
-    if(!defined('__DEBUG_OUTPUT__')) define('__DEBUG_OUTPUT__', 0);
+    if(!defined('__DEBUG_OUTPUT__')) define('__DEBUG_OUTPUT__', 2);
 
     /**
      * @brief FirePHP 콘솔 및 브라우저 주석 출력 보안
