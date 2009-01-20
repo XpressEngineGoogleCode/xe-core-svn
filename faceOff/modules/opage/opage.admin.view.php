@@ -1,195 +1,153 @@
-<!--#include('header.html')-->
+<?php
+    /**
+     * @class  opageAdminView
+     * @author zero (zero@nzeo.com)
+     * @brief  opage 모듈의 admin view 클래스
+     **/
 
-<form action="{Context::getRequestUri()}" method="get" class="issueSearch">
-<input type="hidden" name="mid" value="{$mid}" />
-<input type="hidden" name="act" value="{$act}" />
-<input type="hidden" name="d" value="1" />
-    <ul>
-        <li>
-            <select name="milestone_srl">
-                <option value="">{$lang->milestone}</option> 
-                <!--@foreach($project->milestones as $key => $val)-->
-                <option value="{$val->milestone_srl}" <!--@if($val->milestone_srl==$milestone_srl)-->selected="selected"<!--@end-->>{$val->title}</option> 
-                <!--@end-->
-            </select>
-        </li>
-        <li>
-            <select name="priority_srl">
-                <option value="">{$lang->priority}</option> 
-                <!--@foreach($project->priorities as $key => $val)-->
-                <option value="{$val->priority_srl}" <!--@if($val->priority_srl==$priority_srl)-->selected="selected"<!--@end-->>{$val->title}</option> 
-                <!--@end-->
-            </select>
-        </li>
-        <li>
-            <select name="type_srl">
-                <option value="">{$lang->type}</option> 
-                <!--@foreach($project->types as $key => $val)-->
-                <option value="{$val->type_srl}" <!--@if($val->type_srl==$type_srl)-->selected="selected"<!--@end-->>{$val->title}</option> 
-                <!--@end-->
-            </select>
-        </li>
-        <li>
-            <select name="component_srl">
-                <option value="">{$lang->component}</option> 
-                <!--@foreach($project->components as $key => $val)-->
-                <option value="{$val->component_srl}" <!--@if($val->component_srl==$component_srl)-->selected="selected"<!--@end-->>{$val->title}</option> 
-                <!--@end-->
-            </select>
-        </li>
-        <li>
-            <select name="package_srl" onchange="showRelease(this, this.form);">
-                <option value="">{$lang->package}</option> 
-                <!--@foreach($project->packages as $key => $val)-->
-                <option value="{$val->package_srl}" <!--@if($val->package_srl==$package_srl)-->selected="selected"<!--@end-->>{$val->title}</option> 
-                <!--@end-->
-            </select>
-        </li>
-        <li>
-            <select name="release_srl">
-                <option value="">{$lang->release}</option> 
-                <!--@foreach($project->packages as $key => $val)-->
-                <!--@foreach($project->releases as $k => $v)-->
-                <!--@if($val->package_srl == $v->package_srl)-->
-                <option value="{$v->release_srl}" <!--@if($v->release_srl==$release_srl)-->selected="selected"<!--@end-->>{$v->title}</option> 
-                <!--@end-->
-                <!--@end-->
-                <!--@end-->
-            </select>
-        </li>
-        <li>
-            <select name="assignee_srl">
-                <option value="">{$lang->assignee}</option> 
-                <!--@foreach($commiters as $val)-->
-                <option value="{$val->member_srl}" <!--@if($val->member_srl==$assignee_srl)-->selected="selected"<!--@end-->>{$val->nick_name} ({$val->user_id})</option> 
-                <!--@end-->
-            </select>
-        </li>
-        <li>
-            <!--@foreach($lang->status_list as $key => $val)-->
-            <input name="status[]" type="checkbox" value="{$key}" <!--@if(in_array($key,$status))-->checked="checked"<!--@end--> id="status_{$key}"/><label for="status_{$key}" class="issue_{$key}">{$val}</label>
-            <!--@end-->
-        </li>
-    </ul>
-    <ul>
-        <li class="keywordSearch">
-            <select name="search_target" class="searchTarget">
-                <!--@foreach($search_option as $key => $val)-->
-                <option value="{$key}" <!--@if($search_target==$key)-->selected="selected"<!--@end-->>{$val}</option>
-                <!--@end-->
-            </select>
-        </li>
-        <li><input type="input" name="search_keyword" value="{htmlspecialchars($search_keyword)}" class="inputTypeText" /></li>
-        <li><input type="submit" value="{$lang->cmd_search}" class="inputTypeSubmit" /></li>
-        <li><input type="button" value="{$lang->cmd_cancel}" class="inputTypeSubmit" onclick="location.href='{getUrl('','mid',$mid,'act',$act)}';return false;"/></li>
-        <li class="displayOpt">
-            <ol>
-                <!--@foreach($display_option as $key => $val)-->
-                <li><input type="checkbox" name="d_{$key}" value="1" id="display_{$key}" <!--@if($val->checked)-->checked="checked"<!--@end--> <!--@if($key=='title')-->disabled="disabled"<!--@end--> /><label for="display_{$key}">{$val->title}</label></li>
-                <!--@end-->
-            </ol>
-        </li>
-    </ul>
-    <div class="clear"></div>
-</form>
+    class opageAdminView extends opage {
 
-<form action="./" method="get" class="close">
-<!--@foreach($project->packages as $key => $val)-->
-<select id="release_{$val->package_srl}">
-    <option value="">{$lang->release}</option> 
-    <!--@foreach($project->releases as $k => $v)-->
-    <!--@if($val->package_srl == $v->package_srl)-->
-    <option value="{$v->release_srl}" <!--@if($v->release_srl==$release_srl)-->selected="selected"<!--@end-->>{$v->title}</option> 
-    <!--@end-->
-    <!--@end-->
-</select>
-<!--@end-->
-</form>
+        var $module_srl = 0;
+        var $list_count = 20;
+        var $page_count = 10;
 
-<table class="issues" cellspacing="0">
-<thead>
-<tr>
-<!--@foreach($display_option as $k => $v)-->
-    <!--@if($v->checked)-->
-    <th class="{$k}">
-        <div>
-            <!--@if($k=='title' && $grant->is_admin)--><input type="checkbox" onclick="XE.checkboxToggleAll({ doClick:true }); return false;" /><!--@end-->
-            {$v->title}
-        </div>
-    </th>
-    <!--@end-->
-<!--@end-->
-</tr>
-</thead>
-<tbody>
-<!--@foreach($issue_list as $no=>$val)-->
-<tr>
-    <!--@foreach($display_option as $k => $v)-->
-        <!--@if($v->checked)-->
-            <!--@if($k == 'no')-->
-    <td class="no">{$no}</td>
-            <!--@elseif($k == 'title')-->
-    <td class="title issue_{$val->get('status')}">
-        <!--@if($grant->is_admin)--><input type="checkbox" name="cart" value="{$val->document_srl}" onclick="doAddDocumentCart(this);" <!--@if($val->isCarted())-->checked="checked"<!--@end-->/><!--@end-->
-        <a href="{getUrl('document_srl', $val->get('document_srl'))}">{$val->getTitle()}</a> 
-        {$val->printExtraImages(60*60*24)}
-        <!--@if($val->getCommentCount())-->
-            <strong class="comment">{$val->getCommentCount()}</strong>
-        <!--@end-->
+        /**
+         * @brief 초기화
+         **/
+        function init() {
+            // module_srl이 있으면 미리 체크하여 존재하는 모듈이면 module_info 세팅
+            $module_srl = Context::get('module_srl');
 
-        <!--@if($val->getTrackbackCount())-->
-            <strong class="trackback">{$val->getTrackbackCount()}</strong>
-        <!--@end-->
-    </td>
-            <!--@elseif($k == 'milestone')-->
-    <td class="milestone"><a href="{getUrl('milestone_srl', $val->get('milestone_srl'))}">{$val->getMilestoneTitle()}</a></td>
-            <!--@elseif($k == 'priority')-->
-    <td class="priority"><a href="{getUrl('priority_srl',$val->get('priority_srl'))}">{$val->getPriorityTitle()}</a></td>
-            <!--@elseif($k == 'type')-->
-    <td class="type"><a href="{getUrl('type_srl', $val->get('type_srl'))}">{$val->getTypeTitle()}</a></td>
-            <!--@elseif($k == 'component')-->
-    <td class="component"><a href="{getUrl('component_srl',$val->get('component_srl'))}">{$val->getComponentTitle()}</a></td>
-            <!--@elseif($k == 'status')-->
-    <td class="status issue_{$val->get('status')}"><a href="{getUrl('status', $val->get('status'))}">{$val->getStatus()}</a></td>
-            <!--@elseif($k == 'occured_version')-->
-    <td class="occured_version"><a href="{getUrl('release_srl',$val->get('occured_version_srl'))}">{$val->getOccuredVersionTitle()}</a></td>
-            <!--@elseif($k == 'package')-->
-    <td class="package"><a href="{getUrl('package_srl',$val->get('package_srl'))}">{$val->getPackageTitle()}</a></td>
-            <!--@elseif($k == 'regdate')-->
-    <td class="regdate">{$val->getRegdate("Y-m-d")}</td>
-            <!--@elseif($k == 'assignee')-->
-    <td class="nick_name">
-        <!--@if($val->get('assignee_srl'))-->
-            <span class="member_{$val->get('assignee_srl')}">{$val->get('assignee_name')}</span>
-        <!--@else-->
-            &nbsp;
-        <!--@end-->
-    </td>
-            <!--@elseif($k == 'writer')-->
-    <td class="nick_name"><span class="member_{$val->getMemberSrl()}">{$val->getNickName()}</span></td>
-            <!--@end-->
-        <!--@end-->
-    <!--@end-->
-</tr>
-<!--@end-->
-</tbody>
-</table>
+            // module model 객체 생성 
+            $oModuleModel = &getModel('module');
 
-<!--@if($grant->is_admin)-->
-<div class="fr gap1">
-    <a href="{getUrl('','module','document','act','dispDocumentManageDocument')}" onclick="popopen(this.href,'manageDocument'); return false;" class="button"><span>{$lang->cmd_manage_document}</span></a>
-    <a href="{getUrl('act','dispIssuetrackerAdminManageDocument')}" onclick="popopen(this.href,'manageDocument'); return false;" class="button"><span>{$lang->cmd_manage_issue}</span></a>
-</div>
-<!--@end-->
+            // 모듈 카테고리 목록을 구함
+            $module_category = $oModuleModel->getModuleCategories();
+            Context::set('module_category', $module_category);
 
-<!--@if($page_navigation->total_page>1)-->
-<div class="pagination a1">
-    <!--@while($page_no = $page_navigation->getNextPage())-->
-        <!--@if($page == $page_no)-->
-            <strong>{$page_no}</strong> 
-        <!--@else-->
-            <span><a href="{getUrl('page',$page_no,'document_srl','')}">{$page_no}</a></span>
-        <!--@end-->
-    <!--@end-->
-</div>
-<!--@end-->
+            // 템플릿 경로 구함 (opage의 경우 tpl에 관리자용 템플릿 모아놓음)
+            $this->setTemplatePath($this->module_path.'tpl');
+        }
+
+        /**
+         * @brief 외부페이지 관리 목록 보여줌
+         **/
+        function dispOpageAdminContent() {
+            $args->sort_index = "module_srl";
+            $args->page = Context::get('page');
+            $args->list_count = 40;
+            $args->page_count = 10;
+            $args->s_module_category_srl = Context::get('module_category_srl');
+            $output = executeQuery('opage.getOpageList', $args);
+
+            // 템플릿에 쓰기 위해서 context::set
+            Context::set('total_count', $output->total_count);
+            Context::set('total_page', $output->total_page);
+            Context::set('page', $output->page);
+            Context::set('opage_list', $output->data);
+            Context::set('page_navigation', $output->page_navigation);
+
+            // 템플릿 파일 지정
+            $this->setTemplateFile('index');
+        }
+
+        /**
+         * @brief 선택된 외부페이지의 정보 출력
+         **/
+        function dispOpageAdminInfo() {
+            // GET parameter에서 module_srl을 가져옴
+            $module_srl = Context::get('module_srl');
+
+            // module model 객체 생성 
+            if($module_srl) {
+                $oOpageModel = &getModel('opage');
+                $module_info = $oOpageModel->getOpage($module_srl);
+                if(!$module_info) {
+                    unset($module_info);
+                    unset($module_srl);
+                } else {
+                    Context::set('module_info',$module_info);
+                }
+
+            // module_srl 값이 없다면 그냥 index 외부페이지를 보여줌
+            } else {
+                return $this->dispOpageAdminContent();
+            }
+
+            // 레이아웃이 정해져 있다면 레이아웃 정보를 추가해줌(layout_title, layout)
+            if($module_info->layout_srl) {
+                $oLayoutModel = &getModel('layout');
+                $layout_info = $oLayoutModel->getLayout($module_info->layout_srl);
+                $module_info->layout = $layout_info->layout;
+                $module_info->layout_title = $layout_info->layout_title;
+            }
+
+            // 레이아웃 목록을 구해옴
+            $oLayoutMode = &getModel('layout');
+            $layout_list = $oLayoutMode->getLayoutList();
+            Context::set('layout_list', $layout_list);
+
+
+            // 템플릿 파일 지정
+            $this->setTemplateFile('opage_info');
+        }
+
+        /**
+         * @brief 외부페이지 추가 폼 출력
+         **/
+        function dispOpageAdminInsert() {
+            // 권한 그룹의 목록을 가져온다
+            $oMemberModel = &getModel('member');
+            $group_list = $oMemberModel->getGroups();
+            Context::set('group_list', $group_list);
+
+            // module.xml에서 권한 관련 목록을 구해옴
+            $grant_list = $this->xml_info->grant;
+            Context::set('grant_list', $grant_list);
+
+            // GET parameter에서 module_srl을 가져옴
+            $module_srl = Context::get('module_srl');
+
+            // module_srl이 있으면 해당 모듈의 정보를 구해서 세팅
+            if($module_srl) {
+                $oModuleModel = &getModel('module');
+                $module_info = $oModuleModel->getModuleInfoByModuleSrl($module_srl);
+                if($module_info->module_srl == $module_srl) Context::set('module_info',$module_info);
+                else {
+                    unset($module_info);
+                    unset($module_srl);
+                }
+            }
+
+            // module_srl이 없으면 sequence값으로 미리 구해 놓음
+            if(!$module_srl) $module_srl = getNextSequence();
+            Context::set('module_srl',$module_srl);
+
+            // 레이아웃 목록을 구해옴
+            $oLayoutMode = &getModel('layout');
+            $layout_list = $oLayoutMode->getLayoutList();
+            Context::set('layout_list', $layout_list);
+
+
+            // 템플릿 파일 지정
+            $this->setTemplateFile('opage_insert');
+        }
+
+
+        /**
+         * @brief 외부페이지 삭제 화면 출력
+         **/
+        function dispOpageAdminDelete() {
+            $module_srl = Context::get('module_srl');
+            if(!$module_srl) return $this->dispContent();
+
+            $oModuleModel = &getModel('module');
+            $module_info = $oModuleModel->getModuleInfoByModuleSrl($module_srl);
+            Context::set('module_info',$module_info);
+
+            // 템플릿 파일 지정
+            $this->setTemplateFile('opage_delete');
+        }
+
+    }
+?>
