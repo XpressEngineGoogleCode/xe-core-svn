@@ -160,7 +160,7 @@
                         else return $value;
                     break;
                 case 'date' :
-                        return zdate($val->value,"Y-m-d");
+                        return zdate($value,"Y-m-d");
                     break;
                 case 'select' :
                         if(is_array($value)) return implode(', ',$value);
@@ -235,18 +235,18 @@
                         Context::loadJavascriptPlugin('ui.datepicker');
 
                         $buff .= 
-                            '<input type="hidden" name="'.$column_name.'" id="date_'.$column_name.'" value="'.$value.'" />'.
-                            '<input type="text" '.($className?'class="'.$className.'"':'').' value="'.zdate($value,'Y-m-d').'" readonly="readonly" />'.
-                            '<script type="text/javascript">'.
-                            '(function($){'.
-                            '    $(function(){'.
-                            '        var option = { gotoCurrent: false,yearRange:\'-100:+10\', onSelect:function(){'.
-                            '            $(this).prev(\'input[type="hidden"]\').val(this.value.replace(/-/g,""))}'.
-                            '        };'.
-                            '        $.extend(option,$.datepicker.regional[\''.Context::getLangType().'\']);'.
-                            '        $(".inputDate").datepicker(option);'.
-                            '    });'.
-                            '})(jQuery);'.
+                            '<input type="hidden" name="'.$column_name.'" value="'.$value.'" />'.
+                            '<input type="text" id="date_'.$column_name.'" '.($className?'class="'.$className.'"':'').' value="'.zdate($value,'Y-m-d').'" readonly="readonly" />'."\n".
+                            '<script type="text/javascript">'."\n".
+                            '(function($){'."\n".
+                            '    $(function(){'."\n".
+                            '        var option = { gotoCurrent: false,yearRange:\'-100:+10\', onSelect:function(){'."\n".
+                            '            $(this).prev(\'input[type="hidden"]\').val(this.value.replace(/-/g,""))}'."\n".
+                            '        };'."\n".
+                            '        $.extend(option,$.datepicker.regional[\''.Context::getLangType().'\']);'."\n".
+                            '        $("#date_'.$column_name.'").datepicker(option);'."\n".
+                            '    });'."\n".
+                            '})(jQuery);'."\n".
                             '</script>';
                     break;
 
