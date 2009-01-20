@@ -24,16 +24,19 @@
             // 날짜 형태
             $DATE_FORMAT = $args->date_format ? $args->date_format : "Y-m-d H:i:s";
 
-            $URL_parsed = parse_url($args->rss_url); 
+            $URL_parsed = parse_url($args->rss_url);
+            if(strpos($URL_parsed["host"],'naver.com')) $args->rss_url = iconv('UTF-8', 'euc-kr', $args->rss_url);
+            $args->rss_url = str_replace(array('%2F','%3F','%3A','%3D','%3B','%26'),array('/','?',':','=',';','&'),urlencode($args->rss_url));
+            $URL_parsed = parse_url($args->rss_url);
 
-            $host = $URL_parsed["host"]; 
-            $port = $URL_parsed["port"]; 
+            $host = $URL_parsed["host"];
+            $port = $URL_parsed["port"];
 
-            if ($port == 0) $port = 80; 
+            if ($port == 0) $port = 80;
 
-            $path = $URL_parsed["path"]; 
+            $path = $URL_parsed["path"];
 
-            if ($URL_parsed["query"] != "") $path .= "?".$URL_parsed["query"]; 
+            if ($URL_parsed["query"] != '') $path .= "?".$URL_parsed["query"];
 
             $oReqeust = new HTTP_Request($args->rss_url);
             $oReqeust->addHeader('Content-Type', 'application/xml');
