@@ -91,8 +91,8 @@
                     $del_var = $extra_vars->{"del_".$name};
                     unset($extra_vars->{"del_".$name});
                     if($del_var == 'Y') {
-                        $extra_vars->{$name} = '';
                         FileHandler::removeFile($extra_vars->{$name});
+                        $extra_vars->{$name} = '';
                         continue;
                     }
 
