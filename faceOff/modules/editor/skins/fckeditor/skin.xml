@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<skin version="0.2">
+    <title xml:lang="ko">fckeditor Skin</title>
+    <description xml:lang="ko">
+        http://fckeditor.net
+		by sol
+    </description>
+    <version>0.1</version>
+    <date>2008-11-25</date>
+    <author email_address="sol@ngleader.com" link="http://ngleader.com">
+        <name xml:lang="ko">sol</name>
+    </author>
+</skin>
