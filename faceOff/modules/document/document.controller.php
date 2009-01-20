@@ -114,6 +114,8 @@
             // 주어진 문서 번호가 없으면 문서 번호 등록
             if(!$obj->document_srl) $obj->document_srl = getNextSequence();
 
+            $oDocumentModel = &getModel('document');
+
             // 카테고리가 있나 검사하여 없는 카테고리면 0으로 세팅
             if($obj->category_srl) {
                 $category_list = $oDocumentModel->getCategoryList($obj->module_srl);
@@ -158,7 +160,6 @@
             }
 
             // 등록 성공시 확장 변수 등록
-            $oDocumentModel = &getModel('document');
             $extra_keys = $oDocumentModel->getExtraKeys($obj->module_srl);
             if(count($extra_keys)) {
                 foreach($extra_keys as $idx => $extra_item) {
@@ -220,9 +221,10 @@
             unset($obj->_saved_doc_content);
             unset($obj->_saved_doc_message);
 
+            $oDocumentModel = &getModel('document');
+
             // 카테고리가 변경되었으면 검사후 없는 카테고리면 0으로 세팅
             if($source_obj->get('category_srl')!=$obj->category_srl) {
-                $oDocumentModel = &getModel('document');
                 $category_list = $oDocumentModel->getCategoryList($obj->module_srl);
                 if(!$category_list[$obj->category_srl]) $obj->category_srl = 0;
             }
@@ -274,7 +276,6 @@
             }
 
             // 등록 성공시 확장 변수 등록
-            $oDocumentModel = &getModel('document');
             $extra_keys = $oDocumentModel->getExtraKeys($obj->module_srl);
             if(count($extra_keys)) {
                 $this->deleteDocumentExtraVars($obj->module_srl, $obj->document_srl);
