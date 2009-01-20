@@ -282,11 +282,11 @@
                             $query_id = 'document.getDocumentListWithinTag';
                         break;
                     default :
-                            preg_match('/^extra_vars([0-9]+)$/',$search_target,$matches);
-                            if($matches[1]) {
-                                $query_id = 'document.getDocumentListWithExtraVars';
-                                $args->var_idx = $matches[1];
+                            if(strpos($search_target,'extra_vars')!==false) {
+                                $args->var_idx = substr($search_target, strlen('extra_vars'));
                                 $args->var_value = str_replace(' ','%',$search_keyword);
+                                $args->sort_index = 'documents.'.$args->sort_index;
+                                $query_id = 'document.getDocumentListWithExtraVars';
                             }
                         break;
                 }
