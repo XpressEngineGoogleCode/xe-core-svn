@@ -42,14 +42,11 @@
         <td>{$oIssue->getReleaseTitle()}</td>
     </tr>
     <!--@end-->
-
-    <!--@if($oIssue->isExtraVarsExists())-->
-        <!--@foreach($oIssue->getExtraValue() as $key => $val)-->
+    <!--@foreach($oIssue->getExtraVars() as $key => $val)-->
     <tr>
-        <th>{$val->name} :</th>
-        <td colspan="3"><!--#include("./extra_var_value.html")--></td>
+        <th>{$val->name}</th>
+        <td colspan="3">{$val->getValueHTML()}</td>
     </tr>
-        <!--@end-->
     <!--@end-->
 
     {@ $tag_list = $oIssue->get('tag_list') }

@@ -354,7 +354,8 @@
 
             // 현재 모듈에 등록된 확장변수 추출
             $oDocumentModel = &getModel('document');
-            $extra_keys = $oDocumentModel->getExtraKeys($this->module_info->module_srl);
+            if($oIssue->isExists()) $extra_keys = $oIssue->getExtraVars();
+            else $extra_keys = $oDocumentModel->getExtraKeys($this->module_info->module_srl);
             if(count($extra_keys)) {
                 // 글쓰기 폼에서 사용하기 위한 변수 설정
                 Context::set('extra_keys', $extra_keys);

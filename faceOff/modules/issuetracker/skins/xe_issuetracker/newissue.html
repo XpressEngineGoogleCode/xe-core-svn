@@ -115,7 +115,7 @@
     <!--@foreach($extra_keys as $key => $val)-->
     <tr>
         <th><label>{$val->name} <!--@if($val->is_required=='Y')-->*<!--@end--> :</label></th>
-        <td colspan="3"><!--#include("./extra_var_form.html")--></td>
+        <td colspan="3">{$val->getFormHTML()}</td>
     </tr>
     <!--@end-->
 

@@ -98,6 +98,7 @@
      **/
     if(__DEBUG__) define('__ClassLoadStartTime__', getMicroTime());
     require_once(_XE_PATH_.'classes/object/Object.class.php');
+    require_once(_XE_PATH_.'classes/extravar/Extravar.class.php');
     require_once(_XE_PATH_.'classes/handler/Handler.class.php');
     require_once(_XE_PATH_.'classes/xml/XmlParser.class.php');
     require_once(_XE_PATH_.'classes/context/Context.class.php');

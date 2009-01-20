@@ -834,11 +834,13 @@
 
             $js_code = "";
 
+            $logged_info = Context::get('logged_info');
+
             foreach($extra_keys as $idx => $val) {
-                $js_code .= sprintf('alertMsg["extra_vars%d"] = "%s";', $idx, $val->name);
-                $js_code .= sprintf('extra_vars[extra_vars.length] = "extra_vars%d";', $idx);
-                $js_code .= sprintf('target_type_list["extra_vars%d"] = "%s";', $idx, $val->type);
-                if($val->is_required == 'Y') $js_code .= sprintf('notnull_list[notnull_list.length] = "extra_vars%s";',$idx);
+                $js_code .= sprintf('alertMsg["extra_vars%s"] = "%s";', $val->idx, $val->name);
+                $js_code .= sprintf('target_type_list["extra_vars%s"] = "%s";', $val->idx, $val->type);
+                $js_code .= sprintf('extra_vars[extra_vars.length] = "extra_vars%s";', $val->idx);
+                if($val->is_required == 'Y' && $logged_info->is_admin != 'Y') $js_code .= sprintf('notnull_list[notnull_list.length] = "extra_vars%s";',$val->idx);
             }
 
             $js_code = "<script type=\"text/javascript\">//<![CDATA[\n".$js_code."\n//]]></script>";

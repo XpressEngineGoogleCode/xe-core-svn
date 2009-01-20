@@ -1089,6 +1089,10 @@
         }
 
         function _loadJavascriptPlugin($plugin_name) {
+            static $loaded_plugins = array();
+            if($loaded_plugins[$plugin_name]) return;
+            $loaded_plugins[$plugin_name] = true;
+
             $plugin_path = './common/js/plugins/'.$plugin_name.'/';
             if(!is_dir($plugin_path)) return;
 

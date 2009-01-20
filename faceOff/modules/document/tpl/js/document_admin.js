@@ -93,7 +93,7 @@ function insertSelectedModule(id, module_srl, mid, browser_title) {
 
 function completeInsertExtraVar(ret_obj) {
     alert(ret_obj['message']);
-    location.href = current_url.setQuery('selected_var_idx','');
+    location.href = current_url.setQuery('type','','selected_var_idx','');
 }
 
 function insertSelectedModule(id, module_srl, mid, browser_title) {
@@ -108,3 +108,9 @@ function insertSelectedModule(id, module_srl, mid, browser_title) {
     }
 }
 
+function doDeleteExtraKey(module_srl, var_idx) {
+    var fo_obj = xGetElementById('fo_delete');
+    fo_obj.module_srl.value = module_srl;
+    fo_obj.var_idx.value = var_idx;
+    return procFilter(fo_obj, delete_extra_var);
+}

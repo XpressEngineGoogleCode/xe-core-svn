@@ -22,14 +22,12 @@
 
 	<!--@if($oDocument->isExtraVarsExists() && (!$oDocument->isSecret() || $oDocument->isGranted()) )-->
     <table border="1" cellspacing="0" summary="Extra Form" class="extraVarsList">
-	<!--@foreach($oDocument->getExtraValue() as $key => $val)-->
-	<tr>
-		<th scope="row">{$val->name}</th>
-		<td>
-			<!--#include("./_extra_var_value.html")-->
-		</td>
-	</tr>
-	<!--@end-->
+    <!--@foreach($oDocument->getExtraVars() as $key => $val)-->
+    <tr>
+        <th>{$val->name} :</th>
+        <td>{$val->getValueHTML()}</td>
+    </tr>
+    <!--@end-->
 	</table>
 	<!--@end-->
 

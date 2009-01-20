@@ -38,62 +38,40 @@
 
         /**
          * @brief document의 확장 변수 키값을 가져오는 함수
+         * $form_include : 글 작성시에 필요한 확장변수의 input form 추가 여부
          **/
         function getExtraKeys($module_srl) {
-            static $extra_keys = array();
-            if(!$module_srl) return;
-            if(!isset($extra_keys[$module_srl])) {
+            $oExtraVar = &ExtraVar::getInstance($module_srl);
+            if(!$oExtraVar->isSettedExtraVars()) {
                 $obj->module_srl = $module_srl;
-                $obj->sort_index = var_idx;
+                $obj->sort_index = 'var_idx';
                 $obj->order = 'asc';
                 $output = executeQueryArray('document.getDocumentExtraKeys', $obj);
-                if(!$output->toBool() || !$output->data) {
-                    $extra_keys[$module_srl] = array();
-                } else {
-                    foreach($output->data as $key => $val) {
-                        $extra_keys[$module_srl][$val->idx] = $val;
-                    }
-                }
+                $oExtraVar->setExtraVarKeys($output->data);
             }
-            return $extra_keys[$module_srl];
+            return $oExtraVar->getExtraVars();
         }
 
         /**
          * @brief document의 확장 변수 값을 가져오는 함수
          **/
-        function getExtraVars($module_srl, $document_srl, $extra_keys) {
-            static $extra_vars = array();
+        function getExtraVars($module_srl, $document_srl) {
+            $extra_keys = $this->getExtraKeys($module_srl);
+            if(!count($extra_keys)) return array();
 
-            if(!isset($extra_vars[$document_srl])) {
-                $extra_keys = $this->getExtraKeys($module_srl);
-                if(count($extra_keys)) {
-                    $obj->module_srl = $module_srl;
-                    $obj->document_srl = $document_srl;
-                    $output = executeQueryArray('document.getDocumentExtraVars', $obj);
-                    if($output->toBool() && $output->data) {
-                        foreach($output->data as $key => $val) {
-                            $var_idx = $val->var_idx;
-                            $value = trim($val->value);
-                            if(!$value) continue;
-                            if(strpos($value, '|@|')) $value = explode('|@|', $value);
-                            $val->value = $value;
-                            $val->name = $extra_keys[$var_idx]->name;
-                            $val->type = $extra_keys[$var_idx]->type;
-                            if($val->type == 'homepage' && !preg_match('/^([a-z]+):\/\//i',$value)) $value = 'http://'.$value;
-                            $val->is_required = $extra_keys[$var_idx]->is_required;
-                            $val->search = $extra_keys[$var_idx]->search;
-                            $val->default = $extra_keys[$var_idx]->default;
-                            $val->desc = $extra_keys[$var_idx]->desc;
-                            $extra_vars[$document_srl][$var_idx] = $val;
-                        }
-                    }
-                } else {
-                    $extra_vars[$document_srl] = array();
-                }
+            $obj->module_srl = $module_srl;
+            $obj->document_srl = $document_srl;
+            $output = executeQueryArray('document.getDocumentExtraVars', $obj);
+            if(!$output->toBool() || !$output->data) return $extra_keys;
+
+            foreach($output->data as $key => $val) {
+                $var_idx = $val->var_idx;
+                $value = trim($val->value);
+                if(!$value) continue;
+                $extra_keys[$var_idx]->setValue($value);
             }
-            return $extra_vars[$document_srl];
+            return $extra_keys;
         }
-
 
         /**
          * @brief 선택된 게시물의 팝업메뉴 표시
