@@ -7,7 +7,8 @@
 /* 생성된 코드를 textarea에 출력 */
 function completeGenerateCode(ret_obj) {
     var widget_code = ret_obj["widget_code"];
-
+        widget_code = widget_code.replace(/&/g, "&amp;");
+        widget_code = widget_code.replace(/\'/g, "&apos;");
     var zone = xGetElementById("widget_code");
     zone.value = widget_code;
 }

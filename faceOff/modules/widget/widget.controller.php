@@ -51,8 +51,8 @@
                     continue;
                 }
                 if(strpos($val,'|@|') > 0) $val = str_replace('|@|', ',', $val);
-                $vars->{$key} = htmlspecialchars($val);
-                $attribute[] = sprintf('%s="%s"', $key, $val);
+                $vars->{$key} = htmlspecialchars(Context::convertEncodingStr($val));
+                $attribute[] = sprintf('%s="%s"', $key, Context::convertEncodingStr($val));
             }
 
             return $attribute;
