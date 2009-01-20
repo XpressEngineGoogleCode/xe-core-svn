@@ -114,3 +114,12 @@ function doDeleteExtraKey(module_srl, var_idx) {
     fo_obj.var_idx.value = var_idx;
     return procFilter(fo_obj, delete_extra_var);
 }
+
+function moveVar(type, module_srl, var_idx) {
+    var params = new Array();
+    params['type'] = type;
+    params['module_srl'] = module_srl;
+    params['var_idx'] = var_idx;
+    var response_tags = new Array('error','message');
+    exec_xml('document','procAdminMoveExtraVar', params, function() { location.reload(); });
+}

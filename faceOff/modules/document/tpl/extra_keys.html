@@ -77,7 +77,7 @@
         <th><div>{$lang->column_type}</div></th>
         <th><div>{$lang->is_required}</div></th>
         <th><div>{$lang->cmd_search}</div></th>
-        <th colspan="2"><div>&nbsp;</div></th>
+        <th colspan="4"><div>&nbsp;</div></th>
     </tr>
     </thead>
     <tbody>
@@ -88,6 +88,8 @@
         <td class="nowrap">{$lang->column_type_list[$val->type]}</td>
         <td rowspan="3" class="nowrap center"><!--@if($val->is_required=='Y')--><b>{$lang->is_required}</b><!--@else-->N<!--@end--></td>
         <td rowspan="3" class="nowrap center"><!--@if($val->search=='Y')--><b>{$lang->search_target}</b><!--@else-->N<!--@end--></td>
+        <td rowspan="3" class="moveupdown"><!--@if($val->idx>1)--><a href="#" onclick="moveVar('up','{$module_srl}','{$val->idx}'); return false;" class="up">{$lang->cmd_modify}</a><!--@else-->&nbsp;<!--@end--></td>
+        <td rowspan="3" class="moveupdown"><a href="#" onclick="moveVar('down','{$module_srl}','{$val->idx}');return false;" class="down">{$lang->cmd_modify}</a></td>
         <td rowspan="3" class="modify"><a href="{getUrl('selected_var_idx',$val->idx)}">{$lang->cmd_modify}</a></td>
         <td rowspan="3" class="delete"><a href="#" onclick="return doDeleteExtraKey('{$module_srl}','{$val->idx}');">{$lang->cmd_delete}</a></td>
     </tr>

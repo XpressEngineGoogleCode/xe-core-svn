@@ -31,6 +31,7 @@
         <action name="procDocumentAdminDeleteCategory" type="controller" standalone="true"/>
         <action name="procDocumentAdminMoveCategory" type="controller" standalone="true"/>
         <action name="procDocumentAdminMakeXmlFile" type="controller" standalone="true"/>
+        <action name="procAdminMoveExtraVar" type="controller" standalone="true"/>
 
         <action name="procDocumentAdminInsertExtraVar" type="controller" standalone="true" />
         <action name="procDocumentAdminDeleteExtraVar" type="controller" standalone="true" />

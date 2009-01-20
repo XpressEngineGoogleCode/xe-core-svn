@@ -534,5 +534,62 @@
             $this->add('xml_file',$xml_file);
         }
 
+        /**
+         * @brief 확장변수 순서 조절
+         **/
+        function procAdminMoveExtraVar() {
+            $type = Context::get('type');
+            $module_srl = Context::get('module_srl');
+            $var_idx = Context::get('var_idx');
+
+            if(!$type || !$module_srl || !$var_idx) return new Object(-1,'msg_invalid_request');
+
+            $oModuleModel = &getModel('module');
+            $module_info = $oModuleModel->getModuleInfoByModuleSrl($module_srl);
+            if(!$module_info->module_srl) return new Object(-1,'msg_invalid_request');
+
+            $oDocumentModel = &getModel('document');
+            $extra_keys = $oDocumentModel->getExtraKeys($module_srl);
+            if(!$extra_keys[$var_idx]) return new Object(-1,'msg_invalid_request');
+
+            if($type == 'up') $new_idx = $var_idx-1;
+            else $new_idx = $var_idx+1;
+            if($new_idx<1) return new Object(-1,'msg_invalid_request');
+
+            // 바꿀 idx가 없으면 바로 업데이트
+            if(!$extra_keys[$new_idx]) {
+                $args->module_srl = $module_srl;
+                $args->var_idx = $var_idx;
+                $args->new_idx = $new_idx;
+                $output = executeQuery('document.updateDocumentExtraKeyIdx', $args);
+                if(!$output->toBool()) return $output;
+                $output = executeQuery('document.updateDocumentExtraVarIdx', $args);
+                if(!$output->toBool()) return $output;
+            // 있으면 기존의 꺼랑 교체
+            } else {
+                $args->module_srl = $module_srl;
+                $args->var_idx = $new_idx;
+                $args->new_idx = -1;
+                $output = executeQuery('document.updateDocumentExtraKeyIdx', $args);
+                if(!$output->toBool()) return $output;
+                $output = executeQuery('document.updateDocumentExtraVarIdx', $args);
+                if(!$output->toBool()) return $output;
+
+                $args->var_idx = $var_idx;
+                $args->new_idx = $new_idx;
+                $output = executeQuery('document.updateDocumentExtraKeyIdx', $args);
+                if(!$output->toBool()) return $output;
+                $output = executeQuery('document.updateDocumentExtraVarIdx', $args);
+                if(!$output->toBool()) return $output;
+
+                $args->var_idx = -1;
+                $args->new_idx = $var_idx;
+                $output = executeQuery('document.updateDocumentExtraKeyIdx', $args);
+                if(!$output->toBool()) return $output;
+                $output = executeQuery('document.updateDocumentExtraVarIdx', $args);
+                if(!$output->toBool()) return $output;
+            }
+        }
+
     }
 ?>
