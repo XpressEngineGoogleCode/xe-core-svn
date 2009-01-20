@@ -56,8 +56,14 @@
          * @brief document의 확장 변수 값을 가져오는 함수
          **/
         function getExtraVars($module_srl, $document_srl) {
+            static $extra_vars = array();
+
+            if($extra_vars[$document_srl]) return $extra_vars[$document_srl];
+
             $extra_keys = $this->getExtraKeys($module_srl);
             if(!count($extra_keys)) return array();
+
+            foreach($extra_keys as $key => $val) $extra_keys[$key]->setValue(null);
 
             $obj->module_srl = $module_srl;
             $obj->document_srl = $document_srl;

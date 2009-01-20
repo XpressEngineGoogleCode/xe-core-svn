@@ -78,7 +78,6 @@
             // 모듈정보를 확인하여 확장변수에서도 검색이 설정되어 있는지 확인
             $oDocumentModel = &getModel('document');
             $extra_keys = $oDocumentModel->getExtraKeys($this->module_info->module_srl);
-            debugPrint($extra_keys);
             if(count($extra_keys)) {
                 foreach($extra_keys as $key => $val) {
                     if($val->search == 'Y') $search_option['extra_vars'.$val->idx] = $val->name;

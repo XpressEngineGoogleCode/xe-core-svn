@@ -130,8 +130,6 @@
                 }
             } else {
                 $output = executeQueryArray($query_id, $args);
-                debugPrint($args);
-                debugPrint($output);
             }
 
             // 결과가 없거나 오류 발생시 그냥 return
@@ -400,7 +398,6 @@
                 $output = executeQueryArray("issuetracker.getChangesets", $args);
                 if(!$output->toBool())
                 {
-                    debugPrint($output);
                     return array();
                 }
             }
