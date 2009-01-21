@@ -51,6 +51,18 @@
             return $this->declaredDocument($document_srl);
         }
 
+        function deleteDocumentAliasByModule($module_srl)
+        {
+            $args->module_srl = $module_srl;
+            executeQuery("document.deleteAlias", $args);
+        }
+
+        function deleteDocumentAliasByDocument($document_srl)
+        {
+            $args->document_srl = $document_srl;
+            executeQuery("document.deleteAlias", $args);
+        }
+
         /**
          * @brief 모듈이 삭제될때 등록된 모든 글을 삭제하는 trigger
          **/
@@ -70,6 +82,8 @@
 
             // 확장변수 삭제
             $this->deleteDocumentExtraVars($module_srl);
+
+            $this->deleteDocumentAliasByModule($module_srl);
 
             return new Object();
         }
@@ -342,6 +356,8 @@
                 $oDB->rollback();
                 return $output;
             }
+
+            $this->deleteDocumentAliasByDocument($document_srl);
 
             // 카테고리가 있으면 카테고리 정보 변경
             if($oDocument->get('category_srl')) $this->updateCategoryCount($oDocument->get('module_srl'),$oDocument->get('category_srl'));
