@@ -226,7 +226,7 @@
             $oDocument = $oDocumentModel->getDocument(Context::get('document_srl'));
 
             // 특정 문서의 permalink로 직접 접속할 경우 page값을 직접 구함
-            if(count($_GET)==1 && isset($_GET['document_srl']) && $oDocument->isExists() && !$oDocument->isNotice()) {
+            if(( (count($_GET)==1 && isset($_GET['document_srl'])) || isset($_GET['entry'])) && $oDocument->isExists() && !$oDocument->isNotice()) {
                 $page = $oDocumentModel->getDocumentPage($oDocument, $args);
                 Context::set('page', $page);
                 $args->page = $page;
