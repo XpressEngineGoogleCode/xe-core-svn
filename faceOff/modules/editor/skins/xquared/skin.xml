@@ -3,6 +3,7 @@
     <title xml:lang="ko">XE Xquared Editor Skin</title>
     <title xml:lang="zh-CN">Xquared编辑器皮肤</title>
     <title xml:lang="en">XE Xquared Editor Skin</title>
+	<title xml:lang="es">XE Xquared Editor de la piel</title>
     <title xml:lang="jp">XE Xquared Editor Skin</title>
     <title xml:lang="zh-TW">XE Xquared編輯器面板</title>
     <description xml:lang="ko">
@@ -23,6 +24,12 @@
         http://labs.openmaru.com/projects/xquared/
         Xquared is copyrighted free software by Alan Kang <jania902@gmail.com>.
     </description>
+	<description xml:lang="es">
+        Este es el editor de la piel basado en el editor WYSIWYG de código abierto, Xquared.
+        Puede encontrar más información deatiled de Xquared la página oficial.
+        http://labs.openmaru.com/projects/xquared/
+        Xquared está protegido por derechos de autor de software libre por Alan Kang <jania902@gmail.com>.
+    </description>
     <description xml:lang="jp">
         オープンソースのエディターであるXquaredを利用したウイジウイグエディターです。
         詳細な情報は、 Xquared サイトを参照してください。
@@ -40,6 +47,7 @@
 
     <author email_address="haneul0318@gmail.com" link="http://haneul.zetyx.net">
         <name xml:lang="ko">haneul</name>
+		<name xml:lang="es">haneul</name>
         <name xml:lang="zh-CN">haneul</name>
         <name xml:lang="en">haneul</name>
         <name xml:lang="jp">Haneul</name>
