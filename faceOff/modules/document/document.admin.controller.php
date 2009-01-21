@@ -591,5 +591,31 @@
             }
         }
 
+        function procDocumentAdminInsertAlias() {
+            $args = Context::gets('module_srl','document_srl', 'alias_title');
+            $alias_srl = Context::get('alias_srl');
+            if(!$alias_srl) 
+            {
+                $args->alias_srl = getNextSequence();
+                $query = "document.insertAlias";
+            }
+            else 
+            {
+                $args->alias_srl = $alias_srl;
+                $query = "document.updateAlias";
+            }
+            $output = executeQuery($query, $args);
+            if(!$output->toBool())
+            {
+                return $output;
+            }
+        }
+
+        function procDocumentAdminDeleteAlias() {
+            $alias_srl = Context::get('alias_srl');
+            $args->alias_srl = $alias_srl;
+            $output = executeQuery("document.deleteAlias", $args);
+        }
+
     }
 ?>

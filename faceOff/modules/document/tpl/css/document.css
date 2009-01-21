@@ -6,3 +6,4 @@ ul.document_list_box { margin:0; padding:0; list-style:none; }
 .document_list .document_title { }
 
 div.printContent { padding:20px; }
+input.btnSubmit { background:url("../images/buttonInsert.gif") no-repeat 3px 2px; line-height:150%; height:23px; padding:2px 3px 2px 18px; border:1px solid; border-color:#d8d8d8 #a6a6a6 #a6a6a6 #d8d8d8; }

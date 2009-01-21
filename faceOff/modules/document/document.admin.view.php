@@ -102,5 +102,31 @@
             $this->setTemplatePath($this->module_path.'tpl');
             $this->setTemplateFile('declared_list');
         }
+
+        function dispDocumentAdminAlias() {
+            $args->document_srl = Context::get('document_srl');
+            if(!$args->document_srl) return $this->dispDocumentAdminList();
+
+            $oModel = &getModel('document');
+            $oDocument = $oModel->getDocument($args->document_srl);
+            if(!$oDocument->isExists()) return $this->dispDocumentAdminList();
+            Context::set('oDocument', $oDocument);
+
+            $output = executeQueryArray('document.getAliases', $args);
+            if(!$output->data)
+            {
+                $aliases = array();
+            }
+            else
+            {
+                $aliases = $output->data; 
+            }
+
+
+            Context::set('aliases', $aliases);
+
+            $this->setTemplatePath($this->module_path.'tpl');
+            $this->setTemplateFile('document_alias');
+        }
     }
 ?>

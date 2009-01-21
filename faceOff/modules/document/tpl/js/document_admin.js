@@ -96,6 +96,11 @@ function completeInsertExtraVar(ret_obj) {
     location.href = current_url.setQuery('type','','selected_var_idx','');
 }
 
+function completeInsertAlias(ret_obj) {
+    alert(ret_obj['message']);
+    location.href = current_url;
+}
+
 function insertSelectedModule(id, module_srl, mid, browser_title) {
     if(current_url.getQuery('act')=='dispDocumentManageDocument') {
         var obj= xGetElementById('_'+id);
@@ -106,6 +111,14 @@ function insertSelectedModule(id, module_srl, mid, browser_title) {
     } else {
         location.href = current_url.setQuery('module_srl',module_srl);
     }
+}
+
+function deleteByFilter(target_srl, filter)
+{
+    var e = xGetElementById('target_srl');
+    e.value= target_srl;
+    var hF = xGetElementById("deleteForm");
+    procFilter(hF, filter);
 }
 
 function doDeleteExtraKey(module_srl, var_idx) {

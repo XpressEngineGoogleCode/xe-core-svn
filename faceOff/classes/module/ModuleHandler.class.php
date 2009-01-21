@@ -56,6 +56,8 @@
             if(!$module_srl) $this->module_srl = (int)Context::get('module_srl');
             else $this->module_srl = (int)$module_srl;
 
+            $this->entry = Context::get('entry');
+
             // 기본 변수들의 검사 (XSS방지를 위한 기초적 검사)
             if($this->module && !preg_match("/^([a-z0-9\_\-]+)$/i",$this->module)) die(Context::getLang("msg_invalid_request"));
             if($this->mid && !preg_match("/^([a-z0-9\_\-]+)$/i",$this->mid)) die(Context::getLang("msg_invalid_request"));
@@ -75,6 +77,13 @@
 
             $site_module_info = Context::get('site_module_info');
             $site_srl = $site_module_info->site_srl;
+
+            if(!$this->document_srl && $this->mid && $this->entry)
+            {
+                $oDocumentModel = &getModel('document');
+                $this->document_srl = $oDocumentModel->getDocumentSrlByAlias($this->mid, $this->entry);
+                if($this->document_srl) Context::set('document_srl', $this->document_srl);
+            }
 
             // document_srl만 있을 경우 document_srl로 모듈과 모듈 정보를 구함
             if($this->document_srl && !$this->mid && !$this->module_srl) {

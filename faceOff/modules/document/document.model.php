@@ -755,5 +755,15 @@
             $oTemplate = &TemplateHandler::getInstance();
             return $oTemplate->compile($this->module_path.'tpl', 'category_list');
         }
+
+        function getDocumentSrlByAlias($mid, $alias)
+        {
+            if(!$mid || !$alias) return null;
+            $args->mid = $mid;
+            $args->alias_title = $alias;
+            $output = executeQuery('document.getDocumentSrlByAlias', $args);
+            if(!$output->data) return null;
+            else return $output->data->document_srl;
+        }
     }
 ?>

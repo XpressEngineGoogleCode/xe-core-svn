@@ -27,6 +27,7 @@
             $oDB->addIndex("documents","idx_module_notice", array("module_srl","is_notice"));
             $oDB->addIndex("documents","idx_module_document_srl", array("module_srl","document_srl"));
             $oDB->addIndex("documents","idx_module_blamed_count", array("module_srl","blamed_count"));
+            $oDB->addIndex("document_aliases", "idx_module_title", array("module_srl","alias_title"), true);
 
             // 2007. 10. 17 모듈이 삭제될때 등록된 글도 모두 삭제하는 트리거 추가
             $oModuleController->insertTrigger('module.deleteModule', 'document', 'controller', 'triggerDeleteModuleDocuments', 'after');

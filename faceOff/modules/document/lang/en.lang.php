@@ -63,4 +63,6 @@
         'last_update' => 'Last Modified Date',
         'ipaddress' => 'IP Address',
     );
+
+    $lang->alias = "Alias";
 ?>

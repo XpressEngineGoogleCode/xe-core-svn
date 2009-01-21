@@ -61,4 +61,5 @@
         'last_update' => 'Día de la última actualización',
         'ipaddress' => 'Dirección IP',
     );
+    $lang->alias = "Alias";
 ?>

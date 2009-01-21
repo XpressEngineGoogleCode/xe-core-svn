@@ -61,4 +61,5 @@
         'last_update' => '最近更新日期',
         'ipaddress' => 'IP 位址',
     );
+    $lang->alias = "Alias";
 ?>

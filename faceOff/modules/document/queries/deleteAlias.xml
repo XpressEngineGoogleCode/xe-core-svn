@@ -1,0 +1,8 @@
+<query id="deleteAlias" action="delete">
+    <tables>
+        <table name="document_aliases" />
+    </tables>
+    <conditions>
+        <condition operation="equal" column="alias_srl" var="alias_srl" filter="number" notnull="notnull" />
+    </conditions>
+</query>

@@ -57,4 +57,5 @@
         'last_update' => 'Последнее Обновление',
         'ipaddress' => 'IP-Адрес',
     );
+    $lang->alias = "Alias";
 ?>

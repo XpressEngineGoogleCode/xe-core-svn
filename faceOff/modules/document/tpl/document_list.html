@@ -50,6 +50,7 @@
         <th scope="col"><div>{$lang->voted_count}</div></th>
         <th scope="col"><div>{$lang->date}</div></th>
         <th scope="col"><div>{$lang->ipaddress}</div></th>
+        <th scope="col"><div>{$lang->alias}</div></th>
     </tr>
 </thead>
 <tbody>
@@ -77,6 +78,7 @@
         <td class="number center">{$oDocument->get('voted_count')} / {$oDocument->get('blamed_count')}</td>
         <td class="date center nowrap">{$oDocument->getRegdate("Y-m-d H:i:s")}</td>
         <td class="number center nowrap"><a href="{getUrl('search_target','ipaddress','search_keyword',$oDocument->get('ipaddress'))}">{$oDocument->get('ipaddress')}</a></td>
+        <td class="center"><a href="{getUrl('act','dispDocumentAdminAlias','document_srl',$oDocument->document_srl)}">{$lang->alias}</a>
     </tr>
     <!--@end-->
 </tbody>
