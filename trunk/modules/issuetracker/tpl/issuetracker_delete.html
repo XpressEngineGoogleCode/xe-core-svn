@@ -1,0 +1,32 @@
+<!--%import("filter/delete_issuetracker.xml")-->
+<!--%import("js/issuetracker_admin.js")-->
+<!--#include("header.html")-->
+
+<form action="{Context::getRequestUri()}" method="get" onsubmit="return procFilter(this, delete_issuetracker)">
+<input type="hidden" name="page" value="{$page}" />
+<input type="hidden" name="module_srl" value="{$module_info->module_srl}" />
+
+    <table cellspacing="0" class="adminTable">
+    <caption>{$lang->confirm_delete}</caption>
+    <tr>
+        <th scope="row"><div>{$lang->module_name}</div></th>
+        <td class="wide">{$module_info->mid}</td>
+    </tr>
+    <tr>
+        <th scope="row"><div>{$lang->module}</div></th>
+        <td>{$module_info->module}</td>
+    </tr>
+    <tr>
+        <th scope="row"><div>{$lang->document_count}</div></th>
+        <td>{$module_info->document_count}</td>
+    </tr>
+    <tr>
+        <td class="right" colspan="2">
+            <a href="{getUrl('act','dispIssuetrackerAdminContent')}" class="button"><span>{$lang->cmd_back}</span></a>
+            <span class="button"><input type="submit" value="{$lang->cmd_delete}" /></span>
+        </td>
+    </tr>
+    </table>
+
+
+</form>
