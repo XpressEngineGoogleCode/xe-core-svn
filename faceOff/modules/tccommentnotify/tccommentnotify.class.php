@@ -31,7 +31,7 @@
         function checkUpdate() {
             $oModuleModel = &getModel('module');
             if(!$oModuleModel->getTrigger('comment.insertComment', 'tccommentnotify', 'controller', 'triggerInsertComment', 'after')) return true;
-            if(!$oModuleModel->getActionForward('tccommentnotify','view','dispCommentNotifyAdminIndex')) return true;
+            if(!$oModuleModel->getActionForward('dispCommentNotifyAdminIndex')) return true;
 
 
             return false;
@@ -43,8 +43,9 @@
         function moduleUpdate() {
             $oModuleModel = &getModel('module');
             $oModuleController = &getController('module');
-            if(!$oModuleModel->getTrigger('comment.insertComment', 'tccommentnotify', 'controller', 'triggerInsertComment', 'after')) $oModuleController->insertTrigger('comment.insertComment', 'tccommentnotify', 'controller', 'triggerInsertComment', 'after');
-            if(!$oModuleModel->getActionForward('tccommentnotify','view','dispCommentNotifyAdminIndex')) 
+            if(!$oModuleModel->getTrigger('comment.insertComment', 'tccommentnotify', 'controller', 'triggerInsertComment', 'after')) 
+                $oModuleController->insertTrigger('comment.insertComment', 'tccommentnotify', 'controller', 'triggerInsertComment', 'after');
+            if(!$oModuleModel->getActionForward('dispCommentNotifyAdminIndex')) 
                 $oModuleController->insertActionForward('tccommentnotify', 'view', 'dispCommentNotifyAdminIndex');
 
             return new Object(0, 'success_updated');
