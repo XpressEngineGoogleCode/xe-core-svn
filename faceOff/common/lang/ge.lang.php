@@ -256,6 +256,7 @@
     $lang->column_type_list['textarea'] = 'Multi-line textarea';
     $lang->column_type_list['checkbox'] = 'Checkbox (multiple Auswahl)';
     $lang->column_type_list['select'] = 'select box (Einzel-Auswahl) ';
+    $lang->column_type_list['radio'] = 'radio button (radio)';
     $lang->column_type_list['kr_zip'] = 'Postleitzahl (Koreanisch) ';
     $lang->column_type_list['date'] = 'Datum (jjjj / mm / dd)';
     // $lang->column_type_list [ 'jp_zip'] = 'Postleitzahl (Japanisch)';

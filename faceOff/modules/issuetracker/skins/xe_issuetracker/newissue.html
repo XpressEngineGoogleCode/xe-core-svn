@@ -1,4 +1,3 @@
-<!--%import("filter/insert.xml")-->
 <!--#include("header.html")-->
 
 <form action="./" method="post" onsubmit="return procFilter(this, window.insert)" id="fo_write">
@@ -115,7 +114,7 @@
     <!--@foreach($extra_keys as $key => $val)-->
     <tr>
         <th><label>{$val->name} <!--@if($val->is_required=='Y')-->*<!--@end--> :</label></th>
-        <td colspan="3">{$val->getFormHTML()}</td>
+        <td colspan="3" class="extraVarForm">{$val->getFormHTML()}</td>
     </tr>
     <!--@end-->
 

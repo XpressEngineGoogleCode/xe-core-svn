@@ -53,30 +53,29 @@
         }
 
         /**
-         * @brief document의 확장 변수 값을 가져오는 함수
+         * @brief 특정 document의 확장 변수 값을 가져오는 함수
          **/
         function getExtraVars($module_srl, $document_srl) {
             static $extra_vars = array();
 
-            if($extra_vars[$document_srl]) return $extra_vars[$document_srl];
+            if(!isset($extra_vars[$module_srl][$document_srl])) {
+                $obj->module_srl = $module_srl;
+                $obj->document_srl = $document_srl;
+                $obj->sort_index = 'extra_keys.var_idx';
+                $obj->order = 'asc';
+                $obj->lang_code = Context::getLangType();
+                $output = executeQueryArray('document.getDocumentExtraVars', $obj);
 
-            $extra_keys = $this->getExtraKeys($module_srl);
-            if(!count($extra_keys)) return array();
-
-            foreach($extra_keys as $key => $val) $extra_keys[$key]->setValue(null);
-
-            $obj->module_srl = $module_srl;
-            $obj->document_srl = $document_srl;
-            $output = executeQueryArray('document.getDocumentExtraVars', $obj);
-            if(!$output->toBool() || !$output->data) return $extra_keys;
-
-            foreach($output->data as $key => $val) {
-                $var_idx = $val->var_idx;
-                $value = trim($val->value);
-                if(!$value) continue;
-                $extra_keys[$var_idx]->setValue($value);
+                if($output->data) {
+                    foreach($output->data as $key => $val) {
+                        $obj = new ExtraItem($val->module_srl, $val->idx, $val->name, $val->type, $val->default, $val->desc, $val->is_required, $val->search, $val->value);
+                        $extra_vars[$module_srl][$document_srl][$obj->idx] = $obj;
+                    }
+                } else {
+                    $extra_vars[$module_srl][$document_srl] = array();
+                }
             }
-            return $extra_keys;
+            return $extra_vars[$module_srl][$document_srl];
         }
 
         /**
@@ -426,27 +425,30 @@
          * @brief module_srl값을 가지는 문서의 공지사항만 가져옴
          **/
         function getNoticeList($obj) {
-            $args->module_srl = $obj->module_srl;
-            $args->category_srl = $obj->category_srl;
-            $args->sort_index = 'list_order';
+            $cache_file = _XE_PATH_.'files/cache/document_notice/'.getNumberingPath($obj->module_srl,4).$obj->module_srl.'.txt';
+            if(!file_exists($cache_file)) {
+                $oDocumentController = &getController('document');
+                $oDocumentController->updateDocumentNoticeCache($obj->module_srl);
+            }
+
+            $document_srls = FileHandler::readFile($cache_file);
+            if(!$document_srls) return;
+
+            $list_count = count(explode(',',$document_srls));
+            $args->document_srls = $document_srls;
+            $args->list_count = $list_count;
+            $args->list_order = 'list_order';
             $args->order_type = 'asc';
-
-            $output = executeQueryArray('document.getNoticeList', $args);
-
-            // 결과가 없거나 오류 발생시 그냥 return
-            if(!$output->toBool()||!count($output->data)) return $output;
-
-            foreach($output->data as $key => $attribute) {
-                $document_srl = $attribute->document_srl;
-
+            $output = executeQueryArray('document.getDocuments', $args);
+            if(!$output->toBool()||!$output->data) return;
+            foreach($output->data as $key => $val) {
+                if(!$val->document_srl) continue;
                 $oDocument = null;
                 $oDocument = new documentItem();
-                $oDocument->setAttribute($attribute);
-
-                $output->data[$key] = $oDocument;
-            
+                $oDocument->setAttribute($val);
+                $result->data[$val->document_srl] = $oDocument;
             }
-            return $output;
+            return $result;
         }
 
         /**

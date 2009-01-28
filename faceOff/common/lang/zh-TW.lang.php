@@ -256,6 +256,7 @@
     $lang->column_type_list['textarea'] = '文字輸入區塊 (textarea)';
     $lang->column_type_list['checkbox'] = '復選框 (checkbox)';
     $lang->column_type_list['select'] = '下拉式選單 (select)';
+    $lang->column_type_list['radio'] = 'radio button (radio)';
     $lang->column_type_list['kr_zip'] = '韓國郵編(zip)';
     $lang->column_type_list['date'] = '日期 (年月日)';
     //$lang->column_type_list['jp_zip'] = '日本郵編 (zip)';

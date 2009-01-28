@@ -994,6 +994,14 @@
         }
 
         /**
+         * @brief javascript filter 추가
+         **/
+        function addJsFilter($path, $filename) {
+            $oXmlFilter = new XmlJSFilter($path, $filename);
+            $oXmlFilter->compile();
+        }
+
+        /**
          * @brief array_unique와 동작은 동일하나 file 첨자에 대해서만 동작함
          **/
         function _getUniqueFileList($files) {

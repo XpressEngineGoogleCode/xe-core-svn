@@ -256,6 +256,7 @@
     $lang->column_type_list['textarea'] = 'multi-line textarea';
     $lang->column_type_list['checkbox'] = 'checkbox (multiple selection)';
     $lang->column_type_list['select'] = 'select box (single selection)';
+    $lang->column_type_list['radio'] = 'radio button (radio)';
     $lang->column_type_list['kr_zip'] = 'zip code (Korean)';
     $lang->column_type_list['date'] = 'date (yyyy/mm/dd)';
     //$lang->column_type_list['jp_zip'] = 'zip code (Japanese)';

@@ -283,3 +283,14 @@ dt span.closed { text-decoration: line-through; }
 
 .search { float: right; }
 .left { float: left; }
+
+
+/* 확장 변수 폼 */
+.extraVarForm .text { border:1px solid; border-color:#a6a6a6 #d8d8d8 #d8d8d8 #a6a6a6; padding:3px;  margin-right:10px; width:90%; }
+.extraVarForm .email_address { border:1px solid; border-color:#a6a6a6 #d8d8d8 #d8d8d8 #a6a6a6; padding:3px;  margin-right:10px; width:300px; }
+.extraVarForm .homepage { border:1px solid; border-color:#a6a6a6 #d8d8d8 #d8d8d8 #a6a6a6; padding:3px;  margin-right:10px; width:300px; }
+.extraVarForm .tel { border:1px solid; border-color:#a6a6a6 #d8d8d8 #d8d8d8 #a6a6a6; padding:3px;  margin-right:10px; width:40px; margin-right:10px;}
+.extraVarForm .textarea { border:1px solid; border-color:#a6a6a6 #d8d8d8 #d8d8d8 #a6a6a6; padding:3px;  margin-right:10px; width:90%; height:80px; font-size:12px;}
+.extraVarForm ul { margin:0; padding:0; list-style:none; }
+.extraVarForm .date { border:1px solid; border-color:#a6a6a6 #d8d8d8 #d8d8d8 #a6a6a6; padding:3px;  margin-right:10px; width:100px; }
+.extraVarForm .address { border:1px solid; border-color:#a6a6a6 #d8d8d8 #d8d8d8 #a6a6a6; padding:3px;  margin-right:10px; width:300px; }

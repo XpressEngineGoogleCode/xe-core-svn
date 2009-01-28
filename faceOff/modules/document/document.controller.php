@@ -177,6 +177,7 @@
             $extra_keys = $oDocumentModel->getExtraKeys($obj->module_srl);
             if(count($extra_keys)) {
                 foreach($extra_keys as $idx => $extra_item) {
+                    $value = '';
                     if($obj->{'extra_vars'.$idx}) $value = trim($obj->{'extra_vars'.$idx});
                     elseif($obj->{$extra_item->name}) $value = trim($obj->{$extra_item->name});
                     if(!$value) continue;
@@ -186,6 +187,9 @@
 
             // 성공하였을 경우 category_srl이 있으면 카테고리 update
             if($obj->category_srl) $this->updateCategoryCount($obj->module_srl, $obj->category_srl);
+
+            // 공지사항 글이면 공지사항 캐시 업데이트
+            if($obj->is_notice == 'Y') $this->updateDocumentNoticeCache($obj->module_srl);
 
             // trigger 호출 (after)
             if($output->toBool()) {
@@ -294,6 +298,7 @@
             if(count($extra_keys)) {
                 $this->deleteDocumentExtraVars($obj->module_srl, $obj->document_srl);
                 foreach($extra_keys as $idx => $extra_item) {
+                    $value = '';
                     if($obj->{'extra_vars'.$idx}) $value = trim($obj->{'extra_vars'.$idx});
                     elseif($obj->{$extra_item->name}) $value = trim($obj->{$extra_item->name});
                     if(!$value) continue;
@@ -306,6 +311,9 @@
                 if($source_obj->get('category_srl')) $this->updateCategoryCount($obj->module_srl, $source_obj->get('category_srl'));
                 if($obj->category_srl) $this->updateCategoryCount($obj->module_srl, $obj->category_srl);
             }
+
+            // 공지사항 글이면 공지사항 캐시 업데이트
+            if($obj->is_notice == 'Y') $this->updateDocumentNoticeCache($obj->module_srl);
 
             // trigger 호출 (after)
             if($output->toBool()) {
@@ -368,6 +376,9 @@
             // 확장 변수 삭제
             $this->deleteDocumentExtraVars($oDocument->get('module_srl'), $oDocument->document_srl);
 
+            // 공지사항 글이면 공지사항 캐시 업데이트
+            if($oDocument->get('is_notice') == 'Y') $this->updateDocumentNoticeCache($oDocument->get('module_srl'));
+
             // trigger 호출 (after)
             if($output->toBool()) {
                 $trigger_obj = $oDocument->getObjectVars();
@@ -385,6 +396,22 @@
             $oDB->commit();
 
             return $output;
+        }
+
+        /**
+         * @brief 특정 모듈의 공지사항 글에 대해 캐시
+         **/
+        function updateDocumentNoticeCache($module_srl) {
+            $cache_file = _XE_PATH_.'files/cache/document_notice/'.getNumberingPath($module_srl,4).$module_srl.'.txt';
+            FileHandler::removeFile($cache_file);
+            $args->module_srl = $module_srl;
+            $output = executeQueryArray('document.getNoticeList', $args);
+            if(!$output->toBool()|| !$output->data) return;
+
+            foreach($output->data as $key => $val) {
+                $document_srls[] = $val->document_srl;
+            }
+            FileHandler::writeFile($cache_file, implode(',',$document_srls));
         }
 
         /**
@@ -468,9 +495,7 @@
             $obj->value = $value;
             $obj->lang_code = $lang_code ;
 
-            $output = executeQuery('document.getDocumentExtraVars', $obj);
-            if(!$output->data) return executeQuery('document.insertDocumentExtraVar', $obj);
-            return executeQuery('document.updateDocumentExtraVar', $obj);
+            executeQuery('document.insertDocumentExtraVar', $obj);
         }
 
         /**
@@ -844,10 +869,12 @@
         }
 
         /**
-         * @brief document의 20개 확장변수를 xml js filter 적용을 위해 직접 적용
-         * 모듈정보를 받아서 20개의 확장변수를 체크하여 type, required등의 값을 체크하여 header에 javascript 코드 추가
+         * @brief 특정 module_srl에 해당하는 document_extra_keys type, required등의 값을 체크하여 header에 javascript 코드 추가
          **/
-        function addXmlJsFilter($extra_keys) {
+        function addXmlJsFilter($module_srl) {
+            $oDocumentModel = &getModel('document');
+            $extra_keys = $oDocumentModel->getExtraKeys($module_srl);
+            if(!count($extra_keys)) return;
 
             $js_code = "";
 

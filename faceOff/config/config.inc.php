@@ -42,7 +42,7 @@
      * 1 : HTML 최하단에 주석으로 출력 (Response Method가 HTML 일 때)
      * 2 : Firebug 콘솔에 출력 (PHP >= 5.2.0. Firebug/FirePHP 플러그인 필요)
      **/
-    if(!defined('__DEBUG_OUTPUT__')) define('__DEBUG_OUTPUT__', 2);
+    if(!defined('__DEBUG_OUTPUT__')) define('__DEBUG_OUTPUT__', 0);
 
     /**
      * @brief FirePHP 콘솔 및 브라우저 주석 출력 보안
@@ -101,6 +101,7 @@
     require_once(_XE_PATH_.'classes/extravar/Extravar.class.php');
     require_once(_XE_PATH_.'classes/handler/Handler.class.php');
     require_once(_XE_PATH_.'classes/xml/XmlParser.class.php');
+    require_once(_XE_PATH_.'classes/xml/XmlJsFilter.class.php');
     require_once(_XE_PATH_.'classes/context/Context.class.php');
     require_once(_XE_PATH_.'classes/db/DB.class.php');
     require_once(_XE_PATH_.'classes/file/FileHandler.class.php');
@@ -111,5 +112,6 @@
     require_once(_XE_PATH_.'classes/display/DisplayHandler.class.php');
     require_once(_XE_PATH_.'classes/template/TemplateHandler.class.php');
     require_once(_XE_PATH_.'classes/mail/Mail.class.php');
+    require_once(_XE_PATH_.'classes/page/PageHandler.class.php');
     if(__DEBUG__) $GLOBALS['__elapsed_class_load__'] = getMicroTime() - __ClassLoadStartTime__;
 ?>

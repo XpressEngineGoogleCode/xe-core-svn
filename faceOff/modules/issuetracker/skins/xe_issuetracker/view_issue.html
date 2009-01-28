@@ -69,7 +69,6 @@
     <!--@else-->
     <tr>
         <td colspan="4" class="inputPassword">
-            <!--%import("filter/input_password.xml")-->
             <form action="./" method="get" onsubmit="return procFilter(this, input_password)">
             <input type="hidden" name="mid" value="{$mid}" />
             <input type="hidden" name="document_srl" value="{$oIssue->document_srl}" />
@@ -144,7 +143,6 @@
 <!--@end-->
 
 <!--@if($grant->ticket_write || $grant->commiter)-->
-<!--%import("./filter/insert_history.xml")-->
 <div class="newIssue newHistory">
 <form action="./" method="post" onsubmit="return procFilter(this, insert_history)">
 <input type="hidden" name="mid" value="{$mid}" />

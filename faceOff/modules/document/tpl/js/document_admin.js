@@ -93,7 +93,7 @@ function insertSelectedModule(id, module_srl, mid, browser_title) {
 
 function completeInsertExtraVar(ret_obj) {
     alert(ret_obj['message']);
-    location.href = current_url.setQuery('type','','selected_var_idx','');
+    location.href = current_url.setQuery('type','').setQuery('selected_var_idx','');
 }
 
 function completeInsertAlias(ret_obj) {

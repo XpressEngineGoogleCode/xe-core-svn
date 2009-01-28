@@ -46,11 +46,13 @@
             // 템플릿에서 사용할 검색옵션 세팅 (검색옵션 key값은 미리 선언되어 있는데 이에 대한 언어별 변경을 함)
             foreach($this->search_option as $opt) $search_option[$opt] = Context::getLang($opt);
 
-            // 모듈정보를 확인하여 확장변수에서도 검색이 설정되어 있는지 확인
             $oDocumentModel = &getModel('document');
             $extra_keys = $oDocumentModel->getExtraKeys($this->module_srl);
-            if(count($extra_keys)) {
-                foreach($extra_keys as $key => $val) {
+            Context::set('extra_keys', $extra_keys);
+
+            // 모듈정보를 확인하여 확장변수에서도 검색이 설정되어 있는지 확인
+            if(count(Context::get('extra_keys'))) {
+                foreach(Context::get('extra_keys') as $key => $val) {
                     if($val->search == 'Y') $search_option['extra_vars'.$val->idx] = $val->name;
                 }
             }
@@ -75,6 +77,10 @@
                     Context::set('act','dispIssuetrackerViewIssue');
                 }
             }
+
+            // javascript, JS 필터 추가
+            Context::addJsFilter($this->module_path.'tpl/filter', 'input_password.xml');
+            Context::addJsFile($this->module_path.'tpl/js/issuetracker.js');
         }
 
         function dispIssuetrackerTimeline() {
@@ -225,6 +231,8 @@
                         $this->setTemplateFile('source_list');
                     break;
             }
+
+            Context::addJsFile($this->module_path.'tpl/js/svn.js');
         }
 
         /**
@@ -318,6 +326,9 @@
                 // 스킨에서 사용하기 위해 context set
                 Context::set('oIssue', $oIssue);
 
+                // javascript 필터 추가
+                Context::addJsFilter($this->module_path.'tpl/filter', 'insert_history.xml');
+
                 $this->setTemplateFile('view_issue');
             }
 
@@ -352,18 +363,13 @@
             Context::set('document_srl',$document_srl);
             Context::set('oIssue', $oIssue);
 
-            // 현재 모듈에 등록된 확장변수 추출
-            $oDocumentModel = &getModel('document');
-            if($oIssue->isExists()) $extra_keys = $oIssue->getExtraVars();
-            else $extra_keys = $oDocumentModel->getExtraKeys($this->module_info->module_srl);
-            if(count($extra_keys)) {
-                // 글쓰기 폼에서 사용하기 위한 변수 설정
-                Context::set('extra_keys', $extra_keys);
+            // 확장변수처리를 위해 xml_js_filter를 직접 header에 적용
+            $oDocumentController = &getController('document');
+            $oDocumentController->addXmlJsFilter($this->module_info->module_srl);
+            if($oIssue->isExists()) Context::set('extra_keys', $oIssue->getExtraVars());
 
-                // 확장변수처리를 위해 xml_js_filter를 직접 header에 적용
-                $oDocumentController = &getController('document');
-                $oDocumentController->addXmlJsFilter($extra_keys);
-            }
+            // javascript 필터 추가
+            Context::addJsFilter($this->module_path.'tpl/filter', 'insert.xml');
 
             $this->setTemplateFile('newissue');
         }
@@ -387,6 +393,9 @@
             if(!$oIssue->isGranted()) return $this->setTemplateFile('input_password_form');
 
             Context::set('oIssue', $oIssue);
+
+            // javascript 필터 추가
+            Context::addJsFilter($this->module_path.'tpl/filter', 'delete_issue.xml');
 
             $this->setTemplateFile('delete_form');
         }
@@ -444,6 +453,9 @@
             if(!$trackback) return $this->dispIssuetrackerMessage('msg_invalid_request');
 
             Context::set('trackback',$trackback);
+
+            // javascript 필터 추가
+            Context::addJsFilter($this->module_path.'tpl/filter', 'delete_trackback.xml');
 
             $this->setTemplateFile('delete_trackback');
         }

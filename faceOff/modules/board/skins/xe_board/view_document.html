@@ -80,7 +80,6 @@
             <div class="contentBody">
 
                 <!--@if($oDocument->isSecret() && !$oDocument->isGranted())-->
-                    <!--%import("filter/input_password.xml")-->
                     <div class="secretContent">
                         <form action="./" method="get" onsubmit="return procFilter(this, input_password)">
                         <input type="hidden" name="mid" value="{$mid}" />
@@ -160,7 +159,6 @@
 
 <!-- 댓글 입력 폼 -->
 <!--@if($grant->write_comment && $oDocument->isEnableComment() )-->
-    <!--%import("filter/insert_comment.xml")-->
     <form action="./" method="post" onsubmit="return procFilter(this, insert_comment)" class="boardEditor" >
     <input type="hidden" name="mid" value="{$mid}" />
     <input type="hidden" name="document_srl" value="{$oDocument->document_srl}" />

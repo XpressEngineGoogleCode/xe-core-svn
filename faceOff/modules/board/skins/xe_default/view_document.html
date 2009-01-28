@@ -33,7 +33,6 @@
 
 	<div class="boardReadBody">
 		<!--@if($oDocument->isSecret() && !$oDocument->isGranted())-->
-			<!--%import("filter/input_password.xml")-->
 			<form action="./" method="get" onsubmit="return procFilter(this, input_password)" class="secretMessage">
 			<input type="hidden" name="mid" value="{$mid}" />
 			<input type="hidden" name="page" value="{$page}" />
@@ -149,7 +148,6 @@
     <!--#include("./comment.html")-->
 
     <!--@if($grant->write_comment && $oDocument->isEnableComment() )-->
-        <!--%import("filter/insert_comment.xml")-->
         <form action="./" method="post" onsubmit="return procFilter(this, insert_comment)" class="boardEditor" >
         <input type="hidden" name="mid" value="{$mid}" />
         <input type="hidden" name="document_srl" value="{$oDocument->document_srl}" />

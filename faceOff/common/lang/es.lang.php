@@ -262,6 +262,7 @@
     $lang->column_type_list['textarea'] = 'Texto multi-linea';
     $lang->column_type_list['checkbox'] = 'Caja de chequeo (selección múltiple)';
     $lang->column_type_list['select'] = 'Selección (selección individual)';
+    $lang->column_type_list['radio'] = 'radio button (radio)';
     //$lang->column_type_list['kr_zip'] = 'zip code (Korean)';
     $lang->column_type_list['date'] = 'fecha (dd/mm/aaaa)';
     //$lang->column_type_list['jp_zip'] = 'zip code (Japanese)';

@@ -11,8 +11,6 @@
 
         var $allow_trackback_status = null;
 
-        var $extra_vars = null;
-
         function documentItem($document_srl = 0) {
             $this->document_srl = $document_srl;
             $this->_loadFromDB();
@@ -380,11 +378,8 @@
 
         function getExtraVars() {
             if(!$this->get('module_srl') || !$this->document_srl) return null;
-            if(is_null($this->extra_vars)) {
-                $oDocumentModel = &getModel('document');
-                $this->extra_vars = $oDocumentModel->getExtraVars($this->get('module_srl'), $this->document_srl);
-            }
-            return $this->extra_vars;
+            $oDocumentModel = &getModel('document');
+            return $oDocumentModel->getExtraVars($this->get('module_srl'), $this->document_srl);
         }
 
         function getExtraValue($idx) {
