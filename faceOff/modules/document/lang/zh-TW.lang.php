@@ -19,6 +19,7 @@
     $lang->category_color = '分類顏色';
     $lang->expand = '展開';
     $lang->category_group_srls = '用戶組';
+
     $lang->cmd_make_child = '新增子分類';
     $lang->cmd_enable_move_category = "分類順序(勾選後用滑鼠拖曳分類項目)";
     $lang->about_category_title = '請輸入分類名稱。';
@@ -59,7 +60,7 @@
         'uploaded_count ' => '上傳檔案數(以上)',
         'regdate' => '登錄日期',
         'last_update' => '最近更新日期',
-        'ipaddress' => 'IP 位址',
+        'ipaddress' => 'IP位址',
     );
-    $lang->alias = "Alias";
+    $lang->alias = "別名";
 ?>

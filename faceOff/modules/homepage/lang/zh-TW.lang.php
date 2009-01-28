@@ -1,7 +1,7 @@
 <?php
     /**
      * @file   zh-TW.lang.php
-     * @author zero (zero@nzeo.com)
+     * @author zero (zero@nzeo.com) 翻譯︰royallin
      * @brief  網站(homepage) 基本模組
      **/
 
@@ -71,10 +71,10 @@
     $lang->about_menu_option = "可設定案選單時，是否要以新視窗開啟。<br />選展開的話，是隨版面。";
 
     $lang->about_group_grant = "有選擇用戶群組的話，只有被選擇的用戶群組才看的到。<br/>沒有選擇的話，非會員也能觀看。";
-    $lang->about_module_type = "討論板，頁面可直接建立該模組和 URL。<br/>注意：建立後無法再修改";
+    $lang->about_module_type = "討論板，頁面可直接建立該模組和連結網址。<br/>注意：建立後無法再修改";
     $lang->about_browser_title = "連結選單後，顯示在瀏覽器視窗的標題。";
     $lang->about_module_id = "連結討論板，頁面等模組時，所要輸入的格式。<br/>例) http://域名/[模組 ID], http://域名/?mid=[模組 ID]";
-    $lang->about_menu_item_url = "目標是 URL時，在此輸入網址。<br/>請勿輸入 http://";
+    $lang->about_menu_item_url = "目標是連結網址時，在此輸入網址。<br/>請勿輸入 http://";
     $lang->about_menu_image_button = "可用圖片代替選單名稱";
     $lang->about_homepage_delete = "刪除網站：即刪除所有相關的模組(討論板，頁面等)以及相關文章。請慎重使用。";
     $lang->about_homepage_admin = "可以建立網站管理員。<br/>管理員登入網址是 http://域名/?module=homepage。只能在現有的會員中指定管理員。";
