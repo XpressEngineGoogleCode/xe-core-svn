@@ -62,8 +62,8 @@
     $lang->cmd_publish = "發表";
     $lang->cmd_layout_setup = '版面設置';
     $lang->cmd_layout_edit = '版面編輯';
-    $lang->cmd_search_by_ipaddress = '以 IP位址搜尋';
-    $lang->cmd_add_ip_to_spamfilter = '新增 IP至垃圾過濾器';
+    $lang->cmd_search_by_ipaddress = '以IP位址搜尋';
+    $lang->cmd_add_ip_to_spamfilter = '新增IP至垃圾過濾器';
 
     $lang->enable = '可用';
     $lang->disable = '禁用';
@@ -133,7 +133,7 @@
     $lang->blog_name = '部落格名稱';
     $lang->excerpt = '轉載自';
 
-    $lang->document_count = '文章數';
+    $lang->document_count = '文章數量';
     $lang->page_count = '頁數';
     $lang->list_count = '列表數';
     $lang->search_list_count = '搜尋列表數';
@@ -265,27 +265,27 @@
     $lang->is_active = '啟動';
     $lang->is_required = '必填';
 
-    // 關於 FTP
-    $lang->ftp_form_title = '輸入 FTP資訊';
+    // 關於FTP
+    $lang->ftp_form_title = '輸入FTP資訊';
     $lang->ftp = 'FTP';
     $lang->ftp_port = 'FTP Port';
-    $lang->cmd_check_ftp_connect = '確認 FTP連線';
+    $lang->cmd_check_ftp_connect = '確認FTP連線';
     $lang->about_ftp_info = "
         FTP資訊可應用至以下情形<br/>
-        1. 當 PHP的安全模式(safe_mode)開啟時，可使程式正常運作。<br/>
+        1. 當PHP的安全模式(safe_mode)開啟時，可使程式正常運作。<br/>
         2. 可用於自動更新。<br/>
-        這個 FTP資訊會儲存在檔案 files/config/ftp.config.php裡面。<br/>
-        安裝程式後，可以在管理頁面中針對 FTP資訊進行修改或刪除。<br />
+        此FTP資訊會儲存在檔案files/config/ftp.config.php裡面。<br/>
+        安裝程式後，可以在管理頁面中針對FTP資訊進行修改或刪除。<br />
     ";
 
-    $lang->msg_safe_mode_ftp_needed = "當 PHP的安全模式(safe_mode)開啟時，請輸入相關 FTP資訊，否則無法正常安裝或使用程式。";
-    $lang->msg_ftp_not_connected = "本地(localhost)FTP連線錯誤。請確認 FTP Prot或確認是否支援 FTP功能。";
-    $lang->msg_ftp_invalid_auth_info = "FTP登入失敗。請確認輸入的 FTP資訊。";
-    $lang->msg_ftp_mkdir_fail = "新增資料夾失敗。請確認 FTP主機設置。";
-    $lang->msg_ftp_chmod_fail = "修改資料夾權限失敗。請確認 FTP主機設置。";
+    $lang->msg_safe_mode_ftp_needed = "當PHP的安全模式(safe_mode)開啟時，請輸入相關FTP資訊，否則無法正常安裝或使用程式。";
+    $lang->msg_ftp_not_connected = "本地(localhost)FTP連線錯誤。請確認FTP Prot或是否支援FTP功能。";
+    $lang->msg_ftp_invalid_auth_info = "FTP登入失敗。請確認輸入的FTP資訊。";
+    $lang->msg_ftp_mkdir_fail = "新增資料夾失敗。請確認FTP主機設置。";
+    $lang->msg_ftp_chmod_fail = "修改資料夾權限失敗。請確認FTP主機設置。";
     $lang->msg_ftp_connect_success = "FTP連線成功。";
 
-    // 在 xml filter使用的 javascript用 alert msg
+    // 在 xml filter中所使用的JavaScript警告訊息
     $lang->filter->isnull = '請輸入%s';
     $lang->filter->outofrange = '請確認%s字數';
     $lang->filter->equalto = '%s值有誤。';
