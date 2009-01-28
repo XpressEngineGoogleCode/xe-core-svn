@@ -20,6 +20,7 @@
 
             // notify를 위한 트리거 추가
             $oModuleController->insertTrigger('comment.insertComment', 'tccommentnotify', 'controller', 'triggerInsertComment', 'after');
+            $oModuleController->insertActionForward('tccommentnotify', 'view', 'dispCommentNotifyAdminIndex');
 
             return new Object();
         }
@@ -30,6 +31,8 @@
         function checkUpdate() {
             $oModuleModel = &getModel('module');
             if(!$oModuleModel->getTrigger('comment.insertComment', 'tccommentnotify', 'controller', 'triggerInsertComment', 'after')) return true;
+            if(!$oModuleModel->getActionForward('tccommentnotify','view','dispCommentNotfiyAdminIndex')) return true;
+
 
             return false;
         }
@@ -41,6 +44,8 @@
             $oModuleModel = &getModel('module');
             $oModuleController = &getController('module');
             if(!$oModuleModel->getTrigger('comment.insertComment', 'tccommentnotify', 'controller', 'triggerInsertComment', 'after')) $oModuleController->insertTrigger('comment.insertComment', 'tccommentnotify', 'controller', 'triggerInsertComment', 'after');
+            if(!$oModuleModel->getActionForward('tccommentnotify','view','dispCommentNotfiyAdminIndex')) 
+                $oModuleController->insertActionForward('tccommentnotify', 'view', 'dispCommentNotifyAdminIndex');
 
             return new Object(0, 'success_updated');
         }
