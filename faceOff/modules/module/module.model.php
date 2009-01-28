@@ -970,7 +970,7 @@
         /**
          * @brief 특정 모듈의 스킨 정보를 모듈 정보와 결합
          **/
-        function syncSkinInfoToModuleInfo($module_info) {
+        function syncSkinInfoToModuleInfo(&$module_info) {
             if(!$module_info->module_srl) return;
 
             $args->module_srl = $module_info->module_srl;
