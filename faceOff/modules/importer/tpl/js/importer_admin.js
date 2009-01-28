@@ -86,7 +86,8 @@ function completePreProcessing(ret_obj, response_tags) {
     fo_obj.key.value = key;
 
     var fo_import = xGetElementById('fo_import');
-    if(fo_import && fo_import.target_module) fo_obj.target_module.value = fo_import.target_module.value;
+    if(fo_import && fo_import.post_target_module) fo_obj.post_target_module.value = fo_import.post_target_module.value;
+    if(fo_import && fo_import.guestbook_target_module) fo_obj.guestbook_target_module.value = fo_import.guestbook_target_module.value;
     if(fo_import && fo_import.user_id) fo_obj.user_id.value = fo_import.user_id.value;
 
     fo_obj.unit_count.value = fo_import.unit_count.options[fo_import.unit_count.selectedIndex].value;
@@ -104,7 +105,8 @@ function doImport() {
     params['total'] = fo_obj.total.value;
     params['cur'] = fo_obj.cur.value;
     params['key'] = fo_obj.key.value;
-    params['target_module'] = fo_obj.target_module.value;
+    params['post_target_module'] = fo_obj.post_target_module.value;
+    params['guestbook_target_module'] = fo_obj.guestbook_target_module.value;
     params['unit_count'] = fo_obj.unit_count.value;
     params['user_id'] = fo_obj.user_id.value;
 

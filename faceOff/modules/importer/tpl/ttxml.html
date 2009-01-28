@@ -4,13 +4,21 @@
 <div id="importForm">
     <form action="./" method="get" onsubmit="return doPreProcessing(this)" id="fo_import">
         <input type="hidden" name="type" value="ttxml" />
-        <input type="hidden" name="target_module" value="" id="target_module" />
+        <input type="hidden" name="post_target_module" value="" id="post_target_module" />
+        <input type="hidden" name="guestbook_target_module" value="" id="guestbook_target_module" />
 
         <table cellspacing="0" class="adminTable">
         <caption>{$lang->import_step_title[1]} - {$lang->import_step_desc[12]}</caption>
         <tr>
+            <td>{$lang->import_step_desc[121]} </td>
             <td>
-                <input type="text" name="_target_module" id="_target_module" class="inputTypeText w300" readonly="readonly"><a href="{getUrl('','module','module','act','dispModuleSelectList','id','target_module','type','single')}" onclick="popopen(this.href,'ModuleSelect');return false;" class="button green"><span>{$lang->cmd_select}</span></a>
+                <input type="text" name="_post_target_module" id="_post_target_module" class="inputTypeText w300" readonly="readonly"><a href="{getUrl('','module','module','act','dispModuleSelectList','id','post_target_module','type','single')}" onclick="popopen(this.href,'ModuleSelect');return false;" class="button green"><span>{$lang->cmd_select}</span></a>
+            </td>
+        </tr>
+        <tr>
+            <td>{$lang->import_step_desc[122]} </td>
+            <td>
+                <input type="text" name="_guestbook_target_module" id="_guestbook_target_module" class="inputTypeText w300" readonly="readonly"><a href="{getUrl('','module','module','act','dispModuleSelectList','id','guestbook_target_module','type','single')}" onclick="popopen(this.href,'ModuleSelect');return false;" class="button green"><span>{$lang->cmd_select}</span></a>
             </td>
         </tr>
         </table>
