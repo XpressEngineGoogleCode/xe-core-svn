@@ -71,5 +71,25 @@
             $this->add('page',Context::get('page'));
             $this->setMessage('success_deleted');
         }
+
+        /**
+         * @brief 게시판 목록 지정
+         **/
+        function procBoardAdminInsertListConfig() {
+            $module_srl = Context::get('module_srl');
+            $list = explode(',',Context::get('list'));
+            if(!count($list)) return new Object(-1, 'msg_invalid_request');
+
+            $list_arr = array();
+            foreach($list as $val) {
+                $val = trim($val);
+                if(!$val) continue;
+                if(substr($val,0,10)=='extra_vars') $val = substr($val,10);
+                $list_arr[] = $val;
+            }
+
+            $oModuleController = &getController('module');
+            $oModuleController->insertModulePartConfig('board', $module_srl, $list_arr);
+        }
     }
 ?>

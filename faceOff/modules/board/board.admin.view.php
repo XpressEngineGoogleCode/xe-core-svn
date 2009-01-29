@@ -145,6 +145,21 @@
         }
 
         /**
+         * @brief 게시판의 목록 설정
+         **/
+        function dispBoardAdminListSetup() {
+            $oBoardModel = &getModel('board');
+
+            // 대상 항목을 구함
+            Context::set('extra_vars', $oBoardModel->getDefaultListConfig($this->module_info->module_srl));
+
+            // 설정 항목 추출 (설정항목이 없을 경우 기본 값을 세팅)
+            Context::set('list_config', $oBoardModel->getListConfig($this->module_info->module_srl));
+
+            $this->setTemplateFile('list_setting');
+        }
+
+        /**
          * @brief 카테고리의 정보 출력
          **/
         function dispBoardAdminCategoryInfo() {

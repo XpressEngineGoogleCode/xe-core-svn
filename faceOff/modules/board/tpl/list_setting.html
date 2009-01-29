@@ -1,0 +1,37 @@
+<!--#include("./header.html")-->
+<!--%import("css/board.css")-->
+
+<div class="aboutListConfig">{$lang->about_list_config}</div>
+
+<div class="itemZone">
+
+    <div class="targetItem">
+        <strong>{$lang->list_target_item}</strong>
+        <select size="{count($extra_vars)}" name="targetItem" id="targetItem" ondblclick="doInsertItem(); return false;">
+        <!--@foreach($extra_vars as $key => $val)-->
+        <option value="{$key}">{$val->name}</option>
+        <!--@end-->
+        </select>
+    </div>
+
+    <div class="displayItem">
+        <strong>{$lang->list_display_item}</strong>
+        <select size="{count($extra_vars)}" name="displayItem" id="displayItem" ondblclick="doDeleteItem();">
+        <!--@foreach($list_config as $key => $val)-->
+        <option value="{$key}">{$val->name}</option>
+        <!--@end-->
+        </select>
+    </div>
+
+    <div class="buttonArea">
+        <div class="fl">
+            <a href="#" onclick="doInsertItem(); return false;" class="button blue"><span>{$lang->cmd_insert}</span></a>
+        </div>
+        <div class="fr">
+            <a href="#" onclick="doDeleteItem(); return false;" class="button red"><span>{$lang->cmd_delete}</span></a>
+            <a href="#" onclick="doMoveUpItem(); return false;" class="button green"><span>{$lang->cmd_move_up}</span></a>
+            <a href="#" onclick="doMoveDownItem(); return false;" class="button green"><span>{$lang->cmd_move_down}</span></a>
+            <span class="button blue"><button onclick="doSaveListConfig('{$module_srl}'); return false;" type="button">{$lang->cmd_save}</button></span>
+        </div>
+    </div>
+</div>

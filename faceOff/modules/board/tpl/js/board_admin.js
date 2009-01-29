@@ -69,3 +69,72 @@ function doCartSetup(url) {
     url += "&module_srls="+module_srl.join(',');
     popopen(url,'modulesSetup');
 }
+
+/* 목록 설정 */
+function doInsertItem() {
+    var target_obj = xGetElementById('targetItem');
+    var display_obj = xGetElementById('displayItem');
+    if(!target_obj || !display_obj) return;
+
+    var text = target_obj.options[target_obj.selectedIndex].text;
+    var value = target_obj.options[target_obj.selectedIndex].value;
+
+    for(var i=0;i<display_obj.options.length;i++) if(display_obj.options[i].value == value) return;
+
+    var obj = new Option(text, value, true, true);
+    display_obj.options[display_obj.options.length] = obj;
+
+}
+function doDeleteItem() {
+    var sel_obj = xGetElementById('displayItem');
+    var idx = sel_obj.selectedIndex;
+    if(idx<0 || sel_obj.options.length<2) return;
+    sel_obj.remove(idx);
+    sel_obj.selectedIndex = idx-1;
+}
+function doMoveUpItem() {
+    var sel_obj = xGetElementById('displayItem');
+    var idx = sel_obj.selectedIndex;
+    if(idx<1 || !idx) return;
+
+    var text = sel_obj.options[idx].text;
+    var value = sel_obj.options[idx].value;
+
+    sel_obj.options[idx].text = sel_obj.options[idx-1].text;
+    sel_obj.options[idx].value = sel_obj.options[idx-1].value;
+    sel_obj.options[idx-1].text = text;
+    sel_obj.options[idx-1].value = value;
+    sel_obj.selectedIndex = idx-1;
+}
+function doMoveDownItem() {
+    var sel_obj = xGetElementById('displayItem');
+    var idx = sel_obj.selectedIndex;
+    if(idx>=sel_obj.options.length-1) return;
+
+    var text = sel_obj.options[idx].text;
+    var value = sel_obj.options[idx].value;
+
+    sel_obj.options[idx].text = sel_obj.options[idx+1].text;
+    sel_obj.options[idx].value = sel_obj.options[idx+1].value;
+    sel_obj.options[idx+1].text = text;
+    sel_obj.options[idx+1].value = value;
+    sel_obj.selectedIndex = idx+1;
+}
+
+function doSaveListConfig(module_srl) {
+    if(!module_srl) return;
+    var sel_obj = xGetElementById('displayItem');
+    var idx = sel_obj.selectedIndex;
+
+    var list = new Array();
+    for(var i=0;i<sel_obj.options.length;i++) list[list.length] = sel_obj.options[i].value;
+    if(list.length<1) return;
+    
+    var params = new Array();
+    params['module_srl'] = module_srl;
+    params['list'] = list.join(',');
+
+    var response_tags = new Array('error','message');
+
+    exec_xml('board','procBoardAdminInsertListConfig', params, function() { location.reload(); });
+}

@@ -35,6 +35,7 @@
              * 스킨 경로를 미리 template_path 라는 변수로 설정함
              * 스킨이 존재하지 않는다면 xe_board로 변경
              **/
+            $this->module_info->skin  = 'xe_default';
             $template_path = sprintf("%sskins/%s/",$this->module_path, $this->module_info->skin);
             if(!is_dir($template_path)) {
                 $this->module_info->skin = 'xe_board';
@@ -186,8 +187,7 @@
              * 사용되는 javascript 필터 추가
              **/
             Context::addJsFilter($this->module_path.'tpl/filter', 'insert_comment.xml');
-
-
+        
             return new Object();
         }
 
@@ -292,8 +292,11 @@
             Context::set('total_page', $output->total_page);
             Context::set('page', $output->page);
             Context::set('page_navigation', $output->page_navigation);
-        }
 
+            // 목록 설정값을 세팅
+            $oBoardModel = &getModel('board');
+            Context::set('list_config', $oBoardModel->getListConfig($this->module_info->module_srl));
+        }
 
         /**
          * @brief 태그 목록 모두 보기
@@ -497,6 +500,12 @@
             // 필요한 정보들 세팅
             Context::set('oSourceComment',$oSourceComment);
             Context::set('oComment',$oComment);
+
+            /** 
+             * 사용되는 javascript 필터 추가
+             **/
+            Context::addJsFilter($this->module_path.'tpl/filter', 'insert_comment.xml');
+        
 
             $this->setTemplateFile('comment_form');
         }

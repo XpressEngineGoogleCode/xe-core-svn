@@ -387,6 +387,11 @@
             return $extra_vars[$idx]->value;
         }
 
+        function getExtraValueHTML($idx) {
+            $extra_vars = $this->getExtraVars();
+            return $extra_vars[$idx]->getValueHTML();
+        }
+
         function getExtraVarsValue($key) {
             $extra_vals = unserialize($this->get('extra_vars'));
             $val = $extra_vals->$key;

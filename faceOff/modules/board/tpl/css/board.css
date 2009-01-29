@@ -1,11 +1,12 @@
 @charset "utf-8";
 
-body { margin:10px; }
+.aboutListConfig { border:1px solid #ccc; padding:5px; line-height:160%; margin-bottom:20px; }
 
-.menuListZone { table-layout:fixed; }
-.menuListZone td { vertical-align:top; }
-.menuListZone td.category_zone { padding-right:10px; }
+.itemZone { margin:0 auto; width:530px;  overflow:hidden; *zoom:1; }
+.itemZone strong { margin-bottom:3px; display:block; text-align:center; padding:5px; border:1px solid #eee;}
 
-#category_list { padding:.5em 0 .5em 0; margin-bottom:2em; width:250px; overflow:hidden; float:left; position:absolute; left:10px;}
-#category_info { margin-left:10px; width:560px; _width:540px; float:left; position:absolute; right:10px;}
-*:first-child+html #category_info { width:550px; }
+.targetItem { float:left; width:250px; overflow:hidden; *zoom:1; }
+.displayItem { float:right; width:250px; overflow:hidden; *zoom:1; }
+.displayItem select, .targetItem  select { width:99%;  overflow:hidden; *zoom:1;}
+
+.buttonArea { clear:both; padding-top:20px; }
