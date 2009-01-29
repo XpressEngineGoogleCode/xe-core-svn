@@ -35,7 +35,6 @@
              * 스킨 경로를 미리 template_path 라는 변수로 설정함
              * 스킨이 존재하지 않는다면 xe_board로 변경
              **/
-            $this->module_info->skin  = 'xe_default';
             $template_path = sprintf("%sskins/%s/",$this->module_path, $this->module_info->skin);
             if(!is_dir($template_path)) {
                 $this->module_info->skin = 'xe_board';
