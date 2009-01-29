@@ -81,6 +81,7 @@
         <action name="dispBoardAdminDeleteBoard" type="view" standalone="true" />
         <action name="dispBoardAdminSkinInfo" type="view" standalone="true" />
         <action name="dispBoardAdminGrantInfo" type="view" standalone="true" />
+        <action name="dispBoardAdminCategoryInfo" type="view" />
 
         <action name="procBoardAdminInsertBoard" type="controller" standalone="true" />
         <action name="procBoardAdminDeleteBoard" type="controller" standalone="true" />
