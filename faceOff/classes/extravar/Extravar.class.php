@@ -105,7 +105,7 @@
          **/
         function _getTypeValue($type, $value) {
             $value = trim($value);
-            if(!trim($value)) return;
+            if(!isset($value)) return;
             switch($type) {
                 case 'homepage' :
                         if(!preg_match('/^([a-z]+):\/\//i',$value)) $value = 'http://'.$value;
@@ -115,9 +115,9 @@
                         if(is_array($value)) $values = $value;
                         elseif(strpos($value,'|@|')!==false) $values = explode('|@|', $value);
                         elseif(strpos($value,',')!==false) $values = explode(',', $value);
-                        $values[0] = (int)($values[0]);
-                        $values[1] = (int)($values[1]);
-                        $values[2] = (int)($values[2]);
+                        $values[0] = $values[0];
+                        $values[1] = $values[1];
+                        $values[2] = $values[2];
                         return $values;
                     break;
                     break;
@@ -153,7 +153,6 @@
          **/
         function getValueHTML() {
             $value = $this->_getTypeValue($this->type, $this->value);
-            if(!$value) return;
             switch($this->type) {
                 case 'homepage' :
                         return sprintf('<a href="%s" onclick="window.open(this.href); return false;">%s</a>', $value, $value);
@@ -161,7 +160,8 @@
                         return sprintf('<a href="mailto:%s">%s</a>', $value, $value);
                     break;
                 case 'tel' :
-                        return sprintf('%d - %d - %d', $value[0],$value[1],$value[2]);
+                    debugPrint($value);
+                        return sprintf('%s - %s - %s', $value[0],$value[1],$value[2]);
                     break;
                 case 'textarea' :
                         return nl2br($value);

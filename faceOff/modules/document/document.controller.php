@@ -178,9 +178,9 @@
             if(count($extra_keys)) {
                 foreach($extra_keys as $idx => $extra_item) {
                     $value = '';
-                    if($obj->{'extra_vars'.$idx}) $value = trim($obj->{'extra_vars'.$idx});
-                    elseif($obj->{$extra_item->name}) $value = trim($obj->{$extra_item->name});
-                    if(!$value) continue;
+                    if(isset($obj->{'extra_vars'.$idx})) $value = trim($obj->{'extra_vars'.$idx});
+                    elseif(isset($obj->{$extra_item->name})) $value = trim($obj->{$extra_item->name});
+                    if(!isset($value)) continue;
                     $this->insertDocumentExtraVar($obj->module_srl, $obj->document_srl, $idx, $value);
                 }
             }
@@ -299,9 +299,9 @@
                 $this->deleteDocumentExtraVars($obj->module_srl, $obj->document_srl);
                 foreach($extra_keys as $idx => $extra_item) {
                     $value = '';
-                    if($obj->{'extra_vars'.$idx}) $value = trim($obj->{'extra_vars'.$idx});
-                    elseif($obj->{$extra_item->name}) $value = trim($obj->{$extra_item->name});
-                    if(!$value) continue;
+                    if(isset($obj->{'extra_vars'.$idx})) $value = trim($obj->{'extra_vars'.$idx});
+                    elseif(isset($obj->{$extra_item->name})) $value = trim($obj->{$extra_item->name});
+                    if(!isset($value)) continue;
                     $this->insertDocumentExtraVar($obj->module_srl, $obj->document_srl, $idx, $value);
                 }
             }
@@ -486,7 +486,7 @@
          * @breif documents 테이블의 확장 변수 값 등록
          **/
         function insertDocumentExtraVar($module_srl, $document_srl, $var_idx, $value, $lang_code = '') {
-            if(!$module_srl || !$document_srl || !$var_idx || !$value) return new Object(-1,'msg_invalid_request');
+            if(!$module_srl || !$document_srl || !$var_idx || !isset($value)) return new Object(-1,'msg_invalid_request');
             if(!$lang_code) $lang_code = Context::getLangType();
     
             $obj->module_srl = $module_srl;
