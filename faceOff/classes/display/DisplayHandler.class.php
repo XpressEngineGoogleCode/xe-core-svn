@@ -234,8 +234,6 @@
 
             // 파일 및 HTML 주석으로 출력
             } else {
-                // debug string 작성 시작
-                $buff  = "** Debug at ".date('Y-m-d H:i:s').str_repeat('*', 60)."\n";
 
                 // 전체 실행 시간 출력, Request/Response info 출력
                 if(__DEBUG__ & 2) {
@@ -283,22 +281,25 @@
 
                 // HTML 주석으로 출력
                 if(__DEBUG_OUTPUT__ == 1 && Context::getResponseMethod() == 'HTML') {
+                    $buff = sprintf("[%s %s:%d]\n%s\n", date('Y-m-d H:i:s'), $file_name, $line_num, print_r($buff, true));
+
                     if(__DEBUG_PROTECT__ == 1 && __DEBUG_PROTECT_IP__ != $_SERVER['REMOTE_ADDR']) {
                         $buff = 'The IP address is not allowed. Change the value of __DEBUG_PROTECT_IP__ into your IP address in config/config.user.inc.php or config/config.inc.php';
                     }
+
                     return "<!--\r\n".$buff."\r\n-->";
                 }
 
                 // 파일에 출력
                 if(__DEBUG_OUTPUT__ == 0) {
                     $debug_file = _XE_PATH_.'files/_debug_message.php';
-                    $debug_output = sprintf("[%s %s:%d]\n%s\n", date('Y-m-d H:i:s'), $file_name, $line_num, print_r($debug_output, true));
+                    $buff = sprintf("[%s %s:%d]\n%s\n", date('Y-m-d H:i:s'), $file_name, $line_num, print_r($buff, true));
 
-                    if($display_option === true) $debug_output = str_repeat('=', 40)."\n".$debug_output.str_repeat('-', 40);
-                    $debug_output = "\n<?php\n/*".$debug_output."*/\n?>\n";
+                    $buff = str_repeat('=', 40)."\n".$buff.str_repeat('-', 40);
+                    $buff = "\n<?php\n/*".$buff."*/\n?>\n";
 
                     if(@!$fp = fopen($debug_file, 'a')) return;
-                    fwrite($fp, $debug_output);
+                    fwrite($fp, $buff);
                     fclose($fp);
                 }
             }
