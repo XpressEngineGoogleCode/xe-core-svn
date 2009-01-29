@@ -90,6 +90,11 @@
                     $oFileController->setFilesValid($obj->document_srl);
                 }
 
+                if($module_srl != $obj->module_srl)
+                {
+                    $oDocumentController->deleteDocumentAliasByDocument($obj->document_srl);
+                }
+
                 // 게시물의 모듈 이동
                 $obj->module_srl = $module_srl;
                 $obj->category_srl = $category_srl;
