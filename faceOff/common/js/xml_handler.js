@@ -26,6 +26,14 @@ function exec_xml(module, act, params, callback_func, response_tags, callback_fu
 
 // 결과 처리 후 callback_func에 넘겨줌
 function xml_response_filter(oXml, callback_func, response_tags, callback_func_arg, fo_obj) {
+    var text = oXml.getResponseText();
+    if(text && !/^<response>/i.test(text)) {
+        var waiting_obj = xGetElementById("waitingforserverresponse");
+        if(waiting_obj) waiting_obj.style.visibility = "hidden";
+        alert(text);
+        return null;
+    }
+
     var xmlDoc = oXml.getResponseXml();
     if(!xmlDoc) return null;
 
@@ -64,6 +72,7 @@ function xml_handler() {
     this.setPath = xml_handlerSetPath;
     this.addParam = xml_handlerAddParam;
     this.getResponseXml = xml_handlerGetResponseXML;
+    this.getResponseText = xml_handlerGetResponseText;
     this.toZMsgObject = xml_handlerToZMsgObject;
     this.parseXMLDoc = xml_parseXmlDoc;
 
@@ -156,6 +165,13 @@ function xml_handlerGetResponseXML() {
         var xmlDoc = this.objXmlHttp.responseXML;
         this.reset();
         return xmlDoc;
+    }
+    return null;
+}
+
+function xml_handlerGetResponseText() {
+    if(this.objXmlHttp && this.objXmlHttp.readyState == 4 && isDef(this.objXmlHttp.responseText)) {
+        return this.objXmlHttp.responseText;
     }
     return null;
 }
