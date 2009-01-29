@@ -55,7 +55,7 @@
     $lang->cmd_planet_addfavorite = "Add to Favorite";
 
     $lang->planet_hot_tag = "Popular tags";
-    $lang->planet_home = "Home";
+    $lang->planet_home = "Planet Home";
     $lang->cmd_planet_more_tag = "Display more tags";
 
     $lang->planet_memo = "Memo";

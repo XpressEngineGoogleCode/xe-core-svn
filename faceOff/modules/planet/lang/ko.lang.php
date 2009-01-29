@@ -56,7 +56,7 @@
     $lang->cmd_planet_addfavorite = "즐겨찾기추가";
 
     $lang->planet_hot_tag = "실시간 인기태그";
-    $lang->planet_home = "홈";
+    $lang->planet_home = "플래닛홈";
     $lang->cmd_planet_more_tag = "더 많은 태그 보기";
 
     $lang->planet_memo = "메모";

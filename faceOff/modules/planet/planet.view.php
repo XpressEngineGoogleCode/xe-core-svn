@@ -11,7 +11,6 @@
          * @brief 초기화
          **/
         function init() {
-
             if(!preg_match('/planet/i', $this->act) && !in_array($this->act, array('favorite','countContentTagSearch','dispReplyList'))) return;
 
             /**
@@ -28,10 +27,6 @@
             if(!$this->module_info->skin) $this->module_info->skin = $this->module_info->planet_default_skin;
             $template_path = sprintf("%sskins/%s/",$this->module_path, $this->module_info->skin);
             $this->setTemplatePath($template_path);
-
-            $module_info = $oPlanetModel->getPlanetConfig();
-            $grant = $oModuleModel->getGrant($module_info, $this->xml_info, Context::get('logged_info'));
-            $this->grant = $grant;
 
             /**
              * myplanet(접속자 플래닛), planet(접속된 페이지의 플래닛)을 Context setting 하여 모든 곳에서 사용

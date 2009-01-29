@@ -239,7 +239,8 @@ button span{ position:absolute; width:0; height:0; font:0/0 Sans-serif; visibili
 .commentBody .comment .identity{ position:relative; width:98px; float:left; margin:0 -98px 0 0; font-size:12px; background:none; *zoom:1;}
 .commentBody .comment .identity a{ position:relative; display:block; text-align:center; font-size:12px; color:#fff !important; font-weight:bold;}
 .commentBody .comment .identity a img{ display:block; border:1px solid #ddd;}
-.commentBody .comment .identity a em{ position:absolute; width:96px; text-align:center; left:1px; bottom:1px; display:block; padding:5px 0; font-style:normal; background:#000; opacity:.6; filter:alpha(opacity=60); line-height:normal;}
+.commentBody .comment .identity em{ position:absolute; width:96px; text-align:center; left:1px; bottom:1px; display:block; padding:5px 0; font-style:normal; background:#000; opacity:.6; filter:alpha(opacity=60); line-height:normal;}
+.commentBody .comment .identity em img { border:0; display:inline; }
 .commentBody .comment .tongue{ position:relative; margin-left:113px; *zoom:1;}
 .commentBody .comment .tongue .post{ margin:0 0 7px 0; font:16px/1.6 NanumGothic,"Malgun Gothic", AppleGothic, Dotum, Gulim, Sans-serif; word-break:break-all; }
 .commentBody .comment .tongue .post a { font:1em NanumGothic,"Malgun Gothic", AppleGothic, Dotum, Gulim, Sans-serif; color:#06C;}

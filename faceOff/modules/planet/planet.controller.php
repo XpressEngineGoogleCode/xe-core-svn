@@ -14,9 +14,9 @@
             $oPlanetModel = &getModel('planet');
             $oModuleModel = &getModel('module');
 
-            $module_info = $oPlanetModel->getPlanetConfig();
-            $grant = $oModuleModel->getGrant($module_info, $this->xml_info, Context::get('logged_info'));
-            $this->grant = $grant;
+            Context::set('module_info',$this->module_info = $oPlanetModel->getPlanetConfig());
+            $this->grant = $oModuleModel->getGrant($this->module_info, Context::get('logged_info'), $this->xml_info);
+            Context::set('grant', $this->grant);
         }
 
         /**
@@ -771,6 +771,25 @@
             return $output;
 
         }
+
+        /**
+         * @brief 아이디 클릭시 나타나는 팝업메뉴에 "플래닛" 메뉴를 추가하는 trigger
+         **/
+        function triggerMemberMenu(&$obj) {
+            $member_srl = Context::get('target_srl');
+            if(!$member_srl) return new Object();
+
+            $args->member_srl = $member_srl;
+            $output = executeQuery('planet.getMemberPlanet', $args);
+            if(!$output->toBool() || !$output->data) return new Object();
+
+            $url = getUrl('','mid',$output->data->mid);
+            $oMemberController = &getController('member');
+            $oMemberController->addMemberPopupMenu($url, 'planet', './modules/planet/tpl/images/planet.gif');
+
+            return new Object();
+        }
+
     }
 
 ?>

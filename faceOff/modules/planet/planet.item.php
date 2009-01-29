@@ -23,47 +23,28 @@
         }
 
 
-        function getWriteInfo() {
-            static $module_info = array();
-            if(!isset($module_info[$this->get('module_srl')])) {
-                $oPlanetModel = &getModel('planet');
-                $info = $module_info[$this->get('module_srl')] = $oPlanetModel->getPlanet($this->get('module_srl'));
-                $this->add('planet_title', $info->getBrowserTitle());
-                $this->add('nick_name', $info->getNickName());
-                $this->add('user_name', $info->getUserName());
-                $this->add('user_id', $info->getUserID());
-                $this->add('planet_title', $info->getPlanetTitle());
-                $this->add('mid', $info->getMid());
-            }
-        }
-
         function getPlanetPhotoSrc($width=96,$height=96) {
             $oPlanetModel = &getModel('planet');
             return $oPlanetModel->getPlanetPhotoSrc($this->get('module_srl'), $width, $height);
         }
 
         function getPlanetMid() {
-            $this->getWriteInfo();
             return $this->get('mid');
         }
 
         function getPlanetTitle() {
-            $this->getWriteInfo();
             return $this->get('planet_title');
         }
 
         function getUserID() {
-            $this->getWriteInfo();
             return parent::getUserID();
         }
         
         function getUserName() {
-            $this->getWriteInfo();
             return parent::getUserName();
         }
         
         function getNickName() {
-            $this->getWriteInfo();
             return parent::getNickName();
         }
 

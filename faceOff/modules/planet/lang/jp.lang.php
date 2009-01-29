@@ -56,7 +56,7 @@
     $lang->cmd_planet_addfavorite = "お気に入り追加";
 
     $lang->planet_hot_tag = "リアルタイム人気タグ";
-    $lang->planet_home = "TOP";
+    $lang->planet_home = "Planet TOP";
     $lang->cmd_planet_more_tag = "タグをもっと見る";
 
     $lang->planet_memo = "メモ";

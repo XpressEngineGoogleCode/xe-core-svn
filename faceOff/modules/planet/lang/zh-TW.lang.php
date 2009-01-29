@@ -55,7 +55,7 @@
     $lang->cmd_planet_addfavorite = "新增至最愛";
 
     $lang->planet_hot_tag = "熱門標籤";
-    $lang->planet_home = "首頁";
+    $lang->planet_home = "微型部落格首頁";
     $lang->cmd_planet_more_tag = "更多";
 
     $lang->planet_memo = "留言";
