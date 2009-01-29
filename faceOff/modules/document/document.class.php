@@ -82,6 +82,11 @@
             // 2008-12-15 문서 분류에 color를 추가
             if(!$oDB->isColumnExists("document_categories", "color")) return true;
 
+            /**
+             * 2009. 01. 29 : 확장변수 값 테이블에 lang_code가 없을 경우 추가
+             **/
+            if(!$oDB->isColumnExists("document_extra_vars","lang_code")) return true;
+
             return false;
         }
 
@@ -156,6 +161,11 @@
 
 
             if(!$oDB->isColumnExists("document_categories","color")) $oDB->addColumn('document_categories',"color","char",7);
+
+            /**
+             * 2009. 01. 29 : 확장변수 값 테이블에 lang_code가 없을 경우 추가
+             **/
+            if(!$oDB->isColumnExists("document_extra_vars","lang_code")) $oDB->addColumn('document_extra_vars',"lang_code","varchar",10);
 
             return new Object(0,'success_updated');
 
