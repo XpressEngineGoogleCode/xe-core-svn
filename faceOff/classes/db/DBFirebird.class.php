@@ -209,7 +209,7 @@
             return $string;
         }
 
-        function autoValueQuotes($string, $output){
+        function autoValueQuotes($string, $tables){
             $tok = strtok($string, ",");
             while($tok !== false) {
                 $values[] = $tok;
@@ -225,8 +225,9 @@
                     $tmpString2 = trim($tmpString2);
 
                     $isTable = false;
-                    foreach($output->tables as $key => $val) {
+                    foreach($tables as $key => $val) {
                         if($key == $tmpString1) $isTable = true;
+						if($val == $tmpString1) $isTable = true;
                     }
 
                     if($isTable) {
@@ -606,17 +607,17 @@
          **/
         function getCondition($output) {
             if(!$output->conditions) return;
-            $condition = $this->_getCondition($output->conditions,$output->column_type);
+            $condition = $this->_getCondition($output->conditions,$output->column_type,$output->tables);
             if($condition) $condition = ' where '.$condition;
             return $condition;
         }
 
-        function getLeftCondition($conditions,$column_type){
-            return $this->_getCondition($conditions,$column_type);
+        function getLeftCondition($conditions,$column_type,$tables){
+            return $this->_getCondition($conditions,$column_type,$tables);
         }
 
 
-        function _getCondition($conditions,$column_type) {
+        function _getCondition($conditions,$column_type,$tables) {
             $condition = '';
             foreach($conditions as $val) {
                 $sub_condition = '';
@@ -635,7 +636,7 @@
                     if(!$value) $value = $v['value'];
 
                     $name = $this->autoQuotes($name);
-                    $value = $this->autoValueQuotes($value, $output);
+                    $value = $this->autoValueQuotes($value, $tables);
 
                     $str = $this->getConditionPart($name, $value, $operation);
                     if($sub_condition) $sub_condition .= ' '.$pipe.' ';
@@ -646,6 +647,7 @@
                     $condition .= '('.$sub_condition.')';
                 }
             }
+
             return $condition;
         }
 
@@ -777,7 +779,7 @@
             $left_tables= (array)$output->left_tables;
 
             foreach($left_tables as $key => $val) {
-                $condition = $this->_getCondition($output->left_conditions[$key],$output->column_type);
+                $condition = $this->getLeftCondition($output->left_conditions[$key],$output->column_type,$output->tables);
                 if($condition){
                     $left_join[] = $val . ' "'.$this->prefix.$output->_tables[$key].'" as '.$key  . ' on (' . $condition . ')';
                 }
