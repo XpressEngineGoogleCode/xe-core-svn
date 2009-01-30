@@ -30,7 +30,7 @@ RewriteRule ^atom/([[:digit:]]+)$ ./index.php?module=rss&act=atom&page=$1 [L]
 RewriteRule ^atom$ ./index.php?module=rss&act=atom [L]
 
 # administrator page
-RewriteRule ^admin$ ./index.php?module=admin [L]
+RewriteRule ^admin/?$ ./index.php?module=admin [L]
 
 # mid + act 
 RewriteRule ^([a-zA-Z0-9_]+)/api$ ./index.php?mid=$1&act=api [L]
