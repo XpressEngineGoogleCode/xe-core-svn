@@ -1,6 +1,6 @@
 <?php
 /**
- * @author haojilin
+ * @author royallin
  **/
 $lang->code_type = '語法類型';
 
