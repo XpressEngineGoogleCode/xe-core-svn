@@ -32,6 +32,9 @@
             // 2007. 10. 17 모듈이 삭제될때 등록된 글도 모두 삭제하는 트리거 추가
             $oModuleController->insertTrigger('module.deleteModule', 'document', 'controller', 'triggerDeleteModuleDocuments', 'after');
 
+            // 2009. 01. 29 Added a trigger for additional setup
+            $oModuleController->insertTrigger('module.dispAdditionSetup', 'document', 'view', 'triggerDispDocumentAdditionSetup', 'before');
+
             return new Object();
         }
 
@@ -86,6 +89,8 @@
              * 2009. 01. 29 : 확장변수 값 테이블에 lang_code가 없을 경우 추가
              **/
             if(!$oDB->isColumnExists("document_extra_vars","lang_code")) return true;
+
+            if(!$oModuleModel->getTrigger('module.dispAdditionSetup', 'document', 'view', 'triggerDispDocumentAdditionSetup', 'before')) return true;
 
             return false;
         }
@@ -166,6 +171,11 @@
              * 2009. 01. 29 : 확장변수 값 테이블에 lang_code가 없을 경우 추가
              **/
             if(!$oDB->isColumnExists("document_extra_vars","lang_code")) $oDB->addColumn('document_extra_vars',"lang_code","varchar",10);
+
+            // 2009. 01. 29 Added a trigger for additional setup
+            if(!$oModuleModel->getTrigger('module.dispAdditionSetup', 'document', 'view', 'triggerDispDocumentAdditionSetup', 'before')) 
+                $oModuleController->insertTrigger('module.dispAdditionSetup', 'document', 'view', 'triggerDispDocumentAdditionSetup', 'before');
+
 
             return new Object(0,'success_updated');
 

@@ -63,6 +63,15 @@
             executeQuery("document.deleteAlias", $args);
         }
 
+        function deleteDocumentHistory($history_srl, $document_srl, $module_srl)
+        {
+            $args->history_srl = $history_srl;
+            $args->module_srl = $module_srl;
+            $args->document_srl = $document_srl;
+            if(!$args->history_srl && !$args->module_srl && !$args->document_srl) return;
+            executeQuery("document.deleteHistory", $args);
+        }
+
         /**
          * @brief 모듈이 삭제될때 등록된 모든 글을 삭제하는 trigger
          **/
@@ -83,7 +92,11 @@
             // 확장변수 삭제
             $this->deleteDocumentExtraVars($module_srl);
 
+            // remove aliases
             $this->deleteDocumentAliasByModule($module_srl);
+
+            // remove histories
+            $this->deleteDocumentHistory(null, null, $module_srl);
 
             return new Object();
         }
@@ -222,6 +235,25 @@
             $oDB = &DB::getInstance();
             $oDB->begin();
 
+            $oModuleModel = &getModel('module');
+            $module_srl = $source_obj->get('module_srl');
+            $document_config = $oModuleModel->getModulePartConfig('document', $module_srl);
+            if(!isset($document_config->use_history)) $document_config->use_history = 'N';
+            $bUseHistory = $document_config->use_history == 'Y';
+
+            if($bUseHistory)
+            {
+                $args->history_srl = getNextSequence();
+                $args->document_srl = $obj->document_srl;
+                $args->module_srl = $module_srl;
+                $args->content = $source_obj->get('content');
+                $args->nick_name = $source_obj->get('nick_name');
+                $args->member_srl = $source_obj->get('member_srl');
+                $args->regdate = $source_obj->get('last_update');
+                $args->ipaddress = $source_obj->get('ipaddress');
+                $output = executeQuery("document.insertHistory", $args);
+            }
+
             // 기본 변수들 정리
             if($obj->is_secret!='Y') $obj->is_secret = 'N';
             if($obj->allow_comment!='Y') $obj->allow_comment = 'N';
@@ -253,10 +285,10 @@
             // 비밀번호가 있으면 md5 hash
             if($obj->password) $obj->password = md5($obj->password);
 
-            // 원본 작성인과 수정하려는 수정인이 동일할 시에 로그인 회원의 정보를 입력
+            // 원본 작성인과 수정하려는 수정인이 동일할 시에 또는 History를 사용하면 로그인된 사용자 정보를 입력
             if(Context::get('is_logged')) {
                 $logged_info = Context::get('logged_info');
-                if($source_obj->get('member_srl')==$logged_info->member_srl) {
+                if($source_obj->get('member_srl')==$logged_info->member_srl || $bUseHistory) {
                     $obj->member_srl = $logged_info->member_srl;
                     $obj->user_name = $logged_info->user_name;
                     $obj->nick_name = $logged_info->nick_name;
@@ -366,6 +398,8 @@
             }
 
             $this->deleteDocumentAliasByDocument($document_srl);
+
+            $this->deleteDocumentHistory(null, $document_srl, null);
 
             // 카테고리가 있으면 카테고리 정보 변경
             if($oDocument->get('category_srl')) $this->updateCategoryCount($oDocument->get('module_srl'),$oDocument->get('category_srl'));
@@ -1258,6 +1292,26 @@
             $_SESSION['document_management'] = array();
 
             $this->setMessage($msg_code);
+        }
+
+        function procDocumentInsertModuleConfig()
+        {
+            $module_srl = Context::get('target_module_srl');
+            if(preg_match('/^([0-9,]+)$/',$module_srl)) $module_srl = explode(',',$module_srl);
+            else $module_srl = array($module_srl);
+
+            $document_config = null;
+            $document_config->use_history = Context::get('use_history');
+            if(!$document_config->use_history) $document_config->user_history = 'N';
+
+            $oModuleController = &getController('module');
+            for($i=0;$i<count($module_srl);$i++) {
+                $srl = trim($module_srl[$i]);
+                if(!$srl) continue;
+                $output = $oModuleController->insertModulePartConfig('document',$srl,$document_config);
+            }
+            $this->setError(-1);
+            $this->setMessage('success_updated');
         }
 
     }

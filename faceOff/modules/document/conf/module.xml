@@ -20,6 +20,7 @@
         <action name="procDocumentDeclare" type="controller" standalone="true" />
         <action name="procDocumentAddCart" type="controller" standalone="true" />
         <action name="procDocumentManageCheckedDocument" type="controller" standalone="true" />
+        <action name="procDocumentInsertModuleConfig" type="controller" standalone="true" />
 
         <action name="dispDocumentAdminList" type="view" admin_index="true" standalone="true" />
         <action name="dispDocumentAdminConfig" type="view" standalone="true" />

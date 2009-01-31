@@ -97,5 +97,28 @@
             $this->setTemplateFile('checked_list');
         }
 
+        function triggerDispDocumentAdditionSetup(&$obj) {
+            $current_module_srl = Context::get('module_srl');
+            $current_module_srls = Context::get('module_srls');
+
+            if(!$current_module_srl && !$current_module_srls) {
+                // 선택된 모듈의 정보를 가져옴
+                $current_module_info = Context::get('current_module_info');
+                $current_module_srl = $current_module_info->module_srl;
+                if(!$current_module_srl) return new Object();
+            }
+
+            $oModuleModel = &getModel('module');
+            $document_config = $oModuleModel->getModulePartConfig('document', $module_srl);
+            if(!isset($document_config->use_history)) $document_config->use_history = 'N';
+            Context::set('document_config', $document_config);
+
+            $oTemplate = &TemplateHandler::getInstance();
+            $tpl = $oTemplate->compile($this->module_path.'tpl', 'document_module_config');
+            $obj .= $tpl;
+            
+            return new Object();
+        }
+
     }
 ?>
