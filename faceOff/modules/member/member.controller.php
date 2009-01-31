@@ -129,7 +129,7 @@
 
         function doOpenIDValidate($openid) {
             // use the JanRain php-openid library 
-            ini_set('include_path', ini_get('include_path').':./modules/member/php-openid-1.2.3');
+            ini_set('include_path', ini_get('include_path').':'._XE_PATH_.'modules/member/php-openid-1.2.3');
             require_once('Auth/OpenID/URINorm.php');
 
             $oModuleModel = &getModel('module');
