@@ -66,6 +66,22 @@
     <!--@end-->
     </table>
 
+    <!--@if($member_config->enable_openid=="Y")-->
+    <!--@if(sizeof($openids) > 0)-->
+    <table cellspacing="0" class="memberInfoTable">
+    <col width="140" />
+    <col />
+    <caption>{$lang->openid} </caption>
+    <!--@foreach($openids as $openid)-->
+    <tr>
+        <th> {$lang->openid} </th>
+        <td> <a href="{$openid->bookmarklet}">{$openid->openid}</a> </td>
+    </tr>
+    <!--@end-->
+    </table>
+    <!--@end-->
+    <!--@end-->
+
     <!--@if($extend_form_list)-->
     <table cellspacing="0" class="memberInfoTable">
     <col width="140" />

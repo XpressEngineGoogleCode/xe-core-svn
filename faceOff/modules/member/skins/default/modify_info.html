@@ -16,6 +16,11 @@
     <!--%import("filter/delete_image_mark.xml")-->
 <!--@end-->
 
+<!--@if($member_config->enable_openid=="Y")-->
+    <!--%import("filter/add_openid_to_member.xml")-->
+    <!--%import("filter/delete_openid_from_member.xml")-->
+<!--@end-->
+
 <!--// datepicker javascript plugin load -->
 <!--%load_js_plugin("ui.datepicker")-->
 
@@ -234,11 +239,35 @@
     </table>
     <!--@end-->
 
+    <!--@if($member_config->enable_openid=="Y")-->
+    <table cellspacing="0" class="memberInfoTable">
+    <col width="130" />
+    <col width="200" />
+    <col />
+    <caption>{$lang->openid}</caption>
+    <!--@foreach($openids as $openid)-->
+    <tr>
+        <th> {$lang->openid} </th>
+        <td> <a href="{$openid->bookmarklet}">{$openid->openid}</a> </td>
+        <td> <a onclick="doDeleteOpenIDFromMember('{$openid->openid}')" class="button"><span>{$lang->cmd_delete}</span></a> </td>
+    </tr>
+    <!--@end-->
+    <tr>
+        <th> {$lang->add_openid} </th>
+        <td> 
+        <input name="openid" type="text" class="openid_user_id" />  
+        <input name="openid_to_delete" type="hidden" />
+        </td>
+        <td> <a onclick="doAddOpenIDToMember()" class="button"><span>{$lang->cmd_insert}</span></a> </td>
+    </tr>
+    </table>
+    <!--@end-->
     <div class="tRight">
         <span class="button"><input type="submit" value="{$lang->cmd_registration}" accesskey="s" /></span>
         <a href="{getUrl('act','dispMemberInfo','member_srl','')}" class="button"><span>{$lang->cmd_cancel}</span></a>
     </div>
 </form>
+
 
 <script type="text/javascript">
 (function($){

@@ -126,6 +126,8 @@ fieldset { border:0; margin:0; }
 /* 아이디, 이름, 이메일 주소 중복 체크후 중복되면 출력되는 메세지의 className */
 .memberInfoTable td .checkValue { margin-top:5px; font-weight:bold; color:#444444; }
 
+.memberInfoTable .openid_user_id { background: url(../images/openid_input_bg.gif) left no-repeat; background-color: #ffffff; background-position: 0 50%; padding:3px 3px 3px 18px; border:1px solid; border-color:#a6a6a6 #d8d8d8 #d8d8d8 #a6a6a6; line-height:1em; vertical-align:middle; color:#666666; width:120px;}
+
 /* modify/ insert member info */
 .memberImage { clear:both; }
 .memberImage .info { margin-bottom:1.5em; float:left; margin-right:1em;}
