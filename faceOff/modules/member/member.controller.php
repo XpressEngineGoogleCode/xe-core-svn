@@ -128,17 +128,16 @@
         }
 
         function doOpenIDValidate($openid) {
-            // use the JanRain php-openid library 
-            ini_set('include_path', ini_get('include_path').':'._XE_PATH_.'modules/member/php-openid-1.2.3');
-            require_once('Auth/OpenID/URINorm.php');
+            // use the JanRain php-openid library
+            require_once($this->module_path.'php-openid-1.2.3/Auth/OpenID/URINorm.php');
 
             $oModuleModel = &getModel('module');
             $config = $oModuleModel->getModuleConfig('member');
             if($config->enable_openid != 'Y') $this->stop('msg_invalid_request');
 
             ob_start();
-            require('./modules/member/openid_lib/class.openid.php');
-            require_once('./modules/member/openid_lib/libcurlemu.inc.php');
+            require($this->module_path.'openid_lib/class.openid.php');
+            require_once($this->module_path.'openid_lib/libcurlemu.inc.php');
 
             $openid_ctx = new SimpleOpenID;
 
