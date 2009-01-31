@@ -58,7 +58,8 @@
 
             Context::set('member_info', $member_info);
             Context::set('extend_form_list', $oMemberModel->getCombineJoinForm($member_info));
-            Context::set('openids', $oMemberModel->getMemberOpenIDByMemberSrl($member_srl));
+            if ($member_info->member_srl == $logged_info->member_srl)
+                Context::set('openids', $oMemberModel->getMemberOpenIDByMemberSrl($member_srl));
 
             $this->setTemplateFile('member_info');
         }
