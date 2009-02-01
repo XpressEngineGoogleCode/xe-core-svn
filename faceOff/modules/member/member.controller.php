@@ -260,7 +260,7 @@
 
             if ($openid_validation_result == true) {
                 $logged_info = Context::get('logged_info');
-                if (!$logged_info->member_srl) return $this->stop('msg_not_permitted');
+                if (!Context::get('is_logged')) return $this->stop('msg_not_logged');
 
                 $member_srl = $logged_info->member_srl;
 
@@ -296,9 +296,9 @@
             $arg->openid = $openid_identity;
             $result = executeQuery('member.getMemberSrlByOpenID', $arg);
 
-            if (!$logged_info->member_srl) {
+            if (!Context::get('is_logged')) {
                 $this->setError(-1);
-                $this->setMessage('msg_not_permitted');
+                $this->setMessage('msg_not_logged');
                 return;
             } else if (!$result->data || is_array($result->data)) {
                 $this->setError(-1);
