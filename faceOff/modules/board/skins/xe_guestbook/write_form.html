@@ -1,5 +1,7 @@
 <!--@if($act=="dispBoardWrite")-->
     <!--#include("header.html")-->
+<!--@else-->
+    <!--%import("filter/insert.xml")-->
 <!--@end-->
 
 <form action="./" method="post" onsubmit="return procFilter(this, window.insert)" id="fo_write">
