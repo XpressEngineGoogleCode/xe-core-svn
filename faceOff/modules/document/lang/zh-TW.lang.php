@@ -40,7 +40,7 @@
     $lang->msg_is_secret = '秘密！';
     $lang->msg_checked_document_is_deleted = '刪除了%d個文章。';
 
-    // 管理頁面尋找的對象
+    // 管理頁面搜尋的目標
     $lang->search_target_list = array(
         'title' => '標題',
         'content' => '內容',
@@ -63,6 +63,6 @@
         'ipaddress' => 'IP位址',
     );
     $lang->alias = "別名";
-    $lang->history = "히스토리";
+    $lang->history = "歷史紀錄";
     $lang->about_use_history = "히스토리 기능의 사용여부를 지정합니다. 히스토리 기능을 사용할 경우 문서 수정시 이전 리비전을 기록하고 복원할 수 있습니다.";
 ?>

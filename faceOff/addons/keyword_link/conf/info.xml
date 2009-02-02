@@ -37,8 +37,8 @@
             <title xml:lang="jp">cssquery</title>
             <description xml:lang="ko">치환할 부분의 jQuery cssquery입니다.
             xe_board 게시판 스킨이면 공백으로 두면 됩니다.</description>
-            <description xml:lang="zh-TW">치환할 부분의 jQuery cssquery입니다.
-            xe_board 게시판 스킨이면 공백으로 두면 됩니다.</description>
+            <description xml:lang="zh-TW">jQuery cssquery可置換的部份。
+            如果是使用xe_board討論板面板，請留白。</description>
             <description xml:lang="jp">置き換える部分のjQuery cssqueryです。
             xe_board掲示板スキンの場合、空白にして下さい。</description>
         </var>
@@ -52,7 +52,8 @@
             <description xml:lang="zh-TW"> 키워드가 여러개 있을때 "첫번째 키워드"에만 링크를 걸 것인지 "모든 키워드"에 걸 것인지 선택합니다.
             </description>
             <description xml:lang="jp"> 複数のキーワードの場合、"最初のキーワード"のみ、もしくは "全てのキーワード"にリンクを貼りつけるかを選択します。
-            </description>            <options value="">
+            </description>
+            <options value="">
                 <title xml:lang="ko">첫번째 키워드</title>
                 <title xml:lang="zh-TW">第一關鍵字</title>
                 <title xml:lang="jp">最初のキーワード</title>

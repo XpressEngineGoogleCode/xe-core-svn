@@ -86,7 +86,7 @@
 			<name xml:lang="zh-CN">중복 허용</name>
 			<name xml:lang="en">중복 허용</name>
 			<name xml:lang="ru">중복 허용</name>
-			<name xml:lang="zh-TW">중복 허용</name>
+			<name xml:lang="zh-TW">是否重複</name>
 			<description xml:lang="ko">Y로 하시면 플래닛 멤버들의 중복을 검사하지 않고 무조건 최신순으로 글을 추출하여 출력합니다</description>
 			<description xml:lang="jp">Y로 하시면 플래닛 멤버들의 중복을 검사하지 않고 무조건 최신순으로 글을 추출하여 출력합니다</description>
 			<description xml:lang="zh-CN">Y로 하시면 플래닛 멤버들의 중복을 검사하지 않고 무조건 최신순으로 글을 추출하여 출력합니다</description>
@@ -100,7 +100,7 @@
 				<name xml:lang="jp">중복하지 않음</name>
 				<name xml:lang="zh-CN">중복하지 않음</name>
 				<name xml:lang="es">중복하지 않음</name>
-				<name xml:lang="zh-TW">중복하지 않음</name>
+				<name xml:lang="zh-TW">不重複</name>
 			</options>
 			<options>
 				<value>Y</value>
@@ -109,7 +109,7 @@
 				<name xml:lang="jp">중복 허용</name>
 				<name xml:lang="zh-CN">중복 허용</name>
 				<name xml:lang="es">중복 허용</name>
-				<name xml:lang="zh-TW">중복 허용</name>
+				<name xml:lang="zh-TW">可重複</name>
 			</options>
 		</var>
 	</extra_vars>
