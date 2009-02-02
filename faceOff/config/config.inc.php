@@ -22,6 +22,16 @@
 
     /**
      * @brief 기본 설정에 우선하는 사용자 설정 파일
+     * config/config.user.inc.php 파일에 아래 내용을 저장하면 됨
+     * <?php 
+     * define('__DEBUG__', 0);
+     * define('__DEBUG_OUTPUT__', 0);
+     * define('__DEBUG_PROTECT__', 1);
+     * define('__DEBUG_PROTECT_IP__', '127.0.0.1');
+     * define('__DEBUG_DB_OUTPUT__', 0);
+     * define('__LOG_SLOW_QUERY__', 0);
+     * define('__OB_GZHANDLER_ENABLE__', 1);
+     * ?>
      */
     if(file_exists(_XE_PATH_.'config/config.user.inc.php')) {
         require _XE_PATH_.'config/config.user.inc.php';
@@ -74,8 +84,6 @@
      * 대부분의 서버에서는 문제가 없는데 특정 서버군에서 압축전송시 IE에서 오동작을 일으키는경우가 있음
      **/
     if(!defined('__OB_GZHANDLER_ENABLE__')) define('__OB_GZHANDLER_ENABLE__', 1);
-
-
 
     /**
      * @brief Firebug 콘솔 출력 사용시 관련 파일 require
