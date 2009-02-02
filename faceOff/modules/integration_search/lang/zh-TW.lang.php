@@ -12,6 +12,7 @@
     $lang->about_sample_code = "將上述原始碼插入到相對應版面當中，即可實現搜尋功能。";
 
     $lang->is_result_text = "符合<strong>'%s'</strong>的搜尋結果，約有<strong>%d</strong>項";
+    $lang->multimedia = "Images/ Movies";
 
     $lang->is_search_option = array(
         'title' => '標題',

@@ -13,6 +13,7 @@
     $lang->msg_no_keyword = "Please input keyword to search";
 
     $lang->is_result_text = "There are <strong>%d</strong> result(s) for <strong>'%s'</strong>";
+    $lang->multimedia = "Images/ Movies";
 
     $lang->is_search_option = array(
         'title' => 'Subject',

@@ -12,6 +12,7 @@
     $lang->about_sample_code = "可把上述代码插入到相应布局当中即可实现搜索功能。";
 
     $lang->is_result_text = "符合<strong>'%s'</strong>的搜索结果约有<strong>%d</strong>项";
+    $lang->multimedia = "Images/ Movies";
 
     $lang->is_search_option = array(
         'title' => '标题',

@@ -13,6 +13,7 @@
     $lang->msg_no_keyword = "Введите ключевое слово для поиска";
 
     $lang->is_result_text = "<strong>%d</strong> результатов для <strong>'%s'</strong>";
+    $lang->multimedia = "Images/ Movies";
 
     $lang->is_search_option = array(
         'title' => 'Тема',

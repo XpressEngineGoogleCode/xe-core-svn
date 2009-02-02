@@ -1,0 +1,74 @@
+@charset "utf-8";
+#spot .search * { vertical-align:middle;}
+#spot .search .inputText { border:4px solid #b6b6b6; padding:2px; width:252px; font-size:16px; font-weight:bold; }
+
+.tabBox { border-bottom:1px solid #DEDEDE; height:27px; z-index:1; margin-top:15px; }
+.tabBox a { text-decoration:none; color:#666666; }
+.tabBox .tab { position:relative; top:1px; border:1px solid #DEDEDE; margin-right:4px; float:left; cursor:pointer;  background-color:#FFFFFF; z-index:2; height:25px; }
+.tabBox .tab div { float:left; height:15px; font-size:9pt; padding:5px 8px 0 8px; color:#666666; }
+.tabBox .tab div a { color:#666666; }
+.tabBox .on { position:relative; top:1px; border:1px solid #DEDEDE; border-bottom:1px solid #FFFFFF; margin-right:4px; float:left; cursor:pointer;  background-color:#FFFFFF; z-index:2; height:25px; }
+.tabBox .on div { float:left; height:15px; font-size:9pt; padding:5px 8px 0 8px; color:#000000; }
+.tabBox .on div a { color:#000000; }
+
+strong.noKeyword { font-size:16px; display:block; margin:50px 0 0 30px; }
+
+h3.subTitle { font-size:12px; padding:15px 0 0 0; margin:0 0 10px 0; clear:both; }
+h3.subTitle span { font-weight:normal; }
+
+.searchResult { margin:10px 0 0 20px; padding:0;}
+.searchResult li { width:100%; margin-bottom:15px; clear:both; overflow:hidden;list-style:none; }
+.searchResult li .thumb { display:block; float:left; margin-right:14px; padding:1px; border:1px solid #DDD;}
+.searchResult li dl { margin:0; padding:0; }
+.searchResult li dl dt { padding:0; margin:0; color:#d8d8d8; margin-bottom:1px;}
+.searchResult li dl dt a { color:#1a3588; text-decoration:underline;}
+.searchResult.comment li dl dt a { color:#444444; text-decoration:none;}
+.searchResult.comment li dl dt a:hover { text-decoration:underline;}
+.searchResult li dl dt .reply { color:#fe6700; font:.9em Tahoma;}
+.searchResult li dl dt .reply em { color:#fe6700; font:bold 1em Tahoma;}
+.searchResult li dl dt .category { color:#818181;}
+.searchResult li dl dt .category a { color:#818181; border:none; text-decoration:none;}
+.searchResult li dl dd { padding:0; margin:0; line-height:18px; color:#555555; margin-bottom:4px;}
+.searchResult li address { color:#d8d8d8; font-size:11px;}
+.searchResult li address strong { color:#3e3e3e; font-size:1em; font-weight:normal;}
+.searchResult li address img { vertical-align:middle; margin-right:2px;}
+.searchResult li address .time { color:#818181; font:.8em Tahoma;}
+.searchResult li address .read { font:11px "돋움", Dotum, "굴림", Gulim, AppleGothic, Sans-serif; color:#818181;}
+.searchResult li address .readNum { color:#818181; font:.8em Tahoma;}
+.searchResult li address .recom { font:11px "돋움", Dotum, "굴림", Gulim, AppleGothic, Sans-serif; color:#818181;}
+.searchResult li address .recomNum { color:#fe6700; font:bold .8em Tahoma;}
+
+.searchImageResult { margin:10px 0 0 20px; padding:0; }
+.searchImageResult li { width:124px; padding:0; margin:0 20px 15px 0; list-style:none;  display:inline-block; overflow:hidden; *zoom:1;}
+.searchImageResult li img { display:block; margin-bottom:10px; padding:1px; border:1px solid #DDD;}
+.searchImageResult li dl { margin:0; padding:0; }
+.searchImageResult li dl dt { padding:0; margin:0; color:#d8d8d8; margin-bottom:1px;}
+.searchImageResult li dl dt a { color:#1a3588; text-decoration:underline;}
+.searchImageResult li address .time { color:#818181; font:.8em Tahoma;}
+
+div.isMore { text-align:right; margin-bottom:10px;}
+div.isMore a { text-decoration:none; }
+
+/* Pagination Reset */
+.pagination{ padding:15px 0; margin:0; text-align:center;}
+.pagination *{ margin:0; padding:0;}
+.pagination img{ border:0;}
+.pagination a,
+.pagination strong{ position:relative; display:inline-block; text-decoration:none; line-height:normal; color:#333; font-family:Tahoma, Sans-serif; vertical-align:middle;}
+.pagination a:hover,
+.pagination a:active,
+.pagination a:focus{ background-color:#f4f4f4 !important; }
+.pagination strong{ color:#ff6600 !important;}
+.pagination a.prev,
+.pagination a.prevEnd,
+.pagination a.next,
+.pagination a.nextEnd{ font-weight:normal !important; border:none !important; margin:0 !important; white-space:nowrap; }
+
+/* Pagination A1 */
+.pagination.a1 a,
+.pagination.a1 strong{ margin:0 -4px; padding:1px 10px 1px 8px; border:none; border-left:1px solid #ccc; border-right:1px solid #ddd; font-weight:bold; font-size:12px; background:#fff;}
+.pagination.a1 a.prev{ padding-left:10px; background:#fff url(images/white/arrowPrevA1.gif) no-repeat left center; }
+.pagination.a1 a.prevEnd{ padding-left:15px; background:#fff url(images/white/arrowPrevEndA1.gif) no-repeat left center; }
+.pagination.a1 a.next{ padding-right:10px; background:#fff url(images/white/arrowNextA1.gif) no-repeat right center; }
+.pagination.a1 a.nextEnd{ padding-right:15px; background:#fff url(images/white/arrowNextEndA1.gif) no-repeat right center; }
+

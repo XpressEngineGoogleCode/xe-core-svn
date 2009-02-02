@@ -13,6 +13,7 @@
     $lang->msg_no_keyword = "검색어를 입력해주세요";
 
     $lang->is_result_text = "<strong>'%s'</strong> 에 대한 검색결과 <strong>%d</strong>건";
+    $lang->multimedia = "이미지/동영상";
 
     $lang->is_search_option = array(
         'title' => '제목',
