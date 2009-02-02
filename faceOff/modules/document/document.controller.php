@@ -994,9 +994,11 @@
                 '} else { '.
                     '$is_admin = false; '.
                     '$group_srsl = array(); '.
-                '} ';
+                '} '."\n";
 
             // xml 캐시 파일 생성 (xml캐시는 따로 동작하기에 session 지정을 해주어야 함)
+            $xml_header_buff = '';
+            $xml_body_buff = $this->getXmlTree($tree[0], $tree, $module_info->site_srl, $xml_header_buff);
             $xml_buff = sprintf(
                 '<?php '.
                 'define(\'__ZBXE__\', true); '.
@@ -1010,14 +1012,16 @@
                 'header("Cache-Control: post-check=0, pre-check=0", false); '.
                 'header("Pragma: no-cache"); '.
                 '%s'.
+                '%s'.
                 '?>'.
                 '<root>%s</root>', 
                 $header_script,
-                $this->getXmlTree($tree[0], $tree)
+                $xml_header_buff,
+                $xml_body_buff
             );
 
             // php 캐시 파일 생성
-            $php_output = $this->getPhpCacheCode($tree[0], $tree, 0);
+            $php_output = $this->getPhpCacheCode($tree[0], $tree, $module_info->site_srl, $php_header_buff);
             $php_buff = sprintf(
                 '<?php '.
                 'if(!defined("__ZBXE__")) exit(); '.
@@ -1026,7 +1030,7 @@
                 '$menu->list = array(%s); '.
                 '?>', 
                 $header_script,
-                $php_output['category_title_str'], 
+                $php_header_buff,
                 $php_output['buff']
             );
 
@@ -1041,17 +1045,16 @@
          * 메뉴 xml파일은 node라는 tag가 중첩으로 사용되며 이 xml doc으로 관리자 페이지에서 메뉴를 구성해줌\n
          * (tree_menu.js 에서 xml파일을 바로 읽고 tree menu를 구현)
          **/
-        function getXmlTree($source_node, $tree) {
+        function getXmlTree($source_node, $tree, $site_srl, &$xml_header_buff) {
             if(!$source_node) return;
-
+            
             foreach($source_node as $category_srl => $node) {
                 $child_buff = "";
 
                 // 자식 노드의 데이터 가져옴
-                if($category_srl && $tree[$category_srl]) $child_buff = $this->getXmlTree($tree[$category_srl], $tree);
+                if($category_srl && $tree[$category_srl]) $child_buff = $this->getXmlTree($tree[$category_srl], $tree, $site_srl, $xml_header_buff);
 
                 // 변수 정리
-                $title = str_replace(array('&','"','<','>'),array('&amp;','&quot;','&lt;','&gt;'),$node->title);
                 $expand = $node->expand;
                 $group_srls = $node->group_srls;
                 $mid = $node->mid;
@@ -1062,15 +1065,21 @@
                 if($group_srls) $group_check_code = sprintf('($is_admin==true||(is_array($group_srls)&&count(array_intersect($group_srls, array(%s)))))',$group_srls);
                 else $group_check_code = "true";
 
+                $title = $node->title;
+                $oModuleAdminModel = &getAdminModel('module');
+                if(substr($title,0,1)=='$') $langs = $oModuleAdminModel->getLangCode($site_srl, substr($title,1));
+                else $langs = $oModuleAdminModel->getLangCode($site_srl, substr($title,1), false);
+                if(count($langs)) foreach($langs as $key => $val) $xml_header_buff .= sprintf('$_titles[%d]["%s"] = "%s"; ', $category_srl, $key, str_replace('"','\\"',$val));
+
                 $attribute = sprintf(
-                        'mid="%s" module_srl="%d" node_srl="%d" parent_srl="%d" category_srl="%d" text="<?php echo (%s?"%s":"")?>" url="%s" expand="%s" color="%s" document_count="%d" ',
+                        'mid="%s" module_srl="%d" node_srl="%d" parent_srl="%d" category_srl="%d" text="<?php echo (%s?($_titles[%d][$lang_type]):"")?>" url="%s" expand="%s" color="%s" document_count="%d" ',
                         $mid,
                         $module_srl,
                         $category_srl,
                         $parent_srl,
                         $category_srl,
                         $group_check_code,
-                        $title,
+                        $category_srl,
                         getUrl('','mid',$node->mid,'category',$category_srl),
                         $expand,
                         $color,
@@ -1089,7 +1098,7 @@
          * php로 된 캐시파일을 만들어서 db이용없이 바로 메뉴 정보를 구할 수 있도록 한다
          * 이 캐시는 ModuleHandler::displayContent() 에서 include하여 Context::set() 한다
          **/
-        function getPhpCacheCode($source_node, $tree) {
+        function getPhpCacheCode($source_node, $tree, $site_srl, &$php_header_buff) {
             $output = array("buff"=>"", "category_srl_list"=>array());
             if(!$source_node) return $output;
 
@@ -1097,11 +1106,8 @@
             foreach($source_node as $category_srl => $node) {
 
                 // 자식 노드가 있으면 자식 노드의 데이터를 먼저 얻어옴 
-                if($category_srl&&$tree[$category_srl]) $child_output = $this->getPhpCacheCode($tree[$category_srl], $tree);
+                if($category_srl&&$tree[$category_srl]) $child_output = $this->getPhpCacheCode($tree[$category_srl], $tree, $site_srl, $php_header_buff);
                 else $child_output = array("buff"=>"", "category_srl_list"=>array());
-
-                // 변수 정리 
-                $category_title_str = sprintf('$_category_title[%d] = "%s"; %s', $node->category_srl, $node->title, $child_output['category_title_str']);
 
                 // 현재 노드의 url값이 공란이 아니라면 category_srl_list 배열값에 입력
                 $child_output['category_srl_list'][] = $node->category_srl;
@@ -1116,9 +1122,15 @@
                 $child_buff = $child_output['buff'];
                 $expand = $node->expand;
 
+                $title = $node->title;
+                $oModuleAdminModel = &getAdminModel('module');
+                if(substr($title,0,1)=='$') $langs = $oModuleAdminModel->getLangCode($site_srl, substr($title,1));
+                else $langs = $oModuleAdminModel->getLangCode($site_srl, substr($title,1), false);
+                if(count($langs)) foreach($langs as $key => $val) $php_header_buff .= sprintf('$_titles[%d]["%s"] = "%s"; ', $category_srl, $key, str_replace('"','\\"',$val));
+
                 // 속성을 생성한다 ( category_srl_list를 이용해서 선택된 메뉴의 노드에 속하는지를 검사한다. 꽁수지만 빠르고 강력하다고 생각;;)
                 $attribute = sprintf(
-                    '"mid" => "%s", "module_srl" => "%d","node_srl"=>"%s","category_srl"=>"%s","parent_srl"=>"%s","text"=>$_category_title[%d],"selected"=>(in_array(Context::get("category"),array(%s))?1:0),"expand"=>"%s","color"=>"%s", "list"=>array(%s),"document_count"=>"%d","grant"=>%s?true:false',
+                    '"mid" => "%s", "module_srl" => "%d","node_srl"=>"%s","category_srl"=>"%s","parent_srl"=>"%s","text"=>$_titles[%d][$lang_type],"selected"=>(in_array(Context::get("category"),array(%s))?1:0),"expand"=>"%s","color"=>"%s", "list"=>array(%s),"document_count"=>"%d","grant"=>%s?true:false',
                     $node->mid,
                     $node->module_srl,
                     $node->category_srl,
@@ -1135,7 +1147,6 @@
                 
                 // buff 데이터를 생성한다
                 $output['buff'] .=  sprintf('%s=>array(%s),', $node->category_srl, $attribute);
-                $output['category_title_str'] .= $category_title_str;
             }
             return $output;
         }

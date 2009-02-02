@@ -30,6 +30,7 @@
     $lang->bundle_setup = "일괄 기본 설정";
     $lang->bundle_addition_setup = "일괄 추가 설정";
     $lang->bundle_grant_setup = "일괄 권한 설정";
+    $lang->lang_code = "언어 코드";
     $lang->module_copy = "Копировать модуль";
 
     $lang->header_script = "헤더 스크립트";
@@ -50,6 +51,7 @@
     $lang->cmd_manage_skin = 'Управление скинами';
     $lang->cmd_manage_document = 'Управление статьями';
     $lang->cmd_find_module = '모듈 찾기';
+    $lang->cmd_find_langcode = 'Find lang code';
 
     $lang->msg_new_module = "Создать новый модуль";
     $lang->msg_update_module = "Изменить модуль";
@@ -79,4 +81,5 @@
 
 	$lang->about_extra_vars_default_value = 'Если нужно несколько значений по умолчанию, разделите их запятыми(,).';
     $lang->about_search_virtual_site = "가상 사이트(카페XE등)의 도메인을 입력하신 후 검색하세요.<br/>가상 사이트이외의 모듈은 내용을 비우고 검색하시면 됩니다.  (http:// 는 제외)";
+    $lang->about_langcode = "언어별로 다르게 설정하고 싶으시면 언어코드 찾기를 이용해주세요";
 ?>

@@ -126,5 +126,30 @@
             $oTemplate = &TemplateHandler::getInstance();
             return $oTemplate->compile($this->module_path.'tpl', 'skin_config');
         }
+
+        /**
+         * @brief 특정 언어 코드에 대한 값들을 가져오기
+         * lang_code를 직접 기입하면 해당 언어코드에 대해서만 가져오고 값이 없으면 $name을 그대로 return
+         **/
+        function getLangCode($site_srl, $name, $from_db = true) {
+            if($from_db) {
+                $args->site_srl = (int)$site_srl;
+                $args->name = $name;
+                $output = executeQueryArray('module.getLang', $args);
+
+                if($output->data) {
+                    foreach($output->data as $key => $val) {
+                        $selected_lang[$val->lang_code] = $val->value;
+                    }
+                }
+            }
+
+            $output = array();
+            $lang_supported = Context::get('lang_supported');
+            foreach($lang_supported as $key => $val) {
+                $output[$key] = $selected_lang[$key]?$selected_lang[$key]:$name;
+            }
+            return $output;
+        }
     }
 ?>

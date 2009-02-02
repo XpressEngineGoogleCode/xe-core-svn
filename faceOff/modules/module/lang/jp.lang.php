@@ -31,6 +31,7 @@
     $lang->bundle_setup = "일괄 기본 설정";
     $lang->bundle_addition_setup = "일괄 추가 설정";
     $lang->bundle_grant_setup = "일괄 권한 설정";
+    $lang->lang_code = "언어 코드";
 
     $lang->header_script = "ヘッダースクリプト";
     $lang->about_header_script = "HTMLの&lt;header&gt;と&lt;/header&gt;の間に入れるコードを直接入力できます。<br />&lt;script、&lt;styleまたは&lt;metaタグなどが利用できます";
@@ -50,6 +51,7 @@
     $lang->cmd_manage_skin = 'スキン管理';
     $lang->cmd_manage_document = '書き込み管理';
     $lang->cmd_find_module = '모듈 찾기';
+    $lang->cmd_find_langcode = 'Find lang code';
 
     $lang->msg_new_module = "モジュール作成";
     $lang->msg_update_module = "モジュール修正";
@@ -80,4 +82,5 @@
 
     $lang->about_extra_vars_default_value = '多重・単一選択などのデフォルト値が、複数必要な場合は、「, （コンマ）」で区切って追加することができます。';
     $lang->about_search_virtual_site = "가상 사이트(카페XE등)의 도메인을 입력하신 후 검색하세요.<br/>가상 사이트이외의 모듈은 내용을 비우고 검색하시면 됩니다.  (http:// 는 제외)";
+    $lang->about_langcode = "언어별로 다르게 설정하고 싶으시면 언어코드 찾기를 이용해주세요";
 ?>

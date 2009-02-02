@@ -194,5 +194,31 @@
             $this->setTemplateFile('module_grant_setup');
         }
 
+        /**
+         * @brief 언어 코드
+         **/
+        function dispModuleAdminLangcode() {
+            // 현재 사이트의 언어파일 가져오기
+            $site_module_info = Context::get('site_module_info');
+            $args->site_srl = (int)$site_module_info->site_srl;
+            $args->sort_index = 'name';
+            $args->order_type = 'asc';
+            $output = executeQueryArray('module.getLangList', $args);
+            Context::set('lang_list', $output->data);
+
+            // 현재 선택된 언어 가져오기
+            $name = Context::get('name');
+            if($name) {
+                $oModuleAdminModel = &getAdminModel('module');
+                Context::set('selected_lang', $oModuleAdminModel->getLangCode($args->site_srl,$name));
+            }
+
+            // 레이아웃을 팝업으로 지정
+            $this->setLayoutFile('popup_layout');
+
+            // 템플릿 파일 지정
+            $this->setTemplateFile('module_langcode');
+        }
+
     }
 ?>

@@ -73,41 +73,31 @@
             $node = $output->data;
             if($node->group_srls) $node->group_srls = explode(',',$node->group_srls);
             else $node->group_srls = array();
-
-            $node->name = $this->getMenuItemNames($node->name);
-
             return $node;
         }
 
         /**
          * @brief 다국어 지원을 위해 menu의 name을 언어별로 나눠서 return
          */
-        function getMenuItemNames($name) {
-            $lang_supported = Context::get('lang_supported');
+        function getMenuItemNames($source_name) {
+            $site_module_info = Context::get('site_module_info');
 
-            $source_name = $name;
-            $name = unserialize($name);
-
-            // unserialize한 값이 없으면, 즉 beta 0.2.3 이전 버전이라면 정해진 값을 모든 언어에 맞게 처리
-            if(!$name) {
-                $name = array();
-                foreach($lang_supported as $key => $val) {
-                    $name[$key] = $source_name;
-                }
-            // 값이 있다면 혹시나 빠진 부분의 언어가 있는지 체크
+            // 언어코드 구함
+            $oModuleAdminModel = &getAdminModel('module');
+            if(substr($source_name,0,1)=='$') {
+                $output = $oModuleAdminModel->getLangCode($site_module_info->site_srl, substr($source_name,1) );
             } else {
-                $values = array_values($name);
-                $title_name = '';
-                for($i=0;$i<count($values);$i++) {
-                    $title_name = trim($values[$i]);
-                    if($title_name) break;;
-                }
-                foreach($lang_supported as $key => $val) {
-                    if(!$name[$key]) $name[$key] = $title_name;
+                $name = unserialize($source_name);
+                if(!$name) {
+                    $output = $oModuleAdminModel->getLangcode($site_module_info->site_srl, $source_name, false);
+                } else {
+                    $output = array();
+                    $rand_name = array_shift(unserialize($source_name));
+                    $lang_supported = Context::get('lang_supported');
+                    foreach($lang_supported as $key => $val) $output[$key] = $name[$key]?$name[$key]:$rand_name;
                 }
             }
-
-            return $name;
+            return $output;
         }
 
         /**
@@ -144,14 +134,11 @@
                     $item_info->menu_item_srl = getNextSequence();
                 }
             }
-
             Context::set('item_info', $item_info);
 
             // template 파일을 직접 컴파일한후 tpl변수에 담아서 return한다.
             $oTemplate = &TemplateHandler::getInstance();
             $tpl = $oTemplate->compile($this->module_path.'tpl', 'menu_item_info');
-
-            // return 할 변수 설정
 
             $this->add('tpl', str_replace("\n"," ",$tpl));
         }

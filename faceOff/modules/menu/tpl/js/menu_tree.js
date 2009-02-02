@@ -129,7 +129,7 @@ function modifyNode(node_srl,e){
 
     jQuery.exec_json('menu.getMenuAdminTplInfo', params, function(data){
         jQuery('#menu_zone_info').html(data.tpl);
-        jQuery('#menu_zone_info').html(data.tpl).css("margin-top",e.pageY-400);
+        jQuery('#menu_zone_info').html(data.tpl).css("margin-top",e.pageY-350);
     });
 }
 
@@ -144,7 +144,7 @@ function addNode(node_srl,e){
             };
 
     jQuery.exec_json('menu.getMenuAdminTplInfo', params, function(data){
-        jQuery('#menu_zone_info').html(data.tpl).css("margin-top",e.pageY-400);
+        jQuery('#menu_zone_info').html(data.tpl).css("margin-top",e.pageY-350);
     });
 }
 

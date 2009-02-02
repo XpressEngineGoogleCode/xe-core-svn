@@ -118,14 +118,7 @@ function menuFormInsert(obj) {
     if(typeof(obj.parent_srl)!='undefined') fo_obj.parent_srl.value = obj.parent_srl;
     if(typeof(obj.menu_item_srl)!='undefined') fo_obj.menu_item_srl.value = obj.menu_item_srl;
     if(typeof(obj.mode)!='undefined') fo_obj.mode.value = obj.mode;
-
-    if(typeof(obj.name)!='undefined') {
-        for(var i in obj.name) {
-            var o = fo_obj['menu_name_'+i];
-            if(!o) continue;
-            o.value = obj.name[i];
-        }
-    }
+    if(typeof(obj.name)!='undefined') fo_obj['menu_name'].value = obj.name;
 
     if(typeof(obj.browser_title)!='undefined') fo_obj.browser_title.value = obj.browser_title;
 

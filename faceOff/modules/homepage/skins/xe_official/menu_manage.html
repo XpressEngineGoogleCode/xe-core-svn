@@ -46,21 +46,16 @@
     </table>
 
     <table cellspacing="0" class="adminTable" id="itemAttr1">
-    {@ $_row = 0;}
-    <!--@foreach($lang_supported as $key => $val)-->
     <tr>
-        <!--@if($_row==0)--><th scope="row" rowspan="{count($lang_supported)+1}"><div>{$lang->menu_name}</div></th><!--@end-->
-        <th><div>{$val}</div></th>
-        <td><input type="checkbox" name="ck_menu_name_{$key}" /><input type="text" name="menu_name_{$key}" value="" class="inputTypeText w300 menu_names"  />
+        <th scope="row"><div>{$lang->menu_name}</div></th>
+        <td>
+            <input type="text" name="menu_name" id="menu_name" value="" class="inputTypeText"/>
+            <a href="{getUrl('','module','module','act','dispModuleAdminLangcode','target','menu_name')}" onclick="popopen(this.href);return false;" class="button black"><span>{$lang->cmd_find_langcode}</span></a>
+            <p class="clear">{$lang->about_langcode}</p>
         </td>
-        {@ $_row ++ }
-    </tr>
-    <!--@end-->
-    <tr>
-        <td colspan="2">{$lang->about_menu_names}</td>
     </tr>
     <tr>
-        <th scope="row" colspan="2"><div>{$lang->cmd_option}</div></th>
+        <th scope="row"><div>{$lang->cmd_option}</div></th>
         <td>
             <input type="checkbox" id="menu_open_window" name="menu_open_window" value="Y" />
             <label for="menu_open_window">{$lang->menu_open_window}</label>
@@ -70,7 +65,7 @@
         </td>
     </tr>
     <tr>
-        <th scope="row" colspan="2"><div>{$lang->item_group_grant}</div></th>
+        <th scope="row"><div>{$lang->item_group_grant}</div></th>
         <td>
             <!--@foreach($group_list as $key=>$val)-->
             <input type="checkbox" name="group_srls" value="{$key}" id="group_{$key}" <!--@if(is_array($item_info->group_srls)&&in_array($key, $item_info->group_srls))-->checked="checked"<!--@end-->/>
@@ -80,7 +75,7 @@
         </td>
     </tr>
     <tr>
-        <th scope="row" colspan="2"><div>{$lang->module_type}</div></th>
+        <th scope="row"><div>{$lang->module_type}</div></th>
         <td>
             <select name="module_type" onchange="changeMenuType(this)">
                 <option value="board">{$lang->board}</option>
@@ -152,7 +147,7 @@
         </td>
     </tr>
     <tr>
-        <td colspan="2">{$lang->about_menu_image_button}</td>
+        <td>{$lang->about_menu_image_button}</td>
     </tr>
     </table>
 

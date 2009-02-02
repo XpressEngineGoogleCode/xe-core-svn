@@ -393,5 +393,84 @@
             $this->setMessage('success_registed');
         }
 
+        /**
+         * @brief 언어 추가/ 업데이트
+         **/
+        function procModuleAdminInsertLang() {
+            // 언어코드명 가져옴 
+            $site_module_info = Context::get('site_module_info');
+            $args->site_srl = (int)$site_module_info->site_srl;
+            $args->name = str_replace(' ','_',Context::get('lang_code'));
+            if(!$args->name) return new Object(-1,'msg_invalid_request');
+
+            // 언어코드가 있는지 조사
+            $output = executeQueryArray('module.getLang', $args);
+            if(!$output->toBool()) return $output;
+
+            // 있으면 업데이트를 위해 기존 값들을 지움
+            if($output->data) $output = executeQuery('module.deleteLang', $args);
+            if(!$output->toBool()) return $output;
+
+            // 입력
+            $lang_supported = Context::get('lang_supported');
+            foreach($lang_supported as $key => $val) {
+                $args->lang_code = $key;
+                $args->value = trim(Context::get(strtolower($key)));
+                if(!$args->value) $args->value = $args->name;
+                $output = executeQuery('module.insertLang', $args);
+                if(!$output->toBool()) return $output;
+            }
+            $this->makeCacheDefinedLangCode($args->site_srl);
+
+            $this->add('name', $args->name);
+        }
+
+        /**
+         * @brief 언어 제거
+         **/
+        function procModuleAdminDeleteLang() {
+            // 언어코드명 가져옴 
+            $site_module_info = Context::get('site_module_info');
+            $args->site_srl = (int)$site_module_info->site_srl;
+            $args->name = str_replace(' ','_',Context::get('name'));
+            if(!$args->name) return new Object(-1,'msg_invalid_request');
+
+            $output = executeQuery('module.deleteLang', $args);
+            if(!$output->toBool()) return $output;
+            $this->makeCacheDefinedLangCode($args->site_srl);
+        }
+
+        /**
+         * @brief 사용자 정이 언어코드 파일 저장
+         **/
+        function makeCacheDefinedLangCode($site_srl) {
+            // 현재 사이트의 언어파일 가져오기
+            $site_module_info = Context::get('site_module_info');
+            $args->site_srl = (int)$site_module_info->site_srl;
+            $output = executeQueryArray('module.getLang', $args);
+            if(!$output->toBool() || !$output->data) return;
+
+            // 캐시 디렉토리 설정
+            $cache_path = _XE_PATH_.'files/cache/lang_defined/';
+            if(!is_dir($cache_path)) FileHandler::makeDir($cache_path);
+
+            $lang_supported = Context::get('lang_supported');
+            foreach($lang_supported as $key => $val) {
+                $fp[$key] = fopen( sprintf('%s/%d.%s.php', $cache_path, $args->site_srl, $key), 'w' );
+                if(!$fp[$key]) return;
+                fwrite($fp[$key],"<?php if(!defined('__ZBXE__')) exit(); \r\n");
+            }
+
+            foreach($output->data as $key => $val) {
+                fwrite($fp[$val->lang_code], sprintf('$lang["%s"] = "%s";'."\r\n", $val->name, str_replace('"','\\"',$val->value)));
+            }
+
+            foreach($lang_supported as $key => $val) {
+                if(!$fp[$key]) continue;
+                fwrite($fp[$key],"?>");
+                fclose($fp[$key]);
+            }
+        }
+
     }
 ?>

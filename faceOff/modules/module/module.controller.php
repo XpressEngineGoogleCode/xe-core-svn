@@ -489,5 +489,27 @@
             $args->module_srl = $module_srl;
             return executeQuery('module.deleteModuleGrants', $args);
         }
+
+        /**
+         * @brief 사용자 정의 언어 변경
+         **/
+        function replaceDefinedLangCode(&$output) {
+            $output = preg_replace_callback('!\$([a-z]+)!s', array($this,'_replaceLangCode'), $output);
+        }
+        function _replaceLangCode($matches) {
+            static $lang = null;
+            if(is_null($lang)) {
+                $site_module_info = Context::get('site_module_info');
+                $cache_file = sprintf('%sfiles/cache/lang_defined/%d.%s.php', _XE_PATH_, $site_module_info->site_srl, Context::getLangType());
+                if(!file_exists($cache_file)) {
+                    $lang = array();
+                    return;
+                }
+                require_once($cache_file);
+            }
+            if($lang[$matches[1]]) return $lang[$matches[1]];
+
+            return $matches[0];
+        }
     }
 ?>

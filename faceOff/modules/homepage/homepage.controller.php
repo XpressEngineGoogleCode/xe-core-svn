@@ -92,17 +92,6 @@
             $oMenuAdminModel = &getAdminModel('menu');
             $oMenuAdminController = &getAdminController('menu');
 
-            // 메뉴 이름 체크
-            $lang_supported = Context::get('lang_supported');
-            $name_inserted = false;
-            foreach($lang_supported as $key => $val) {
-                $menu_name[$key] = $source_args->{"menu_name_".strtolower($key )};
-                if($menu_name[$key]) $name_inserted = true;
-            }
-            if(!$name_inserted) {
-                return new Object(-1, sprintf($lang->filter->isnull, $lang->menu_name));
-            }
-
             $mode = Context::get('mode');
 
             // module_type이 url이 아니면 게시판 또는 페이지를 생성한다
@@ -130,7 +119,7 @@
             $args->menu_item_srl = $source_args->menu_item_srl;
             $args->parent_srl = $source_args->parent_srl;
             $args->menu_srl = $source_args->menu_srl;
-            $args->name = serialize($menu_name);
+            $args->name = $source_args->menu_name;
             if($module_type=='url') $args->url = 'http://'.preg_replace('/^(http|https):\/\//i','',$url);
             else $args->url = $module_id;
             $args->open_window = $source_args->menu_open_window;

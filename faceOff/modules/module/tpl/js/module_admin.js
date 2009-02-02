@@ -132,3 +132,31 @@ function completeModuleSetup(ret_obj) {
     alert(ret_obj['message']);
     window.close();
 }
+
+/**
+ * 언어 관련
+ **/
+function doInsertLangCode(name) {
+    var fo_obj = xGetElementById("menu_fo");
+    var target = fo_obj.target.value;
+    if(window.opener && target) {
+        var obj = window.opener.xGetElementById(target);
+        if(obj) obj.value = '$'+name;
+    }
+    window.close();
+}
+
+function completeInsertLang(ret_obj) {
+    doInsertLangCode(ret_obj['name']);
+}
+
+function doDeleteLang(name) {
+    var params = new Array();
+    params['name'] = name;
+    var response_args = new Array('error','message');
+    exec_xml('module','procModuleAdminDeleteLang',params, completeDeleteLang);
+}
+
+function completeDeleteLang(ret_obj) {
+    location.href = current_url.setQuery('name','');
+}

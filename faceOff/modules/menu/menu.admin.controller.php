@@ -92,25 +92,13 @@
             $source_args->group_srls = str_replace('|@|',',',$source_args->group_srls);
             $source_args->parent_srl = (int)$source_args->parent_srl;
 
-            // 메뉴 이름 체크
-            $lang_supported = Context::get('lang_supported');
-            $name_inserted = false;
-            foreach($lang_supported as $key => $val) {
-                $menu_name[$key] = $source_args->{"menu_name_".strtolower($key )};
-                if($menu_name[$key]) $name_inserted = true;
-            }
-            if(!$name_inserted) {
-                global $lang;
-                return new Object(-1, sprintf($lang->filter->isnull, $lang->menu_name));
-            }
-
             // 변수를 다시 정리 (form문의 column과 DB column이 달라서)
             $args->menu_srl = $source_args->menu_srl;
             $args->menu_item_srl = $source_args->menu_item_srl;
             $args->parent_srl = $source_args->parent_srl;
             $args->menu_srl = $source_args->menu_srl;
             $args->menu_id = $source_args->menu_id;
-            $args->name = serialize($menu_name);
+            $args->name = $source_args->menu_name;
             $args->url = trim($source_args->menu_url);
             $args->open_window = $source_args->menu_open_window;
             $args->expand = $source_args->menu_expand;

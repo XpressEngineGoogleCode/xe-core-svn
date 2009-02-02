@@ -31,6 +31,7 @@
     $lang->bundle_setup = "일괄 기본 설정";
     $lang->bundle_addition_setup = "일괄 추가 설정";
     $lang->bundle_grant_setup = "일괄 권한 설정";
+    $lang->lang_code = "언어 코드";
 
     $lang->header_script = "文件头部脚本";
     $lang->about_header_script = "可以直接输入插入到html中&lt;head&gt;区的代码。<br />可使用&lt;script, &lt;style 或 &lt;meta 等标签。";
@@ -50,6 +51,7 @@
     $lang->cmd_manage_skin = '皮肤管理';
     $lang->cmd_manage_document = '主题管理';
     $lang->cmd_find_module = '모듈 찾기';
+    $lang->cmd_find_langcode = 'Find lang code';
 
     $lang->msg_new_module = "模块生成";
     $lang->msg_update_module = "模块修改";
@@ -79,4 +81,5 @@
 
     $lang->about_extra_vars_default_value = '复选/单选缺省值需要多个时,用,(逗号)来分隔。';
     $lang->about_search_virtual_site = "가상 사이트(카페XE등)의 도메인을 입력하신 후 검색하세요.<br/>가상 사이트이외의 모듈은 내용을 비우고 검색하시면 됩니다.  (http:// 는 제외)";
+    $lang->about_langcode = "언어별로 다르게 설정하고 싶으시면 언어코드 찾기를 이용해주세요";
 ?>
