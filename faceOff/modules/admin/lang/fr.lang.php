@@ -19,6 +19,8 @@
     $lang->newest_news = "Dernières Nouvelles";
     
     $lang->env_setup = "Configuration";
+    $lang->sso_url = "SSO URL";
+    $lang->about_sso_url = "여러개의 virtual site운영시 한 곳에서 로그인하여도 모든 virtual site에서 로그인 정보를 유지할 수 있게 하기 위해서는 기본 사이트의 XE 설치 url을 입력해주시면 됩니다. (ex: http://도메인/xe)";
 
     $lang->env_information = "Informations de l'Environnement";
     $lang->current_version = "Version Courante";

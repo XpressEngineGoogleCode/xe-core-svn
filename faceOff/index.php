@@ -49,18 +49,25 @@
     $oContext->init();
 
     /**
-     * @brief ModuleHandler 객체를 생성/ 실행
-     *
-     * 모듈 핸들러는 Request Argument를 바탕으로 모듈을 찾아서\n
-     * 객체를 생성하고 기본 정보를 setting 해준다.\n
-     * ModuleHandler는 이 외에도 설치가 되어 있는지에 대한 체크를\n
-     * 하여 미설치시 Install 모듈을 실행하도록 한다\n
-     * 그리고 해당 모듈을 실행후 컨텐츠를 출력한다\n
+     * @brief SSO 인증 확인이 불필요할때 모듈 동작
      **/
-    $oModuleHandler = new ModuleHandler();
-    if($oModuleHandler->init()) {
-        $oModule = &$oModuleHandler->procModule();
-        $oModuleHandler->displayContent($oModule);
+    if($oContext->checkSSO()) {
+        
+        /**
+         * @brief ModuleHandler 객체를 생성/ 실행
+         *
+         * 모듈 핸들러는 Request Argument를 바탕으로 모듈을 찾아서\n
+         * 객체를 생성하고 기본 정보를 setting 해준다.\n
+         * ModuleHandler는 이 외에도 설치가 되어 있는지에 대한 체크를\n
+         * 하여 미설치시 Install 모듈을 실행하도록 한다\n
+         * 그리고 해당 모듈을 실행후 컨텐츠를 출력한다\n
+         **/
+        $oModuleHandler = new ModuleHandler();
+        if($oModuleHandler->init()) {
+            $oModule = &$oModuleHandler->procModule();
+            $oModuleHandler->displayContent($oModule);
+        }
+
     }
 
     $oContext->close();

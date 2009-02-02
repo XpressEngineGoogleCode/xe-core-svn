@@ -310,6 +310,43 @@
             return $lang_selected;
         }
 
+        /**
+         * @brief SSO URL이 설정되어 있고 아직 SSO URL검사를 하지 않았다면 return true
+         **/
+        function checkSSO() {
+            // DB info에 설정된 SSO URL이 없다면 무조건 무사통과
+            $sso_url = $this->db_info->sso_url;
+            if(substr($sso_url,-1)!='/') $sso_url .= '/';
+            if(!$sso_url) return true;
+
+            // SSO 검증을 요청 받는 사이트
+            if($sso_url == Context::getRequestUri()) {
+                if(Context::get('sso_url')) {
+                    $url = base64_decode(Context::get('sso_url'));
+                    $url_info = parse_url($url);
+                    $url_info['query'].= ($url_info['query']?'&':'').'SSOID='.$_COOKIE[session_name()];
+                    $redirect_url = sprintf('%s://%s%s%s?%s',$url_info['scheme'],$url_info['host'],$url_info['port']?':'.$url_info['port']:'',$url_info['path'], $url_info['query']);
+                    header("location:".$redirect_url);
+                    return false;
+                }
+            // SSO 검증을 요청하는 사이트
+            } else {
+                // SSO 결과를 받는 경우 session_name() 세팅
+                if(Context::get('SSOID')) {
+                    setcookie(session_name(), Context::get('SSOID'), 0, '/');
+                    header("location:".Context::get('SSOID',''));
+                    return false;
+                // SSO 결과를 요청
+                } else if($_COOKIE['sso']!=md5(Context::getRequestUri()) && !Context::get('SSOID')) {
+                    setcookie('sso',md5(Context::getRequestUri()),0,'/');
+                    $url = sprintf("%s?sso_url=%s", $sso_url, base64_encode(Context::getRequestUrl()));
+                    header("location:".$url);
+                    return false;
+                }
+            }
+
+            return true;
+        }
 
         /**
          * @biref FTP 정보가 등록되었는지 확인
@@ -674,6 +711,21 @@
          **/
         function _getRequestMethod() {
             return $this->request_method;
+        }
+
+        /**
+         * @brief 현재 요청된 full url을 return
+         **/
+        function getRequestUrl() {
+            static $url = null;
+            if(is_null($url)) {
+                $url = Context::getRequestUri();
+                if(count($_GET)) {
+                    foreach($_GET as $key => $val) $vars[] = $key.'='.$val;
+                    $url .= '?'.implode('&',$vars);
+                }
+            }
+            return $url;
         }
 
         /**
