@@ -504,7 +504,6 @@
              * 사용되는 javascript 필터 추가
              **/
             Context::addJsFilter($this->module_path.'tpl/filter', 'insert_comment.xml');
-        
 
             $this->setTemplateFile('comment_form');
         }
@@ -536,6 +535,11 @@
             // 필요한 정보들 세팅
             Context::set('oSourceComment', $oCommentModel->getComment());
             Context::set('oComment', $oComment);
+
+            /** 
+             * 사용되는 javascript 필터 추가
+             **/
+            Context::addJsFilter($this->module_path.'tpl/filter', 'insert_comment.xml');
 
             $this->setTemplateFile('comment_form');
         }
