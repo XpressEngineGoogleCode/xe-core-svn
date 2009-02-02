@@ -507,7 +507,7 @@
                 }
                 require_once($cache_file);
             }
-            if($lang[$matches[1]]) return $lang[$matches[1]];
+            if(!Context::get($matches[1]) && $lang[$matches[1]]) return $lang[$matches[1]];
 
             return $matches[0];
         }
