@@ -131,21 +131,29 @@
          * @brief 특정 언어 코드에 대한 값들을 가져오기
          * lang_code를 직접 기입하면 해당 언어코드에 대해서만 가져오고 값이 없으면 $name을 그대로 return
          **/
-        function getLangCode($site_srl, $name, $from_db = true) {
-            if($from_db) {
-                $args->site_srl = (int)$site_srl;
-                $args->name = $name;
-                $output = executeQueryArray('module.getLang', $args);
+        function getLangCode($site_srl, $name) {
+            $lang_supported = Context::get('lang_supported');
 
+            if(substr($name,0,12)=='$user_lang->') {
+                $args->site_srl = (int)$site_srl;
+                $args->name = substr($name,12);
+                $output = executeQueryArray('module.getLang', $args);
                 if($output->data) {
                     foreach($output->data as $key => $val) {
                         $selected_lang[$val->lang_code] = $val->value;
                     }
                 }
+            } else {
+                $tmp = unserialize($name);
+                if($tmp) {
+                    $selected_lang = array();
+                    $rand_name = $tmp[Context::getLangType()];
+                    if(!$rand_name) $rand_name = array_shift(unserialize($name));
+                    foreach($tmp as $key => $val) $selected_lang[$key] = $tmp[$key]?$tmp[$key]:$rand_name;
+                }
             }
 
             $output = array();
-            $lang_supported = Context::get('lang_supported');
             foreach($lang_supported as $key => $val) {
                 $output[$key] = $selected_lang[$key]?$selected_lang[$key]:$name;
             }

@@ -1067,8 +1067,7 @@
 
                 $title = $node->title;
                 $oModuleAdminModel = &getAdminModel('module');
-                if(substr($title,0,1)=='$') $langs = $oModuleAdminModel->getLangCode($site_srl, substr($title,1));
-                else $langs = $oModuleAdminModel->getLangCode($site_srl, substr($title,1), false);
+                $langs = $oModuleAdminModel->getLangCode($site_srl, $title);
                 if(count($langs)) foreach($langs as $key => $val) $xml_header_buff .= sprintf('$_titles[%d]["%s"] = "%s"; ', $category_srl, $key, str_replace('"','\\"',$val));
 
                 $attribute = sprintf(
@@ -1124,8 +1123,7 @@
 
                 $title = $node->title;
                 $oModuleAdminModel = &getAdminModel('module');
-                if(substr($title,0,1)=='$') $langs = $oModuleAdminModel->getLangCode($site_srl, substr($title,1));
-                else $langs = $oModuleAdminModel->getLangCode($site_srl, substr($title,1), false);
+                $langs = $oModuleAdminModel->getLangCode($site_srl, $title);
                 if(count($langs)) foreach($langs as $key => $val) $php_header_buff .= sprintf('$_titles[%d]["%s"] = "%s"; ', $category_srl, $key, str_replace('"','\\"',$val));
 
                 // 속성을 생성한다 ( category_srl_list를 이용해서 선택된 메뉴의 노드에 속하는지를 검사한다. 꽁수지만 빠르고 강력하다고 생각;;)

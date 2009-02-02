@@ -141,7 +141,7 @@ function doInsertLangCode(name) {
     var target = fo_obj.target.value;
     if(window.opener && target) {
         var obj = window.opener.xGetElementById(target);
-        if(obj) obj.value = '$'+name;
+        if(obj) obj.value = '$user_lang->'+name;
     }
     window.close();
 }

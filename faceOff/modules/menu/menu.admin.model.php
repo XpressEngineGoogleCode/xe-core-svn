@@ -84,20 +84,7 @@
 
             // 언어코드 구함
             $oModuleAdminModel = &getAdminModel('module');
-            if(substr($source_name,0,1)=='$') {
-                $output = $oModuleAdminModel->getLangCode($site_module_info->site_srl, substr($source_name,1) );
-            } else {
-                $name = unserialize($source_name);
-                if(!$name) {
-                    $output = $oModuleAdminModel->getLangcode($site_module_info->site_srl, $source_name, false);
-                } else {
-                    $output = array();
-                    $rand_name = array_shift(unserialize($source_name));
-                    $lang_supported = Context::get('lang_supported');
-                    foreach($lang_supported as $key => $val) $output[$key] = $name[$key]?$name[$key]:$rand_name;
-                }
-            }
-            return $output;
+            return $oModuleAdminModel->getLangCode($site_module_info->site_srl, $source_name);
         }
 
         /**

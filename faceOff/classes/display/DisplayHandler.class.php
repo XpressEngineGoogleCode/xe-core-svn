@@ -64,13 +64,13 @@
                 Context::set('zbxe_final_content', $zbxe_final_content);
                 $output = $oTemplate->compile('./common/tpl', 'common_layout');
 
+                // 사용자 정의 언어 변경
+                $oModuleContrller = &getController('module');
+                $oModuleContrller->replaceDefinedLangCode($output);
+
             } else {
                 $output = $content;
             }
-
-            // 사용자 정의 언어 변경
-            $oModuleContrller = &getController('module');
-            $oModuleContrller->replaceDefinedLangCode($output);
 
             // 애드온 실행
             $called_position = 'before_display_content';
