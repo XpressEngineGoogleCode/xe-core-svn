@@ -767,5 +767,12 @@
             if(!$output->data) return null;
             else return $output->data->document_srl;
         }
+
+        function getHistories($document_srl)
+        {
+            $args->document_srl = $document_srl;
+            $output = executeQueryArray('document.getHistories', $args);
+            return $output->data;
+        }
     }
 ?>

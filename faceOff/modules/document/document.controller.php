@@ -26,6 +26,16 @@
             return $this->updateVotedCount($document_srl, $point);
         }
 
+        function insertAlias($module_srl, $document_srl, $alias_title) {
+            $args->alias_srl = getNextSequence();
+            $args->module_srl = $module_srl;
+            $args->document_srl = $document_srl;
+            $args->alias_title = $alias_title;
+            $query = "document.insertAlias";
+            $output = executeQuery($query, $args);
+            return $output;
+        }
+
         /**
          * @breif 게시글의 추천을 처리하는 action (Down)
          **/
