@@ -318,9 +318,9 @@
             if(Context::getRequestMethod()!='GET' || !Context::isInstalled()) return true;
 
             // DB info에 설정된 SSO URL이 없다면 무조건 무사통과
-            $sso_url = $this->db_info->sso_url;
-            if(substr($sso_url,-1)!='/') $sso_url .= '/';
+            $sso_url = trim($this->db_info->sso_url);
             if(!$sso_url) return true;
+            if(substr($sso_url,-1)!='/') $sso_url .= '/';
 
             // SSO 검증을 요청 받는 사이트
             if($sso_url == Context::getRequestUri()) {
