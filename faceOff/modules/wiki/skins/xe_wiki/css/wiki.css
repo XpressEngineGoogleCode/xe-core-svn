@@ -311,6 +311,7 @@ html:not([lang*=""]) .boardList th { height:33px; }
 .wikimain .header .title { float:left; }
 .wikimain .header .title h1.pageTitle { overflow:hidden; color:#32576B; font-size:24px; font-weight:bold; line-height: 1em; padding:0; margin:0; } 
 .wikimain .header .edit { float:left; margin-left: 10px; }
+.wikimain .header .go { float:right; }
 .wikimain .pageHistory { 
 border-bottom:1px solid #DDEEDD; 
 border-top:1px solid #DDEEDD; 
@@ -320,4 +321,5 @@ color:#666666; font-size:11px; font-weight:normal; margin-top:5px; padding-top:5
 .wikimain .pageHistory .userInfo .author a { color:#3074a5; text-decoration:none; }
 .wikimain .pageHistory .userInfo .date { float:left; margin-left:5px; }
 .wikimain .pageHistory .history { float:right; }
+
 

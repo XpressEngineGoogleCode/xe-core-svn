@@ -3,6 +3,13 @@
 <div class="header">
     <div class="title"><H1 class="pageTitle">{$entry}</H1></div> 
     <div class="edit"><!--@if($oDocument->isExists())--><a href="{getUrl('act','dispWikiEditPage','entry',$entry)}">Edit</a><!--@end--></div>
+    <div class="go">
+        <form action="./" method="get">
+            <input type="hidden" name="mid" value="{$module_info->mid}" />
+            <input type="text" class="inputTypeText w100" name="entry" />
+            <span class="button"><input type="submit" value="Go" /></span>
+        </form>
+    </div>
 </div>
 <div class="clear"></div>
 
