@@ -314,8 +314,8 @@
          * @brief SSO URL이 설정되어 있고 아직 SSO URL검사를 하지 않았다면 return true
          **/
         function checkSSO() {
-            // GET 접속시에만 체크
-            if(Context::getRequestMethod()!='GET') return true;
+            // GET 접속시이 아니거나 안되어 있으면 패스
+            if(Context::getRequestMethod()!='GET' || !Context::isInstalled()) return true;
 
             // DB info에 설정된 SSO URL이 없다면 무조건 무사통과
             $sso_url = $this->db_info->sso_url;
