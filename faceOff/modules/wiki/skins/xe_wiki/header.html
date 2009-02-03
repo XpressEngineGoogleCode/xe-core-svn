@@ -6,7 +6,7 @@
     <div class="edit"><!--@if($oDocument->isExists())--><a href="{getUrl('act','dispWikiEditPage','entry',$entry)}">Edit</a><!--@end--></div>
     <!--@end-->
     <div class="go">
-        <form action="./" method="get">
+        <form action="{getUrl()}" method="get">
             <input type="hidden" name="mid" value="{$module_info->mid}" />
             <input type="text" class="inputTypeText w100" name="entry" />
             <span class="button"><input type="submit" value="Go" /></span>
