@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<skin version="0.2">
+    <title xml:lang="ko">XE Default Skin</title>
+    <description xml:lang="ko">
+        XE Default Skin
+    </description>
+    <version>0.1</version>
+    <date>2009-01-31</date>
+
+    <author email_address="haneul0318@gmail.com" link="http://seungyope.kr">
+        <name xml:lang="ko">haneul</name>
+    </author>
+
+    <license>GPL</license>
+
+    <extra_vars>
+    </extra_vars>
+</skin>
+
