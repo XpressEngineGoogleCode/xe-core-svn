@@ -68,6 +68,24 @@
             $this->setTemplateFile('write_form');
         }
 
+        function dispWikiTitleIndex() {
+            $page = Context::get('page');
+            $oDocumentModel = &getModel('document');
+            $obj->module_srl = $this->module_info->module_srl;
+            $obj->sort_index = "title";
+            $obj->page = $page;
+            $obj->list_count = 50;
+            $output = $oDocumentModel->getDocumentList($obj);
+            debugPrint($output);
+
+            Context::set('document_list', $output->data);
+            Context::set('total_count', $output->total_count);
+            Context::set('total_page', $output->total_page);
+            Context::set('page', $output->page);
+            Context::set('page_navigation', $output->page_navigation);
+            $this->setTemplateFile('title_index');
+        }
+
         function dispWikiContentView() {
             // 요청된 변수 값들을 정리
             $document_srl = Context::get('document_srl');

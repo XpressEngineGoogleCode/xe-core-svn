@@ -31,6 +31,7 @@
     <actions>
         <action name="dispWikiContent" type="view" index="true" />
         <action name="dispWikiEditPage" type="view" />
+        <action name="dispWikiTitleIndex" type="view" />
         <action name="dispWikiAdminContent" type="view" standalone="true" admin_index="true" />
         <action name="dispWikiAdminInsertWiki" type="view" standalone="true" />
         <action name="dispWikiAdminWikiAdditionSetup" type="view" standalone="true" />

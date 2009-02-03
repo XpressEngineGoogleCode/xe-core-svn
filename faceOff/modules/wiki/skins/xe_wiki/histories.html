@@ -1,36 +1,4 @@
 <!--#include("header.html")-->
-<div class="boardRead">
-        <div class="readHeader">
-            <div class="pageHistory">
-                <div class="userInfo">
-                    <!--@if(!$oDocument->getMemberSrl())-->
-                        <div class="author">
-                    last edited by 
-                        <!--@if($oDocument->isExistsHomepage())-->
-                            <a href="{$oDocument->getHomepageUrl()}" onclick="window.open(this.href);return false;">{$oDocument->getNickName()}</a>
-                        <!--@else-->
-                            {$oDocument->getNickName()}
-                        <!--@end-->
-                        </div>
-                    <!--@else-->
-                        <div class="author">
-                    last edited by 
-                        <span class="member_{$oDocument->get('member_srl')}">{$oDocument->getNickName()}</span></div>
-                    <!--@end-->
-                <div class="date" title="{$lang->regdate}">
-                    <strong>{$oDocument->getUpdate('Y.m.d')}</strong> {$oDocument->getUpdate('H:i:s')} 
-                </div>
-                </div>
-
-                <div class="history">
-                    <a href="{getUrl('act','dispWikiContent','document_srl',$oDocument->document_srl)}">View Content</a>
-                </div>
-                <div class="clear"></div>
-            </div>
-
-            <div class="clear"></div>
-        </div>
-        <div class="clear"></div>
 <div class="readBody">
 <table>
 <tr>
@@ -57,6 +25,5 @@
 </tr>
 <!--@end-->
 </table>
-</div>
 </div>
 <!--#include("footer.html")-->

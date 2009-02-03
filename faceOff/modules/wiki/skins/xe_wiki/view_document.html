@@ -2,39 +2,6 @@
 <!-- 글 내용 보여주기 -->
 <div class="boardRead">
     <div class="originalContent">
-        <div class="readHeader">
-            <div class="pageHistory">
-                <div class="userInfo">
-                    <!--@if(!$oDocument->getMemberSrl())-->
-                        <div class="author">
-                    last edited by 
-                        <!--@if($oDocument->isExistsHomepage())-->
-                            <a href="{$oDocument->getHomepageUrl()}" onclick="window.open(this.href);return false;">{$oDocument->getNickName()}</a>
-                        <!--@else-->
-                            {$oDocument->getNickName()}
-                        <!--@end-->
-                        </div>
-                    <!--@else-->
-                        <div class="author">
-                    last edited by 
-                        <span class="member_{$oDocument->get('member_srl')}">{$oDocument->getNickName()}</span></div>
-                    <!--@end-->
-                <div class="date" title="{$lang->regdate}">
-                    <strong>{$oDocument->getUpdate('Y.m.d')}</strong> {$oDocument->getUpdate('H:i:s')} 
-                </div>
-                </div>
-
-                <!--@if($use_history == 'Y')-->
-                <div class="history">
-                    <a href="{getUrl('act','dispWikiHistory','document_srl',$oDocument->document_srl)}">View History</a>
-                </div>
-                <!--@end-->
-                <div class="clear"></div>
-            </div>
-
-            <div class="clear"></div>
-        </div>
-        <div class="clear"></div>
         <div class="readBody">
             <div class="contentBody">
 
