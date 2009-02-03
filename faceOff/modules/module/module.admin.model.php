@@ -159,5 +159,17 @@
             }
             return $output;
         }
+
+        /**
+         * @brief 모듈 언어를 ajax로 요청시 return
+         **/
+        function getModuleAdminLangCode() {
+            $name = Context::get('name');
+            if(!$name) return new Object(-1,'msg_invalid_request');
+            $site_module_info = Context::get('site_module_info');
+            $this->add('name', $name);
+            $output = $this->getLangCode($site_module_info->site_srl, '$user_lang->'.$name);
+            $this->add('langs', $output);
+        }
     }
 ?>

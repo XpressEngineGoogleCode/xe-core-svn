@@ -160,3 +160,29 @@ function doDeleteLang(name) {
 function completeDeleteLang(ret_obj) {
     location.href = current_url.setQuery('name','');
 }
+
+function doFillLangName() {
+    var fo_obj = xGetElementById("menu_fo");
+    var target = fo_obj.target.value;
+    if(window.opener && window.opener.xGetElementById(target)) {
+        var value = window.opener.xGetElementById(target).value;
+        if(/^\$user_lang->/.test(value)) {
+            var param = new Array();
+            param['name'] = value.replace(/^\$user_lang->/,'');
+            var response_tags = new Array('error','message','name','langs');
+            exec_xml('module','getModuleAdminLangCode',param,completeFillLangName, response_tags);
+        }
+    }
+}
+
+function completeFillLangName(ret_obj, response_tags) {
+    var name = ret_obj['name'];
+    var langs = ret_obj['langs'];
+    if(typeof(langs)=='undefined') return;
+    var fo_obj = xGetElementById("menu_fo");
+    fo_obj.lang_code.value = name;
+    for(var i in langs) {
+        fo_obj[i].value = langs[i];
+    }
+
+}

@@ -210,7 +210,7 @@
             $name = Context::get('name');
             if($name) {
                 $oModuleAdminModel = &getAdminModel('module');
-                Context::set('selected_lang', $oModuleAdminModel->getLangCode($args->site_srl,$name));
+                Context::set('selected_lang', $oModuleAdminModel->getLangCode($args->site_srl,'$user_lang->'.$name));
             }
 
             // 레이아웃을 팝업으로 지정
