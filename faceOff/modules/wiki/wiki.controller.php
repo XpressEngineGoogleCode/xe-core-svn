@@ -13,6 +13,7 @@
             // 글작성시 필요한 변수를 세팅
             $obj = Context::getRequestVars();
             $obj->module_srl = $this->module_srl;
+            if(!$obj->nick_name) $obj->nick_name = "anonymous";
             if($obj->is_notice!='Y'||!$this->grant->manager) $obj->is_notice = 'N';
 
             settype($obj->title, "string");
