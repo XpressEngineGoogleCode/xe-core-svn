@@ -19,7 +19,7 @@ body{ background:#fff;}
 #xeAdmin .gnb{ position:relative; float:right; white-space:nowrap; clear:right; margin:0; padding:0;}
 #xeAdmin .gnb li{ position:relative; float:left; margin:0 15px 0 0; padding:0;list-style:none;}
 
-#adminLang { position:absolute; top:18px; left:0; display:none; background:#fff; margin:0; padding:5px; border:1px solid #ddd;}
+#adminLang { position:absolute; top:18px; left:0; display:none; background:#fff; margin:0; padding:5px; border:1px solid #ddd; z-index:999;}
 #adminLang li{ float:none; margin:0;}
 
 .body{ position:relative; margin:0; padding:20px 0 20px 260px; background:url(../img/lineBody.gif) repeat-y 240px 0; *zoom:1;}
