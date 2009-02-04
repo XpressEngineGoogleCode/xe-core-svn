@@ -7,13 +7,19 @@
 
     $lang->admin_info = 'Информация администратора';
     $lang->admin_index = 'Индексная страница администратора';
+    $lang->control_panel = 'Control panel';
 
     $lang->module_category_title = array(
-        'service' => 'Служебные модули',
-        'manager' => 'Управляющие модули',
-        'utility' => 'Утилиратные модули',
-        'accessory' => 'Дополнительные модули',
-        'base' => 'Базовые модули',
+        'service' => 'Service Setting',
+        'member' => 'Member Setting',
+        'content' => 'Content Setting',
+        'statistics' => 'Statistics',
+        'construction' => 'Construction',
+        'utility' => 'Utility Setting',
+        'interlock' => 'Interlock Setting',
+        'accessory' => 'Accessories',
+        'migration' => 'Data Migration',
+        'system' => 'System Setting',
     );
 
     $lang->newest_news = "Последние новости";

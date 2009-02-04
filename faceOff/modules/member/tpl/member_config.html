@@ -7,7 +7,7 @@
 <input type="hidden" name="temp_srl" value="" />
 <input type="hidden" name="agreement" value="{htmlspecialchars($config->agreement)}" />
 
-<table cellspacing="0" class="adminTable">
+<table cellspacing="0" class="rowTable">
 <tr class="row2">
     <th scope="row"><div>{$lang->webmaster_name}</div></th>
     <td>
@@ -148,12 +148,12 @@
     <td><div id="member_colorset"></div></td>
 </tr>
 <tr class="row2">
-    <td colspan="2" class="right">
-        <span class="button"><input type="submit" value="{$lang->cmd_registration}" /></span>
+    <th colspan="2" class="button">
+        <span class="button black strong"><input type="submit" value="{$lang->cmd_registration}" /></span>
         <!--@if($module=="admin")-->
         <a href="{getUrl('act','dispMemberAdminList')}" class="button"><span>{$lang->cmd_back}</span></a>
         <!--@end-->
-    </td>
+    </th>
 </tr>
 </table>
 

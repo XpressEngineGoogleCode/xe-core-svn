@@ -34,6 +34,9 @@
             // 요청방식에 따라 출력을 별도로
             if(Context::getResponseMethod()=="HTML") {
 
+                // 관리자 모드일 경우 #xeAdmin id를 가지는 div 추가
+                if(Context::get('module')!='admin' && strpos(Context::get('act'),'Admin')>0) $content = '<div id="xeAdmin">'.$content.'</div>';
+
                 Context::set('content', $content);
 
                 // 레이아웃을 컴파일

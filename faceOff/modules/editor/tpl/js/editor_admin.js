@@ -27,7 +27,6 @@ function doMoveListOrder(component_name, mode) {
 }
 
 function completeUpdate(ret_obj) {
-    alert(ret_obj['message']);
     location.href = location.href;
 }
 

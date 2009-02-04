@@ -8,7 +8,7 @@
 <input type="hidden" name="is_default" value="Y" />
 <!--@end-->
 
-    <table cellspacing="0" class="adminTable">
+    <table cellspacing="0" class="rowTable">
     <tr class="row2">
         <th scope="row"><div>{$lang->mid}</div></th>
         <td colspan="3">
@@ -71,16 +71,15 @@
         </td>
     </tr>
     <tr class="row2">
-        <td colspan="4" class="right">
-            <span class="button"><input type="submit" value="{$lang->cmd_save}" accesskey="s" /></span>
+        <th colspan="4" class="button">
+            <span class="button black strong"><input type="submit" value="{$lang->cmd_save}" accesskey="s" /></span>
             <!--@if($module == 'admin')-->
             <span class="button"><input type="button" value="{$lang->cmd_list}" onclick="location.href='./?module=admin&act=dispOpageAdminContent';return false;" /></span>
             <!--@else-->
             <span class="button"><input type="button" value="{$lang->cmd_back}" onclick="location.href=current_url.setQuery('module_srl','').setQuery('act','');return false;" /></span>
             <!--@end-->
-        </td>
+        </th>
     </tr>
     </table>
-    </div>
 
 </form>

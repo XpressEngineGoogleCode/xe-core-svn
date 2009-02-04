@@ -9,26 +9,29 @@
 <input type="hidden" name="module_srl" value="{$module_srl}" />
 <input type="hidden" name="admin_member" value="<!--@foreach($admin_member as $key => $val)-->{$val->user_id},<!--@end-->" />
 
-<table cellspacing="0" class="adminTable">
-<caption>{$lang->about_admin_id}</caption>
+<h4>{$lang->about_admin_id}</h4>
+<table cellspacing="0" class="rowTable">
 <tr>
-    <th scope="row"><div>{$lang->admin_id}</div></th>
-    <td>
+    <th scope="row" rowspan="2"><div>{$lang->admin_id}</div></th>
+    <td class="wide">
         <select name="_admin_member" multiple="multiple" size="{count($admin_member)?count($admin_member):1}" class="w200">
         <!--@foreach($admin_member as $key => $val)-->
             <option value="{$val->user_id}">{$val->nick_name} ({$val->user_id})</option>
         <!--@end-->
         </select>
-        <br />
-        <input type="text" name="admin_id" class="inputTypeText w100" />
-        <span class="button blue"><button type="button" onclick="doInsertAdmin()">{$lang->cmd_insert}</button></span>
-        <span class="button red"><button type="button" onclick="doDeleteAdmin()">{$lang->cmd_delete}</button></span>
     </td>
+</tr>
+<tr>
+    <th class="wide">
+        <input type="text" name="admin_id" class="inputTypeText w100" />
+        <span class="button black strong"><button type="button" onclick="doInsertAdmin()">{$lang->cmd_insert}</button></span>
+        <span class="button"><button type="button" onclick="doDeleteAdmin()">{$lang->cmd_delete}</button></span>
+    </th>
 </tr>
 </table>
 
-<table cellspacing="0" class="adminTable">
-<caption>{$lang->about_grant}</caption>
+<h4>{$lang->about_grant}</h4>
+<table cellspacing="0" class="crossTable">
 <thead>
 <tr>
     <th scope="col"><div>{$lang->grant}</div></th>
@@ -60,8 +63,8 @@
 </table>
 
 <div class="tRight">
-    <span class="button blue"><input type="submit" value="{$lang->cmd_save}" accesskey="s" /></span>
-    <span class="button black"><input type="button" value="{$lang->cmd_back}" onclick="history.back(); return false;" /></span>
+    <span class="button black strong"><input type="submit" value="{$lang->cmd_save}" accesskey="s" /></span>
+    <span class="button"><input type="button" value="{$lang->cmd_back}" onclick="history.back(); return false;" /></span>
 </div>
 
 </form>

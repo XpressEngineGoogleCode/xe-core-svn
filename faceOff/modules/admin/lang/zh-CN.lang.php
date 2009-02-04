@@ -7,13 +7,19 @@
 
     $lang->admin_info = '管理员信息';
     $lang->admin_index = '管理首页';
+    $lang->control_panel = 'Control panel';
 
     $lang->module_category_title = array(
-        'service' => '服务类模块',
-        'manager' => '管理类模块',
-        'utility' => '功能模块',
-        'accessory' => '附加模块',
-        'base' => '基本模块',
+        'service' => 'Service Setting',
+        'member' => 'Member Setting',
+        'content' => 'Content Setting',
+        'statistics' => 'Statistics',
+        'construction' => 'Construction',
+        'utility' => 'Utility Setting',
+        'interlock' => 'Interlock Setting',
+        'accessory' => 'Accessories',
+        'migration' => 'Data Migration',
+        'system' => 'System Setting',
     );
 
     $lang->newest_news = "最新消息";

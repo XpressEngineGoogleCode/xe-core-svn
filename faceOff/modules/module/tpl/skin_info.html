@@ -1,10 +1,10 @@
 <!--%import("../../admin/tpl/css/admin.css")-->
-<div id="popHeadder">
+<div id="popHeader" class="wide">
     <h3>{$skin_info->title}</h3>
 </div>
 
 <div id="popBody">
-    <table cellspacing="0" class="adminTable">
+    <table cellspacing="0" class="rowTable">
     <col width="100" />
     <col />
     <tr>
@@ -55,7 +55,7 @@
 </div>
 
 <div id="popHistoryBody">
-    <table cellspacing="0" class="adminTable">
+    <table cellspacing="0" class="rowTable">
     <col width="100" />
     <col />
 
@@ -89,7 +89,3 @@
     </table>
 </div>
 <!--@endif-->
-
-<div id="popFooter" class="tCenter">
-    <a href="#" onclick="window.close(); return false;" class="button"><span>{$lang->cmd_close}</span></a>
-</div>

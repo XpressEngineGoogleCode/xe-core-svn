@@ -7,13 +7,19 @@
 
     $lang->admin_info = '管理者情報';
     $lang->admin_index = '管理者トップページ';
+    $lang->control_panel = 'Control panel';
 
     $lang->module_category_title = array(
-        'service' => 'サービス型モジュール',
-        'utility' => '機能性モジュール',
-        'manager' => '管理型モジュール',
-        'accessory' => '付加モジュール',
-        'base' => '基本モジュール',
+        'service' => 'Service Setting',
+        'member' => 'Member Setting',
+        'content' => 'Content Setting',
+        'statistics' => 'Statistics',
+        'construction' => 'Construction',
+        'utility' => 'Utility Setting',
+        'interlock' => 'Interlock Setting',
+        'accessory' => 'Accessories',
+        'migration' => 'Data Migration',
+        'system' => 'System Setting',
     );
 
     $lang->newest_news = "最新ニュース";

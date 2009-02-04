@@ -3,8 +3,8 @@
 
 <!--#include("header.html")-->
 
-<table cellspacing="0" class="adminTable">
-<caption>{$selected_layout->title} ver {$selected_layout->version} ({$selected_layout->layout})</caption>
+<h4>{$selected_layout->title} ver {$selected_layout->version} ({$selected_layout->layout})</h4>
+<table cellspacing="0" class="rowTable">
 <tbody>
     <tr>
         <td>{nl2br($lang->about_layout_code)}</td>
@@ -12,8 +12,8 @@
 </tbody>
 </table>
 
-<table cellspacing="0" class="adminTable">
-<caption>{$lang->widget}</caption>
+<h4>{$lang->widget}</h4>
+<table cellspacing="0" class="rowTable">
 <tr>
     <td>
         <!--@foreach($widget_list as $widget)-->
@@ -30,11 +30,11 @@
         <input type="hidden" name="act" value="" />
 
         <div class="layout_editor_box">
-            <textarea name="code" class="layout_editor">{htmlspecialchars($layout_code)}</textarea>
+            <textarea name="code" style="width:99%; height:500px; border:0px; font-size:12px;">{htmlspecialchars($layout_code)}</textarea>
         </div>
 
         <div class="tRight gap1">
-            <span class="button"><input type="submit" value="{$lang->cmd_save}" /></span>
+            <span class="button black strong"><input type="submit" value="{$lang->cmd_save}" /></span>
             <a href="#" onclick="doPreviewLayoutCode();return false"  class="button"><span>{$lang->cmd_preview}</span></a>
             <a href="#"  onclick="doResetLayoutCode('{$layout_srl}');return false"  class="button"><span>{$lang->cmd_reset}</span></a>
         </div>

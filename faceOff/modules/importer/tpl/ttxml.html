@@ -7,8 +7,8 @@
         <input type="hidden" name="post_target_module" value="" id="post_target_module" />
         <input type="hidden" name="guestbook_target_module" value="" id="guestbook_target_module" />
 
-        <table cellspacing="0" class="adminTable">
-        <caption>{$lang->import_step_title[1]} - {$lang->import_step_desc[12]}</caption>
+        <h4>{$lang->import_step_title[1]} - {$lang->import_step_desc[12]}</h4>
+        <table cellspacing="0" class="rowTable">
         <tr>
             <td>{$lang->import_step_desc[121]} </td>
             <td>
@@ -23,7 +23,7 @@
         </tr>
         </table>
 
-        <table cellspacing="0" class="adminTable">
+        <table cellspacing="0" class="rowTable">
         <tr>
             <td>
                 {$lang->user_id} : <input type="text" name="user_id" value="{$logged_info->user_id}" class="inputTypeText w200" />
@@ -32,8 +32,8 @@
         </tr>
         </table>
 
-        <table cellspacing="0" class="adminTable">
-        <caption>{$lang->import_step_title[2]} - {$lang->import_step_desc[2]}</caption>
+        <h4>{$lang->import_step_title[2]} - {$lang->import_step_desc[2]}</h4>
+        <table cellspacing="0" class="rowTable">
         <tr>
             <td>
                 <input type="text" name="xml_file" value="./" class="inputTypeText w700" />
@@ -55,7 +55,7 @@
                     <option value="500">500</option>
                     <option value="1000">1000</option>
                 </select>
-                <span class="button"><input type="submit" value="{$lang->cmd_next}" /></span>
+                <span class="button black strong"><input type="submit" value="{$lang->cmd_next}" /></span>
             </th>
         </tr>
         </table>

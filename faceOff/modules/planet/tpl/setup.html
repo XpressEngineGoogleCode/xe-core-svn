@@ -2,12 +2,12 @@
 <!--%import("filter/insert_config.xml")-->
 
 <form action="./" method="get" onsubmit="return procFilter(this, insert_config)">
-    <table cellspacing="0" class="adminTable">
+    <table cellspacing="0" class="rowTable">
     <tr>
         <th scope="row"><div>{$lang->mid}</div></th>
         <td colspan="3">
             <input type="text" name="mid" value="{htmlspecialchars($module_info->mid)}"  class="inputTypeText w400" />
-            <p>{$lang->mid}</p>
+            <p>{$lang->about_mid}</p>
         </td>
     </tr>
     <tr class="row2">
@@ -21,7 +21,7 @@
         <th scope="row"><div>{$lang->browser_title}</div></th>
         <td colspan="3">
             <input type="text" name="browser_title" value="{htmlspecialchars($module_info->browser_title)}"  class="inputTypeText w400" />
-            <p>{$lang->browser_title}</p>
+            <p>{$lang->about_browser_title}</p>
         </td>
     </tr>
     <tr class="row">
@@ -100,9 +100,9 @@
         </td>
     </tr>
     <tr>
-        <td class="right" colspan="4">
-            <span class="button"><input type="submit" value="{$lang->cmd_registration}" accesskey="s" /></span>
-        </td>
+        <th class="button" colspan="4">
+            <span class="button black strong"><input type="submit" value="{$lang->cmd_registration}" accesskey="s" /></span>
+        </th>
     </tr>
     </table>
 </form>

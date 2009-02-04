@@ -2,67 +2,66 @@
 <!--%import("./js/module_admin.js")-->
 <!--%import("./css/module.css")-->
 
-<div id="popHeadder">
+<div id="popHeader" class="wide">
     <h3>{$lang->lang_code}</h3>
 </div>
 
 <div id="popBody">
-    <div id="listZone">
-        <table cellspacing="0" class="adminTable">
-        <thead>
-        <tr>
-            <th scope="row" colspan="3"><div>{$lang->cmd_list}</div></th>
-        </tr>
-        </thead>
-        <tbody>
-        <!--@foreach($lang_list as $key => $val)-->
-        <tr>
-            <td class="wide"><a href="#" onclick="doInsertLangCode('{$val->name}','{$target}'); return false;">{$val->name}</a></td>    
-            <td class="delete"><a href="#" onclick="if(confirm('{$lang->confirm_delete}')) doDeleteLang('{$val->name}','{$target}'); return false;">{$lang->cmd_select}</a></td>
-            <td class="setup"><a href="{getUrl('name',$val->name)}">{$lang->cmd_select}</a></td>
-        </tr>
-        <!--@end-->
-        </ul>
-        </tbody>
-        </table>
-    </div>
-
-    <div id="editZone">
-        <form action="./" method="post" onsubmit="return procFilter(this, insert_lang)" id="menu_fo">
-            <input type="hidden" name="target" value="{$target}" />
-            <table cellspacing="0" class="adminTable">
+    <table cellspacing="0" class="colTable">
+    <tr>
+        <td>
+            <form action="./" method="post" onsubmit="return procFilter(this, insert_lang)" id="menu_fo">
+                <input type="hidden" name="target" value="{$target}" />
+                <table cellspacing="0" class="rowTable">
+                <thead>
+                <tr>
+                    <th scope="row" colspan="2"><div>{$lang->lang_code}</div></th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr>
+                    <th scope="row"><div>{$lang->lang_code}</div></th>
+                    <td>
+                        <input type="text" name="lang_code" value="{$name}" class="inputTypeText w200" />
+                        <p>{$lang->about_lang_code}</p>
+                    </td>
+                </tr>
+                <!--@foreach($lang_supported as $key => $val)-->
+                <tr>
+                    <th scope="row"><div>{$val}</div></th>
+                    <td>
+                        <textarea name="{$key}" class="inputTypeTextArea">{$selected_lang[$key]}</textarea>
+                    </td>
+                </tr>
+                <!--@end-->
+                </tbody>
+                </table>
+                <div class="buttonZone">
+                    <span class="button blue"><input type="submit" value="{$lang->cmd_save}"></span>
+                </div>
+            </form>
+        </td>
+        <td>
+            <table cellspacing="0" class="rowTable">
             <thead>
             <tr>
-                <th scope="row" colspan="2"><div>{$lang->lang_code}</div></th>
+                <th scope="row" colspan="3"><div>{$lang->cmd_list}</div></th>
             </tr>
             </thead>
             <tbody>
+            <!--@foreach($lang_list as $key => $val)-->
             <tr>
-                <th scope="row"><div>{$lang->lang_code}</div></th>
-                <td>
-                    <input type="text" name="lang_code" value="{$name}" class="inputTypeText w200" />
-                    <p>{$lang->about_lang_code}</p>
-                </td>
-            </tr>
-            <!--@foreach($lang_supported as $key => $val)-->
-            <tr>
-                <th scope="row"><div>{$val}</div></th>
-                <td>
-                    <textarea name="{$key}" class="inputTypeTextArea">{$selected_lang[$key]}</textarea>
-                </td>
+                <td class="wide"><a href="#" onclick="doInsertLangCode('{$val->name}','{$target}'); return false;">{$val->name}</a></td>    
+                <td><a href="#" onclick="if(confirm('{$lang->confirm_delete}')) doDeleteLang('{$val->name}','{$target}'); return false;" class="buttonSet buttonActive"><span>{$lang->cmd_select}</span></a></td>
+                <td><a href="{getUrl('name',$val->name)}" class="buttonSet buttonDelete"><span>{$lang->cmd_select}</span></a></td>
             </tr>
             <!--@end-->
+            </ul>
             </tbody>
             </table>
-            <div class="buttonZone">
-                <span class="button blue"><input type="submit" value="{$lang->cmd_save}"></span>
-            </div>
-        </form>
-    </div>
-</div>
-
-<div id="popFooter" class="tCenter gap1">
-    <span class="button black"><input type="button" value="{$lang->cmd_close}" onclick="window.close(); return false;"/></span>
+        </td>
+    </tr>
+    </table>
 </div>
 
 <script type="text/javascript">

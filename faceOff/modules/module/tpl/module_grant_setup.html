@@ -6,7 +6,7 @@
 </script>
 
 
-<div id="popHeadder">
+<div id="popHeader" class="wide">
     <h3>{$lang->bundle_grant_setup}</h3>
 </div>
 
@@ -15,8 +15,8 @@
 
 <div id="popBody">
 
-    <table cellspacing="0" class="adminTable">
-    <caption>{$lang->about_grant}</caption>
+    <h4>{$lang->about_grant}</h4>
+    <table cellspacing="0" class="crossTable">
     <thead>
     <tr>
         <th scope="col"><div>{$lang->grant}</div></th>
@@ -49,9 +49,8 @@
 
 </div>
 
-<div id="popFooter" class="tCenter gap1">
-    <span class="button blue"><input type="submit" value="{$lang->cmd_registration}" /></span>
-    <span class="button black"><input type="button" value="{$lang->cmd_close}" onclick="window.close(); return false;"/></span>
+<div id="popFooter">
+    <span class="button black strong"><input type="submit" value="{$lang->cmd_registration}" /></span>
 </div>
 
 </form>

@@ -3,8 +3,9 @@
 <form action="./" method="post" onsubmit="return procFilter(this, insert_document_module_config)">
 <input type="hidden" name="target_module_srl" value="{$module_info->module_srl?$module_info->module_srl:$module_srls}" />
 
-    <table cellspacing="0" class="adminTable">
-    <caption>{$lang->document}</caption>
+    <h4>{$lang->document}</h4>
+    <p class="summary">{$lang->about_use_history}</p>
+    <table cellspacing="0" class="rowTable">
     <tr>    
         <th><div>{$lang->history}</div></th>
         <td class="wide">
@@ -12,13 +13,12 @@
                 <option value="N" <!--@if($document_config->use_history=='N')-->selected<!--@end-->>{$lang->notuse}</option>
                 <option value="Y" <!--@if($document_config->use_history=='Y')-->selected<!--@end-->>{$lang->use}</option>
             </select>
-            <p>{$lang->about_use_history}</p>
         </td>
     </tr>
     <tr>
-        <td class="right" colspan="2">
-            <span class="button"><input type="submit" value="{$lang->cmd_save}"/></span>
-        </td>
+        <th class="button" colspan="2">
+            <span class="button strong black"><input type="submit" value="{$lang->cmd_save}"/></span>
+        </th>
     </tr>
     </table>
 

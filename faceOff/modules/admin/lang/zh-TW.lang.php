@@ -7,14 +7,21 @@
 
     $lang->admin_info = '管理員資訊';
     $lang->admin_index = '管理頁面';
+    $lang->control_panel = 'Control panel';
 
     $lang->module_category_title = array(
-        'service' => '服務類模組',
-        'utility' => '功能模組',
-        'manager' => '管理類模組',
-        'accessory' => '附加模組',
-        'base' => '基本模組',
+        'service' => 'Service Setting',
+        'member' => 'Member Setting',
+        'content' => 'Content Setting',
+        'statistics' => 'Statistics',
+        'construction' => 'Construction',
+        'utility' => 'Utility Setting',
+        'interlock' => 'Interlock Setting',
+        'accessory' => 'Accessories',
+        'migration' => 'Data Migration',
+        'system' => 'System Setting',
     );
+
 
     $lang->newest_news = "最新消息";
 

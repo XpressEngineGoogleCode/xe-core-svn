@@ -61,7 +61,9 @@ function doStartPageModify(zoneID, module_srl) {
     var dummy = xCreateElement("div");
     xInnerHtml(dummy, xInnerHtml(obj));
     dummy.id="pageSizeLayer";
+    dummy.className=obj.className;
     dummy.style.visibility = "hidden";
+    dummy.style.display = "block";
     dummy.style.position = "absolute";
     dummy.style.left = 0;
     dummy.style.top = 0;

@@ -9,7 +9,7 @@
 <input type="hidden" name="is_default" value="Y" />
 <!--@end-->
 
-    <table cellspacing="0" class="adminTable">
+    <table cellspacing="0" class="rowTable">
 
     <!--@if(!$module_srls)-->
         <tr class="row2">
@@ -113,29 +113,29 @@
     <tr>
         <th scope="row"><div>{$lang->description}</div></th>
         <td>
-            <textarea name="description" class="inputTypeTextArea fixWidth">{htmlspecialchars($module_info->description)}</textarea>
+            <textarea name="description" class="inputTypeTextArea fullWidth">{htmlspecialchars($module_info->description)}</textarea>
             <p>{$lang->about_description}</p>
         </td>
     </tr>
     <tr>
         <th scope="row"><div>{$lang->header_text}</div></th>
         <td>
-            <textarea name="header_text" class="inputTypeTextArea fixWidth">{htmlspecialchars($module_info->header_text)}</textarea>
+            <textarea name="header_text" class="inputTypeTextArea fullWidth">{htmlspecialchars($module_info->header_text)}</textarea>
             <p>{$lang->about_header_text}</p>
         </td>
     </tr>
     <tr>
         <th scope="row"><div>{$lang->footer_text}</div></th>
         <td>
-            <textarea name="footer_text" class="inputTypeTextArea fixWidth">{htmlspecialchars($module_info->footer_text)}</textarea>
+            <textarea name="footer_text" class="inputTypeTextArea fullWidth">{htmlspecialchars($module_info->footer_text)}</textarea>
             <p>{$lang->about_footer_text}</p>
         </td>
     </tr>
     <tr>
-        <td colspan="2" class="right">
-            <span class="button"><input type="submit" value="{$lang->cmd_registration}" accesskey="s" /></span>
+        <th colspan="2" class="button">
+            <span class="button black strong"><input type="submit" value="{$lang->cmd_registration}" accesskey="s" /></span>
             <span class="button"><input type="button" value="{$lang->cmd_back}" onclick="history.back(); return false;" /></span>
-        </td>
+        </th>
     </table>
 
 </form>

@@ -7,13 +7,19 @@
 
     $lang->admin_info = '관리자 정보';
     $lang->admin_index = '관리자 초기 페이지';
+    $lang->control_panel = '제어판';
 
     $lang->module_category_title = array(
-        'service' => '서비스 모듈',
-        'utility' => '기능성 모듈',
-        'manager' => '관리 모듈',
-        'accessory' => '부가 모듈',
-        'base' => '기본 모듈',
+        'service' => '서비스 관리',
+        'member' => '회원 관리',
+        'content' => '정보 관리',
+        'statistics' => '통계 열람',
+        'construction' => '사이트 설정',
+        'utility' => '기능 설정',
+        'interlock' => '연동 설정',
+        'accessory' => '부가 기능 설정',
+        'migration' => '데이터 관리/복원',
+        'system' => '시스템 관리',
     );
 
     $lang->newest_news = "최신 소식";

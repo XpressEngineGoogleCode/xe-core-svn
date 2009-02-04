@@ -5,7 +5,7 @@
 <h3>{$lang->trackback} <span class="gray">{$lang->cmd_management}</span></h3>
 
 <form action="./" method="get" onsubmit="return procFilter(this, insert_config)">
-<table cellspacing="0" class="adminTable topGap">
+<table cellspacing="0" class="rowTable topGap">
 <tr class="row2">
     <th scope="col"><div>{$lang->enable_trackback}</div></th>
 </tr>
@@ -16,7 +16,7 @@
     </td>
 </tr>
 <tr class="row2">
-    <td class="right"><span class="button blue"><input type="submit" value="{$lang->cmd_registration}" accesskey="s" /></span></td>
+    <th class="button"><span class="button black strong"><input type="submit" value="{$lang->cmd_registration}" accesskey="s" /></span></th>
 </tr>
 </table>
 </form>
@@ -51,13 +51,10 @@
     <span class="button red"><input type="submit" value="{$lang->cmd_delete_checked_trackback}" /></span>
 </div>
 
-<!-- 정보 -->
-<div class="summary clear gap1">
-    <strong>Total</strong> <em>{number_format($total_count)}</em>, Page <strong>{number_format($page)}</strong>/{number_format($total_page)}
-</div>
 
 <!-- 목록 -->
-<table cellspacing="0" class="adminTable">
+<table cellspacing="0" class="rowTable clear">
+<caption>Total {number_format($total_count)}, Page {number_format($page)}/{number_format($total_page)}</caption>
 <thead>
     <tr>
         <th scope="col"><div>{$lang->no}</div></th>

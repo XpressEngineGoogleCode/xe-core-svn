@@ -18,8 +18,8 @@
     <!--@if($module == 'admin')-->
         <form action="./" method="get" onsubmit="return procFilter(this, update_menu_title)">
         <input type="hidden" name="menu_srl" value="{$menu_info->menu_srl}" />
-            <table cellspacing="0" class="adminTable">
-            <caption>{$lang->menu} {$lang->cmd_management}</caption>
+            <h4>{$lang->menu} {$lang->cmd_management}</h4>
+            <table cellspacing="0" class="rowTable">
             <tr>
                 <th scope="col"><div>{$lang->title}</div></th>
                 <td>
@@ -41,7 +41,7 @@
         </form>
 
     <!--@else-->
-        <table cellspacing="0" class="adminTable">
+        <table cellspacing="0" class="rowTable">
         <tr>
             <th scope="col"><div>{$lang->title}</div></th>
             <td class="left">
@@ -66,12 +66,12 @@
         <input type="hidden" name="act" value="" />
         <input type="hidden" name="target" value="" />
 
-    <div id="menu">
-        <ul class="simpleTree">
-            <li class="root" id='tree_0'><span>{$lang->menu}</span></li>
-        </ul>
-    </div>
-<div id="menu_zone_info" style="position:absolute;top:200px; width:70%; right:20px"></div>
+        <div id="menu_zone_info"></div>
+        <div id="menu">
+            <ul class="simpleTree">
+                <li class="root" id='tree_0'><span>{$lang->menu}</span></li>
+            </ul>
+        </div>
         </form>
     </div>
 </div>

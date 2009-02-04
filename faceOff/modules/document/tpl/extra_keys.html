@@ -7,19 +7,13 @@
     {@ $selected_var = $extra_keys[$selected_var_idx] }
 <!--@end-->
 
-<div class="tRight">
-    <a href="{getUrl('type','insertExtraForm','selected_var_idx','')}" class="button blue"><span>{$lang->cmd_insert}</span></a>
-</div>
-
 <!--@if($type == 'insertExtraForm' || $selected_var_idx)-->
     <form action="./" method="post" onsubmit="return procFilter(this, insert_extra_var)">
     <input type="hidden" name="module_srl" value="{$module_srl}" />
     <input type="hidden" name="var_idx" value="{$selected_var_idx}" />
 
-        <div class="gap1"></div>
-
-        <table cellspacing="0" class="adminTable ">
-        <caption>{$lang->extra_vars} {$selected_var_idx}</caption>
+        <h4>{$lang->extra_vars} {$selected_var_idx}</h4>
+        <table cellspacing="0" class="crossTable ">
         <tr>
             <th><div>{$lang->column_name}</div></th>
             <td class="wide"><input type="text" name="name" value="{$selected_var->name}" class="inputTypeText w200" /> </td>
@@ -53,13 +47,13 @@
             <td><input type="checkbox" name="search" value="Y" <!--@if($selected_var->search=='Y')-->checked="checked"<!--@end--> /></td>
         </tr>
         <tr>
-            <td colspan="2" class="right">
+            <th colspan="2" class="button">
                 <!--@if($selected_var)-->
-                <span class="button red"><input type="submit" value="{$lang->cmd_modify}" accesskey="s" /></span>
+                <span class="button strong black"><input type="submit" value="{$lang->cmd_modify}" accesskey="s" /></span>
                 <!--@else-->
-                <span class="button green"><input type="submit" value="{$lang->cmd_insert}" accesskey="s" /></span>
+                <span class="button strong black"><input type="submit" value="{$lang->cmd_insert}" accesskey="s" /></span>
                 <!--@end-->
-                <a href="{getUrl('type','','selected_var_idx','')}"  class="button black"><span>{$lang->cmd_back}</span></a>
+                <a href="{getUrl('type','','selected_var_idx','')}"  class="button"><span>{$lang->cmd_back}</span></a>
             </th>
         </tr>
         </table>
@@ -67,9 +61,8 @@
     </form>
 <!--@else-->
 
-    <div class="gap1"></div>
-    <table cellspacing="0" class="adminTable ">
-    <caption>{$lang->extra_vars}</caption>
+    <h4>{$lang->extra_vars}</h4>
+    <table cellspacing="0" class="crossTable ">
     <thead>
     <tr>
         <th><div>{$lang->no}</div></th>
@@ -77,21 +70,23 @@
         <th><div>{$lang->column_type}</div></th>
         <th><div>{$lang->is_required}</div></th>
         <th><div>{$lang->cmd_search}</div></th>
-        <th colspan="4"><div>&nbsp;</div></th>
+        <th><div>&nbsp;</div></th>
     </tr>
     </thead>
     <tbody>
     <!--@foreach($extra_keys as $key => $val)-->
     <tr>
-        <td rowspan="3" class="center number">{$val->idx}</td>
+        <td rowspan="3">{$val->idx}</td>
         <td class="nowrap"><b>{$val->name}</b></td>
         <td class="nowrap">{$lang->column_type_list[$val->type]}</td>
-        <td rowspan="3" class="nowrap center"><!--@if($val->is_required=='Y')--><b>{$lang->is_required}</b><!--@else-->N<!--@end--></td>
-        <td rowspan="3" class="nowrap center"><!--@if($val->search=='Y')--><b>{$lang->search_target}</b><!--@else-->N<!--@end--></td>
-        <td rowspan="3" class="moveupdown"><!--@if($val->idx>1)--><a href="#" onclick="moveVar('up','{$module_srl}','{$val->idx}'); return false;" class="up">{$lang->cmd_modify}</a><!--@else-->&nbsp;<!--@end--></td>
-        <td rowspan="3" class="moveupdown"><a href="#" onclick="moveVar('down','{$module_srl}','{$val->idx}');return false;" class="down">{$lang->cmd_modify}</a></td>
-        <td rowspan="3" class="modify"><a href="{getUrl('selected_var_idx',$val->idx)}">{$lang->cmd_modify}</a></td>
-        <td rowspan="3" class="delete"><a href="#" onclick="return doDeleteExtraKey('{$module_srl}','{$val->idx}');">{$lang->cmd_delete}</a></td>
+        <td rowspan="3"><!--@if($val->is_required=='Y')--><b>{$lang->is_required}</b><!--@else-->N<!--@end--></td>
+        <td rowspan="3"><!--@if($val->search=='Y')--><b>{$lang->search_target}</b><!--@else-->N<!--@end--></td>
+        <td rowspan="3" class="nowrap">
+            <!--@if($val->idx>1)--><a href="#" onclick="moveVar('up','{$module_srl}','{$val->idx}'); return false;" class="buttonSet buttonUp"><span>{$lang->cmd_modify}</span></a><!--@end-->
+            <a href="#" onclick="moveVar('down','{$module_srl}','{$val->idx}');return false;" class="buttonSet buttonDown"><span>{$lang->cmd_modify}</a></span>
+            <a href="{getUrl('selected_var_idx',$val->idx)}" class="buttonSet buttonSetting"><span>{$lang->cmd_modify}</span></a>
+            <a href="#" onclick="return doDeleteExtraKey('{$module_srl}','{$val->idx}');" class="buttonSet buttonDelete"><span>{$lang->cmd_delete}</span></a>
+        </td>
     </tr>
     <tr>
         <td>{$lang->default_value}</td>
@@ -100,7 +95,13 @@
     <tr>
         <td>{$lang->description}</td>
         <td class="wide">{$val->desc}&nbsp;</td>
+    </tr>
     <!--@end-->
+    <tr>
+        <th colspan="9" class="button">
+            <a href="{getUrl('type','insertExtraForm','selected_var_idx','')}" class="button black strong"><span>{$lang->cmd_insert}</span></a>
+        </th>
+    </tr>
     </tbody>
     </table>
 <!--@end-->

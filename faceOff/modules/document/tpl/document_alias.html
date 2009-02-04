@@ -10,8 +10,10 @@
 <form action="{Context::getRequestUri()}" method="post" onsubmit="return procFilter(this, insert_alias)">
 <input type="hidden" name="document_srl" value="{$document_srl}" />
 <input type="hidden" name="module_srl" value="{$oDocument->get('module_srl')}" />
-<table cellspacing="0" class="adminTable">
-<caption>{$lang->alias}</caption>
+
+<h4>{$lang->alias}</h4>
+
+<table cellspacing="0" class="crossTable">
 <thead>
 <tr>
     <th scope="col" class="half_wide"><div>{$lang->title}</div></th>
@@ -39,7 +41,7 @@
     <td>
     <input type="text" class="inputTypeText fixWidth" name="alias_title" />
     </td>
-    <td><input type="submit" value="{$lang->cmd_registration}" accesskey="s"class="btnSubmit" /></td>
+    <td><span class="button black strong"><input type="submit" value="{$lang->cmd_registration}" accesskey="s"class="btnSubmit" /></span></td>
 </tr>
 </tbody>
 </table>

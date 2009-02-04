@@ -1,6 +1,0 @@
-@charset "utf-8";
-
-#listZone { float:left; width:250px; overflow-x:hidden; overflow-y:scroll; height:378px;}
-#editZone { float:right; width:340px; overflow:hidden; }
-.buttonZone { text-align:right; margin:0 0 10px 0; }
-.inputTypeTextArea { width:98%; height:30px; }

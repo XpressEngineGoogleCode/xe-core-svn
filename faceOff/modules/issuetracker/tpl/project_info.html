@@ -1,6 +1,6 @@
 <!--#include("header.html")-->
 
-<table cellspacing="0" class="adminTable">
+<table cellspacing="0" class="rowTable">
 <tr class="row2">
     <th scope="row"><div>{$lang->module_category}</div></th>
     <td>
@@ -68,8 +68,8 @@
     {@ $extra_vars_desc = $module_info->extra_vars[$i]->desc?$module_info->extra_vars[$i]->desc:'&nbsp;'}
     {@ $extra_vars_search = $module_info->extra_vars[$i]->search=='Y'?'Y':'N'}
 
-    <table cellspacing="0" class="adminTable topGap">
-    <caption>{$lang->extra_vars} {$i}</caption>
+    <h4>{$lang->extra_vars} {$i}</h4>
+    <table cellspacing="0" class="rowTable">
     <tr class="row2">
         <th><div>{$lang->column_name}</div></th>
         <td class="wide">{$extra_vars_name}</td>

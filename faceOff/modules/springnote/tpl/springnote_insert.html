@@ -11,11 +11,11 @@
 <!--@end-->
 <input type="hidden" name="use_category" value="N" />
 
-    <table cellspacing="0" class="adminTable">
+    <table cellspacing="0" class="rowTable">
 
     <tr class="row2">
         <th scope="row"><div>{$lang->mid}</div></th>
-        <td>
+        <td class="wide">
             <input type="text" name="mid" value="{$module_info->mid}" class="inputTypeText w200" />
             <p>{$lang->about_mid}</p>
         </td>
@@ -131,9 +131,9 @@
         </td>
     </tr>
     <tr>
-        <td colspan="2" class="right">
-            <span class="button"><input type="submit" value="{$lang->cmd_registration}" accesskey="s" /></span>
-        </td>
+        <th colspan="2" class="button">
+            <span class="button black strong"><input type="submit" value="{$lang->cmd_registration}" accesskey="s" /></span>
+        </th>
     </tr>
     </table>
 

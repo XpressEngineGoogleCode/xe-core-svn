@@ -30,13 +30,9 @@
     <span class="button red"><input type="submit" value="{$lang->cmd_delete_checked_comment}" /></span>
 </div>
 
-<!-- 정보 -->
-<div class="summary clear gap1">
-    <strong>Total</strong> <em>{number_format($total_count)}</em>, Page <strong>{number_format($page)}</strong>/{number_format($total_page)}
-</div>
-
 <!-- 목록 -->
-<table cellspacing="0" class="adminTable">
+<table cellspacing="0" class="crossTable clear">
+<caption>Total {number_format($total_count)}, Page {number_format($page)}/{number_format($total_page)}</caption>
 <thead>
     <tr>
         <th scope="col"><div>{$lang->no}</div></th>

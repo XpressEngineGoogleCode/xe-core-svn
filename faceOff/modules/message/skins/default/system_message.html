@@ -1,10 +1,10 @@
-<!--%import("css/message.css")-->
+<!--%import("message.css")-->
 
-<div class="system_message <!--@if($is_logged)-->without_login<!--@end-->">
-    <div class="system_message_box">
-        <blockquote>
+<div class="messageLayer">
+    <div class="messageLayerBody">
+        <h4>
             {$system_message}
-        </blockquote>
+        </h4>
 
         <ul>
             <li><a href="#" onclick="history.back(); return false;" class="button black"><span>{$lang->cmd_back}</span></a></li>
@@ -13,10 +13,62 @@
             <!--@end-->
         </ul>
     </div>
-
-    <!--@if(!$is_logged)-->
-    <div class="loginForm">
-        <img widget="login_info" skin="xe_official" colorset="default" />
-    </div>
-    <!--@end-->
 </div>
+
+<!--@if(!$is_logged)-->
+    <!--%import("./filter/login.xml")-->
+    <!--%import("./filter/openid_login.xml")-->
+    <!--%import("./message.js")-->
+    <script type="text/javascript">
+        var keep_signed_msg = "{$lang->about_keep_signed}";
+        xAddEventListener(window, "load", function(){ xGetElementById("messageLoginForm").user_id.focus(); });
+    </script>
+
+    <div class="messageLayer">
+        <div class="messageLayerBody">
+            <h4>
+                {$lang->cmd_login}
+            </h4>
+
+            <div class="messageLogin" id="messageLogin">
+
+                <form action="./" method="post" onsubmit="return procFilter(this, widget_login)" id="messageLoginForm">
+
+                    <div class="formField"><label>{$lang->user_id}</label> <input name="user_id" type="text" class="inputTypeText" /></div>
+                    <div class="formField"><label>{$lang->password}</label> <input name="password" type="password" class="inputTypeText" /></div>
+
+                    <div class="button">
+                        <span class="button black strong"><input type="submit" value="{$lang->cmd_login}" /></span>
+                        <a href="{getUrl('act','dispMemberSignUpForm')}" class="button"><span>{$lang->cmd_signup}</span></a>
+                        <a href="{getUrl('act','dispMemberFindAccount')}" class="button"><span>{$lang->cmd_find_member_account}</span></a>
+                    </div>
+
+                    <p class="loginOption">
+                        <input type="checkbox" name="keep_signed" id="messageKeepid" value="Y" onclick="if(this.checked) return confirm(keep_signed_msg);" />
+                        <label for="keepid">{$lang->keep_signed}</label>
+                        <!--@if($member_config->enable_openid=='Y')-->
+                        <input name="use_open_id" id="messageUseOpenID" type="checkbox" value="Y" onclick="toggleLoginForm(this); return false;" />
+                        <label for="use_open_id">Open ID</label>
+                        <!--@end-->
+                    </p>
+
+                </form>
+                <div class="clear"></div>
+            </div>
+
+            <!-- OpenID -->
+            <!--@if($member_config->enable_openid=='Y')-->
+            <div class="messageLogin openid_login" id="messageOpenidLogin">
+                <form action="{getUrl('module','member','act','procMemberOpenIDLogin')}" method="post" onsubmit="return procFilter(this, openid_login)" id="messageOpenIDForm">
+                    <div class="openIDTitle">
+                        OpenID 
+                        <input type="text" name="openid" class="inputTypeText" />
+                        <input name="use_open_id_2" type="checkbox" value="Y" onclick="toggleLoginForm(this); return false;" checked="checked" />
+                        <span class="button black strong"><input type="submit" value="{$lang->cmd_login}" /></span>
+                    </div>
+              </form>
+            </div>
+            <!--@end-->
+        </div>
+    </div>
+<!--@end-->

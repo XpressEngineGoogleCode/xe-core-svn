@@ -507,26 +507,18 @@ function setFixedPopupSize() {
     if(h != _popupHeight)  {
         _popupHeight = h;
 
-        jQuery('div').each(function() {
-            var ww = jQuery(this).width();
-            if(jQuery.inArray(this.id, ['waitingforserverresponse', 'fororiginalimagearea', 'fororiginalimageareabg']) == -1) {
-                if(ww > w) w = ww;
-            }
-        });
+        jQuery('div').each(function() { var ww = jQuery(this).width(); if(jQuery.inArray(this.id, ['waitingforserverresponse', 'fororiginalimagearea', 'fororiginalimageareabg']) == -1) { if(ww > w) w = ww; } });
+        jQuery('table').each(function() { var ww = jQuery(this).width(); if(ww > w) w = ww; });
+        jQuery('form').each(function() { var ww = jQuery(this).width(); if(ww > w) w = ww; });
 
-        // 윈도우에서는 브라우저 상관없이 가로 픽셀이 조금 더 늘어나야 한다.
-        if(navigator.userAgent.toLowerCase().indexOf('windows') > 0) {
-            if(jQuery.browser.opera) w += 10;
-            else if(jQuery.browser.msie) w += 10;
-            else w += 10;
-        }
+        jQuery("#pop_content").width('100%');
+        jQuery("#popHeader").width('100%');
+        w += 50;
         window.resizeTo(w, h);
 
         var h1 = jQuery(window).height();
-        window.resizeBy(0, h-h1);
-
+        window.resizeBy(0, h-h1+5);
         window.scrollTo(0,0);
-
     }
 
     setTimeout(setFixedPopupSize, 300);

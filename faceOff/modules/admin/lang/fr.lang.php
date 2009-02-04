@@ -7,13 +7,19 @@
 
     $lang->admin_info = 'Informations d\'Administrateur';
     $lang->admin_index = 'Page de l\'indice pour l\'Administrateur';
+    $lang->control_panel = 'Control panel';
 
     $lang->module_category_title = array(
-        'service' => 'Modules de Service',
-        'manager' => 'Modules Administratif',
-        'utility' => 'Modules d\'Utilité',
-        'accessory' => 'Modules Additionnels',
-        'base' => 'Modules Fondamentaux',
+        'service' => 'Service Setting',
+        'member' => 'Member Setting',
+        'content' => 'Content Setting',
+        'statistics' => 'Statistics',
+        'construction' => 'Construction',
+        'utility' => 'Utility Setting',
+        'interlock' => 'Interlock Setting',
+        'accessory' => 'Accessories',
+        'migration' => 'Data Migration',
+        'system' => 'System Setting',
     );
 
     $lang->newest_news = "Dernières Nouvelles";
