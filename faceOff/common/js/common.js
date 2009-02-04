@@ -124,6 +124,18 @@ if(jQuery) jQuery.noConflict();
 
 }) (jQuery);
 
+/* os check */
+new function() {
+    var b = navigator.userAgent.toLowerCase(); // jQuery.browser 아래에 추가하시면 이 줄은 삭제
+
+    jQuery.os = {
+        Linux: /linux/.test(b),
+        Unix: /x11/.test(b),
+        Mac: /mac/.test(b),
+        Windows: /win/.test(b)
+    }
+}
+
 /* jQuery(document).ready() */
 jQuery(function($) {
     /* 팝업메뉴 레이어 생성 */

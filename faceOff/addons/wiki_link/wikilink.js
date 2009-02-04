@@ -1,9 +1,16 @@
 function openWikiLinkDialog()
 {
-    jQuery("#link").css('display', 'block');
+    var link = jQuery("#link");
+    link.css('display', 'block');
     var target = xGetElementById('linktarget');
     target.value = "";
-    jQuery("#link").dialog({height:100});
+    try{
+        link.dialog({height:100});
+    }
+    catch(e)
+    {
+        link.dialog("open");
+    }
 }
 
 function setText() {
@@ -23,7 +30,15 @@ function setText() {
 function addShortCutForWiki() 
 {
     var iframe_obj = editorGetIFrame(1);
-    jQuery(iframe_obj.contentWindow.document).bind('keydown', "Alt+Space", function(evt) { openWikiLinkDialog(); return false;}); 
+    if(jQuery.os.Mac)
+    {
+        jQuery(iframe_obj.contentWindow.document).bind('keydown', "ALT+SPACE", function(evt) { openWikiLinkDialog(); }); 
+    }
+    else
+    {
+        jQuery(iframe_obj.contentWindow.document).bind('keydown', "CTRL+SPACE", function(evt) { openWikiLinkDialog(); }); 
+    }
+    jQuery(document).bind('keydown',"CTRL+ALT+SPACE", function(evt) {} );
 }
 
 xAddEventListener(window, 'load', addShortCutForWiki);
