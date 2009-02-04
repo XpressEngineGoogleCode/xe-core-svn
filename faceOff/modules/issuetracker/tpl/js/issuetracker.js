@@ -58,11 +58,10 @@ function completeDeleteTrackback(ret_obj) {
 }
 
 /* 내용 숨김/열기 */
-xAddEventListener(document,'click',openSummaryText);
 function openSummaryText(evt) {
-    var e = new xEvent(evt);
-    if(!e.target) return;
-    var pObj = e.target;
+    var pObj = evt.target;
+    if(!pObj) return;
+
     while(pObj) {
         if(pObj.nodeName == "DIV" && (pObj.className == "open" || pObj.className == "close")) {
             if(pObj.className == 'open') {
@@ -76,34 +75,26 @@ function openSummaryText(evt) {
 }
 
 /* title 레이어 */
-xAddEventListener(document,'mouseover',showTitleLayer);
 function showTitleLayer(evt) {
-    var e = new xEvent(evt);
-    var obj = e.target;
-    var layer = xGetElementById("titleLayer");
+    var obj = jQuery(evt.target);
+    var layer = jQuery("#titleLayer");
 
-    if(!obj || obj.nodeName != 'A' || !obj.getAttribute('rel')) {
-        if(layer) layer.style.visibility = "hidden";
-        return;
+    if(!layer.size()) {
+        layer = jQuery("<div>")
+            .attr('id', "titleLayer")
+            .css({
+                border : "1px solid #F3B95E",
+                backgroundColor : "#FBF2E4",
+                padding : "5px",
+                color : "#000000",
+                display : "none",
+                position : "absolute"
+            })
+            .appendTo(document.body);
     }
 
-    if(!layer) {
-        layer = xCreateElement("DIV");
-        layer.id = "titleLayer";
-        layer.style.border = "1px solid #F3B95E";
-        layer.style.backgroundColor = "#FBF2E4";
-        layer.style.padding = "5px";
-        layer.style.color = "#000000";
-        layer.style.visibility = "hidden";
-        layer.style.position = "absolute";
-        window.document.body.appendChild(layer);
-    }
-
-    var text = obj.getAttribute('rel');
-    xInnerHtml(layer, text);
-    xLeft(layer, e.pageX+5);
-    xTop(layer, e.pageY+5);
-    layer.style.visibility = "visible";
+    layer.text(obj.attr('rel'));
+    layer.css({left:evt.pageX+5, top:evt.pageY+5}).show();
 
     evt.cancel = true;
     //evt.returnValue = false;
@@ -111,23 +102,22 @@ function showTitleLayer(evt) {
 
 /* issue list에서 배포판 선택 */
 function showRelease(obj, fo_obj) {
-    var packge_srl = obj.options[obj.selectedIndex].value;
-    var target = xGetElementById('release_'+packge_srl);
-    if(!packge_srl || !target) return;
+    var packge_srl = jQuery('option:selected', obj).val();
+    if(!packge_srl) return;
 
-    var sel = fo_obj.release_srl;
-    while(sel.options.length) {
-        sel.remove(0);
-    }
+    var target = jQuery('#release_'+packge_srl);
+    if(!target.size()) return;
 
-    for(var i=0;i<target.options.length;i++) {
-        var opt = xCreateElement('option');
-        opt.text = target.options[i].text;
-        opt.value = target.options[i].value;
-        try {
-            sel.add(opt, null);
-        } catch(e) {
-            sel.add(opt);
-        }
-    }
+    var releaseEl = fo_obj.release_srl;
+    jQuery('option', releaseEl).remove();
+    jQuery('option', target).clone().appendTo(releaseEl);
 }
+
+
+jQuery(function ($) {
+    $('.summaryText').click(openSummaryText);
+    $('td.filename a[rel]')
+        .mouseover(showTitleLayer)
+        .mouseout(function() { $("#titleLayer").hide() });
+});
+

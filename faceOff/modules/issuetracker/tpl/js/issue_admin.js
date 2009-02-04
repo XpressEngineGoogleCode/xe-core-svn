@@ -34,9 +34,8 @@ function completeInsertProject(ret_obj) {
 
 function deleteByFilter(target_srl, filter)
 {
-    var e = xGetElementById('target_srl');
-    e.value= target_srl;
-    var hF = xGetElementById("deleteForm");
+    var e = jQuery('#target_srl').val(target_srl);
+    var hF = jQuery("#deleteForm").get(0);
     procFilter(hF, filter);
 }
 

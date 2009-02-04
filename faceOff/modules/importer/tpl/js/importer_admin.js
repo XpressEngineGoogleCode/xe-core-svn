@@ -28,9 +28,9 @@ function doPreProcessing(fo_obj) {
 
     var type = fo_obj.type.value;
 
-    xDisplay('importForm','none');
-    xDisplay('process','block');
-    xInnerHtml('status','');
+    jQuery('#importForm').hide();
+    jQuery('#process').show();
+    jQuery('#status').empty();
     prepared = false;
     setTimeout(doPrepareDot, 50);
 
@@ -48,17 +48,18 @@ function doPreProcessing(fo_obj) {
 function doPrepareDot() {
     if(prepared) return;
 
-    var str = xInnerHtml('status');
-    if(str.length<1 || str.length - preProcessingMsg.length > 50) str = preProcessingMsg;
+    var str = jQuery('#status').html();
+    if(str.length < 1 || str.length - preProcessingMsg.length > 50) str = preProcessingMsg;
     else str += ".";
-    xInnerHtml('status', str);
+
+    jQuery('#status').html(str);
     setTimeout(doPrepareDot, 50);
 }
 
 /* 준비가 끝났을때 호출되는 함수 */
 function completePreProcessing(ret_obj, response_tags) {
     prepared = true;
-    xInnerHtml('status','');
+    jQuery('#status').empty();
 
     var status = ret_obj['status'];
     var message = ret_obj['message'];
@@ -76,16 +77,16 @@ function completePreProcessing(ret_obj, response_tags) {
         return;
     }
 
-    xDisplay('btn_reload','none');
-    xDisplay('btn_continue','block');
+    jQuery('#btn_reload').hide();
+    jQuery('#btn_continue').show();
 
-    var fo_obj = xGetElementById('fo_process');
+    var fo_obj = jQuery('#fo_process').get(0);
     fo_obj.type.value = type;
     fo_obj.total.value = total;
     fo_obj.cur.value = cur;
     fo_obj.key.value = key;
 
-    var fo_import = xGetElementById('fo_import');
+    var fo_import = jQuery('#fo_import').get(0);
     if(fo_import && fo_import.post_target_module) fo_obj.post_target_module.value = fo_import.post_target_module.value;
     if(fo_import && fo_import.guestbook_target_module) fo_obj.guestbook_target_module.value = fo_import.guestbook_target_module.value;
     if(fo_import && fo_import.user_id) fo_obj.user_id.value = fo_import.user_id.value;
@@ -98,7 +99,7 @@ function completePreProcessing(ret_obj, response_tags) {
 
 /* @brief 임포트 시작 */
 function doImport() {
-    var fo_obj = xGetElementById('fo_process');
+    var fo_obj = jQuery('#fo_process').get(0);
 
     var params = new Array();
     params['type'] = fo_obj.type.value;
@@ -126,26 +127,26 @@ function doImport() {
 function completeImport(ret_obj, response_tags) {
     var message = ret_obj['message'];
     var type = ret_obj['type'];
-    var total = parseInt(ret_obj['total'],10);
-    var cur = parseInt(ret_obj['cur'],10);
+    var total = parseInt(ret_obj['total'], 10);
+    var cur = parseInt(ret_obj['cur'], 10);
     var key = ret_obj['key'];
 
     displayProgress(total, cur);
 
-    var fo_obj = xGetElementById('fo_process');
+    var fo_obj = jQuery('#fo_process').get(0);
     fo_obj.type.value = type;
     fo_obj.total.value = total;
     fo_obj.cur.value = cur;
     fo_obj.key.value = key;
     
     // extract된 파일을 이용해서 import
-    if(total>cur) doImport();
+    if(total > cur) doImport();
     else {
         alert(message);
         fo_obj.reset();
-        xDisplay('process','none');
-        xDisplay('importForm','block');
-        xGetElementById('fo_import').reset();
+        jQuery('#process').hide();
+        jQuery('#importForm').show();
+        jQuery('#fo_import').get(0).reset();
     }
 }
 
@@ -153,19 +154,17 @@ function completeImport(ret_obj, response_tags) {
 function displayProgress(total, cur) {
     // 진행률 구함
     var per = 0;
-    if(total > 0) per = Math.round(cur/total*100);
+    if(total > 0) per = Math.round(cur / total * 100);
     else per = 100;
     if(!per) per = 1;
 
     var status = '<div class="progressBox"><div class="progress1" style="width:'+per+'%;">'+per+'%&nbsp;</div>';
     status += '<div class="progress2">'+cur+'/'+total+'</div>';
     status += '<div class="clear"></div></div>';
-    xInnerHtml('status', status);
+    jQuery('#status').html(status);
 }
 
 function insertSelectedModule(id, module_srl, mid, browser_title) {
-    var obj= xGetElementById('_'+id);
-    var sObj = xGetElementById(id);
-    sObj.value = module_srl;
-    obj.value = browser_title+' ('+mid+')';
+    jQuery('#_' + id).val(module_srl);
+    jQuery('#' + id).val(browser_title+' ('+mid+')');
 }
