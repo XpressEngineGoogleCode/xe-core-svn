@@ -33,6 +33,8 @@
     <tr>
         <th scope="col"><div>{$lang->no}</div></th>
         <th scope="col"><div>{$lang->word}</div></th>
+        <th scope="col"><div>{$lang->hit}</div></th>
+        <th scope="col"><div>{$lang->latest_hit}</div></th>
         <th scope="col"><div>{$lang->regdate}</div></th>
         <th scope="col"><div>{$lang->cmd_delete}</div></th>
     </tr>
@@ -42,6 +44,8 @@
     <tr class="row{$cycle_idx}">
         <td>{count($word_list)-$no}</td>
         <td class="wide">{$val->word}</td>
+        <td>{$val->hit}</td>
+        <td><span title="{zdate($val->latest_hit, 'Y-m-d H:i:s')}">{zdate($val->latest_hit, 'Y-m-d')}</span></td>
         <td>{zdate($val->regdate,"Y-m-d")}</td>
         {@ $val->word = base64_encode($val->word);}
         <td><a href="#" onclick="doDeleteDeniedWord('{$val->word}');return false;" title="{$lang->cmd_delete}" class="buttonSet buttonDelete"><span>{$lang->cmd_delete}</span></a></td>
