@@ -32,7 +32,7 @@ body{ background:#fff;}
 .ece .e2 { width:300px; float:right; right:-320px; border-left:1px solid #ddd; padding-bottom:20px;}
 .ec .e2 { display:none;}
 
-#xeAdmin .lnb { position:relative; left:-3px; float:right; clear:left; margin:5px 0 0 0; padding:0;}
+#xeAdmin .lnb { position:relative; left:-3px; float:left; clear:left; margin:5px 0 0 0; padding:0;}
 #xeAdmin .lnb li,
 #xeAdmin .lnb li a{ position:relative; float:left; background:url(../img/buttonLNB.gif) no-repeat; white-space:nowrap;}
 #xeAdmin .lnb li{ margin:0 1px 0 0; padding:0;list-style:none; background-position:0 0;}
