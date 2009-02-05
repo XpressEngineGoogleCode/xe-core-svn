@@ -45,8 +45,8 @@
             <!--@foreach($lang_list as $key => $val)-->
             <tr>
                 <td class="wide"><a href="#" onclick="doInsertLangCode('{$val->name}','{$target}'); return false;">{$val->name}</a></td>    
-                <td><a href="#" onclick="if(confirm('{$lang->confirm_delete}')) doDeleteLang('{$val->name}','{$target}'); return false;" class="buttonSet buttonActive"><span>{$lang->cmd_select}</span></a></td>
-                <td><a href="{getUrl('name',$val->name)}" class="buttonSet buttonDelete"><span>{$lang->cmd_select}</span></a></td>
+                <td><a href="{getUrl('name',$val->name)}" class="buttonSet buttonActive"><span>{$lang->cmd_select}</span></a></td>
+                <td><a href="#" onclick="if(confirm('{$lang->confirm_delete}')) doDeleteLang('{$val->name}','{$target}'); return false;" class="buttonSet buttonDelete"><span>{$lang->cmd_select}</span></a></td>
             </tr>
             <!--@end-->
             </ul>
