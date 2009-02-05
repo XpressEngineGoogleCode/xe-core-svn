@@ -48,10 +48,12 @@
 
 <div class="adminRightExtra">
     <form action="./" method="post" onsubmit="return procFilter(this, insert_homepage)">
-        <table cellspacing="0" class="rowTable">
+        <table cellspacing="0" class="colTable">
         <tbody>
             <tr>
                 <th scope="row"><div>{$lang->homepage_title}</div></th>
+			</tr>
+			<tr>
                 <td>
                     <input type="text" name="homepage_title" value="" class="inputTypeText w200" />
                     <p>{$lang->about_homepage_title}</p>
@@ -59,13 +61,15 @@
             </tr>
             <tr>
                 <th scope="row"><div>{$lang->domain}</div></th>
+			</tr>
+			<tr>
                 <td>
                     http://<input type="text" name="domain" value="" class="inputTypeText w200" />
                     <p>{$lang->about_domain}</p>
                 </td>
             </tr>
             <tr class="row2">
-                <th colspan="2" class="button"><span class="button black strong"><input type="submit" value="{$lang->cmd_homepage_registration}" accesskey="s" /></span></div></th>
+                <td colspan="2" class="button"><span class="button black strong"><input type="submit" value="{$lang->cmd_homepage_registration}" accesskey="s" /></span></div></td>
             </tr>
         </tbody>
         </table>
