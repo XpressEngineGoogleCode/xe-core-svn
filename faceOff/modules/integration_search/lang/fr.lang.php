@@ -16,11 +16,18 @@
     $lang->multimedia = "Images/ Movies";
 
     $lang->is_search_option = array(
-        'title' => 'Titre',
-        'content' => 'Contenu',
-        'title_content' => 'Titre+Contenu',
-        'comment' => 'Commentaire',
-        'tag' => 'Balise',
+        'document' => array(
+            'title_content' => 'Titre+Contenu',
+            'title' => 'Titre',
+            'content' => 'Contenu',
+            'tag' => 'Balise',
+        ),
+        'trackback' => array(
+            'url' => 'URL objectif',
+            'blog_name' => 'Nom du Site objectif',
+            'title' => 'Titre',
+            'excerpt' => 'Contenu',
+        ),
     );
 
     $lang->is_sort_option = array(

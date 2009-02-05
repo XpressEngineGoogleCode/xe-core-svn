@@ -15,13 +15,13 @@
         /**
          * @brief 게시글 검색
          **/
-        function getDocuments($module_srls_list, $search_keyword, $page=1, $list_count = 20) {
+        function getDocuments($module_srls_list, $search_target, $search_keyword, $page=1, $list_count = 20) {
             if(is_array($module_srls_list)) $args->module_srl = implode(',',$module_srls_list);
             else $args->module_srl = $module_srls_list;
             $args->page = $page;
             $args->list_count = $list_count;
             $args->page_count = 10;
-            $args->search_target = 'title_content';
+            $args->search_target = $search_target;
             $args->search_keyword = $search_keyword;
             $args->sort_index = 'list_order'; 
             $args->order_type = 'asc';
@@ -57,6 +57,27 @@
                 $list[$key] = $oComment;
             }
             $output->data = $list;
+            return $output;
+        }
+
+        /**
+         * @brief 엮인글 검색
+         **/
+        function getTrackbacks($module_srls_list, $search_target = "title", $search_keyword, $page=1, $list_count = 20) {
+            if(is_array($module_srls_list)) $args->module_srl = implode(',',$module_srls_list);
+            else $args->module_srl = $module_srls_list;
+            $args->page = $page;
+            $args->list_count = $list_count;
+            $args->page_count = 10;
+            $args->search_target = $search_target;
+            $args->search_keyword = $search_keyword;
+            $args->sort_index = 'list_order'; 
+            $args->order_type = 'asc';
+
+            // 대상 문서들을 가져옴
+            $oTrackbackModel = &getAdminModel('trackback');
+            $output = $oTrackbackModel->getTotalTrackbackList($args);
+            if(!$output->toBool()|| !$output->data) return $output;
             return $output;
         }
 

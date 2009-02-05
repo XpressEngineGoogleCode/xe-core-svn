@@ -16,11 +16,18 @@
     $lang->multimedia = "Images/ Movies";
 
     $lang->is_search_option = array(
-        'title' => 'Тема',
-        'content' => 'Содержание',
-        'title_content' => 'Тема+Содержание',
-        'comment' => 'Комментарии',
-        'tag' => 'Теги',
+        'document' => array(
+            'title_content' => 'Тема+Содержание',
+            'title' => 'Тема',
+            'content' => 'Содержание',
+            'tag' => 'Теги',
+        ),
+        'trackback' => array(
+            'url' => 'URL назначения',
+            'blog_name' => 'Имя сайта',
+            'title' => 'Заголовок',
+            'excerpt' => 'Выдержка',
+        ),
     );
 
     $lang->is_sort_option = array(

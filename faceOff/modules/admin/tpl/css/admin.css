@@ -34,8 +34,8 @@
 .rowTable td{ border-bottom:1px solid #f0f0f0;}
 
 .rowTable th.button, .colTable th.button, .crossTable th.button { text-align:right; }
-.rowTable td.alert, .colTable td.alert, .crossTable td.alert  { font-weight:bold !important; }
-.rowTable td.alert a, .colTable td.alert a, .crossTable td.alert a { font-weight:bold !important; text-decoration:none;}
+.rowTable td.alert, .colTable td.alert, .crossTable td.alert  { color:red !important; }
+.rowTable td.alert a, .colTable td.alert a, .crossTable td.alert a { text-decoration:none; color:red !important; }
 
 .colTable td.wide, .rowTable td.wide, .crossTable td.wide { width:100%;}
 

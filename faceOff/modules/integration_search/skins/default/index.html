@@ -8,6 +8,10 @@
 <!--#include("comment.html")-->
 <div class="isMore"><a href="{getUrl('where','comment','page',1)}">more</a></div>
 
+{@ $output = $search_result['trackback'] }
+<!--#include("trackback.html")-->
+<div class="isMore"><a href="{getUrl('where','trackback','page',1)}">more</a></div>
+
 {@ $output = $search_result['multimedia'] }
 <!--#include("multimedia.html")-->
 <div class="isMore"><a href="{getUrl('where','multimedia','page',1)}">more</a></div>

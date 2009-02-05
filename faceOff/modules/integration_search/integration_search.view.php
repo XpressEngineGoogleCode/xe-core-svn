@@ -70,7 +70,11 @@
                 $oIS = &getModel('integration_search');
                 switch($where) {
                     case 'document' :
-                            $output = $oIS->getDocuments($module_srl_list, $is_keyword, $page, 10);
+                            $search_target = Context::get('search_target');
+                            if(!in_array($search_target, array('title','content','title_content','tag'))) $search_target = 'title';
+                            Context::set('search_target', $search_target);
+
+                            $output = $oIS->getDocuments($module_srl_list, $search_target, $is_keyword, $page, 10);
                             Context::set('output', $output);
                             $this->setTemplateFile("document", $page);
                         break;
@@ -78,6 +82,15 @@
                             $output = $oIS->getComments($module_srl_list, $is_keyword, $page, 10);
                             Context::set('output', $output);
                             $this->setTemplateFile("comment", $page);
+                        break;
+                    case 'trackback' :
+                            $search_target = Context::get('search_target');
+                            if(!in_array($search_target, array('title','url','blog_name','excerpt'))) $search_target = 'title';
+                            Context::set('search_target', $search_target);
+
+                            $output = $oIS->getTrackbacks($module_srl_list, $search_target, $is_keyword, $page, 10);
+                            Context::set('output', $output);
+                            $this->setTemplateFile("trackback", $page);
                         break;
                     case 'multimedia' :
                             $output = $oIS->getImages($module_srl_list, $is_keyword, $page,20);
@@ -90,8 +103,9 @@
                             $this->setTemplateFile("file", $page);
                         break;
                     default :
-                            $output['document'] = $oIS->getDocuments($module_srl_list, $is_keyword, $page, 4);
+                            $output['document'] = $oIS->getDocuments($module_srl_list, 'title', $is_keyword, $page, 5);
                             $output['comment'] = $oIS->getComments($module_srl_list, $is_keyword, $page, 5);
+                            $output['trackback'] = $oIS->getTrackbacks($module_srl_list, 'title', $is_keyword, $page, 5);
                             $output['multimedia'] = $oIS->getImages($module_srl_list, $is_keyword, $page, 5);
                             $output['file'] = $oIS->getFiles($module_srl_list, $is_keyword, $page, 5);
                             Context::set('search_result', $output);

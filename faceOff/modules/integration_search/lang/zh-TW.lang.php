@@ -15,11 +15,18 @@
     $lang->multimedia = "Images/ Movies";
 
     $lang->is_search_option = array(
-        'title' => '標題',
-        'content' => '內容',
-        'title_content' => '標題+內容',
-        'comment' => '評論',
-        'tag' => '標籤',
+        'document' => array(
+            'title_content' => '標題+內容',
+            'title' => '標題',
+            'content' => '內容',
+            'tag' => '標籤',
+        ),
+        'trackback' => array(
+            'url' => '目標網址',
+            'blog_name' => '目標網站名稱',
+            'title' => '標題',
+            'excerpt' => '內容',
+        ),
     );
 
     $lang->is_sort_option = array(

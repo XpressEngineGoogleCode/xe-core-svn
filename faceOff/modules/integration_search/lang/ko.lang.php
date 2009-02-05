@@ -16,11 +16,18 @@
     $lang->multimedia = "이미지/동영상";
 
     $lang->is_search_option = array(
-        'title' => '제목',
-        'content' => '내용',
-        'title_content' => '제목+내용',
-        'comment' => '댓글',
-        'tag' => '태그',
+        'document' => array(
+            'title_content' => '제목+내용',
+            'title' => '제목',
+            'content' => '내용',
+            'tag' => '태그',
+        ),
+        'trackback' => array(
+            'url' => '대상 URL',
+            'blog_name' => '대상 사이트 이름',
+            'title' => '제목',
+            'excerpt' => '내용',
+        ),
     );
 
     $lang->is_sort_option = array(

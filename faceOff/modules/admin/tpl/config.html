@@ -14,10 +14,10 @@
         </p>
     <!--@end-->
 
-    <h3 class="bottomGap">{$lang->cmd_setup}</h3>
+    <h4>{$lang->cmd_setup}</h4>
 
     <form action="./" method="get" onsubmit="return procFilter(this, update_env_config);">
-    <table cellspacing="0" class="crossTable">
+    <table cellspacing="0" class="rowTable">
     <tr>
         <th><div>{$lang->use_rewrite}</div></th>
         <td>
@@ -95,7 +95,7 @@
     </table>
     </form>
 
-    <h3>{$lang->ftp_form_title}</h3>
+    <h4>{$lang->ftp_form_title}</h4>
     <p class="summary">{$lang->about_ftp_info}</p>
     <form action="./" method="post" onsubmit="return procFilter(this, install_ftp_info);" id="ftp_form">
     <table cellspacing="0" class="rowTable">
@@ -125,10 +125,10 @@
 <div class="extension e2">
     <div class="section">
 
-        <h3>{$lang->cmd_lang_select}</h3>
+        <h4>{$lang->cmd_lang_select}</h4>
         <p class="summary">{$lang->about_cmd_lang_select}</p>
         <form action="./" method="get" onsubmit="return procFilter(this, update_lang_select);">
-        <table cellspacing="0" class="crossTable">
+        <table cellspacing="0" class="rowTable">
         <!--@foreach($lang_supported as $key => $val)-->
         <tr>
             <td>
@@ -144,7 +144,7 @@
         </table>
         </form>
 
-        <h3>{$lang->cmd_remake_cache}</h3>
+        <h4>{$lang->cmd_remake_cache}</h4>
         <p class="summary">{$lang->about_recompile_cache}</p>
         <table cellspacing="0" class="colTable">
         <tr>
