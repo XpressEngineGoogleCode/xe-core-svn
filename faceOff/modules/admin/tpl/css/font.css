@@ -1,6 +1,8 @@
 @charset "utf-8";
 /* NHN > UIT Center > Open UI Technology Team > Jeong Chan Myeong(dece24@nhncorp.com) */
 
+#xeAdmin{ font-family:Sans-serif;}
+
 #xeAdmin a{ text-decoration:none !important;}
 #xeAdmin a:hover,
 #xeAdmin a:active,
@@ -26,7 +28,7 @@
 #xeAdmin .gnb li a { color:#777e86; font-size:11px; font-family:Tahoma;}
 #adminLang li a{ font-size:12px;}
 #xeAdmin .lnb li,
-#xeAdmin .lnb li a{ color:#fff; font-size:14px; font-family:Tahoma;}
+#xeAdmin .lnb li a{ color:#fff; font-size:14px; font-family:Dotum, Tahoma;}
 
 #xeAdmin .path{ color:#ccc; font-size:11px;}
 #xeAdmin .path a{ color:#888; font-size:11px; font-family:Dotum, Sans-serif;}
