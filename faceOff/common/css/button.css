@@ -91,7 +91,7 @@ a.button,
 span.button{ margin-right:2px;}
 
 /* Button Set */
-.buttonSet{ width:16px; height:16px; background-image:url(../tpl/images/buttonSet.gif); background-repeat:no-repeat; border:0; background-color:transparent; vertical-align:middle; display:inline-block;}
+.buttonSet{ width:16px; height:16px; background-image:url(../tpl/images/buttonSet.gif); background-repeat:no-repeat; border:0; background-color:transparent; vertical-align:middle; display:inline-block; text-decoration:none;}
 .buttonSet span{ z-index:-1; font-size:0; line-height:0; visibility:hidden;}
 .buttonSet.buttonUp{ background-position:0 0;}
 .buttonSet.buttonDown{ background-position:0 -16px;}

@@ -1,40 +1,30 @@
-<!--#include("./common_header.html")-->
+<!--%import("css/default.css")-->
 
-<div class="memberSmallBox w600pop">
+<div id="popHeader" class="wide">
+    <h3>{$lang->cmd_view_saved_document}</h3>
+</div>
 
-    <div class="header">
-        <h3>{$lang->cmd_view_saved_document}</h3>
-    </div>
-
-    <div class="complex">
-
-        <!-- 정보 -->
-        <div class="boardInformation">
-            Total : <strong>{number_format($total_count)}</strong>, 
-            Page <strong>{number_format($page)}</strong>/{number_format($total_page)}
-        </div>
-
+<div id="popBody">
+    <div id="memberModule">
         <!-- 목록 -->
-        <table cellspacing="0" class="list">
-        <col width="120" />
-        <col />
-        <col width="100" />
+        <table cellspacing="0" class="colTable">
+        <caption>Total : {number_format($total_count)}, Page {number_format($page)}/{number_format($total_page)}</caption>
         <thead>
             <tr>
-                <th scope="col">{$lang->date}</th>
-                <th scope="col">{$lang->title}</th>
-                <th scope="col">{$lang->cmd_select}</th>
+                <th class="title"><div>{$lang->date}</div></th>
+                <th class="title"><div>{$lang->title}</div></th>
+                <th class="title"><div>{$lang->cmd_select}</div></th>
             </tr>
         </thead>
         <tbody>
             <!--@foreach($document_list as $no => $val)-->
-            <tr class="bg{($no+1)%2+1}">
-                <td class="registDate">{$val->getRegdate("Y-m-d H:i:s")}</td>
-                <td class="subject">
+            <tr>
+                <td class="nowrap">{$val->getRegdate("Y-m-d H:i:s")}</td>
+                <td class="wide">
                     <div><a href="#" onclick="jQuery('#saved_document_{$val->document_srl}').toggle(); setFixedPopupSize(); return false;">{$val->getTitle()}</a></div>
                     <div id="saved_document_{$val->document_srl}" class="saved_content" style="display:none;">{$val->getContent(false)}</div>
                 </td>
-                <td><a href="#" onclick="doDocumentSelect('{$val->document_srl}'); return false;" class="button"><span>{$lang->cmd_select}</span></a></td>
+                <td><a href="#" onclick="doDocumentSelect('{$val->document_srl}'); return false;" class="buttonSet buttonActive"><span>{$lang->cmd_select}</span></a></td>
             </tr>
             <!--@end-->
         </tbody>
@@ -53,11 +43,4 @@
             <a href="{getUrl('page',$page_navigation->last_page,'module_srl','')}" class="nextEnd">{$lang->last_page}</a>
         </div>
     </div>
-
-    <div class="tCenter help">
-        <a href="#" onclick="window.close(); return false;" class="button"><span>{$lang->cmd_close}</span></a>
-    </div>
-
 </div>
-
-<!--#include("./common_footer.html")-->
