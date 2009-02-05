@@ -8,8 +8,8 @@ function completeInsertLayout(ret_obj) {
 
 /* 레이아웃 삭제 */
 function doDeleteLayout(layout_srl) {
-    jQuery('#fo_layout input[name=layout_srl]').val(layout_srl);
-
+    var fo_obj = jQuery('#fo_layout').get(0);
+    fo_obj.layout_srl.value = layout_srl;
     procFilter(fo_obj, delete_layout);
 }
 
