@@ -17,6 +17,9 @@
 #xeAdmin button.text{ font-size:12px;}
 #xeAdmin em,
 #xeAdmin address{ font-style:normal;}
+#xeAdmin select{ font-size:12px;}
+#xeAdmin input{ font-size:12px;}
+#xeAdmin .buttonTypeGo{ padding:0; cursor:pointer;}
 
 #xeAdmin .footer address{ font:10px Tahoma;}
 #xeAdmin .footer address a{ color:#777e86; }
