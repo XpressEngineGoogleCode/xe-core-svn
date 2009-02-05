@@ -8,7 +8,7 @@
      **/
 
     // called_position가 before_display_content 일 경우 실행
-    if($called_position == 'before_display_content' && Context::get('module')!='admin') {
+    if(Context::isInstalled() && $called_position == 'before_display_content' && Context::get('module')!='admin') {
         $oCounterController = &getController('counter');
         $oCounterController->procCounterExecute();
     }
