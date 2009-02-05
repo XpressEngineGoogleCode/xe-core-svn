@@ -22,7 +22,7 @@
          <uri>{$oDocument->getHomepageUrl()}</uri>
          <!--@end-->
       </author>
-      <!--@if($rss_config[$oDocument->get('module_srl')]=='Y')-->
+      <!--@if($open_rss_config[$oDocument->get('module_srl')]=='Y')-->
       <content type="html">{str_replace('\'', '&apos;', htmlspecialchars($oDocument->getTransContent(false,false,true)))}</content>
       <!--@else-->
       <summary type="text">{str_replace('\'', '&apos;', htmlspecialchars($oDocument->getContentText(100)))}</summary>

@@ -16,6 +16,29 @@
             </select>
         </td>
     </tr>
+    <tr>
+        <th scope="row"><div>{$lang->open_feed_to_total}</div></th>
+        <td class="wide">
+            <select name="open_total_feed" class="w400">
+                <option value="N" <!--@if(!$rss_config->open_total_feed || $rss_config->open_total_feed == 'N')-->selected="selected"<!--@end-->>{$lang->use}</option>
+                <option value="T_N" <!--@if($rss_config->open_total_feed == 'T_N')-->selected="selected"<!--@end-->>{$lang->notuse}</option>
+            </select>
+        </td>
+    </tr>
+    <tr>
+        <th scope="row"><div>{$lang->description}</div></th>
+        <td class="wide">
+            <textarea name="feed_description">{$rss_config->feed_description}</textarea>
+            <p>{$lang->about_feed_description}</p>
+        </td>
+    </tr>
+    <tr>
+        <th scope="row"><div>{$lang->feed_copyright}</div></th>
+        <td class="wide">
+            <input type="text" class="inputTypeText" name="feed_copyright" value="{htmlspecialchars($rss_config->feed_copyright)}" />
+            <p>{$lang->about_feed_copyright}</p>
+        </td>
+    </tr>
     <tr class="row2">
         <th class="button" colspan="2"><span class="button strong black"><input type="submit" value="{$lang->cmd_save}"/></span></th>
     </tr>

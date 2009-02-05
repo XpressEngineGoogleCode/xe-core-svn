@@ -17,11 +17,11 @@
         }
 
         /**
-         * @brief RSS 출력
+         * @brief 피드 출력
          **/
         function rss() {
             /**
-             * RSS 출력을 위한 변수 설정
+             * 피드 출력을 위한 변수 설정
              **/
             $mid = Context::get('mid'); ///< 대상 모듈 id, 없으면 전체로
             $start_date = (int)Context::get('start_date');
@@ -38,7 +38,7 @@
                 $config = $oModuleModel->getModulePartConfig('rss', $module_srl);
                 if($config->open_rss && $config->open_rss != 'N') {
                    $module_srls[] = $module_srl; 
-                   $rss_config[$module_srl] = $config->open_rss;
+                   $open_rss_config[$module_srl] = $config->open_rss;
                 }
 
             // mid 가 선택되어 있지 않으면 전체
@@ -46,9 +46,9 @@
                 $rss_config = $oModuleModel->getModulePartConfigs('rss');
                 if($rss_config) {
                     foreach($rss_config as $module_srl => $config) {
-                        if($config && $config->open_rss != 'N') {
+                        if($config && $config->open_rss != 'N' && $config->open_total_feed != 'T_N') {
                             $module_srls[] = $module_srl;
-                            $rss_config[$module_srl] = $config->open_rss;
+                            $open_rss_config[$module_srl] = $config->open_rss;
                         }
                     }
                 }
@@ -77,11 +77,16 @@
             $output = $oDocumentModel->getDocumentList($args);
             $document_list = $output->data;
 
-            // rss 제목 및 정보등을 추출 Context::getBrowserTitle 
+            // 피드 제목 및 정보등을 추출 Context::getBrowserTitle 
             if($mid) {
                 $info->title = Context::getBrowserTitle();
                 $info->title = str_replace('\'', '&apos;',$info->title);
-                $info->description = $this->module_info->description;
+                if($config->feed_description) {
+                    $info->description = str_replace('\'', '&apos;', htmlspecialchars($config->feed_description));
+                }
+                else {
+                    $info->description = $this->module_info->description;
+                }
                 $info->link = getUrl('','mid',$mid);
             } else {
                 $site_module_info = Context::get('site_module_info');
@@ -108,7 +113,8 @@
 
             // RSS 출력물에서 사용될 변수 세팅
             Context::set('info', $info);
-            Context::set('rss_config', $rss_config);
+            Context::set('feed_config', $config);
+            Context::set('open_rss_config', $open_rss_config);
             Context::set('document_list', $document_list);
 
             // 결과 출력을 XMLRPC로 강제 지정
