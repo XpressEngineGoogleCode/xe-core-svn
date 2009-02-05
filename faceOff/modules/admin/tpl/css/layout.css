@@ -22,12 +22,12 @@ body{ background:#fff;}
 #adminLang { position:absolute; top:18px; left:0; display:none; background:#fff; margin:0; padding:5px; border:1px solid #ddd; z-index:999;}
 #adminLang li{ float:none; margin:0;}
 
-.body{ position:relative; margin:0; padding:20px 0 20px 260px; background:url(../img/lineBody.gif) repeat-y 240px 0; *zoom:1;}
+.body{ position:relative; margin:0; padding:20px 0 20px 200px; background:url(../img/lineBody.gif) repeat-y 180px 0; *zoom:1;}
 .body:after {content:""; display:block; clear:both;}
 .ece .body {padding-right:340px;}
 .ec .body {padding-right:20px;}
 .extension{ position:relative;}
-.body .e1 { float:left; width:200px; margin-right:-200px; left:-240px;}
+.body .e1 { float:left; width:160px; margin-right:-160px; left:-190px;}
 .content { position:relative; width:100%; margin-right:-100%; float:left;}
 .ece .e2 { width:300px; float:right; right:-320px; border-left:1px solid #ddd; padding-bottom:20px;}
 .ec .e2 { display:none;}
