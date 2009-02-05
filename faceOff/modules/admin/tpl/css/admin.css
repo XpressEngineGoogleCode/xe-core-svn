@@ -3,6 +3,18 @@
 @import url("./pagination.css");
 /* NHN > UIT Center > Open UI Technology Team > Jeong Chan Myeong(dece24@nhncorp.com) */
 
+#xeAdmin .open{ display:block !important;}
+#xeAdmin h1 { float:left; white-space:nowrap; margin:0;padding:0;}
+#xeAdmin caption{ text-align:left;}
+#xeAdmin button{ cursor:pointer;}
+#xeAdmin hr{ display:none;}
+#xeAdmin fieldset{ border:0;}
+#xeAdmin fieldset legend{ font-size:0; line-height:0; position:absolute; visibility:hidden;}
+#xeAdmin .section{ margin-bottom:20px;}
+#xeAdmin .buttonArea{ text-align:center; padding:15px 0;}
+#xeAdmin button.text{ background:none; border:0; color:#0000ee;}
+#xeAdmin img.graphHr{ height:5px; vertical-align:middle;}
+
 .crossTable{ width:100%; border:0; margin:0 0 20px 0; padding:0;}
 .crossTable th div { white-space:nowrap; }
 .crossTable th,

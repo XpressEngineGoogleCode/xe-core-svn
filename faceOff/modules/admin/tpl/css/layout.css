@@ -2,17 +2,6 @@
 
 /* NHN > UIT Center > Open UI Technology Team > Jeong Chan Myeong(dece24@nhncorp.com) */
 body{ background:#fff;}
-#xeAdmin .open{ display:block !important;}
-#xeAdmin h1 { float:left; white-space:nowrap; margin:0;padding:0;}
-#xeAdmin caption{ text-align:left;}
-#xeAdmin button{ cursor:pointer;}
-#xeAdmin hr{ display:none;}
-#xeAdmin fieldset{ border:0;}
-#xeAdmin fieldset legend{ font-size:0; line-height:0; position:absolute; visibility:hidden;}
-#xeAdmin .section{ margin-bottom:20px;}
-#xeAdmin .buttonArea{ text-align:center; padding:15px 0;}
-#xeAdmin button.text{ background:none; border:0; color:#0000ee;}
-#xeAdmin img.graphHr{ height:5px; vertical-align:middle;}
 
 #xeAdmin .header{ position:relative; height:62px; padding:10px 15px 10px 30px; background:url(../img/bgHeader.gif) repeat-x; z-index:10;}
 #xeAdmin .footer{ height:26px; padding-top:10px; background:url(../img/bgFooter.gif) repeat-x; text-align:center;}
