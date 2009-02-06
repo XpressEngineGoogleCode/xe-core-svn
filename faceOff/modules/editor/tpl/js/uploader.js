@@ -354,7 +354,9 @@ function insertUploadedFile(editorSequence) {
         if(file.direct_download == 'Y') {
             // 이미지 파일의 경우 image_link 컴포넌트 열결
             if(/\.(jpg|jpeg|png|gif)$/i.test(file.download_url)) {
-                text.push("<img editor_component=\"image_link\" src=\""+file.download_url+"\" alt=\""+file.source_filename+"\" />");
+                var obj = new Image();
+                obj.src = file.download_url;
+                text.push("<img editor_component=\"image_link\" src=\""+file.download_url+"\" alt=\""+file.source_filename+"\" width=\""+obj.width+"\" height=\""+obj.height+"\" />");
             // 이미지외의 경우는 multimedia_link 컴포넌트 연결
             } else {
                 text.push("<img src=\"./common/tpl/images/blank.gif\" editor_component=\"multimedia_link\" multimedia_src=\""+file.download_url+"\" width=\"400\" height=\"320\" style=\"display:block;width:400px;height:320px;border:2px dotted #4371B9;background:url(./modules/editor/components/multimedia_link/tpl/multimedia_link_component.gif) no-repeat center;\" auto_start=\"false\" alt=\"\" />");
