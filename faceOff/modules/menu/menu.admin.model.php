@@ -73,6 +73,14 @@
             $node = $output->data;
             if($node->group_srls) $node->group_srls = explode(',',$node->group_srls);
             else $node->group_srls = array();
+
+            $tmp_name = unserialize($node->name);
+            if($tmp_name && count($tmp_name) ) {
+                $selected_lang = array();
+                $rand_name = $tmp_name[Context::getLangType()];
+                if(!$rand_name) $rand_name = array_shift($tmp_name);
+                $node->name = $rand_name;
+            }
             return $node;
         }
 
