@@ -264,7 +264,7 @@
                 $idx++;
             }
             else if (191<$c && $c < 224) {
-			          $char_width += $chars[0];
+			          $char_width += $chars[4];
 			          $idx += 2;
 		        }
             else {
