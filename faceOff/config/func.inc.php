@@ -262,7 +262,12 @@
             if($c<128) {
                 $char_width += (int)$chars[$c-32];
                 $idx++;
-            } else {
+            }
+            else if (191<$c && $c < 224) {
+			          $char_width += $chars[0];
+			          $idx += 2;
+		        }
+            else {
                 $char_width += $chars[0];
                 $idx += 3;
             }
