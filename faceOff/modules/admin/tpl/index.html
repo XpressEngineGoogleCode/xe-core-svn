@@ -168,7 +168,7 @@
         </tr>
         <tr>
             <th><div>{$lang->time_zone}</div></th>
-            <td><!--@foreach($time_zone_list as $key => $val)--><!--@if($time_zone==$key)-->{$val}<!--@end--><!--@endforeach--></td>
+            <td><!--@foreach($time_zone_list as $key => $val)--><!--@if($time_zone==$key)-->{substr($val,1,10)}<!--@end--><!--@endforeach--></td>
         </tr>
         <tr>
             <th><div>{$lang->use_rewrite}</div></th>
