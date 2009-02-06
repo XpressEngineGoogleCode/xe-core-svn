@@ -511,13 +511,29 @@ function setFixedPopupSize() {
         jQuery('table').each(function() { var ww = jQuery(this).width(); if(ww > w) w = ww; });
         jQuery('form').each(function() { var ww = jQuery(this).width(); if(ww > w) w = ww; });
 
-        jQuery("#pop_content").width('100%');
-        jQuery("#popHeader").width('100%');
-        w += 50;
+        jQuery("#popup_content").width(w-4);
+        jQuery("#popHeader").width(w-4);
+        jQuery("#popFooter").width(w-4);
+
         window.resizeTo(w, h);
 
+        // 윈도우 OS에서는 브라우저별로 미세 조절이 필요
+        var moreW = 0;
+        if(navigator.userAgent.toLowerCase().indexOf('windows') > 0) {
+            if(jQuery.browser.opera) moreW += 18;
+            else if(jQuery.browser.msie) moreW += 20;
+            else if(jQuery.browser.mozilla) moreW += 17;
+            else if(jQuery.browser.safari) {
+                moreW += 4;
+                h -= 12;
+            } 
+        }
         var h1 = jQuery(window).height();
-        window.resizeBy(0, h-h1+5);
+        if(!/chrome/.test(navigator.userAgent.toLowerCase())) {
+            window.resizeBy(moreW, h-h1+5);
+        } else {
+            window.resizeBy(10,60);
+        }
         window.scrollTo(0,0);
     }
 

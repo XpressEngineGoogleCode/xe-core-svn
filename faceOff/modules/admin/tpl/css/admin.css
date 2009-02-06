@@ -128,7 +128,7 @@
 .boxModelControler .borderDetach.open { display:block; }
 .boxModelControler .buttonArea{ padding:15px 0 0 0; text-align:center;}
 
-#popup_content { border:2px solid #777; margin:0; font-size:12px; background:#fff; width:100%; position:relative;}
+#popup_content { border:2px solid #777; margin:0; font-size:12px; background:#fff; position:relative;}
 #popup_content .xButton { position:absolute; top:9px; right:9px; width:15px; height:14px; background-color:transparent; background:url(../img/buttonClose.gif) no-repeat; border:0; cursor:pointer; overflow:hidden; }
 #popup_content .xButton span { position:relative; z-index:-1; visibility:hidden; }
 #popup_content * { font-size:12px; }

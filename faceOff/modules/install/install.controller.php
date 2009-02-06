@@ -213,14 +213,13 @@
                 $modules[$xml_info->category][] = $module;
             }
 
-            // 모듈을 category에 의거 설치 순서를 정함
-            $install_step = array('base','utility','manager','accessory','service','package');
-
             // module 모듈은 미리 설치
             $this->installModule('module','./modules/module');
             $oModule = &getClass('module');
             if($oModule->checkUpdate()) $oModule->moduleUpdate();
 
+            // 모듈을 category에 의거 설치 순서를 정함
+            $install_step = array('system','content','member');
             // 나머지 모든 모듈 설치
             foreach($install_step as $category) {
                 if(count($modules[$category])) {
@@ -230,6 +229,22 @@
 
                         $oModule = &getClass($module);
                         if($oModule->checkUpdate()) $oModule->moduleUpdate();
+                    }
+                    unset($modules[$category]);
+                }
+            }
+
+            // 나머지 모든 모듈 설치
+            if(count($modules)) {
+                foreach($modules as $category => $module_list) {
+                    if(count($module_list)) {
+                        foreach($module_list as $module) {
+                            if($module == 'module') continue;
+                            $this->installModule($module, sprintf('./modules/%s', $module));
+
+                            $oModule = &getClass($module);
+                            if($oModule->checkUpdate()) $oModule->moduleUpdate();
+                        }
                     }
                 }
             }
