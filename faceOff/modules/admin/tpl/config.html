@@ -129,7 +129,7 @@
         <p class="summary">{$lang->about_cmd_lang_select}</p>
         <form action="./" method="get" onsubmit="return procFilter(this, update_lang_select);">
         <table cellspacing="0" class="rowTable">
-        <!--@foreach($lang_supported as $key => $val)-->
+        <!--@foreach($langs as $key => $val)-->
         <tr>
             <td>
                 <input id="lang_{$key}" type="checkbox" name="selected_lang" value="{$key}" <!--@if(isset($lang_selected[$key]))-->checked="checked"<!--@end--> <!--@if($key==$selected_lang)-->disabled="disabled"<!--@end--> /> <label for="lang_{$key}">{$val}</label>
