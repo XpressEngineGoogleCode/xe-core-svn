@@ -259,7 +259,7 @@
 
                 // 현재 요청된 action의 대상 모듈을 찾음
                 // 1. action이름으로 검색 (DB검색 없이 하기 위함)
-                if(preg_match('/^([a-z]+)([A-Z])([a-z\_]+)(.*)$/', $this->act, $matches)) {
+                if(preg_match('/^([a-z]+)([A-Z])([a-z0-9\_]+)(.*)$/', $this->act, $matches)) {
                     $module = strtolower($matches[2].$matches[3]);
                     $xml_info = $oModuleModel->getModuleActionXml($module);
                     if($xml_info->action->{$this->act}) {
