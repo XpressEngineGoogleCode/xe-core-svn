@@ -20,7 +20,8 @@
 
             // 출력된 목록 수
             $list_count = (int)$args->list_count;
-            if(!$list_count) $list_count = 5;
+            if(!$list_count) $list_count = 20;
+            $list_count ++;
 
             // 대상 모듈 (mid_list는 기존 위젯의 호환을 위해서 처리하는 루틴을 유지. module_srl로 위젯에서 변경)
             $oModuleModel = &getModel('module');
@@ -67,6 +68,7 @@
                     if($max < $count) $max = $count;
                     if($min > $count) $min = $count;
                     $tags[] = $val;
+                    if(count($tags)>=20) continue;
                 }
 
                 $mid2 = $min+(int)(($max-$min)/2);
