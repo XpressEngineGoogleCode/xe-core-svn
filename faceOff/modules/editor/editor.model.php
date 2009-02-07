@@ -432,7 +432,7 @@
                     }
 
                     // 대상 모듈이 있으면 체크
-                    if($extra_vars->mid_list && count($extra_vars->mid_list) ) {
+                    if($extra_vars->mid_list && count($extra_vars->mid_list) && Context::get('mid')) {
                         if(!in_array(Context::get('mid'), $extra_vars->mid_list)) continue;
                     }
 
