@@ -26,5 +26,5 @@
     $lang->about_feed_copyright = '현재 모듈에서 Feed로 발행되는 글에 대한 저작권 정보입니다.';
 
     // 錯誤提示
-    $lang->msg_rss_is_disabled = "RSS Feed功能處於關閉狀態。";
+    $lang->msg_rss_is_disabled = "RSS Feed功能未開啟。";
 ?>
