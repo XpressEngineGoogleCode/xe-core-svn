@@ -36,6 +36,11 @@
                 <a href="{getUrl('page',$page_no)}">{$page_no}</a>
             <!--@end-->
         <!--@end-->
-        <a href="{getUrl('page',$output->page_navigation->last_page)}" class="nextEnd">{$lang->last_page}</a>
+        <a href="{getUrl('page',$output->page_navigation->last_page)}" <!--@if(!$last_division)-->class="nextEnd"<!--@end-->>{$lang->last_page}</a>
+        <!--@if($last_division)-->
+        <a href="{getUrl('page',1,'document_srl','','search_target',$search_target,'is_keyword',$is_keyword,'division',$last_division,'last_division','')}" class="nextEnd">{$lang->cmd_search_next}</a>
+        <!--@end-->
     </div>
 <!--@end-->
+
+
