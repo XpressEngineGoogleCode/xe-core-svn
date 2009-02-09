@@ -409,6 +409,7 @@
 
         function syncChangeset($module_info)
         {
+            if(!$module_info->svn_url || !$module_info->svn_cmd) return;
             require_once($this->module_path.'classes/svn.class.php');
             $oSvn = new Svn($module_info->svn_url, $module_info->svn_cmd, $module_info->diff_cmd, $module_info->svn_userid, $module_info->svn_passwd);
             $oModel = &getModel('issuetracker');
