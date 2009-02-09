@@ -29,7 +29,7 @@
             <!--@end-->
         </td>
         <td class="wide">{htmlspecialchars($val->title)}</td>
-        <td>{zdate($val->regdate,"Y-m-d")}</td>
+        <td class="nowrap">{zdate($val->regdate,"Y-m-d")}</td>
         <td>
             <!--@if(!$val->module_srl)-->
                 <a href="{getUrl('act','dispLayoutAdminModify','layout_srl',$val->layout_srl)}" title="{htmlspecialchars($lang->cmd_layout_management)}" class="buttonSet buttonSetting"><span>{$lang->cmd_layout_management}</span></a>
