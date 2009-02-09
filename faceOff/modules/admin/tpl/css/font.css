@@ -8,7 +8,7 @@
 #xeAdmin a:active,
 #xeAdmin a:focus{ text-decoration:underline !important;}
 
-#xeAdmin h1 a{ text-decoration:none !important; font-family:Arial; font-size:16px; color:#fff; margin:0; padding:0;}
+#xeAdmin h1.xeAdmin a{ text-decoration:none !important; font-family:Arial; font-size:16px; color:#fff; margin:0; padding:0;}
 #xeAdmin table th{ color:#666;}
 #xeAdmin table th a { color:#666;}
 #xeAdmin table td{ color:#888;}
@@ -37,8 +37,8 @@
 .e1 .navigation li ul li a{ color:#888;}
 .e1 .navigation li ul li.active a{ font-weight:bold; color:#666;}
 
-.e2 .section h2{ font-size:12px; margin:0; padding:0;}
-.e2 .section h2 .date{ font:Tahoma; color:#999;}
+.e2 .section h2.xeAdmin { font-size:12px; margin:0; padding:0;}
+.e2 .section h2.xeAdmin  .date{ font:Tahoma; color:#999;}
 
 .e2 table tbody th{ font-weight:normal; font-family:Dotum;}
 
@@ -48,8 +48,8 @@
 .localNavigation li a{ text-decoration:none !important; color:#666;}
 .localNavigation li.active a{ font-weight:bold; color:#1e6aac;}
 
-#xeAdmin h2 { font-size:12px;}
-#xeAdmin h3 { font-size:12px; color:#666; margin:0; padding:0;}
+#xeAdmin h2.xeAdmin  { font-size:12px;}
+#xeAdmin h3.xeAdmin { font-size:12px; color:#666; margin:0; padding:0;}
 #xeAdmin p.summary{ color:#888;}
 #xeAdmin p.summary a { text-decoration:none; color:#888; }
 #xeAdmin p.summary.red { color:#A54D4D; }

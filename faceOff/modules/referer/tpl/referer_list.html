@@ -1,6 +1,6 @@
 <!--%import("css/referer.css")-->
 
-<h3>{$lang->referer} <span class="gray">{$lang->cmd_management}</span></h3>
+<h3 class="xeAdmin">{$lang->referer} <span class="gray">{$lang->cmd_management}</span></h3>
 
 <table cellspacing="0" class="rowTable ">
 <caption>Total {number_format($total_count)} Page {number_format($page)}/{number_format($total_page)}</caption>
@@ -28,7 +28,7 @@
     <a href="{getUrl('page',$page_navigation->last_page,'module_srl','')}" class="nextEnd">{$lang->last_page}</a>
 </div>
 
-<h4>{$lang->ranking}</h4>
+<h4 class="xeAdmin">{$lang->ranking}</h4>
 <table cellspacing="0" class="rowTable">
 <tbody>
 <!--{$rank = 1}-->

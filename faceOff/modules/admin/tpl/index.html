@@ -93,7 +93,7 @@
 
 <div class="extension e2">
     <div class="section">
-        <h4>{$lang->status} <span class="date">{zdate(date("Ymd"),"Y.m.d")}</h4>
+        <h4 class="xeAdmin">{$lang->status} <span class="date">{zdate(date("Ymd"),"Y.m.d")}</h4>
         <table cellspacing="0" class="crossTable">
         <thead>
         <tr>
@@ -150,7 +150,7 @@
         </table>
 
 
-        <h4>{$lang->env_information}</h4>
+        <h4 class="xeAdmin">{$lang->env_information}</h4>
         <!--@if($current_version < $released_version)-->
         <p class="summary red">{nl2br($lang->about_download_link)} [<a href="{$download_link}" onclick="window.open(this.href);return false;">{$lang->cmd_download}</a>]</p>
         <!--@end-->
@@ -191,7 +191,7 @@
 
 
         <!--@if($news)-->
-        <h4>{$lang->newest_news}</h4>
+        <h4 class="xeAdmin">{$lang->newest_news}</h4>
         <table cellspacing="0" class="rowTable">
         <tbody>
         <!--@foreach($news as $key => $val)-->

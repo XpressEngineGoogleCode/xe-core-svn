@@ -1,13 +1,13 @@
 <!--%import("./js/homepage.js",optimized=false)-->
 <!--%import("./filter/delete_homepage.xml")-->
 
-<h3>{$lang->homepage} <span class="gray">{$lang->cmd_management}</span></h3>
+<h3 class="xeAdmin">{$lang->homepage} <span class="gray">{$lang->cmd_management}</span></h3>
 
 <div class="infoText">{nl2br($lang->about_homepage)}</div>
 
 <form action="./" method="post" onsubmit="return procFilter(this, delete_homepage)" id="fo_homepage">
 <input type="hidden" name="site_srl" value="{$homepage_info->site_srl}" />
-    <h4><div>{$lang->cmd_homepage_delete}</h4>
+    <h4 class="xeAdmin"><div>{$lang->cmd_homepage_delete}</h4>
     <p class="summary">{$lang->about_homepage_delete}</p>
     <table cellspacing="0" class="rowTable">
     <tbody>

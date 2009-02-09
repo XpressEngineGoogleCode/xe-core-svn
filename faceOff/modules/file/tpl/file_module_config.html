@@ -2,7 +2,7 @@
 <form action="./" method="get" onsubmit="return procFilter(this, insert_file_module_config)">
 <input type="hidden" name="target_module_srl" value="{$module_info->module_srl?$module_info->module_srl:$module_srls}" />
 
-    <h4>{$lang->file}</h4>
+    <h4 class="xeAdmin">{$lang->file}</h4>
     <table cellspacing="0" class="rowTable">
     <tr class="row2">
         <th scope="col"><div>{$lang->allowed_filesize}</div></th>
