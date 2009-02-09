@@ -29,6 +29,10 @@
                 unset($obj->title_color);
                 unset($obj->title_bold);
             }
+            if($obj->release_srl)
+            {
+                $obj->occured_version_srl = $obj->release_srl;
+            }
 
             if($obj->occured_version_srl == 0)
             {
