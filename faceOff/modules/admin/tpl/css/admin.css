@@ -137,7 +137,7 @@
 #popHeader, #popBody, #popFooter { position:relative; *zoom:1; }
 #popBody, #popHistoryBody { margin:15px !important;}
 #popFooter { padding:10px 0 0 0; height:28px; text-align:center; background:#f4f4f4;}
-#popHeader { padding-left:10px;}
+#popHeader { }
 #popHeader.wide { width:600px;}
 
 .adminTable { width:100%; border:1px solid #EEE; border-bottom:none; border-right:none; margin-bottom:15px; }

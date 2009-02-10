@@ -59,6 +59,7 @@
             'N' => '只允许好友',
     );
     $lang->about_allow_message = '可以指定接收短消息方法及对象。';
+    $lang->logged_users = 'Logged Users';
 
     $lang->webmaster_name = '管理员名';
     $lang->webmaster_email = '管理员电子邮件';

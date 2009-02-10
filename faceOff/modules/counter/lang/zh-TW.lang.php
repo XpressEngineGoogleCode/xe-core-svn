@@ -19,4 +19,7 @@
 
     $lang->unique_visitor = '訪問者';
     $lang->pageview = '頁面瀏覽';
+
+    $lang->today = 'today';
+    $lang->yesterday = 'yesterday';
 ?>

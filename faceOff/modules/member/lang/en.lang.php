@@ -59,6 +59,7 @@
             'N' => 'Reject All',
     );
     $lang->about_allow_message = 'You may allow or reject messages.';
+    $lang->logged_users = 'Logged Users';
 
     $lang->webmaster_name = "Webmaster's Name";
     $lang->webmaster_email = "Webmaster's Email";

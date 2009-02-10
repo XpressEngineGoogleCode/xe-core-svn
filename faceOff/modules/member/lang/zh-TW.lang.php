@@ -59,6 +59,7 @@
             'N' => '全部禁止',
     );
     $lang->about_allow_message = '可選擇是否接收短訊息。';
+    $lang->logged_users = 'Logged Users';
 
     $lang->webmaster_name = '管理員名稱';
     $lang->webmaster_email = '管理員電子郵件';

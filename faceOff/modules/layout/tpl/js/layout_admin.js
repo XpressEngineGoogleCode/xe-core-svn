@@ -40,5 +40,5 @@ function doMenuManagement(menu_id) {
     if(menu_srl == 0) return;
 
     var url = current_url.setQuery('act','dispMenuAdminManagement').setQuery('menu_srl',menu_srl);
-    winopen(url,'MenuManage','width=850,height=800,resizable=yes,scrollbars=yes,toolbars=no');
+    winopen(url);
 }

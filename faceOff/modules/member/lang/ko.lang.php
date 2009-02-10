@@ -59,6 +59,7 @@
             'N' => '모두 금지',
     );
     $lang->about_allow_message = '쪽지 허용 방법 및 대상을 지정할 수 있습니다';
+    $lang->logged_users = '현재 접속자';
 
     $lang->webmaster_name = '웹마스터 이름';
     $lang->webmaster_email = '웹마스터 메일주소';

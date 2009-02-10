@@ -68,6 +68,11 @@
 
             Context::set('mid_list',$module_categories);
 
+            // 메뉴 목록을 구함
+            $output = executeQueryArray('menu.getMenus');
+            Context::set('menu_list',$output->data);
+
+
             // 스킨의 정보를 구함
             $skin_list = $oModuleModel->getSkins($widget_info->path);
             Context::set('skin_list', $skin_list);

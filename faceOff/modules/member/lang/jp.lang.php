@@ -59,6 +59,7 @@
             'N' => '全て禁止',
     );
     $lang->about_allow_message = 'メッセージの許可タイプ及び対象を設定します。';
+    $lang->logged_users = 'Logged Users';
 
     $lang->webmaster_name = 'ウェブマスターのお名前';
     $lang->webmaster_email = 'ウェブマスターのメールアドレス';

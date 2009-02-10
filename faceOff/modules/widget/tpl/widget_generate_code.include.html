@@ -114,6 +114,12 @@
                     doAddWindowLoadEventLoader( function() { getModuleSrl('{$id}'); });
                 }
             </script>
+        <!--@elseif($var->type == "menu")-->
+            <select name="{$id}" class="w300 fl">
+                <!--@foreach($menu_list as $key => $val)-->
+                <option value="{$val->menu_srl}">{$val->title}</option>
+                <!--@end-->
+            </select>
         <!--@end-->
         <p class="clear">{nl2br($var->description)}</p>
     </td>

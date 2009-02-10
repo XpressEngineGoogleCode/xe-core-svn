@@ -260,7 +260,7 @@
 
             $widgetStyle_path = $this->getWidgetStylePath($widgetStyle);
             if(!$widgetStyle_path) return;
-            $xml_file = sprintf("%sconf/skin.xml", $widgetStyle_path);
+            $xml_file = sprintf("%sskin.xml", $widgetStyle_path);
             if(!file_exists($xml_file)) return;
 
             // cache 파일을 비교하여 문제 없으면 include하고 $widgetStyle_info 변수를 return
