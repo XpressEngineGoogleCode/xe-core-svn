@@ -118,5 +118,44 @@
             $this->setTemplateFile('module_selector');
         }
 
+
+        // 파일 박스 보기
+        function dispModuleFileBox(){
+            $logged_info = Context::get('logged_info');
+            if($logged_info->is_admin !='Y' && !$logged_info->is_site_admin) return new Object(-1, 'msg_not_permitted');
+
+            $input_name = Context::get('input');
+
+            if(!$input_name) return new Object(-1, 'msg_not_permitted');
+
+
+            $addscript = sprintf('<script type="text/javascript">//<![CDATA[
+                            var selected_filebox_input_name = "%s";
+                          //]]></script>',$input_name);
+            Context::addHtmlHeader($addscript);
+
+            $oModuleModel = &getModel('module');
+            $output = $oModuleModel->getModuleFileBoxList();
+            Context::set('filebox_list', $output->data);
+
+            $filter = Context::get('filter');
+            if($filter) Context::set('arrfilter',explode(',',$filter));
+
+            Context::set('page_navigation', $output->page_navigation);
+            $this->setLayoutFile('popup_layout');
+            $this->setTemplateFile('filebox_list');
+        }
+
+        // 파일 박스 등록화면
+        function dispModuleFileBoxAdd(){
+            $logged_info = Context::get('logged_info');
+            if($logged_info->is_admin !='Y' && !$logged_info->is_site_admin) return new Object(-1, 'msg_not_permitted');
+
+            $filter = Context::get('filter');
+            if($filter) Context::set('arrfilter',explode(',',$filter));
+
+            $this->setLayoutFile('popup_layout');
+            $this->setTemplateFile('filebox_add');
+        }
     }
 ?>

@@ -117,6 +117,7 @@
     $lang->order_type = '排列方式';
     $lang->order_asc = '升冪';
     $lang->order_desc = '降冪';
+    $lang->file = 'file';
 
     $lang->mid = '模組名稱';
     $lang->layout = '版面';

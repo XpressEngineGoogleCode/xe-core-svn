@@ -26,6 +26,7 @@
 #widgetButton { background-color:#C7DBE9;left:0; top:0;}
 #widgetBoxButton { background-color:#D2E9C7; right:0; top:0;}
 .widgetButtons div { float:left; }
+.widgetButtons .widgetStyle { background:transparent url("../images/widgetstyle_setup.gif") no-repeat 1px 1px; width:14px; height:14px;  cursor:pointer; z-index:1000;}
 .widgetButtons .widgetSetup { background:transparent url("../images/widget_setup.gif") no-repeat 1px 1px; width:14px; height:14px;  cursor:pointer; z-index:1000;}
 .widgetButtons .widgetCopy { background:transparent url("../images/widget_copy.gif") no-repeat 1px 1px; width:14px; height:14px;  cursor:pointer; z-index:1000;}
 .widgetButtons .widgetSize { background:transparent url("../images/widget_size.gif") no-repeat 1px 1px; width:14px; height:14px;  cursor:pointer; z-index:1000;}

@@ -117,6 +117,7 @@
     $lang->order_type = 'Sorting Type';
     $lang->order_asc = 'Ascend';
     $lang->order_desc = 'Descendre';
+    $lang->file = 'file';
 
     $lang->mid = 'Nom';
     $lang->layout = 'Mise en Page';

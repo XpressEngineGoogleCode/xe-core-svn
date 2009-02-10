@@ -429,6 +429,10 @@ function move_url(url, open_wnidow) {
  * @brief 멀티미디어 출력용 (IE에서 플래쉬/동영상 주변에 점선 생김 방지용)
  **/
 function displayMultimedia(src, width, height, options) {
+    var html = _displayMultimedia(src, width, height, options);
+	if(html) document.writeln(html);
+}
+function _displayMultimedia(src, width, height, options) {
     if(src.indexOf('files') == 0) src = request_uri + src;
 
     var defaults = {
@@ -447,7 +451,9 @@ function displayMultimedia(src, width, height, options) {
     var codebase = "";
     var html = "";
 
-    if(/\.swf$/i.test(src)) {
+    if(/\.(gif|jpg|jpeg|bmp|png)$/i.test(src)){
+        html = '<img src="'+src+'" width="'+width+'" height="'+height+'" />';
+    } else if(/\.swf$/i.test(src)) {
         clsid = 'clsid:D27CDB6E-AE6D-11cf-96B8-444553540000';
         codebase = "http://download.macromedia.com/pub/shockwave/cabs/flash/swflash.cab#version=9,0,28,0";
         html = '<object classid="'+clsid+'" codebase="'+codebase+'" width="'+width+'" height="'+height+'" flashvars="'+params.flashvars+'">';
@@ -469,7 +475,7 @@ function displayMultimedia(src, width, height, options) {
         }
         html += '></embed>';
     }
-    document.writeln(html);
+    return html;
 }
 
 /**
@@ -502,6 +508,7 @@ function setFixedPopupSize() {
     }
 
     var w = jQuery("#popup_content").width();
+    w = w< 400 ? 400 : w;
     var h = jQuery("#popup_content").height();
 
     if(h != _popupHeight)  {
@@ -526,7 +533,7 @@ function setFixedPopupSize() {
             else if(jQuery.browser.safari) {
                 moreW += 4;
                 h -= 12;
-            } 
+            }
         }
         var h1 = jQuery(window).height();
         if(!/chrome/.test(navigator.userAgent.toLowerCase())) {

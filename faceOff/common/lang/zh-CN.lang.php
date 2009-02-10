@@ -117,6 +117,7 @@
     $lang->order_type = '排序方式';
     $lang->order_asc = '升序';
     $lang->order_desc = '倒序';
+    $lang->file = 'file';
 
     $lang->mid = '模块名称';
     $lang->layout = '布局';

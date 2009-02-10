@@ -117,6 +117,7 @@
     $lang->order_type = 'Sortieren Typ';
     $lang->order_asc = 'Aufstieg';
     $lang->order_desc = 'Abstieg';
+    $lang->file = 'file';
 
     $lang->mid = 'Module Name';
     $lang->layout = 'Layout';

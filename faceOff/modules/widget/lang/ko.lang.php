@@ -33,6 +33,7 @@
     $lang->about_widget_cache = '지정된 시간동안 캐시된 데이터를 이용할 수 있습니다.';
 
     $lang->generated_code = '생성된 코드';
+    $lang->widgetstyle= '위젯스타일';
 
     $lang->msg_widget_is_not_exists = '%s 위젯을 찾을 수 없습니다';
     $lang->msg_widget_object_is_null = '%s 위젯의 객체 생성을 할 수가 없습니다';

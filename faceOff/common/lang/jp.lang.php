@@ -117,6 +117,7 @@
     $lang->order_type = 'ソート方法';
     $lang->order_asc = '昇る';
     $lang->order_desc = '降下';
+    $lang->file = 'file';
 
     $lang->mid = 'モジュール名';
     $lang->layout = 'レイアウト';

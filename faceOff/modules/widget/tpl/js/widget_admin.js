@@ -22,7 +22,6 @@ function completeGenerateCodeInPage(ret_obj,response_tags,params,fo_obj) {
     }
 
     opener.doAddWidgetCode(widget_code);
-
     window.close();
 }
 
@@ -69,8 +68,28 @@ function completeGetSkinColorset(ret_obj, response_tags, params, fo_obj) {
     setFixedPopupSize();
 }
 
-/* 페이지 모듈에서 내용의 위젯을 더블클릭하여 수정하려고 할 경우 */
+
 var selected_node = null;
+/* 페이지 모듈에서 위젯스타일 수정하려고 할 경우 */
+function getWidgetVars() {
+    if(!opener || !opener.selectedWidget || !opener.selectedWidget.getAttribute("widget")) return;
+    selected_node = opener.selectedWidget;
+
+    var fo_widget = jQuery('#fo_widget');
+    var attrs = selected_node.attributes;
+    for (i=0; i< attrs.length ; i++){
+        var input = jQuery("[name='"+attrs[i].name+"']" ,'#fo_widget');
+        if( input.size() == 0 && attrs[i].name != 'style'){
+            fo_widget.prepend('<input type="hidden" name="'+attrs[i].name+'" value="'+attrs[i].value+'" />');
+        }else{
+            if(!input.val() && attrs[i].value ){
+                input.val(attrs[i].value);
+            }
+        }
+    }
+}
+
+/* 페이지 모듈에서 내용의 위젯을 더블클릭하여 수정하려고 할 경우 */
 function doFillWidgetVars() {
     if(!opener || !opener.selectedWidget || !opener.selectedWidget.getAttribute("widget")) return;
 
@@ -327,4 +346,9 @@ xAddEventListener(window,'load',excuteWindowLoadEvent);
 function selectWidget(val){
     var url =current_url.setQuery('selected_widget', val);
     document.location.href = url;
+}
+
+function widgetstyle_extra_image_upload(f){
+	f.act.value='procWidgetStyleExtraImageUpload';
+	f.submit();
 }

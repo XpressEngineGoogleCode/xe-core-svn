@@ -33,6 +33,7 @@
     $lang->about_widget_cache = '指定的時間內可以利用已暫存的資料。';
 
     $lang->generated_code = '已建立的原始碼';
+    $lang->widgetstyle= '위젯스타일';
 
     $lang->msg_widget_is_not_exists = '找不到%s控件！';
     $lang->msg_widget_object_is_null = '無法建立%s控件目標！';

@@ -182,7 +182,7 @@
                 return new Object(-1, 'msg_module_name_exists');
             }
 
-            // is_default 의 값에 따라서 처리 
+            // is_default 의 값에 따라서 처리
             if($args->site_srl!=0) $args->is_default = 'N';
             else {
                 if($args->is_default!='Y') $args->is_default = 'N';
@@ -238,7 +238,7 @@
                 return new Object(-1, 'msg_module_name_exists');
             }
 
-            // is_default 의 값에 따라서 처리 
+            // is_default 의 값에 따라서 처리
             if($args->site_srl!=0) $args->is_default = 'N';
             else {
                 if($args->is_default!='Y') $args->is_default = 'N';
@@ -336,14 +336,14 @@
         }
 
         /**
-         * @brief 지정된 menu_srl에 속한 mid 의 menu_srl 을 변경 
+         * @brief 지정된 menu_srl에 속한 mid 의 menu_srl 을 변경
          **/
         function updateModuleMenu($args) {
             return executeQuery('module.updateModuleMenu', $args);
         }
 
         /**
-         * @brief 지정된 menu_srl에 속한 mid 의 layout_srl을 변경 
+         * @brief 지정된 menu_srl에 속한 mid 의 layout_srl을 변경
          **/
         function updateModuleLayout($layout_srl, $menu_srl_list) {
             if(!count($menu_srl_list)) return;
@@ -386,7 +386,7 @@
         }
 
         /**
-         * @brief 특정 모듈에 관리자 아이디 지정 
+         * @brief 특정 모듈에 관리자 아이디 지정
          **/
         function insertAdminId($module_srl, $admin_id) {
             $oMemberModel = &getModel('member');
@@ -510,6 +510,140 @@
             if(!Context::get($matches[1]) && $lang[$matches[1]]) return $lang[$matches[1]];
 
             return $matches[0];
+        }
+
+
+
+        /**
+         * @brief 파일박스에 파일 추가 및 업데이트
+         **/
+        function procModuleFileBoxAdd(){
+
+            $logged_info = Context::get('logged_info');
+            if($logged_info->is_admin !='Y' && !$logged_info->is_site_admin) return new Object(-1, 'msg_not_permitted');
+
+            $vars = Context::gets('comment','addfile','filter');
+            $module_filebox_srl = Context::get('module_filebox_srl');
+
+            $ext = strtolower(substr(strrchr($vars->addfile['name'],'.'),1));
+            $vars->ext = $ext;
+            if($vars->filter) $filter = explode(',',$vars->filter);
+            if(!in_array($ext,$filter)) return new Object(-1, 'msg_error_occured');
+
+            $vars->member_srl = $logged_info->member_srl;
+
+            // update
+            if($module_filebox_srl > 0){
+                $vars->module_filebox_srl = $module_filebox_srl;
+                $output = $this->updateModuleFileBox($vars);
+
+            // insert
+            }else{
+                if(!Context::isUploaded()) return new Object(-1, 'msg_error_occured');
+                $addfile = Context::get('addfile');
+                if(!is_uploaded_file($addfile['tmp_name'])) return new Object(-1, 'msg_error_occured');
+                if($vars->addfile['error'] != 0) return new Object(-1, 'msg_error_occured');
+                $output = $this->insertModuleFileBox($vars);
+            }
+
+            $url  = getUrl('','module','module','act','dispModuleFileBox','input',Context::get('input'),'filter',$vars->filter);
+            $url = html_entity_decode($url);
+            $vars = Context::set('url',$url);
+            $this->setTemplatePath($this->module_path.'tpl');
+            $this->setTemplateFile('move_filebox_list');
+        }
+
+
+        /**
+         * @brief 파일박스에 파일 업데이트
+         **/
+        function updateModuleFileBox($vars){
+
+            // have file
+            if($vars->addfile['tmp_name'] && is_uploaded_file($vars->addfile['tmp_name'])){
+                $oModuleModel = &getModel('module');
+                $output = $oModuleModel->getModuleFileBox($vars->module_filebox_srl);
+                FileHandler::removeFile($output->data->filename);
+
+                $path = $oModuleModel->getModuleFileBoxPath($vars->module_filebox_srl);
+                FileHandler::makeDir($path);
+
+                $save_filename = sprintf('%s%s.%s',$path, $vars->module_filebox_srl, $ext);
+                $tmp = $vars->addfile['tmp_name'];
+
+                if(!@move_uploaded_file($tmp, $save_filename)) {
+                    return false;
+                }
+
+                $args->fileextension = strtolower(substr(strrchr($vars->addfile['name'],'.'),1));
+                $args->filename = $save_filename;
+                $args->filesize = $vars->addfile['size'];
+
+            }
+
+            $args->module_filebox_srl = $vars->module_filebox_srl;
+            $args->comment = $vars->comment;
+
+            return executeQuery('module.updateModuleFileBox', $vars);
+        }
+
+
+        /**
+         * @brief 파일박스에 파일 추가
+         **/
+        function insertModuleFileBox($vars){
+            // set module_filebox_srl
+            $vars->module_filebox_srl = getNextSequence();
+
+            // get file path
+            $oModuleModel = &getModel('module');
+            $path = $oModuleModel->getModuleFileBoxPath($vars->module_filebox_srl);
+            FileHandler::makeDir($path);
+            $save_filename = sprintf('%s%s.%s',$path, $vars->module_filebox_srl, $vars->ext);
+            $tmp = $vars->addfile['tmp_name'];
+
+            // upload
+            if(!@move_uploaded_file($tmp, $save_filename)) {
+                return false;
+            }
+
+
+            // insert
+            $args->module_filebox_srl = $vars->module_filebox_srl;
+            $args->member_srl = $vars->member_srl;
+            $args->comment = $vars->comment;
+            $args->filename = $save_filename;
+            $args->fileextension = strtolower(substr(strrchr($vars->addfile['name'],'.'),1));
+            $args->filesize = $vars->addfile['size'];
+
+            $output = executeQuery('module.insertModuleFileBox', $args);
+            return $output;
+        }
+
+
+        /**
+         * @brief 파일박스에 파일 삭제
+         **/
+
+        function procModuleFileBoxDelete(){
+            $logged_info = Context::get('logged_info');
+            if($logged_info->is_admin !='Y' && !$logged_info->is_site_admin) return new Object(-1, 'msg_not_permitted');
+
+            $module_filebox_srl = Context::get('module_filebox_srl');
+            if(!$module_filebox_srl) return new Object(-1, 'msg_invalid_request');
+            $vars->module_filebox_srl = $module_filebox_srl;
+            $output = $this->deleteModuleFileBox($vars);
+            if(!$output->toBool()) return $output;
+        }
+        function deleteModuleFileBox($vars){
+
+            // delete real file
+            $oModuleModel = &getModel('module');
+            $output = $oModuleModel->getModuleFileBox($vars->module_filebox_srl);
+            FileHandler::removeFile($output->data->filename);
+
+            $args->module_filebox_srl = $vars->module_filebox_srl;
+            return executeQuery('module.deleteModuleFileBox', $args);
         }
     }
 ?>

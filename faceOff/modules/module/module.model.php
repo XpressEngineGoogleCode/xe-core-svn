@@ -1093,5 +1093,23 @@
             }
             return $grant;
         }
+
+
+
+        function getModuleFileBox($module_filebox_srl){
+            $args->module_filebox_srl = $module_filebox_srl;
+            return executeQuery('getModuleFileBox', $args);
+        }
+
+        function getModuleFileBoxList(){
+            $args->page = Context::get('page');
+            $args->list_count = 10;
+            $args->page_count = 10;
+            return executeQuery('module.getModuleFileBoxList', $args);
+        }
+
+        function getModuleFileBoxPath($module_filebox_srl){
+            return sprintf("./files/attach/filebox/%s",getNumberingPath($module_filebox_srl,3));
+        }
     }
 ?>

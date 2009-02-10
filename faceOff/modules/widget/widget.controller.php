@@ -21,6 +21,8 @@
             $widget_info = $oWidgetModel->getWidgetInfo($widget);
 
             $widget = $vars->selected_widget;
+            $vars->widgetstyle = $request_vars->widgetstyle;
+
             $vars->skin = trim($request_vars->skin);
             $vars->colorset = trim($request_vars->colorset);
             $vars->widget_sequence = (int)($request_vars->widget_sequence);
@@ -30,11 +32,28 @@
             $vars->widget_padding_right = trim($request_vars->widget_padding_right);
             $vars->widget_padding_top = trim($request_vars->widget_padding_top);
             $vars->widget_padding_bottom = trim($request_vars->widget_padding_bottom);
+            $vars->document_srl= trim($request_vars->document_srl);
+
+
             if(count($widget_info->extra_var)) {
                 foreach($widget_info->extra_var as $key=>$val) {
-                    $vars->{$key} = trim($request_vars->{$key}); 
+                    $vars->{$key} = trim($request_vars->{$key});
                 }
             }
+
+            // 위젯 스타일이 있는 경우
+            if($request_vars->widgetstyle){
+                $widgetStyle_info = $oWidgetModel->getWidgetStyleInfo($request_vars->widgetstyle);
+                if(count($widgetStyle_info->extra_var)) {
+                    foreach($widgetStyle_info->extra_var as $key=>$val) {
+                        if($val->type =='text' || $val->type =='select' || $val->type =='filebox'){
+                            $vars->{$key} = trim($request_vars->{$key});
+                        }
+                    }
+                }
+            }
+
+
 
             if($vars->widget_sequence) {
                 $cache_path = './files/cache/widget_cache/';
@@ -80,16 +99,24 @@
         function procWidgetGenerateCodeInPage() {
             $widget = Context::get('selected_widget');
             if(!$widget) return new Object(-1,'msg_invalid_request');
-            if(!Context::get('skin')) return new Object(-1,Context::getLang('msg_widget_skin_is_null'));
-
+//            if(!Context::get('skin')) return new Object(-1,Context::getLang('msg_widget_skin_is_null'));
             $attribute = $this->arrangeWidgetVars($widget, Context::getRequestVars(), $vars);
-
             // 결과물을 구함
             $oWidgetHandler = new WidgetHandler();
             $widget_code = $oWidgetHandler->execute($widget, $vars, true);
-
             $this->add('widget_code', $widget_code);
         }
+
+        function procWidgetStyleExtraImageUpload(){
+            $attribute = $this->arrangeWidgetVars($widget, Context::getRequestVars(), $vars);
+
+            $this->setLayoutPath('./common/tpl');
+            $this->setLayoutFile('default_layout.html');
+            $this->setTemplatePath($this->module_path.'tpl');
+            $this->setTemplateFile("top_refresh.html");
+        }
+
+
 
         /**
          * @brief 선택된 위젯 - 스킨의 컬러셋을 return
@@ -235,14 +262,14 @@
                 foreach($user_group as $group_srl => $group_info) {
                     if(in_array($group_srl, $manager_group)) $is_admin = true;
                 }
-            } 
+            }
             if(!$is_admin && !$is_logged && $logged_info->is_admin != 'Y' && !$oModuleModel->isSiteAdmin($logged_info) && !(is_array($page_info->admin_id) && in_array($logged_infoi->user_id, $page_info->admin_id))) return new Object(-1,'msg_not_permitted');
 
 
             // 글 입력
             $oDocumentModel = &getModel('document');
             $oDocumentController = &getController('document');
-           
+
             $obj->module_srl = $module_srl;
             $obj->content = $content;
             $obj->document_srl = $document_srl;
@@ -292,7 +319,7 @@
                 foreach($user_group as $group_srl => $group_info) {
                     if(in_array($group_srl, $manager_group)) $is_admin = true;
                 }
-            } 
+            }
             if(!$is_admin && !$is_logged && $logged_info->is_admin != 'Y' && !$oModuleModel->isSiteAdmin($logged_info) && !(is_array($page_info->admin_id) && in_array($logged_infoi->user_id, $page_info->admin_id))) return new Object(-1,'msg_not_permitted');
 
             $output = $oDocumentAdminController->copyDocumentModule(array($oDocument->get('document_srl')), $oDocument->get('module_srl'),0);
@@ -332,7 +359,7 @@
                 foreach($user_group as $group_srl => $group_info) {
                     if(in_array($group_srl, $manager_group)) $is_admin = true;
                 }
-            } 
+            }
             if(!$is_admin && !$is_logged && $logged_info->is_admin != 'Y' && !$oModuleModel->isSiteAdmin($logged_info) && !(is_array($page_info->admin_id) && in_array($logged_infoi->user_id, $page_info->admin_id))) return new Object(-1,'msg_not_permitted');
 
             $output = $oDocumentController->deleteDocument($oDocument->get('document_srl'), true);
@@ -361,7 +388,7 @@
                 foreach($user_group as $group_srl => $group_info) {
                     if(in_array($group_srl, $manager_group)) $is_admin = true;
                 }
-            } 
+            }
             if(!$is_admin && !$is_logged && $logged_info->is_admin != 'Y' && !$oModuleModel->isSiteAdmin($logged_info) && !(is_array($page_info->admin_id) && in_array($logged_infoi->user_id, $page_info->admin_id))) return new Object(-1,'msg_not_permitted');
 
             // 등록된 글 목록 구함
@@ -376,5 +403,8 @@
             }
             return new Object();
         }
+
+
+
     }
 ?>

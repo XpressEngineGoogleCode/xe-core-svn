@@ -95,5 +95,28 @@
             $this->setTemplateFile('widget_generate_code_in_page');
         }
 
+
+        /**
+         * @brief 페이지 관리에서 사용될 위젯 스타일 코드 생성 팝업
+         **/
+        function dispWidgetStyleGenerateCodeInPage() {
+
+            // 위젯 스타일 목록
+            $oWidgetModel = &getModel('widget');
+            $widgetStyle_list = $oWidgetModel->getDownloadedWidgetStyleList();
+            Context::set('widgetStyle_list',$widgetStyle_list);
+
+            // 선택된 위젯 스타일 목록
+            $widgetstyle = Context::get('widgetstyle');
+            $widgetstyle_info = $oWidgetModel->getWidgetStyleInfo($widgetstyle);
+            if($widgetstyle && $widgetstyle_info){
+                Context::set('widgetstyle_info',$widgetstyle_info);
+            }
+            
+            $this->dispWidgetGenerateCode();
+            $this->setLayoutFile('popup_layout');
+            $this->setTemplateFile('widget_style_generate_code_in_page');
+        }
+
     }
 ?>

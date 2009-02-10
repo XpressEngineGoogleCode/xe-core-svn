@@ -6,19 +6,19 @@
 
 /* document.write(ln)의 경우 ajax로 처리시 가로채기 위한 함수 */
 document.write = document.writeln = function(str){
-	if ( str.match(/^<\//) ) return;
-	if ( !window.opera ) str = str.replace(/&(?![#a-z0-9]+;)/g, "&");
+    if ( str.match(/^<\//) ) return;
+    if ( !window.opera ) str = str.replace(/&(?![#a-z0-9]+;)/g, "&");
     str = str.replace(/(<[a-z]+)/g, "$1 xmlns='http://www.w3.org/1999/xhtml'");
     var div = null;
     if(document.createElementNS) div = document.createElementNS("http://www.w3.org/1999/xhtml","div");
     else div = xCreateElement('div');
     xInnerHtml(div, str);
-	var pos;
+    var pos;
     pos = document.getElementsByTagName("*");
     pos = pos[pos.length - 1];
-	var nodes = div.childNodes;
-	while ( nodes.length ) {
-		pos.parentNode.appendChild( nodes[0] );
+    var nodes = div.childNodes;
+    while ( nodes.length ) {
+        pos.parentNode.appendChild( nodes[0] );
     }
 };
 
@@ -117,21 +117,54 @@ function getWidgetContent(obj) {
         }
         childObj = childObj.nextSibling;
     }
-
     return html;
 }
 
 // 컨텐츠 위젯 코드 구함
 function getContentWidgetCode(childObj, widget) {
     var cobj = childObj.firstChild;
-    while(cobj) {
-        if(cobj.nodeName == "DIV" && cobj.className == "widgetContent") {
-            var body = xInnerHtml(cobj);
-            var document_srl = childObj.getAttribute('document_srl');
-            if(document_srl>0) body = '';
-            return '<img src="./common/tpl/images/widget_bg.jpg" class="zbxe_widget_output" widget="widgetContent" style="'+getStyle(childObj)+'" body="'+body+'" document_srl="'+document_srl+'" widget_padding_left="'+getPadding(childObj,'left')+'" widget_padding_right="'+getPadding(childObj, 'right')+'" widget_padding_top="'+getPadding(childObj, 'top')+'" widget_padding_bottom="'+getPadding(childObj,'bottom')+'" />';
+
+    var widgetContent = jQuery('div.widgetContent',childObj);
+    var body = '';
+    var document_srl = 0;
+    var attrs ='';
+
+    if(widgetContent.size() > 0){
+        document_srl = jQuery(childObj).attr('document_srl');
+        if(document_srl>0){
+            body = '';
+        }else{
+            body = widgetContent.html();
         }
-        cobj = cobj.nextSibling;
+
+
+        for(var i=0;i<childObj.attributes.length;i++) {
+            if(!childObj.attributes[i].nodeName || !childObj.attributes[i].nodeValue) continue;
+            var name = childObj.attributes[i].nodeName.toLowerCase();
+            if(name == "contenteditable"
+                || name == "id"
+                || name=="style"
+                || name=="src"
+                || name=="widget"
+                || name == "body"
+                || name == "class"
+                || name == "widget_width"
+                || name == "widget_width_type"
+                || name == "xdpx"
+                || name == "xdpy"
+                || name == "height"
+                || name == "document_srl"
+                || name == "widget_padding_left"
+                || name == "widget_padding_right"
+                || name == "widget_padding_top"
+                || name == "widget_padding_bottom") continue;
+            var value = childObj.attributes[i].nodeValue;
+            if(!value) continue;
+            attrs += name+'="'+escape(value)+'" ';
+        }
+        return '<img src="./common/tpl/images/widget_bg.jpg" class="zbxe_widget_output" widget="widgetContent" style="'+getStyle(childObj)+'" body="'+body+'" document_srl="'+document_srl+'" widget_padding_left="'+getPadding(childObj,'left')+'" widget_padding_right="'+getPadding(childObj, 'right')+'" widget_padding_top="'+getPadding(childObj, 'top')+'" widget_padding_bottom="'+getPadding(childObj,'bottom')+'" '+attrs+' />';
+    }else{
+        return '';
     }
 }
 
@@ -347,7 +380,17 @@ function doCheckWidget(e) {
         if(!widget) return;
         selectedWidget = p_obj;
         if(widget == 'widgetContent') popopen(request_uri+"?module=widget&act=dispWidgetAdminAddContent&module_srl="+zoneModuleSrl+"&document_srl="+p_obj.getAttribute("document_srl"), "addContent");
-        else popopen(request_uri+"?module=widget&act=dispWidgetGenerateCodeInPage&selected_widget="+widget,'GenerateCodeInPage');
+        else popopen(request_uri+"?module=widget&act=dispWidgetGenerateCodeInPage&selected_widget="+widget+"&widgetstyle="+widgetstyle,'GenerateCodeInPage');
+        return;
+
+    // 위젯 스타일
+    } else if(obj.className == 'widgetStyle') {
+        var p_obj = obj.parentNode.parentNode;
+        var widget = p_obj.getAttribute("widget");
+        var widgetstyle = p_obj.getAttribute("widgetstyle");
+        if(!widget) return;
+        selectedWidget = p_obj;
+        popopen(request_uri+"?module=widget&act=dispWidgetStyleGenerateCodeInPage&selected_widget="+widget+"&widgetstyle="+widgetstyle,'GenerateCodeInPage');
         return;
 
     // 위젯 복사
@@ -473,7 +516,7 @@ function doCheckWidgetDrag(e) {
 
     doHideWidgetSizeSetup();
 
-    if(obj.className == 'widgetSetup' || obj.className == 'widgetCopy' || obj.className == 'widgetBoxCopy' || obj.className == 'widgetSize' || obj.className == 'widgetBoxSize' || obj.className == 'widgetRemove' || obj.className == 'widgetBoxRemove') return;
+    if(obj.className == 'widgetSetup' || obj.className == 'widgetStyle' || obj.className == 'widgetCopy' || obj.className == 'widgetBoxCopy' || obj.className == 'widgetSize' || obj.className == 'widgetBoxSize' || obj.className == 'widgetRemove' || obj.className == 'widgetBoxRemove') return;
 
     p_obj = obj;
     while(p_obj) {

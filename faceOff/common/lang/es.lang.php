@@ -116,6 +116,7 @@
     $lang->order_type = 'Tipo de Ordenación';
     $lang->order_asc = 'ascendente';
     $lang->order_desc = 'descendente';
+    $lang->file = 'file';
 
     $lang->mid = 'ID del Módulo';
     $lang->layout = 'Composición';

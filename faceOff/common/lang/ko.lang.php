@@ -117,6 +117,7 @@
     $lang->order_type = '정렬방법';
     $lang->order_asc = '올림차순';
     $lang->order_desc = '내림차순';
+    $lang->file = '파일';
 
     $lang->mid = '모듈이름';
     $lang->layout = '레이아웃';

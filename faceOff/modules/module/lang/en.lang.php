@@ -32,6 +32,7 @@
     $lang->bundle_addition_setup = "일괄 추가 설정";
     $lang->bundle_grant_setup = "일괄 권한 설정";
     $lang->lang_code = "언어 코드";
+    $lang->filebox = "파일박스";
 
     $lang->header_script = "Header Script";
     $lang->about_header_script = "You can input the html script between &lt;header&gt; and &lt;/header&gt; by yourself.<br />You can use &lt;script, &lt;style or &lt;meta tag";
@@ -83,4 +84,5 @@
 	$lang->about_extra_vars_default_value = 'If multiple default values are needed,	 you can link them with comma(,).';
     $lang->about_search_virtual_site = "가상 사이트(카페XE등)의 도메인을 입력하신 후 검색하세요.<br/>가상 사이트이외의 모듈은 내용을 비우고 검색하시면 됩니다.  (http:// 는 제외)";
     $lang->about_langcode = "언어별로 다르게 설정하고 싶으시면 언어코드 찾기를 이용해주세요";
+    $lang->about_file_extension= "%s 파일만 가능합니다.";
 ?>
