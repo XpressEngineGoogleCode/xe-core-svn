@@ -1,0 +1,10 @@
+@charset "utf-8";
+.widgetLogin label { color:#333;}
+.widgetLogin .inputText { border-color:#ccc; background:#f4f4f4; color:#000;}
+.widgetLogin .help a { color:#666;}
+.widgetLogin .help li{ background:url(../img/white/lineTextDiv.gif) no-repeat left center;}
+.widgetLastLogin dt{ color:#333;}
+.widgetLastLogin dd{ color:#888; }
+.widgetLastLogin a { color:#333;}
+.widgetMyInfo a { color:#666;}
+.widgetMyInfo li{ background:url(../img/white/iconMyInfo.gif) no-repeat left 1px;}

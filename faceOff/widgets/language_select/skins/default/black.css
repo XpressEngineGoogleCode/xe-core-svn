@@ -1,0 +1,11 @@
+@charset "utf-8";
+
+.widgetLanguage p{ float:right; margin:0;}
+.widgetLanguage ul { display:none; position:absolute; margin:0; padding:0;}
+.widgetLanguage ul li{ list-style:none;}
+.widgetLanguage ul li a { font-size:12px; display:block; padding:2px 5px;}
+
+.widgetLanguage p a{ color:#b3b3b3;}
+.widgetLanguage ul { background-color:#fff; border:1px solid #ccc;}
+.widgetLanguage ul li a{ color:#333;}
+

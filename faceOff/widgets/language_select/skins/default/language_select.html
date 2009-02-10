@@ -1,10 +1,17 @@
-<div class="tCenter">
-    <select name="lang_type" onchange="doChangeLangType(this)">
-        <option value="{$lang_type}">{$lang_supported[$lang_type]}</option>
+<!--@if($colorset == "black")-->
+    <!--%import("./black.css")-->
+<!--@elseif($colorset == "white" || $colorset == "normal")-->
+    <!--%import("./white.css")-->
+<!--@end-->
+
+<div class="widgetLanguage">
+    <p><a href="#language" class="cafeXeA" onclick="if(xGetElementById('language').style.display=='block'){ xGetElementById('language').style.display='none';}else{ xGetElementById('language').style.display='block';} return false;">Language:{$lang_supported[$lang_type]}</a></p>
+    <ul id="language" class="">
+        <!-- class="" | class="open" -->
         <!--@foreach($lang_supported as $key => $val)-->
         <!--@if($key != $lang_type)-->
-        <option value="{$key}">{$val}</option>
+        <li><a href="{$key}" onclick="doChangeLangType('{$key}');return false;">{$val}</a></li>
         <!--@end-->
         <!--@end-->
-    </select>
+    </ul>
 </div>

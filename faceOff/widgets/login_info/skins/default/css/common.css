@@ -1,0 +1,38 @@
+@charset "utf-8";
+.widgetLogin { margin:0; padding:0; }
+
+.widgetLogin label { cursor:pointer; }
+.widgetLogin fieldset { border:0; padding:0; margin:0;}
+.widgetLogin a { text-decoration:none;}
+.widgetLogin a:hover,
+.widgetLogin a:active,
+.widgetLogin a:focus{ text-decoration:underline;}
+.widgetLogin .inputText { border:1px solid; padding:2px 5px; font-size:12px; }
+.widgetLogin .inputCheck { margin:0; width:13px; height:13px; vertical-align:middle; margin-right:5px; }
+.widgetLogin .inputSubmit { padding:0;}
+
+.widgetLogin{ font-size:12px;}
+.widgetLogin dl{ margin:0;}
+.widgetLogin dt{ display:none;}
+.widgetLogin dd{ margin:0 0 5px 0;}
+.widgetLogin dd .inputText{ width:168px; height:16px;}
+.widgetLogin p{ margin:5px 0;}
+.widgetLogin p .inputText { margin-right:5px;}
+.widgetLogin .button.login input { width:178px;}
+.widgetLogin .help{ position:relative; width:100%; overflow:hidden; margin:10px 0 0 0; padding:0;}
+.widgetLogin .help li{ position:relative; left:-5px; padding-left:5px; list-style:none; display:inline;}
+
+/* widgetLastLogin */
+.widgetLastLogin{ margin:10px 0; font-size:12px;}
+.widgetLastLogin dt,
+.widgetLastLogin dd{ display:inline; margin:0; font-size:11px; font-family:Dotum; }
+.widgetLastLogin dd{font-family:Tahoma;}
+
+/* widgetMyInfo */
+.widgetMyInfo{ margin:0; padding:0; font-size:12px;}
+.widgetMyInfo:after{ content:""; display:block; clear:both; *zoom:1;}
+.widgetMyInfo li{ float:left; width:50%; margin:0 -1px 5px 0; padding:0; text-indent:12px; list-style:none;}
+.widgetMyInfo a { text-decoration:none; }
+.widgetMyInfo a:hover,
+.widgetMyInfo a:active,
+.widgetMyInfo a:focus{ text-decoration:underline;}
