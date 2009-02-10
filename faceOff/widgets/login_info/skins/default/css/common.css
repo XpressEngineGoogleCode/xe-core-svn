@@ -7,7 +7,7 @@
 .widgetLogin a:hover,
 .widgetLogin a:active,
 .widgetLogin a:focus{ text-decoration:underline;}
-.widgetLogin .inputText { border:1px solid; padding:2px 5px; font-size:12px; }
+.widgetLogin .inputText { border-width:1px; border-style:solid; padding:2px 5px; font-size:12px; }
 .widgetLogin .inputCheck { margin:0; width:13px; height:13px; vertical-align:middle; margin-right:5px; }
 .widgetLogin .inputSubmit { padding:0;}
 
