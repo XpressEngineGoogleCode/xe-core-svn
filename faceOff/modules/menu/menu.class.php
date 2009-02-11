@@ -40,7 +40,7 @@
                 $oDB->addColumn('menu','site_srl','number',11,0,true);
             }
 
-            return new Object();
+            return new Object(0, 'success_updated');
         }
 
         /**
