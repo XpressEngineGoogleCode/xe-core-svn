@@ -182,10 +182,10 @@
                 <input type="checkbox" name="notify_message" value="Y" id="notify_message" />
                 <label for="notify_message">{$lang->notify}</label>
                 <!--@end-->
-
+                <!--@if($module_info->secret=="Y")-->
                 <input type="checkbox" name="is_secret" value="Y" id="is_secret" />
                 <label for="is_secret">{$lang->secret}</label>
-
+                <!--@end-->
             </div>
 
             <div class="editor">{$oDocument->getCommentEditor()}</div>
