@@ -24,7 +24,7 @@
             $total_config = $oModuleModel->getModuleConfig('rss');
             $config_vars = Context::getRequestVars();
             $config_vars->feed_document_count = (int)$config_vars->feed_document_count;
-            if(!$config_vars->use_total_feed) return new Object(-1, 'msg_invalid_request');
+            if(!$config_vars->use_total_feed) $alt_message = 'msg_invalid_request';
             if(!in_array($config_vars->use_total_feed, array('Y','N'))) $config_vars->open_rss = 'Y';
 
             if($config_vars->image || $config_vars->del_image) {
