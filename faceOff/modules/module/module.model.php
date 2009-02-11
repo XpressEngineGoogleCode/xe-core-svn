@@ -540,8 +540,8 @@
                                     $obj->options[$i]->value = $val->options[$i]->attrs->value;
                                 }
                             } else {
-                                $obj->options[0]->title = $val->options[0]->title->body;
-                                $obj->options[0]->value = $val->options[0]->attrs->value;
+                                $obj->options[0]->title = $val->options->title->body;
+                                $obj->options[0]->value = $val->options->attrs->value;
                             }
 
                             $skin_info->extra_vars[] = $obj;
