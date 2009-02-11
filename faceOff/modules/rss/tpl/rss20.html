@@ -4,13 +4,20 @@
     <channel>
         <title>{$info->title}</title>
         <link>{$info->link}</link>
-        <description>{str_replace('\'', '&apos;', htmlspecialchars($info->description))}</description>
+        <description>{$info->description}</description>
         <language>{$info->language}</language>
         <pubDate>{$info->date}</pubDate>
         <lastBuildDate>{$info->date}</lastBuildDate>
         <generator>XpressEngine {__ZBXE_VERSION__}</generator>
-        <!--@if($feed_config->feed_copyright)-->
-        <copyright>{$feed_config->feed_copyright}</copyright>
+        <!--@if($info->feed_copyright)-->
+        <copyright>{$info->feed_copyright}</copyright>
+        <!--@end-->
+        <!--@if($info->image)-->
+        <image>
+            <url>{$info->image}</url>
+            <title>{$info->title}</title>
+            <link>{$info->link}</link>
+        </image>
         <!--@end-->
         <!--@foreach($document_list as $oDocument)-->
         <item>
