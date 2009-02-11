@@ -79,7 +79,7 @@
                 $site_module_info = Context::get('site_module_info');
                 $args->site_srl = (int)$site_module_info->site_srl;
             }
-            if(!$args->site_srl) $query_id = 'module.getDefaultModules';
+            //if(is_null($args->site_srl)) $query_id = 'module.getDefaultModules';
 
             // 지정된 사이트(혹은 전체)의 module 목록을 구함
             $output = executeQueryArray($query_id, $args);
