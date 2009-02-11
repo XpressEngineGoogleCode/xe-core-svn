@@ -1,12 +1,12 @@
 <?php
     /**
-     * @class menu 
+     * @class navigator 
      * @author zero (zero@nzeo.com)
      * @brief 메뉴 출력기
      * @version 0.1
      **/
 
-    class menu extends WidgetHandler {
+    class navigator extends WidgetHandler {
 
         /**
          * @brief 위젯의 실행 부분
