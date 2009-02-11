@@ -80,6 +80,7 @@
         <action name="procIssuetrackerAdminInsertMilestone" type="controller" standalone="true" />
         <action name="procIssuetrackerAdminInsertPriority" type="controller" standalone="true" />
         <action name="procIssuetrackerAdminInsertComponent" type="controller" standalone="true" />
+        <action name="procIssuetrackerAdminModifyDisplayOption" type="controller" standalone="true" />
         <action name="procIssuetrackerAdminInsertType" type="controller" standalone="true" />
         <action name="procIssuetrackerAdminInsertPackage" type="controller" standalone="true" />
         <action name="procIssuetrackerAdminInsertRelease" type="controller" standalone="true" />

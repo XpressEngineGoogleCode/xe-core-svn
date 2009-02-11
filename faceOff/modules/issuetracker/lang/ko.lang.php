@@ -41,6 +41,7 @@
      $lang->assignee = '소유자';
      $lang->status = '상태';
      $lang->action = '동작';
+     $lang->display_option = '표시 옵션';
 
      $lang->history_format_not_source = '<span class="target">[target]</span> 으로 <span class="key">[key]</span> 변경';
      $lang->history_format = '<span class="source">[source]</span> 에서 <span class="target">[target]</span> 으로 <span class="key">[key]</span> 변경';

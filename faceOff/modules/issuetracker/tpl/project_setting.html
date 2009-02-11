@@ -8,6 +8,7 @@
 <!--%import("filter/delete_type.xml")-->
 <!--%import("filter/insert_component.xml")-->
 <!--%import("filter/delete_component.xml")-->
+<!--%import("filter/modify_display_option.xml")-->
 
 <!--// datepicker javascript plugin load -->
 <!--%load_js_plugin("ui.datepicker")-->
@@ -173,4 +174,18 @@
             <td><input type="submit" value="{$lang->cmd_registration}" class="btnSubmit" accesskey="s"/></td>
         </tbody>
         </table>
+    </form>
+
+    <form action="./" method="post" onsubmit="return procFilter(this, modify_display_option)">
+    <input type="hidden" name="module_srl" value="{$module_srl}" />
+
+        <h4 class="xeAdmin">{$lang->display_option}</h4>
+        <ol class="displayOpt">
+            <!--@foreach($display_option as $key => $val)-->
+            <li><input type="checkbox" name="displayopts" value="{$key}" id="display_{$key}" <!--@if($val->checked)-->checked="checked"<!--@end--> <!--@if($key=='title')-->disabled="disabled"<!--@end--> /><label for="display_{$key}">{$val->title}</label></li>
+            <!--@end-->
+        </ol>
+        <div class="right">
+        <input type="submit" value="{$lang->cmd_modify}" class="btnSubmit" accesskey="s"/>
+        </div>
     </form>

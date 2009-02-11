@@ -57,6 +57,10 @@
                 }
             }
             Context::set('search_option', $search_option);
+            
+            $oModuleModel = &getModel('module');
+            $module_config = $oModuleModel->getModulePartConfig('issuetracker',$this->module_srl);
+            if($module_config) $this->default_enable = $module_config->display_option;
 
             // 템플릿에서 사용할 노출옵션 세팅
             foreach($this->display_option as $opt) {

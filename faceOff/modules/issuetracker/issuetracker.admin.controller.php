@@ -117,6 +117,16 @@
             }
         }
 
+        function procIssuetrackerAdminModifyDisplayOption()
+        {
+            $args = Context::getRequestVars();
+            $args->module_srl = $this->module_srl;
+            
+            $oModuleController = &getController('module');
+            $module_config->display_option = explode('|@|', $args->displayopts);
+            $oModuleController->insertModulePartConfig('issuetracker',$args->module_srl,$module_config);
+        }
+        
         function procIssuetrackerAdminInsertPriority()
         {
             $args = Context::getRequestVars();

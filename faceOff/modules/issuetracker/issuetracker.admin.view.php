@@ -172,6 +172,22 @@
             // milestone
             $milestone_list = $oIssuetrackerModel->getList($module_srl, "Milestones");
             Context::set('milestone_list', $milestone_list);
+            
+            // display option
+            $oModuleModel = &getModel('module');
+            $module_config = $oModuleModel->getModulePartConfig('issuetracker',$this->module_srl);
+            if($module_config) $this->default_enable = $module_config->display_option;
+
+            // 템플릿에서 사용할 노출옵션 세팅
+            foreach($this->display_option as $opt) {
+                $obj = null;
+                $obj->title = Context::getLang($opt);
+                $checked = Context::get('d_'.$opt);
+                if($opt == 'title' || $checked==1 || (Context::get('d')!=1&&in_array($opt,$this->default_enable))) $obj->checked = true;
+                $display_option[$opt] = $obj;
+            }
+            
+            Context::set('display_option', $display_option);
 
             // type
             $type_list = $oIssuetrackerModel->getList($module_srl, "Types");
