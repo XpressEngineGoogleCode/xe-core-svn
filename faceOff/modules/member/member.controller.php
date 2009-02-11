@@ -944,8 +944,18 @@
             // 메일 내용을 구함
             Context::set('auth_args', $args);
             Context::set('member_info', $member_info);
+            
+            $member_config = $oModuleModel->getModuleConfig('member');
+            if(!$member_config->skin) $this->member_config->skin = "default";
+            if(!$member_config->colorset) $this->member_config->colorset = "white";
+
+            Context::set('member_config', $member_config);
+            
+            $tpl_path = sprintf('%sskins/%s', $this->module_path, $member_config->skin);
+            if(!is_dir($tpl_path)) $tpl_path = sprintf('%sskins/%s', $this->module_path, 'default');
+            
             $oTemplate = &TemplateHandler::getInstance();
-            $content = $oTemplate->compile($this->module_path.'tpl', 'find_member_account_mail');
+            $content = $oTemplate->compile($tpl_path, 'find_member_account_mail');
 
             // 사이트 웹마스터 정보를 구함
             $oModuleModel = &getModel('module');
@@ -1371,8 +1381,18 @@
                 // 메일 내용을 구함
                 Context::set('auth_args', $auth_args);
                 Context::set('member_info', $args);
-                $oTemplate = &TemplateHandler::getInstance();
-                $content = $oTemplate->compile($this->module_path.'tpl', 'confirm_member_account_mail');
+                
+	            $member_config = $oModuleModel->getModuleConfig('member');
+	            if(!$member_config->skin) $this->member_config->skin = "default";
+	            if(!$member_config->colorset) $this->member_config->colorset = "white";
+	
+	            Context::set('member_config', $member_config);
+	            
+	            $tpl_path = sprintf('%sskins/%s', $this->module_path, $member_config->skin);
+	            if(!is_dir($tpl_path)) $tpl_path = sprintf('%sskins/%s', $this->module_path, 'default');
+	            
+	            $oTemplate = &TemplateHandler::getInstance();
+                $content = $oTemplate->compile($tpl_path, 'confirm_member_account_mail');
 
                 // 사이트 웹마스터 정보를 구함
                 $oModuleModel = &getModel('module');
