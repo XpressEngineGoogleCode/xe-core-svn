@@ -1,18 +1,18 @@
 <!--%import("./js/homepage.js",optimized=false)-->
 <!--%import("./filter/delete_homepage.xml")-->
 
-<h3 class="xeAdmin">{$lang->homepage} <span class="gray">{$lang->cmd_management}</span></h3>
+<h3 class="xeAdmin">{$lang->cafe} <span class="gray">{$lang->cmd_management}</span></h3>
 
-<div class="infoText">{nl2br($lang->about_homepage)}</div>
+<div class="infoText">{nl2br($lang->about_cafe)}</div>
 
 <form action="./" method="post" onsubmit="return procFilter(this, delete_homepage)" id="fo_homepage">
 <input type="hidden" name="site_srl" value="{$homepage_info->site_srl}" />
-    <h4 class="xeAdmin"><div>{$lang->cmd_homepage_delete}</h4>
-    <p class="summary">{$lang->about_homepage_delete}</p>
+    <h4 class="xeAdmin"><div>{$lang->cmd_cafe_delete}</h4>
+    <p class="summary">{$lang->about_cafe_delete}</p>
     <table cellspacing="0" class="rowTable">
     <tbody>
         <tr>
-            <th scope="row"><div>{$lang->homepage_title}</div></th>
+            <th scope="row"><div>{$lang->cafe_title}</div></th>
             <td class="wide">{$homepage_info->title}</td>
         </tr>
         <tr>
@@ -20,7 +20,7 @@
             <td>http://{$homepage_info->domain}</td>
         </tr>
         <tr>
-            <th scope="row"><div>{$lang->homepage_admin}</div></th>
+            <th scope="row"><div>{$lang->cafe_admin}</div></th>
             <td>
                 <!--@foreach($admin_list as $key => $val)-->
                     {$val->nick_name} ({$val->user_id})<br />

@@ -66,6 +66,7 @@
             $idx = 0;
             $list_order = array();
             foreach($list as $key => $val) {
+                if(!$val['text']) continue;
                 $obj = null;
                 $obj->href = $val['href'];
                 $obj->url = $val['url'];

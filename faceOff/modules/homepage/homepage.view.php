@@ -31,18 +31,9 @@
             $this->homepage_info = $oHomepageModel->getHomepageInfo($this->site_srl);
             Context::set('homepage_info', $this->homepage_info);
 
-            // 기본 스킨 디렉토리를 구함
-            $template_path = sprintf("%sskins/xe_official",$this->module_path);
+            // 템플릿 디렉토리를 구함
+            $template_path = sprintf("%stpl",$this->module_path);
             $this->setTemplatePath($template_path);
-
-            // 홈페이지 관리 화면은 별도의 레이아웃으로 설정하여 운영
-            $this->setLayoutPath($template_path);
-            $this->setLayoutFile('layout');
-
-            // 레이아웃 정보 가져옴
-            $oLayoutModel = &getModel('layout');
-            $this->selected_layout = $oLayoutModel->getLayout($this->homepage_info->layout_srl);
-            Context::set('selected_layout', $this->selected_layout);
 
             // 모듈 번호가 있으면 해동 모듈의 정보를 구해와서 세팅
             $module_srl = Context::get('module_srl');
@@ -63,6 +54,11 @@
             $layout_list = $oLayoutModel->getDownloadedLayoutList();
             Context::set('layout_list', $layout_list);
 
+            // 레이아웃 정보 가져옴
+            $oLayoutModel = &getModel('layout');
+            $this->selected_layout = $oLayoutModel->getLayout($this->homepage_info->layout_srl);
+            Context::set('selected_layout', $this->selected_layout);
+
             // 메뉴 목록을 가져옴
             $oMenuAdminModel = &getAdminModel('menu');
             $menu_list = $oMenuAdminModel->getMenus();
@@ -70,7 +66,12 @@
 
             if(!Context::get('act')) Context::set('act', 'dispHomepageManage');
 
-            $this->setTemplateFile('index');
+            $args->site_srl = $this->site_srl;
+            $oModuleModel = &getModel('module');
+            $mid_list = $oModuleModel->getMidList($args);
+            Context::set('mid_list', $mid_list);
+
+            $this->setTemplateFile('layout_setup');
         }
 
         /**
@@ -130,6 +131,7 @@
         function dispHomepageTopMenu() {
             // 메뉴 정보 가져오기
             $menu_srl = $this->homepage_info->first_menu_srl;
+
             $oMenuModel = &getAdminModel('menu');
             $menu_info = $oMenuModel->getMenu($menu_srl);
             Context::set('menu_info', $menu_info);
@@ -138,29 +140,11 @@
             $group_list = $oMemberModel->getGroups($this->site_srl);
             Context::set('group_list', $group_list);
 
-            $_menu_info = get_object_vars($this->selected_layout->menu);
+            $oLayoutModel = &getModel('layout');
+            $selected_layout = $oLayoutModel->getLayout($this->homepage_info->layout_srl);
+
+            $_menu_info = get_object_vars($selected_layout->menu);
             $menu = array_shift($_menu_info);
-            Context::set('menu_max_depth', $menu->maxdepth);
-
-            $this->setTemplateFile('menu_manage');
-        }
-
-        /**
-         * @brief 홈페이지 하단 메뉴 관리
-         **/
-        function dispHomepageBottomMenu() {
-            // 메뉴 정보 가져오기
-            $menu_srl = $this->homepage_info->second_menu_srl;
-            $oMenuModel = &getAdminModel('menu');
-            $menu_info = $oMenuModel->getMenu($menu_srl);
-            Context::set('menu_info', $menu_info);
-
-            $oMemberModel = &getModel('member');
-            $group_list = $oMemberModel->getGroups($this->site_srl);
-            Context::set('group_list', $group_list);
-
-            $_menu_info = get_object_vars($this->selected_layout->menu);
-            $menu = array_pop($_menu_info);
             Context::set('menu_max_depth', $menu->maxdepth);
 
             $this->setTemplateFile('menu_manage');
@@ -195,6 +179,19 @@
             Context::set('module_info', $this->module_info);
             $this->setTemplateFile('board_insert');
         }
+
+        /**
+         * @brief 홈페이지 모듈의 게시판 분류
+         **/
+        function dispHomepageBoardCategoryInfo() {
+            $oDocumentModel = &getModel('document');
+            $catgegory_content = $oDocumentModel->getCategoryHTML($this->module_info->module_srl);
+            Context::set('category_content', $catgegory_content);
+
+            Context::set('module_info', $this->module_info);
+            $this->setTemplateFile('category_list');
+        }
+
 
 
         /**
@@ -259,18 +256,6 @@
             Context::set('grant_content', $grant_content);
 
             $this->setTemplateFile('page_grant_list');
-        }
-
-        /**
-         * @brief 홈페이지 모듈의 게시판 분류
-         **/
-        function dispHomepageBoardCategoryInfo() {
-            $oDocumentModel = &getModel('document');
-            $catgegory_content = $oDocumentModel->getCategoryHTML($this->module_info->module_srl);
-            Context::set('category_content', $catgegory_content);
-
-            Context::set('module_info', $this->module_info);
-            $this->setTemplateFile('category_list');
         }
 
         /**

@@ -21,6 +21,11 @@
          * @brief 설치가 이상이 없는지 체크하는 method
          **/
         function checkUpdate() {
+            $oDB = &DB::getInstance();
+
+            // 2009. 02. 11 layout 테이블에 site_srl 추가
+            if(!$oDB->isColumnExists('layouts', 'site_srl')) return true;
+
             return false;
         }
 
@@ -28,6 +33,13 @@
          * @brief 업데이트 실행
          **/
         function moduleUpdate() {
+            $oDB = &DB::getInstance();
+
+            // 2009. 02. 11 menu 테이블에 site_srl 추가
+            if(!$oDB->isColumnExists('layouts', 'site_srl')) {
+                $oDB->addColumn('layouts','site_srl','number',11,0,true);
+            }
+
             return new Object();
         }
 
@@ -41,6 +53,7 @@
                 FileHandler::makeDir($path);
                 return;
             }
+
             $directory = dir($path);
             while($entry = $directory->read()) {
                 if ($entry == "." || $entry == ".." || preg_match('/\.html$/i',$entry) ) continue;

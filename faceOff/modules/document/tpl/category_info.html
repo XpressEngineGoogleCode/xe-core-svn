@@ -18,7 +18,7 @@
         <tr>
             <th scope="row"><div>{$lang->category_title}</div></th>
             <td>
-                <input type="text" name="category_title" id="category_name" value="{htmlspecialchars($category_info->title)}" class="inputTypeText" />
+                <input type="text" name="category_title" id="category_name" value="{$category_info->title}" class="inputTypeText" />
                 <a href="{getUrl('','module','module','act','dispModuleAdminLangcode','target','category_name')}" onclick="popopen(this.href);return false;" class="buttonSet buttonSetting"><span>{$lang->cmd_find_langcode}</span></a>
             </td>
         </tr>

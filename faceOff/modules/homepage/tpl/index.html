@@ -1,13 +1,13 @@
 <!--%import("./js/homepage.js",optimized=false)-->
 <!--%import("./filter/insert_homepage.xml")-->
 
-<h3 class="xeAdmin">{$lang->homepage} <span class="gray">{$lang->cmd_management}</span></h3>
+<h3 class="xeAdmin">{$lang->cafe} <span class="gray">{$lang->cmd_management}</span></h3>
 
-<div class="infoText">{nl2br($lang->about_homepage)}</div>
+<div class="infoText">{nl2br($lang->about_cafe)}</div>
 
 <div class="adminLeftContent">
-    <table cellspacing="0" class="rowTable">
-    <caption>Total{number_format($total_count)}, Page {number_format($page)}/{number_format($total_page)}</caption>
+    <table cellspacing="0" class="colTable">
+    <caption>Total {number_format($total_count)}, Page {number_format($page)}/{number_format($total_page)}</caption>
     <thead>
         <tr>
             <th scope="col"><div>{$lang->no}</div></th>
@@ -49,14 +49,15 @@
 <div class="adminRightExtra">
     <form action="./" method="post" onsubmit="return procFilter(this, insert_homepage)">
         <table cellspacing="0" class="colTable">
+        <caption>&nbsp;</caption>
         <tbody>
             <tr>
-                <th scope="row"><div>{$lang->homepage_title}</div></th>
+                <th scope="row"><div>{$lang->cafe_title}</div></th>
 			</tr>
 			<tr>
                 <td>
                     <input type="text" name="homepage_title" value="" class="inputTypeText w200" />
-                    <p>{$lang->about_homepage_title}</p>
+                    <p>{$lang->about_cafe_title}</p>
                 </td>
             </tr>
             <tr>
@@ -69,7 +70,7 @@
                 </td>
             </tr>
             <tr class="row2">
-                <td colspan="2" class="button"><span class="button black strong"><input type="submit" value="{$lang->cmd_homepage_registration}" accesskey="s" /></span></div></td>
+                <td colspan="2" class="button"><span class="button black strong"><input type="submit" value="{$lang->cmd_cafe_registration}" accesskey="s" /></span></div></td>
             </tr>
         </tbody>
         </table>

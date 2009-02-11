@@ -18,6 +18,8 @@
          * 레이아웃의 신규 생성은 제목만 받아서 layouts테이블에 입력함
          **/
         function procLayoutAdminInsert() {
+            $site_module_info = Context::get('site_module_info');
+            $args->site_srl = (int)$site_module_info->site_srl;
             $args->layout_srl = getNextSequence();
             $args->layout = Context::get('layout');
             $args->title = Context::get('title');

@@ -291,6 +291,9 @@
                         return $this->stop("msg_module_is_not_exists");
                     }
 
+                    // forward 모듈의 실행 결과 검사
+                    if($oModule->stop_proc) return $this->stop($oModule->getMessage());
+
                     $this->setTemplatePath($oModule->getTemplatePath());
                     $this->setTemplateFile($oModule->getTemplateFile());
 

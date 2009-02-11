@@ -142,7 +142,11 @@
          * @breif 특정 content의 위젯 태그들을 변환하여 return
          **/
         function transWidgetCode($content, $include_info = false) {
+            // 사용자 정의 언어 변경
+            $oModuleController = &getController('module');
+            $oModuleController->replaceDefinedLangCode($content);
 
+            // 편집 정보 포함 여부 체크
             $this->include_info = $include_info;
 
             // 내용중 위젯을 또다시 구함 (기존 버전에서 페이지 수정해 놓은것과의 호환을 위해서)

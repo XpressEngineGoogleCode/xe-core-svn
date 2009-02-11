@@ -68,8 +68,9 @@
                 $output = $oTemplate->compile('./common/tpl', 'common_layout');
 
                 // 사용자 정의 언어 변경
-                $oModuleContrller = &getController('module');
-                $oModuleContrller->replaceDefinedLangCode($output);
+                $oModuleController = &getController('module');
+                $oModuleController->replaceDefinedLangCode($output);
+
 
             } else {
                 $output = $content;

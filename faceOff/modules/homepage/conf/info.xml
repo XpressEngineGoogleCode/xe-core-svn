@@ -1,19 +1,19 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <module version="0.2">
-    <title xml:lang="ko">Cafe 관리</title>
-    <title xml:lang="en">Cafe 관리</title>
-	<title xml:lang="es">Cafe 관리</title>
-    <title xml:lang="zh-CN">Cafe 관리</title>
-    <title xml:lang="zh-TW">Cafe 管理</title>
-    <title xml:lang="jp">Cafe 관리</title>
+    <title xml:lang="ko">CafeXE</title>
+    <title xml:lang="en">CafeXE</title>
+	<title xml:lang="es">CafeXE</title>
+    <title xml:lang="zh-CN">CafeXE</title>
+    <title xml:lang="zh-TW">CafeXE</title>
+    <title xml:lang="jp">CafeXE</title>
     <description xml:lang="ko">XE 내에서 Cafe를 분양하고 관리할 수 있는 기능을 제공합니다</description>
     <description xml:lang="en">XE 내에서 Cafe를 분양하고 관리할 수 있는 기능을 제공합니다</description>
     <description xml:lang="es">XE 내에서 Cafe를 분양하고 관리할 수 있는 기능을 제공합니다</description>
     <description xml:lang="zh-CN">XE 내에서 Cafe를 분양하고 관리할 수 있는 기능을 제공합니다</description>
     <description xml:lang="zh-TW">XE 내에서 Cafe를 분양하고 관리할 수 있는 기능을 제공합니다</description>
     <description xml:lang="jp">XE 내에서 Cafe를 분양하고 관리할 수 있는 기능을 제공합니다</description>
-    <version>0.1</version>
-    <date>2008-11-04</date>
+    <version>0.2</version>
+    <date>2009-02-11</date>
     <category>package</category>
 
     <author email_address="zero@zeroboard.com" link="http://blog.nzeo.com">

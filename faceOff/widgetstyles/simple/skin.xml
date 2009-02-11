@@ -13,11 +13,13 @@
         <var name="ws_colorset" type="select">
             <title xml:lang="ko">컬러셋</title>
             <description xml:lang="ko">컬러셋을 지정해주세요</description>
-            <options value="white">
-                <title xml:lang="ko">하얀색</title>
+            <options>
+                <name xml:lang="ko">하얀색</name>
+                <value>white</value>
             </options>
-            <options value="black">
-                <title xml:lang="ko">검은색</title>
+            <options>
+                <name xml:lang="ko">검은색</name>
+                <value>black</value>
             </options>
         </var>
         <var name="ws_title" type="text">

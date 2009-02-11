@@ -342,5 +342,18 @@
             $output = $oModuleController->updateSite($args);
             return $output;
         }
+
+        function triggerMemberMenu(&$content) {
+            $site_module_info = Context::get('site_module_info');
+            $logged_info = Context::get('logged_info');
+            if(!$site_module_info->site_srl || !$logged_info->member_srl) return new Object();
+
+            if($logged_info->is_admin == 'Y' || $logged_info->is_site_admin) {
+                $oMemberController = &getController('member');
+                $oMemberController->addMemberMenu('dispHomepageManage','cmd_cafe_setup');
+            } 
+            return new Object();
+
+        }
     }
 ?>

@@ -1,0 +1,78 @@
+@charset "utf-8";
+/* NHN > UIT Center > Open UI Technology Team > Jeong Chan Myeong(dece24@nhncorp.com) */
+
+#cafeXeParentBody{ margin:0; font-family:AppleGothic, Gulim, Sans-serif;}
+img.cafeXeImg{ border:0;}
+form.cafeXeForm{ margin:0;}
+fieldset.cafeXeFieldset{ border:0; padding:0; margin:0;}
+label.cafeXeLabel{ cursor:pointer;}
+
+a.cafeXeA{ text-decoration:none;}
+a.cafeXeA:hover,
+a.cafeXeA:active,
+a.cafeXeA:focus{ text-decoration:underline;}
+
+/* Common Class */
+.open{ display:block !important;}
+.cafeXeInputText{ border:1px solid; padding:2px 5px; font-size:12px;}
+.cafeXeInputCheck{ margin:0; width:13px; height:13px; vertical-align:middle;}
+.cafeXeInputSubmit{ padding:0;}
+.cafeXeMoreTop{ position:absolute; top:8px; right:0; font:11px Dotum;}
+.cafeXeAddress{ font-style:normal;}
+
+/* Heading */
+#cafeXeBody h2.cafeXeBodyH2{ margin:0; padding-bottom:5px; font:bold 16px "Malgun Gothic", AppleGothic, Dotum, Sans-serif; border-bottom:2px solid;}
+#cafeXeBody h2.cafeXeExtensionH2{ margin:0 0 10px 0; padding-bottom:5px; font:bold 16px "Malgun Gothic", AppleGothic, Dotum, Sans-serif; border-bottom:2px solid;}
+#cafeXeKnee h2.cafeXeExtensionH2{ position:relative; margin:0 0 15px 0; font-size:12px; padding-bottom:5px; border-bottom:2px solid;}
+
+/* Container */
+.cafeXeFixed #cafeXeContainer{ width:auto;}
+
+/* Header */
+.cafeXeFixed .cafeXeEC #cafeXeHeader,
+.cafeXeFixed .cafeXeCE #cafeXeHeader{ border:0; padding:20px 0;}
+.cafeXeFixed .cafeXeEC #cafeXeHeader .cafeXeHeader,
+.cafeXeFixed .cafeXeCE #cafeXeHeader .cafeXeHeader{ width:960px; margin:0 auto;}
+.cafeXeFixed .cafeXeEC #cafeXeHeader h1.cafeXeH1,
+.cafeXeFixed .cafeXeCE #cafeXeHeader h1.cafeXeH1{ margin:0;}
+.cafeXeFixed .cafeXeEC #cafeXeHeader h1.cafeXeH1 a.cafeXeA,
+.cafeXeFixed .cafeXeCE #cafeXeHeader h1.cafeXeH1 a.cafeXeA{ font-family:"Malgun Gothic", AppleGothic, Dotum, Tahoma, Sans-serif; text-decoration:none;}
+.cafeXeFixed .cafeXeEC #cafeXeHeader .cafeXeUrl,
+.cafeXeFixed .cafeXeCE #cafeXeHeader .cafeXeUrl{ margin:0;}
+.cafeXeFixed .cafeXeEC #cafeXeHeader .cafeXeUrl a.cafeXeA,
+.cafeXeFixed .cafeXeCE #cafeXeHeader .cafeXeUrl a.cafeXeA{ font:10px Tahoma;}
+
+/* Body */
+.cafeXeFixed .cafeXeEC #cafeXeBody,
+.cafeXeFixed .cafeXeCE #cafeXeBody{ width:720px; margin:0 auto; padding-top:40px;}
+.cafeXeFixed .cafeXeEC #cafeXeBody{ padding-left:220px;}
+.cafeXeFixed .cafeXeCE #cafeXeBody{ padding-right:220px;}
+.cafeXeFixed .cafeXeEC #cafeXeBody .cafeXeE1,
+.cafeXeFixed .cafeXeCE #cafeXeBody .cafeXeE1{ width:200px;}
+.cafeXeFixed .cafeXeEC #cafeXeBody .cafeXeE1{ left:-240px; margin-right:-200px;}
+.cafeXeFixed .cafeXeCE #cafeXeBody .cafeXeE1{ right:-240px; margin-left:-200px;}
+.cafeXeFixed .cafeXeEC #cafeXeBody #cafeXeContent,
+.cafeXeFixed .cafeXeCE #cafeXeBody #cafeXeContent{ width:100%;}
+.cafeXeFixed .cafeXeEC #cafeXeBody #cafeXeContent .cafeXeSection,
+.cafeXeFixed .cafeXeCE #cafeXeBody #cafeXeContent .cafeXeSection{ margin-bottom:40px; *zoom:1;}
+
+/* Knee */
+.cafeXeFixed .cafeXeEC #cafeXeKnee,
+.cafeXeFixed .cafeXeCE #cafeXeKnee{ padding:30px 0; border:0;}
+.cafeXeFixed .cafeXeEC #cafeXeKnee .cafeXeExtension,
+.cafeXeFixed .cafeXeCE #cafeXeKnee .cafeXeExtension{ left:14px; _left:28px; width:988px; margin:0 auto;}
+.cafeXeFixed .cafeXeEC #cafeXeKnee .cafeXeExtension .cafeXeSection,
+.cafeXeFixed .cafeXeCE #cafeXeKnee .cafeXeExtension .cafeXeSection{ width:219px; margin-right:28px;}
+
+/* Footer */
+.cafeXeFixed .cafeXeEC #cafeXeFooter,
+.cafeXeFixed .cafeXeCE #cafeXeFooter{ padding:30px 0; border:0;}
+.cafeXeFixed .cafeXeEC #cafeXeFooter .cafeXeFooter,
+.cafeXeFixed .cafeXeCE #cafeXeFooter .cafeXeFooter{ position:relative; width:960px; margin:0 auto; *zoom:1; font:10px Tahoma;}
+.cafeXeFixed .cafeXeEC #cafeXeFooter .cafeXeFooter a.cafeXeA,
+.cafeXeFixed .cafeXeCE #cafeXeFooter .cafeXeFooter a.cafeXeA{ text-decoration:none;}
+.cafeXeFixed .cafeXeEC #cafeXeFooter .cafeXeFooter:after,
+.cafeXeFixed .cafeXeCE #cafeXeFooter .cafeXeFooter:after{ content:""; display:block; clear:both;}
+.cafeXeFixed .cafeXeEC #cafeXeFooter .cafeXeFooter address,
+.cafeXeFixed .cafeXeCE #cafeXeFooter .cafeXeFooter address{ float:left;}
+

@@ -392,8 +392,8 @@
          * @brief 사이트 title adding
          **/
         function _addBrowserTitle($site_title) {
-            if($this->site_title) $this->site_title .= ' - '.htmlspecialchars($site_title);
-            else $this->site_title .= htmlspecialchars($site_title);
+            if($this->site_title) $this->site_title .= ' - '.$site_title;
+            else $this->site_title .= $site_title;
         }
 
         /**
@@ -409,7 +409,7 @@
          * @brief 사이트 title setting
          **/
         function _setBrowserTitle($site_title) {
-            $this->site_title = htmlspecialchars($site_title);
+            $this->site_title = $site_title;
         }
 
         /**
@@ -1261,6 +1261,10 @@
          * @brief 내용의 위젯이나 기타 기능에 대한 code를 실제 code로 변경
          **/
         function transContent($content) {
+            // 사용자 정의 언어로 변경
+            $oModuleController = &getController('module');
+            $oModuleController->replaceDefinedLangCode($content);
+            
             // 위젯 코드 변경 
             $oWidgetController = &getController('widget');
             $content = $oWidgetController->transWidgetCode($content, false);

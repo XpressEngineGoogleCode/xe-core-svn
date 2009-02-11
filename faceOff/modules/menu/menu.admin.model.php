@@ -18,7 +18,11 @@
          * @brief 전체 메뉴 목록을 구해옴
          **/
         function getMenuList($obj) {
-
+            if(!$obj->site_srl) {
+                $site_module_info = Context::get('site_module_info');
+                $obj->site_srl = (int)$site_module_info->site_srl;
+            }
+            $args->site_srl = $obj->site_srl;
             $args->sort_index = $obj->sort_index;
             $args->page = $obj->page?$obj->page:1;
             $args->list_count = $obj->list_count?$obj->list_count:20;
@@ -36,8 +40,13 @@
         /**
          * @brief 등록된 모든 메뉴를 return
          **/
-        function getMenus() {
+        function getMenus($site_srl = 0) {
+            if(!$site_srl) {
+                $site_module_info = Context::get('site_module_info');
+                $site_srl = (int)$site_module_info->site_srl;
+            }
             // 일단 DB에서 정보를 가져옴
+            $args->site_srl = $site_srl ;
             $args->menu_srl = $menu_srl;
             $output = executeQuery('menu.getMenus', $args);
             if(!$output->data) return;
@@ -87,12 +96,15 @@
         /**
          * @brief 다국어 지원을 위해 menu의 name을 언어별로 나눠서 return
          */
-        function getMenuItemNames($source_name) {
-            $site_module_info = Context::get('site_module_info');
+        function getMenuItemNames($source_name, $site_srl = null) {
+            if(!$site_srl) {
+                $site_module_info = Context::get('site_module_info');
+                $site_srl = (int)$site_module_info->site_srl;
+            }
 
             // 언어코드 구함
             $oModuleAdminModel = &getAdminModel('module');
-            return $oModuleAdminModel->getLangCode($site_module_info->site_srl, $source_name);
+            return $oModuleAdminModel->getLangCode($site_srl, $source_name);
         }
 
         /**

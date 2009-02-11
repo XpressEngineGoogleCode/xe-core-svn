@@ -18,8 +18,13 @@
          * @brief DB 에 생성된 레이아웃의 목록을 구함
          * 생성되었다는 것은 DB에 등록이 되었다는 것을 의미
          **/
-        function getLayoutList() {
-            $output = executeQuery('layout.getLayoutList');
+        function getLayoutList($site_srl = 0) {
+            if(!$site_srl) {
+                $site_module_info = Context::get('site_module_info');
+                $site_srl = (int)$site_module_info->site_srl;
+            }
+            $args->site_srl = $site_srl;
+            $output = executeQuery('layout.getLayoutList', $args);
             if(!$output->data) return;
 
             if(is_array($output->data)) return $output->data;

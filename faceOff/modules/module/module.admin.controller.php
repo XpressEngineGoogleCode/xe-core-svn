@@ -443,10 +443,14 @@
         /**
          * @brief 사용자 정이 언어코드 파일 저장
          **/
-        function makeCacheDefinedLangCode($site_srl) {
+        function makeCacheDefinedLangCode($site_srl = 0) {
             // 현재 사이트의 언어파일 가져오기
-            $site_module_info = Context::get('site_module_info');
-            $args->site_srl = (int)$site_module_info->site_srl;
+            if(!$site_srl) {
+                $site_module_info = Context::get('site_module_info');
+                $args->site_srl = (int)$site_module_info->site_srl;
+            } else {
+                $args->site_srl = $site_srl;
+            }
             $output = executeQueryArray('module.getLang', $args);
             if(!$output->toBool() || !$output->data) return;
 
@@ -462,7 +466,7 @@
             }
 
             foreach($output->data as $key => $val) {
-                fwrite($fp[$val->lang_code], sprintf('$lang["%s"] = "%s";'."\r\n", $val->name, str_replace('"','\\"',$val->value)));
+                if($fp[$val->lang_code]) fwrite($fp[$val->lang_code], sprintf('$lang["%s"] = "%s";'."\r\n", $val->name, str_replace('"','\\"',$val->value)));
             }
 
             foreach($lang_supported as $key => $val) {
