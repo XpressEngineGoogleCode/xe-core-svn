@@ -1,11 +1,13 @@
 <?php
     /**
      * @class DBPostgreSQL
-     * @author ioseph (ioseph@postgresql.kr)
+     * @author ioseph (ioseph@postgresql.kr) updated by yoonjong.joh@gmail.com
      * @brief MySQL DBMS를 이용하기 위한 class
-     * @version 0.1
+     * @version 0.2
      *
      * postgresql handling class
+     * 2009.02.10  update 와 delete query를 실행할때 table 이름에 alias 사용하는 것을 없앰. 지원 안함
+     *             order by clause를 실행할때 함수를 실행 하는 부분을 column alias로 대체. 
      **/
 
     class DBPostgresql extends DB {
@@ -152,15 +154,46 @@
         function _query($query) {
             if(!$this->isConnected()) return;
 
+/*            
+            $l_query_array = explode(" ", $query);
+            if ($l_query_array[0] = "update")
+            {
+              if (strtolower($l_query_array[2]) == "as")
+              {
+                $l_query_array[2] = "";
+                $l_query_array[3] = "";
+                $query = implode(" ",$l_query_array);
+              }
+            }
+            else if ($l_query_array[0] = "delete") 
+            {
+              if (strtolower($l_query_array[3]) == "as")
+              {
+                $l_query_array[3] = "";
+                $l_query_array[4] = "";            
+                $query = implode(" ",$l_query_array);
+              }
+            }
+*/
+           
             // 쿼리 시작을 알림
             $this->actStart($query);
+            $arr = array('Hello','World!','Beautiful','Day!');
+
 
             // 쿼리 문 실행
             $result = @pg_query($this->fd, $query);
 
             // 오류 체크
-            if(!$result) $this->setError(1, pg_last_error($this->fd));
-
+            if(!$result) 
+            {
+//              var_dump($l_query_array);      
+              //var_dump($query);
+              //die("\nin query statement\n");
+              //var_dump(debug_backtrace());
+              $this->setError(1, pg_last_error($this->fd));
+            }
+            
             // 쿼리 실행 종료를 알림
             $this->actFinish();
 
@@ -219,24 +252,22 @@
             $this->_query($query);
         }
 
-        /**
-         * @brief 특정 테이블에 특정 column 제거
-         **/
-        function dropColumn($table_name, $column_name) {
-            $query = sprintf("alter table %s%s drop %s ", $this->prefix, $table_name, $column_name);
-            $this->_query($query);
-        }
-
 
         /**
          * @brief 특정 테이블의 column의 정보를 return
          **/
         function isColumnExists($table_name, $column_name) {
-            $query = sprintf("select column_name from information_schema.columns where table_schema = current_schema() and table_name = '%s%s' and column_name = '%s'", $this->prefix, $this->addQuotes($table_name), strtolower($column_name));
+            $query = sprintf("SELECT attname FROM pg_attribute WHERE attrelid = (SELECT oid FROM pg_class WHERE relname = '%s%s') AND attname = '%s'", $this->prefix, strtolower($table_name), strtolower($column_name));
+                
+            // $query = sprintf("select column_name from information_schema.columns where table_schema = current_schema() and table_name = '%s%s' and column_name = '%s'", $this->prefix, $this->addQuotes($table_name), strtolower($column_name));
             $result = $this->_query($query);
-            if($this->isError()) return;
+            if($this->isError()) {
+                return;
+            }
             $output = $this->_fetch($result);
-            if($output) return true;
+            if($output) {
+                return true;
+            }                                 
             return false;
         }
 
@@ -461,7 +492,8 @@
         function _executeUpdateAct($output) {
             // 테이블 정리
             foreach($output->tables as $key => $val) {
-                $table_list[] = $this->prefix.$val.' as '.$key;
+                //$table_list[] = $this->prefix.$val.' as '.$key;
+                $table_list[] = $this->prefix.$val;
             }
 
             // 컬럼 정리
@@ -567,7 +599,35 @@
 
             $query = sprintf("select %s from %s %s %s", $columns, implode(',',$table_list),implode(' ',$left_join), $condition);
 
-            if(count($output->groups)) $query .= sprintf(' group by %s', implode(',',$output->groups));
+            if(count($output->groups)) {
+ /*            
+              var_dump("= column output start = ");
+              var_dump(sizeof ($output->columns) . " = end length == ");
+              var_dump($output->columns);
+              var_dump("= column output end = " . "\n");
+              var_dump($output->groups);
+              var_dump("=== " . "\n");
+              var_dump(debug_backtrace());
+             
+              foreach($output->columns as $key => $val) {
+                    $name = $val['name'];
+                    $alias = $val['alias'];
+              } */
+              $group_list = array();
+              foreach($output->groups as $gkey => $gval) {
+                foreach($output->columns as $key => $val) {
+                    $name = $val['name'];
+                    $alias = $val['alias'];
+                    if (trim($name) == trim($gval)) {
+                      $group_list[] = $alias; 
+                      break;
+                    }
+                }
+               
+              }
+              $query .= sprintf(' group by %s', implode(',',$group_list));
+ //             var_dump($query);
+            }
 
             if($output->order) {
                 foreach($output->order as $key => $val) {
