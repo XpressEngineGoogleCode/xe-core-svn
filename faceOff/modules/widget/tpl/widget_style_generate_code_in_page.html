@@ -1,7 +1,7 @@
 <!--%import("filter/style_generate_code_in_page.xml")-->
 <!--%import("js/widget_admin.js")-->
-<!--%import("../../module/tpl/js/filebox.js")-->
 <!--%import("css/widget.css")-->
+<!--%import("../../module/tpl/js/filebox.js")-->
 <!--%import("../../admin/tpl/css/admin.css")-->
 
 
@@ -9,12 +9,9 @@
     doAddWindowLoadEventLoader(getWidgetVars);
 </script>
 
-
-<div id="popHeadder">
-    <h3>{$lang->widgetstyle}</h3>
+<div id="popHeader" class="wide">
+    <h3 class="xeAdmin">{$lang->widgetstyle}</h3>
 </div>
-
-<div id="popBody">
 
 <form action="{getUrl('')}" method="post" enctype="multipart/form-data" target="hidden_iframe" onsubmit="return procFilter(this, style_generate_code_in_page);" id="fo_widget">
 <input type="hidden" name="module" value="widget" />
@@ -26,31 +23,21 @@
 <input type="hidden" name="selected_widget" value="{$selected_widget}" />
 
 
-    <table cellspacing="0" class="adminTable" >
-        <caption>{$lang->cmd_list}</caption>
-        <tr><td>
-    <div style="float:left">
-        <a href="{getUrl('widgetstyle','none')}" style="float:left">
-            <img src="images/widgetstyle_none.gif" title="{$lang->notuse}" style="padding:2px;border:2px solid <!--@if($widgetstyle=='' || $widgetstyle=='none' )-->#FF0000<!--@else-->#ffffff<!--@end-->" />
-        </a>
-    </div>
 
-<!--@foreach($widgetStyle_list as $key => $widgetStyle)-->
-    <!--@if($widgetStyle->preview)-->
-    <div style="float:left;width:100px;height:100px">
-        <a href="{getUrl('widgetstyle',$widgetStyle->widgetStyle)}" >
-            <img src="{getUrl()}{$widgetStyle->preview}" title="{$widgetStyle->title}" style="padding:2px; border:2px solid <!--@if(trim($widgetStyle->widgetStyle)==trim($widgetstyle))-->#FF0000<!--@else-->#ffffff<!--@end-->" />
-        </a>
-    </div>
+<div id="popBody">
+
+    <a href="{getUrl('widgetstyle','none')}" class="widgetStyle"><img src="images/widgetstyle_none.gif" title="{$lang->notuse}" /></a>
+    <!--@foreach($widgetStyle_list as $key => $widgetStyle)-->
+        <!--@if($widgetStyle->preview)-->
+    <a href="{getUrl('widgetstyle',$widgetStyle->widgetStyle)}" class="widgetStyle <!--@if($widgetStyle->widgetStyle==$widgetstyle)-->selected<!--@end-->"><img src="{getUrl()}{$widgetStyle->preview}" title="{$widgetStyle->title}" /></a>
+        <!--@end-->
     <!--@end-->
-<!--@end-->
-        </td></tr>
-    </table>
+    <div class="clear"></div>
 
 
 <!--@if($widgetstyle_info)-->
-    <table cellspacing="0" class="adminTable">
-        <caption>{$widgetstyle_info->title} ver {$widgetstyle_info->version}</caption>
+    <h4 class="xeAdmin">{$widgetstyle_info->title} ver {$widgetstyle_info->version}</h4>
+    <table cellspacing="0" class="rowTable">
         <tr>
             <th scope="row"><div>{$lang->description}</div></th>
             <td>{$widgetstyle_info->description}</td>
@@ -69,8 +56,8 @@
         </tr>
         </table>
 
-        <table cellspacing="0" class="adminTable">
-        <caption>{$lang->cmd_setup}</caption>
+        <h4 class="xeAdmin">{$lang->cmd_setup}</h4>
+        <table cellspacing="0" class="rowTable">
         <!--@foreach($widgetstyle_info->extra_var as $id => $var)-->
         <tr>
             <th scope="row">
@@ -111,10 +98,9 @@
 <!--@end-->
 
 </div>
-    <div id="popFooter" class="tCenter gap1">
-        <span class="button black"><input type="submit" value="{$lang->cmd_setup}"  /></span>
-        <a href="#" onclick="window.close(); return false;" class="button"><span>{$lang->cmd_close}</span></a>
-    </div>
+<div id="popFooter">
+    <span class="button black strong"><input type="submit" value="{$lang->cmd_setup}"  /></span>
+</div>
 </form>
 
 <iframe name="hidden_iframe" frameborder="0" style="display:none"></iframe>
