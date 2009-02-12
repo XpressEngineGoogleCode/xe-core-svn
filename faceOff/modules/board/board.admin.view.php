@@ -36,6 +36,8 @@
                 }
             }
 
+            if($module_info->module != 'board') return $this->stop("msg_invalid_request");
+
             // 모듈 카테고리 목록을 구함
             $module_category = $oModuleModel->getModuleCategories();
             Context::set('module_category', $module_category);

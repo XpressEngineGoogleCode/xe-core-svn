@@ -63,7 +63,7 @@
             $https_port = Context::get('https_port');
 
             $db_info = Context::getDBInfo();
-            $db_info->sso_url = Context::get('sso_url');
+            $db_info->default_url = Context::get('default_url');
             $db_info->time_zone = $time_zone;
             $db_info->qmail_compatibility = $qmail_compatibility;
             $db_info->use_rewrite = $use_rewrite;

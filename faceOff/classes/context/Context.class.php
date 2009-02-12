@@ -92,6 +92,14 @@
             $this->_setRequestArgument();
             $this->_setUploadedArgument();
 
+            // 설치가 되어 있다면 가상 사이트 정보를 구함
+            if(Context::isInstalled()) {
+                // site_module_info를 구함
+                $oModuleModel = &getModel('module');
+                $site_module_info = $oModuleModel->getDefaultMid();
+                Context::set('site_module_info', $site_module_info);
+            }
+
             // 쿠키로 설정된 언어타입 가져오기 
             if($_COOKIE['lang_type']) $this->lang_type = $_COOKIE['lang_type'];
             else {
@@ -108,11 +116,6 @@
 
             // 인증 관련 정보를 Context와 세션에 설정
             if(Context::isInstalled()) {
-                // site_module_info를 구함
-                $oModuleModel = &getModel('module');
-                $site_module_info = $oModuleModel->getDefaultMid();
-                Context::set('site_module_info', $site_module_info);
-
                 // 인증관련 데이터를 Context에 설정
                 $oMemberModel = &getModel('member');
                 $oMemberController = &getController('member');
@@ -271,6 +274,14 @@
         }
 
         /**
+         * @brief 기본 URL을 return
+         **/
+        function getDefaultUrl() {
+            $db_info = Context::getDBInfo();
+            return $db_info->default_url;
+        }
+
+        /**
          * @brief 지원되는 언어 파일 찾기
          **/
         function loadLangSupported() {
@@ -318,14 +329,14 @@
             if(Context::getRequestMethod()!='GET' || !Context::isInstalled()) return true;
 
             // DB info에 설정된 SSO URL이 없다면 무조건 무사통과
-            $sso_url = trim($this->db_info->sso_url);
-            if(!$sso_url) return true;
-            if(substr($sso_url,-1)!='/') $sso_url .= '/';
+            $default_url = trim($this->db_info->default_url);
+            if(!$default_url) return true;
+            if(substr($default_url,-1)!='/') $default_url .= '/';
 
             // SSO 검증을 요청 받는 사이트
-            if($sso_url == Context::getRequestUri()) {
-                if(Context::get('sso_url')) {
-                    $url = base64_decode(Context::get('sso_url'));
+            if($default_url == Context::getRequestUri()) {
+                if(Context::get('default_url')) {
+                    $url = base64_decode(Context::get('default_url'));
                     $url_info = parse_url($url);
                     $url_info['query'].= ($url_info['query']?'&':'').'SSOID='.$_COOKIE[session_name()];
                     $redirect_url = sprintf('%s://%s%s%s?%s',$url_info['scheme'],$url_info['host'],$url_info['port']?':'.$url_info['port']:'',$url_info['path'], $url_info['query']);
@@ -342,7 +353,7 @@
                 // SSO 결과를 요청
                 } else if($_COOKIE['sso']!=md5(Context::getRequestUri()) && !Context::get('SSOID')) {
                     setcookie('sso',md5(Context::getRequestUri()),0,'/');
-                    $url = sprintf("%s?sso_url=%s", $sso_url, base64_encode(Context::getRequestUrl()));
+                    $url = sprintf("%s?default_url=%s", $default_url, base64_encode(Context::getRequestUrl()));
                     header("location:".$url);
                     return false;
                 }
@@ -743,10 +754,21 @@
          * @brief 요청받은 url에 args_list를 적용하여 return
          **/
         function _getUrl($num_args=0, $args_list=array(), $domain = null) {
-            if($domain) {
-                $domain = preg_replace('/^(http|https):\/\//i','', trim($domain));
-                if(substr($domain,-1) != '/') $domain .= '/';
+            static $site_module_info = null;
+            if(is_null($site_module_info)) {
+                $site_module_info = Context::get('site_module_info');
             }
+
+            if(!$domain) {
+                if($site_module_info->domain) $domain = $site_module_info->domain;
+                else {
+                    if($this->db_info->default_url) $domain = $this->db_info->default_url;
+                    else if(!$domain) $domain = Context::getRequestUri();
+                }
+            }
+
+            $domain = preg_replace('/^(http|https):\/\//i','', trim($domain));
+            if(substr($domain,-1) != '/') $domain .= '/';
 
             if(!$this->get_vars || $args_list[0]=='') {
                 $get_vars = null;

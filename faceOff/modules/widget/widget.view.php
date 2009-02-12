@@ -57,6 +57,11 @@
             $args->site_srl = $site_module_info->site_srl;
             $mid_list = $oModuleModel->getMidList($args);
 
+            // 그룹 목록을 가져옴
+            $oMemberModel = &getModel('member');
+            $group_list = $oMemberModel->getGroups($site_module_info->site_srl);
+            Context::set('group_list', $group_list);
+
             // module_category와 module의 조합
             if($module_categories) {
                 foreach($mid_list as $module_srl => $module) {

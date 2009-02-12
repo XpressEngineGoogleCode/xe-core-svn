@@ -9,7 +9,8 @@
         <column name="documents.*" />
     </columns>
     <conditions>
-        <condition operation="in" column="documents.module_srl" var="module_srl" filter="number" />
+        <condition operation="equal" column="modules.site_srl" var="site_srl" />
+        <condition operation="in" column="documents.module_srl" var="module_srl" filter="number" pipe="and" />
         <condition operation="equal" column="modules.module_srl" default="documents.module_srl" filter="number" pipe="and" />
     </conditions>
     <navigation>

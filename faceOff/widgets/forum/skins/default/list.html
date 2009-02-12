@@ -21,7 +21,7 @@
         <tr class="content">
             <td class="icon"><img src="./images/icon<!--@if($val->is_new)-->_new<!--@end-->.gif" alt="icon" /></td>
             <td class="title">
-                <strong><a href="{getUrl('','mid',$val->mid)}">{$val->title}</a></strong>
+                <strong><a href="{getSiteUrl($val->domain,'','mid',$val->mid)}">{$val->title}</a></strong>
                 <p>{$val->description}</p>
             </td>
             <td class="topic">{number_format($val->document_count)}</td>
@@ -30,7 +30,7 @@
                 <!--@if($val->last_item)-->
                     <div class="author">
                         <span class="member_{$val->last_item->member_srl}">{$val->last_item->nick_name}</span>
-                        <a href="{getUrl('','document_srl',$val->last_item->document_srl)}<!--@if($val->last_item->comment_srl)-->#comment_{$val->last_item->comment_srl}<!--@end-->"><img src="./images/replies.gif" alt="go" /></a>
+                        <a href="{getSiteUrl($val->domain,'','document_srl',$val->last_item->document_srl)}<!--@if($val->last_item->comment_srl)-->#comment_{$val->last_item->comment_srl}<!--@end-->"><img src="./images/replies.gif" alt="go" /></a>
                     </div>
                     <div class="date">{zdate($val->last_item->regdate,"Y-m-d H:i")}</div>
                 <!--@else-->

@@ -781,12 +781,6 @@ function showWidgetButton(name, obj) {
 
     var cobj = obj.firstChild;
     while(cobj) {
-        if(cobj.nodeName == "DIV" && cobj.className == "widgetBorder") {
-            if(/embed/i.test(xInnerHtml(cobj))) {
-                hideElements[hideElements.length] = cobj;
-                cobj.style.paddingTop = '20px';
-            }
-        }
         cobj = cobj.nextSibling;
     }
 

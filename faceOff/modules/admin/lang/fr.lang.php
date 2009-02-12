@@ -25,8 +25,9 @@
     $lang->newest_news = "Dernières Nouvelles";
     
     $lang->env_setup = "Configuration";
-    $lang->sso_url = "SSO URL";
-    $lang->about_sso_url = "여러개의 virtual site운영시 한 곳에서 로그인하여도 모든 virtual site에서 로그인 정보를 유지할 수 있게 하기 위해서는 기본 사이트의 XE 설치 url을 입력해주시면 됩니다. (ex: http://도메인/xe)";
+    $lang->default_url = "기본 URL";
+    $lang->about_default_url = "XE 가상 사이트(cafeXE등)의 기능을 사용할때 기본 URL을 입력해 주셔야 가상 사이트간 인증 연동이 되고 게시글/모듈등의 연결이 정상적으로 이루어집니다. (ex: http://도메인/설치경로)";
+
 
     $lang->env_information = "Informations de l'Environnement";
     $lang->current_version = "Version Courante";

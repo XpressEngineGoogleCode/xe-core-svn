@@ -89,7 +89,7 @@
 			<description xml:lang="zh-TW">可設置要顯示的列表數。 (預設是5個)</description>
 		</var>
 		<var id="target_group">
-			<type>text</type>
+			<type>member_group</type>
 			<name xml:lang="ko">대상 회원 그룹</name>
 			<name xml:lang="jp">対象会員グループ</name>
 			<name xml:lang="en">Target Member Group</name>

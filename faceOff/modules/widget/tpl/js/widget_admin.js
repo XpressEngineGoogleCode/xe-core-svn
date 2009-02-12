@@ -131,8 +131,8 @@ function doFillWidgetVars() {
                         if(fo_obj[name].length) {
                             for(var i=0;i<fo_obj[name].length;i++) {
                                 var v = fo_obj[name][i].value;
-                                for(var j=0;j<val.length;j++) {
-                                    if(v == val[j]) {
+                                for(var k=0;k<val.length;k++) {
+                                    if(v == val[k]) {
                                         fo_obj[name][i].checked=true;
                                         break;
                                     }

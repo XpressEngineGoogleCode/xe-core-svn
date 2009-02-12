@@ -3,7 +3,7 @@
 
 <div class="categoryWidget">
 
-    <div class="top <!--@if($mid == $widget_info->mid && !$category)-->selected<!--@end-->"><a href="{getUrl('','mid',$widget_info->mid)}">{$widget_info->module_info->browser_title}</a> <strong>[{$widget_info->total_document_count}]</strong></div>
+    <div class="top <!--@if($mid == $widget_info->module_info->mid && !$category)-->selected<!--@end-->"><a href="{getSiteUrl($widget_info->domain,'','mid',$widget_info->module_info->mid)}">{$widget_info->module_info->browser_title}</a> <strong>[{$widget_info->total_document_count}]</strong></div>
 
     {@ $prev_depth = 0}
     {@ $prev_last = false}
@@ -42,7 +42,7 @@
 
     <div class="{$class}" id="category_parent_{$val->category_srl}">
         <div class="item <!--@if($val->selected)-->selected<!--@end-->">
-            <a href="{getUrl('','mid',$widget_info->mid, 'category',$val->category_srl)}">{$val->text}</a> 
+            <a href="{getSiteUrl($widget_info->domain, '','mid',$widget_info->module_info->mid, 'category',$val->category_srl)}">{$val->text}</a> 
             <!--@if($val->document_count)--><strong>[{$val->document_count}]</strong><!--@end-->
         </div>
     </div>

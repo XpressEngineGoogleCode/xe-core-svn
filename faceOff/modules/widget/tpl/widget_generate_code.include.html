@@ -75,6 +75,15 @@
             <!--@end-->
         </select>
 
+        <!--@elseif($var->type == "member_group")-->
+
+            <!--@foreach($group_list as $key => $group_info)-->
+                <div class="widget_mid_list">
+                    <input type="checkbox" value="{$key}" name="{$id}" id="member_group_{$id}_{$key}" />
+                    <label for="member_group_{$id}_{$key}">{$group_info->title}</label>
+                </div>
+            <!--@end-->
+
         <!--@elseif($var->type == "mid_list")-->
 
             <!--@foreach($mid_list as $module_category_srl => $modules)-->

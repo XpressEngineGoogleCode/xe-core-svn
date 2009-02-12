@@ -253,7 +253,7 @@
 
             Context::set('selected_lang', $db_info->lang_type);
 
-            Context::set('sso_url', $db_info->sso_url);
+            Context::set('default_url', $db_info->default_url);
 
             Context::set('langs', Context::loadLangSupported());
 

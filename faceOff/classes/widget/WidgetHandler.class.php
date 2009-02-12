@@ -68,7 +68,7 @@
 
             // 캐시 파일을 갱신하여야 할 경우 lock파일을 만들고 캐시 생성
             $oWidget = WidgetHandler::getObject($widget);
-            if(!$oWidget) return;
+            if(!$oWidget || !method_exists($oWidget,'proc')) return;
 
             $widget_content = $oWidget->proc($args);
             FileHandler::writeFile($cache_file, $widget_content);

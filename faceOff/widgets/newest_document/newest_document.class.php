@@ -15,6 +15,17 @@
          * 결과를 만든후 print가 아니라 return 해주어야 한다
          **/
         function proc($args) {
+            // 대상 모듈 (mid_list는 기존 위젯의 호환을 위해서 처리하는 루틴을 유지. module_srls로 위젯에서 변경)
+            $oModuleModel = &getModel('module');
+            if($args->mid_list) {
+                $mid_list = explode(",",$args->mid_list);
+                if(count($mid_list)) {
+                    $module_srls = $oModuleModel->getModuleSrlByMid($mid_list);
+                    if(count($module_srls)) $args->module_srls = implode(',',$module_srls);
+                    else $args->module_srls = null;
+                } 
+            }
+
             // 제목
             $title = $args->title;
 
@@ -38,27 +49,12 @@
             $duration_new = $args->duration_new;
             if(!$duration_new) $duration_new = 12;
 
-            // 대상 모듈 (mid_list는 기존 위젯의 호환을 위해서 처리하는 루틴을 유지. module_srl로 위젯에서 변경)
-            if($args->mid_list) {
-                $mid_list = explode(",",$args->mid_list);
-                $oModuleModel = &getModel('module');
-                if(count($mid_list)) {
-                    $module_srl = $oModuleModel->getModuleSrlByMid($mid_list);
-                } else {
-                    $site_module_info = Context::get('site_module_info');
-                    if($site_module_info) {
-                        $margs->site_srl = $site_module_info->site_srl;
-                        $oModuleModel = &getModel('module');
-                        $output = $oModuleModel->getMidList($margs);
-                        if(count($output)) $mid_list = array_keys($output);
-                        $module_srl = $oModuleModel->getModuleSrlByMid($mid_list);
-                    }
-                }
-            } else $module_srl = explode(',',$args->module_srls);
+            // 대상 모듈이 선택되어 있지 않으면 해당 사이트의 전체 모듈을 대상으로 함
+            $site_module_info = Context::get('site_module_info');
+            if($args->module_srls) $obj->module_srl = $args->module_srls;
+            else if($site_module_info) $obj->site_srl = (int)$site_module_info->site_srl;
 
             // newest_document 위젯에서 정의한 query문을 직접 사용
-            if(is_array($module_srl)) $obj->module_srl = implode(',',$module_srl);
-            else $obj->module_srl = $module_srl;
             $obj->sort_index = 'documents.'.$order_target;
             $obj->order_type = $order_type=="desc"?"asc":"desc";
             $obj->list_count = $list_count;
@@ -97,7 +93,6 @@
                 if($info) {
                     $widget_info->mid = $info->mid;
                     if($info->site_srl) {
-                        $oModuleModel = &getModel('module');
                         $site_info = $oModuleModel->getSiteInfo($info->site_srl);
                         if($site_info->domain) {
                             $widget_info->more_link = getSiteUrl('http://'.$site_info->domain, '','mid', $widget_info->mid);

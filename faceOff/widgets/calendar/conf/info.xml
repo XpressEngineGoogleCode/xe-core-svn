@@ -28,7 +28,7 @@
 	</author>
 
 	<extra_vars>
-		<var id="mid">
+		<var id="srl">
 			<type>mid</type>
 			<name xml:lang="ko">대상 모듈</name>
 			<name xml:lang="zh-CN">模块对象</name>

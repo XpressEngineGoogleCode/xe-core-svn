@@ -27,28 +27,13 @@
                 $group_name = trim($tmp_groups[$i]);
                 if(!$group_name) continue;
                 $target_group[] = $group_name;
-
             }
+            if(!count($target_group)) return;
 
-            if(count($target_group)) {
-
-                // 그룹 목록을 구해옴
-                $oMemberModel = &getModel('member');
-                $group_list = $oMemberModel->getGroups();
-
-                foreach($group_list as $group_srl => $val) {
-                    if(!in_array($val->title, $target_group)) continue;
-                    $target_group_srl_list[] = $group_srl;
-                }
-
-                // 해당 그룹의 멤버를 구해옴
-                if(count($target_group_srl_list)) {
-                    $obj->selected_group_srl = implode(',',$target_group_srl_list);
-                    $obj->list_count = $list_count;
-                    $output = executeQuery('member.getMemberListWithinGroup', $obj);
-                    $widget_info->member_list = $output->data;
-                }
-            }
+            $obj->selected_group_srl = implode(',',$target_group);
+            $obj->list_count = $list_count;
+            $output = executeQuery('member.getMemberListWithinGroup', $obj);
+            $widget_info->member_list = $output->data;
 
             $widget_info->title = $title;
             Context::set('widget_info', $widget_info);

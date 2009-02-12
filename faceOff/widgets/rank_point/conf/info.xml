@@ -100,7 +100,7 @@
             </options>
         </var>
         <var id="with_group">
-            <type>text</type>
+            <type>member_group</type>
             <name xml:lang="ko">그룹 포함</name>
             <name xml:lang="jp">グループを含む</name>
             <name xml:lang="en">Include Group</name>
@@ -117,7 +117,7 @@
             <description xml:lang="zh-TW">請輸入要顯示的會員組。例)準會員，正會員</description>
         </var>
         <var id="without_group">
-            <type>text</type>
+            <type>member_group</type>
             <name xml:lang="ko">그룹 제외</name>
             <name xml:lang="jp">グループ除外</name>
             <name xml:lang="en">Exclude Group</name>
