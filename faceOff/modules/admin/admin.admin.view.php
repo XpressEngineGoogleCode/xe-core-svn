@@ -11,14 +11,15 @@
          * @brief 초기화
          **/
         function init() {
-            if(!$this->grant->is_admin) return;
-
             // template path 지정
             $this->setTemplatePath($this->module_path.'tpl');
 
             // 접속 사용자에 대한 체크
             $oMemberModel = &getModel('member');
             $logged_info = $oMemberModel->getLoggedInfo();
+
+            // 관리자가 아니면 금지
+            if($logged_info->is_admin!='Y') return $this->stop("msg_is_not_administrator");
 
             // 관리자용 레이아웃으로 변경
             $this->setLayoutPath($this->getTemplatePath());

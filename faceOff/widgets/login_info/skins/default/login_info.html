@@ -15,9 +15,6 @@
     <!--@foreach($logged_info->menu_list as $key => $val)-->
     <li><a href="{getUrl('act',$key,'member_srl','')}">{Context::getLang($val)}</a></li>
     <!--@end-->
-    <!--@if($logged_info->is_site_admin)-->
-    <li><a href="{getUrl('','module','admin')}" onclick="window.open(this.href);return false;">{$lang->cmd_management}</a></li>
-    <!--@end-->
 </ul>
 <div class="widgetLogin">
     <span class="button green login"><input type="button" onclick="location.href='{getUrl('act','dispMemberLogout')}';return false;" value="{$lang->cmd_logout}" /></span>

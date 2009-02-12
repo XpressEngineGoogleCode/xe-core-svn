@@ -10,6 +10,12 @@
          * @brief 초기화
          **/
         function init() {
+            // 접속 사용자에 대한 체크
+            $oMemberModel = &getModel('member');
+            $logged_info = $oMemberModel->getLoggedInfo();
+
+            // 관리자가 아니면 금지
+            if($logged_info->is_admin!='Y') return $this->stop("msg_is_not_administrator");
         }
 
         /**

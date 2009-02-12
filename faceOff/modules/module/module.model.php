@@ -1011,7 +1011,7 @@
             } else {
 
                 // grant 종류를 구함
-                $grant->access = $grant->is_admin = $grant->manager = $member_info->is_admin=='Y'?true:false;
+                $grant->access = $grant->is_admin = $grant->manager = ($member_info->is_admin=='Y'||$this->isSiteAdmin($member_info))?true:false;
 
                 // 관리자가 아니라 로그인 회원일 경우 이 모듈의 관리자인지 확인
                 if(!$grant->manager && $member_info->member_srl) {
