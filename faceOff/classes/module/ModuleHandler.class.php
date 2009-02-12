@@ -387,8 +387,6 @@
 
             if(__DEBUG__==3) $GLOBALS['__elapsed_class_load__'] += getMicroTime() - $start_time;
 
-            // init method가 있으면 실행
-
             // 객체 리턴
             return $GLOBALS['_loaded_module'][$module][$type][$kind];
         }

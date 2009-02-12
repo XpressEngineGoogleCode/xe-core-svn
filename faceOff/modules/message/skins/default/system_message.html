@@ -6,15 +6,6 @@
             {$system_message}
         </h4>
 
-        <ul>
-            <li><a href="#" onclick="history.back(); return false;" class="button black"><span>{$lang->cmd_back}</span></a></li>
-            <!--@if($is_logged)-->
-            <li><a href="{getUrl('act','dispMemberLogout')}" class="button red"><span>{$lang->cmd_logout}</span></a></li>
-            <!--@end-->
-        </ul>
-    </div>
-</div>
-
 <!--@if(!$is_logged)-->
     <!--%import("./filter/login.xml")-->
     <!--%import("./filter/openid_login.xml")-->
@@ -23,13 +14,6 @@
         var keep_signed_msg = "{$lang->about_keep_signed}";
         xAddEventListener(window, "load", function(){ xGetElementById("messageLoginForm").user_id.focus(); });
     </script>
-
-    <div class="messageLayer">
-        <div class="messageLayerBody">
-            <h4>
-                {$lang->cmd_login}
-            </h4>
-
             <div class="messageLogin" id="messageLogin">
 
                 <form action="./" method="post" onsubmit="return procFilter(this, widget_login)" id="messageLoginForm">
@@ -44,10 +28,10 @@
                     </div>
 
                     <p class="loginOption">
-                        <input type="checkbox" name="keep_signed" id="messageKeepid" value="Y" onclick="if(this.checked) return confirm(keep_signed_msg);" />
+                        <input type="checkbox" name="keep_signed" id="keepid" value="Y" onclick="if(this.checked) return confirm(keep_signed_msg);" />
                         <label for="keepid">{$lang->keep_signed}</label>
                         <!--@if($member_config->enable_openid=='Y')-->
-                        <input name="use_open_id" id="messageUseOpenID" type="checkbox" value="Y" onclick="toggleLoginForm(this); return false;" />
+                        <input name="use_open_id" id="use_open_id" type="checkbox" value="Y" onclick="toggleLoginForm(this); return false;" />
                         <label for="use_open_id">Open ID</label>
                         <!--@end-->
                     </p>
@@ -69,6 +53,13 @@
               </form>
             </div>
             <!--@end-->
-        </div>
-    </div>
 <!--@end-->
+
+        <ul>
+            <li><a href="#" onclick="history.back(); return false;" class="button black"><span>{$lang->cmd_back}</span></a></li>
+            <!--@if($is_logged)-->
+            <li><a href="{getUrl('act','dispMemberLogout')}" class="button red"><span>{$lang->cmd_logout}</span></a></li>
+            <!--@end-->
+        </ul>
+    </div>
+</div>
