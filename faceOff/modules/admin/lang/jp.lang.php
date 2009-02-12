@@ -7,7 +7,7 @@
 
     $lang->admin_info = '管理者情報';
     $lang->admin_index = '管理者トップページ';
-    $lang->control_panel = 'Control panel';
+    $lang->control_panel = 'コントロールパネル';
 
     $lang->module_category_title = array(
         'service' => 'サービス管理',
@@ -25,9 +25,8 @@
     $lang->newest_news = "最新ニュース";
 
     $lang->env_setup = "環境設定";
-    $lang->default_url = "기본 URL";
-    $lang->about_default_url = "XE 가상 사이트(cafeXE등)의 기능을 사용할때 기본 URL을 입력해 주셔야 가상 사이트간 인증 연동이 되고 게시글/모듈등의 연결이 정상적으로 이루어집니다. (ex: http://도메인/설치경로)";
-
+    $lang->sso_url = "SSO（シングルサインオン） URL";
+    $lang->about_sso_url = "複数のvirtual siteを運営する場合、どちらからログインしてもvirtual siteの間でログイン情報を維持できるようにするためには、基本になるサイトでのXEをインストールしたurlを登録してください。 (例: http://ドメイン/xe)";
 
     $lang->env_information = "環境情報";
     $lang->current_version = "インストールバージョン";
@@ -60,12 +59,12 @@
     $lang->xe_license = 'XEのライセンスはGPLです。';
     $lang->about_shortcut = 'よく使用するモジュールに登録されたショートカットは削除できます。';
 
-    $lang->yesterday = "Yesterday";
-    $lang->today = "Today";
+    $lang->yesterday = "昨日";
+    $lang->today = "今日";
 
     $lang->cmd_lang_select = "言語選択";
     $lang->about_cmd_lang_select = "選択された言語のみでサービスを行います。";
-    $lang->about_recompile_cache = "要らないか誤ったキャッシューファイルを整理します。";
+    $lang->about_recompile_cache = "要らないｄか誤ったキャッシューファイルを整理します。";
     $lang->use_ssl = "SSL環境設定";
     $lang->ssl_options = array(
         'none' => "使わない",
