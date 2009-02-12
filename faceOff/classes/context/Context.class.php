@@ -92,6 +92,20 @@
             $this->_setRequestArgument();
             $this->_setUploadedArgument();
 
+            // 쿠키로 설정된 언어타입 가져오기 
+            if($_COOKIE['lang_type']) $this->lang_type = $_COOKIE['lang_type'];
+            else {
+                if($site_module_info && $site_module_info->default_language) {
+                    $this->db_info->lang_type = $site_module_info->default_language;
+                }
+                $this->lang_type = $this->db_info->lang_type;
+            }
+            if(!in_array($this->lang_type, array_keys($lang_supported))) $this->lang_type = $this->db_info->lang_type;
+            if(!$this->lang_type) $this->lang_type = "en";
+
+            Context::set('lang_supported', $lang_supported);
+            $this->setLangType($this->lang_type);
+
             // 인증 관련 정보를 Context와 세션에 설정
             if(Context::isInstalled()) {
                 // site_module_info를 구함
@@ -115,20 +129,6 @@
                 $this->_set('is_logged', $oMemberModel->isLogged() );
                 $this->_set('logged_info', $oMemberModel->getLoggedInfo() );
             }
-
-            // 쿠키로 설정된 언어타입 가져오기 
-            if($_COOKIE['lang_type']) $this->lang_type = $_COOKIE['lang_type'];
-            else {
-                if($site_module_info && $site_module_info->default_language) {
-                    $this->db_info->lang_type = $site_module_info->default_language;
-                }
-                $this->lang_type = $this->db_info->lang_type;
-            }
-            if(!in_array($this->lang_type, array_keys($lang_supported))) $this->lang_type = $this->db_info->lang_type;
-            if(!$this->lang_type) $this->lang_type = "en";
-
-            Context::set('lang_supported', $lang_supported);
-            $this->setLangType($this->lang_type);
 
             // 기본 언어파일 로드
             $this->lang = &$GLOBALS['lang'];
