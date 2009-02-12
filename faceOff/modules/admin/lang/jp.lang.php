@@ -10,23 +10,23 @@
     $lang->control_panel = 'Control panel';
 
     $lang->module_category_title = array(
-        'service' => 'Service Setting',
-        'member' => 'Member Setting',
-        'content' => 'Content Setting',
-        'statistics' => 'Statistics',
-        'construction' => 'Construction',
-        'utility' => 'Utility Setting',
-        'interlock' => 'Interlock Setting',
-        'accessory' => 'Accessories',
-        'migration' => 'Data Migration',
-        'system' => 'System Setting',
+        'service' => 'サービス管理',
+        'member' => '会員管理',
+        'content' => 'コンテンツ管理',
+        'statistics' => '統計確認',
+        'construction' => 'サイト設定',
+        'utility' => '機能設定',
+        'interlock' => '連動設定',
+        'accessory' => '付加機能設定',
+        'migration' => 'データ管理／復元',
+        'system' => 'システム管理',
     );
 
     $lang->newest_news = "最新ニュース";
 
     $lang->env_setup = "環境設定";
-    $lang->sso_url = "SSO URL";
-    $lang->about_sso_url = "여러개의 virtual site운영시 한 곳에서 로그인하여도 모든 virtual site에서 로그인 정보를 유지할 수 있게 하기 위해서는 기본 사이트의 XE 설치 url을 입력해주시면 됩니다. (ex: http://도메인/xe)";
+    $lang->sso_url = "SSO（シングルサインオン） URL";
+    $lang->about_sso_url = "複数のvirtual siteを運営する場合、どちらからログインしてもvirtual siteの間でログイン情報を維持できるようにするためには、基本になるサイトでのXEをインストールしたurlを登録してください。 (例: http://ドメイン/xe)";
 
     $lang->env_information = "環境情報";
     $lang->current_version = "インストールバージョン";
