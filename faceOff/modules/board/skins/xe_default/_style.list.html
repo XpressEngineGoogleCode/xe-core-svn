@@ -47,7 +47,7 @@
                         <!--@end-->
                     <!--// 사용자 선언 확장변수일 경우 -->
                     <!--@else-->
-                            <th scope="col" {$_lc}><div>{$val->name}</div></th>
+                            <th scope="col"><div>{$val->name}</div></th>
                     <!--@end-->
                 <!--@end-->
             </tr>
@@ -57,7 +57,7 @@
 
         <!--@if(!$document_list && !$notice_list)-->
             <tr>
-                <td colspan="{count($list_config)}">
+                <td colspan="<!--@if($grant->manager)-->{count($list_config)+1}<!--@else-->{count($list_config)}<!--@end-->">
                     {$lang->no_documents}
                 </td>
             </tr>

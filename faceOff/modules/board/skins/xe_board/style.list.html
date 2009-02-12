@@ -71,7 +71,7 @@
     <!--// 게시물이 없으면 등록된 글이 없음을 표시 -->
     <!--@if(!$document_list && !$notice_list)-->
     <tr class="bg0 tCenter">
-        <td colspan="{count($list_config)}" class="title">
+        <td colspan="<!--@if($grant->manager)-->{count($list_config)+1}<!--@else-->{count($list_config)}<!--@end-->" class="title">
             {$lang->no_documents}
         </td>
     </tr>
