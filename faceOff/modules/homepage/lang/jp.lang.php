@@ -18,7 +18,7 @@
     $lang->default_menus = array(
         'home' => 'ホーム',
         'notice' => 'お知らせ',
-        'levelup' => 'Level Up',
+        'levelup' => 'レベルアップ',
         'freeboard' => '自由掲示板',
         'view_total' => '全文を表示',
         'view_comment' => '一行の物語',
@@ -44,8 +44,8 @@
     $lang->cmd_change_layout = "変更";
     $lang->cmd_select_index = "初期ページ選択";
     $lang->cmd_add_new_menu = "新しいメニュー追加";
-    $lang->default_language = "기본 언어";
-    $lang->about_default_language = "처음 접속하는 사용자의 언어 설정을 지정할 수 있습니다.";
+    $lang->default_language = "基本言語";
+    $lang->about_default_language = "初めてアクセスするユーザーに見せるページの言語を指定します。";
 
     $lang->about_cafe_act = array(
         "dispHomepageManage" => "ホームページのレイアウトを変更します。",
