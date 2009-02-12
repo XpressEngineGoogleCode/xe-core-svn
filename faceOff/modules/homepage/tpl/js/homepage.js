@@ -362,3 +362,7 @@ function changeMenuType(obj) {
     xGetElementById('itemAttr3').style.display = 'none';
 
 }
+
+function homepageMoveMenuItem() {
+    xAddEventListener(window, 'load', function() { document.body.appendChild(xGetElementById("menuItem")); xGetElementById("menuItem").style.width="550px";} );
+}

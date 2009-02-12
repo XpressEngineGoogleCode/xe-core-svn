@@ -282,6 +282,7 @@
 
                     $oModule->setAct($forward->act);
                     $oModule->init();
+                    if($oModule->stop_proc) return $this->stop($oModule->getMessage());
 
                     $oModule->setModuleInfo($this->module_info, $xml_info);
 

@@ -1,6 +1,6 @@
 @charset "utf-8";
 
-.messageLayer { border:2px solid #777; font-size:12px; background:#fff; margin:50px auto; width:400px;}
+.messageLayer { border:2px solid #777; font-size:12px; background:#fff; margin:50px auto; width:350px;}
 .messageLayer * { margin:0; padding:0; font-size:12px; }
 .messageLayer h4 { font-size:14px !important; font-family:Dotum; background:#f4f4f4 !important; padding:8px 30px 8px 15px !important; letter-spacing:-1px !important; }
 .messageLayer .messageLayerBody{ margin:0 0 15px 0;}
@@ -10,8 +10,8 @@
 
 .messageLogin { padding:20px; }
 .messageLogin .formField { margin-bottom:10px; overflow:hidden; *zoom:1;}
-.messageLogin .formField label { display:block; float:left; }
-.messageLogin .formField input { display:block; float:right ; width:220px;}
+.messageLogin .formField label { display:block; float:left; width:100px;}
+.messageLogin .formField input { display:block; float:left; width:140px;}
 .messageLogin div.button { text-align:center; margin-top:10px; }
 .messageLogin .loginOption { margin-top:20px; text-align:right;}
 .messageLogin .loginOption input { margin-left:20px; vertical-align:middle; }

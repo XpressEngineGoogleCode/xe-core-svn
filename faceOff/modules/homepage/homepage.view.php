@@ -19,7 +19,7 @@
 
             // 현재 접속 권한 체크하여 사이트 관리자가 아니면 접근 금지
             $logged_info = Context::get('logged_info');
-            if(!$oModuleModel->isSiteAdmin($logged_info)) return $this->stop('msg_not_permitted');
+            if(!Context::get('is_logged') || !$oModuleModel->isSiteAdmin($logged_info)) return $this->stop('msg_not_permitted');
 
             // site_module_info값으로 홈페이지의 정보를 구함
             $this->site_module_info = Context::get('site_module_info');

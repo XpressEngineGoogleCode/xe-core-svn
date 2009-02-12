@@ -179,6 +179,7 @@ var confirmMenuMove = "{$lang->confirm_move}";
 var lang_confirm_delete = "{$lang->confirm_delete}";
 var xml_url = "{$menu_info->xml_file}";
 homepageLoadMenuInfo(xml_url);
+homepageMoveMenuItem();
 
 (function($){
 $("[name^=menu_name_]").bind("blur",function(e){

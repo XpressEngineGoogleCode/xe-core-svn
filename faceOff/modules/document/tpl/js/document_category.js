@@ -127,7 +127,7 @@ function addNode(node,e){
             };
 
     jQuery.exec_json('document.getDocumentAdminCategoryTplInfo', params, function(data){
-        jQuery('#category_info').html(data.tpl);
+        jQuery('#category_info').html(data.tpl).css('left',e.pageX).css('top',e.pageY);
     });
 }
 
@@ -139,7 +139,7 @@ function modifyNode(node,e){
             };
 
     jQuery.exec_json('document.getDocumentAdminCategoryTplInfo', params, function(data){
-        jQuery('#category_info').html(data.tpl);
+        jQuery('#category_info').html(data.tpl).css('left',e.pageX).css('top',e.pageY);
     });
 }
 
@@ -183,4 +183,8 @@ function doReloadTreeCategory(module_srl) {
     // 서버에 요청하여 해당 노드의 정보를 수정할 수 있도록 한다.
     var response_tags = new Array('error','message', 'xml_file');
     exec_xml('document', 'procDocumentAdminMakeXmlFile', params, completeInsertCategory, response_tags, params);
+}
+
+function doCategoryFormMove() {
+    xAddEventListener(window,'load',function() { window.document.body.appendChild(xGetElementById('fo_category')); xGetElementById('category_info').style.width = "550px"; } );
 }

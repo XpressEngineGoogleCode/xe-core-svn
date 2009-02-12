@@ -65,14 +65,13 @@
         <input type="hidden" name="module" value="menu" />
         <input type="hidden" name="act" value="" />
         <input type="hidden" name="target" value="" />
-
         <div id="menu_zone_info"></div>
+        </form>
         <div id="menu">
             <ul class="simpleTree">
                 <li class="root" id='tree_0'><span>{$lang->menu}</span></li>
             </ul>
         </div>
-        </form>
     </div>
 </div>
 
@@ -89,6 +88,7 @@ var simpleTreeCollection;
 var max_menu_depth = 999;
 var xml_url = "{$menu_info->xml_file}";
 var lang_confirm_delete = "{$lang->confirm_delete}";
+doMoveMenuInfo();
 Tree(xml_url);
 //]]>
 </script>

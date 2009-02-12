@@ -128,7 +128,7 @@ function modifyNode(node_srl,e){
             };
 
     jQuery.exec_json('menu.getMenuAdminTplInfo', params, function(data){
-        jQuery('#menu_zone_info').html(data.tpl);
+        jQuery('#menu_zone_info').html(data.tpl).css('position','absolute').css("left",e.pageX).css("top",e.pageY).css('display','block');
     });
 }
 
@@ -143,7 +143,7 @@ function addNode(node_srl,e){
             };
 
     jQuery.exec_json('menu.getMenuAdminTplInfo', params, function(data){
-        jQuery('#menu_zone_info').html(data.tpl);
+        jQuery('#menu_zone_info').html(data.tpl).css('position','absolute').css("left",e.pageX).css("top",e.pageY).css('display','block');
     });
 }
 
@@ -166,4 +166,8 @@ function deleteNode(node_srl){
 function completeInsertMenuItem(ret_obj) {
     jQuery('#menu_zone_info').html('');
     Tree(xml_url);
+}
+
+function doMoveMenuInfo() {
+    xAddEventListener(window,'load', function() { window.document.body.appendChild(xGetElementById('fo_menu')); xGetElementById('menu_zone_info').style.width = '550px'; } );
 }
