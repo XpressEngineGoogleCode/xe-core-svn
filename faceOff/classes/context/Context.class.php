@@ -64,6 +64,9 @@
             $this->context->lang = &$GLOBALS['lang'];
             $this->context->_COOKIE = $_COOKIE;
 
+            // 사용자의 쿠키 설정된 언어 타입 추출
+            if($_COOKIE['lang_type']) $this->lang_type = $_COOKIE['lang_type'];
+
             // 기본적인 DB정보 세팅
             $this->_loadDBInfo();
 
@@ -100,14 +103,15 @@
                 Context::set('site_module_info', $site_module_info);
             }
 
-            // 쿠키로 설정된 언어타입 가져오기 
-            if($_COOKIE['lang_type']) $this->lang_type = $_COOKIE['lang_type'];
-            else {
-                if($site_module_info && $site_module_info->default_language) {
-                    $this->db_info->lang_type = $site_module_info->default_language;
-                }
+            // 사용자 설정 언어 타입이 없으면 기본 언어타입으로 지정
+            if(!$this->lang_type) {
+                // 가상 사이트라면 가상사이트의 언어타입으로 지정
+                if($site_module_info && $site_module_info->default_language) $this->db_info->lang_type = $site_module_info->default_language;
+
+                // 언어 타입 지정
                 $this->lang_type = $this->db_info->lang_type;
             }
+            // 지정된 언어가 지원 언어에 속하지 않거나 없으면 영문으로 지정
             if(!in_array($this->lang_type, array_keys($lang_supported))) $this->lang_type = $this->db_info->lang_type;
             if(!$this->lang_type) $this->lang_type = "en";
 
