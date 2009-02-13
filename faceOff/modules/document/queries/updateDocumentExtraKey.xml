@@ -1,4 +1,4 @@
-<query id="updateDocumentExtraKeys" action="update">
+<query id="updateDocumentExtraKey" action="update">
     <tables>
         <table name="document_extra_keys" />
     </tables>
