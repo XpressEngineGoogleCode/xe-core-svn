@@ -42,10 +42,10 @@ a.cafeXeA:focus{ text-decoration:underline;}
 .cafeXeFixed .cafeXeEC #cafeXeHeader .cafeXeUrl a.cafeXeA,
 .cafeXeFixed .cafeXeCE #cafeXeHeader .cafeXeUrl a.cafeXeA{ font:10px Tahoma;}
 
-#cafeXeBody .cafeXeSearch { position:absolute; top:-75px; }
+#cafeXeBody .cafeXeSearch { margin-bottom:20px; }
 #cafeXeBody .cafeXeSearch fieldset { border:0; margin:0; padding:0; }
 #cafeXeBody .cafeXeSearch legend { display:none; }
-#cafeXeBody .cafeXeSearch .searchInput { width:170px; }
+#cafeXeBody .cafeXeSearch .searchInput { width:170px; border:1px solid #CCC; }
 #cafeXeBody .cafeXeSearch .searchSubmit { width:1px; height:1px; visibility:hidden; }
 
 /* Body */
