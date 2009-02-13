@@ -54,6 +54,18 @@
                 </div>
                 <hr class="cafeXeHr" />
                 <div class="cafeXeExtension cafeXeE1">
+                    <div class="cafeXeSearch">
+                        <form action="{getUrl()}" method="post">
+                            <fieldset>
+                                <input type="hidden" name="mid" value="{$mid}" />
+                                <input type="hidden" name="act" value="IS" />
+                                <input type="hidden" name="search_target" value="title" />
+                                <legend>{$lang->cmd_search}</legend>
+                                <input type="text" name="is_keyword" class="searchInput" />
+                                <input type="submit" value="{$lang->cmd_search}" class="searchSubmit" />
+                            </fieldset>
+                        </form>
+                    </div>
                     <!--// Left/Right Widget -->
 
                     <!--// Login Info Widget -->
