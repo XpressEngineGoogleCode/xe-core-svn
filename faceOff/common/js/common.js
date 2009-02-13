@@ -7,7 +7,20 @@
 /* jQuery 참조변수($) 제거 */
 if(jQuery) jQuery.noConflict();
 
-;(function($) {
+(function($) {
+    /* OS check */
+    var UA = navigator.userAgent.toLowerCase();
+    $.os = {
+        Linux: /linux/.test(UA),
+        Unix: /x11/.test(UA),
+        Mac: /mac/.test(UA),
+        Windows: /win/.test(UA)
+    };
+    $.os.name = ($.os.Windows) ? 'Windows' :
+        ($.os.Linux) ? 'Linux' :
+        ($.os.Unix) ? 'Unix' :
+        ($.os.Mac) ? 'Mac' : '';
+
     /**
      * @brief XE 공용 유틸리티 함수
      * @namespace XE
@@ -109,32 +122,22 @@ if(jQuery) jQuery.noConflict();
 
             /* 레이어 출력 */
             if(html) {
-                var area = jQuery("#popup_menu_area").html('<ul>'+html+'</ul>');
+                var area = $('#popup_menu_area').html('<ul>'+html+'</ul>');
                 var areaOffset = {top:params['page_y'], left:params['page_x']};
 
-                if(area.outerHeight()+areaOffset.top > jQuery(window).height()+jQuery(window).scrollTop())
-                    areaOffset.top = jQuery(window).height() - area.outerHeight() + jQuery(window).scrollTop();
-                if(area.outerWidth()+areaOffset.left > jQuery(window).width()+jQuery(window).scrollLeft())
-                    areaOffset.left = jQuery(window).width() - area.outerWidth() + jQuery(window).scrollLeft();
+                if(area.outerHeight()+areaOffset.top > $(window).height()+$(window).scrollTop())
+                    areaOffset.top = $(window).height() - area.outerHeight() + $(window).scrollTop();
+                if(area.outerWidth()+areaOffset.left > $(window).width()+$(window).scrollLeft())
+                    areaOffset.left = $(window).width() - area.outerWidth() + $(window).scrollLeft();
 
-                area.css({ visibility:"visible", top:areaOffset.top, left:areaOffset.left });
+                area.css({ top:areaOffset.top, left:areaOffset.left }).show();
             }
         }
     }
 
 }) (jQuery);
 
-/* os check */
-new function() {
-    var b = navigator.userAgent.toLowerCase(); // jQuery.browser 아래에 추가하시면 이 줄은 삭제
 
-    jQuery.os = {
-        Linux: /linux/.test(b),
-        Unix: /x11/.test(b),
-        Mac: /mac/.test(b),
-        Windows: /win/.test(b)
-    }
-}
 
 /* jQuery(document).ready() */
 jQuery(function($) {
@@ -142,23 +145,23 @@ jQuery(function($) {
     if(!$('#popup_menu_area').length) {
         var menuObj = $('<div>')
             .attr('id', 'popup_menu_area')
-            .css({visibility:'hidden', zIndex:9999});
+            .css({display:'none', zIndex:9999});
         $(document.body).append(menuObj);
     }
 
     $(document).click(function(evt) {
-        var area = jQuery("#popup_menu_area");
+        var area = $('#popup_menu_area');
         if(!area.length) return;
 
         // 이전에 호출되었을지 모르는 팝업메뉴 숨김
-        area.css('visibility', 'hidden');
+        area.hide();
 
         var targetObj = $(evt.target);
         if(!targetObj.length) return;
 
         // obj의 nodeName이 div나 span이 아니면 나올대까지 상위를 찾음
-        if(targetObj.length && jQuery.inArray(targetObj.attr('nodeName'), ['DIV', 'SPAN', 'A']) == -1) targetObj = targetObj.parent();
-        if(!targetObj.length || jQuery.inArray(targetObj.attr('nodeName'), ['DIV', 'SPAN', 'A']) == -1) return;
+        if(targetObj.length && $.inArray(targetObj.attr('nodeName'), ['DIV', 'SPAN', 'A']) == -1) targetObj = targetObj.parent();
+        if(!targetObj.length || $.inArray(targetObj.attr('nodeName'), ['DIV', 'SPAN', 'A']) == -1) return;
 
         // 객체의 className값을 구함
         var class_name = targetObj.attr('className');
@@ -430,7 +433,7 @@ function move_url(url, open_wnidow) {
  **/
 function displayMultimedia(src, width, height, options) {
     var html = _displayMultimedia(src, width, height, options);
-	if(html) document.writeln(html);
+    if(html) document.writeln(html);
 }
 function _displayMultimedia(src, width, height, options) {
     if(src.indexOf('files') == 0) src = request_uri + src;
