@@ -42,15 +42,22 @@
             // 검색이 가능한 목록을 구하기 위해 전체 목록을 구해옴
             $oModuleModel = &getModel('module');
             $site_module_info = Context::get('site_module_info');
-            $args->site_srl = (int)$site_module_info->site_srl;
-            $module_list = $oModuleModel->getMidList($args);
-
-            // 대상 모듈을 정리함
-            $module_srl_list = array();
-            foreach($module_list as $mid => $val) {
-                $mid_list[$val->module_srl] = $val;
-                if(count($this->target_mid) && !in_array($mid, $this->target_mid)) continue;
-                $module_srl_list[] = $val->module_srl;
+            if($site_module_info->site_srl) {
+                $args->site_srl = (int)$site_module_info->site_srl;
+                $module_list = $oModuleModel->getMidList($args);
+                foreach($module_list as $mid => $val) {
+                    $mid_list[$val->module_srl] = $val;
+                    $module_srl_list[] = $val->module_srl;
+                }
+            } else {
+                // 대상 모듈을 정리함
+                $module_list = $oModuleModel->getMidList($args);
+                $module_srl_list = array();
+                foreach($module_list as $mid => $val) {
+                    $mid_list[$val->module_srl] = $val;
+                    if(count($this->target_mid) && !in_array($mid, $this->target_mid)) continue;
+                    $module_srl_list[] = $val->module_srl;
+                }
             }
 
             // 검색어 변수 설정
