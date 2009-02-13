@@ -494,7 +494,7 @@
          * @brief 사용자 정의 언어 변경
          **/
         function replaceDefinedLangCode(&$output) {
-            $output = preg_replace_callback('!\$user_lang->([a-z0-9\_]+)!s', array($this,'_replaceLangCode'), $output);
+            $output = preg_replace_callback('!\$user_lang->([a-z0-9\_]+)!is', array($this,'_replaceLangCode'), $output);
         }
         function _replaceLangCode($matches) {
             static $lang = null;

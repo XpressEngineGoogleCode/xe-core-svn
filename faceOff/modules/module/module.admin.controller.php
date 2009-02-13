@@ -415,7 +415,7 @@
             $lang_supported = Context::get('lang_supported');
             foreach($lang_supported as $key => $val) {
                 $args->lang_code = $key;
-                $args->value = trim(Context::get(strtolower($key)));
+                $args->value = trim(Context::get($key));
                 if(!$args->value) $args->value = $args->name;
                 $output = executeQuery('module.insertLang', $args);
                 if(!$output->toBool()) return $output;
