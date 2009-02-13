@@ -42,7 +42,7 @@
             } else $module_srl = explode(',',$args->module_srls);
 
             // TagModel::getTagList()를 이용하기 위한 변수 정리
-            $obj->module_srl = $args->module_srl;
+            $obj->module_srl = $module_srl;
             $obj->list_count = $list_count;
 
             // tag 모듈의 model 객체를 받아서 getTagList() method를 실행
