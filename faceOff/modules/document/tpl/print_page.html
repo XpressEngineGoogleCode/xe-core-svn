@@ -10,10 +10,12 @@
     <div class="clear"></div>
 
 
-<!--@foreach($extra_vars as $key => $extra_var)-->
-    <div class="gap1">{$extra_var->name} : {$extra_var->value}</div>
+    <!--@if($oDocument->isExtraVarsExists() && (!$oDocument->isSecret() || $oDocument->isGranted()) )-->
+    <!--@foreach($oDocument->getExtraVars() as $key => $val)-->
+    <div class="gap1">{$val->name} : {$val->getValueHtml()}</div>
     <div class="clear"></div>
-<!--@end-->
+    <!--@end-->
+    <!--@end-->
     <div class="gap1">{$oDocument->getContent(false, false)}</div>
 
 </div>
