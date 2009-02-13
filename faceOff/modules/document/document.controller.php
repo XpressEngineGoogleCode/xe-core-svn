@@ -123,10 +123,6 @@
          * @brief 문서 입력
          **/
         function insertDocument($obj, $manual_inserted = false) {
-            // trigger 호출 (before)
-            $output = ModuleHandler::triggerCall('document.insertDocument', 'before', $obj);
-            if(!$output->toBool()) return $output;
-
             // begin transaction
             $oDB = &DB::getInstance();
             $oDB->begin();
@@ -150,6 +146,10 @@
 
             // 주어진 문서 번호가 없으면 문서 번호 등록
             if(!$obj->document_srl) $obj->document_srl = getNextSequence();
+
+            // trigger 호출 (before)
+            $output = ModuleHandler::triggerCall('document.insertDocument', 'before', $obj);
+            if(!$output->toBool()) return $output;
 
             $oDocumentModel = &getModel('document');
 

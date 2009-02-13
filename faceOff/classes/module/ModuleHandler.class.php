@@ -90,7 +90,6 @@
                 // 문서가 존재하지 않으면 문서 정보를 제거
                 if(!$module_info) {
                     unset($this->document_srl);
-                    Context::set('document_srl','', true);
                 // 문서가 존재할 경우 모듈 정보를 바탕으로 virtual site 및 mid 비교
                 } else {
                     // mid 값이 다르면 문서의 mid로 설정
@@ -414,20 +413,7 @@
             if(!Context::isInstalled()) return new Object();
 
             $oModuleModel = &getModel('module');
-
-            $cache_dir = sprintf("%sfiles/cache/triggers/",_XE_PATH_);
-            if(!is_dir($cache_dir)) FileHandler::makeDir($cache_dir);
-
-            $cache_file = sprintf("%s%s.%s", $cache_dir, $trigger_name, $called_position);
-
-            if(!@file_exists($cache_file)) {
-                $triggers = $oModuleModel->getTriggers($trigger_name, $called_position);
-                FileHandler::writeFile($cache_file, serialize($triggers));
-            } else {
-                $buff = FileHandler::readFile($cache_file);
-                $triggers = unserialize($buff);
-            }
-
+            $triggers = $oModuleModel->getTriggers($trigger_name, $called_position);
             if(!$triggers || !count($triggers)) return new Object();
 
             foreach($triggers as $item) {

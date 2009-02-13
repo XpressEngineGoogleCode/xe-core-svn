@@ -169,8 +169,7 @@
          **/
         function triggerAttachFiles(&$obj) {
             $document_srl = $obj->document_srl;
-            $uploaded_count = $obj->uploaded_count;
-            if(!$document_srl || !$uploaded_count) return new Object();
+            if(!$document_srl) return new Object();
 
             $output = $this->setFilesValid($document_srl);
             if(!$output->toBool()) return $output;
