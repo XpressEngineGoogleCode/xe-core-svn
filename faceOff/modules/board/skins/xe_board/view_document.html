@@ -96,7 +96,7 @@
                 <!--@end-->
 
                 <!-- 서명 / 프로필 이미지 출력 -->
-                <!--@if($oDocument->getProfileImage() || $oDocument->getSignature())-->
+                <!--@if($module_info->display_sign != 'N' && ($oDocument->getProfileImage() || $oDocument->getSignature()))-->
                     <div class="memberSignature">
                     <!--@if($oDocument->getProfileImage())-->
                         <div class="profile"><img src="{$oDocument->getProfileImage()}" alt="profile" /></div>

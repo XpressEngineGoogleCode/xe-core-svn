@@ -49,7 +49,7 @@
 			{$oDocument->getContent()}
 		<!--@end-->
 
-		<!--@if($oDocument->getProfileImage() || $oDocument->getSignature())-->
+        <!--@if($module_info->display_sign != 'N' && ($oDocument->getProfileImage() || $oDocument->getSignature()))-->
 			<div class="memberSignature">
 			<!--@if($oDocument->getProfileImage())-->
 				<img src="{$oDocument->getProfileImage()}" alt="profile" class="profile" />
