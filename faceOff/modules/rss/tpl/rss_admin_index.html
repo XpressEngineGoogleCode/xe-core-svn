@@ -6,7 +6,7 @@
     <input type="hidden" name="act" value="procRssAdminInsertConfig" />
     <table cellspacing="0" class="rowTable">
     <tr>
-        <th scope="row"><div>{$lang->cmd_publish}</div></th>
+        <th scope="row"><div>{$lang->total_feed}</div></th>
         <td class="wide">
             <select name="use_total_feed" class="w200">
                 <option value="Y" <!--@if(!$total_config->use_total_feed || $total_config->use_total_feed == 'Y')-->selected="selected"<!--@end-->>{$lang->use}</option>
@@ -47,7 +47,7 @@
         </td>
     </tr>
     <tr>
-        <th scope="row"><div>{$lang->document_count}</div></th>
+        <th scope="row"><div>{$lang->feed_document_count}</div></th>
         <td class="wide">
             <input type="text" class="inputTypeText" name="feed_document_count" value="{$total_config->feed_document_count}" />
             <p>{$lang->about_feed_document_count}</p>

@@ -7,9 +7,10 @@
 
     // 일반 단어들
     $lang->feed = '피드(Feed) 발행';
-    $lang->total_feed = '전체 피드';
+    $lang->total_feed = '통합 피드';
     $lang->rss_disable = '피드(Feed) 끄기';
     $lang->feed_copyright = '저작권';
+    $lang->feed_document_count = '한 페이지당 글 수';
     $lang->feed_image = '피드 이미지';
     $lang->rss_type = '출력할 피드(Feed) 형식';
     $lang->open_rss = '피드(Feed) 공개';
@@ -18,7 +19,7 @@
         'H' => '요약 공개',
         'N' => '공개하지 않음',
     );
-    $lang->open_feed_to_total = '전체 피드에 포함';
+    $lang->open_feed_to_total = '통합 피드에 포함';
 
     // 설명문
     $lang->about_rss_disable = '체크하시면 피드(Feed) 출력을 하지 않습니다.';
