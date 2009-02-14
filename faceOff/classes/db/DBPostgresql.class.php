@@ -9,6 +9,7 @@
  * 2009.02.10  update 와 delete query를 실행할때 table 이름에 alias 사용하는 것을 없앰. 지원 안함
  *             order by clause를 실행할때 함수를 실행 하는 부분을 column alias로 대체.
  * 2009.02.11  dropColumn() function이 추가  
+ * 2009.02.13  addColumn() 함수 변경
  **/
 
 class DBPostgresql extends DB
@@ -263,23 +264,31 @@ class DBPostgresql extends DB
      * @brief 특정 테이블에 특정 column 추가
      **/
     function addColumn($table_name, $column_name, $type = 'number', $size = '', $default =
-        '', $notnull = false)
+        NULL, $notnull = false)
     {
         $type = $this->column_type[$type];
         if (strtoupper($type) == 'INTEGER' || strtoupper($type) == 'BIGINT')
             $size = '';
 
         $query = sprintf("alter table %s%s add %s ", $this->prefix, $table_name, $column_name);
+
         if ($size)
             $query .= sprintf(" %s(%s) ", $type, $size);
         else
             $query .= sprintf(" %s ", $type);
-        if ($default)
-            $query .= sprintf(" default '%s' ", $default);
-        if ($notnull)
-            $query .= " not null ";
 
         $this->_query($query);
+
+        if (isset($default)) {
+            $query = sprintf("alter table %s%s alter %s  set default '%s' ", $this->prefix, $table_name, $column_name, $default);
+            $this->_query($query);
+        }
+        if ($notnull) {
+            $query = sprintf("update %s%s set %s  = %s ", $this->prefix, $table_name, $column_name, $default);
+            $this->_query($query);              
+            $query = sprintf("alter table %s%s alter %s  set not null ", $this->prefix, $table_name, $column_name);
+            $this->_query($query);
+        }
     }
 
 
