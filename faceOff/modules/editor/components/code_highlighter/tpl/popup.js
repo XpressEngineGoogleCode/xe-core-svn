@@ -20,14 +20,14 @@ function getCode() {
     var nogutter = node.getAttribute('nogutter');
     var nocontrols = node.getAttribute('nocontrols');
 
-    jQuery('#code_type').val() = code_type;
-    jQuery('#file_path').val() = file_path;
-    jQuery('#description').val() = description;
-    if(!first_line) jQuery('#first_line').val() = '1';
-    else jQuery('#first_line').val() = first_line;
-    if(collapse == 'Y') jQuery('#collapse').attr('checked') = true;
-    if(nogutter == 'Y') jQuery('#nogutter').attr('checked') = true;
-    if(nocontrols == 'Y') jQuery('#nocontrols').attr('checked') = true;
+    jQuery('#code_type').val(code_type);
+    jQuery('#file_path').val(file_path);
+    jQuery('#description').val(description);
+    if(!first_line) jQuery('#first_line').val('1');
+    else jQuery('#first_line').val(first_line);
+    if(collapse == 'Y' || collapse == 'true') jQuery('#collapse').attr('checked', true);
+    if(nogutter == 'Y' || nogutter == 'true') jQuery('#nogutter').attr('checked', true);
+    if(nocontrols == 'Y' || nocontrols == 'true') jQuery('#nocontrols').attr('checked', true);
 }
 
 /* 추가 버튼 클릭시 부모창의 위지윅 에디터에 인용구 추가 */
