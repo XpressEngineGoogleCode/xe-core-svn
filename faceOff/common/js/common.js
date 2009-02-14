@@ -530,9 +530,9 @@ function setFixedPopupSize() {
         // 윈도우 OS에서는 브라우저별로 미세 조절이 필요
         var moreW = 0;
         if(navigator.userAgent.toLowerCase().indexOf('windows') > 0) {
-            if(jQuery.browser.opera) moreW += 18;
-            else if(jQuery.browser.msie) moreW += 20;
-            else if(jQuery.browser.mozilla) moreW += 17;
+            if(jQuery.browser.opera) moreW += 9;
+            else if(jQuery.browser.msie) moreW += 11;
+            else if(jQuery.browser.mozilla) moreW += 8;
             else if(jQuery.browser.safari) {
                 moreW += 4;
                 h -= 12;

@@ -20,7 +20,7 @@
     $lang->category_group_srls = '그룹제한';
 
     $lang->cmd_make_child = '하위 카테고리 추가';
-    $lang->cmd_enable_move_category = "카테고리 위치 변경 (선택후 위 메뉴를 드래그하세요)";
+    $lang->cmd_enable_move_category = '카테고리 위치 변경 (선택후 위 메뉴를 드래그하세요)';
 
     $lang->about_category_title = '카테고리 이름을 입력해주세요';
     $lang->about_expand = '선택하시면 늘 펼쳐진 상태로 있게 합니다';
@@ -40,7 +40,7 @@
     $lang->msg_is_secret = '비밀글입니다';
     $lang->msg_checked_document_is_deleted = '%d개의 글이 삭제되었습니다';
 
-    $lang->move_target_module = "대상 모듈";
+    $lang->move_target_module = '대상 모듈';
 
     // 관리자 페이지에서 검색할 대상
     $lang->search_target_list = array(
