@@ -222,6 +222,27 @@
 
                         $path_tree = Svn::explodePath($path, true);
                         Context::set('path_tree', $path_tree);
+                        
+                        $file_name = array_pop(array_keys($path_tree));
+                        $file_ext = array_pop(explode(".",$file_name));
+                        $extlist = array(
+                            "document" => array("doc", "pdf", "hwp"),
+                            "image" => array("jpg", "jpeg", "jpe", "gif", "png", "bmp"),
+                            "sound" => array("mp3", "ogg", "wma", "wav"),
+                            "movie" => array("avi", "mpg", "mpeg", "mpe", "wmv", "asf", "asx", "mov", "flv", "swf")
+                        );
+                        
+						foreach($extlist as $key => $exts) {
+							foreach($exts as $s_key => $ext) {
+                                if(!strcasecmp($file_ext, $ext)) {
+                                    $file_type = $key;
+                                    break 2;
+                                }
+                            }
+						}
+
+                        if(!$file_type) $file_type = "code";
+                        Context::set('file_type', $file_type);
 
                         $this->setTemplateFile('source_file_view');
                     break;
