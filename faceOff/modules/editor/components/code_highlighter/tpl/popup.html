@@ -2,17 +2,17 @@
 <!--%import("popup.css")-->
 <!--%import("../lang")-->
 
-<div id="popHeader">
+<div id="popHeader" class="wide">
     <h3 class="xeAdmin">{$component_info->title} ver. {$component_info->version}</h3>
 </div>
 
 <form action="./" method="get" onSubmit="return false" id="fo">
     <div id="popBody">
         <table cellspacing="0" class="rowTable">
-        <col width="120" />
+        <col width="150" />
         <col />
         <tr>
-            <th scope="row">{$lang->code_type}</th>
+            <th scope="row"><div>{$lang->code_type}</div></th>
             <td>
                 <select id="code_type" name="code_type">
                     <option value="Php">PHP</option>
@@ -32,32 +32,32 @@
             </td>
         </tr>
         <tr>
-            <th scope="row">{$lang->file_path}</th>
+            <th scope="row"><div>{$lang->file_path}</div></th>
             <td>
                 <input type="text" id="file_path" name="file_path" class="inputTypeText w400" />
             </td>
         </tr>
         <tr>
-            <th scope="row">{$lang->description}</th>
+            <th scope="row"><div>{$lang->description}</div></th>
             <td>
                 <input type="text" id="description" name="description" class="inputTypeText w400" />
             </td>
         </tr>
         <tr>
-            <th scope="row">{$lang->first_line}</th>
+            <th scope="row"><div>{$lang->first_line}</div></th>
             <td>
                 <input type="text" id="first_line" name="first_line" value="1" class="inputTypeText w40" />
                 <input type="checkbox" id="nogutter" name="nogutter" value="Y" /> <label for="nogutter">{$lang->hidden_linenumber}</label>
             </td>
         </tr>
         <tr>
-            <th scope="row">{$lang->used_collapse}</th>
+            <th scope="row"><div>{$lang->used_collapse}</div></th>
             <td>
                 <input type="checkbox" id="collapse" name="collapse" value="Y" />
             </td>
         </tr>
         <tr>
-            <th scope="row">{$lang->hidden_controls}</th>
+            <th scope="row"><div>{$lang->hidden_controls}</div></th>
             <td>
                 <input type="checkbox" id="nocontrols" name="nocontrols" value="Y" />
             </td>
