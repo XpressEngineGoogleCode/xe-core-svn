@@ -10,7 +10,6 @@
     $lang->thumbnail_crop = '裁減';
     $lang->thumbnail_ratio = '比例';
     $lang->cmd_delete_all_thumbnail = '刪除全部縮圖';
-    $lang->move_target_module = "移到";
     $lang->title_bold = '粗體';
     $lang->title_color = '標題顏色';
 
@@ -21,7 +20,8 @@
     $lang->category_group_srls = '用戶組';
 
     $lang->cmd_make_child = '新增子分類';
-    $lang->cmd_enable_move_category = "分類順序(勾選後用滑鼠拖曳分類項目)";
+    $lang->cmd_enable_move_category = '分類順序(勾選後用滑鼠拖曳分類項目)';
+
     $lang->about_category_title = '請輸入分類名稱。';
     $lang->about_expand = '選擇此項將維持展開狀態。';
     $lang->about_category_group_srls = '被選擇的用戶組才可以檢視此分類。';
@@ -39,6 +39,8 @@
     $lang->msg_category_not_moved = '無法移動！';
     $lang->msg_is_secret = '秘密！';
     $lang->msg_checked_document_is_deleted = '刪除了%d個文章。';
+
+    $lang->move_target_module = '移到';
 
     // 管理頁面搜尋的目標
     $lang->search_target_list = array(
@@ -62,6 +64,7 @@
         'last_update' => '最近更新日期',
         'ipaddress' => 'IP位址',
     );
+
     $lang->alias = "別名";
     $lang->history = "歷史紀錄";
     $lang->about_use_history = "히스토리 기능의 사용여부를 지정합니다. 히스토리 기능을 사용할 경우 문서 수정시 이전 리비전을 기록하고 복원할 수 있습니다.";

@@ -32,7 +32,7 @@
     $lang->bundle_addition_setup = "新增批次設定";
     $lang->bundle_grant_setup = "整體權限設定";
     $lang->lang_code = "語言代碼";
-    $lang->filebox = "파일박스";
+    $lang->filebox = "Filebox";
 
     $lang->header_script = "Header Script";
     $lang->about_header_script = "可以直接輸入，並插入到 HTML的&lt;head&gt;之間。<br />可使用&lt;script&gt;, &lt;style&gt; 或 &lt;meta&gt; 等標籤。";

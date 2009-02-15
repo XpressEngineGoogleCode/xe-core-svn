@@ -18,15 +18,15 @@
     $lang->default_menus = array(
         'home' => '首頁',
         'notice' => '公告事項',
-        'levelup' => '評分奧林匹克請求',
+        'levelup' => 'Lveel Up',
         'freeboard' => '自由討論',
         'view_total' => '查看全文',
         'view_comment' => '故事線',
-        'cafe_album' => '咖啡專輯',
-        'menu' => '菜單',
-        'default_group1' => '待審批成員',
-        'default_group2' => '協理',
-        'default_group3' => '會員',
+        'cafe_album' => 'CafeAlbum',
+        'menu' => '選單',
+        'default_group1' => '待審會員',
+        'default_group2' => '準會員',
+        'default_group3' => '正會員',
     );
 
     $lang->cmd_admin_menus = array(
@@ -44,8 +44,8 @@
     $lang->cmd_change_layout = "變更";
     $lang->cmd_select_index = "選擇初始頁面";
     $lang->cmd_add_new_menu = "新增選單";
-    $lang->default_language = "기본 언어";
-    $lang->about_default_language = "처음 접속하는 사용자의 언어 설정을 지정할 수 있습니다.";
+    $lang->default_language = "預設語言";
+    $lang->about_default_language = "初めてアクセスするユーザーに見せるページの言語を指定します。";
 
     $lang->about_cafe_act = array(
         "dispHomepageManage" => "可設定網站風格",

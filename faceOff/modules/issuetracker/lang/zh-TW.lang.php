@@ -41,7 +41,7 @@
      $lang->assignee = '所有者';
      $lang->status = '狀態';
      $lang->action = '動作';
-     $lang->display_option = 'Display Option';
+     $lang->display_option = '顯示選項';
 
      $lang->history_format_not_source = '<span class="key">[key]</span>修改為<span class="target">[target]</span>';
      $lang->history_format = '<span class="key">[key]</span>，從<span class="source">[source]</span>修改為<span class="target">[target]</span>';

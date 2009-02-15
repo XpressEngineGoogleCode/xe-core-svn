@@ -5,13 +5,13 @@
     <title xml:lang="en">로그인 회원 출력</title>
 	<title xml:lang="es">로그인 회원 출력</title>
     <title xml:lang="zh-CN">로그인 회원 출력</title>
-    <title xml:lang="zh-TW">로그인 회원 출력</title>
+    <title xml:lang="zh-TW">顯示線上會員</title>
     <description xml:lang="ko">로그인 되어 있는 회원의 목록을 출력하는 위젯입니다.</description>
     <description xml:lang="jp">로그인 되어 있는 회원의 목록을 출력하는 위젯입니다.</description>
     <description xml:lang="en">로그인 되어 있는 회원의 목록을 출력하는 위젯입니다.</description>
 	<description xml:lang="es">로그인 되어 있는 회원의 목록을 출력하는 위젯입니다.</description>
     <description xml:lang="zh-CN">로그인 되어 있는 회원의 목록을 출력하는 위젯입니다.</description>
-    <description xml:lang="zh-TW">로그인 되어 있는 회원의 목록을 출력하는 위젯입니다.</description>
+    <description xml:lang="zh-TW">可顯示並輸出線上會員的控件。</description>
     <version>0.1</version>
     <date>2007-07-30</date>
     <link>http://www.zeroboard.com</link>

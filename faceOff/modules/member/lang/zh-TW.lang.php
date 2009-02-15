@@ -59,7 +59,7 @@
             'N' => '全部禁止',
     );
     $lang->about_allow_message = '可選擇是否接收短訊息。';
-    $lang->logged_users = 'Logged Users';
+    $lang->logged_users = '線上會員';
 
     $lang->webmaster_name = '管理員名稱';
     $lang->webmaster_email = '管理員電子郵件';
@@ -74,11 +74,11 @@
         'nick_name' => '暱稱',
         'email_address' => '電子郵件',
         'regdate' => '註冊日期',
-        'regdate_more' => '註冊日期(更多)',
-        'regdate_less' => '註冊日期(較少)',
+        'regdate_more' => '註冊日期(以上)',
+        'regdate_less' => '註冊日期(以下)',
         'last_login' => '最近登入',
-        'last_login_more' => '最近登入(更多)',
-        'last_login_less' => '最近登入(較少)',
+        'last_login_more' => '最近登入(以上)',
+        'last_login_less' => '最近登入(以下)',
         'extra_vars' => '延伸變數',
     );
 
@@ -125,7 +125,7 @@
 
     $lang->msg_new_member = '會員註冊';
     $lang->msg_update_member = '修改會員資料';
-    $lang->msg_leave_member = '退出會員';
+    $lang->msg_leave_member = '會員退出';
     $lang->msg_group_is_null = '無用戶組。';
     $lang->msg_not_delete_default = '無法刪除基本項目';
     $lang->msg_not_exists_member = '不存在的帳號';

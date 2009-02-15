@@ -117,7 +117,7 @@
     $lang->order_type = '排列方式';
     $lang->order_asc = '升冪';
     $lang->order_desc = '降冪';
-    $lang->file = 'file';
+    $lang->file = '檔案';
 
     $lang->mid = '模組名稱';
     $lang->layout = '版面';
@@ -251,7 +251,7 @@
 
     $lang->column_type = '格式';
     $lang->column_type_list['text'] = '文字輸入(text)';
-    $lang->column_type_list['homepage'] = '網址格式 (url)';
+    $lang->column_type_list['homepage'] = '網址格式';
     $lang->column_type_list['email_address'] = '郵件格式 (email)';
     $lang->column_type_list['tel'] = '電話號碼格式 (phone)';
     $lang->column_type_list['textarea'] = '文字區域 (textarea)';
