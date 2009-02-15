@@ -59,6 +59,7 @@
 
         <action name="procMemberFindAccount" type="controller" standalone="true" />
         <action name="procMemberAuthAccount" type="controller" standalone="true" />
+        <action name="procMemberUpdateAuthMail" type="controller" standalone="true" />
 
         <action name="procMemberAdminInsert" type="controller" standalone="true" />
         <action name="procMemberAdminDelete" type="controller" standalone="true" />

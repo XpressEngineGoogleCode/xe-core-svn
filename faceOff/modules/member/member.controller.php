@@ -1027,6 +1027,71 @@
             $this->setTemplatePath($this->module_path.'tpl');
             $this->setTemplateFile('msg_success_authed');
         }
+        
+        /**
+         * @brief 아이디/비밀번호 찾기 기능 실행
+         * 메일에 등록된 링크를 선택시 호출되는 method로 비밀번호를 바꾸고 인증을 시켜버림
+         **/
+        function procMemberUpdateAuthMail() {
+        	$member_srl = Context::get('member_srl');
+        	if(!$member_srl) return new Object(-1, 'msg_invalid_request');
+
+            $oMemberModel = &getModel('member');
+        	
+            // 회원의 정보를 가져옴
+            $member_info = $oMemberModel->getMemberInfoByMemberSrl($member_srl);
+            
+            // 인증메일 재발송 요청이 가능한 상태의 회원인지 검사
+            if ($member_info->denied != 'Y') 
+                return new Object(-1, 'msg_invalid_request');
+            
+            $chk_args->member_srl = $member_srl;
+            $output = executeQuery('member.chkAuthMail', $chk_args);
+            if ($output->toBool() && $output->data->count == '0') return new Object(-1, 'msg_invalid_request');
+            
+            // 인증 DB에 데이터를 넣음
+            $auth_args->member_srl = $member_srl;
+            $auth_args->auth_key = md5(rand(0, 999999));
+
+            $output = executeQuery('member.updateAuthMail', $auth_args);
+            if (!$output->toBool()) {
+                $oDB->rollback();
+                return $output;
+            }
+
+            // 메일 내용을 구함
+            Context::set('auth_args', $auth_args);
+            Context::set('member_info', $member_info);
+            
+            $oModuleModel = &getModel('module');
+            $member_config = $oModuleModel->getModuleConfig('member');
+            if(!$member_config->skin) $this->member_config->skin = "default";
+            if(!$member_config->colorset) $this->member_config->colorset = "white";
+
+            Context::set('member_config', $member_config);
+            
+            $tpl_path = sprintf('%sskins/%s', $this->module_path, $member_config->skin);
+            if(!is_dir($tpl_path)) $tpl_path = sprintf('%sskins/%s', $this->module_path, 'default');
+            
+            $oTemplate = &TemplateHandler::getInstance();
+            $content = $oTemplate->compile($tpl_path, 'confirm_member_account_mail');
+            
+            // 사이트 웹마스터 정보를 구함
+            $oModuleModel = &getModel('module');
+            $member_config = $oModuleModel->getModuleConfig('member');
+
+            // 메일 발송
+            $oMail = new Mail();
+            $oMail->setTitle( Context::getLang('msg_confirm_account_title') );
+            $oMail->setContent($content);
+            $oMail->setSender( $member_config->webmaster_name?$member_config->webmaster_name:'webmaster', $member_config->webmaster_email);
+            $oMail->setReceiptor( $member_info->user_name, $member_info->email_address );
+            $oMail->send();
+            
+            // 메세지 return
+            $msg = sprintf(Context::getLang('msg_auth_mail_sent'), $member_info->email_address);
+            return new Object(-1, $msg);
+        }
 
         /**
          * @brief 서명을 파일로 저장
