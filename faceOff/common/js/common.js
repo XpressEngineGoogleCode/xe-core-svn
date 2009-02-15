@@ -531,7 +531,7 @@ function setFixedPopupSize() {
         var moreW = 0;
         if(navigator.userAgent.toLowerCase().indexOf('windows') > 0) {
             if(jQuery.browser.opera) moreW += 9;
-            else if(jQuery.browser.msie) moreW += 11;
+            else if(jQuery.browser.msie) moreW += 10;
             else if(jQuery.browser.mozilla) moreW += 8;
             else if(jQuery.browser.safari) {
                 moreW += 4;

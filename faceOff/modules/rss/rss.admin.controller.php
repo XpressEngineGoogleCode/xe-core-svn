@@ -22,8 +22,11 @@
         function procRssAdminInsertConfig() {
             $oModuleModel = &getModel('module');
             $total_config = $oModuleModel->getModuleConfig('rss');
+
             $config_vars = Context::getRequestVars();
+
             $config_vars->feed_document_count = (int)$config_vars->feed_document_count;
+
             if(!$config_vars->use_total_feed) $alt_message = 'msg_invalid_request';
             if(!in_array($config_vars->use_total_feed, array('Y','N'))) $config_vars->open_rss = 'Y';
 
@@ -42,6 +45,7 @@
                 if($image_obj['tmp_name'] && is_uploaded_file($image_obj['tmp_name'])) {
                     // 이미지 파일이 아니어도 무시 (swf는 패스~)
                     $image_obj['name'] = Context::convertEncodingStr($image_obj['name']);
+
                     if(!preg_match("/\.(jpg|jpeg|gif|png)$/i", $image_obj['name'])) $alt_message = 'msg_rss_invalid_image_format';
                     else {
                         // 경로를 정해서 업로드
@@ -64,13 +68,16 @@
             $output = $this->setFeedConfig($config_vars);
 
             if(!$alt_message) $alt_message = 'success_updated';
+
             $alt_message = Context::getLang($alt_message);
             Context::set('msg', $alt_message);
+
             $this->setLayoutPath('./common/tpl');
             $this->setLayoutFile('default_layout.html');
             $this->setTemplatePath($this->module_path.'tpl');
             $this->setTemplateFile("top_refresh.html");
         }
+
 
         /**
          * @brief RSS 모듈별 설정
@@ -85,10 +92,12 @@
             if(!is_array($module_srl)) $module_srl[0] = $module_srl;
 
             $config_vars = Context::getRequestVars();
+
             $open_rss = $config_vars->open_rss;
             $open_total_feed = $config_vars->open_total_feed;
             $feed_description = trim($config_vars->feed_description);
             $feed_copyright = trim($config_vars->feed_copyright);
+
             if(!$module_srl || !$open_rss) return new Object(-1, 'msg_invalid_request');
 
             if(!in_array($open_rss, array('Y','H','N'))) $open_rss = 'N';
@@ -104,6 +113,7 @@
             $this->setMessage('success_updated');
         }
 
+
         /**
          * @brief RSS모듈의 전체 Feed 설정용 함수
          **/
@@ -112,6 +122,7 @@
             $oModuleController->insertModuleConfig('rss',$config);
             return new Object();
         }
+
 
         /**
          * @brief RSS 모듈별 설정 함수
