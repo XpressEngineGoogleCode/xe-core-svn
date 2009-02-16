@@ -322,10 +322,18 @@
 
             while($tmp = ibase_fetch_object($result)) {
                 foreach($tmp as $key => $val) {
-                    $type = $output->column_type[$key];
+					$type = $output->column_type[$key];
+
+					if($type == null) {
+						foreach($output->columns as $cols) {
+							if($cols['alias'] == $key) {
+								$type = $output->column_type[$cols['name']];
+							}
+						}
+					}
 
                     if($type == "text" || $type == "bigtext") {
-                        $blob_data = ibase_blob_info($tmp->{$key});
+						$blob_data = ibase_blob_info($tmp->{$key});
                         $blob_hndl = ibase_blob_open($tmp->{$key});
                         $tmp->{$key} = ibase_blob_get($blob_hndl, $blob_data[0]);
                         ibase_blob_close($blob_hndl);
@@ -934,6 +942,14 @@
             while($tmp = ibase_fetch_object($result)) {
                 foreach($tmp as $key => $val){
                     $type = $output->column_type[$key];
+
+					if($type == null) {
+						foreach($output->columns as $cols) {
+							if($cols['alias'] == $key) {
+								$type = $output->column_type[$cols['name']];
+							}
+						}
+					}
 
                     if($type == "text" || $type == "bigtext") {
                         $blob_data = ibase_blob_info($tmp->{$key});
