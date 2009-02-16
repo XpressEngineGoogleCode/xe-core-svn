@@ -1162,10 +1162,15 @@
 
         /**
          * @brief 특정 회원들의 그룹을 일괄 변경
+         * 가상 사이트와 같이 한 회원이 하나의 그룹만 가질 경우 사용할 수 있음
          **/
         function replaceMemberGroup($args) {
             $obj->site_srl = $args->site_srl;
             $obj->member_srl = implode(',',$args->member_srl);
+
+            $output = executeQueryArray('member.getMembersGroup', $obj);
+            if($output->data) foreach($output->data as $key => $val) $date[$val->member_srl] = $val->regdate;
+
             $output = executeQuery('member.deleteMembersGroup', $obj);
             if(!$output->toBool()) return $output;
 
@@ -1178,6 +1183,7 @@
                 $obj->member_srl = $val;
                 $obj->group_srl = $args->group_srl;
                 $obj->site_srl = $args->site_srl;
+                $obj->regdate = $date[$obj->member_srl];
                 $output = executeQuery('member.addMemberToGroup', $obj);
                 if(!$output->toBool()) return $output;
             }
