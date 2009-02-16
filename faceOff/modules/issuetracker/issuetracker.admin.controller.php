@@ -72,7 +72,6 @@
         function procIssuetrackerAdminInsertMilestone()
         {
             $args = Context::getRequestVars();
-            $args->module_srl = $this->module_srl;
             if($args->is_default=='Y') executeQuery('issuetracker.clearMilestoneDefault', $args);
 
             if(!$args->milestone_srl)
@@ -89,7 +88,6 @@
         function procIssuetrackerAdminInsertType()
         {
             $args = Context::getRequestVars();
-            $args->module_srl = $this->module_srl;
             if($args->is_default=='Y') executeQuery('issuetracker.clearTypeDefault', $args);
 
             if($args->type_srl) {
@@ -104,7 +102,7 @@
         function procIssuetrackerAdminInsertComponent()
         {
             $args = Context::getRequestVars();
-            $args->module_srl = $this->module_srl;
+            
             if($args->is_default=='Y') executeQuery('issuetracker.clearComponentsDefault', $args);
 
             if($args->component_srl) {
@@ -120,7 +118,6 @@
         function procIssuetrackerAdminModifyDisplayOption()
         {
             $args = Context::getRequestVars();
-            $args->module_srl = $this->module_srl;
             
             $oModuleController = &getController('module');
             $module_config->display_option = explode('|@|', $args->displayopts);
@@ -130,7 +127,6 @@
         function procIssuetrackerAdminInsertPriority()
         {
             $args = Context::getRequestVars();
-            $args->module_srl = $this->module_srl;
             if($args->is_default=='Y') executeQuery('issuetracker.clearPrioritiesDefault',$args);
 
             if($args->priority_srl) {
@@ -177,7 +173,6 @@
         function procIssuetrackerAdminInsertPackage()
         {
             $args = Context::getRequestVars();
-            $args->module_srl = $this->module_srl;
 
             if(!$args->package_srl)
             {
@@ -193,7 +188,6 @@
         function procIssuetrackerAdminInsertRelease()
         {
             $args = Context::getRequestVars();
-            $args->module_srl = $this->module_srl;
 
             if(!$args->release_srl)
             {
