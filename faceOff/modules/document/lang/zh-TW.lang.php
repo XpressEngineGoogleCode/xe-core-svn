@@ -12,6 +12,7 @@
     $lang->cmd_delete_all_thumbnail = '刪除全部縮圖';
     $lang->title_bold = '粗體';
     $lang->title_color = '標題顏色';
+    $lang->new_document_count = '새글';
 
     $lang->parent_category_title = '主分類';
     $lang->category_title = '分類名稱';

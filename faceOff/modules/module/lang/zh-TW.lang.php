@@ -42,6 +42,7 @@
 
     $lang->grant_to_all = "所有使用者";
     $lang->grant_to_login_user = "已登入使用者";
+    $lang->grant_to_site_user = "誰訂閱用戶";
     $lang->grant_to_group = "特定群組使用者";
 
     $lang->cmd_add_shortcut = "新增到快捷選單";
@@ -79,6 +80,7 @@
     $lang->about_page_count = '可以指定顯示在清單下方的頁面數(預設為10個)。 ';
     $lang->about_admin_id = '可以對該模組指定最高管理權限。';
     $lang->about_grant = '全部解除特定權限的對象時，沒有登錄的會員也將具有相關權限。';
+    $lang->about_grant_deatil = '가입한 사용자는 cafeXE등 분양형 가상 사이트에 가입을 한 로그인 사용자를 의미합니다';
     $lang->about_module = "除基本函式庫以外XE全部由模組組成。\n模組管理中列出所有已安裝的模組，因此易於管理。";
 
     $lang->about_extra_vars_default_value = '當復選或單選的預設值需要很多個時，用 (,) 區隔。';

@@ -86,6 +86,7 @@
     $lang->cmd_login = '登录';
     $lang->cmd_logout = '退出';
     $lang->cmd_signup = '新会员注册';
+    $lang->cmd_site_signup = 'Join';
     $lang->cmd_modify_member_info = '修改会员信息';
     $lang->cmd_modify_member_password = '修改密码';
     $lang->cmd_view_member_info = '查看会员信息';

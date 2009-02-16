@@ -42,6 +42,7 @@
 
     $lang->grant_to_all = "All users";
     $lang->grant_to_login_user = "Logged users";
+    $lang->grant_to_site_user = "Joined users";
     $lang->grant_to_group = "Specification group users";
 
     $lang->cmd_add_shortcut = "Ajouter un raccourci";
@@ -78,6 +79,7 @@
     $lang->about_page_count = 'Vous pouvez configurer combien de liens pour les Pages à Bouger en bas de chaque page.(10 par défaut)';
     $lang->about_admin_id = 'Vous pouvez désigner un directeur qui aura tous les permissions sur le module.\nVous pouvez entrer plusieurs compte en utilisant.';
     $lang->about_grant = 'Si vous ne donnez pas la permission à aucune personne, même les membres qui n\'a pas ouvert la connexion auront la permission. '; 
+    $lang->about_grant_deatil = '가입한 사용자는 cafeXE등 분양형 가상 사이트에 가입을 한 로그인 사용자를 의미합니다';
     $lang->about_module = "XE se compose des modules sauf la bibliothèque fondamental.\nLe module [Administration des Modules] montera tous les modules installés et vous aidera les administrer.";
 
 	$lang->about_extra_vars_default_value = 'Si plusieurs valeurs sont nécessaires, vous pouvez les connecter avec la virgule(,).';

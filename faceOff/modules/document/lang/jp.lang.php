@@ -12,6 +12,7 @@
     $lang->cmd_delete_all_thumbnail = 'すべてのサムネール削除';
     $lang->title_bold = 'タイトル太字';
     $lang->title_color = 'タイトルの色';
+    $lang->new_document_count = '새글';
 
     $lang->parent_category_title = '上位カテゴリ名';
     $lang->category_title = 'カテゴリ名';

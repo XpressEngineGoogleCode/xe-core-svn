@@ -42,6 +42,7 @@
 
     $lang->grant_to_all = "All users";
     $lang->grant_to_login_user = "Logged users";
+    $lang->grant_to_site_user = "Joined users";
     $lang->grant_to_group = "Specification group users";
 
     $lang->cmd_add_shortcut = "añadir acceso directo";
@@ -78,6 +79,7 @@
     $lang->about_page_count = 'Usted puede definir el número de página enlazada para mover páginas en un botón de la página.(Predefinido es 10)';
     $lang->about_admin_id = 'Usted puede definir el administrador de atribuciones superiores al módulo.\n Usted puede asignar múltiples IDs.';
     $lang->about_grant = 'Si usted desea desactivar a todos los objetos teniendo atribuciones especificas, incluso el usuario no conectado pueden tener atribuciones.';
+    $lang->about_grant_deatil = '가입한 사용자는 cafeXE등 분양형 가상 사이트에 가입을 한 로그인 사용자를 의미합니다';
     $lang->about_module = "XE consiste de módulos excepto la librería básica.\n Módulo del Manejo del Módulo muestra todos los módulos instalados y ayuda el manejo de ellos.";
 
 	$lang->about_extra_vars_default_value = 'Si múltiples valores predefinidos son requeridos, usted puede enlazar con la coma(,).';

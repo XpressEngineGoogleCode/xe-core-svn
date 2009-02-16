@@ -1027,7 +1027,6 @@
                     $args->module_srl = $module_srl;
                     $output = executeQueryArray('module.getModuleGrants', $args);
 
-                    $default_grant = array();
                     $grant_exists = $granted = array();
 
                     if($output->data) {
@@ -1038,13 +1037,25 @@
 
                             // 로그인 회원만
                             if($val->group_srl == -1) {
-                                $default_grant[$val->name] = -1;
                                 $granted[$val->name] = true;
                                 if($member_info->member_srl) $grant->{$val->name} = true;
 
+                            // 사이트 가입한 회원만
+                            } elseif($val->group_srl == -2) {
+                                $granted[$val->name] = true;
+                                // 비로그인 회원이면 권한 미부여
+                                if(!$member_info->member_srl) $grant->{$val->name} = false;
+                                // 로그인 회원
+                                else {
+                                    $site_module_info = Context::get('site_module_info');
+                                    // 현재 접속된 사이트 정보가 없으면 권한 부여
+                                    if(!$site_module_info->site_srl) $grant->{$val->name} = true;
+                                    // 현재 접속된 사이트의 그룹 정보가 있 으면 권한 미부여
+                                    elseif(count($group_list)) $grant->{$val->name} = true;
+                                }
+
                             // 비로그인 회원 모두
                             } elseif($val->group_srl == 0) {
-                                $default_grant[$val->name] = -1;
                                 $granted[$val->name] = true;
                                 $grant->{$val->name} = true;
                             // 특정 그룹 대상일 경우
@@ -1068,6 +1079,11 @@
                                     break;
                                 case 'member' :
                                         if($member_info->member_srl) $grant->{$grant_name} = true;
+                                        else $grant->{$grant_name} = false;
+                                    break;
+                                case 'site' :
+                                        $site_module_info = Context::get('site_module_info');
+                                        if($member_info->member_srl && (($site_module_info->site_srl && count($group_list)) || !$site_module_info->site_srl)) $grant->{$grant_name} = true;
                                         else $grant->{$grant_name} = false;
                                     break;
                                 case 'manager' :

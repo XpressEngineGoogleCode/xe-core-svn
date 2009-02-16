@@ -12,6 +12,7 @@
     $lang->page = "페이지";
     $lang->module_id = "모듈 ID";
     $lang->item_group_grant = "보여줄 그룹";
+    $lang->cafe_info = "카페 정보";
     $lang->cafe_admin = "Cafe 관리자";
     $lang->do_selected_member = "선택된 회원을 : ";
 

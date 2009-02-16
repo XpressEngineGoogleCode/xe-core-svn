@@ -276,6 +276,17 @@
             if(!$output->toBool()) return $output;
         }
 
+        function procHomepageDeleteMember() {
+            $member_srl = Context::get('member_srl');
+            if(!$member_srl) return new Object(-1,'msg_invalid_request');
+
+            $args->site_srl= $this->site_srl;
+            $args->member_srl = $member_srl;
+            $output = executeQuery('member.deleteMembersGroup', $args);
+            if(!$output->toBool()) return $output;
+            $this->setMessage('success_deleted');
+        }
+
         function procHomepageUpdateMemberGroup() {
             if(!Context::get('cart')) return new Object();
             $args->site_srl = $this->site_srl;

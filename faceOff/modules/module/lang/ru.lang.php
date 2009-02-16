@@ -43,6 +43,7 @@
 
     $lang->grant_to_all = "All users";
     $lang->grant_to_login_user = "Logged users";
+    $lang->grant_to_site_user = "Joined users";
     $lang->grant_to_group = "Specification group users";
 
     $lang->cmd_add_shortcut = "Добавить ярлык";
@@ -79,6 +80,7 @@
     $lang->about_page_count = 'Вы можете установить число страниц внизу. (по умолчанию: 10)';
     $lang->about_admin_id = 'Вы можете разрешить менеджеру иметь полные права доступа к этому модулю.\nВы можете ввести несколько ID, используя ';
     $lang->about_grant = 'Если Вы отключите все права доступа для отдельного объекта, не прошедшие процедуру входа на сайт пользователи получат доступ.'; 
+    $lang->about_grant_deatil = '가입한 사용자는 cafeXE등 분양형 가상 사이트에 가입을 한 로그인 사용자를 의미합니다';
     $lang->about_module = "XE состоит из модулей, за исключением базовой библиотеки.\n Управление модулем покажет все установленные модули и поможет управлять ими.";
 
 	$lang->about_extra_vars_default_value = 'Если нужно несколько значений по умолчанию, разделите их запятыми(,).';

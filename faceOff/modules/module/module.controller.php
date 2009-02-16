@@ -635,6 +635,7 @@
             $output = $this->deleteModuleFileBox($vars);
             if(!$output->toBool()) return $output;
         }
+
         function deleteModuleFileBox($vars){
 
             // delete real file

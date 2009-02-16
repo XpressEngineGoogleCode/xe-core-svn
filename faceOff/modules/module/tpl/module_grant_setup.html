@@ -16,6 +16,7 @@
 <div id="popBody">
 
     <h4 class="xeAdmin">{$lang->about_grant}</h4>
+    <p class="summary">{$lang->about_grant_deatil}</p>
     <table cellspacing="0" class="crossTable">
     <thead>
     <tr>
@@ -32,9 +33,9 @@
                 <select name="{$grant_name}_default" class="grant_default">
                     <!--@if($grant_item->default == 'guest')--><option value="0">{$lang->grant_to_all}</option><!--@end-->
                     <!--@if($grant_item->default != 'manager')--><option value="-1">{$lang->grant_to_login_user}</option><!--@end-->
+                    <!--@if($grant_item->default != 'manager')--><option value="-2" <!--@if($default_grant[$grant_name]=='site')-->selected="selected"<!--@end-->>{$lang->grant_to_site_user}</option><!--@end-->
                     <option value="">{$lang->grant_to_group}</option>
                 </select>
-
                 <div id="zone_{$grant_name}" style="display:none">
                     <!--@foreach($group_list as $group_srl => $group_item)-->
                     <input type="checkbox" class="checkbox" name="{$grant_name}" value="{$group_item->group_srl}" id="grant_{$grant_name}_{$group_srl}" /> 

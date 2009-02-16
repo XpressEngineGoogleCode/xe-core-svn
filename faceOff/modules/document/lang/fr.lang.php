@@ -12,6 +12,7 @@
     $lang->cmd_delete_all_thumbnail = 'Supprimer toutes les vignettes';
     $lang->title_bold = 'Gras';
     $lang->title_color = 'Couleur';
+    $lang->new_document_count = '새글';
 
     $lang->parent_category_title = 'catégorie supérieure';
     $lang->category_title = 'Catégorie';

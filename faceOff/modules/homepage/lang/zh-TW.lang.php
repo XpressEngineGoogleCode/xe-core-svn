@@ -12,6 +12,7 @@
     $lang->page = "頁面";
     $lang->module_id = "模組 ID";
     $lang->item_group_grant = "顯示群組";
+    $lang->cafe_info = "Cafe Infomation";
     $lang->cafe_admin = "網站管理者";
     $lang->do_selected_member = "選擇會員 : ";
 

@@ -42,6 +42,7 @@
 
     $lang->grant_to_all = "All users";
     $lang->grant_to_login_user = "Logged users";
+    $lang->grant_to_site_user = "Joined users";
     $lang->grant_to_group = "Specification group users";
 
     $lang->cmd_add_shortcut = "ショットカット追加";
@@ -79,6 +80,7 @@
     $lang->about_page_count = 'リストの下段に移動できるページのリンク数が指定できます（デフォルト１０個）。';
     $lang->about_admin_id = '該当するモジュールに対して最高権限を持つ管理者を指定することができます。';
     $lang->about_grant = '特定権限の対象をすべて解除するとログインしていない会員ユーザまで権限が与えられます。';
+    $lang->about_grant_deatil = '가입한 사용자는 cafeXE등 분양형 가상 사이트에 가입을 한 로그인 사용자를 의미합니다';
     $lang->about_module = "XEは、基本ライブラリの他は、すべてモジュールで構成されています。モジュール管理用のモジュールはインストールされたすべてを表示し、管理できるようにします。";
 
     $lang->about_extra_vars_default_value = '多重・単一選択などのデフォルト値が、複数必要な場合は、「, （コンマ）」で区切って追加することができます。';

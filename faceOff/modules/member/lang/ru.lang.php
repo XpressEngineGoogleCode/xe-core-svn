@@ -84,6 +84,7 @@
     $lang->cmd_login = 'Войти';
     $lang->cmd_logout = 'Выйти';
     $lang->cmd_signup = 'Регистрация';
+    $lang->cmd_site_signup = 'Join';
     $lang->cmd_modify_member_info = 'Изменить информацию пользователя';
     $lang->cmd_modify_member_password = 'Изменить пароль';
     $lang->cmd_view_member_info = 'Информация пользователя';

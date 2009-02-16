@@ -12,6 +12,7 @@
     $lang->page = "Page";
     $lang->module_id = "module ID";
     $lang->item_group_grant = "Accessible group";
+    $lang->cafe_info = "Cafe Infomation";
     $lang->cafe_admin = "CafeXE administrator";
     $lang->do_selected_member = "Change the selected members into : ";
 

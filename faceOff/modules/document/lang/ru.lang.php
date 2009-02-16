@@ -13,6 +13,7 @@
     $lang->move_target_module = "Переместить в";
     $lang->title_bold = 'Жирное название';
     $lang->title_color = 'Цвет названия';
+    $lang->new_document_count = '새글';
 
     $lang->parent_category_title = 'Родительская категория';
     $lang->category_title = 'Категория';

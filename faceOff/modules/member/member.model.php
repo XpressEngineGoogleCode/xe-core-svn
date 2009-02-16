@@ -123,14 +123,8 @@
                 $site_module_info = Context::get('site_module_info');
                 if($site_module_info) {
                     $logged_info->group_list = $this->getMemberGroups($logged_info->member_srl, $site_module_info->site_srl);
-                    if(!count($logged_info->group_list)) {
-                        $default_group = $this->getDefaultGroup($site_module_info->site_srl);
-                        $oMemberController = &getController('member');
-                        $oMemberController->addMemberToGroup($logged_info->member_srl, $default_group->group_srl, $site_module_info->site_srl);
-                        $groups[$default_group->group_srl] = $default_group->title;
-                        $logged_info->group_list = $groups;
-                    }
 
+                    // 사이트 관리자이면 로그인 정보에 is_site_admin bool변수를 추가
                     $oModuleModel = &getModel('module');
                     if($oModuleModel->isSiteAdmin($logged_info)) $logged_info->is_site_admin = true;
                     else $logged_info->is_site_admin = false;

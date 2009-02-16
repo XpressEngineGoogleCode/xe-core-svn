@@ -42,6 +42,7 @@
 
     $lang->grant_to_all = "All users";
     $lang->grant_to_login_user = "Logged users";
+    $lang->grant_to_site_user = "Joined users";
     $lang->grant_to_group = "Specification group users";
 
     $lang->cmd_add_shortcut = "Add Shortcut";
@@ -79,6 +80,7 @@
     $lang->about_page_count = 'You can set the number of page link to move pages in a bottom of page.(default is 10)';
     $lang->about_admin_id = 'You can grant a manager to have all permissions to the module.';
     $lang->about_grant = 'If you disable all permissions for a specific object, members who has not logged in would get permission.'; 
+    $lang->about_grant_deatil = '가입한 사용자는 cafeXE등 분양형 가상 사이트에 가입을 한 로그인 사용자를 의미합니다';
     $lang->about_module = "XE consists of modules except basic library.\n [Module Manage] module will show all installed modules and help you to manage them.";
 
 	$lang->about_extra_vars_default_value = 'If multiple default values are needed,	 you can link them with comma(,).';

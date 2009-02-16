@@ -12,6 +12,7 @@
     $lang->page = "页面";
     $lang->module_id = "模块ID";
     $lang->item_group_grant = "用户组";
+    $lang->cafe_info = "Cafe Infomation";
     $lang->cafe_admin = "管理员";
     $lang->do_selected_member = "把被选用户 : ";
 

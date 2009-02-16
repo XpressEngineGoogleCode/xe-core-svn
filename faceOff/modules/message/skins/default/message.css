@@ -1,6 +1,6 @@
 @charset "utf-8";
 
-.messageLayer { border:2px solid #777; font-size:12px; background:#fff; margin:50px auto; width:350px;}
+.messageLayer { border:2px solid #777; font-size:12px; background:#fff; margin:50px auto; width:370px;}
 .messageLayer * { margin:0; padding:0; font-size:12px; }
 .messageLayer h4 { font-size:14px !important; font-family:Dotum; background:#f4f4f4 !important; padding:8px 30px 8px 15px !important; letter-spacing:-1px !important; }
 .messageLayer .messageLayerBody{ margin:0 0 15px 0;}

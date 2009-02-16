@@ -5,7 +5,7 @@
 <h4 class="xeAdmin">{$lang->cmd_admin_menus[$act]}</h4>
 <p class="summary">{$lang->about_cafe_act[$act]}</p>
 
-<form method="post" action="./" onsubmit="return procFilter(this,update_member_group);">
+<form method="post" action="./" onsubmit="return procFilter(this,update_member_group);" id="siteMembers">
     <table cellspacing="0" class="crossTable">
     <thead>
         <tr>
@@ -22,7 +22,7 @@
         <!--@foreach($member_list as $no => $val)-->
         {@ $val->group_list = implode(', ', $val->group_list)}
         <tr class="row{$cycle_idx}">
-            <td class="center number"> <input type="checkbox" name="cart" value="{$val->member_srl}" /> {$no}</td>
+            <td class="center number"><input type="checkbox" name="cart" value="{$val->member_srl}" <!--@if($logged_info->member_srl==$val->member_srl)-->disabled="disabled"<!--@end-->/> {$no}</td>
             <td class="nowrap"><span class="member_{$val->member_srl}">{htmlspecialchars($val->nick_name)}</span></td>
             <td class="nowrap">{htmlspecialchars($val->user_id)}</td>
             <td class="nowrap">{htmlspecialchars($val->user_name)}</td>
@@ -45,6 +45,7 @@
                     <option value="{$val->group_srl}">{$val->title}</option>
                     <!--@end-->
                 </select><span class="button black strong"><input type="submit" value="{$lang->cmd_modify}" /></span>
+                <a href="#" onclick="doRemoveMember('{$lang->confirm_delete}');return false;" class="button red"><span>{$lang->cmd_delete}</span></a>
             </th>
         </tr>
     </tbody>

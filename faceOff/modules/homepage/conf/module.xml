@@ -30,6 +30,7 @@
         <permission action="procHomepageDeleteGroup" target="manager" />
         <permission action="procHomepageInsertGroup" target="manager" />
         <permission action="procHomepageUpdateMemberGroup" target="manager" />
+        <permission action="procHomepageDeleteMember" target="manager" />
         <permission action="procHomepageInsertBoard" target="manager" />
         <permission action="procHomepageInsertPage" target="manager" />
         <permission action="procHomepageUpdateBoardSkin" target="manager" />
@@ -63,6 +64,7 @@
         <action name="procHomepageDeleteButton" type="controller" standalone="true" />
         <action name="procHomepageDeleteGroup" type="controller" standalone="true" />
         <action name="procHomepageInsertGroup" type="controller" standalone="true" />
+        <action name="procHomepageDeleteMember" type="controller" standalone="true" />
         <action name="procHomepageUpdateMemberGroup" type="controller" standalone="true" />
         <action name="procHomepageInsertBoard" type="controller" standalone="true" />
         <action name="procHomepageInsertPage" type="controller" standalone="true" />

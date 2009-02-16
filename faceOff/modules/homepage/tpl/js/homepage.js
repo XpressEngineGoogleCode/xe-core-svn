@@ -366,3 +366,32 @@ function changeMenuType(obj) {
 function homepageMoveMenuItem() {
     xAddEventListener(window, 'load', function() { document.body.appendChild(xGetElementById("menuItem")); xGetElementById("menuItem").style.width="550px";} );
 }
+
+function doRemoveMember(confirm_msg) {
+    var fo_obj = xGetElementById('siteMembers');
+    var chk_obj = fo_obj.cart;
+    if(!chk_obj) return;
+
+
+    var values = new Array();
+    if(typeof(chk_obj.length)=='undefined') {
+        if(chk_obj.checked) values[values.length]=chk_obj.value;
+    } else {
+        for(var i=0;i<chk_obj.length;i++) {
+            if(chk_obj[i].checked) values[values.length]=chk_obj[i].value;
+        }
+    }
+    if(values.length<1) return;
+
+    if(!confirm(confirm_msg)) return;
+
+    params = new Array();
+    params['member_srl'] = values.join(',');
+
+    exec_xml('homepage','procHomepageDeleteMember', params, doCompleteRemoveMember);
+}
+
+function doCompleteRemoveMember(ret_obj) { 
+    alert(ret_obj['message']); 
+    location.reload(); 
+}

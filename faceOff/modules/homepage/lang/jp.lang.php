@@ -12,6 +12,7 @@
     $lang->page = "ページ";
     $lang->module_id = "モジュール ID";
     $lang->item_group_grant = "メニューを見せるグループ";
+    $lang->cafe_info = "Cafe Infomation";
     $lang->cafe_admin = "ホームページ管理者";
     $lang->do_selected_member = "選択した会員を : ";
 

@@ -105,8 +105,10 @@
             $output = $oMemberAdminModel->getSiteMemberList($this->site_srl);
 
             $members = array();
-            foreach($output->data as $key=>$val) {
-                $members[] = $val->member_srl;
+            if(count($output->data)) {
+                foreach($output->data as $key=>$val) {
+                    $members[] = $val->member_srl;
+                }
             }
             $members_groups = $oMemberModel->getMembersGroups($members, $this->site_srl);
             Context::set('members_groups',$members_groups);

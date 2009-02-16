@@ -18,7 +18,7 @@
 .widgetLogin dd .inputText{ width:168px; height:16px;}
 .widgetLogin p{ margin:5px 0;}
 .widgetLogin p .inputText { margin-right:5px;}
-.widgetLogin .button.login input { width:178px;}
+.widgetLogin .button.login { clear:both; }
 .widgetLogin .help{ position:relative; width:100%; overflow:hidden; margin:10px 0 0 0; padding:0;}
 .widgetLogin .help li{ position:relative; left:-5px; padding-left:5px; list-style:none; display:inline;}
 

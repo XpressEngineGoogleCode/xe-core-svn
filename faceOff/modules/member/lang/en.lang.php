@@ -85,6 +85,7 @@
     $lang->cmd_login = 'Login';
     $lang->cmd_logout = 'Logout';
     $lang->cmd_signup = 'Join';
+    $lang->cmd_site_signup = 'Join';
     $lang->cmd_modify_member_info = 'Modify Member Info';
     $lang->cmd_modify_member_password = 'Modify Password';
     $lang->cmd_view_member_info = 'Member Info';

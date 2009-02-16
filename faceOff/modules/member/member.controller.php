@@ -1094,6 +1094,36 @@
         }
 
         /**
+         * @brief 가상 사이트 가입
+         **/
+        function procModuleSiteSignUp() {
+            $site_module_info = Context::get('site_module_info');
+            $logged_info = Context::get('logged_info');
+            if(!$site_module_info->site_srl || !Context::get('is_logged') || count($logged_info->group_srl_list) ) return new Object(-1,'msg_invalid_request');
+
+            $oMemberModel = &getModel('member');
+            $default_group = $oMemberModel->getDefaultGroup($site_module_info->site_srl);
+            $this->addMemberToGroup($logged_info->member_srl, $default_group->group_srl, $site_module_info->site_srl);
+            $groups[$default_group->group_srl] = $default_group->title;
+            $logged_info->group_list = $groups;
+        }
+
+        /**
+         * @brief 가상 사이트 탈퇴
+         **/
+        function procModuleSiteLeave() {
+            $site_module_info = Context::get('site_module_info');
+            $logged_info = Context::get('logged_info');
+            if(!$site_module_info->site_srl || !Context::get('is_logged') || count($logged_info->group_srl_list) ) return new Object(-1,'msg_invalid_request');
+
+            $args->site_srl= $site_module_info->site_srl;
+            $args->member_srl = $logged_info->member_srl;
+            $output = executeQuery('member.deleteMembersGroup', $args);
+            if(!$output->toBool()) return $output;
+            $this->setMessage('success_deleted');
+        }
+
+        /**
          * @brief 서명을 파일로 저장
          **/
         function putSignature($member_srl, $signature) {

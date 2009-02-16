@@ -13,6 +13,7 @@
     $lang->move_target_module = "Módulo para cambiar de posición";
     $lang->title_bold = 'Bold';
     $lang->title_color = 'Color';
+    $lang->new_document_count = '새글';
 
     $lang->parent_category_title = 'Categoría Superior';
     $lang->category_title = 'Nombre de la categoría';

@@ -162,7 +162,7 @@
                 // default값을 구함
                 $default = Context::get($grant_name.'_default');
 
-                // -1 = 로그인 사용자만, 0 = 모든 사용자
+                // -1 = 로그인 사용자만, -2 = 사이트 가입자만, 0 = 모든 사용자
                 if(strlen($default)){
                     $grant->{$grant_name}[] = $default;
                     continue;

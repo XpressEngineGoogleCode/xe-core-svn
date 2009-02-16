@@ -13,6 +13,7 @@
     $lang->move_target_module = "移动目标模块";
     $lang->title_bold = '粗标题';
     $lang->title_color = '标题颜色';
+    $lang->new_document_count = '새글';
 
     $lang->parent_category_title = '上级分类名';
     $lang->category_title = '分类名';

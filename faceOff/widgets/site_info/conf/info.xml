@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<widget version="0.2">
+    <title xml:lang="ko">가상 사이트 현황</title>
+    <description xml:lang="ko">cafeXE와 같은 분양형 가상 사이트의 정보를 출력하는 위젯입니다.</description>
+    <version>0.1</version>
+    <date>2009-02-16</date>
+
+    <author email_address="zero@zeroboard.com" link="http://www.zeroboard.com">
+        <name xml:lang="ko">zero</name>
+    </author>
+
+    <extra_vars />
+</widget>

@@ -12,6 +12,7 @@
     $lang->cmd_delete_all_thumbnail = '썸네일 모두 삭제';
     $lang->title_bold = '제목 굵게';
     $lang->title_color = '제목 색깔';
+    $lang->new_document_count = '새글';
 
     $lang->parent_category_title = '상위 카테고리명';
     $lang->category_title = '분류명';
