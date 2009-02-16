@@ -728,12 +728,17 @@
                     }
 
                     if(strlen($value) != 0) {
-                        if(($pos = strpos($value, '+1')) !== false) {
-                            $substr = substr($value, 0, $pos);
-                            $value = '"'.$substr.'"'."+1";
-                            $column_list[] = sprintf("\"%s\" = %s", $name, $value);
-                            continue;
-                        }
+						$pos = strpos($value, '+');
+						if($pos == 0) $pos = strpos($value, '-');
+						if($pos == 0) $pos = strpos($value, '*');
+						if($pos == 0) $pos = strpos($value, '/');
+
+						if($pos != 0) {
+							$substr = substr($value, 0, $pos);
+							$value = '"'.$substr.'"'.substr($value, $pos, strlen($value));
+							$column_list[] = sprintf("\"%s\" = %s", $name, $value);
+							continue;
+						}
                     }
 
                     $values[] = $value;
