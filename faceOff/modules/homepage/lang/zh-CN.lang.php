@@ -14,7 +14,7 @@
     $lang->item_group_grant = "用户组";
     $lang->cafe_info = "站点信息";
     $lang->cafe_admin = "管理员";
-    $lang->do_selected_member = "把被选用户 : ";
+    $lang->do_selected_member = "把所选用户 : ";
 
     $lang->default_menus = array(
         'home' => '首页',

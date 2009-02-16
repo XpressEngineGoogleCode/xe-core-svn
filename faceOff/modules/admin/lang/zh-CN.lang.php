@@ -63,8 +63,8 @@
     $lang->yesterday = "Yesterday";
     $lang->today = "Today";
 
-    $lang->cmd_lang_select = "多国语言支援";
-    $lang->about_cmd_lang_select = "只支援被选语言。";
+    $lang->cmd_lang_select = "多国语言支持";
+    $lang->about_cmd_lang_select = "请选择要使用的语言。";
     $lang->about_recompile_cache = "整理无用的或错误的缓冲文件。";
     $lang->use_ssl = "SSL使用";
     $lang->ssl_options = array(

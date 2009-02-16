@@ -20,14 +20,14 @@
     $lang->footer_text = '尾部修饰';
     $lang->use_category = '使用分类';
     $lang->category_title = '分类名';
-    $lang->checked_count = '被选择的主题数';
+    $lang->checked_count = '所选主题数';
     $lang->skin_default_info = '皮肤默认信息';
     $lang->skin_author = '皮肤作者';
     $lang->skin_license = '版权';
     $lang->skin_history = '更新日志';
     $lang->module_copy = "模块复制";
     $lang->module_selector = "模块选择器";
-    $lang->do_selected = "把被选模块...";
+    $lang->do_selected = "把所选模块...";
     $lang->bundle_setup = "批量设置-常规选项";
     $lang->bundle_addition_setup = "批量设置-高级选项";
     $lang->bundle_grant_setup = "批量设置-权限";

@@ -58,7 +58,7 @@
     $lang->cmd_scrap = '收藏';
     $lang->cmd_preview = '预览';
     $lang->cmd_reset = '初始化';
-    $lang->cmd_remake_cache = "重新生成缓冲文件";
+    $lang->cmd_remake_cache = "更新缓冲";
     $lang->cmd_publish = "发表";
     $lang->cmd_layout_setup = '布局设置';
     $lang->cmd_layout_edit = '编辑布局';

@@ -24,7 +24,7 @@
     $lang->cmd_enable_move_category = "分类顺序(勾选后用鼠标拖动分类项)";
     $lang->about_category_title = '请输入分类名。';
     $lang->about_expand = '选择此项将维持展开状态。';
-    $lang->about_category_group_srls = '被选的用户组才可以查看此分类。';
+    $lang->about_category_group_srls = '所选用户组才可以查看此分类。';
     $lang->about_category_color = '请指定分类颜色（必须带#符号）。ex）#ff0000';
 
     $lang->cmd_search_next = '继续搜索';
