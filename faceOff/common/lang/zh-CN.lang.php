@@ -49,7 +49,7 @@
     $lang->cmd_close = '关闭';
     $lang->cmd_open = '打开';
     $lang->cmd_setup = '设置';
-    $lang->cmd_addition_setup = '扩展设置';
+    $lang->cmd_addition_setup = '高级选项';
     $lang->cmd_option = '选项';
     $lang->cmd_apply = '应用';
     $lang->cmd_open_calendar = '选择日期';
@@ -117,7 +117,7 @@
     $lang->order_type = '排序方式';
     $lang->order_asc = '升序';
     $lang->order_desc = '倒序';
-    $lang->file = 'file';
+    $lang->file = '文件';
 
     $lang->mid = '模块名称';
     $lang->layout = '布局';
@@ -125,7 +125,7 @@
     $lang->module = '模块';
     $lang->skin = '皮肤';
     $lang->colorset = '颜色设定';
-    $lang->extra_vars = '扩展变数';
+    $lang->extra_vars = '扩展变量';
 
     $lang->domain = "域名";
     $lang->url = "URL";
@@ -257,7 +257,7 @@
     $lang->column_type_list['textarea'] = '多行文本框 (textarea)';
     $lang->column_type_list['checkbox'] = '复选框 (checkbox)';
     $lang->column_type_list['select'] = '下拉列表框 (select)';
-    $lang->column_type_list['radio'] = 'radio button (radio)';
+    $lang->column_type_list['radio'] = '单选框 (radio)';
     $lang->column_type_list['kr_zip'] = '韩国邮编(zip)';
     $lang->column_type_list['date'] = '日期 (年月日)';
     //$lang->column_type_list['jp_zip'] = '日本地址 (zip)';

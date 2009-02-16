@@ -7,26 +7,26 @@
 
     $lang->admin_info = '管理员信息';
     $lang->admin_index = '管理首页';
-    $lang->control_panel = 'Control panel';
+    $lang->control_panel = '控制面板';
 
     $lang->module_category_title = array(
-        'service' => 'Service Setting',
-        'member' => 'Member Setting',
-        'content' => 'Content Setting',
-        'statistics' => 'Statistics',
-        'construction' => 'Construction',
-        'utility' => 'Utility Setting',
-        'interlock' => 'Interlock Setting',
-        'accessory' => 'Accessories',
-        'migration' => 'Data Migration',
-        'system' => 'System Setting',
+        'service' => '应用管理',
+        'member' => '用户管理',
+        'content' => '资源管理',
+        'statistics' => '统计管理',
+        'construction' => '界面管理',
+        'utility' => '扩展管理',
+        'interlock' => '辅助联动',
+        'accessory' => '附加功能',
+        'migration' => '数据导入',
+        'system' => '系统管理',
     );
 
     $lang->newest_news = "最新消息";
 
     $lang->env_setup = "系统设置";
-    $lang->default_url = "기본 URL";
-    $lang->about_default_url = "XE 가상 사이트(cafeXE등)의 기능을 사용할때 기본 URL을 입력해 주셔야 가상 사이트간 인증 연동이 되고 게시글/모듈등의 연결이 정상적으로 이루어집니다. (ex: http://도메인/설치경로)";
+    $lang->default_url = "XE通行证";
+    $lang->about_default_url = "请输入默认站点的XE安装地址(ex: http://域名/xe)。 <br /><strong>说明：</strong>简单的说，就是绑定帐号系统。只需要登录一次，就可以在用站点模块生成的多个子站点中随意漫游。";
 
     $lang->env_information = "系统信息";
     $lang->current_version = "安装版本";
@@ -48,7 +48,7 @@
 
     $lang->cmd_shortcut_management = "编辑菜单";
 
-    $lang->msg_is_not_administrator = '只有管理员才可以查看';
+    $lang->msg_is_not_administrator = '只允许管理员访问';
     $lang->msg_manage_module_cannot_delete = '模块，插件，布局，控件模块的快捷菜单是不能删除的。';
     $lang->msg_default_act_is_null = '没有指定默认管理员的动作，是不能添加到快捷菜单的。';
 

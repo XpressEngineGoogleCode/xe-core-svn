@@ -1,7 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <widgetstyle>
     <title xml:lang="ko">박스 위젯스타일</title>
+    <title xml:lang="zh-CN">盒状控件样式</title>
     <description xml:lang="ko">박스 위젯스타일</description>
+    <description xml:lang="zh-CN">可指定控件盒的样式。</description>
     <version>0.1</version>
     <date>2009-02-03</date>
 
@@ -17,37 +19,51 @@
     <extra_vars>
         <var name="ws_title_image" type="filebox" filter="jpg,jpeg,gif,png">
             <name xml:lang="ko">제목</name>
+	    <name xml:lang="zh-CN">栏目图片</name>
             <description xml:lang="ko">제목 이미지를 등록합니다.</description>
+	    <description xml:lang="zh-CN">栏目名可以使用图片。</description>
         </var>
         <var name="ws_title" type="text">
             <name xml:lang="ko">제목</name>
+	    <name xml:lang="zh-CN">栏目名</name>
             <description xml:lang="ko">제목 텍스트</description>
+	    <description xml:lang="zh-CN">输入文本形式的栏目名。</description>
         </var>
         <var name="ws_title_color" type="text">
             <name xml:lang="ko">제목 글자색</name>
+	    <name xml:lang="zh-CN">栏目字体色</name>
         </var>
         <var name="ws_title_bgcolor" type="text">
             <name xml:lang="ko">제목 배경색</name>
+	    <name xml:lang="zh-CN">栏目背景色</name>
         </var>
         <var name="ws_title_icon" type="filebox" filter="jpg,jpeg,gif,png">
             <name xml:lang="ko">아이콘 이미지</name>
+	    <name xml:lang="zh-CN">栏目图标</name>
             <description xml:lang="ko">제목 앞 아이콘 이미지를 등록합니다.</description>
+	    <description xml:lang="zh-CN">可以给栏目名指定个性图标。</description>
         </var>
 
         <var name="ws_more_url" type="text">
             <name xml:lang="ko">더보기 URL</name>
+	    <name xml:lang="zh-CN">查看更多(链接)</name>
             <description xml:lang="ko">http:// 제외한 URL를 등록합니다.</description>
+	    <description xml:lang="zh-CN">请输入除http://以外的URL地址。</description>
         </var>
         <var name="ws_more_image" type="filebox" filter="jpg,jpeg,gif,png">
             <name xml:lang="ko">더보기 이미지</name>
+	    <name xml:lang="zh-CN">查看更多(图片)</name>
         </var>
         <var name="ws_more_text" type="text">
             <name xml:lang="ko">더보기 텍스트</name>
+	    <name xml:lang="zh-CN">查看更多(文本)</name>
             <description xml:lang="ko">더보기 텍스트</description>
+	    <description xml:lang="zh-CN">文本形式的"查看更多"。</description>
        </var>
 
         <var name="ws_border_color" type="text">
             <name xml:lang="ko">보더색</name>
+	    <name xml:lang="zh-CN">边框色</name>
         </var>
     </extra_vars>
 </widgetstyle>

@@ -39,7 +39,7 @@
     $lang->create_message = "简单微博介绍";
     $lang->about_create_message = "可以输入简单的关于微博的简介。";
 
-    $lang->cmd_planet_setup = "基本设置";
+    $lang->cmd_planet_setup = "常规选项";
     $lang->cmd_planet_list = "微博列表";
 
     $lang->msg_not_logged = "请登录。";

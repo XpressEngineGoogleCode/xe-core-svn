@@ -63,7 +63,7 @@
         'ipaddress' => 'IP 地址',
     );
     $lang->alias = "Alias";
-    $lang->history = "히스토리";
-    $lang->about_use_history = "히스토리 기능의 사용여부를 지정합니다. 히스토리 기능을 사용할 경우 문서 수정시 이전 리비전을 기록하고 복원할 수 있습니다.";
+    $lang->history = "编辑记录";
+    $lang->about_use_history = "设置启用编辑记录与否。启用将记录修改主题版本，并可以复原。";
     $lang->trace_only = "흔적만 남김";
 ?>

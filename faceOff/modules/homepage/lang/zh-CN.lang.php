@@ -2,32 +2,32 @@
     /**
      * @file   zh-CN.lang.php
      * @author zero (zero@nzeo.com)
-     * @brief  CafeXE(homepage)模块语言包
+     * @brief  站点(homepage)模块语言包
      **/
 
-    $lang->cafe = "CafeXE"; 
+    $lang->cafe = "站点"; 
     $lang->cafe_title = "站点名称";
     $lang->module_type = "对象";
     $lang->board = "版面";
     $lang->page = "页面";
     $lang->module_id = "模块ID";
     $lang->item_group_grant = "用户组";
-    $lang->cafe_info = "Cafe Infomation";
+    $lang->cafe_info = "站点系统信息";
     $lang->cafe_admin = "管理员";
     $lang->do_selected_member = "把被选用户 : ";
 
     $lang->default_menus = array(
         'home' => '首页',
-        'notice' => '公告',
-        'levelup' => 'Level Up',
+        'notice' => '站点公告',
+        'levelup' => '级别审批',
         'freeboard' => '自由交流区',
         'view_total' => '查看全文',
-        'view_comment' => '故事线',
-        'cafe_album' => '咖啡专辑',
+        'view_comment' => '问候一句',
+        'cafe_album' => '站点相册',
         'menu' => '菜单',
-        'default_group1' => '待审批成员',
-        'default_group2' => '协理',
-        'default_group3' => '会员',
+        'default_group1' => '待审批会员',
+        'default_group2' => '准会员',
+        'default_group3' => '正会员',
     );
 
     $lang->cmd_admin_menus = array(
@@ -35,7 +35,7 @@
         "dispHomepageMemberGroupManage" => "用户组管理",
         "dispHomepageMemberManage" => "用户列表",
         "dispHomepageTopMenu" => "主菜单管理",
-        "dispHomepageCounter" => "접속 통계",
+        "dispHomepageCounter" => "访问统计",
         "dispHomepageMidSetup" => "模块详细设置",
     );
     $lang->cmd_cafe_registration = "生成站点";
@@ -46,15 +46,15 @@
     $lang->cmd_change_layout = "修改";
     $lang->cmd_select_index = "选择默认首页";
     $lang->cmd_add_new_menu = "添加新菜单";
-    $lang->default_language = "기본 언어";
-    $lang->about_default_language = "처음 접속하는 사용자의 언어 설정을 지정할 수 있습니다.";
+    $lang->default_language = "默认语言";
+    $lang->about_default_language = "可以设置显示给首次访问者的同一语言环境。";
 
     $lang->about_cafe_act = array(
         "dispHomepageManage" => "在此可以设置站点风格。",
         "dispHomepageMemberGroupManage" => "在此可以管理站点内的用户组。",
         "dispHomepageMemberManage" => "在此可以查看或管理用户。",
         "dispHomepageTopMenu" => "在此可以设置主菜单及所属子菜单。",
-        "dispHomepageCounter" => "Cafe의 접속 현황을 볼 수 있습니다",
+        "dispHomepageCounter" => "可以查看站点的访问统计数据。",
         "dispHomepageMidSetup" => "在此可以设置站点内的版面，页面等模块的详细设置。",
     );
     $lang->about_cafe = "站点工具不仅可以迅速建立多个站点，而且非常方便各项设置。";
