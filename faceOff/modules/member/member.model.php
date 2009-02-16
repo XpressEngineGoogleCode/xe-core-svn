@@ -121,7 +121,7 @@
 
                 // site_module_info에 따라서 관리자/ 그룹 목록을 매번 재지정
                 $site_module_info = Context::get('site_module_info');
-                if($site_module_info) {
+                if($site_module_info->site_srl) {
                     $logged_info->group_list = $this->getMemberGroups($logged_info->member_srl, $site_module_info->site_srl);
 
                     // 사이트 관리자이면 로그인 정보에 is_site_admin bool변수를 추가
@@ -129,6 +129,15 @@
                     if($oModuleModel->isSiteAdmin($logged_info)) $logged_info->is_site_admin = true;
                     else $logged_info->is_site_admin = false;
                 } else {
+                    // 만약 기본 사이트인데 회원 그룹이 존재하지 않으면 등록
+                    if(!count($logged_info->group_list)) {
+                        $default_group = $this->getDefaultGroup(0);
+                        $oMemberController = &getController('member');
+                        $oMemberController->addMemberToGroup($logged_info->member_srl, $default_group->group_srl, 0);
+                        $groups[$default_group->group_srl] = $default_group->title;
+                        $logged_info->group_list = $groups;
+                    }
+                  
                     $logged_info->is_site_admin = false;
                 }
 
