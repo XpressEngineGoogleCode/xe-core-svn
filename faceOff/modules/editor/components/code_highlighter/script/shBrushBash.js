@@ -1,22 +1,25 @@
 /**
- * Code Syntax Highlighter.
- * Version 1.5.2
- * Copyright (C) 2004-2008 Alex Gorbatchev
- * http://www.dreamprojections.com/syntaxhighlighter/
+ * SyntaxHighlighter
+ * http://alexgorbatchev.com/
  *
- *  This program is free software: you can redistribute it and/or modify
- *  it under the terms of the GNU General Public License as published by
- *  the Free Software Foundation, version 3 of the License.
+ * @version
+ * 2.0.287 (February 06 2009)
  *
- *  This program is distributed in the hope that it will be useful,
- *  but WITHOUT ANY WARRANTY; without even the implied warranty of
- *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- *  GNU General Public License for more details.
+ * @author
+ * Alex Gorbatchev
+ * 
+ * @copyright
+ * Copyright (C) 2004-2009 Alex Gorbatchev.
  *
- *  You should have received a copy of the GNU General Public License
- *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ * Licensed under a GNU Lesser General Public License.
+ * http://creativecommons.org/licenses/LGPL/2.1/
+ *
+ * SyntaxHighlighter is donationware. You are allowed to download, modify and distribute 
+ * the source code in accordance with LGPL 2.1 license, however if you want to use 
+ * SyntaxHighlighter on your site or include it in your product, you must donate.
+ * http://alexgorbatchev.com/wiki/SyntaxHighlighter:Donate
  */
-dp.sh.Brushes.Bash = function()
+SyntaxHighlighter.brushes.Bash = function()
 {
 	var keywords =	'if fi then elif else for do done until while break continue case function return in eq ne gt lt ge le';
 	var commands =  'alias apropos awk bash bc bg builtin bzip2 cal cat cd cfdisk chgrp chmod chown chroot' +
@@ -36,16 +39,13 @@ dp.sh.Brushes.Bash = function()
 					;
     
 	this.regexList = [
-		{ regex: dp.sh.RegexLib.SingleLinePerlComments,			css: 'comment' },		// one line comments
-		{ regex: dp.sh.RegexLib.DoubleQuotedString,				css: 'string' },		// double quoted strings
-		{ regex: new RegExp(this.GetKeywords(keywords), 'gm'),	css: 'keyword' },		// keywords
-		{ regex: new RegExp(this.GetKeywords(commands), 'gm'),	css: 'command' }		// commands
+		{ regex: SyntaxHighlighter.regexLib.singleLinePerlComments,		css: 'comments' },		// one line comments
+		{ regex: SyntaxHighlighter.regexLib.doubleQuotedString,			css: 'string' },		// double quoted strings
+		{ regex: new RegExp(this.getKeywords(keywords), 'gm'),			css: 'keyword' },		// keywords
+		{ regex: new RegExp(this.getKeywords(commands), 'gm'),			css: 'functions' }		// commands
 		];
-
-	this.CssClass = 'dp-sh';
-	this.Style =	'.dp-sh .command { color: #646464; font-weight: bold; }';
 }
 
-dp.sh.Brushes.Bash.prototype	= new dp.sh.Highlighter();
-dp.sh.Brushes.Bash.Aliases		= ['bash', 'shell'];
+SyntaxHighlighter.brushes.Bash.prototype	= new SyntaxHighlighter.Highlighter();
+SyntaxHighlighter.brushes.Bash.aliases		= ['bash', 'shell'];
 

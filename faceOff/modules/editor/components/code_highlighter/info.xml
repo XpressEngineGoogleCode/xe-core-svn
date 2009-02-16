@@ -14,9 +14,9 @@
     <description xml:lang="ru">Компонент служащий для подсветки кода</description>
     <description xml:lang="zh-CN">高亮显示所选代码。</description>
     <description xml:lang="zh-TW">將所選取的語法高亮度顯示。</description>
-    <version>0.4</version>
+    <version>0.5</version>
     <date>2009-01-20</date>
-    <license link="http://www.opensource.org/licenses/mit-license.php">MIT</license>
+    <license link="http://creativecommons.org/licenses/LGPL/2.1/">LGPL 2.1</license>
 
     <author link="http://www.zeroboard.com/">
         <name xml:lang="ko">XE Open Source Project</name>

@@ -23,4 +23,4 @@ dp.sh.Brushes.Abap = function()
 }
 
 dp.sh.Brushes.Abap.prototype = new dp.sh.Highlighter();
-dp.sh.Brushes.Abap.Aliases = ['abap'];
+dp.sh.Brushes.Abap.Aliases = ['abap', 'Abap'];

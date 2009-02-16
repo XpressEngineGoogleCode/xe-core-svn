@@ -46,10 +46,10 @@ class code_highlighter extends EditorHandler {
         $option_collapse = $xml_obj->attrs->collapse;
         $option_nogutter = $xml_obj->attrs->nogutter;
         $option_nocontrols = $xml_obj->attrs->nocontrols;
-        if($option_collapse == 'true') $option = $option.':collapse';
-        if($option_nogutter == 'true') $option = $option.':nogutter';
-        if($option_nocontrols == 'true' && $option_collapse != 'true') $option = $option.':nocontrols';
-        if($option_first_line > 1) $option = $option.":firstline[$option_first_line]";
+        if($option_collapse == 'true') $option = $option.'collapse: true;';
+        if($option_nogutter == 'true') $option = $option.'gutter: false;';
+        if($option_nocontrols == 'true' && $option_collapse != 'true') $option = $option.'toolbar: false;';
+        if($option_first_line > 1) $option = $option."first-line: ".$option_first_line.";";
         $body = $xml_obj->body;
 
 
@@ -60,13 +60,15 @@ class code_highlighter extends EditorHandler {
             $GLOBALS['_called_editor_component_code_highlighter_'] = true;
             $js_code = <<<dpScript
 <script type="text/javascript">
-dp.SyntaxHighlighter.ClipboardSwf = '{$this->component_path}script/clipboard.swf';
+SyntaxHighlighter.config.clipboardSwf = '{$this->component_path}script/clipboard.swf';
+SyntaxHighlighter.all();
 dp.SyntaxHighlighter.HighlightAll('code');
 </script>
 dpScript;
 
             Context::addHtmlFooter($js_code);
-            Context::addCSSFile($this->component_path.'css/SyntaxHighlighter.css');
+            Context::addCSSFile($this->component_path.'style/shCore.css');
+            Context::addCSSFile($this->component_path.'style/shThemeDefault.css');
             Context::addJsFile($this->component_path.'script/shCore.js');
         }
 
@@ -79,7 +81,7 @@ dpScript;
             if($option_description != null) $output .= '<span class="description">'.$option_description.'</span>';
             $output .= '</div>';
         }
-        $output .= sprintf('<pre name="code" class="%s">%s</pre>', $code_type.$option, $body);
+        $output .= sprintf('<pre class="brush: %s;%s">%s</pre>', strtolower($code_type), $option, $body);
         return $output;
     }
 }
