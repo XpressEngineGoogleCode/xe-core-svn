@@ -110,7 +110,7 @@
     $lang->msg_alreay_scrapped = '이미 스크랩된 게시물입니다';
 
     $lang->msg_cart_is_null = '대상을 선택해주세요';
-    $lang->msg_checked_file_is_deleted = '%d개의 첨부파일이 삭제되었습니다';
+    $lang->msg_checked_file_is_deleted = "%d개의 첨부파일이 삭제되었습니다";
 
     $lang->msg_find_account_title = '아이디/ 비밀번호 정보입니다';
     $lang->msg_find_account_info = '요청하신 계정 정보는 아래와 같습니다';
@@ -118,8 +118,8 @@
     $lang->msg_confirm_account_title = '가입 인증 메일 입니다';
     $lang->msg_confirm_account_info = '가입하신 계정 정보는 아래와 같습니다';
     $lang->msg_confirm_account_comment = '아래 링크를 클릭하시면 가입 인증이 이루어집니다.';
-    $lang->msg_auth_mail_sent = '%s 메일로 인증 정보를 담은 메일이 발송되었습니다. 메일을 확인하세요.';
-    $lang->msg_confirm_mail_sent = '%s 메일로 가입 인증 메일이 발송되었습니다. 메일을 확인하세요.';
+    $lang->msg_auth_mail_sent = "%s 메일로 인증 정보를 담은 메일이 발송되었습니다. 메일을 확인하세요.";
+    $lang->msg_confirm_mail_sent = "%s 메일로 가입 인증 메일이 발송되었습니다. 메일을 확인하세요.";
     $lang->msg_invalid_auth_key = '잘못된 계정 인증 요청입니다.<br />아이디/비밀번호 찾기를 다시 하시거나 사이트 관리자에게 계정 정보를 문의해주세요';
     $lang->msg_success_authed = '인증이 정상적으로 되어 로그인 처리가 되었습니다.\n꼭 인증 메일에 표시된 비밀번호를 이용하여 원하시는 비밀번호로 변경하세요.';
     $lang->msg_success_confirmed = '가입 인증이 정상적으로 처리 되었습니다.';
@@ -148,7 +148,7 @@
 
     $lang->msg_user_denied = '입력하신 아이디의 사용이 중지되셨습니다';
     $lang->msg_user_not_confirmed = '아직 메일 인증이 이루어지지 않았습니다. 메일을 확인해 주세요';
-    $lang->msg_user_limited = '입력하신 아이디는 %s 이후부터 사용하실 수 있습니다';
+    $lang->msg_user_limited = "입력하신 아이디는 %s 이후부터 사용하실 수 있습니다";
 
     $lang->about_user_id = '사용자 ID는 3~20자 사이의 영문+숫자로 이루어져야 하며 영문으로 시작되어야 합니다';
     $lang->about_password = '비밀번호는 6~20자로 되어야 합니다';

@@ -124,13 +124,13 @@
     </th>
     <!--@end-->
     <td class="wide">
-        {@$img_percent = $percent-30}
+        {@$img_percent = $img_width-30}
         <!--@if($img_percent<1)-->
             <img class="graphHr" style="width:3px;" alt="" src="./images/iconBar.gif" />
         <!--@else-->
             <img class="graphHr" style="width:{$img_percent}%;" alt="" src="./images/iconBar.gif" />
         <!--@end-->
-        {number_format($val)}({$percent}%) 
+        {number_format($val)}({$percent}%)
     </td>
 </tr>
 <!--@end-->
