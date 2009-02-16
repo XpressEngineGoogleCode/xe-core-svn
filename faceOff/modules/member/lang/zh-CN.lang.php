@@ -87,9 +87,9 @@
     $lang->cmd_logout = '退出';
     $lang->cmd_signup = '新会员注册';
     $lang->cmd_site_signup = '注册';
-    $lang->cmd_modify_member_info = '修改会员信息';
+    $lang->cmd_modify_member_info = '编辑个人资料';
     $lang->cmd_modify_member_password = '修改密码';
-    $lang->cmd_view_member_info = '查看会员信息';
+    $lang->cmd_view_member_info = '个人资料';
     $lang->cmd_leave = '注销';
     $lang->cmd_find_member_account = '查找用户名/密码';
 
@@ -99,11 +99,11 @@
     $lang->cmd_send_mail = '发送邮件';
     $lang->cmd_manage_id = '禁止用户名';
     $lang->cmd_manage_form = '扩展注册表单';
-    $lang->cmd_view_own_document = '查看发表主题';
+    $lang->cmd_view_own_document = '我的话题';
     $lang->cmd_trace_document = '主题追踪';
     $lang->cmd_trace_comment = '评论追踪';
-    $lang->cmd_view_scrapped_document = '查看收藏';
-    $lang->cmd_view_saved_document = '查看临时保存箱';
+    $lang->cmd_view_scrapped_document = '我的收藏';
+    $lang->cmd_view_saved_document = '临时保存箱';
     $lang->cmd_send_email = '发送邮件';
 
     $lang->msg_email_not_exists = "没有找到您输入的Email地址。";

@@ -13,7 +13,7 @@
     $lang->move_target_module = "移动目标模块";
     $lang->title_bold = '粗标题';
     $lang->title_color = '标题颜色';
-    $lang->new_document_count = '새글';
+    $lang->new_document_count = '新帖';
 
     $lang->parent_category_title = '上级分类名';
     $lang->category_title = '分类名';
@@ -65,5 +65,5 @@
     $lang->alias = "Alias";
     $lang->history = "编辑记录";
     $lang->about_use_history = "设置启用编辑记录与否。启用将记录修改主题版本，并可以复原。";
-    $lang->trace_only = "흔적만 남김";
+    $lang->trace_only = "只留痕迹";
 ?>

@@ -12,7 +12,7 @@
     $lang->page = "页面";
     $lang->module_id = "模块ID";
     $lang->item_group_grant = "用户组";
-    $lang->cafe_info = "站点系统信息";
+    $lang->cafe_info = "站点信息";
     $lang->cafe_admin = "管理员";
     $lang->do_selected_member = "把被选用户 : ";
 
@@ -34,9 +34,9 @@
         "dispHomepageManage" => "站点设置",
         "dispHomepageMemberGroupManage" => "用户组管理",
         "dispHomepageMemberManage" => "用户列表",
-        "dispHomepageTopMenu" => "主菜单管理",
+        "dispHomepageTopMenu" => "菜单管理",
         "dispHomepageCounter" => "访问统计",
-        "dispHomepageMidSetup" => "模块详细设置",
+        "dispHomepageMidSetup" => "模块设置",
     );
     $lang->cmd_cafe_registration = "生成站点";
     $lang->cmd_cafe_setup = "站点设置";

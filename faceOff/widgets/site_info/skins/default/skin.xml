@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <skin version="0.2">
     <title xml:lang="ko">가상 사이트 현황 기본 스킨 </title>
-    <title xml:lang="zh-CN">站点系统信息默认皮肤</title>
+    <title xml:lang="zh-CN">站点信息默认皮肤</title>
     <description xml:lang="ko">가상 사이트의 현황을 출력하는 기본 스킨입니다</description>
-    <description xml:lang="zh-CN">站点系统信息默认皮肤。</description>
+    <description xml:lang="zh-CN">站点信息默认皮肤。</description>
     <version>0.1</version>
     <date>2009-02-16</date>
     <link>http://www.zeroboard.com</link>
