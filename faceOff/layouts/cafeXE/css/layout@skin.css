@@ -42,11 +42,11 @@ a.cafeXeA:focus{ text-decoration:underline;}
 .cafeXeFixed .cafeXeEC #cafeXeHeader .cafeXeUrl a.cafeXeA,
 .cafeXeFixed .cafeXeCE #cafeXeHeader .cafeXeUrl a.cafeXeA{ font:10px Tahoma;}
 
-#cafeXeBody .cafeXeSearch { margin-bottom:20px; }
-#cafeXeBody .cafeXeSearch fieldset { border:0; margin:0; padding:0; }
-#cafeXeBody .cafeXeSearch legend { display:none; }
-#cafeXeBody .cafeXeSearch .searchInput { width:170px; border:1px solid #CCC; }
-#cafeXeBody .cafeXeSearch .searchSubmit { width:1px; height:1px; visibility:hidden; }
+#cafeXeHeader .cafeXeSearch { float:right; border:1px solid #333333; border-right-color:#666; border-bottom-color:#666; background-color:#4D4D4D; padding:2px;}
+#cafeXeHeader .cafeXeSearch fieldset { border:0; margin:0; padding:0; }
+#cafeXeHeader .cafeXeSearch legend { display:none; }
+#cafeXeHeader .cafeXeSearch .searchInput { width:170px; border:none; background-color:#4D4D4D; color:#AAA; }
+#cafeXeHeader .cafeXeSearch .searchSubmit { width:14px; height:14px; border:0; vertical-align:middle; }
 
 /* Body */
 .cafeXeFixed .cafeXeEC #cafeXeBody,

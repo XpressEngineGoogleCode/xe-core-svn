@@ -42,7 +42,21 @@
                     <h1 class="cafeXeH1"><a href="{$layout_info->index_url}" class="cafeXeA">Cafe<sup>XE</sup></a></h1>
                     <!--@end-->
 
+                    <div class="cafeXeSearch">
+                        <form action="{getUrl()}" method="post">
+                            <fieldset>
+                                <input type="hidden" name="mid" value="{$mid}" />
+                                <input type="hidden" name="act" value="IS" />
+                                <input type="hidden" name="search_target" value="title" />
+                                <legend>{$lang->cmd_search}</legend>
+                                <input type="text" name="is_keyword" class="searchInput" />
+                                <input type="image" src="./img/white/buttonSearch.gif" value="{$lang->cmd_search}" class="searchSubmit" />
+                            </fieldset>
+                        </form>
+                    </div>
+
                     <p class="cafeXeUrl"><a href="{$layout_info->index_url}" class="cafeXeA">{$layout_info->index_url}</a></p>
+
                 </div>
             </div>
             <!-- /#header -->
@@ -58,19 +72,6 @@
 
                     <!--// Login Info Widget -->
                     <img class="zbxe_widget_output" widget="login_info" skin="default" widgetstyle="simple" ws_colorset="{$layout_info->colorset}" ws_title="<!--@if($is_logged)-->{$logged_info->nick_name}<!--@else-->{$lang->cmd_login}<!--@end-->" ws_more_url="" ws_more_text=""/>
-
-                    <div class="cafeXeSearch">
-                        <form action="{getUrl()}" method="post">
-                            <fieldset>
-                                <input type="hidden" name="mid" value="{$mid}" />
-                                <input type="hidden" name="act" value="IS" />
-                                <input type="hidden" name="search_target" value="title" />
-                                <legend>{$lang->cmd_search}</legend>
-                                <input type="text" name="is_keyword" class="searchInput" />
-                                <input type="submit" value="{$lang->cmd_search}" class="searchSubmit" />
-                            </fieldset>
-                        </form>
-                    </div>
 
                     <!--// Menu Widget -->
                     <img class="zbxe_widget_output" widget="navigator" skin="tree" widgetstyle="simple" ws_colorset="{$layout_info->colorset}" ws_title="{$lang->menu}" />
