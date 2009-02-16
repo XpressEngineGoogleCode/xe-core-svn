@@ -258,6 +258,7 @@ function completeReloadFileList(ret_obj, response_tags, settings) {
                 uploadedFiles[file_srl] = item[i];
                 var opt = new Option(item[i].source_filename+" ("+item[i].disp_file_size+")", file_srl, true, true);
                 listObj.options[listObj.options.length] = opt;
+                previewFiles('', file_srl);
             }
         }
     }
@@ -265,7 +266,8 @@ function completeReloadFileList(ret_obj, response_tags, settings) {
     xAddEventListener(listObj,'click',previewFiles);
 }
 
-function previewFiles(evt) {
+function previewFiles(evt, given_file_srl) {
+    if(!given_file_srl) {
     var e = new xEvent(evt);
     var obj = e.target;
     var selObj = null;
@@ -276,6 +278,10 @@ function previewFiles(evt) {
     obj = selObj.options[selObj.selectedIndex];
 
     var file_srl = obj.value;
+    }
+    else {
+        var file_srl = given_file_srl;
+    }
     if(!file_srl || typeof(uploadedFiles[file_srl])=="undefined") return;
     var file_info = uploadedFiles[file_srl];
     var previewAreaID = file_info.previewAreaID;
@@ -299,8 +305,13 @@ function previewFiles(evt) {
     } else if(/\.(wmv|avi|mpg|mpeg|asx|asf|mp3)$/i.test(uploaded_filename)) {
         html = "<EMBED src=\""+uploaded_filename+"\" width=\"100%\" height=\"100%\" autostart=\"true\" Showcontrols=\"0\"></EMBED>";
 
-    // 이미지 파일의 경우
+    // 이미지 파일의 경우 미리 로드시킴
     } else if(/\.(jpg|jpeg|png|gif)$/i.test(uploaded_filename)) {
+        if(given_file_srl) {
+            var uploaded_obj = new Image();
+            uploaded_obj.src = uploaded_filename;
+            if(!uploaded_obj.width || !uploaded_obj.width) { previewFiles('', given_file_srl); }
+        }
         html = "<img src=\""+uploaded_filename+"\" border=\"0\" width=\"100%\" height=\"100%\" />";
 
     }
