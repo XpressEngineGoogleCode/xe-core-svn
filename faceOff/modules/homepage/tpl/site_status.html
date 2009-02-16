@@ -1,5 +1,6 @@
-<!--%import("js/counter_admin.js")-->
-<!--%import("css/counter.css")-->
+<!--#include("_header.html")-->
+
+<!--%import("../../counter/tpl/js/counter_admin.js")-->
 
 <!--// datepicker javascript plugin load -->
 <!--%load_js_plugin("ui.datepicker")-->
@@ -126,12 +127,14 @@
     <td class="wide">
         {@$img_percent = $percent-30}
         <!--@if($img_percent<1)-->
-            <img class="graphHr" style="width:3px;" alt="" src="./images/iconBar.gif" />
+            <img class="graphHr" style="width:3px;" alt="" src="../../counter/tpl/images/iconBar.gif" />
         <!--@else-->
-            <img class="graphHr" style="width:{$img_percent}%;" alt="" src="./images/iconBar.gif" />
+            <img class="graphHr" style="width:{$img_percent}%;" alt="" src="../../counter/tpl/images/iconBar.gif" />
         <!--@end-->
         {number_format($val)}({$percent}%) 
     </td>
 </tr>
 <!--@end-->
 </table>
+
+<!--#include("_footer.html")-->

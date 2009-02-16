@@ -35,6 +35,7 @@
         "dispHomepageMemberGroupManage" => "會員群組管理",
         "dispHomepageMemberManage" => "會員列表",
         "dispHomepageTopMenu" => "主選單",
+        "dispHomepageCounter" => "접속 통계",
         "dispHomepageMidSetup" => "詳細設定",
     );
     $lang->cmd_cafe_registration = "建立網站";
@@ -53,6 +54,7 @@
         "dispHomepageMemberGroupManage" => "可管理網站內的用戶群組",
         "dispHomepageMemberManage" => "可以檢視和管理會員",
         "dispHomepageTopMenu" => "可建立或管理左側或上端的選單",
+        "dispHomepageCounter" => "Cafe의 접속 현황을 볼 수 있습니다",
         "dispHomepageMidSetup" => "可詳細設定網站所使用的討論板，頁面等模組",
     );
     $lang->about_cafe = "網站模組可快速建立網站，且容易進行設定。";

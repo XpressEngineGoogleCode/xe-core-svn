@@ -234,7 +234,6 @@
                 $oDB->dropColumn('documents','extra_vars'.$i);
             }
 
-
             return new Object(0, 'success_updated');
         }
 

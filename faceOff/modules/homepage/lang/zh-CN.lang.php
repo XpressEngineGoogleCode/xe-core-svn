@@ -35,6 +35,7 @@
         "dispHomepageMemberGroupManage" => "用户组管理",
         "dispHomepageMemberManage" => "用户列表",
         "dispHomepageTopMenu" => "主菜单管理",
+        "dispHomepageCounter" => "접속 통계",
         "dispHomepageMidSetup" => "模块详细设置",
     );
     $lang->cmd_cafe_registration = "生成站点";
@@ -53,6 +54,7 @@
         "dispHomepageMemberGroupManage" => "在此可以管理站点内的用户组。",
         "dispHomepageMemberManage" => "在此可以查看或管理用户。",
         "dispHomepageTopMenu" => "在此可以设置主菜单及所属子菜单。",
+        "dispHomepageCounter" => "Cafe의 접속 현황을 볼 수 있습니다",
         "dispHomepageMidSetup" => "在此可以设置站点内的版面，页面等模块的详细设置。",
     );
     $lang->about_cafe = "站点工具不仅可以迅速建立多个站点，而且非常方便各项设置。";

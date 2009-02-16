@@ -35,6 +35,7 @@
         "dispHomepageMemberGroupManage" => "会員のグループ管理",
         "dispHomepageMemberManage" => "会員リスト",
         "dispHomepageTopMenu" => "基本メニュー 管理",
+        "dispHomepageCounter" => "접속 통계",
         "dispHomepageMidSetup" => "モジュール詳細設定",
     );
     $lang->cmd_cafe_registration = "ホームページ作成";
@@ -53,6 +54,7 @@
         "dispHomepageMemberGroupManage" => "ホームページ内のグループを管理します。",
         "dispHomepageMemberManage" => "ホームページに登録されている会員を管理します。",
         "dispHomepageTopMenu" => "ホームページのヘッダー（header、上段）や左側などのメニューを管理します。",
+        "dispHomepageCounter" => "Cafe의 접속 현황을 볼 수 있습니다",
         "dispHomepageMidSetup" => "ホームページの掲示板、ページなどのモジュールを管理します。",
     );
     $lang->about_cafe = "ホームページサービス管理者は複数のホームページ作成、および各ホームページを簡単に管理が出来ます。";

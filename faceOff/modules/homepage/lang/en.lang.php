@@ -35,6 +35,7 @@
         "dispHomepageMemberGroupManage" => "Manage groups",
         "dispHomepageMemberManage" => "Member list",
         "dispHomepageTopMenu" => "Manage default menu",
+        "dispHomepageCounter" => "접속 통계",
         "dispHomepageMidSetup" => "Module configuration",
     );
     $lang->cmd_cafe_registration = "Create a cafe";
@@ -53,6 +54,7 @@
         "dispHomepageMemberGroupManage" => "You can manage groups used in this cafe.",
         "dispHomepageMemberManage" => "You can list up members registered and manage them.",
         "dispHomepageTopMenu" => "You can manage the default menus",
+        "dispHomepageCounter" => "Cafe의 접속 현황을 볼 수 있습니다",
         "dispHomepageMidSetup" => "You can configure modules, such as pages and boards, used in the cafe."
     );
     $lang->about_cafe = "CafeXE package provides features to create cafes and to configure them conveniently";
