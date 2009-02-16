@@ -67,5 +67,6 @@
 
     $lang->alias = "Alias";
     $lang->history = "History";
-    $lang->about_use_history = "히스토리 기능의 사용여부를 지정합니다. 히스토리 기능을 사용할 경우 문서 수정시 이전 리비전을 기록하고 복원할 수 있습니다.";
+    $lang->about_use_history = "Determine whether to enable history feature, if it is enabled, update history would be stored and possible to restore old revisions.";
+    $lang->trace_only = "Trace only";
 ?>

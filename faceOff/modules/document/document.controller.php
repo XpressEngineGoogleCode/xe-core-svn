@@ -249,14 +249,15 @@
             $module_srl = $source_obj->get('module_srl');
             $document_config = $oModuleModel->getModulePartConfig('document', $module_srl);
             if(!isset($document_config->use_history)) $document_config->use_history = 'N';
-            $bUseHistory = $document_config->use_history == 'Y';
+            $bUseHistory = $document_config->use_history == 'Y' || $document_config->use_history == 'Trace';
 
             if($bUseHistory)
             {
                 $args->history_srl = getNextSequence();
                 $args->document_srl = $obj->document_srl;
                 $args->module_srl = $module_srl;
-                $args->content = $source_obj->get('content');
+                if($document_config->use_history == 'Y')
+                    $args->content = $source_obj->get('content');
                 $args->nick_name = $source_obj->get('nick_name');
                 $args->member_srl = $source_obj->get('member_srl');
                 $args->regdate = $source_obj->get('last_update');

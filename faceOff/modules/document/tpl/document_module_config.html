@@ -12,6 +12,7 @@
             <select name="use_history" class="w100">
                 <option value="N" <!--@if($document_config->use_history=='N')-->selected<!--@end-->>{$lang->notuse}</option>
                 <option value="Y" <!--@if($document_config->use_history=='Y')-->selected<!--@end-->>{$lang->use}</option>
+                <option value="Trace" <!--@if($document_config->use_history=='Trace')-->selected<!--@end-->>{$lang->trace_only}</option>
             </select>
         </td>
     </tr>
