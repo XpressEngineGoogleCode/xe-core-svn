@@ -1,3 +1,5 @@
+<!--%import("./widget.css")-->
+	
 <!--@if($colorset == "black")-->
     <!--%import("./black.css")-->
 <!--@elseif($colorset == "white" || $colorset == "normal")-->
@@ -6,7 +8,7 @@
 
 <div class="widgetLanguage">
     <p><a href="#language" class="cafeXeA" onclick="if(xGetElementById('language').style.display=='block'){ xGetElementById('language').style.display='none';}else{ xGetElementById('language').style.display='block';} return false;">Language:{$lang_supported[$lang_type]}</a></p>
-    <ul id="language" class="">
+    <ul id="language" class="" style="right: 0pt; bottom: 15px;">
         <!-- class="" | class="open" -->
         <!--@foreach($lang_supported as $key => $val)-->
         <!--@if($key != $lang_type)-->

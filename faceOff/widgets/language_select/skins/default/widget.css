@@ -1,0 +1,7 @@
+@charset "utf-8";
+
+/* widgetLanguage */
+.widgetLanguage p{ float:right; margin:0;}
+.widgetLanguage #language{ display:none; position:absolute; margin:0; padding:0;}
+.widgetLanguage #language li{ list-style:none;}
+.widgetLanguage #language li a{ font-size:12px; display:block; padding:2px 5px;}

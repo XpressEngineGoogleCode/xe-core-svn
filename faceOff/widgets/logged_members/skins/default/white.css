@@ -1,13 +1,4 @@
 @charset "utf-8";
-.widgetList { margin:0; padding:0; font-size:12px; position:relative; clear:both; *zoom:1;}
-.widgetList:after{ content:""; display:block; clear:both;}
-.widgetList li{ position:relative; padding:2px 0; line-height:1.5;}
 
-ul.widgetList li{ text-indent:10px; list-style:none; *zoom:1;}
-ul.widgetList li .icon{ _margin-top:6px;}
-ul.widgetList.half li{ float:left; clear:none; width:50%; *margin-right:-1px;}
-ul.widgetListTypeD li{ background:none;}
-ul.widgetListTypeD a{ color:#666; text-decoration:none;}
-ul.widgetListTypeD a:hover,
-ul.widgetListTypeD a:active,
-ul.widgetListTypeD a:focus{ background:#f4f4f4;}
+/* widgetUlistA */
+.widgetUlistA li a{ color:#666;}
