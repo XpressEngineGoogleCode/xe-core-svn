@@ -251,7 +251,7 @@
             FileHandler::removeFilesInDir("./files/cache/db");
 
             // 기타 캐시 삭제
-            FileHandler::removeFilesInDir("./files/cache/tmp");
+            FileHandler::removeDir("./files/cache/tmp");
         }
     }
 ?>

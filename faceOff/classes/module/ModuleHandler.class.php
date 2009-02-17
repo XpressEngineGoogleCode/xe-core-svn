@@ -66,7 +66,8 @@
             // 애드온 실행 (모듈 실행 전)
             $called_position = 'before_module_init';
             $oAddonController = &getController('addon');
-            @include($oAddonController->getCacheFilePath());
+            $addon_file = $oAddonController->getCacheFilePath();
+            if(file_exists($addon_file)) @include($addon_file);
         }
 
         /**

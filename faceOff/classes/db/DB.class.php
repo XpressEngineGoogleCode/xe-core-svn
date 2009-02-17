@@ -50,7 +50,7 @@
          **/
         function &getInstance($db_type = NULL) {
             if(!$db_type) $db_type = Context::getDBType();
-            if(!$db_type) return new Object(-1, 'msg_db_not_setted');
+            if(!$db_type && Context::isInstalled()) return new Object(-1, 'msg_db_not_setted');
 
             if(!$GLOBALS['__DB__']) {
                 $class_name = sprintf("DB%s%s", strtoupper(substr($db_type,0,1)), strtolower(substr($db_type,1)));

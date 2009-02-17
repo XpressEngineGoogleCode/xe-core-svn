@@ -58,8 +58,7 @@
          * @brief 캐시 파일 재생성
          **/
         function recompileCache() {
-            $oAddonController = &getAdminController('addon');
-            $oAddonController->makeCacheFile();
+            FileHandler::removeFilesInDir('./files/cache/addons');
         }
 
     }

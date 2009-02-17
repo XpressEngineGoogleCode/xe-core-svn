@@ -79,7 +79,8 @@
             // 애드온 실행
             $called_position = 'before_display_content';
             $oAddonController = &getController('addon');
-            @include($oAddonController->getCacheFilePath());
+            $addon_file = $oAddonController->getCacheFilePath();
+            if(file_exists($addon_file)) @include($addon_file);
 
             $this->content_size = strlen($output);
 

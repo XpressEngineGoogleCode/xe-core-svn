@@ -236,7 +236,8 @@
             // addon 실행(called_position 를 before_module_proc로 하여 호출)
             $called_position = 'before_module_proc';
             $oAddonController = &getController('addon');
-            @include($oAddonController->getCacheFilePath());
+            $addon_file = $oAddonController->getCacheFilePath();
+            if(file_exists($addon_file)) @include($addon_file);
 
             // action 실행
             if(method_exists($this, $this->act)) {
@@ -312,7 +313,8 @@
             // addon 실행(called_position 를 after_module_proc로 하여 호출)
             $called_position = 'after_module_proc';
             $oAddonController = &getController('addon');
-            @include($oAddonController->getCacheFilePath());
+            $addon_file = $oAddonController->getCacheFilePath();
+            if(file_exists($addon_file)) @include($addon_file);
 
             if(is_a($output, 'Object') || is_subclass_of($output, 'Object')) {
                 $this->setError($output->getError());
