@@ -67,10 +67,8 @@
             if($site_srl) {
                 $args->site_srl = $site_srl;
                 $output = executeQuery('counter.updateSiteCounterUnique', $args);
-                //$output = executeQuery('counter.updateSiteTotalCounterUnique', $args);
             } else {
                 $output = executeQuery('counter.updateCounterUnique', $args);
-                //$output = executeQuery('counter.updateTotalCounterUnique');
             }
         }
 
@@ -122,7 +120,7 @@
             $this->insertLog($site_srl);
 
             // unique 및 pageview 등록
-            //$this->insertUniqueVisitor($site_srl);
+            $this->insertUniqueVisitor($site_srl);
         }
     }
 ?>
