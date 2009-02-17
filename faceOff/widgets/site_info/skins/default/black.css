@@ -1,7 +1,6 @@
 @charset "utf-8";
-dl.widgetSiteInfo { margin:10px 0; font-size:12px;}
-dl.widgetSiteInfo a { color:#ccc !important; }
-dl.widgetSiteInfo dt,
-dl.widgetSiteInfo dd{ display:inline; margin:0; font-size:12px; font-family:Dotum; color:#999 !important;}
-dl.widgetSiteInfo dd{font-family:Tahoma; color:#888 !important; font-weight:bold;}
-dl.widgetSiteInfo dt.div {margin-left:10px; background:url("./div.gif") no-repeat left top; padding-left:10px; }
+
+/* widgetDlistA */
+.widgetDlistA dt{ color:#999;}
+.widgetDlistA dd,
+.widgetDlistA  dd a{ color:#888;}
