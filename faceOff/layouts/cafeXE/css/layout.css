@@ -13,12 +13,12 @@ hr.cafeXeHr{ display:none; position:absolute;}
 
 /* Container + Header + Body + Footer */
 #cafeXeContainer{ position:relative; margin:0 20px; *zoom:1;}
-#cafeXeHeader{ position:relative; padding:20px 0 10px; border-bottom:3px solid; *zoom:1;}
+#cafeXeHeader{ position:relative; padding:20px 0 10px; border-bottom:3px solid; *zoom:1; z-index:100;}
 #cafeXeHeader:after{ content:""; display:block; clear:both;}
 #cafeXeBody{ position:relative; padding-top:20px; padding-bottom:20px; *zoom:1;}
 #cafeXeBody:after{ content:""; display:block; clear:both;}
 #cafeXeContent{ position:relative; margin-bottom:20px; text-align:justify;}
-#cafeXeFooter{ position:relative; padding:10px 0; border-top:1px solid; *zoom:1;}
+#cafeXeFooter{ position:relative; padding:10px 0; border-top:1px solid; *zoom:1; z-index:100;}
 #cafeXeFooter address{ text-align:center;}
 
 /* Layout Width */
@@ -47,14 +47,14 @@ hr.cafeXeHr{ display:none; position:absolute;}
 #cafeXeFooter .cafeXeNavigation li{ display:inline; position:relative; list-style:none; padding:0 5px;}
 
 /* Neck */
-#neck{ position:relative; clear:both; *zoom:1;}/* overflow:hidden;}*/
+#neck{ position:relative; clear:both; *zoom:1;}
 #neck .cafeXeExtension{ margin-right:-30px; *zoom:1;}
 #neck .cafeXeExtension:after{ content:""; display:block; clear:both;}
 #neck .cafeXeExtension .cafeXeSection{ position:relative; float:left; width:300px; margin-right:30px;}
 .cafeXeLiquid #neck .cafeXeExtension .cafeXeSection{ width:30%; margin-right:3.3%;}
 
 /* Knee */
-#cafeXeKnee{ display:none; position:relative; clear:both; *zoom:1;}/* overflow:hidden;}*/
+#cafeXeKnee{ position:relative; clear:both; *zoom:1;}
 #cafeXeKnee{ padding-top:30px; border-top:1px solid;}
 #cafeXeKnee .cafeXeExtension{ margin-right:-30px; *zoom:1;}
 #cafeXeKnee .cafeXeExtension:after{ content:""; display:block; clear:both;}
@@ -62,10 +62,10 @@ hr.cafeXeHr{ display:none; position:absolute;}
 .cafeXeLiquid #cafeXeKnee .cafeXeExtension .cafeXeSection{ width:30%; margin-right:3.3%;}
 
 /* Extension */
-.cafeXeExtension, .cafeXeSection{position:relative; *zoom:1;}
+.cafeXeExtension, 
+.cafeXeSection{position:relative; *zoom:1;}
 #cafeXeBody .cafeXeExtension{ position:relative; display:none; margin-bottom:20px;}
 .cafeXeExtension .cafeXeSection{ margin-bottom:20px;}
-.cafeXeExtension .cafeXeSection ul{ /* margin-left:20px; */ padding:0;}
 
 /* ----- Fixed 2 Column Layout ----- */
 .cafeXeFixed .cafeXeCE #cafeXeBody .cafeXeE1,

@@ -1,13 +1,14 @@
 <!--%import("css/layout.css")-->
-<!--%import("css/layout@skin.css")-->
+<!--%import("css/layout@cafe.css")-->
 
 <!--%import("css/widget.css")-->
-<!--%import("css/widget@skin.css")-->
 
 <!--@if($layout_info->colorset == "black")-->
-    <!--%import("css/black.css")-->
+    <!--%import("css/layout@black.css")-->
+    <!--%import("css/widget@black.css")-->
 <!--@else-->
-    <!--%import("css/white.css")-->
+    <!--%import("css/layout@white.css")-->
+    <!--%import("css/widget@white.css")-->
 <!--@end-->
 
 <!--// 모양 설정 > 본문 위치 -->
@@ -42,18 +43,16 @@
                     <h1 class="cafeXeH1"><a href="{$layout_info->index_url}" class="cafeXeA">Cafe<sup>XE</sup></a></h1>
                     <!--@end-->
 
-                    <div class="cafeXeSearch">
-                        <form action="{getUrl()}" method="post">
-                            <fieldset>
-                                <input type="hidden" name="mid" value="{$mid}" />
-                                <input type="hidden" name="act" value="IS" />
-                                <input type="hidden" name="search_target" value="title" />
-                                <legend>{$lang->cmd_search}</legend>
-                                <input type="text" name="is_keyword" class="searchInput" />
-                                <input type="image" src="./img/white/buttonSearch.gif" value="{$lang->cmd_search}" class="searchSubmit" />
-                            </fieldset>
-                        </form>
-                    </div>
+					<form action="{getUrl()}" method="post" class="widgetSearch">
+						<fieldset>
+							<input type="hidden" name="mid" value="{$mid}" />
+							<input type="hidden" name="act" value="IS" />
+							<input type="hidden" name="search_target" value="title" />
+							<!--<legend>{$lang->cmd_search}</legend>-->
+							<input type="text" name="is_keyword" class="widgetXeInputText" title="{$lang->cmd_search}" />
+							<input type="image" src="./img/white/buttonSearch.gif" value="{$lang->cmd_search}" class="widgetSearch" />
+						</fieldset>
+					</form>
 
                     <p class="cafeXeUrl"><a href="{$layout_info->index_url}" class="cafeXeA">{$layout_info->index_url}</a></p>
 
