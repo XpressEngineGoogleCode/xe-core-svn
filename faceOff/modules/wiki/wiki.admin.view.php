@@ -104,5 +104,23 @@
             // 템플릿 파일 지정
             $this->setTemplateFile('addition_setup');
         }
+
+        function dispWikiAdminGrantInfo() {
+            // 공통 모듈 권한 설정 페이지 호출
+            $oModuleAdminModel = &getAdminModel('module');
+            $grant_content = $oModuleAdminModel->getModuleGrantHTML($this->module_info->module_srl, $this->xml_info->grant);
+            Context::set('grant_content', $grant_content);
+
+            $this->setTemplateFile('grant_list');
+        }
+
+        function dispWikiAdminSkinInfo() {
+            // Call the common page for managing skin information
+            $oModuleAdminModel = &getAdminModel('module');
+            $skin_content = $oModuleAdminModel->getModuleSkinHTML($this->module_info->module_srl);
+            Context::set('skin_content', $skin_content);
+
+            $this->setTemplateFile('skin_info');
+        }
     }
 ?>

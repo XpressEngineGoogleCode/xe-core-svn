@@ -55,6 +55,8 @@
         }
 
         function dispWikiEditPage() {
+            if(!$this->grant->write_document) return $this->dispWikiMessage('msg_not_permitted');
+
             $oDocumentModel = &getModel('document');
             $document_srl = Context::get('document_srl');
             $oDocument = $oDocumentModel->getDocument(0, $this->grant->manager);
@@ -66,6 +68,16 @@
             Context::addJsFilter($this->module_path.'tpl/filter', 'insert.xml');
 
             $this->setTemplateFile('write_form');
+        }
+
+        /**
+         * @brief Displaying Message 
+         **/
+        function dispWikiMessage($msg_code) {
+            $msg = Context::getLang($msg_code);
+            if(!$msg) $msg = $msg_code;
+            Context::set('message', $msg);
+            $this->setTemplateFile('message');
         }
 
         function dispWikiTitleIndex() {
@@ -136,20 +148,14 @@
              * 글 보기 권한을 체크해서 권한이 없으면 오류 메세지 출력하도록 처리
              **/
             if($oDocument->isExists()) {
-                if(!$this->grant->view && !$oDocument->isGranted()) {
-                    $oDocument = $oDocumentModel->getDocument(0);
-                    Context::set('document_srl','',true);
-                    $this->alertMessage('msg_not_permitted');
-                } else {
-                    // 브라우저 타이틀에 글의 제목을 추가
-                    Context::addBrowserTitle($oDocument->getTitleText());
+                // 브라우저 타이틀에 글의 제목을 추가
+                Context::addBrowserTitle($oDocument->getTitleText());
 
-                    // 조회수 증가 (비밀글일 경우 권한 체크)
-                    if(!$oDocument->isSecret() || $oDocument->isGranted()) $oDocument->updateReadedCount();
+                // 조회수 증가 (비밀글일 경우 권한 체크)
+                if(!$oDocument->isSecret() || $oDocument->isGranted()) $oDocument->updateReadedCount();
 
-                    // 비밀글일때 컨텐츠를 보여주지 말자.
-                    if($oDocument->isSecret() && !$oDocument->isGranted()) $oDocument->add('content',Context::getLang('thisissecret'));
-                }
+                // 비밀글일때 컨텐츠를 보여주지 말자.
+                if($oDocument->isSecret() && !$oDocument->isGranted()) $oDocument->add('content',Context::getLang('thisissecret'));
                 $this->setTemplateFile('view_document');
             }
             else

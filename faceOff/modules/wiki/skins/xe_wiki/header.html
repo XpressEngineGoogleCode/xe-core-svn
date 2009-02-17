@@ -36,7 +36,7 @@
                     <strong>{$oDocument->getUpdate('Y.m.d')}</strong> {$oDocument->getUpdate('H:i:s')} 
                 </div>
                 </div>
-                <!--@if($use_history == 'Y')-->
+                <!--@if($use_history != 'N')-->
                 <div class="history">
                     <a href="{getUrl('act','dispWikiHistory','document_srl',$oDocument->document_srl)}">View History</a>
                 </div>
