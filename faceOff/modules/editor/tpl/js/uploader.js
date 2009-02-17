@@ -289,7 +289,11 @@ function previewFiles(evt, given_file_srl) {
     var previewObj = xGetElementById("previewAreaID");
     if(!previewAreaID) return;
     xInnerHtml(previewAreaID,"&nbsp;");
-    if(file_info.direct_download != "Y") return;
+    if(file_info.direct_download != "Y") {
+        var html = "<img src=\""+request_uri+"./modules/editor/tpl/images/files.gif\" border=\"0\" width=\"100%\" height=\"100%\" />";
+        xInnerHtml(previewAreaID, html);
+        return;
+    }
 
     var html = "";
     var uploaded_filename = file_info.download_url;
@@ -309,6 +313,8 @@ function previewFiles(evt, given_file_srl) {
     // 이미지 파일의 경우
     } else if(/\.(jpg|jpeg|png|gif)$/i.test(uploaded_filename)) {
         html = "<img src=\""+uploaded_filename+"\" border=\"0\" width=\"100%\" height=\"100%\" />";
+    } else if(uploaded_filename) {
+        html = "<img src=\""+request_uri+"/modules/editor/tpl/images/files.gif\" border=\"0\" width=\"100%\" height=\"100%\" />";
     }
     xInnerHtml(previewAreaID, html);
 
