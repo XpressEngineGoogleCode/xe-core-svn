@@ -314,18 +314,20 @@ function previewFiles(evt, given_file_srl) {
 
     // 이미지 파일중, 파일 목록 리로드시 불러오는 이미지는 미리 로드시킴, 로드시키는 이유는 이미지 가로/세로 크기를 얻기 위함. 로드 횟수는 4번을 초과하지 않게 (그 이상은 포기)
     if(given_file_srl) {
-        var uploaded_obj = new Image();
-        uploaded_obj.src = uploaded_filename;
-        if(!uploaded_obj.width || !uploaded_obj.width) {
-            if(!img_loaded_check[given_file_srl]) {
-                img_loaded_check[given_file_srl] = 1;
-            }
-            else {
-                img_loaded_check[given_file_srl]++;
-            }
+        if(/\.(jpg|jpeg|png|gif)$/i.test(uploaded_filename)) {
+            var uploaded_obj = new Image();
+            uploaded_obj.src = uploaded_filename;
+            if(!uploaded_obj.width || !uploaded_obj.width) {
+                if(!img_loaded_check[given_file_srl]) {
+                    img_loaded_check[given_file_srl] = 1;
+                }
+                else {
+                    img_loaded_check[given_file_srl]++;
+                }
 
-            if(img_loaded_check[given_file_srl] < 5) {
-                previewFiles('', given_file_srl);
+                if(img_loaded_check[given_file_srl] < 5) {
+                    previewFiles('', given_file_srl);
+                }
             }
         }
     }
