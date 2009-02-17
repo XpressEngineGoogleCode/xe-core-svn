@@ -329,10 +329,10 @@
          * @brief SSO URL이 설정되어 있고 아직 SSO URL검사를 하지 않았다면 return true
          **/
         function checkSSO() {
-            // GET 접속시이 아니거나 안되어 있으면 패스
+            // GET 접속이 아니거나 설치가 안되어 있으면 패스
             if(Context::getRequestMethod()!='GET' || !Context::isInstalled()) return true;
 
-            // DB info에 설정된 SSO URL이 없다면 무조건 무사통과
+            // DB info에 설정된 Default URL이 없다면 무조건 무사통과
             $default_url = trim($this->db_info->default_url);
             if(!$default_url) return true;
             if(substr($default_url,-1)!='/') $default_url .= '/';
@@ -342,7 +342,7 @@
                 if(Context::get('default_url')) {
                     $url = base64_decode(Context::get('default_url'));
                     $url_info = parse_url($url);
-                    $url_info['query'].= ($url_info['query']?'&':'').'SSOID='.$_COOKIE[session_name()];
+                    $url_info['query'].= ($url_info['query']?'&':'').'SSOID='.session_id();
                     $redirect_url = sprintf('%s://%s%s%s?%s',$url_info['scheme'],$url_info['host'],$url_info['port']?':'.$url_info['port']:'',$url_info['path'], $url_info['query']);
                     header("location:".$redirect_url);
                     return false;
