@@ -189,6 +189,9 @@
             // 세션에서 최고 관리자가 아니면 iframe, script 제거
             if($logged_info->is_admin != 'Y') $obj->content = removeHackTag($obj->content);
 
+            // 로그인정보가 없고 사용자 이름이 없으면 오류 표시
+            if(!$logged_info->member_srl && !$obj->nick_name) return new Object(-1,'msg_invalid_request');
+
             // DB에 입력
             $output = executeQuery('document.insertDocument', $obj);
             if(!$output->toBool()) {
