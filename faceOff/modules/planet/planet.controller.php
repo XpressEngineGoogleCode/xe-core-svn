@@ -783,7 +783,12 @@
             $output = executeQuery('planet.getMemberPlanet', $args);
             if(!$output->toBool() || !$output->data) return new Object();
 
-            $url = getUrl('','mid',$output->data->mid);
+            $site_module_info = Context::get('site_module_info');
+            $default_url = Context::getDefaultUrl();
+
+            if($site_module_info->site_srl && !$default_url) return new Object();
+
+            $url = getSiteUrl($default_url, '','mid',$output->data->mid);
             $oMemberController = &getController('member');
             $oMemberController->addMemberPopupMenu($url, 'planet', './modules/planet/tpl/images/planet.gif');
 
