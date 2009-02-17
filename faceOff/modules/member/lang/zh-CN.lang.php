@@ -27,7 +27,7 @@
     $lang->group_title = '用户组标题';
     $lang->group_srl = '用户组编号';
     $lang->signature = '签名';
-    $lang->profile_image = '签名图片';
+    $lang->profile_image = '个性头像';
     $lang->profile_image_max_width = '宽度限制';
     $lang->profile_image_max_height = '高度限制';
     $lang->image_name = '昵称图片';
