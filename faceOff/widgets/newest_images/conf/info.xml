@@ -296,7 +296,7 @@
 			<name xml:lang="zh-TW">目標模組</name>
 			<description xml:lang="ko">선택하신 모듈에 등록된 글을 대상으로 합니다.</description>
 			<description xml:lang="jp">チェックされたコンテンツを対象とします。</description>
-			<description xml:lang="zh-CN">把被选模块中的主题作为对象。</description>
+			<description xml:lang="zh-CN">把所选模块中的主题作为对象。</description>
 			<description xml:lang="en">Articles on chosen module will be the target.</description>
 			<description xml:lang="es">Objetivo de los documentos será los del módulo seleccionado.</description>
 			<description xml:lang="ru">Статьи на выбранных модулях будут назначением.</description>

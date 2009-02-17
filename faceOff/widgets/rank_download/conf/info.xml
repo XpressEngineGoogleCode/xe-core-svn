@@ -159,7 +159,7 @@
             <description xml:lang="jp">選択したモジュールに登録されたコンテンツ（書き込み）を対象とします。</description>
             <description xml:lang="en">Articles in selected module will be target.</description>
             <description xml:lang="es">Los artículos seleccionados en el módulo se meta.</description>
-            <description xml:lang="zh-CN">将把被选模块中的主题作为对象。</description>
+            <description xml:lang="zh-CN">将把所选模块中的主题作为对象。</description>
             <description xml:lang="ru">Статьи в выбранном модуле будут назначением.</description>
             <description xml:lang="zh-TW">將所選擇的模組當作目標。</description>
         </var>

@@ -37,7 +37,7 @@
     $lang->cmd_move_down = '向下';
     $lang->cmd_add_indent = '拉长';
     $lang->cmd_remove_indent = '缩短';
-    $lang->cmd_management = '后台管理';
+    $lang->cmd_management = '管理';
     $lang->cmd_make = '生成';
     $lang->cmd_select = '选择';
     $lang->cmd_select_all = '全部选择';
