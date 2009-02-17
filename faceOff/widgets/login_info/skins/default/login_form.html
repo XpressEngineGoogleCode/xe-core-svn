@@ -2,7 +2,7 @@
 <!--%import("./filter/login.xml")-->
 <!--%import("./filter/openid_login.xml")-->
 
-<!--%import("./css/common.css")-->
+<!--%import("./css/widget.css")-->
 <!--@if($colorset=="black")-->
     <!--%import("./css/black.css")-->
 <!--@elseif($colorset=="white" || $colorset=="default")-->
@@ -19,11 +19,11 @@
 <fieldset>
     <dl>
         <dt><label for="uid">{$lang->user_id} :</label></dt>
-        <dd><input name="user_id" type="text" id="uid" class="inputText" title="{$lang->user_id}" /></dd>
+        <dd><input name="user_id" type="text" id="uid" class="widgetXeInputText" title="{$lang->user_id}" /></dd>
         <dt><label for="upw">{$lang->password} :</label></dt>
-        <dd><input name="password" type="password" id="upw" class="inputText" title="{$lang->password}" /></dd>
+        <dd><input name="password" type="password" id="upw" class="widgetXeInputText" title="{$lang->password}" /></dd>
     </dl>
-    <p><input name="keep_signed" id="keepid" type="checkbox" value="Y" onclick="if(this.checked) return confirm(keep_signed_msg);" class="inputCheck" /><label for="keepid">{$lang->keep_signed}</label></p>
+    <p><input name="keep_signed" id="keepid" type="checkbox" value="Y" onclick="if(this.checked) return confirm(keep_signed_msg);" class="widgetXeInputCheck" /><label for="keepid">{$lang->keep_signed}</label></p>
     <!--@if($member_config->enable_openid=='Y')-->
     <p><input name="use_open_id" id="use_open_id" type="checkbox" value="Y" onclick="xGetElementById('formLogin').style.display = 'none';xGetElementById('formOpenID').style.display='block';xGetElementById('formOpenID').openid.focus();return false;" class="inputCheck" /><label for="use_open_id">Open ID</label></p>
     <!--@end-->
