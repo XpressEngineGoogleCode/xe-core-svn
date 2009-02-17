@@ -140,6 +140,35 @@
             $args->site_srl = $info->site_srl;
             $oMemberAdminController->insertGroup($args);
 
+            // 기본 애드온 On
+            $oAddonController = &getAdminController('addon');
+            $oAddonController->doInsert('autolink', $info->site_srl);
+            $oAddonController->doInsert('counter', $info->site_srl);
+            $oAddonController->doInsert('member_communication', $info->site_srl);
+            $oAddonController->doInsert('member_extra_info', $info->site_srl);
+            $oAddonController->doInsert('referer', $info->site_srl);
+            $oAddonController->doInsert('resize_image', $info->site_srl);
+            $oAddonController->doActivate('autolink', $info->site_srl);
+            $oAddonController->doActivate('counter', $info->site_srl);
+            $oAddonController->doActivate('member_communication', $info->site_srl);
+            $oAddonController->doActivate('member_extra_info', $info->site_srl);
+            $oAddonController->doActivate('referer', $info->site_srl);
+            $oAddonController->doActivate('resize_image', $info->site_srl);
+            $oAddonController->makeCacheFile($info->site_srl);
+
+            // 기본 에디터 컴포넌트 On
+            $oEditorController = &getAdminController('editor');
+            $oEditorController->insertComponent('colorpicker_text',true, $info->site_srl);
+            $oEditorController->insertComponent('colorpicker_bg',true, $info->site_srl);
+            $oEditorController->insertComponent('emoticon',true, $info->site_srl);
+            $oEditorController->insertComponent('url_link',true, $info->site_srl);
+            $oEditorController->insertComponent('image_link',true, $info->site_srl);
+            $oEditorController->insertComponent('multimedia_link',true, $info->site_srl);
+            $oEditorController->insertComponent('quotation',true, $info->site_srl);
+            $oEditorController->insertComponent('table_maker',true, $info->site_srl);
+            $oEditorController->insertComponent('poll_maker',true, $info->site_srl);
+            $oEditorController->insertComponent('image_gallery',true, $info->site_srl);
+
             $this->add('site_srl', $info->site_srl);
             $this->add('url', getSiteUrl($info->domain, ''));
         }
@@ -275,6 +304,18 @@
             // 메뉴 삭제
             $oMenuAdminController = &getAdminController('menu');
             $oMenuAdminController->deleteMenu($homepage_info->first_menu_srl);
+
+            // 카운터 정보 삭제
+            $oCounterController = &getController('counter');
+            $oCounterController->deleteSiteCounterLogs($site_srl);
+
+            // 애드온 삭제
+            $oAddonController = &getController('addon');
+            $oAddonController->removeAddonConfig($site_srl);
+
+            // 에디터 컴포넌트 삭제
+            $oEditorController = &getController('editor');
+            $oEditorController->removeEditorConfig($site_srl);
 
             // 레이아웃 삭제
             Context::set('layout_srl', $homepage_info->layout_srl);

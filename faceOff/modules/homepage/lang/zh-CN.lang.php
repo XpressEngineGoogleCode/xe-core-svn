@@ -35,6 +35,7 @@
         "dispHomepageMemberGroupManage" => "用户组管理",
         "dispHomepageMemberManage" => "用户列表",
         "dispHomepageTopMenu" => "菜单管理",
+        "dispHomepageComponent" => "기능 설정",
         "dispHomepageCounter" => "访问统计",
         "dispHomepageMidSetup" => "模块设置",
     );
@@ -54,6 +55,7 @@
         "dispHomepageMemberGroupManage" => "在此可以管理站点内的用户组。",
         "dispHomepageMemberManage" => "在此可以查看或管理用户。",
         "dispHomepageTopMenu" => "在此可以设置主菜单及所属子菜单。",
+        "dispHomepageComponent" => "에디터 컴포넌트/ 애드온을 활성화 하거나 설정을 변경할 수 있습니다",
         "dispHomepageCounter" => "可以查看站点的访问统计数据。",
         "dispHomepageMidSetup" => "在此可以设置站点内的版面，页面等模块的详细设置。",
     );

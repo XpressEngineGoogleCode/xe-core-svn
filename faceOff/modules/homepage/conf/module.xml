@@ -6,12 +6,11 @@
         <permission action="dispHomepageMemberGroupManage" target="manager" />
         <permission action="dispHomepageMemberManage" target="manager" />
 
-
-
         <permission action="dispHomepageTopMenu" target="manager" />
         <permission action="dispHomepageBottomMenu" target="manager" />
         <permission action="dispHomepageMidSetup" target="manager" />
         <permission action="dispHomepageCounter" target="manager" />
+        <permission action="dispHomepageComponent" target="manager" />
         <permission action="dispHomepageBoardInfo" target="manager" />
         <permission action="dispHomepageBoardAddition" target="manager" />
         <permission action="dispHomepageBoardGrant" target="manager" />
@@ -45,6 +44,7 @@
         <action name="dispHomepageBottomMenu" type="view" standalone="true" />
         <action name="dispHomepageMidSetup" type="view" standalone="true" />
         <action name="dispHomepageCounter" type="view" standalone="true" />
+        <action name="dispHomepageComponent" type="view" standalone="true" />
 
         <action name="dispHomepageBoardInfo" type="view" standalone="true" />
         <action name="dispHomepageBoardAddition" type="view" standalone="true" />

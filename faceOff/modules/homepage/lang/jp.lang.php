@@ -35,6 +35,7 @@
         "dispHomepageMemberGroupManage" => "会員のグループ管理",
         "dispHomepageMemberManage" => "会員リスト",
         "dispHomepageTopMenu" => "基本メニュー 管理",
+        "dispHomepageComponent" => "기능 설정",
         "dispHomepageCounter" => "접속 통계",
         "dispHomepageMidSetup" => "モジュール詳細設定",
     );
@@ -54,6 +55,7 @@
         "dispHomepageMemberGroupManage" => "ホームページ内のグループを管理します。",
         "dispHomepageMemberManage" => "ホームページに登録されている会員を管理します。",
         "dispHomepageTopMenu" => "ホームページのヘッダー（header、上段）や左側などのメニューを管理します。",
+        "dispHomepageComponent" => "에디터 컴포넌트/ 애드온을 활성화 하거나 설정을 변경할 수 있습니다",
         "dispHomepageCounter" => "Cafe의 접속 현황을 볼 수 있습니다",
         "dispHomepageMidSetup" => "ホームページの掲示板、ページなどのモジュールを管理します。",
     );

@@ -122,5 +122,14 @@
             // unique 및 pageview 등록
             $this->insertUniqueVisitor($site_srl);
         }
+
+        /**
+         * @brief 특정 가상 사이트의 카운터 로그 삭제
+         **/
+        function deleteSiteCounterLogs($site_srl) {
+            $args->site_srl = $site_srl;
+            executeQuery('counter.deleteSiteCounter',$args);
+            executeQuery('counter.deleteSiteCounterLog',$args);
+        }
     }
 ?>

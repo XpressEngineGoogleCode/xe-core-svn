@@ -65,7 +65,8 @@
 
             // 애드온 실행 (모듈 실행 전)
             $called_position = 'before_module_init';
-            @include(_XE_PATH_."files/cache/activated_addons.cache.php");
+            $oAddonController = &getController('addon');
+            @include($oAddonController->getCacheFilePath());
         }
 
         /**

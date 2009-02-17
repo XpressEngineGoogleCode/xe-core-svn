@@ -269,13 +269,12 @@
 
             if(!file_exists($cache_file)) return new Object(-1, 'msg_invalid_queryid');
 
-            if($source_args) $args = clone($source_args);
+            if($source_args) $args = @clone($source_args);
 
             $output = @include($cache_file);
 
             if( (is_a($output, 'Object')||is_subclass_of($output,'Object'))&&!$output->toBool()) return $output;
             $output->_tables = ($output->_tables && is_array($output->_tables)) ? $output->_tables : array();
-
 
             // action값에 따라서 쿼리 생성으로 돌입
             switch($output->action) {
@@ -300,6 +299,7 @@
             else if(!is_a($output, 'Object') && !is_subclass_of($output, 'Object')) $output = new Object();
             $output->add('_query', $this->query);
             $output->add('_elapsed_time', sprintf("%0.5f",$this->elapsed_time));
+
             return $output;
         }
 

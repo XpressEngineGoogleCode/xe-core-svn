@@ -35,6 +35,7 @@
         "dispHomepageMemberGroupManage" => "Manage groups",
         "dispHomepageMemberManage" => "Member list",
         "dispHomepageTopMenu" => "Manage default menu",
+        "dispHomepageComponent" => "기능 설정",
         "dispHomepageCounter" => "접속 통계",
         "dispHomepageMidSetup" => "Module configuration",
     );
@@ -54,6 +55,7 @@
         "dispHomepageMemberGroupManage" => "You can manage groups used in this cafe.",
         "dispHomepageMemberManage" => "You can list up members registered and manage them.",
         "dispHomepageTopMenu" => "You can manage the default menus",
+        "dispHomepageComponent" => "에디터 컴포넌트/ 애드온을 활성화 하거나 설정을 변경할 수 있습니다",
         "dispHomepageCounter" => "Cafe의 접속 현황을 볼 수 있습니다",
         "dispHomepageMidSetup" => "You can configure modules, such as pages and boards, used in the cafe."
     );

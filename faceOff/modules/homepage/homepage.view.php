@@ -300,6 +300,22 @@
             // 표시
             $this->setTemplateFile('site_status');
         }
-    }
 
+        /**
+         * @brief 애드온/ 컴포넌트 설정
+         **/
+        function dispHomepageComponent() {
+            // 애드온 목록을 가져옴
+            $oAddonModel = &getAdminModel('addon');
+            $addon_list = $oAddonModel->getAddonList($this->site_srl);
+            Context::set('addon_list', $addon_list);
+
+            // 에디터 컴포넌트 목록을 가져옴
+            $oEditorModel = &getModel('editor');
+            Context::set('component_list', $oEditorModel->getComponentList(false, $this->site_srl));
+
+            // 표시
+            $this->setTemplateFile('components');
+        }
+    }
 ?>

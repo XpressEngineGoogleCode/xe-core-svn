@@ -35,7 +35,7 @@
             $oAddonController->doActivate('mobile');
             $oAddonController->doActivate('referer');
             $oAddonController->doActivate('resize_image');
-            $oAddonController->procAddonAdminToggleActivate();
+            $oAddonController->makeCacheFile(0);
             return new Object();
         }
 
@@ -43,6 +43,7 @@
          * @brief 설치가 이상이 없는지 체크하는 method
          **/
         function checkUpdate() {
+            if(file_exists($this->cache_file)) FileHandler::removeFile($this->cache_file);
             return false;
         }
 

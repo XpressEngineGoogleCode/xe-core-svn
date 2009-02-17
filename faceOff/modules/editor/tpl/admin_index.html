@@ -27,7 +27,7 @@
     </tr>
     <tr>
         <td>{nl2br($xml_info->description)}</td>
-        <td>
+        <td class="nowrap">
             <!--@foreach($xml_info->author as $author)-->
             <a href="{$author->homepage}" onclick="window.open(this.href);return false;">{$author->name}</a>
             <!--@endforeach-->
