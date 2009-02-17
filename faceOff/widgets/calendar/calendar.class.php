@@ -53,7 +53,9 @@
             $widget_info->start_week= date('w', ztime($obj->regdate));
 
             $widget_info->prev_month = date('Ym', mktime(1,0,0,zdate($obj->regdate,'m'),1,zdate($obj->regdate,'Y'))-60*60*24);
+            $widget_info->prev_year = date('Y', mktime(1,0,0,1,1,zdate($obj->regdate,'Y'))-60*60*24);
             $widget_info->next_month = date('Ym', mktime(1,0,0,zdate($obj->regdate,'m'),$widget_info->last_day,zdate($obj->regdate,'Y'))+60*60*24);
+            $widget_info->next_year = date('Y', mktime(1,0,0,12,$widget_info->last_day,zdate($obj->regdate,'Y'))+60*60*24);
 
             $widget_info->title = $title;
 

@@ -69,14 +69,20 @@
                 $last_args = null;
                 $last_args->module_srl = $module->module_srl;
                 $output = executeQuery('widgets.forum.getLatestComments', $last_args);
-                if($output->data && is_array($output->data)) $last_comment = array_pop($output->data);
+                if($output->data && is_array($output->data)) {
+                    $last_comment = array_pop($output->data);
+                    $last_comment->content_type = 'comment';
+                }
 
                 // 최근 등록된 글의 정보
                 $last_document = null;
                 $last_args = null;
                 $last_args->module_srl = $module->module_srl;
                 $output = executeQuery('widgets.forum.getLatestDocuments', $last_args);
-                if($output->data && is_array($output->data)) $last_document = array_pop($output->data);
+                if($output->data && is_array($output->data)) {
+                    $last_document = array_pop($output->data);
+                    $last_document->content_type = 'document';
+                }
 
                 $last_item = null;
                 if($last_comment && $last_document) {

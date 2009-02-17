@@ -23,7 +23,7 @@
 			<name xml:lang="jp">タイトル</name>
 			<name xml:lang="en">Title</name>
 			<name xml:lang="es">Título</name>
-			<nameml:lang="ru">Заголовок</name>
+			<name xml:lang="ru">Заголовок</name>
 			<name xml:lang="zh-TW">標題</name>
 			<description xml:lang="ko">최근 게시물의 제목으로 출력됩니다.</description>
 			<description xml:lang="zh-CN">显示为最新主题列表的标题。</description>
