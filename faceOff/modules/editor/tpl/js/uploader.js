@@ -266,6 +266,7 @@ function completeReloadFileList(ret_obj, response_tags, settings) {
     xAddEventListener(listObj,'click',previewFiles);
 }
 
+var img_loaded_check = Array();
 function previewFiles(evt, given_file_srl) {
     if(!given_file_srl) {
     var e = new xEvent(evt);
@@ -305,17 +306,29 @@ function previewFiles(evt, given_file_srl) {
     } else if(/\.(wmv|avi|mpg|mpeg|asx|asf|mp3)$/i.test(uploaded_filename)) {
         html = "<EMBED src=\""+uploaded_filename+"\" width=\"100%\" height=\"100%\" autostart=\"true\" Showcontrols=\"0\"></EMBED>";
 
-    // 이미지 파일의 경우 미리 로드시킴
+    // 이미지 파일의 경우
     } else if(/\.(jpg|jpeg|png|gif)$/i.test(uploaded_filename)) {
-        if(given_file_srl) {
-            var uploaded_obj = new Image();
-            uploaded_obj.src = uploaded_filename;
-            if(!uploaded_obj.width || !uploaded_obj.width) { previewFiles('', given_file_srl); }
-        }
         html = "<img src=\""+uploaded_filename+"\" border=\"0\" width=\"100%\" height=\"100%\" />";
-
     }
     xInnerHtml(previewAreaID, html);
+
+    // 이미지 파일중, 파일 목록 리로드시 불러오는 이미지는 미리 로드시킴, 로드시키는 이유는 이미지 가로/세로 크기를 얻기 위함. 로드 횟수는 4번을 초과하지 않게 (그 이상은 포기)
+    if(given_file_srl) {
+        var uploaded_obj = new Image();
+        uploaded_obj.src = uploaded_filename;
+        if(!uploaded_obj.width || !uploaded_obj.width) {
+            if(!img_loaded_check[given_file_srl]) {
+                img_loaded_check[given_file_srl] = 1;
+            }
+            else {
+                img_loaded_check[given_file_srl]++;
+            }
+
+            if(img_loaded_check[given_file_srl] < 5) {
+                previewFiles('', given_file_srl);
+            }
+        }
+    }
 }
 
 function removeUploadedFile(editorSequence) {
