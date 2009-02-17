@@ -585,6 +585,7 @@
 
             FileHandler::writeFile($cache_file, $buff, "w");
 
+            include($cache_file);
             return $xml_info;
         }
     }
