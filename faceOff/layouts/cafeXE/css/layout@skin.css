@@ -1,7 +1,7 @@
 @charset "utf-8";
 /* NHN > UIT Center > Open UI Technology Team > Jeong Chan Myeong(dece24@nhncorp.com) */
 
-#cafeXeParentBody{ margin:0; font-family:AppleGothic, Gulim, Sans-serif;}
+.cafeXe { margin:0; font-family:AppleGothic, Gulim, Sans-serif;}
 img.cafeXeImg{ border:0;}
 form.cafeXeForm{ margin:0;}
 fieldset.cafeXeFieldset{ border:0; padding:0; margin:0;}

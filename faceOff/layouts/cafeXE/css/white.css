@@ -1,7 +1,7 @@
 @charset "utf-8";
 /* NHN > UIT Center > Open UI Technology Team > Jeong Chan Myeong(dece24@nhncorp.com) */
 
-#cafeXeParentBody{ background:#fff;}
+.cafeXe { background:#fff;}
 
 /* Heading */
 #cafeXeHeader a.cafeXeA{ color:#999;}
