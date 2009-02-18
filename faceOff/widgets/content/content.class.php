@@ -16,9 +16,7 @@
          **/
 
         function proc($args) {
-
-
-        // 기본값으로 set
+            // 기본값으로 set
 
             // 정렬 대상
             if(!in_array($args->order_target, array('list_order','update_order'))) $args->order_target = 'list_order';
@@ -51,9 +49,6 @@
             // 썸네일 세로 크기
             if(!$args->thumbnail_height) $args->thumbnail_height = 75;
 
-
-
-
             // rss 인경우는 다르다
             if($args->content_type == 'rss'){
                 $args->rss_urls = array();
@@ -62,46 +57,23 @@
                     if($rss_urls[$i]) $args->rss_urls[] = $rss_urls[$i];
                 }
                 $args->mid_lists = array();
-            }else{
+            } else {
                 $oModuleModel = &getModel('module');
-                // 대상 모듈 (mid_list는 기존 위젯의 호환을 위해서 처리하는 루틴을 유지. module_srl로 위젯에서 변경)
-                if($args->mid_list) {
-                    $mid_list = explode(",",$args->mid_list);
-
-                    if(count($mid_list)) {
-                        $module_srl = $oModuleModel->getModuleSrlByMid($mid_list);
-                    } else {
-                        $site_module_info = Context::get('site_module_info');
-                        if($site_module_info) {
-                            $margs->site_srl = $site_module_info->site_srl;
-                            $oModuleModel = &getModel('module');
-                            $output = $oModuleModel->getMidList($margs);
-                            if(count($output)) $mid_list = array_keys($output);
-                            $module_srl = $oModuleModel->getModuleSrlByMid($mid_list);
-                        }
-                    }
-                } else {
-                    $module_srl = explode(',',$args->module_srls);
-                }
+                $module_srl = explode(',',$args->module_srls);
 
                 if(is_array($module_srl)) $args->module_srl = implode(',',$module_srl);
                 else $args->module_srl = $module_srl;
 
-
                 if(!$args->module_srls){
                     // 대상 모듈이 선택되어 있지 않으면 해당 사이트의 전체 모듈을 대상으로 함
                     $site_module_info = Context::get('site_module_info');
-                    if($site_module_info){
-                        $s_obj->site_srl = (int)$site_module_info->site_srl;
-                    }
+                    if($site_module_info->site_srl) $s_obj->site_srl = (int)$site_module_info->site_srl;
                 
                     $mid_list = $oModuleModel->getMidList($s_obj);
                     foreach($mid_list as $mid => $module){
                         $args->module_srl[] = $module->module_srl;
                     }
                 }
-
-
 
                 // 각 모듈의 정보를 가져온다
                 $selected_modules_info = $oModuleModel->getModulesInfo($args->module_srl);
@@ -116,27 +88,26 @@
             $option_view = array();
             $args->option_view_arr = explode(',',$args->option_view);
             switch($args->content_type){
-                default:
-                case 'document':
-                    $content_items = $this->getDocumentItems($args);
-                break;
                 case 'comment':
-                    $content_items = $this->getCommentItems($args);
-                break;
+                        $content_items = $this->getCommentItems($args);
+                    break;
                 case 'image':
-                    $content_items = $this->getImageItems($args);
-                break;
+                        $content_items = $this->getImageItems($args);
+                    break;
                 case 'rss':
-                    set_include_path("./libs/PEAR");
-                    require_once('PEAR.php');
-                    require_once('HTTP/Request.php');
-                    $content_items = $this->getRssItems($args);
-                break;
+                        set_include_path("./libs/PEAR");
+                        require_once('PEAR.php');
+                        require_once('HTTP/Request.php');
+                        $content_items = $this->getRssItems($args);
+                    break;
                 case 'trackback':
-                    $content_items = $this->getTrackbackItems($args);
-                break;
+                        $content_items = $this->getTrackbackItems($args);
+                    break;
+                case 'document':
+                default:
+                        $content_items = $this->getDocumentItems($args);
+                    break;
             }
-
 
             $output = $this->_complie($args,$content_items);
             return $output;
@@ -230,10 +201,11 @@
 
 
         function _getDocumentItems($args){
-            $obj->module_srl = $args->module_srl;
+            $obj->module_srl = implode(',',$args->module_srl);
             $obj->sort_index = 'documents.'.$args->order_target;
             $obj->order_type = $args->order_type=="desc"?"asc":"desc";
             $obj->list_count = $args->list_count * $args->page_count;
+            $obj->module_srl = implode(',',$args->module_srl);
 
             $output = executeQueryArray('widgets.content.getNewestDocuments', $obj);
 
@@ -311,7 +283,7 @@
         function _getCommentItems($args) {
 
             // CommentModel::getCommentList()를 이용하기 위한 변수 정리
-            $obj->module_srl = $args->module_srl;
+            $obj->module_srl = implode(',',$args->module_srl);
             $obj->sort_index = $args->order_target;
             $obj->list_count = $args->list_count;
 
@@ -369,7 +341,7 @@
 
         function _getImageItems($args) {
 
-            $obj->module_srl = $args->module_srl;
+            $obj->module_srl = implode(',',$args->module_srl);
             $obj->direct_download = 'Y';
             $obj->isvalid = 'Y';
             $oDocumentModel = &getModel('document');
@@ -567,7 +539,7 @@
         }
 
         function _getTrackbackItems($args){
-            $obj->module_srl = $args->module_srl;
+            $obj->module_srl = implode(',',$args->module_srl);
             $obj->sort_index = $args->order_target;
             $obj->list_count = $args->list_count;
 
