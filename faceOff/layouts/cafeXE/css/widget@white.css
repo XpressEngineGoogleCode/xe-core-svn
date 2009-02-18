@@ -50,6 +50,7 @@
 .widgetUlistB li .title .hour{ color:#888;}
 
 /* widgetOlistA */
+.widgetOlistA li,
 .widgetOlistA li a{ color:#666;}
 
 /* widgetDlistA */
@@ -169,8 +170,7 @@
 .widgetTabA li a{ color:#333;}
 
 /* widgetTabB */ 
-.widgetTabB li a{ color:#777;}
-.widgetTabB li.active a{ color:#b3b3b3;}
+.widgetTabB li a{ color:#333;}
 
 /* widgetTabC */
 .widgetTabC{ border-color:#e5e5e5;}
