@@ -59,10 +59,7 @@
                 $args->mid_lists = array();
             } else {
                 $oModuleModel = &getModel('module');
-                $module_srl = explode(',',$args->module_srls);
-
-                if(is_array($module_srl)) $args->module_srl = implode(',',$module_srl);
-                else $args->module_srl = $module_srl;
+                $args->module_srl = $args->module_srls;
 
                 if(!$args->module_srls){
                     // 대상 모듈이 선택되어 있지 않으면 해당 사이트의 전체 모듈을 대상으로 함
@@ -79,9 +76,11 @@
                 $selected_modules_info = $oModuleModel->getModulesInfo($args->module_srl);
                 $args->mid_lists = array();
                 $args->modules_info = array();
-                foreach($selected_modules_info as $key => $module_info){
-                    $args->modules_info[$module_info->mid] = $module_info;
-                    $args->mid_lists[$module_info->module_srl] = $module_info->mid;
+                if(count($selected_modules_info)) {
+                    foreach($selected_modules_info as $key => $module_info){
+                        $args->modules_info[$module_info->mid] = $module_info;
+                        $args->mid_lists[$module_info->module_srl] = $module_info->mid;
+                    }
                 }
             }
 
@@ -103,19 +102,18 @@
                 case 'trackback':
                         $content_items = $this->getTrackbackItems($args);
                     break;
-                case 'document':
                 default:
                         $content_items = $this->getDocumentItems($args);
                     break;
             }
 
-            $output = $this->_complie($args,$content_items);
+            $output = $this->_compile($args,$content_items);
             return $output;
 
         }
 
 
-        function _complie($args,$content_items){
+        function _compile($args,$content_items){
 
             // 위젯에 넘기기 위한 변수 설정
             $widget_info->modules_info = $args->modules_info;
@@ -201,11 +199,11 @@
 
 
         function _getDocumentItems($args){
-            $obj->module_srl = implode(',',$args->module_srl);
+            if(is_array($args->module_srl)) $obj->module_srl = implode(',',$args->module_srl);
+            else $obj->module_srl = $args->module_srl;
             $obj->sort_index = 'documents.'.$args->order_target;
             $obj->order_type = $args->order_type=="desc"?"asc":"desc";
             $obj->list_count = $args->list_count * $args->page_count;
-            $obj->module_srl = implode(',',$args->module_srl);
 
             $output = executeQueryArray('widgets.content.getNewestDocuments', $obj);
 
@@ -283,7 +281,8 @@
         function _getCommentItems($args) {
 
             // CommentModel::getCommentList()를 이용하기 위한 변수 정리
-            $obj->module_srl = implode(',',$args->module_srl);
+            if(is_array($args->module_srl)) $obj->module_srl = implode(',',$args->module_srl);
+            else $obj->module_srl = $args->module_srl;
             $obj->sort_index = $args->order_target;
             $obj->list_count = $args->list_count;
 
@@ -341,7 +340,8 @@
 
         function _getImageItems($args) {
 
-            $obj->module_srl = implode(',',$args->module_srl);
+            if(is_array($args->module_srl)) $obj->module_srl = implode(',',$args->module_srl);
+            else $obj->module_srl = $args->module_srl;
             $obj->direct_download = 'Y';
             $obj->isvalid = 'Y';
             $oDocumentModel = &getModel('document');
@@ -539,7 +539,8 @@
         }
 
         function _getTrackbackItems($args){
-            $obj->module_srl = implode(',',$args->module_srl);
+            if(is_array($args->module_srl)) $obj->module_srl = implode(',',$args->module_srl);
+            else $obj->module_srl = $args->module_srl;
             $obj->sort_index = $args->order_target;
             $obj->list_count = $args->list_count;
 
