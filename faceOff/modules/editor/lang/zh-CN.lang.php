@@ -129,7 +129,7 @@
 
     $lang->edit->upload = '上传';
     $lang->edit->upload_file = '上传附件';
-    $lang->edit->link_file = '插入内容';
+    $lang->edit->link_file = '插入附件';
     $lang->edit->delete_selected = '删除所选';
 
     $lang->edit->icon_align_article = '占一个段落';
