@@ -429,6 +429,7 @@
 
                 $output = $oModule->{$called_method}($obj);
                 if(!$output->toBool()) return $output;
+                unset($oModule);
             }
 
             return new Object();
