@@ -31,9 +31,6 @@
                 </a>
 
             <!--@else if($v=='title')-->
-
-
-
                 <a href="{$item->getLink()}" class="title">{$item->getTitle($widget_info->subject_cut_size)}</a>
                 <!--@if($widget_info->show_trackback_count=='Y' && $item->getCommentCount())-->
                     <sup class="replyNum">{$item->getCommentCount()}</sup>
@@ -60,8 +57,8 @@
 
 <!--@if($widget_info->page_count > 1 && $widget_info->list_count<$i)-->
     <ul class="widgetNavigator">
-        <li><button type="button" class="prev" title="{$lang->cmd_prev}" onclick="content_widget_prev(jQuery(this).parents('ul.widgetNavigator').prev('ul.widgetGallery'),{$widget_info->list_count})"><span>{$lang->cmd_prev}</span></button></li>
-        <li><button type="button" class="next" title="{$lang->cmd_next}" onclick="content_widget_next(jQuery(this).parents('ul.widgetNavigator').prev('ul.widgetGallery'),{$widget_info->list_count})"><span>{$lang->cmd_next}</span></button></li>
+        <li><button type="button" class="prev" title="{$lang->cmd_prev}" onclick="content_widget_prev(jQuery(this).parents('ul.widgetNavigator').prev('ul.widgetGalleryA'),{$widget_info->list_count})"><span>{$lang->cmd_prev}</span></button></li>
+        <li><button type="button" class="next" title="{$lang->cmd_next}" onclick="content_widget_next(jQuery(this).parents('ul.widgetNavigator').prev('ul.widgetGalleryA'),{$widget_info->list_count})"><span>{$lang->cmd_next}</span></button></li>
     </ul>
 <!--@end-->
 </div>
