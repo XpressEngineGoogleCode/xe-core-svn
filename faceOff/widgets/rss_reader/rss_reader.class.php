@@ -7,7 +7,6 @@
 
     set_include_path("./libs/PEAR");
     require_once('PEAR.php');
-    require_once('HTTP/Request.php');
 
     class rss_reader extends WidgetHandler {
         /**
@@ -27,31 +26,8 @@
             $URL_parsed = parse_url($args->rss_url);
             if(strpos($URL_parsed["host"],'naver.com')) $args->rss_url = iconv('UTF-8', 'euc-kr', $args->rss_url);
             $args->rss_url = str_replace(array('%2F','%3F','%3A','%3D','%3B','%26'),array('/','?',':','=',';','&'),urlencode($args->rss_url));
-            $URL_parsed = parse_url($args->rss_url);
-
-            $host = $URL_parsed["host"];
-            $port = $URL_parsed["port"];
-
-            if ($port == 0) $port = 80;
-
-            $path = $URL_parsed["path"];
-
-            if ($URL_parsed["query"] != '') $path .= "?".$URL_parsed["query"];
-
-            $oReqeust = new HTTP_Request($args->rss_url);
-            $oReqeust->addHeader('Content-Type', 'application/xml');
-            $oReqeust->setMethod('GET');
-
-            $user = $URL_parsed["user"];
-            $pass = $URL_parsed["pass"];
-
-            if($user) $oReqeust->setBasicAuth($user, $pass);
-
-            $oResponse = $oReqeust->sendRequest();
-            if (PEAR::isError($oResponse)) {
-                return new Object(-1, 'msg_fail_to_request_open');
-            }
-            $buff = $oReqeust->getResponseBody();
+            
+            $buff = file_get_contents($args->rss_url);
             $encoding = preg_match("/<\?xml.*encoding=\"(.+)\".*\?>/i", $buff, $matches);
             if($encoding && !preg_match("/UTF-8/i", $matches[1])) $buff = trim(iconv($matches[1]=="ks_c_5601-1987"?"EUC-KR":$matches[1], "UTF-8", $buff));
 
