@@ -454,8 +454,8 @@
 
             if($width!=96&&$height!=96) {
                 $filename = sprintf('%s%d.%d.%d.jpg', $path, $module_srl, $width, $height); 
-                if(!file_exists($filename) && FileHandler::createImageFile($source_filename, $filename, $width, $height)) {
-		    $source_filename = $filename;
+                if(!file_exists($filename) || filemtime($source_filename)>filemtime($filename)) {
+                    if(FileHandler::createImageFile($source_filename, $filename, $width, $height)) $source_filename = $filename;
                 }
             } else {
                 $filename = $source_filename;
