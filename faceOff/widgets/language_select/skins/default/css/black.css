@@ -5,3 +5,6 @@
 .widgetLanguage #language{ display:none; position:absolute; margin:0; padding:0;}
 .widgetLanguage #language li{ list-style:none;}
 .widgetLanguage #language li a{ font-size:12px; display:block; padding:2px 5px;}
+.widgetLanguage p a{ color:#b3b3b3;}
+.widgetLanguage #language{ background:#fff; border:1px solid #ccc;}
+.widgetLanguage #language a{ color:#333;}
