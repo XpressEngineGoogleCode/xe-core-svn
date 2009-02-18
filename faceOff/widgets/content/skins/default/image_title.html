@@ -1,0 +1,70 @@
+<!--%import("css/widget.css")-->
+
+<!--@if($colorset=="white"||!$colorset)-->
+    <!--%import("css/white.css")-->
+<!--@elseif($colorset=='black')-->
+    <!--%import("css/black.css")-->
+<!--@end-->
+
+<!--%import("js/content_widget.js")-->
+<div class="widgetContainer">
+{@$have_first_thumbnail=null}
+<!--@if(count($widget_info->content_items) > 0 && $widget_info->content_items[0]->getFirstThumbnailIndex())-->
+    {@$have_first_thumbnail=true}
+    <p class="widgetThumb floatLeft" style="margin-right:-{$widget_info->thumbnail_width}px">
+        <a href="#" class="thumb"><img src="{$widget_info->content_items[$widget_info->content_items[0]->getFirstThumbnailIndex()]->getThumbnail()}" style="width:{$widget_info->thumbnail_width}px;height:{$widget_info->thumbnail_height}px"></a>
+    </p>
+<!--@end-->
+
+<div<!--@if($have_first_thumbnail)--> style="padding-left:{$widget_info->thumbnail_width+10}px"<!--@end-->>
+    <table class="widgetTableA" border="1" cellspacing="0">
+        <tbody>
+{@$i=0}
+<!--@foreach($widget_info->content_items as $key => $item)-->
+        <tr<!--@if($i >= $widget_info->list_count)--> style="display:none"<!--@end-->>
+<!--@foreach($widget_info->option_view_arr as $k => $v)-->
+    <!--@if($v=='title')-->
+        <td class="title">
+
+            <!--@if($widget_info->show_browser_title=='Y' && $item->getBrowserTitle())-->
+                <strong class="board">{$item->getBrowserTitle()}</strong>
+            <!--@end-->
+
+            <!--@if($widget_info->show_category=='Y' && $item->getCategory())-->
+                <strong class="category">{$item->getCategory()}</strong>
+            <!--@end-->
+
+            <a href="{$item->getLink()}">{$item->getTitle($widget_info->subject_cut_size)}</a>
+
+            <!--@if($widget_info->show_trackback_count=='Y' && $item->getCommentCount())-->
+                <sup class="replyNum">{$item->getCommentCount()}</sup>
+            <!--@end-->
+
+            <!--@if($widget_info->show_trackback_count=='Y' && $item->getTrackbackCount())-->
+                <sup class="trackbackNum">{$item->getTrackbackCount()}</sup>
+            <!--@end-->
+
+            <!--@if($widget_info->show_icon=='Y')-->
+                <span class="icon">{$item->printExtraImages()}<span></td>
+            <!--@end-->
+
+    <!--@else if($v=='nickname')-->
+        <td class="author"><a href="#">{$item->getNickName()}</a></td>
+    <!--@else if($v=='regdate')-->
+        <td class="time"><span class="date">{$item->getRegdate("Y-m-d")}</span> <span class="hour">{$item->getRegdate("H:i")}</span></td>
+    <!--@end-->
+<!--@end-->
+        </tr>
+{@$i++}
+<!--@end-->
+        </tbody>
+    </table>
+</div>
+
+<!--@if($widget_info->page_count > 1 && $widget_info->list_count<$i)-->
+    <ul class="widgetNavigator">
+        <li><button type="button" class="prev" title="{$lang->cmd_prev}" onclick="content_widget_prev(jQuery(this).parents('ul.widgetNavigator').prev('div').children('table.widgetTableA'),{$widget_info->list_count})"><span>{$lang->cmd_prev}</span></button></li>
+        <li><button type="button" class="next" title="{$lang->cmd_next}" onclick="content_widget_next(jQuery(this).parents('ul.widgetNavigator').prev('div').children('table.widgetTableA'),{$widget_info->list_count})"><span>{$lang->cmd_next}</span></button></li>
+    </ul>
+<!--@end-->
+</div>
