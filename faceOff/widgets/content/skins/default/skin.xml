@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <skin version="0.2">
-    <title xml:lang="ko">콘탠트 기본 스킨</title>
-    <description xml:lang="ko">콘탠트 기본 스킨 입니다.
+    <title xml:lang="ko">Content 위젯 기본 스킨</title>
+    <description xml:lang="ko">Content 위젯 기본 스킨 입니다.
     Html/Publish: 정찬명
-    Design :
-    기타 : SOL
+    Design : mada
+    Programming : SOL
     </description>
     <version>0.1</version>
     <date>2009-02-10</date>
