@@ -22,12 +22,16 @@
 
             // 날짜 형태
             $DATE_FORMAT = $args->date_format ? $args->date_format : "Y-m-d H:i:s";
+            
+            // request rss
             $args->rss_url = Context::convertEncodingStr($args->rss_url);
             $URL_parsed = parse_url($args->rss_url);
             if(strpos($URL_parsed["host"],'naver.com')) $args->rss_url = iconv('UTF-8', 'euc-kr', $args->rss_url);
             $args->rss_url = str_replace(array('%2F','%3F','%3A','%3D','%3B','%26'),array('/','?',':','=',';','&'),urlencode($args->rss_url));
             
             $buff = file_get_contents($args->rss_url);
+            if(!$buff) return new Object(-1, 'msg_fail_to_request_open');
+            
             $encoding = preg_match("/<\?xml.*encoding=\"(.+)\".*\?>/i", $buff, $matches);
             if($encoding && !preg_match("/UTF-8/i", $matches[1])) $buff = trim(iconv($matches[1]=="ks_c_5601-1987"?"EUC-KR":$matches[1], "UTF-8", $buff));
 
@@ -35,11 +39,11 @@
 
             $oXmlParser = new XmlParser();
             $xml_doc = $oXmlParser->parse($buff);
-
             $rss->title = $xml_doc->rss->channel->title->body;
             $rss->link = $xml_doc->rss->channel->link->body;
 
             $items = $xml_doc->rss->channel->item;
+            
             if(!$items) return; 
             if($items && !is_array($items)) $items = array($items);
 
