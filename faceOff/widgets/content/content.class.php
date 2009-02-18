@@ -16,10 +16,9 @@
          **/
 
         function proc($args) {
-            // 기본값으로 set
-
             // 정렬 대상
             if(!in_array($args->order_target, array('list_order','update_order'))) $args->order_target = 'list_order';
+
             // 정렬 순서
             if(!in_array($args->order_type, array('asc','desc'))) $args->order_type = 'asc';
 
@@ -37,81 +36,406 @@
 
             // 제목 길이 자르기
             if(!$args->subject_cut_size) $args->subject_cut_size = 0;
+
             // 내용 길이 자르기
             if(!$args->content_cut_size) $args->content_cut_size = 100;
 
             // 최근 글 표시 시간
             if(!$args->duration_new) $args->duration_new = 12;
+
             // 썸네일 생성 방법
             if(!$args->thumbnail_type) $args->thumbnail_type = 'crop';
+
             // 썸네일 가로 크기
             if(!$args->thumbnail_width) $args->thumbnail_width = 100;
+
             // 썸네일 세로 크기
             if(!$args->thumbnail_height) $args->thumbnail_height = 75;
+            
+            // 보기 옵션
+            $args->option_view_arr = explode(',',$args->option_view);
 
-            // rss 인경우는 다르다
+            // 내부적으로 쓰이는 변수 설정
+            $oModuleModel = &getModel('module');
+            $module_srls = $args->modules_info = $args->module_srls_info = $args->mid_lists = array();
+            $site_module_info = Context::get('site_module_info');
+
+            // rss 인 경우 URL정리
             if($args->content_type == 'rss'){
                 $args->rss_urls = array();
                 $rss_urls = array_unique(array($args->rss_url0,$args->rss_url1,$args->rss_url2,$args->rss_url3,$args->rss_url4));
                 for($i=0,$c=count($rss_urls);$i<$c;$i++) {
                     if($rss_urls[$i]) $args->rss_urls[] = $rss_urls[$i];
                 }
-                $args->mid_lists = array();
+
+            // rss가 아닌 XE모듈일 경우 모듈 번호 정리 후 모듈 정보 구함
             } else {
-                $oModuleModel = &getModel('module');
-                $args->module_srl = $args->module_srls;
 
+                // 대상 모듈이 선택되어 있지 않으면 해당 사이트의 전체 모듈을 대상으로 함
                 if(!$args->module_srls){
-                    // 대상 모듈이 선택되어 있지 않으면 해당 사이트의 전체 모듈을 대상으로 함
-                    $site_module_info = Context::get('site_module_info');
-                    if($site_module_info->site_srl) $s_obj->site_srl = (int)$site_module_info->site_srl;
-                
-                    $mid_list = $oModuleModel->getMidList($s_obj);
-                    foreach($mid_list as $mid => $module){
-                        $args->module_srl[] = $module->module_srl;
+                    unset($obj);
+                    $obj->site_srl = (int)$site_module_info->site_srl;
+                    $output = executeQueryArray('widgets.content.getMids', $obj);
+                    if($output->data) {
+                        foreach($output->data as $key => $val) {
+                            $args->modules_info[$val->mid] = $val;
+                            $args->module_srls_info[$val->module_srl] = $val;
+                            $args->mid_lists[$val->module_srl] = $val->mid;
+                            $module_srls[] = $val->module_srl;
+                        }
+                    }
+
+                    $args->modules_info = $oModuleModel->getMidList($obj);
+                // 대상 모듈이 선택되어 있으면 해당 모듈만 추출
+                } else {
+                    unset($obj);
+                    $obj->module_srls = $args->module_srls;
+                    $output = executeQueryArray('widgets.content.getMids', $obj);
+                    if($output->data) {
+                        foreach($output->data as $key => $val) {
+                            $args->modules_info[$val->mid] = $val;
+                            $args->module_srls_info[$val->module_srl] = $val;
+                            $args->mid_lists[$val->module_srl] = $val->mid;
+                            $module_srls[] = $val->module_srl;
+                        }
                     }
                 }
 
-                // 각 모듈의 정보를 가져온다
-                $selected_modules_info = $oModuleModel->getModulesInfo($args->module_srl);
-                $args->mid_lists = array();
-                $args->modules_info = array();
-                if(count($selected_modules_info)) {
-                    foreach($selected_modules_info as $key => $module_info){
-                        $args->modules_info[$module_info->mid] = $module_info;
-                        $args->mid_lists[$module_info->module_srl] = $module_info->mid;
-                    }
-                }
+                // 아무런 모듈도 검색되지 않았다면 종료
+                if(!count($args->modules_info)) return Context::get('msg_not_founded');
+                $args->module_srl = implode(',',$module_srls);
             }
 
-            $option_view = array();
-            $args->option_view_arr = explode(',',$args->option_view);
-            switch($args->content_type){
-                case 'comment':
-                        $content_items = $this->getCommentItems($args);
-                    break;
-                case 'image':
-                        $content_items = $this->getImageItems($args);
-                    break;
-                case 'rss':
-                        set_include_path("./libs/PEAR");
-                        require_once('PEAR.php');
-                        require_once('HTTP/Request.php');
-                        $content_items = $this->getRssItems($args);
-                    break;
-                case 'trackback':
-                        $content_items = $this->getTrackbackItems($args);
-                    break;
-                default:
-                        $content_items = $this->getDocumentItems($args);
-                    break;
+            /**
+             * 컨텐츠 추출, 게시글/댓글/엮인글/RSS등 다양한 요소가 있어서 각 method를 따로 만듬
+             **/
+            // tab 형태
+            if($args->tab_type == 'none' || $args->tab_type == '') {
+                switch($args->content_type){
+                    case 'comment':
+                            $content_items = $this->_getCommentItems($args);
+                        break;
+                    case 'image':
+                            $content_items = $this->_getImageItems($args);
+                        break;
+                    case 'rss':
+                            $content_items = $this->getRssItems($args);
+                        break;
+                    case 'trackback':
+                            $content_items = $this->_getTrackbackItems($args);
+                        break;
+                    default:
+                            $content_items = $this->_getDocumentItems($args);
+                        break;
+                }
+            // tab 형태가 아닐 경우
+            } else {
+                $content_items = array();
+
+                switch($args->content_type){
+                    case 'comment':
+                            foreach($args->mid_lists as $module_srl => $mid){
+                                $args->module_srl = $module_srl;
+                                $content_items[$module_srl] = $this->_getCommentItems($args);
+                            }
+                        break;
+                    case 'image':
+                            foreach($args->mid_lists as $module_srl => $mid){
+                                $args->module_srl = $module_srl;
+                                $content_items[$module_srl] = $this->_getImageItems($args);
+                            }
+                        break;
+                    case 'rss':
+                            $content_items = $this->getRssItems($args);
+                        break;
+                    case 'trackback':
+                            foreach($args->mid_lists as $module_srl => $mid){
+                                $args->module_srl = $module_srl;
+                                $content_items[$module_srl] = $this->_getTrackbackItems($args);
+                            }
+                        break;
+                    default:
+                            foreach($args->mid_lists as $module_srl => $mid){
+                                $args->module_srl = $module_srl;
+                                $content_items[$module_srl] = $this->_getDocumentItems($args);
+                            }
+                        break;
+                }
             }
 
             $output = $this->_compile($args,$content_items);
             return $output;
-
         }
 
+        /**
+         * @brief 댓글 목록을 추출하여 contentItem으로 return
+         **/
+        function _getCommentItems($args) {
+            // CommentModel::getCommentList()를 이용하기 위한 변수 정리
+            $obj->module_srl = $args->module_srl;
+            $obj->sort_index = $args->order_target;
+            $obj->list_count = $args->list_count;
+
+            // comment 모듈의 model 객체를 받아서 getCommentList() method를 실행
+            $oCommentModel = &getModel('comment');
+            $output = $oCommentModel->getNewestCommentList($obj);
+
+            $content_items = array();
+
+            if(!count($output)) return;
+
+            foreach($output as $key => $oComment) {
+                $attribute = $oComment->getObjectVars();
+                $title = $oComment->getSummary($args->content_cut_size);
+                $thumbnail = $oComment->getThumbnail($args->thumbnail_width,$args->thumbnail_height,$args->thumbnail_type);
+                $url = sprintf("%s#comment_%s",getUrl('','document_srl',$oComment->get('document_srl')),$oComment->get('comment_srl'));
+
+                $attribute->mid = $args->mid_lists[$attribute->module_srl];
+                $browser_title = $args->module_srls_info[$attribute->module_srl]->browser_title;
+
+                $content_item = new contentItem($browser_title);
+                $content_item->adds($attribute);
+                $content_item->setTitle($title);
+                $content_item->setThumbnail($thumbnail);
+                $content_item->setLink($url);
+                $content_items[] = $content_item;
+            }
+
+            return $content_items;
+        }
+        function _getDocumentItems($args){
+            // document 모듈의 model 객체를 받아서 결과를 객체화 시킴
+            $oDocumentModel = &getModel('document');
+
+            // 분류 구함
+            $output = executeQueryArray('widgets.content.getCategories',$obj);
+            if($output->toBool() && $output->data) {
+                foreach($output->data as $key => $val) {
+                    $category_lists[$val->module_srl][] = $val;
+                }
+            }
+
+            // 글 목록을 구함
+            $obj->module_srl = $args->module_srl;
+            $obj->sort_index = $args->order_target;
+            $obj->order_type = $args->order_type=="desc"?"asc":"desc";
+            $obj->list_count = $args->list_count * $args->page_count;
+            $output = executeQueryArray('widgets.content.getNewestDocuments', $obj);
+            if(!$output->toBool() || !$output->data) return;
+
+            // 결과가 있으면 각 문서 객체화를 시킴
+            $content_items = array();
+            $first_thumbnail_item = null;
+            if(count($output->data)) {
+                foreach($output->data as $key => $attribute) {
+                    $category = $category_lists[$attribute->module_srl][$attribute->category_srl]->title;
+                    $browser_title = $args->module_srls_info[$attribute->module_srl]->browser_title;
+
+                    $oDocument = new documentItem();
+                    $oDocument->setAttribute($attribute);
+                    $content = $oDocument->getSummary($args->content_cut_size);
+                    $url = sprintf("%s#%s",$oDocument->getPermanentUrl() ,$oDocument->getCommentCount());
+                    $thumbnail = $oDocument->getThumbnail($args->thumbnail_width,$args->thumbnail_height,$args->thumbnail_type);
+                    $extra_images = $oDocument->printExtraImages($args->duration_new);
+
+                    $content_item = new contentItem($browser_title);
+                    $content_item->adds($attribute);
+                    $content_item->setCategory($category);
+                    $content_item->setContent($content);
+                    $content_item->setLink($url);
+                    $content_item->setThumbnail($thumbnail);
+                    if(is_null($first_thumbnail_item) && $thumbnail) $first_thumbnail_item = $key;
+                    $content_item->setExtraImages($extra_images);
+                    $content_items[] = $content_item;
+                }
+
+                $content_items[0]->setFirstThumbnailIndex($first_thumbnail_item);
+            }
+            return $content_items;
+        }
+        function _getImageItems($args) {
+            $oDocumentModel = &getModel('document');
+
+            $obj->module_srl = $args->module_srl;
+            $obj->direct_download = 'Y';
+            $obj->isvalid = 'Y';
+
+            // 분류 구함
+            $output = executeQueryArray('widgets.content.getCategories',$obj);
+            if($output->toBool() && $output->data) {
+                foreach($output->data as $key => $val) {
+                    $category_lists[$val->module_srl][] = $val;
+                }
+            }
+
+            // 정해진 모듈에서 문서별 파일 목록을 구함
+            $obj->list_count = $args->list_count;
+            $files_output = executeQueryArray("file.getOneFileInDocument", $obj);
+            $files_count = count($files_output->data);
+            if(!$files_count) return;
+
+            $content_items = array();
+
+            for($i=0;$i<$files_count;$i++) $document_srl_list[] = $files_output->data[$i]->document_srl;
+
+            $tmp_document_list = $oDocumentModel->getDocuments($document_srl_list);
+
+            if(!count($tmp_document_list)) return;
+
+            foreach($tmp_document_list as $oDocument){
+                $browser_title = $args->module_srls_info[$attribute->module_srl]->browser_title;
+                $category = $category_lists[$attribute->module_srl]->text;
+                $attribute = $oDocument->getObjectVars();
+                $content = $oDocument->getSummary($args->content_cut_size);
+                $url = sprintf("%s#%s",$oDocument->getPermanentUrl() ,$oDocument->getCommentCount());
+                $thumbnail = $oDocument->getThumbnail($args->thumbnail_width,$args->thumbnail_height,$args->thumbnail_type);
+                $extra_images = $oDocument->printExtraImages($args->duration_new);
+
+                $content_item = new contentItem($browser_title);
+                $content_item->adds($attribute);
+                $content_item->setCategory($category);
+                $content_item->setContent($content);
+                $content_item->setLink($url);
+                $content_item->setThumbnail($thumbnail);
+                $content_item->setExtraImages($extra_images);
+                $content_items[] = $content_item;
+            }
+
+            return $content_items;
+        }
+
+        function getRssItems($args){
+            set_include_path("./libs/PEAR");
+            require_once('PEAR.php');
+            require_once('HTTP/Request.php');
+
+            $content_items = array();
+            $args->mid_lists = array();
+
+            foreach($args->rss_urls as $key => $rss){
+                $args->rss_url = $rss;
+                $content_item = $this->_getRssItems($args);
+                if(count($content_item) > 0){
+                    $browser_title = $content_item[0]->getBrowserTitle();
+                    $args->mid_lists[] = $browser_title;
+                    $content_items[] = $content_item;
+                }
+            }
+
+            // 탭 형태가 아닐 경우
+            if($args->tab_type == 'none' || $args->tab_type == ''){
+                $items = array();
+                foreach($content_items as $key => $val){
+                    foreach($val as $k => $v){
+                        $date = $v->get('regdate');
+                        $i=0;
+                        while(array_key_exists(sprintf('%s%02d',$date,$i), $items)) $i++;
+                        $items[sprintf('%s%02d',$date,$i)] = $v;
+                    }
+                }
+                if($args->order_type =='asc') ksort($items);
+                else krsort($items);
+                $content_items = array_slice(array_values($items),0,$args->list_count);
+
+            // 탭 형태
+            } else {
+                foreach($content_items as $key=> $content_item_list){
+                    $items = array();
+                    foreach($content_item_list as $k => $content_item){
+                        $date = $content_item->get('regdate');
+                        $i=0;
+                        while(array_key_exists(sprintf('%s%02d',$date,$i), $items)) $i++;
+                        $items[sprintf('%s%02d',$date,$i)] = $content_item;
+                    }
+                    if($args->order_type =='asc') ksort($items);
+                    else krsort($items);
+
+                    $content_items[$key] = array_values($items);
+                }
+            }
+            return $content_items;
+        }
+
+        function _getRssItems($args){
+            // 날짜 형태
+            $DATE_FORMAT = $args->date_format ? $args->date_format : "Y-m-d H:i:s";
+
+            // request rss
+            $args->rss_url = Context::convertEncodingStr($args->rss_url);
+            $URL_parsed = parse_url($args->rss_url);
+            if(strpos($URL_parsed["host"],'naver.com')) $args->rss_url = iconv('UTF-8', 'euc-kr', $args->rss_url);
+            $args->rss_url = str_replace(array('%2F','%3F','%3A','%3D','%3B','%26'),array('/','?',':','=',';','&'),urlencode($args->rss_url));
+            
+            $buff = file_get_contents($args->rss_url);
+            if(!$buff) return new Object(-1, 'msg_fail_to_request_open');
+            
+            $encoding = preg_match("/<\?xml.*encoding=\"(.+)\".*\?>/i", $buff, $matches);
+            if($encoding && !preg_match("/UTF-8/i", $matches[1])) $buff = trim(iconv($matches[1]=="ks_c_5601-1987"?"EUC-KR":$matches[1], "UTF-8", $buff));
+
+            $buff = preg_replace("/<\?xml.*\?>/i", "", $buff);
+
+            $oXmlParser = new XmlParser();
+            $xml_doc = $oXmlParser->parse($buff);
+            $rss->title = $xml_doc->rss->channel->title->body;
+            $rss->link = $xml_doc->rss->channel->link->body;
+
+            $items = $xml_doc->rss->channel->item;
+
+            if(!$items) return;
+            if($items && !is_array($items)) $items = array($items);
+
+            $content_items = array();
+
+            foreach ($items as $key => $value) {
+                if($key >= $args->list_count * $args->page_count) break;
+                unset($item);
+
+                foreach($value as $key2 => $value2) {
+                    if(is_array($value2)) $value2 = array_shift($value2);
+                    $item->{$key2} = $value2->body;
+                }
+
+                $content_item = new contentItem($rss->title);
+                $content_item->setContentsLink($rss->link);
+                $content_item->setTitle($item->title);
+                $content_item->setNickName(max($item->author,$item->{'dc:creator'}));
+                $content_item->setCategory($item->category);
+                $item->description = preg_replace('!<a href=!is','<a onclick="window.open(this.href);return false" href=', $item->description);
+                $content_item->setContent($item->description);
+                $content_item->setLink($item->link);
+                $date = date('YmdHis', strtotime(max($item->pubdate,$item->pubDate,$item->{'dc:date'})));
+                $content_item->setRegdate($date);
+
+                $content_items[] = $content_item;
+            }
+            return $content_items;
+        }
+
+        function _getTrackbackItems($args){
+            $obj->module_srl = $args->module_srl;
+            $obj->sort_index = $args->order_target;
+            $obj->list_count = $args->list_count;
+
+            // trackback 모듈의 model 객체를 받아서 getTrackbackList() method를 실행
+            $oTrackbackModel = &getModel('trackback');
+            $output = $oTrackbackModel->getNewestTrackbackList($obj);
+
+            // 오류가 생기면 그냥 무시
+            if(!$output->toBool() || !$output->data) return;
+
+            // 결과가 있으면 각 문서 객체화를 시킴
+            $content_items = array();
+            foreach($output->data as $key => $item) {
+                $content_item = new contentItem();
+                $content_item->setTitle($item->title);
+                $content_item->setNickName($item->blog_name);
+                $content_item->setContent($item->excerpt);
+                $content_item->setLink($item->url);
+                $content_item->setRegdate($item->regdate);
+                $content_items[] = $content_item;
+            }
+            return $content_items;
+        }
 
         function _compile($args,$content_items){
 
@@ -178,403 +502,7 @@
             return $output;
         }
 
-
-        // 최근글
-        function getDocumentItems($args) {
-            // 탭형태가 아니다
-            if($args->tab_type == 'none' || $args->tab_type == ''){
-                $content_items = $this->_getDocumentItems($args);
-            }else{
-                $content_items = array();
-                foreach($args->mid_lists as $module_srl => $mid){
-                    $args->module_srl = $module_srl;
-                    $content_items[$module_srl] = $this->_getDocumentItems($args);
-                }
-
-            }
-
-            return $content_items;
-        }
-
-
-
-        function _getDocumentItems($args){
-            if(is_array($args->module_srl)) $obj->module_srl = implode(',',$args->module_srl);
-            else $obj->module_srl = $args->module_srl;
-            $obj->sort_index = 'documents.'.$args->order_target;
-            $obj->order_type = $args->order_type=="desc"?"asc":"desc";
-            $obj->list_count = $args->list_count * $args->page_count;
-
-            $output = executeQueryArray('widgets.content.getNewestDocuments', $obj);
-
-            // 오류가 생기면 그냥 무시
-            if(!$output->toBool()) return;
-
-            // document 모듈의 model 객체를 받아서 결과를 객체화 시킴
-            $oDocumentModel = &getModel('document');
-
-            // 분류를 먼저 구하자
-            $category_lists = array();
-            foreach($args->mid_lists as $module_srl => $mid){
-                $category_lists[$module_srl] = $oDocumentModel->getCategoryList($module_srl);
-            }
-
-            // 결과가 있으면 각 문서 객체화를 시킴
-            $content_items = array();
-            $first_thumbnail_item = null;
-            if(count($output->data)) {
-                foreach($output->data as $key => $attribute) {
-
-                    $oDocument = new documentItem();
-                    $oDocument->setAttribute($attribute);
-
-                    $browser_title = $args->modules_info[$attribute->mid]->browser_title;
-                    $content_item = new contentItem($browser_title);
-
-                    // 기본 set
-                    $content_item->adds($attribute);
-
-                    // 분류
-                    $category = $category_lists[$attribute->module_srl][$attribute->category_srl]->text;
-                    $content_item->setCategory($category);
-
-                    $content = $oDocument->getSummary($args->content_cut_size);
-                    $content_item->setContent($content);
-
-                    // 링크
-                    $url = sprintf("%s#%s",$oDocument->getPermanentUrl() ,$oDocument->getCommentCount());
-                    $content_item->setLink($url);
-
-                    //섬네일
-                    $thumbnail = $oDocument->getThumbnail($args->thumbnail_width,$args->thumbnail_height,$args->thumbnail_type);
-                    $content_item->setThumbnail($thumbnail);
-                    if(is_null($first_thumbnail_item) && $thumbnail) $first_thumbnail_item = $key;
-
-                    // 아이콘이미지
-                    $extra_images = $oDocument->printExtraImages($args->duration_new);
-                    $content_item->setExtraImages($extra_images);
-
-                    $content_items[] = $content_item;
-                }
-
-                $content_items[0]->setFirstThumbnailIndex($first_thumbnail_item);
-            }
-            return $content_items;
-        }
-
-        // 댓글
-        function getCommentItems($args) {
-
-            // 탭형태가 아니다
-            if($args->tab_type == 'none' || $args->tab_type == ''){
-                $content_items = $this->_getCommentItems($args);
-            }else{
-                $content_items = array();
-                foreach($args->mid_lists as $module_srl => $mid){
-                    $args->module_srl = $module_srl;
-                    $content_items[$module_srl] = $this->_getCommentItems($args);
-                }
-            }
-            return $content_items;
-        }
-
-        function _getCommentItems($args) {
-
-            // CommentModel::getCommentList()를 이용하기 위한 변수 정리
-            if(is_array($args->module_srl)) $obj->module_srl = implode(',',$args->module_srl);
-            else $obj->module_srl = $args->module_srl;
-            $obj->sort_index = $args->order_target;
-            $obj->list_count = $args->list_count;
-
-            // comment 모듈의 model 객체를 받아서 getCommentList() method를 실행
-            $oCommentModel = &getModel('comment');
-            $output = $oCommentModel->getNewestCommentList($obj);
-            $content_items = array();
-
-            if(count($output)) {
-                foreach($output as $key => $oComment) {
-
-                    $attribute = $oComment->getObjectVars();
-
-                    $attribute->mid = $args->mid_lists[$attribute->module_srl];
-                    $browser_title = $args->modules_info[$attribute->mid]->browser_title;
-
-                    $content_item = new contentItem($browser_title);
-
-                    // 기본 set
-                    $content_item->adds($attribute);
-
-                    // 제목
-                    $title = $oComment->getSummary($args->content_cut_size);
-                    $content_item->setTitle($title);
-
-                    //섬네일
-                    $thumbnail = $oComment->getThumbnail($args->thumbnail_width,$args->thumbnail_height,$args->thumbnail_type);
-                    $content_item->setThumbnail($thumbnail);
-
-                    // 링크
-                    $url = sprintf("%s#comment_%s",getUrl('','document_srl',$oComment->get('document_srl')),$oComment->get('comment_srl'));
-                    $content_item->setLink($url);
-
-                    $content_items[] = $content_item;
-                }
-            }
-
-            return $content_items;
-        }
-
-        // 이미지
-        function getImageItems($args) {
-            // 탭형태가 아니다
-            if($args->tab_type == 'none' || $args->tab_type == ''){
-                $content_items = $this->_getImageItems($args);
-            }else{
-                $content_items = array();
-                foreach($args->mid_lists as $module_srl => $mid){
-                    $args->module_srl = $module_srl;
-                    $content_items[$module_srl] = $this->_getImageItems($args);
-                }
-            }
-            return $content_items;
-        }
-
-        function _getImageItems($args) {
-
-            if(is_array($args->module_srl)) $obj->module_srl = implode(',',$args->module_srl);
-            else $obj->module_srl = $args->module_srl;
-            $obj->direct_download = 'Y';
-            $obj->isvalid = 'Y';
-            $oDocumentModel = &getModel('document');
-
-
-            // 분류를 먼저 구하자
-            $category_lists = array();
-            foreach($args->mid_lists as $module_srl => $mid){
-                $category_lists[$module_srl] = $oDocumentModel->getCategoryList($module_srl);
-            }
-
-
-            // 정해진 모듈에서 문서별 파일 목록을 구함
- //           $obj->list_count = $args->rows_list_count*$args->cols_list_count;
-            $obj->list_count = $args->list_count;
-            $files_output = executeQueryArray("file.getOneFileInDocument", $obj);
-            $files_count = count($files_output->data);
-
-            $content_items = array();
-
-            if($files_count>0) {
-                for($i=0;$i<$files_count;$i++) $document_srl_list[] = $files_output->data[$i]->document_srl;
-                $tmp_document_list = $oDocumentModel->getDocuments($document_srl_list);
-                if(count($tmp_document_list)) {
-                    foreach($tmp_document_list as $oDocument){
-
-                        $attribute = $oDocument->getObjectVars();
-                        $browser_title = $args->modules_info[$attribute->mid]->browser_title;
-                        $content_item = new contentItem($browser_title);
-
-                        // 기본 set
-                        $content_item->adds($attribute);
-
-                        // 분류
-                        $category = $category_lists[$attribute->module_srl]->text;
-                        $content_item->setCategory($category);
-
-
-                        $content = $oDocument->getSummary($args->content_cut_size);
-                        $content_item->setContent($content);
-
-
-                        // 링크
-                        $url = sprintf("%s#%s",$oDocument->getPermanentUrl() ,$oDocument->getCommentCount());
-                        $content_item->setLink($url);
-
-
-                        //섬네일
-                        $thumbnail = $oDocument->getThumbnail($args->thumbnail_width,$args->thumbnail_height,$args->thumbnail_type);
-                        $content_item->setThumbnail($thumbnail);
-
-
-                        // 아이콘이미지
-                        $extra_images = $oDocument->printExtraImages($args->duration_new);
-                        $content_item->setExtraImages($extra_images);
-
-                        $content_items[] = $content_item;
-                    }
-                }
-            }
-
-            return $content_items;
-        }
-
-
-        // RSS
-        function getRssItems($args){
-            // 탭이든 아니든 다 가져와야한다
-            $content_items = array();
-            $args->mid_lists = array();
-            foreach($args->rss_urls as $key => $rss){
-
-                $args->rss_url = $rss;
-                $content_item = $this->_getRssItems($args);
-                if(count($content_item) > 0){
-                    $browser_title = $content_item[0]->getBrowserTitle();
-
-                    $args->mid_lists[] = $browser_title;
-                    $content_items[] = $content_item;
-                }
-            }
-
-            // 탭형태가 아니다
-            if($args->tab_type == 'none' || $args->tab_type == ''){
-
-                // 아이템들을 다 모으고
-                $items = array();
-                foreach($content_items as $key => $val){
-                    foreach($val as $k => $v){
-                        $date = $v->get('regdate');
-                        $i=0;
-                        while(array_key_exists(sprintf('%s%02d',$date,$i), $items)) $i++;
-                        $items[sprintf('%s%02d',$date,$i)] = $v;
-                    }
-                }
-
-                // 정렬을 하자
-                if($args->order_type =='asc') ksort($items);
-                else krsort($items);
-                // list_count 만큼 위에서 부터 자른다
-                $content_items = array_slice(array_values($items),0,$args->list_count);
-            }else{
-
-                foreach($content_items as $key=> $content_item_list){
-                    $items = array();
-                    foreach($content_item_list as $k => $content_item){
-                        $date = $content_item->get('regdate');
-                        $i=0;
-                        while(array_key_exists(sprintf('%s%02d',$date,$i), $items)) $i++;
-                        $items[sprintf('%s%02d',$date,$i)] = $content_item;
-                    }
-                    if($args->order_type =='asc') ksort($items);
-                    else krsort($items);
-
-                    $content_items[$key] = array_values($items);
-                }
-            }
-            return $content_items;
-        }
-
-        function _getRssItems($args){
-
-            // 날짜 형태
-            $DATE_FORMAT = $args->date_format ? $args->date_format : "Y-m-d H:i:s";
-
-            // request rss
-            $args->rss_url = Context::convertEncodingStr($args->rss_url);
-            $URL_parsed = parse_url($args->rss_url);
-            if(strpos($URL_parsed["host"],'naver.com')) $args->rss_url = iconv('UTF-8', 'euc-kr', $args->rss_url);
-            $args->rss_url = str_replace(array('%2F','%3F','%3A','%3D','%3B','%26'),array('/','?',':','=',';','&'),urlencode($args->rss_url));
-            
-            $buff = file_get_contents($args->rss_url);
-            if(!$buff) return new Object(-1, 'msg_fail_to_request_open');
-            
-            $encoding = preg_match("/<\?xml.*encoding=\"(.+)\".*\?>/i", $buff, $matches);
-            if($encoding && !preg_match("/UTF-8/i", $matches[1])) $buff = trim(iconv($matches[1]=="ks_c_5601-1987"?"EUC-KR":$matches[1], "UTF-8", $buff));
-
-            $buff = preg_replace("/<\?xml.*\?>/i", "", $buff);
-
-            $oXmlParser = new XmlParser();
-            $xml_doc = $oXmlParser->parse($buff);
-            $rss->title = $xml_doc->rss->channel->title->body;
-            $rss->link = $xml_doc->rss->channel->link->body;
-
-            $items = $xml_doc->rss->channel->item;
-
-            if(!$items) return;
-            if($items && !is_array($items)) $items = array($items);
-
-            $content_items = array();
-
-            foreach ($items as $key => $value) {
-                if($key >= $args->list_count * $args->page_count) break;
-                unset($item);
-
-                foreach($value as $key2 => $value2) {
-                    if(is_array($value2)) $value2 = array_shift($value2);
-                    $item->{$key2} = $value2->body;
-                }
-
-                $content_item = new contentItem($rss->title);
-                $content_item->setContentsLink($rss->link);
-                $content_item->setTitle($item->title);
-                $content_item->setNickName(max($item->author,$item->{'dc:creator'}));
-                $content_item->setCategory($item->category);
-                $item->description = preg_replace('!<a href=!is','<a onclick="window.open(this.href);return false" href=', $item->description);
-                $content_item->setContent($item->description);
-                $content_item->setLink($item->link);
-                $date = date('YmdHis', strtotime(max($item->pubdate,$item->pubDate,$item->{'dc:date'})));
-                $content_item->setRegdate($date);
-
-                $content_items[] = $content_item;
-            }
-            return $content_items;
-        }
-
-
-        // Trackback
-        function getTrackbackItems($args){
-
-            $module_srls = explode(',',$args->module_srl);
-
-            // 탭형태가 아니다
-            if($args->tab_type == 'none' || $args->tab_type == ''){
-                $content_items = $this->_getTrackbackItems($args);
-            }else{
-                $content_items = array();
-                foreach($args->mid_lists as $module_srl => $mid){
-                    $args->module_srl = $module_srl;
-                    $content_items[$module_srl] = $this->_getTrackbackItems($args);
-                }
-            }
-            return $content_items;
-
-        }
-
-        function _getTrackbackItems($args){
-            if(is_array($args->module_srl)) $obj->module_srl = implode(',',$args->module_srl);
-            else $obj->module_srl = $args->module_srl;
-            $obj->sort_index = $args->order_target;
-            $obj->list_count = $args->list_count;
-
-            // trackback 모듈의 model 객체를 받아서 getTrackbackList() method를 실행
-            $oTrackbackModel = &getModel('trackback');
-            $output = $oTrackbackModel->getNewestTrackbackList($obj);
-
-            // 오류가 생기면 그냥 무시
-            if(!$output->toBool()) return;
-
-            // 결과가 있으면 각 문서 객체화를 시킴
-            $content_items = array();
-            if(count($output->data)) {
-                foreach($output->data as $key => $item) {
-                    $content_item = new contentItem();
-                    $content_item->setTitle($item->title);
-                    $content_item->setNickName($item->blog_name);
-                    $content_item->setContent($item->excerpt);
-                    $content_item->setLink($item->url);
-                    $content_item->setRegdate($item->regdate);
-                    $content_items[] = $content_item;
-                }
-            }
-            return $content_items;
-        }
     }
-
-
-
-
-
-
-
-
 
     class contentItem extends Object {
 
@@ -668,6 +596,9 @@
         }
         function getThumbnail(){
             return $this->get('thumbnail');
+        }
+        function getMemberSrl() {
+            return $this->get('member_srl');
         }
     }
 ?>

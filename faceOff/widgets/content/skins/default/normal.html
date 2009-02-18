@@ -40,7 +40,7 @@
             <!--@end-->
         </td>
     <!--@else if($v=='nickname')-->
-        <td class="author"><a href="#">{$item->getNickName()}</a></td>
+        <td><a href="#" onclick="return false;" class="author member_{$item->getMemberSrl()}">{$item->getNickName()}</a></td>
     <!--@else if($v=='regdate')-->
         <td class="time"><span class="date">{$item->getRegdate("Y-m-d")}</span> <span class="hour">{$item->getRegdate("H:i")}</span></td>
     <!--@end-->

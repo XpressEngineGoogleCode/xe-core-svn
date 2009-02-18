@@ -64,7 +64,7 @@
 
         <!--@else if($widget_info->option_view_arr[$j]=='nickname')-->
         <p class="authorArea">
-              <a href="#" class="author">{$item->getNickName()}</a>
+                <a href="#" onclick="return false;" class="author member_{$item->getMemberSrl()}">{$item->getNickName()}</a>
             <!--@if($widget_info->option_view_arr[$j+1]=='regdate')-->
                 <span class="date">{$item->getRegdate("Y-m-d")}</span> <span class="hour">{$item->getRegdate("H:i")}</span>
             <!--@end-->

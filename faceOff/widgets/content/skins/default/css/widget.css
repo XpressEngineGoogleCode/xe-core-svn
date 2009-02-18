@@ -57,7 +57,7 @@ dl.widgetDivider dd{ display:none; margin:0;}
 .widgetTableC td.title,
 .widgetTableC td.lastDoc{ width:100%; white-space:nowrap;}
 .widgetTableC td.docNum{}
-.widgetTableC td.docNum em{ display:block; padding:12px 0 0 5px; width:50px; height:21px; font-size:11px; font-weight:bold; font-style:normal; font-family:Tahoma; color:#fff; background:url(../images/white/iconForumNum.gif) no-repeat 0 0;}
+.widgetTableC td.docNum em{ display:block; padding:12px 0 0 5px; width:50px; height:21px; font-size:11px; font-weight:bold; font-style:normal; font-family:Tahoma; color:#fff; background:url(../img/white/iconForumNum.gif) no-repeat 0 0;}
 .widgetTableC td.title a{ font-weight:bold; text-decoration:underline !important;}
 .widgetTableC td.title dl{ margin:0;}
 .widgetTableC td.title dd{ margin:0;}
@@ -260,7 +260,7 @@ dl.widgetDivider dd{ display:none; margin:0;}
 /* widgetNavigator */
 .widgetNavigator{ margin:0; padding:0; text-align:right; clear:both;}
 .widgetNavigator li{ list-style:none; display:inline;}
-.widgetNavigator li button{ width:16px; height:16px; padding:0; background-color:transparent; background-image:url(../images/white/buttonWidgetNavigation.gif); border:1px solid #999; cursor:pointer;}
+.widgetNavigator li button{ width:16px; height:16px; padding:0; background-color:transparent; background-image:url(../img/white/buttonWidgetNavigation.gif); border:1px solid #999; cursor:pointer;}
 .widgetNavigator li button.prev{ background-position:left center; *background-position:-1px center;}
 .widgetNavigator li button.next{ background-position:right center; *background-position:13px center;}
 .widgetNavigator li button span{ position:absolute; display:block; width:0; height:0; overflow:hidden; visibility:hidden;}
@@ -334,21 +334,21 @@ dl.widgetDivider dd{ display:none; margin:0;}
 .widgetMenuB li.active li a:focus{ text-decoration:underline !important;}
 
 /* widgetMenuC */
-.widgetMenuC{ margin:0; padding:0; font-size:12px; line-height:1.2; background:url(../images/white/bgMenuC.gif) repeat-x 0 0;}
+.widgetMenuC{ margin:0; padding:0; font-size:12px; line-height:1.2; background:url(../img/white/bgMenuC.gif) repeat-x 0 0;}
 .widgetMenuC ul{ margin:0; padding:0; height:35px;}
 .widgetMenuC ul li ul{ display:none; position:absolute; top:40px; left:0; height:auto; padding-bottom:7px; background:#35ad06; border:1px solid #027a00;}
 .widgetMenuC ul li.active ul{ display:block;}
 .widgetMenuC ul.aCenter{ margin-left:auto; margin-right:auto;}
 .widgetMenuC ul.aLeft{ margin-right:auto;}
 .widgetMenuC ul.aRight{ margin-left:auto;}
-.widgetMenuC li{ position:relative; padding-right:3px; float:left; list-style:none; background:url(../images/white/bgMenuC.gif) no-repeat right -40px; white-space:nowrap;}
+.widgetMenuC li{ position:relative; padding-right:3px; float:left; list-style:none; background:url(../img/white/bgMenuC.gif) no-repeat right -40px; white-space:nowrap;}
 .widgetMenuC li a{ position:relative; float:left; padding:12px 22px 0 25px; height:23px; color:#fff !important; text-decoration:none !important;}
-.widgetMenuC li.first a{ background:url(../images/white/bgMenuC.gif) no-repeat left -40px;}
-.widgetMenuC li.active{ margin-left:-2px; background:url(../images/white/bgMenuC.gif) no-repeat right -80px;}
-.widgetMenuC li.active a{ font-weight:bold; color:#ff0 !important; background:url(../images/white/bgMenuC.gif) no-repeat left -80px;}
+.widgetMenuC li.first a{ background:url(../img/white/bgMenuC.gif) no-repeat left -40px;}
+.widgetMenuC li.active{ margin-left:-2px; background:url(../img/white/bgMenuC.gif) no-repeat right -80px;}
+.widgetMenuC li.active a{ font-weight:bold; color:#ff0 !important; background:url(../img/white/bgMenuC.gif) no-repeat left -80px;}
 .widgetMenuC li.active li{ padding:2px 15px; float:none; background:none;}
 .widgetMenuC li.active li.active{ margin:0;}
-.widgetMenuC li.active li.first{ margin-top:-4px; padding-top:14px; background:url(../images/white/arrowMenuC.gif) no-repeat 30px top;}
+.widgetMenuC li.active li.first{ margin-top:-4px; padding-top:14px; background:url(../img/white/arrowMenuC.gif) no-repeat 30px top;}
 .widgetMenuC li.active li a{ display:block; _display:inline-block; padding:0; float:none; height:auto; font-weight:normal; color:#fff !important; background:none;}
 .widgetMenuC li.active li.active a{ color:#ff0 !important;}
 .widgetMenuC li.active li a:hover,

@@ -1,17 +1,27 @@
 @charset "utf-8";
 /* NHN > UIT Center > Open UI Technology Team > Jeong Chan Myeong(dece24@nhncorp.com) */
 
+/* widgetContainer */
+.widgetContainer a{ text-decoration:none;}
+.widgetContainer a:hover,
+.widgetContainer a:active,
+.widgetContainer a:focus{ text-decoration:underline;}
+.widgetContainer img{ border:0;}
+.widgetContainer sup{ position:relative; line-height:1; display:inline-block; margin:-5px 0; *padding:0 1px;}
+.widgetContainer form{ margin:0; padding:0;}
+.widgetContainer fieldset{ border:0; margin:0; padding:0;}
+
 /* Common Class */
 .widgetXeInputText{ border-color:#666; background:#333; color:#ccc;}
 
 /* widgetTableA */
 .widgetTableA td.title a{ color:#999;}
-.widgetTableA td .board{ color:#999; background:url(../images/black/lineTextDiv.gif) no-repeat right center;}
-.widgetTableA td .notice{ color:#ff1a1a; background:url(../images/black/lineTextDiv.gif) no-repeat right center;}
-.widgetTableA td .category{ color:#999; background:url(../images/black/lineTextDiv.gif) no-repeat right center;}
+.widgetTableA td .board{ color:#999; background:url(../img/black/lineTextDiv.gif) no-repeat right center;}
+.widgetTableA td .notice{ color:#ff1a1a; background:url(../img/black/lineTextDiv.gif) no-repeat right center;}
+.widgetTableA td .category{ color:#999; background:url(../img/black/lineTextDiv.gif) no-repeat right center;}
 .widgetTableA td .replyNum{ color:#ff1a1a;}
 .widgetTableA td .trackbackNum{ color:#66c;}
-.widgetTableA td.author a{ color:#999;}
+.widgetTableA td a.author { color:#999;}
 .widgetTableA td .date{ color:#999;}
 .widgetTableA td .hour{ color:#888;}
 
@@ -19,9 +29,9 @@
 .widgetTableB,
 .widgetTableB td{ border-color:#7f7f7f;}
 .widgetTableB td.title a{ color:#999;}
-.widgetTableB td .board{ color:#999; background:url(../images/black/lineTextDiv.gif) no-repeat right center;}
-.widgetTableB td .notice{ color:#ff1a1a; background:url(../images/black/lineTextDiv.gif) no-repeat right center;}
-.widgetTableB td .category{ color:#999; background:url(../images/black/lineTextDiv.gif) no-repeat right center;}
+.widgetTableB td .board{ color:#999; background:url(../img/black/lineTextDiv.gif) no-repeat right center;}
+.widgetTableB td .notice{ color:#ff1a1a; background:url(../img/black/lineTextDiv.gif) no-repeat right center;}
+.widgetTableB td .category{ color:#999; background:url(../img/black/lineTextDiv.gif) no-repeat right center;}
 .widgetTableB td .replyNum{ color:#ff1a1a;}
 .widgetTableB td .trackbackNum{ color:#66c;}
 .widgetTableB td.author a{ color:#999;}
@@ -44,7 +54,7 @@
 .widgetUlistB li .author img{ border-color:#666;}
 .widgetUlistB li .title{ border-color:#333; color:#999; background:#000;}
 .widgetUlistB li .title a{ color:#3399ff;}
-.widgetUlistB li .title .arrow{ background:url(../images/black/arrowUlistB.gif) no-repeat;}
+.widgetUlistB li .title .arrow{ background:url(../img/black/arrowUlistB.gif) no-repeat;}
 .widgetUlistB li .title .deco{ background:#000;}
 .widgetUlistB li .title .date{ color:#999;}
 .widgetUlistB li .title .hour{ color:#888;}
@@ -75,7 +85,7 @@
 .widgetGalleryB li .hour{ color:#888;}
 
 /* widgetZineA */
-.widgetZineA li .board{ color:#999; background:url(../images/black/lineTextDiv.gif) no-repeat right center;}
+.widgetZineA li .board{ color:#999; background:url(../img/black/lineTextDiv.gif) no-repeat right center;}
 .widgetZineA li .title{ color:#999;}
 .widgetZineA li .replyNum a{ color:#ff1a1a;}
 .widgetZineA li .trackbackNum a{ color:#66c;}
@@ -85,7 +95,7 @@
 .widgetZineA li .text{ color:#888;}
 
 /* widgetZineB */
-.widgetZineB li .board{ color:#999; background:url(../images/black/lineTextDiv.gif) no-repeat right center;}
+.widgetZineB li .board{ color:#999; background:url(../img/black/lineTextDiv.gif) no-repeat right center;}
 .widgetZineB li{ border-color:#7f7f7f;}
 .widgetZineB li .title{ color:#999;}
 .widgetZineB li .replyNum a{ color:#ff1a1a;}
@@ -98,17 +108,17 @@
 /* widgetLogin */
 .widgetLogin label{ color:#999;}
 .widgetLogin .help a{ color:#ccc;}
-.widgetLogin .help li{ background:url(../images/black/lineTextDiv.gif) no-repeat left center;}
+.widgetLogin .help li{ background:url(../img/black/lineTextDiv.gif) no-repeat left center;}
 
 /* widgetLastLogin */
 .widgetLastLogin dt{ color:#999;}
 .widgetLastLogin dd{ color:#888;}
 .widgetLastLogin a{ color:#333;}
-.widgetLastLogin li{ background:url(../images/black/iconInfoMine.gif) no-repeat left center;}
+.widgetLastLogin li{ background:url(../img/black/iconInfoMine.gif) no-repeat left center;}
 
 /* widgetMyInfo */
 .widgetMyInfo li a{ color:#999;}
-.widgetMyInfo li{ background:url(../images/black/iconMyInfo.gif) no-repeat left 1px;}
+.widgetMyInfo li{ background:url(../img/black/iconMyInfo.gif) no-repeat left 1px;}
 
 /* widgetTree */
 .widgetTree{ color:#999;}
@@ -124,48 +134,15 @@
 .widgetLanguage #language a{ color:#333;}
 
 /* Widget Tree */
-.widgetTree ul{ background:url(../images/black/lineTreeVr.gif) repeat-y 0 -1px;}
-.widgetTree ul li{ background:url(../images/black/lineTreeHr.gif) no-repeat 1px 5px !important;}
-.widgetTree ul li button{ background:url(../images/black/buttonTreeCollapse.gif) no-repeat;}
-.widgetTree ul li.nav_tree_last{ background:url(../images/black/lineTreeLastHr.gif) no-repeat 0 5px !important;}
-
-/* widgetLevel */
-.widgetLevel.num0 { background-image:url(http://www.zeroboard.com/modules/point/icons/default/0.gif);}
-.widgetLevel.num1 { background-image:url(http://www.zeroboard.com/modules/point/icons/default/1.gif);}
-.widgetLevel.num2 { background-image:url(http://www.zeroboard.com/modules/point/icons/default/2.gif);}
-.widgetLevel.num3 { background-image:url(http://www.zeroboard.com/modules/point/icons/default/3.gif);}
-.widgetLevel.num4 { background-image:url(http://www.zeroboard.com/modules/point/icons/default/4.gif);}
-.widgetLevel.num5 { background-image:url(http://www.zeroboard.com/modules/point/icons/default/5.gif);}
-.widgetLevel.num6 { background-image:url(http://www.zeroboard.com/modules/point/icons/default/6.gif);}
-.widgetLevel.num7 { background-image:url(http://www.zeroboard.com/modules/point/icons/default/7.gif);}
-.widgetLevel.num8 { background-image:url(http://www.zeroboard.com/modules/point/icons/default/8.gif);}
-.widgetLevel.num9 { background-image:url(http://www.zeroboard.com/modules/point/icons/default/9.gif);}
-.widgetLevel.num10 { background-image:url(http://www.zeroboard.com/modules/point/icons/default/10.gif);}
-.widgetLevel.num11 { background-image:url(http://www.zeroboard.com/modules/point/icons/default/11.gif);}
-.widgetLevel.num12 { background-image:url(http://www.zeroboard.com/modules/point/icons/default/12.gif);}
-.widgetLevel.num13 { background-image:url(http://www.zeroboard.com/modules/point/icons/default/13.gif);}
-.widgetLevel.num14 { background-image:url(http://www.zeroboard.com/modules/point/icons/default/14.gif);}
-.widgetLevel.num15 { background-image:url(http://www.zeroboard.com/modules/point/icons/default/15.gif);}
-.widgetLevel.num16 { background-image:url(http://www.zeroboard.com/modules/point/icons/default/16.gif);}
-.widgetLevel.num17 { background-image:url(http://www.zeroboard.com/modules/point/icons/default/17.gif);}
-.widgetLevel.num18 { background-image:url(http://www.zeroboard.com/modules/point/icons/default/18.gif);}
-.widgetLevel.num19 { background-image:url(http://www.zeroboard.com/modules/point/icons/default/19.gif);}
-.widgetLevel.num20 { background-image:url(http://www.zeroboard.com/modules/point/icons/default/20.gif);}
-.widgetLevel.num21 { background-image:url(http://www.zeroboard.com/modules/point/icons/default/21.gif);}
-.widgetLevel.num22 { background-image:url(http://www.zeroboard.com/modules/point/icons/default/22.gif);}
-.widgetLevel.num23 { background-image:url(http://www.zeroboard.com/modules/point/icons/default/23.gif);}
-.widgetLevel.num24 { background-image:url(http://www.zeroboard.com/modules/point/icons/default/24.gif);}
-.widgetLevel.num25 { background-image:url(http://www.zeroboard.com/modules/point/icons/default/25.gif);}
-.widgetLevel.num26 { background-image:url(http://www.zeroboard.com/modules/point/icons/default/26.gif);}
-.widgetLevel.num27 { background-image:url(http://www.zeroboard.com/modules/point/icons/default/27.gif);}
-.widgetLevel.num28 { background-image:url(http://www.zeroboard.com/modules/point/icons/default/28.gif);}
-.widgetLevel.num29 { background-image:url(http://www.zeroboard.com/modules/point/icons/default/29.gif);}
-.widgetLevel.num30 { background-image:url(http://www.zeroboard.com/modules/point/icons/default/30.gif);}
+.widgetTree ul{ background:url(../img/black/lineTreeVr.gif) repeat-y 0 -1px;}
+.widgetTree ul li{ background:url(../img/black/lineTreeHr.gif) no-repeat 1px 5px !important;}
+.widgetTree ul li button{ background:url(../img/black/buttonTreeCollapse.gif) no-repeat;}
+.widgetTree ul li.nav_tree_last{ background:url(../img/black/lineTreeLastHr.gif) no-repeat 0 5px !important;}
 
 /* widgetTabA */
-.widgetTabA{ border-color:#999;}
+.widgetTabA{ border-color:#999;margin-bottom:5px;}
 .widgetTabA li,
-.widgetTabA li a{ background-image:url(../images/black/buttonWidgetTab.gif);}
+.widgetTabA li a{ background-image:url(../img/black/buttonWidgetTab.gif);}
 .widgetTabA li a{ color:#999;}
 
 /* widgetTabB */
@@ -209,13 +186,13 @@
 /* widgetMenuA */
 .widgetMenuA{ border-color:#7f7f7f;}
 .widgetMenuA li{ border-color:#7f7f7f;}
-.widgetMenuA li a{ color:#999; background-image:url(../images/black/iconMenuAnormal.gif);}
-.widgetMenuA li.active a{ background-image:url(../images/black/iconMenuAactive.gif);}
+.widgetMenuA li a{ color:#999; background-image:url(../img/black/iconMenuAnormal.gif);}
+.widgetMenuA li.active a{ background-image:url(../img/black/iconMenuAactive.gif);}
 
 /* widgetMenuB */
 .widgetMenuB{ border-color:#7f7f7f;}
 .widgetMenuB li{ border-color:#7f7f7f;}
-.widgetMenuB li a{ color:#999; background-image:url(../images/black/iconMenuAnormal.gif);}
-.widgetMenuB li.active a{ background-image:url(../images/black/iconMenuAactive.gif);}
+.widgetMenuB li a{ color:#999; background-image:url(../img/black/iconMenuAnormal.gif);}
+.widgetMenuB li.active a{ background-image:url(../img/black/iconMenuAactive.gif);}
 .widgetMenuB li ul{ border-color:#777; background:#000;}
-.widgetMenuB li li.first{ background-image:url(../images/black/arrowMenuB.gif);}
+.widgetMenuB li li.first{ background-image:url(../img/black/arrowMenuB.gif);}

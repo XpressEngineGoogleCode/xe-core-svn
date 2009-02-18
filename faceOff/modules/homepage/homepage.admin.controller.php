@@ -248,10 +248,10 @@
 
         function getHomeContent() {
             return 
-                '<img class="zbxe_widget_output" widget="content" skin="list" widgetstyle="simple" list_count="7" ws_colorset="white" ws_title="$user_lang->view_total" ws_more_url="" ws_more_text=""/>'.
-                '<img class="zbxe_widget_output" widget="content" skin="list" widgetstyle="simple" list_count="5" ws_colorset="white" ws_title="$user_lang->view_comment" ws_more_url="" ws_more_text=""/>'.
-                '<img class="zbxe_widget_output" widget="content" skin="list" widgetstyle="simple" list_cont="1" ws_colorset="white" ws_title="$user_lang->cafe_album" ws_more_url="" ws_more_text=""/>'.
-                '<img class="zbxe_widget_output" widget="content" skin="album" />';
+                '<img class="zbxe_widget_output" widget="content" skin="default" colorset="white" content_type="document" list_type="normal" tab_type="none" option_view="title,regdate,nickname" show_browser_title="Y" show_comment_count="Y" show_trackback_count="Y" show_category="Y" show_icon="Y" order_target="list_order" order_type="desc" thumbnail_type="crop" page_count="2" duration_new="24" widgetstyle="simple" list_count="7" ws_colorset="white" ws_title="$user_lang->view_total" ws_more_url="" ws_more_text=""/>'.
+                '<img class="zbxe_widget_output" widget="content" skin="default" colorset="white" content_type="comment" list_type="normal" tab_type="none" option_view="title,regdate,nickname" show_browser_title="Y" show_comment_count="Y" show_trackback_count="Y" show_category="Y" show_icon="Y" order_target="list_order" order_type="desc" thumbnail_type="crop" page_count="2" duration_new="24" widgetstyle="simple" list_count="7" ws_colorset="white" ws_title="$user_lang->view_comment" ws_more_url="" ws_more_text=""/>'.
+                '<img class="zbxe_widget_output" widget="content" skin="default" colorset="white" content_type="image" list_type="gallery" tab_type="none" option_view="title,regdate,nickname" show_browser_title="Y" show_comment_count="Y" show_trackback_count="Y" show_category="Y" show_icon="Y" order_target="list_order" order_type="desc" thumbnail_type="crop" thumbnail_width="5" thumbnail_height="2" list_count="5" page_count="1" duration_new="24" content_cut_size="20" widgetstyle="simple" ws_colorset="white" ws_title="$user_lang->cafe_album" ws_more_url="" ws_more_text=""/>'.
+                '';
         }
 
         function procHomepageAdminUpdateHomepage() {
