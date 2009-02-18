@@ -349,6 +349,124 @@ function selectWidget(val){
 }
 
 function widgetstyle_extra_image_upload(f){
-	f.act.value='procWidgetStyleExtraImageUpload';
-	f.submit();
+    f.act.value='procWidgetStyleExtraImageUpload';
+    f.submit();
+}
+
+
+
+
+function MultiOrderSet(id){
+    var selectedObj = jQuery("[name='selected_"+id+"']").get(0);
+
+    var value = [];
+    for(i=0;i<selectedObj.options.length;i++){
+        value.push(selectedObj.options[i].value);
+    }
+    jQuery("[name='"+id+"']").val(value.join(','));
+}
+
+
+function MultiOrderAdd(id){
+    var showObj = jQuery("[name='show_"+id+"']").get(0);
+    var selectedObj = jQuery("[name='selected_"+id+"']").get(0);
+    var defaultObj = jQuery("[name='default_"+id+"']").val().split(',');
+
+    if(showObj.selectedIndex<0) return;
+    var idx = showObj.selectedIndex;
+    var svalue = showObj.options[idx].value;
+
+
+    for(i=0;i<selectedObj.options.length;i++){
+        if(selectedObj.options[i].value == svalue) return;
+    }
+    selectedObj.options.add(new Option(svalue, svalue, false, false));
+
+    MultiOrderSet(id);
+}
+
+
+function MultiOrderDelete(id){
+    var showObj = jQuery("[name='show_"+id+"']").get(0);
+    var selectedObj = jQuery("[name='selected_"+id+"']").get(0);
+    var defaultObj = jQuery("[name='default_"+id+"']").val().split(',');
+
+    var idx = selectedObj.selectedIndex;
+	if(idx<0) return;
+    for(i=0;i<defaultObj.length;i++){
+        if(jQuery.inArray(selectedObj.options[idx].value, defaultObj) > -1) return;
+    }
+
+    selectedObj.remove(idx);
+    idx = idx-1;
+    if(idx < 0) idx = 0;
+    if(selectedObj.options.length) selectedObj.selectedIndex = idx;
+
+    MultiOrderSet(id);
+}
+
+function MultiOrderUp(id){
+    var selectedObj = jQuery("[name='selected_"+id+"']").get(0);
+    if(selectedObj.selectedIndex<0) return;
+    var idx = selectedObj.selectedIndex;
+
+    if(idx < 1) return;
+
+    var s_obj = selectedObj.options[idx];
+    var t_obj = selectedObj.options[idx-1];
+    var value = s_obj.value;
+    var text = s_obj.text;
+    s_obj.value = t_obj.value;
+    s_obj.text = t_obj.text;
+    t_obj.value = value;
+    t_obj.text = text;
+    selectedObj.selectedIndex = idx-1;
+
+    MultiOrderSet(id);
+}
+
+
+function MultiOrderDown(id){
+    var selectedObj = jQuery("[name='selected_"+id+"']").get(0);
+    if(selectedObj.selectedIndex<0) return;
+    var idx = selectedObj.selectedIndex;
+
+    if(idx == selectedObj.options.length-1) return;
+
+    var s_obj = selectedObj.options[idx];
+    var t_obj = selectedObj.options[idx+1];
+    var value = s_obj.value;
+    var text = s_obj.text;
+    s_obj.value = t_obj.value;
+    s_obj.text = t_obj.text;
+    t_obj.value = value;
+    t_obj.text = text;
+    selectedObj.selectedIndex = idx+1;
+
+    MultiOrderSet(id);
+}
+
+function initMultiOrder(id){
+    var selectedObj = jQuery("[name='selected_"+id+"']").get(0);
+    var init_value = jQuery("[name='init_"+id+"']").val();
+    var save_value = jQuery("[name='"+id+"']").val();
+    if(save_value){
+        var arr_save_value = save_value.split(',');
+        for(i=0;i<arr_save_value.length;i++){
+            if(arr_save_value[i].length>0){
+                var opt = new Option(arr_save_value[i], arr_save_value[i]);
+                selectedObj.options.add(opt);
+            }
+        }
+    }else{
+        var arr_init_value = init_value.split(',');
+        for(i=0;i<arr_init_value.length;i++){
+            if(arr_init_value[i].length>0){
+                var opt = new Option(arr_init_value[i], arr_init_value[i]);
+                selectedObj.options.add(opt);
+            }
+        }
+
+    }
+    MultiOrderSet(id);
 }

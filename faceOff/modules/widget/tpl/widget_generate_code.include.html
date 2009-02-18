@@ -75,15 +75,54 @@
             <!--@end-->
         </select>
 
-        <!--@elseif($var->type == "member_group")-->
 
-            <!--@foreach($group_list as $key => $group_info)-->
-                <div class="widget_mid_list">
-                    <input type="checkbox" value="{$key}" name="{$id}" id="member_group_{$id}_{$key}" />
-                    <label for="member_group_{$id}_{$key}">{$group_info->title}</label>
-                </div>
+
+        <!--@elseif($var->type == "select-multi-order")-->
+        <input type="hidden" name="{$id}" value="" />
+        <input type="hidden" name="default_{$id}" value="" />
+        <input type="hidden" name="init_{$id}" value="" />
+
+        <div style="float:left;margin-left:30px;">
+            <select name="show_{$id}" size="8" class="w100">
+                <!--@foreach($var->options as $key => $val)-->
+                <option value="{$key}">{$key}</option>
+                <!--@end-->
+            </select>
+        </div>
+        <div style="float:left;margin-left:30px;">
+            <a class="buttonSet buttonRight" onclick="MultiOrderAdd('{$id}'); return false;" href="#"></a>
+            <br/><br/>
+            <a class="buttonSet buttonLeft" onclick="MultiOrderDelete('{$id}'); return false;" href="#"></a>
+            <br/><br/>
+            <a class="buttonSet buttonUp" onclick="MultiOrderUp('{$id}'); return false;" href="#"></a>
+            <br/><br/>
+            <a class="buttonSet buttonDown" onclick="MultiOrderDown('{$id}'); return false;" href="#"></a>
+        </div>
+
+
+        <div style="float:left;margin-left:30px;">
+            <select name="selected_{$id}" name="selected_{$id}" size="8" class="w100">
+            </select>
+        </div>
+
+
+        <script type="text/javascript">
+            <!--@foreach($var->options as $key => $val)-->
+                <!--@if($var->default_options[$key] == true)-->
+                    jQuery("[name='default_{$id}']").get(0).value += '{$key},';
+                <!--@end-->
+
+                <!--@if($var->init_options[$key] == true)-->
+                    jQuery("[name='init_{$id}']").get(0).value += ','+'{$key}';
+                <!--@end-->
+
             <!--@end-->
 
+            if(typeof(initMultiOrder)!=='undefined') {
+                doAddWindowLoadEventLoader( function() { initMultiOrder('{$id}'); } );
+            }
+//            MultiOrderSet('{$id}');
+        </script>
         <!--@elseif($var->type == "mid_list")-->
 
             <!--@foreach($mid_list as $module_category_srl => $modules)-->
