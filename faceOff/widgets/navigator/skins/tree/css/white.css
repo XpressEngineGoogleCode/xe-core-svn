@@ -22,12 +22,12 @@
 .widgetTree .icon{ position:relative; left:16px;}
 
 /* widgetTree */
-.widgetTree{ color:#999;}
-.widgetTree a { color:#999;}
+.widgetTree{ color:#333;}
+.widgetTree a{ color:#333;}
 
 /* Widget Tree */
-.widgetTree ul{ background:url(./img/black/lineTreeVr.gif) repeat-y 0 -1px;}
-.widgetTree ul li{ background:url(./img/black/lineTreeHr.gif) no-repeat 1px 5px !important;}
-.widgetTree ul li button{ background:url(./img/black/buttonTreeCollapse.gif) no-repeat;}
-.widgetTree ul li.nav_tree_last{ background:url(./img/black/lineTreeLastHr.gif) no-repeat 0 5px !important;}
+.widgetTree ul{ background:url(../img/white/lineTreeVr.gif) repeat-y 0 -1px;}
+.widgetTree ul li{ background:url(../img/white/lineTreeHr.gif) no-repeat 1px 5px !important;}
+.widgetTree ul li button{ background:url(../img/white/buttonTreeCollapse.gif) no-repeat;}
+.widgetTree ul li.nav_tree_last{ background:url(../img/white/lineTreeLastHr.gif) no-repeat 0 5px !important;}
 

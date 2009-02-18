@@ -50,7 +50,7 @@
 
             // 템플릿 컴파일
             $tpl_path = sprintf('%sskins/%s', $this->widget_path, $args->skin);
-            $tpl_file = 'menu';
+            $tpl_file = 'navigator';
 
             Context::set('colorset', $args->colorset);
 
