@@ -397,6 +397,9 @@
             Context::addJsFilter($this->module_path.'tpl/filter', 'insert.xml');
 
             $this->setTemplateFile('newissue');
+            
+            // 커미터 목록을 추출
+            Context::set('commiters', $oIssuetrackerModel->getGroupMembers($this->module_info->module_srl,'commiter'));
         }
 
         function dispIssuetrackerDeleteIssue() {

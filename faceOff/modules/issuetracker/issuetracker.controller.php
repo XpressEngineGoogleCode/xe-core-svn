@@ -29,6 +29,13 @@
                 unset($obj->title_color);
                 unset($obj->title_bold);
             }
+            // 커미터가 아니라면 마일스톤(계획), 우선순위, 소유자 설정 제거
+            // (이슈 상태는 여기서 건드릴수없음 / 종류, 컴포넌트, 패키지 설정은 ticket_write권한이면 가능)
+            if(!$this->grant->commiter) {
+                unset($obj->assignee_srl);
+                unset($obj->milestone_srl);
+                unset($obj->priority_srl);
+            }
             if($obj->release_srl)
             {
                 $obj->occured_version_srl = $obj->release_srl;
@@ -57,11 +64,16 @@
 
             // 그렇지 않으면 신규 등록
             } else {
+            	// assignee name
+            	$oMemberModel = &getModel('member');
+                $member_info = $oMemberModel->getMemberInfoByMemberSrl($obj->assignee_srl);
+                $obj->assignee_name = $member_info->nick_name;
+                
                 // transaction start
                 $oDB = &DB::getInstance();
                 $oDB->begin();
 
-                $output = executeQuery("issuetracker.insertIssue", $obj); 
+                $output = executeQuery("issuetracker.insertIssue", $obj);
                 if(!$output->toBool()) {
                     $oDB->rollback();
                     return $output;
