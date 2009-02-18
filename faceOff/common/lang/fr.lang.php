@@ -75,6 +75,7 @@
     $lang->secret = 'Secret';
     $lang->category = $lang->category_srl = 'Catégorie';
     $lang->none_category = 'None category';
+    $lang->none_image = '이미지 없음';
     $lang->document_srl = 'Numéro de série du Document';
     $lang->user_id = 'Compte';
     $lang->author = 'Auteur';

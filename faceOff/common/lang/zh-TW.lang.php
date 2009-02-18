@@ -75,6 +75,7 @@
     $lang->secret = '秘密';
     $lang->category = $lang->category_srl = '分類';
     $lang->none_category = '無分類';
+    $lang->none_image = '이미지 없음';
     $lang->document_srl = '文章編號';
     $lang->user_id = '帳號';
     $lang->author = '作者';

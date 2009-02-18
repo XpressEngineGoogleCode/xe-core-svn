@@ -75,6 +75,7 @@
     $lang->secret = '密帖';
     $lang->category = $lang->category_srl = '分类';
     $lang->none_category = '无分类';
+    $lang->none_image = '이미지 없음';
     $lang->document_srl = '文章编号';
     $lang->user_id = '用户名';
     $lang->author = '制作';
