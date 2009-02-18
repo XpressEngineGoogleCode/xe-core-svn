@@ -21,18 +21,21 @@
                 <dd><input type="password" name="password" id="upw" value="" class="inputTypeText w140" /></dd>
             </dl>
 
-            <span class="button black strong"><input type="submit" value="{$lang->cmd_login}" /></span>
-
             <p class="keep">
                 <input type="checkbox" name="keep_signed" id="keepid_opt" value="Y" onclick="if(this.checked) return confirm(keep_signed_msg);"/>
                 <label for="keepid_opt">{$lang->keep_signed}</label>
             </p>
+			
+			<div class="buttonArea">
+				<span class="button black strong"><input type="submit" value="{$lang->cmd_login}" /></span>
+			</div>
+
         </fieldset>
     </form>
 
     <div class="help tCenter">
-        <a href="{getUrl('act','dispMemberFindAccount')}" class="button"><span>{$lang->cmd_find_member_account}</span></a>
-        <a href="{getUrl('act','dispMemberSignUpForm')}" class="button"><span>{$lang->cmd_signup}</span></a>
+        <a href="{getUrl('act','dispMemberFindAccount')}"><span>{$lang->cmd_find_member_account}</span></a> |
+        <a href="{getUrl('act','dispMemberSignUpForm')}"><span>{$lang->cmd_signup}</span></a>
     </div>
 </div>
 

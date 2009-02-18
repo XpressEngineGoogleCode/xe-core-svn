@@ -108,12 +108,14 @@
 
 #memberModule .memberSmallBox { border:1px solid #EFEFEF; margin:50px auto 20px auto; padding:0; width:400px;}
 #memberModule .memberSmallBox .header { padding:10px; font-weight:bold; text-align:center; border-bottom:1px solid #DDD;  background:url(../img/bgTab.gif) repeat-x left bottom;}
-#memberModule fieldset { border:0; margin:0; padding:10px;}
-#memberModule .memberSmallBox .login dl { margin:0; padding:0; overflow:hidden; float:left; margin-right:10px; width:250px;}
-#memberModule .memberSmallBox .login dl dt { margin:0; padding:0; width:100px; clear:left; float:left; color:#54564b; height:24px; padding-top:3px;}
+#memberModule fieldset { position:relative; border:0; margin:0; padding:10px;}
+#memberModule .memberSmallBox .login dl { margin:0; padding:0; overflow:hidden; margin-right:10px; width:250px;}
+#memberModule .memberSmallBox .login dl dt { margin:0; padding:0; width:100px; clear:left; float:left; color:#54564b; height:24px; padding-top:3px; text-indent:10px;}
 #memberModule .memberSmallBox .login dl dd { margin:0; padding:0; float:left; height:27px; width:150px; }
 #memberModule .memberSmallBox .login .keep { clear:both; white-space:nowrap; margin-left:100px;}
 #memberModule .memberSmallBox .login .keep input { vertical-align:middle;}
 #memberModule .memberSmallBox .login .keep label { margin:0; padding:0; font-size:12px; color:#999999;}
 #memberModule .memberSmallBox .openid_user_id { background: url(../img/openid_login_bg.gif) left no-repeat; background-color: #ffffff; background-position: 0 50%; padding:3px 3px 3px 18px; border:1px solid; border-color:#a6a6a6 #d8d8d8 #d8d8d8 #a6a6a6; line-height:1em; vertical-align:middle; color:#666666; width:120px;}
-#memberModule .memberSmallBox .help { background:#f5f5f3; color:#666666; border-top:1px solid #eaebe7; overflow:hidden; padding:1.1em; }
+#memberModule .memberSmallBox .help { background:#f5f5f3; color:#666666; border-top:1px solid #eaebe7; overflow:hidden; padding:1.1em; color:#ccc;}
+#memberModule .memberSmallBox .help a{ color:#666; text-decoration:underline;}
+#memberModule .memberSmallBox .buttonArea{ position:absolute; top:0; left:260px;}
