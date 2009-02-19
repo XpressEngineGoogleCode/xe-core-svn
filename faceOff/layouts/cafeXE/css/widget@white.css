@@ -219,3 +219,58 @@
 .widgetMenuB li.active a{ background-image:url(../img/white/iconMenuAactive.gif);}
 .widgetMenuB li ul{ border-color:#ddd; background:#fff;}
 .widgetMenuB li li.first{ background-image:url(../img/white/arrowMenuB.gif);}
+
+/* widgetMenuCgreen */
+.widgetMenuCgreen{ background-image:url(../img/white/bgMenuCgreen.gif);}
+.widgetMenuCgreen ul li ul{ background:#35ad06; border-color:#027a00;}
+.widgetMenuCgreen li{ background-image:url(../img/white/bgMenuCgreen.gif);}
+.widgetMenuCgreen li.first a{ background-image:url(../img/white/bgMenuCgreen.gif);}
+.widgetMenuCgreen li.active{ background-image:url(../img/white/bgMenuCgreen.gif);}
+.widgetMenuCgreen li.active a{ background-image:url(../img/white/bgMenuCgreen.gif);}
+.widgetMenuCgreen li.active li.first{ background-image:url(../img/white/arrowMenuCgreen.gif);}
+
+/* widgetMenuCblue */
+.widgetMenuCblue{ background-image:url(../img/white/bgMenuCblue.gif);}
+.widgetMenuCblue ul li ul{ background:#0688ad; border-color:#00557a;}
+.widgetMenuCblue li{ background-image:url(../img/white/bgMenuCblue.gif);}
+.widgetMenuCblue li.first a{ background-image:url(../img/white/bgMenuCblue.gif);}
+.widgetMenuCblue li.active{ background-image:url(../img/white/bgMenuCblue.gif);}
+.widgetMenuCblue li.active a{ background-image:url(../img/white/bgMenuCblue.gif);}
+.widgetMenuCblue li.active li.first{ background-image:url(../img/white/arrowMenuCblue.gif);}
+
+/* widgetMenuCcyan */
+.widgetMenuCcyan{ background-image:url(../img/white/bgMenuCcyan.gif);}
+.widgetMenuCcyan ul li ul{ background:#06a4ad; border-color:#00717a;}
+.widgetMenuCcyan li{ background-image:url(../img/white/bgMenuCcyan.gif);}
+.widgetMenuCcyan li.first a{ background-image:url(../img/white/bgMenuCcyan.gif);}
+.widgetMenuCcyan li.active{ background-image:url(../img/white/bgMenuCcyan.gif);}
+.widgetMenuCcyan li.active a{ background-image:url(../img/white/bgMenuCcyan.gif);}
+.widgetMenuCcyan li.active li.first{ background-image:url(../img/white/arrowMenuCcyan.gif);}
+
+/* widgetMenuCorange */
+.widgetMenuCorange{ background-image:url(../img/white/bgMenuCorange.gif);}
+.widgetMenuCorange ul li ul{ background:#ad9906; border-color:#7a6600;}
+.widgetMenuCorange li{ background-image:url(../img/white/bgMenuCorange.gif);}
+.widgetMenuCorange li.first a{ background-image:url(../img/white/bgMenuCorange.gif);}
+.widgetMenuCorange li.active{ background-image:url(../img/white/bgMenuCorange.gif);}
+.widgetMenuCorange li.active a{ background-image:url(../img/white/bgMenuCorange.gif);}
+.widgetMenuCorange li.active li.first{ background-image:url(../img/white/arrowMenuCorange.gif);}
+
+/* widgetMenuCred */
+.widgetMenuCred{ background-image:url(../img/white/bgMenuCred.gif);}
+.widgetMenuCred ul li ul{ background:#ad4606; border-color:#7a1300;}
+.widgetMenuCred li{ background-image:url(../img/white/bgMenuCred.gif);}
+.widgetMenuCred li.first a{ background-image:url(../img/white/bgMenuCred.gif);}
+.widgetMenuCred li.active{ background-image:url(../img/white/bgMenuCred.gif);}
+.widgetMenuCred li.active a{ background-image:url(../img/white/bgMenuCred.gif);}
+.widgetMenuCred li.active li.first{ background-image:url(../img/white/arrowMenuCred.gif);}
+
+/* widgetMenuCgray */
+.widgetMenuCgray{ background-image:url(../img/white/bgMenuCgray.gif);}
+.widgetMenuCgray ul li ul{ background:#595959; border-color:#7a1300;}
+.widgetMenuCgray li{ background-image:url(../img/white/bgMenuCgray.gif);}
+.widgetMenuCgray li.first a{ background-image:url(../img/white/bgMenuCgray.gif);}
+.widgetMenuCgray li.active{ background-image:url(../img/white/bgMenuCgray.gif);}
+.widgetMenuCgray li.active a{ background-image:url(../img/white/bgMenuCgray.gif);}
+.widgetMenuCgray li.active li.first{ background-image:url(../img/white/arrowMenuCgray.gif);}
+
