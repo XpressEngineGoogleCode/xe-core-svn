@@ -849,6 +849,8 @@
                         break;
                     case 'act.document_srl.mid' :
                         return sprintf('%s%s/%s/%s',$path,$get_vars['mid'], $get_vars['act'],$get_vars['document_srl']);
+                    case 'entry.mid' :
+                    	return sprintf('%s%s/entry/%s',$path,$get_vars['mid'],$get_vars['entry']);
                 }
             }
 
