@@ -139,6 +139,12 @@
                     </div>
                 <!--@end-->
             <!--@end-->
+        <!--@elseif($var->type == "member_group")-->
+
+            <!--@foreach($group_list as $key => $val)-->
+                <input type="checkbox" value="{$key}" name="{$id}" id="chk_member_gruop_{$key}" />
+                <label for="chk_member_gruop_{$key}">{$key} ({$val->title})</label>
+            <!--@end-->
 
         <!--@elseif($var->type == "module_srl_list")-->
             <input type="hidden" name="{$id}" id="{$id}" value="" />
