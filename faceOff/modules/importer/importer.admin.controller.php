@@ -147,7 +147,7 @@
             $cur = Context::get('cur');
             $key = Context::get('key');
             $user_id = Context::get('user_id');
-            $target_module = Context::get('post_target_module');
+            $target_module = Context::get('target_module');
             $guestbook_target_module = Context::get('guestbook_target_module');
             $this->unit_count = Context::get('unit_count');
             
