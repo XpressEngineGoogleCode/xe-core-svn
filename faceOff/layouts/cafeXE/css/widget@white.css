@@ -8,7 +8,7 @@
 .widgetTableA td.title a{ color:#333;}
 .widgetTableA td .board{ color:#333; background:url(../img/white/lineTextDiv.gif) no-repeat right center;}
 .widgetTableA td .notice{ color:#ff1a1a; background:url(../img/white/lineTextDiv.gif) no-repeat right center;}
-.widgetTableA td .category{ color:#333; background:url(../img/white/lineTextDiv.gif) no-repeat right center;}
+.widgetTableA td .category{ color:#888; background:url(../img/white/lineTextDiv.gif) no-repeat right center;}
 .widgetTableA td .replyNum a{ color:#ff1a1a;}
 .widgetTableA td .trackbackNum a{ color:#66c;}
 .widgetTableA td.author a{ color:#333;}
@@ -21,7 +21,7 @@
 .widgetTableB td.title a{ color:#333;}
 .widgetTableB td .board{ color:#333; background:url(../img/white/lineTextDiv.gif) no-repeat right center;}
 .widgetTableB td .notice{ color:#ff1a1a; background:url(../img/white/lineTextDiv.gif) no-repeat right center;}
-.widgetTableB td .category{ color:#333; background:url(../img/white/lineTextDiv.gif) no-repeat right center;}
+.widgetTableB td .category{ color:#888; background:url(../img/white/lineTextDiv.gif) no-repeat right center;}
 .widgetTableB td .replyNum a{ color:#ff1a1a;}
 .widgetTableB td .trackbackNum a{ color:#66c;}
 .widgetTableB td.author a{ color:#333;}
