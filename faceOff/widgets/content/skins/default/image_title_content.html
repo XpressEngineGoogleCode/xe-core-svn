@@ -1,22 +1,12 @@
-<!--%import("css/widget.css")-->
-<!--@if($colorset=="white"||!$colorset)-->
-    <!--%import("css/white.css")-->
-<!--@elseif($colorset=='black')-->
-    <!--%import("css/black.css")-->
-<!--@end-->
-
-<!--%import("css/widget@skin.css")-->
-<!--%import("js/content_widget.js")-->
-
 <ul class="widgetZineA">
 {@$i=0}
 <!--@foreach($widget_info->content_items as $key => $item)-->
     <li<!--@if($i >= $widget_info->list_count)--> style="display:none"<!--@end-->>
 
-        <p class="thumbArea">
-            <a href="{$item->getLink()}" class="thumb">
+        <p class="thumbArea" style="width:{$widget_info->thumbnail_width}px;margin-right:-{$widget_info->thumbnail_width}px;">
+            <a href="{$item->getLink()}" class="thumb" style="width:{$widget_info->thumbnail_width}px;height:{$widget_info->thumbnail_height}px">
                 <!--@if($item->getThumbnail())-->
-                    <img src="{$item->getThumbnail()}" />
+                    <img src="{$item->getThumbnail()}" style="width:{$widget_info->thumbnail_width}px;height:{$widget_info->thumbnail_height}px" />
                 <!--@else-->
                     <span class="imgNone">{$lang->none_image}</span>
                 <!--@end-->
@@ -30,20 +20,24 @@
     <!--@for($j=0,$c=count($widget_info->option_view_arr);$j<$c;$j++)-->
 
         <!--@if($widget_info->option_view_arr[$j]=='title')-->
-        <p class="titleArea">
+        <p class="titleArea" style="margin-left:{$widget_info->thumbnail_width+20}px;">
 
             <!--@if($widget_info->show_browser_title=='Y' && $item->getBrowserTitle())-->
-                <strong class="board">{$item->getBrowserTitle()}</strong>
+                <a href="{getSiteUrl($item->domain, '', 'mid', $item->get('mid'))}"><strong class="board">{$item->getBrowserTitle()}</strong></a>
+            <!--@end-->
+
+            <!--@if($widget_info->show_category=='Y' && $item->get('category_srl') )-->
+                <a href="{getSiteUrl($item->domain,'','mid',$item->get('mid'),'category',$item->get('category_srl'))}"><strong class="category">{$item->getCategory()}</strong></a>
             <!--@end-->
 
             <a href="{$item->getLink()}" class="title">{$item->getTitle($widget_info->subject_cut_size)}</a>
 
             <!--@if($widget_info->show_trackback_count=='Y' && $item->getCommentCount())-->
-                <sup class="replyNum">{$item->getCommentCount()}</sup>
+                <sup class="replyNum"><a href="{$item->getLink()}#comment">{$item->getCommentCount()}</a></sup>
             <!--@end-->
 
             <!--@if($widget_info->show_trackback_count=='Y' && $item->getTrackbackCount())-->
-                <sup class="trackbackNum">{$item->getTrackbackCount()}</sup>
+                <sup class="trackbackNum"><a href="{$item->getLink()}#trackback">{$item->getTrackbackCount()}</a></sup>
             <!--@end-->
 
             <!--@if($widget_info->show_icon=='Y')-->
@@ -56,14 +50,15 @@
         </p>
 
         <!--@else if($widget_info->option_view_arr[$j]=='content')-->
-        <p class="text">{$item->getContent()}
+        <p class="text" style="margin-left:{$widget_info->thumbnail_width+20}px;">
+            {$item->getContent()}
             <!--@if($widget_info->option_view_arr[$j+1]=='regdate')-->
                 <span class="date">{$item->getRegdate("Y-m-d")}</span> <span class="hour">{$item->getRegdate("H:i")}</span>
             <!--@end-->
         </p>
 
         <!--@else if($widget_info->option_view_arr[$j]=='nickname')-->
-        <p class="authorArea">
+        <p class="authorArea" style="margin-left:{$widget_info->thumbnail_width+20}px;">
                 <a href="#" onclick="return false;" class="author member_{$item->getMemberSrl()}">{$item->getNickName()}</a>
             <!--@if($widget_info->option_view_arr[$j+1]=='regdate')-->
                 <span class="date">{$item->getRegdate("Y-m-d")}</span> <span class="hour">{$item->getRegdate("H:i")}</span>

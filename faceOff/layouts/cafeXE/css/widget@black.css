@@ -11,7 +11,7 @@
 .widgetTableA td .category{ color:#666; background:url(../img/black/lineTextDiv.gif) no-repeat right center;}
 .widgetTableA td .replyNum{ color:#ff1a1a;}
 .widgetTableA td .trackbackNum{ color:#66c;}
-.widgetTableA td.author a{ color:#999;}
+.widgetTableA td .author { color:#999;}
 .widgetTableA td .date{ color:#999;}
 .widgetTableA td .hour{ color:#888;}
 
@@ -24,7 +24,7 @@
 .widgetTableB td .category{ color:#666; background:url(../img/black/lineTextDiv.gif) no-repeat right center;}
 .widgetTableB td .replyNum{ color:#ff1a1a;}
 .widgetTableB td .trackbackNum{ color:#66c;}
-.widgetTableB td.author a{ color:#999;}
+.widgetTableB td .author { color:#999;}
 .widgetTableB td .date{ color:#999;}
 .widgetTableB td .hour{ color:#888;}
 

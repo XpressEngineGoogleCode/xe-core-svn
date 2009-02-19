@@ -778,14 +778,15 @@ function showWidgetButton(name, obj) {
     var widgetButton = xGetElementById(name);
     if(!widgetButton) return;
     widgetButton.style.visibility = 'visible';
-
+    obj.insertBefore(widgetButton, obj.firstChild);
+    /*
     var cobj = obj.firstChild;
     while(cobj) {
         cobj = cobj.nextSibling;
     }
 
     obj.appendChild(widgetButton);
-
+    */
 }
 
 function widgetSetup(evt) {

@@ -1,18 +1,9 @@
-<!--%import("css/widget.css")-->
-
-<!--@if($colorset=="white"||!$colorset)-->
-    <!--%import("css/white.css")-->
-<!--@elseif($colorset=='black')-->
-    <!--%import("css/black.css")-->
-<!--@end-->
-
-<!--%import("js/content_widget.js")-->
-<div class="widgetContainer">
-{@$have_first_thumbnail=null}
-<!--@if(count($widget_info->content_items) > 0 && $widget_info->content_items[0]->getFirstThumbnailIndex())-->
+{@$have_first_thumbnail=false}
+<!--@if(count($widget_info->content_items) && $widget_info->content_items[0]->haveFirstThumbnail())-->
+    {@$thumbnail_idx = $widget_info->content_items[0]->getFirstThumbnailIdx() }
     {@$have_first_thumbnail=true}
     <p class="widgetThumb floatLeft" style="margin-right:-{$widget_info->thumbnail_width}px">
-        <a href="#" class="thumb"><img src="{$widget_info->content_items[$widget_info->content_items[0]->getFirstThumbnailIndex()]->getThumbnail()}" style="width:{$widget_info->thumbnail_width}px;height:{$widget_info->thumbnail_height}px"></a>
+        <a href="{$widget_info->content_items[$thumbnail_idx]->getLink()}" class="thumb"><img src="{$widget_info->content_items[$thumbnail_idx]->getThumbnail()}" style="width:{$widget_info->thumbnail_width}px;height:{$widget_info->thumbnail_height}px"></a>
     </p>
 <!--@end-->
 
@@ -27,21 +18,21 @@
         <td class="title">
 
             <!--@if($widget_info->show_browser_title=='Y' && $item->getBrowserTitle())-->
-                <strong class="board">{$item->getBrowserTitle()}</strong>
+                <a href="{getSiteUrl($item->domain, '', 'mid', $item->get('mid'))}"><strong class="board">{$item->getBrowserTitle()}</strong></a>
             <!--@end-->
 
             <!--@if($widget_info->show_category=='Y' && $item->getCategory())-->
-                <strong class="category">{$item->getCategory()}</strong>
+                <a href="{getSiteUrl($item->domain,'','mid',$item->get('mid'),'category',$item->get('category_srl'))}"><strong class="category">{$item->getCategory()}</strong></a>
             <!--@end-->
 
             <a href="{$item->getLink()}">{$item->getTitle($widget_info->subject_cut_size)}</a>
 
             <!--@if($widget_info->show_trackback_count=='Y' && $item->getCommentCount())-->
-                <sup class="replyNum">{$item->getCommentCount()}</sup>
+                <sup class="replyNum"><a href="{$item->getLink()}#comment">{$item->getCommentCount()}</a></sup>
             <!--@end-->
 
             <!--@if($widget_info->show_trackback_count=='Y' && $item->getTrackbackCount())-->
-                <sup class="trackbackNum">{$item->getTrackbackCount()}</sup>
+                <sup class="trackbackNum"><a href="{$item->getLink()}#trackback">{$item->getTrackbackCount()}</a></sup>
             <!--@end-->
 
             <!--@if($widget_info->show_icon=='Y')-->
@@ -67,4 +58,3 @@
         <li><button type="button" class="next" title="{$lang->cmd_next}" onclick="content_widget_next(jQuery(this).parents('ul.widgetNavigator').prev('div').children('table.widgetTableA'),{$widget_info->list_count})"><span>{$lang->cmd_next}</span></button></li>
     </ul>
 <!--@end-->
-</div>

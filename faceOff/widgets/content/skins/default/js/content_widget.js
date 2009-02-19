@@ -54,6 +54,8 @@ function content_widget_prev(obj,list_per_page){
 function content_widget_tab_show(tab,list,i){
     tab.parents('ul.widgetTab').children('li.active').removeClass('active');
     tab.parent('li').addClass('active');
-    jQuery('>dd.open',list).removeClass('open');
-    jQuery('>dd:nth-child('+ i +')',list).addClass('open');
+    jQuery('>dd',list).each(function(j){
+            if(j==i) jQuery(this).addClass('open');
+            else jQuery(this).removeClass('open');
+            });
 }

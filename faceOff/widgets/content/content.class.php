@@ -88,15 +88,19 @@
                     $args->modules_info = $oModuleModel->getMidList($obj);
                 // 대상 모듈이 선택되어 있으면 해당 모듈만 추출
                 } else {
-                    unset($obj);
                     $obj->module_srls = $args->module_srls;
                     $output = executeQueryArray('widgets.content.getMids', $obj);
                     if($output->data) {
                         foreach($output->data as $key => $val) {
                             $args->modules_info[$val->mid] = $val;
                             $args->module_srls_info[$val->module_srl] = $val;
-                            $args->mid_lists[$val->module_srl] = $val->mid;
                             $module_srls[] = $val->module_srl;
+                        }
+                        $idx = explode(',',$args->module_srls);
+                        for($i=0,$c=count($idx);$i<$c;$i++) {
+                            $srl = $idx[$i];
+                            if(!$args->module_srls_info[$srl]) continue;
+                            $args->mid_lists[$srl] = $args->module_srls_info[$srl]->mid;
                         }
                     }
                 }
@@ -192,26 +196,30 @@
 
                 $attribute->mid = $args->mid_lists[$attribute->module_srl];
                 $browser_title = $args->module_srls_info[$attribute->module_srl]->browser_title;
+                $domain = $args->module_srls_info[$attribute->module_srl]->domain;
 
                 $content_item = new contentItem($browser_title);
                 $content_item->adds($attribute);
                 $content_item->setTitle($title);
                 $content_item->setThumbnail($thumbnail);
                 $content_item->setLink($url);
+                $content_item->setDomain($domain);
+                $content_item->add('mid', $args->mid_lists[$attribute->module_srl]);
                 $content_items[] = $content_item;
             }
-
             return $content_items;
         }
+
         function _getDocumentItems($args){
             // document 모듈의 model 객체를 받아서 결과를 객체화 시킴
             $oDocumentModel = &getModel('document');
 
             // 분류 구함
+            $obj->module_srl = $args->module_srl;
             $output = executeQueryArray('widgets.content.getCategories',$obj);
             if($output->toBool() && $output->data) {
                 foreach($output->data as $key => $val) {
-                    $category_lists[$val->module_srl][] = $val;
+                    $category_lists[$val->module_srl][$val->category_srl] = $val;
                 }
             }
 
@@ -225,16 +233,17 @@
 
             // 결과가 있으면 각 문서 객체화를 시킴
             $content_items = array();
-            $first_thumbnail_item = null;
+            $first_thumbnail_idx = -1;
             if(count($output->data)) {
                 foreach($output->data as $key => $attribute) {
                     $category = $category_lists[$attribute->module_srl][$attribute->category_srl]->title;
                     $browser_title = $args->module_srls_info[$attribute->module_srl]->browser_title;
+                    $domain = $args->module_srls_info[$attribute->module_srl]->domain;
 
                     $oDocument = new documentItem();
                     $oDocument->setAttribute($attribute);
                     $content = $oDocument->getSummary($args->content_cut_size);
-                    $url = sprintf("%s#%s",$oDocument->getPermanentUrl() ,$oDocument->getCommentCount());
+                    $url = getSiteUrl($domain,'','document_srl',$oDocument->document_srl);
                     $thumbnail = $oDocument->getThumbnail($args->thumbnail_width,$args->thumbnail_height,$args->thumbnail_type);
                     $extra_images = $oDocument->printExtraImages($args->duration_new);
 
@@ -244,15 +253,18 @@
                     $content_item->setContent($content);
                     $content_item->setLink($url);
                     $content_item->setThumbnail($thumbnail);
-                    if(is_null($first_thumbnail_item) && $thumbnail) $first_thumbnail_item = $key;
+                    if($first_thumbnail_idx==-1 && $thumbnail) $first_thumbnail_idx = $key;
                     $content_item->setExtraImages($extra_images);
+                    $content_item->setDomain($domain);
+                    $content_item->add('mid', $args->mid_lists[$attribute->module_srl]);
                     $content_items[] = $content_item;
                 }
 
-                $content_items[0]->setFirstThumbnailIndex($first_thumbnail_item);
+                $content_items[0]->setFirstThumbnailIdx($first_thumbnail_idx);
             }
             return $content_items;
         }
+
         function _getImageItems($args) {
             $oDocumentModel = &getModel('document');
 
@@ -264,7 +276,7 @@
             $output = executeQueryArray('widgets.content.getCategories',$obj);
             if($output->toBool() && $output->data) {
                 foreach($output->data as $key => $val) {
-                    $category_lists[$val->module_srl][] = $val;
+                    $category_lists[$val->module_srl][$val->category_srl] = $val;
                 }
             }
 
@@ -284,6 +296,7 @@
 
             foreach($tmp_document_list as $oDocument){
                 $browser_title = $args->module_srls_info[$attribute->module_srl]->browser_title;
+                $domain = $args->module_srls_info[$attribute->module_srl]->domain;
                 $category = $category_lists[$attribute->module_srl]->text;
                 $attribute = $oDocument->getObjectVars();
                 $content = $oDocument->getSummary($args->content_cut_size);
@@ -298,6 +311,8 @@
                 $content_item->setLink($url);
                 $content_item->setThumbnail($thumbnail);
                 $content_item->setExtraImages($extra_images);
+                $content_item->setDomain($domain);
+                $content_item->add('mid', $args->mid_lists[$attribute->module_srl]);
                 $content_items[] = $content_item;
             }
 
@@ -438,6 +453,7 @@
         }
 
         function _compile($args,$content_items){
+            $oTemplate = &TemplateHandler::getInstance();
 
             // 위젯에 넘기기 위한 변수 설정
             $widget_info->modules_info = $args->modules_info;
@@ -460,72 +476,69 @@
             $widget_info->show_trackback_count = $args->show_trackback_count;
             $widget_info->show_icon = $args->show_icon;
 
+            $widget_info->list_type = $args->list_type;
+            $widget_info->tab_type = $args->tab_type;
+
+            // 탭형태일경우 탭에 대한 정보를 정리하고 module_srl로 되어 있는 key값을 index로 변경
+            if($args->tab_type != 'none' && $args->tab_type) {
+                $tab = array();
+                foreach($args->mid_lists as $module_srl => $mid){
+                    if(!is_array($content_items[$module_srl]) || !count($content_items[$module_srl])) continue;
+
+                    unset($tab_item);
+                    $tab_item->title = $content_items[$module_srl][0]->getBrowserTitle();
+                    $tab_item->content_items = $content_items[$module_srl];
+                    $tab_item->domain = $content_items[$module_srl][0]->getDomain();
+                    $tab_item->url = $content_items[$module_srl][0]->getContentsLink();
+                    if(!$tab_item->url) $tab_item->url = getSiteUrl($tab_item->domain, '','mid',$mid);
+                    $tab[] = $tab_item;
+                }
+                $widget_info->tab = $tab;
+            } else {
+                $widget_info->content_items = $content_items;
+            }
             unset($args->option_view_arr);
             unset($args->modules_info);
 
             Context::set('colorset', $args->colorset);
+            Context::set('widget_info', $widget_info);
+
             $tpl_path = sprintf('%sskins/%s', $this->widget_path, $args->skin);
-            $oTemplate = &TemplateHandler::getInstance();
-
-            // 탭형태가 아니다
-            if($args->tab_type == 'none' || $args->tab_type == ''){
-                $widget_info->content_items = $content_items;
-                Context::set('widget_info', $widget_info);
-                $output = $oTemplate->compile($tpl_path, $args->list_type);
-            }else{
-
-                $content = array();
-                $tab = array();
-                // 각각별 컴파일은 한다
-                foreach($args->mid_lists as $module_srl => $mid){
-                    if(count($content_items[$module_srl]) > 0){
-                        $widget_info->content_items = $content_items[$module_srl];
-                        if(is_array($content_items[$module_srl]) && count($content_items[$module_srl])>0){
-                            Context::set('widget_info', $widget_info);
-                            $tab[$module_srl]->title = $content_items[$module_srl][0]->getBrowserTitle();
-                            $tab[$module_srl]->content = $oTemplate->compile($tpl_path, $args->list_type);
-
-                            // rss 의 경우 링크가 다르다
-                            $tab[$module_srl]->url = $content_items[$module_srl][0]->getContentsLink();
-                            if(!$tab[$module_srl]->url) $tab[$module_srl]->url = getUrl('').$mid;
-
-                        }
-                    }
-                }
-
-                unset($args->mid_lists);
-
-                Context::set('_tab', $tab);
-                $output = $oTemplate->compile($tpl_path, '_' . $args->tab_type);
-            }
-
-            return $output;
+            return $oTemplate->compile($tpl_path, "content");
         }
-
     }
 
     class contentItem extends Object {
 
         var $browser_title = null;
-        var $first_thumbnail_index = null;
+        var $has_first_thumbnail_idx = false;
+        var $first_thumbnail_idx = null;
         var $contents_link = null;
+        var $domain = null;
 
         function contentItem($browser_title=''){
             $this->browser_title = $browser_title;
         }
-
         function setContentsLink($link){
             $this->contents_link = $link;
         }
-
-        function setFirstThumbnailIndex($first_thumbnail_index){
-            if(!is_null($first_thumbnail_index)) $this->first_thumbnail_index = $first_thumbnail_index;
+        function setFirstThumbnailIdx($first_thumbnail_idx){
+            if(is_null($this->first_thumbnail) && $first_thumbnail_idx>-1) {
+                $this->has_first_thumbnail_idx = true;
+                $this->first_thumbnail_idx= $first_thumbnail_idx;
+            }
         }
-
         function setExtraImages($extra_images){
             $this->add('extra_images',$extra_images);
         }
-
+        function setDomain($domain) {
+            static $default_domain = null;
+            if(!$domain) {
+                if(is_null($default_domain)) $default_domain = Context::getDefaultUrl();
+                $domain = $default_domain;
+            }
+            $this->domain = $domain;
+        }
         function setLink($url){
             $this->add('url',$url);
         }
@@ -548,16 +561,18 @@
         function setCategory($category){
             $this->add('category',$category);
         }
-
         function getBrowserTitle(){
             return $this->browser_title;
+        }
+        function getDomain() {
+            return $this->domain;
         }
         function getContentsLink(){
             return $this->contents_link;
         }
 
-        function getFirstThumbnailIndex(){
-            return $this->first_thumbnail_index;
+        function getFirstThumbnailIdx(){
+            return $this->first_thumbnail_idx;
         }
 
         function getLink(){
@@ -593,6 +608,9 @@
         }
         function printExtraImages() {
             return $this->get('extra_images');
+        }
+        function haveFirstThumbnail() {
+            return $this->has_first_thumbnail_idx;
         }
         function getThumbnail(){
             return $this->get('thumbnail');

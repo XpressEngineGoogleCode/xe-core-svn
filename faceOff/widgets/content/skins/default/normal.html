@@ -1,61 +1,49 @@
-<!--%import("css/widget.css")-->
-<!--@if($colorset=="white"||!$colorset)-->
-    <!--%import("css/white.css")-->
-<!--@elseif($colorset=='black')-->
-    <!--%import("css/black.css")-->
-<!--@end-->
-
-<!--%import("js/content_widget.js")-->
-
-<div class="widgetContainer">
-    <table class="widgetTableA" border="1" cellspacing="0">
-        <tbody>
+<table class="widgetTableA" border="1" cellspacing="0">
+    <tbody>
 {@$i=0}
 <!--@foreach($widget_info->content_items as $key => $item)-->
-        <tr<!--@if($i >= $widget_info->list_count)--> style="display:none"<!--@end-->>
+    <tr<!--@if($i >= $widget_info->list_count)--> style="display:none"<!--@end-->>
 <!--@foreach($widget_info->option_view_arr as $k => $v)-->
-    <!--@if($v=='title')-->
-        <td class="title">
+<!--@if($v=='title')-->
+    <td class="title">
 
-            <!--@if($widget_info->show_browser_title=='Y' && $item->getBrowserTitle())-->
-                <strong class="board">{$item->getBrowserTitle()}</strong>
-            <!--@end-->
+        <!--@if($widget_info->show_browser_title=='Y' && $item->getBrowserTitle())-->
+            <a href="{getSiteUrl($item->domain, '', 'mid', $item->get('mid'))}"><strong class="board">{$item->getBrowserTitle()}</strong></a>
+        <!--@end-->
+        <!--@if($widget_info->show_category=='Y' && $item->get('category_srl') )-->
+            <a href="{getSiteUrl($item->domain,'','mid',$item->get('mid'),'category',$item->get('category_srl'))}"><strong class="category">{$item->getCategory()}</strong></a>
+        <!--@end-->
 
-            <!--@if($widget_info->show_category=='Y' && $item->getCategory())-->
-                <strong class="category">{$item->getCategory()}</strong>
-            <!--@end-->
+        <a href="{$item->getLink()}">{$item->getTitle($widget_info->subject_cut_size)}</a>
 
-            <a href="{$item->getLink()}">{$item->getTitle($widget_info->subject_cut_size)}</a>
+        <!--@if($widget_info->show_trackback_count=='Y' && $item->getCommentCount())-->
+            <sup class="replyNum"><a href="{$item->getLink()}#comment">{$item->getCommentCount()}</a></sup>
+        <!--@end-->
 
-            <!--@if($widget_info->show_trackback_count=='Y' && $item->getCommentCount())-->
-                <sup class="replyNum">{$item->getCommentCount()}</sup>
-            <!--@end-->
+        <!--@if($widget_info->show_trackback_count=='Y' && $item->getTrackbackCount())-->
+            <sup class="trackbackNum"><a href="{$item->getLink()}#trackback">{$item->getTrackbackCount()}</a></sup>
+        <!--@end-->
 
-            <!--@if($widget_info->show_trackback_count=='Y' && $item->getTrackbackCount())-->
-                <sup class="trackbackNum">{$item->getTrackbackCount()}</sup>
-            <!--@end-->
-
-            <!--@if($widget_info->show_icon=='Y')-->
-                <span class="icon">{$item->printExtraImages()}<span></td>
-            <!--@end-->
-        </td>
-    <!--@else if($v=='nickname')-->
-        <td><a href="#" onclick="return false;" class="author member_{$item->getMemberSrl()}">{$item->getNickName()}</a></td>
-    <!--@else if($v=='regdate')-->
-        <td class="time"><span class="date">{$item->getRegdate("Y-m-d")}</span> <span class="hour">{$item->getRegdate("H:i")}</span></td>
-    <!--@end-->
+        <!--@if($widget_info->show_icon=='Y')-->
+            <span class="icon">{$item->printExtraImages()}<span></td>
+        <!--@end-->
+    </td>
+<!--@else if($v=='nickname')-->
+    <td><a href="#" onclick="return false;" class="author member_{$item->getMemberSrl()}">{$item->getNickName()}</a></td>
+<!--@else if($v=='regdate')-->
+    <td class="time"><span class="date">{$item->getRegdate("Y-m-d")}</span> <span class="hour">{$item->getRegdate("H:i")}</span></td>
 <!--@end-->
-        </tr>
+<!--@end-->
+    </tr>
 {@$i++}
 <!--@end-->
-        </tbody>
-    </table>
+    </tbody>
+</table>
 
 
 <!--@if($widget_info->page_count > 1 && $widget_info->list_count<$i)-->
-    <ul class="widgetNavigator">
-        <li><button type="button" class="prev" title="{$lang->cmd_prev}" onclick="content_widget_prev(jQuery(this).parents('div.widgetContainer').children('table.widgetTableA'),{$widget_info->list_count})"><span>{$lang->cmd_prev}</span></button></li>
-        <li><button type="button" class="next" title="{$lang->cmd_next}" onclick="content_widget_next(jQuery(this).parents('div.widgetContainer').children('table.widgetTableA'),{$widget_info->list_count})"><span>{$lang->cmd_next}</span></button></li>
-    </ul>
+<ul class="widgetNavigator">
+    <li><button type="button" class="prev" title="{$lang->cmd_prev}" onclick="content_widget_prev(jQuery(this).parents('div.widgetContainer').children('table.widgetTableA'),{$widget_info->list_count})"><span>{$lang->cmd_prev}</span></button></li>
+    <li><button type="button" class="next" title="{$lang->cmd_next}" onclick="content_widget_next(jQuery(this).parents('div.widgetContainer').children('table.widgetTableA'),{$widget_info->list_count})"><span>{$lang->cmd_next}</span></button></li>
+</ul>
 <!--@end-->
-</div>
