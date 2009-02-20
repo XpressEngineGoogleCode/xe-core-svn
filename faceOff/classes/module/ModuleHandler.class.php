@@ -171,8 +171,14 @@
          * @brief 모듈과 관련된 정보를 이용하여 객체를 구하고 act 실행까지 진행시킴
          **/
         function procModule() {
-            // 에러가 있으면 return
-            if($this->error) return;
+            // 에러가 있으면 메세지 객체를 만들어서 return
+            if($this->error) {
+                $oMessageView = &getView('message');
+                $oMessageView->setError(-1);
+                $oMessageView->setMessage($this->error);
+                $oMessageView->dispMessage();
+                return $oMessageView;
+            }
 
             // ModuleModel 객체 생성
             $oModuleModel = &getModel('module');
