@@ -17,6 +17,12 @@
         function proc($args) {
             $oModuleModel = &getModel('module');
 
+            // 메뉴의 정렬 순서
+            $widget_info->menu_align = $args->menu_align;
+
+            // 메뉴의 선택 깊이
+            $widget_info->start_depth = $args->start_depth;
+
             // $args->menu_srl이 지정되어 있으면 해당 메뉴로, 그렇지 않다면 현재 레이아웃의 메뉴를 구함
             if(!$args->menu_srl) {
                 $current_module_info = Context::get('current_module_info');
@@ -34,7 +40,10 @@
 
                     // 레이아웃 정보중 menu를 Context::set
                     foreach($layout_info->menu as $menu_id => $menu) {
-                        if(file_exists($menu->php_file)) @include($menu->php_file);
+                        if(file_exists($menu->php_file)) {
+                            $args->menu_srl = $menu->menu_srl;
+                            @include($menu->php_file);
+                        }
                         break;
                     }
                 } else return;
@@ -42,9 +51,27 @@
                 $php_file = sprintf('%sfiles/cache/menu/%d.php', _XE_PATH_, $args->menu_srl);
                 @include($php_file);
             }
-            if(!$menu->list) return;
+            if(!$menu) return;
+
+            // 시작 depth가 2이상, 즉 상위 메뉴 선택 이후 하위 메뉴 출력시 처리
+            if($widget_info->start_depth>1 && count($menu->list)) {
+                $tmp = $menu->list;
+                for($i=1;$i<$widget_info->start_depth;$i++) {
+                    if(count($tmp)) {
+                        foreach($tmp as $key => $val) {
+                            if($val['selected']) $tmp = $val['list'];
+                        }
+                    }
+                }
+                if(!count($tmp)) return;
+                $menu->list = $tmp;
+            }
+
             $this->_arrangeMenu($arranged_list, $menu->list, 0);
             $widget_info->menu = $arranged_list;
+
+            // men XML 파일
+            $widget_info->xml_file = sprintf('%sfiles/cache/menu/%d.xml.php', _XE_PATH_, $args->menu_srl);
 
             Context::set('widget_info', $widget_info);
 
