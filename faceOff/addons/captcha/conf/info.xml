@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<addon version="0.2">
+    <title xml:lang="ko">Captcha 애드온</title>
+    <description xml:lang="ko">
+        프로그램 글 등록기를 막기 위해 게시판/ issueTracker에서 글/ 댓글을 입력하려 할 때 이미지를 보여주고 글에 해당하는 이미지를 선택하게 하는 애드온입니다.
+        로그인하지 않은 경우에만 해당됩니다.
+    </description>
+    <version>0.1</version>
+    <date>2009-02-20</date>
+
+    <author email_address="zero@zeroboard.com" link="http://blog.nzeo.com">
+        <name xml:lang="ko">zero</name>
+    </author>
+</addon>
