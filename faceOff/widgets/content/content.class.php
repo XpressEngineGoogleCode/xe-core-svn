@@ -351,7 +351,7 @@
                 }
                 if($args->order_type =='asc') ksort($items);
                 else krsort($items);
-                $content_items = array_slice(array_values($items),0,$args->list_count);
+                $content_items = array_slice(array_values($items),0,$args->list_count*$args->page_count);
 
             // 탭 형태
             } else {
@@ -370,6 +370,22 @@
                 }
             }
             return $content_items;
+        }
+
+        function _getRssBody($value) {
+            if(!$value || is_string($value)) return $value;
+            if(is_object($value)) $value = get_object_vars($value);
+            $body = null;
+            if(!count($value)) return;
+            foreach($value as $key => $val) {
+                if($key == 'body') {
+                    $body = $val;
+                    continue;
+                }
+                if(is_object($val)||is_array($val)) $body = $this->_getRssBody($val);
+                if($body !== null) return $body;
+            }
+            return $body;
         }
 
         function _getRssItems($args){
@@ -408,14 +424,14 @@
 
                 foreach($value as $key2 => $value2) {
                     if(is_array($value2)) $value2 = array_shift($value2);
-                    $item->{$key2} = $value2->body;
+                    $item->{$key2} = $this->_getRssBody($value2);
                 }
 
                 $content_item = new contentItem($rss->title);
                 $content_item->setContentsLink($rss->link);
                 $content_item->setTitle($item->title);
                 $content_item->setNickName(max($item->author,$item->{'dc:creator'}));
-                $content_item->setCategory($item->category);
+                //$content_item->setCategory($item->category);
                 $item->description = preg_replace('!<a href=!is','<a onclick="window.open(this.href);return false" href=', $item->description);
                 $content_item->setContent($item->description);
                 $content_item->setLink($item->link);
