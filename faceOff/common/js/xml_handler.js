@@ -233,6 +233,17 @@ function xml_handlerToZMsgObject(xmlDoc, tags) {
 
     var parsed_array = this.parseXMLDoc(xmlDoc.getElementsByTagName('response')[0]);
 
+    if(typeof(parsed_array)=='undefined') {
+        var ret = new Array();
+        ret['error'] = -1;
+        ret['message'] = "Unexpected error occured.";
+        try{
+            if(typeof(xmlDoc.childNodes[0].firstChild.data)!='undefined') ret['message']+="\r\n"+xmlDoc.childNodes[0].firstChild.data;
+        } catch(e) {
+        }
+        return ret;
+    }
+
     var obj_ret = new Array();
     for(var i=0; i<tags.length; i++) {
         var key = tags[i];
