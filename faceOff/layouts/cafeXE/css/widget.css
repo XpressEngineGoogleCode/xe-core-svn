@@ -129,7 +129,7 @@ dl.widgetDivider dd{ display:none; margin:0;}
 /* widgetZineA */
 .widgetZineA{ position:relative; margin:0; padding:0; font-size:12px; line-height:1.5; *zoom:1;}
 .widgetZineA:after{ content:""; display:block; clear:both;}
-.widgetZineA li { list-style:none; clear:both; margin-bottom:10px; padding-bottom:10px;}
+.widgetZineA li { list-style:none; clear:both; margin-bottom:10px; padding-bottom:10px; overflow:hidden; *zoom:1;}
 .widgetZineA li p{ margin:0;}
 .widgetZineA li p.thumbArea{ position:relative; float:left; width:100px; margin-right:-100px; overflow:hidden;}
 .widgetZineA li p.titleArea{ margin-left:120px; margin-bottom:4px;}

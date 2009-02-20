@@ -178,7 +178,7 @@
             // CommentModel::getCommentList()를 이용하기 위한 변수 정리
             $obj->module_srl = $args->module_srl;
             $obj->sort_index = $args->order_target;
-            $obj->list_count = $args->list_count;
+            $obj->list_count = $args->list_count * $args->page_count;
 
             // comment 모듈의 model 객체를 받아서 getCommentList() method를 실행
             $oCommentModel = &getModel('comment');
@@ -268,7 +268,7 @@
         function _getImageItems($args) {
             $oDocumentModel = &getModel('document');
 
-            $obj->module_srl = $args->module_srl;
+            $obj->module_srls = $obj->module_srl = $args->module_srl;
             $obj->direct_download = 'Y';
             $obj->isvalid = 'Y';
 
@@ -281,7 +281,7 @@
             }
 
             // 정해진 모듈에서 문서별 파일 목록을 구함
-            $obj->list_count = $args->list_count;
+            $obj->list_count = $args->list_count * $args->page_count;
             $files_output = executeQueryArray("file.getOneFileInDocument", $obj);
             $files_count = count($files_output->data);
             if(!$files_count) return;
@@ -295,6 +295,7 @@
             if(!count($tmp_document_list)) return;
 
             foreach($tmp_document_list as $oDocument){
+                $attribute = $oDocument->getObjectVars();
                 $browser_title = $args->module_srls_info[$attribute->module_srl]->browser_title;
                 $domain = $args->module_srls_info[$attribute->module_srl]->domain;
                 $category = $category_lists[$attribute->module_srl]->text;
@@ -427,9 +428,17 @@
         }
 
         function _getTrackbackItems($args){
+            // 분류 구함
+            $output = executeQueryArray('widgets.content.getCategories',$obj);
+            if($output->toBool() && $output->data) {
+                foreach($output->data as $key => $val) {
+                    $category_lists[$val->module_srl][$val->category_srl] = $val;
+                }
+            }
+
             $obj->module_srl = $args->module_srl;
             $obj->sort_index = $args->order_target;
-            $obj->list_count = $args->list_count;
+            $obj->list_count = $args->list_count * $args->page_count;
 
             // trackback 모듈의 model 객체를 받아서 getTrackbackList() method를 실행
             $oTrackbackModel = &getModel('trackback');
@@ -441,11 +450,20 @@
             // 결과가 있으면 각 문서 객체화를 시킴
             $content_items = array();
             foreach($output->data as $key => $item) {
-                $content_item = new contentItem();
+                $domain = $args->module_srls_info[$item->module_srl]->domain;
+                $category = $category_lists[$item->module_srl]->text;
+                $url = getSiteUrl($domain,'','document_srl',$item->document_srl);
+                $browser_title = $args->module_srls_info[$item->module_srl]->browser_title;
+
+                $content_item = new contentItem($browser_title);
+                $content_item->adds($item);
                 $content_item->setTitle($item->title);
+                $content_item->setCategory($category);
                 $content_item->setNickName($item->blog_name);
-                $content_item->setContent($item->excerpt);
-                $content_item->setLink($item->url);
+                $content_item->setContent($item->excerpt);  ///<<
+                $content_item->setDomain($domain);  ///<<
+                $content_item->setLink($url);
+                $content_item->add('mid', $args->mid_lists[$item->module_srl]);
                 $content_item->setRegdate($item->regdate);
                 $content_items[] = $content_item;
             }

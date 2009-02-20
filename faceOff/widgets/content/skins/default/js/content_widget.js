@@ -1,18 +1,16 @@
 function content_widget_next(obj,list_per_page){
     var page = 1;
-
-    if(obj.is('table')){
+    if(obj.is('table')) {
         var list = jQuery('>tbody>tr',obj);
-    }else if(obj.is('ul')){
+    } else if(obj.is('ul')) {
         var list = jQuery('>li',obj);
     }
 
-
-    var total_page = parseInt(list.size() / list_per_page);
+    var total_page = parseInt((list.size()-1) / list_per_page,10)+1;
     list.each(function(i){
         if(jQuery(this).css('display') !='none'){
-            page = parseInt((i+1)/list_per_page);
-            return;
+            page = parseInt((i+1)/list_per_page,10)+1;
+            return false;
         }
     });
     if(total_page <= page) return;
@@ -33,11 +31,11 @@ function content_widget_prev(obj,list_per_page){
         var list = jQuery('>li',obj);
     }
 
-    var total_page = parseInt(list.size() / list_per_page);
+    var total_page = parseInt((list.size()-1) / list_per_page,10)+1;
     list.each(function(i){
         if(jQuery(this).css('display') !='none'){
-            page = parseInt((i+1)/list_per_page);
-            return;
+            page = parseInt((i+1)/list_per_page,10)+1;
+            return false;
         }
     });
 
