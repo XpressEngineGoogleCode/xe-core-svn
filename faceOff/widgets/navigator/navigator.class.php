@@ -21,7 +21,12 @@
             $widget_info->menu_align = $args->menu_align;
 
             // 메뉴의 선택 깊이
+            if(!$args->start_depth) $args->start_depth = 1;
             $widget_info->start_depth = $args->start_depth;
+
+            // DHTML 기능 사용
+            if($args->use_dhtml!='N') $args->use_dhtml = 'Y';
+            $widget_info->use_dhtml = $args->use_dhtml;
 
             // $args->menu_srl이 지정되어 있으면 해당 메뉴로, 그렇지 않다면 현재 레이아웃의 메뉴를 구함
             if(!$args->menu_srl) {

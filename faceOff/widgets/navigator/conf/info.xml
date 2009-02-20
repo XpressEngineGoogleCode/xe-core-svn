@@ -61,5 +61,26 @@
 				<name xml:lang="zh-TW">오른쪽</name>
 			</options>
         </var>
+        <var id="use_dhtml">
+            <type>select</type>
+            <name xml:lang="ko">DHTML 사용</name>
+            <name xml:lang="zh-CN">DHTML 사용</name>
+            <name xml:lang="zh-TW">DHTML 사용</name>
+            <description xml:lang="ko">DHTML사용으로 하시면 스킨에 따라 지원되는 DHTML 기능을 사용할 수 있습니다. DHTML기능이란 마우스오버등이 경우에 레이어로 하위 메뉴가 나타나는 기능입니다.</description>
+            <description xml:lang="zh-CN">DHTML사용으로 하시면 스킨에 따라 지원되는 DHTML 기능을 사용할 수 있습니다. DHTML기능이란 마우스오버등이 경우에 레이어로 하위 메뉴가 나타나는 기능입니다.</description>
+            <description xml:lang="zh-CW">DHTML사용으로 하시면 스킨에 따라 지원되는 DHTML 기능을 사용할 수 있습니다. DHTML기능이란 마우스오버등이 경우에 레이어로 하위 메뉴가 나타나는 기능입니다.</description>
+			<options>
+				<value>Y</value>
+				<name xml:lang="ko">사용</name>
+				<name xml:lang="zh-CN">사용</name>
+				<name xml:lang="zh-TW">사용</name>
+			</options>
+			<options>
+				<value>N</value>
+				<name xml:lang="ko">미사용</name>
+				<name xml:lang="zh-CN">미사용</name>
+				<name xml:lang="zh-TW">미사용</name>
+			</options>
+        </var>
     </extra_vars>
 </widget>

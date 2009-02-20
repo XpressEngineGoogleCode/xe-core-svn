@@ -335,22 +335,21 @@ dl.widgetDivider dd{ display:none; margin:0;}
 .widgetMenuB li.active li a:active,
 .widgetMenuB li.active li a:focus{ text-decoration:underline !important;}
 
-/* widgetMenuC */
-.widgetMenuC{ margin:0; padding:0; font-size:12px; line-height:1.2; background:url(../img/white/bgMenuC.gif) repeat-x 0 0;}
+.widgetMenuC{ margin:0; padding:0; font-size:12px; line-height:1.2; background-repeat:repeat-x;background-position:0 0;}
 .widgetMenuC ul{ margin:0; padding:0; height:35px;}
-.widgetMenuC ul li ul{ display:none; position:absolute; top:40px; left:0; height:auto; padding-bottom:7px; background:#35ad06; border:1px solid #027a00;}
+.widgetMenuC ul li ul{ display:none; position:absolute; top:40px; left:20px; height:auto; padding-bottom:7px; background:#35ad06; border:1px solid #027a00;}
 .widgetMenuC ul li.active ul{ display:block;}
 .widgetMenuC ul.aCenter{ margin-left:auto; margin-right:auto;}
 .widgetMenuC ul.aLeft{ margin-right:auto;}
 .widgetMenuC ul.aRight{ margin-left:auto;}
-.widgetMenuC li{ position:relative; padding-right:3px; float:left; list-style:none; background:url(../img/white/bgMenuC.gif) no-repeat right -40px; white-space:nowrap;}
+.widgetMenuC li{ position:relative; padding-right:3px; float:left; list-style:none; background-repeat:no-repeat;background-position:right -40px; white-space:nowrap;}
 .widgetMenuC li a{ position:relative; float:left; padding:12px 22px 0 25px; height:23px; color:#fff !important; text-decoration:none !important;}
-.widgetMenuC li.first a{ background:url(../img/white/bgMenuC.gif) no-repeat left -40px;}
-.widgetMenuC li.active{ margin-left:-2px; background:url(../img/white/bgMenuC.gif) no-repeat right -80px;}
-.widgetMenuC li.active a{ font-weight:bold; color:#ff0 !important; background:url(../img/white/bgMenuC.gif) no-repeat left -80px;}
+.widgetMenuC li.first a{ background-repeat:no-repeat;background-position:left -40px;}
+.widgetMenuC li.active{ margin-left:-2px; background-repeat:no-repeat;background-position:right -80px;}
+.widgetMenuC li.active a{ font-weight:bold; color:#ff0 !important; background-repeat:no-repeat; background-position:left -80px;}
 .widgetMenuC li.active li{ padding:2px 15px; float:none; background:none;}
 .widgetMenuC li.active li.active{ margin:0;}
-.widgetMenuC li.active li.first{ margin-top:-4px; padding-top:14px; background:url(../img/white/arrowMenuC.gif) no-repeat 30px top;}
+.widgetMenuC li.active li.first{ margin-top:-4px; padding-top:14px; background-repeat:no-repeat; background-position:30px top;}
 .widgetMenuC li.active li a{ display:block; _display:inline-block; padding:0; float:none; height:auto; font-weight:normal; color:#fff !important; background:none;}
 .widgetMenuC li.active li.active a{ color:#ff0 !important;}
 .widgetMenuC li.active li a:hover,
