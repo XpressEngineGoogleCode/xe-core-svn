@@ -75,7 +75,7 @@
     $lang->secret = '秘密';
     $lang->category = $lang->category_srl = '分類';
     $lang->none_category = '無分類';
-    $lang->none_image = '이미지 없음';
+    $lang->none_image = '無圖片';
     $lang->document_srl = '文章編號';
     $lang->user_id = '帳號';
     $lang->author = '作者';
@@ -272,7 +272,7 @@
     $lang->ftp_form_title = '輸入FTP資訊';
     $lang->ftp = 'FTP';
     $lang->ftp_port = 'FTP埠口';
-    $lang->cmd_check_ftp_connect = '確認FTP連線';
+    $lang->cmd_check_ftp_connect = '檢查FTP連線';
     $lang->about_ftp_info = "
         FTP資訊可應用至以下情形<br/>
         1. 當PHP的安全模式(safe_mode)開啟時，可使程式正常運作。<br/>
@@ -281,14 +281,14 @@
         安裝程式後，可以在管理頁面中針對FTP資訊進行修改或刪除。<br />
     ";
 
-    $lang->msg_safe_mode_ftp_needed = "當PHP的安全模式(safe_mode)開啟時，請輸入相關FTP資訊，否則無法正常安裝或使用程式。";
-    $lang->msg_ftp_not_connected = "本地(localhost)FTP連線錯誤。請檢查FTP埠口並確認是否支援FTP功能。";
-    $lang->msg_ftp_invalid_auth_info = "FTP登入失敗。請確認輸入的FTP資訊。";
-    $lang->msg_ftp_mkdir_fail = "新增資料夾失敗。請確認FTP主機設置。";
-    $lang->msg_ftp_chmod_fail = "修改資料夾權限失敗。請確認FTP主機設置。";
-    $lang->msg_ftp_connect_success = "FTP連線成功。";
+    $lang->msg_safe_mode_ftp_needed = '當PHP的安全模式(safe_mode)開啟時，請輸入相關FTP資訊，否則無法正常安裝或使用程式。';
+    $lang->msg_ftp_not_connected = '本地(localhost)FTP連線錯誤。請檢查FTP埠口並確認是否支援FTP功能。';
+    $lang->msg_ftp_invalid_auth_info = 'FTP登入失敗。請確認輸入的FTP資訊。';
+    $lang->msg_ftp_mkdir_fail = '新增資料夾失敗。請確認FTP主機設置。';
+    $lang->msg_ftp_chmod_fail = '修改資料夾權限失敗。請確認FTP主機設置。';
+    $lang->msg_ftp_connect_success = 'FTP連線成功。';
 
-    // 在 xml filter中所使用的JavaScript警告訊息
+    // 在xml filter中所使用的JavaScript警告訊息
     $lang->filter->isnull = '請輸入%s';
     $lang->filter->outofrange = '請確認%s字數';
     $lang->filter->equalto = '%s值有誤。';
