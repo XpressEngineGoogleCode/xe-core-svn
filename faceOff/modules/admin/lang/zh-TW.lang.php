@@ -7,27 +7,26 @@
 
     $lang->admin_info = '管理員資訊';
     $lang->admin_index = '管理頁面';
-    $lang->control_panel = 'Control panel';
+    $lang->control_panel = '控制介面';
 
     $lang->module_category_title = array(
-        'service' => 'Service Setting',
-        'member' => 'Member Setting',
-        'content' => 'Content Setting',
-        'statistics' => 'Statistics',
-        'construction' => 'Construction',
-        'utility' => 'Utility Setting',
-        'interlock' => 'Interlock Setting',
-        'accessory' => 'Accessories',
-        'migration' => 'Data Migration',
-        'system' => 'System Setting',
+        'service' => '服務設定',
+        'member' => '會員管理',
+        'content' => '內容管理',
+        'statistics' => '統計資料',
+        'construction' => '界面設定',
+        'utility' => '擴充功能',
+        'interlock' => '連動設定',
+        'accessory' => '附加功能管理',
+        'migration' => '資料轉換',
+        'system' => '系統管理',
     );
-
 
     $lang->newest_news = "最新消息";
 
     $lang->env_setup = "系統設置";
-    $lang->default_url = "기본 URL";
-    $lang->about_default_url = "XE 가상 사이트(cafeXE등)의 기능을 사용할때 기본 URL을 입력해 주셔야 가상 사이트간 인증 연동이 되고 게시글/모듈등의 연결이 정상적으로 이루어집니다. (ex: http://도메인/설치경로)";
+    $lang->default_url = "預設網址";
+    $lang->about_default_url = "XE虛擬網站必須要先輸入預設的網址確保虛擬網站的運作，請輸入預設程式安裝路徑。<br />(例: http://網域名稱/安裝路徑)";
 
 
     $lang->env_information = "系統資訊";

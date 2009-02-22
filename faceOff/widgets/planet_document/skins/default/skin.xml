@@ -2,11 +2,15 @@
 <skin version="0.2">
 	<title xml:lang="ko">기본 플래닛 글 스킨</title>
 	<title xml:lang="zh-CN">微博最新主题列表皮肤</title>
+	<title xml:lang="zh-TW">微型部落格最新主題列表面板</title>
 	<description xml:lang="ko">
 		플래닛 글들을 출력하는 기본 위젯 스킨입니다.
 	</description>
 	<description xml:lang="zh-CN">
 		微博最新主题列表皮肤。
+	</description>
+	<description xml:lang="zh-TW">
+		微型部落格最新主題列表面板。
 	</description>
 	<version>0.1</version>
 	<date>2009-02-17</date>
@@ -15,6 +19,7 @@
 	<author email_address="zero@zeroboard.com" link="http://www.zeroboard.com">
 		<name xml:lang="ko">zero</name>
 		<name xml:lang="zh-CN">zero</name>
+		<name xml:lang="zh-TW">zero</name>
 	</author>
 	<colorset>
         <color name="layout">

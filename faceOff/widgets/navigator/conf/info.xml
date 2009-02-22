@@ -11,7 +11,7 @@
 
     <author email_address="zero@zeroboard.com" link="http://www.zeroboard.com">
         <name xml:lang="ko">zero</name>
-	<name xml:lang="zh-CN">zero</name>
+		<name xml:lang="zh-CN">zero</name>
         <name xml:lang="zh-TW">zero</name>
     </author>
 
@@ -31,14 +31,14 @@
             <name xml:lang="zh-CN">开始深度</name>
             <name xml:lang="zh-TW">階層數</name>
             <description xml:lang="ko">출력될 메뉴의 시작 깊이(depth)를 지정할 수 있습니다. 1이 최상단이고 2부터는 선택된 상위 메뉴가 있으면 출력하게 됩니다</description>
-	    <description xml:lang="zh-CN">请指定要显示的菜单开始深度(1为一级菜单)。</description>
+	    	<description xml:lang="zh-CN">请指定要显示的菜单开始深度(1为一级菜单)。</description>
             <description xml:lang="zh-TW">출력될 메뉴의 시작 깊이(depth)를 지정할 수 있습니다. 1이 최상단이고 2부터는 선택된 상위 메뉴가 있으면 출력하게 됩니다</description>
         </var>
         <var id="menu_align">
             <type>select</type>
             <name xml:lang="ko">메뉴 정렬</name>
             <name xml:lang="zh-CN">메뉴 정렬</name>
-            <name xml:lang="zh-TW">메뉴 정렬</name>
+            <name xml:lang="zh-TW">選單排序</name>
             <description xml:lang="ko">왼쪽,가운데,오른쪽등 원하는 위치로 지정할 수 있습니다. 다만 이 값은 메뉴 출력기 스킨에서 적용하는 것에 따라 다르게 사용될 수 있습니다.</description>
             <description xml:lang="zh-CN">왼쪽,가운데,오른쪽등 원하는 위치로 지정할 수 있습니다. 다만 이 값은 메뉴 출력기 스킨에서 적용하는 것에 따라 다르게 사용될 수 있습니다.</description>
             <description xml:lang="zh-TW">왼쪽,가운데,오른쪽등 원하는 위치로 지정할 수 있습니다. 다만 이 값은 메뉴 출력기 스킨에서 적용하는 것에 따라 다르게 사용될 수 있습니다.</description>
@@ -46,26 +46,26 @@
 				<value>left</value>
 				<name xml:lang="ko">왼쪽</name>
 				<name xml:lang="zh-CN">왼쪽</name>
-				<name xml:lang="zh-TW">왼쪽</name>
+				<name xml:lang="zh-TW">左側</name>
 			</options>
 			<options>
 				<value>middle</value>
 				<name xml:lang="ko">가운데</name>
 				<name xml:lang="zh-CN">가운데</name>
-				<name xml:lang="zh-TW">가운데</name>
+				<name xml:lang="zh-TW">置中</name>
 			</options>
 			<options>
 				<value>right</value>
 				<name xml:lang="ko">오른쪽</name>
 				<name xml:lang="zh-CN">오른쪽</name>
-				<name xml:lang="zh-TW">오른쪽</name>
+				<name xml:lang="zh-TW">右側</name>
 			</options>
         </var>
         <var id="use_dhtml">
             <type>select</type>
             <name xml:lang="ko">DHTML 사용</name>
             <name xml:lang="zh-CN">DHTML 사용</name>
-            <name xml:lang="zh-TW">DHTML 사용</name>
+            <name xml:lang="zh-TW">使用DHTML</name>
             <description xml:lang="ko">DHTML사용으로 하시면 스킨에 따라 지원되는 DHTML 기능을 사용할 수 있습니다. DHTML기능이란 마우스오버등이 경우에 레이어로 하위 메뉴가 나타나는 기능입니다.</description>
             <description xml:lang="zh-CN">DHTML사용으로 하시면 스킨에 따라 지원되는 DHTML 기능을 사용할 수 있습니다. DHTML기능이란 마우스오버등이 경우에 레이어로 하위 메뉴가 나타나는 기능입니다.</description>
             <description xml:lang="zh-CW">DHTML사용으로 하시면 스킨에 따라 지원되는 DHTML 기능을 사용할 수 있습니다. DHTML기능이란 마우스오버등이 경우에 레이어로 하위 메뉴가 나타나는 기능입니다.</description>
@@ -73,13 +73,13 @@
 				<value>Y</value>
 				<name xml:lang="ko">사용</name>
 				<name xml:lang="zh-CN">사용</name>
-				<name xml:lang="zh-TW">사용</name>
+				<name xml:lang="zh-TW">使用</name>
 			</options>
 			<options>
 				<value>N</value>
 				<name xml:lang="ko">미사용</name>
 				<name xml:lang="zh-CN">미사용</name>
-				<name xml:lang="zh-TW">미사용</name>
+				<name xml:lang="zh-TW">不使用</name>
 			</options>
         </var>
     </extra_vars>

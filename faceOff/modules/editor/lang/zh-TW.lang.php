@@ -2,7 +2,7 @@
     /**
      * @file   modules/editor/lang/zh-TW.lang.php
      * @author zero <zero@nzeo.com> 翻譯：royallin
-     * @brief  網頁編輯器(editor) 模組語言
+     * @brief  網頁編輯器(editor)模組語言
      **/
 
     $lang->editor = '網頁編輯器';
@@ -46,7 +46,7 @@
     $lang->about_editor_height = '指定編輯器的預設高度。';
     $lang->about_editor_height_resizable = '允許用戶拖曳編輯器高度。';
     $lang->about_enable_html_grant = 'HTML原始碼編輯權限設置。';
-    $lang->about_enable_autosave = '發表主題時，啟動內容自動儲存功能。';
+    $lang->about_enable_autosave = '發表主題時，開啟內容自動儲存功能。';
 
     $lang->edit->fontname = '字體';
     $lang->edit->fontsize = '大小';
@@ -91,11 +91,11 @@
     $lang->edit->align_left = '靠左對齊';
     $lang->edit->align_center = '置中對齊';
     $lang->edit->align_right = '靠右對齊';
-    $lang->edit->align_justify = 'Align 對齊';
+    $lang->edit->align_justify = '左右對齊';
     $lang->edit->add_indent = '縮排';
     $lang->edit->remove_indent = '凸排';
-    $lang->edit->list_number = 'Orderd List';
-    $lang->edit->list_bullet = 'Unordered List';
+    $lang->edit->list_number = '編號';
+    $lang->edit->list_bullet = '清單符號';
     $lang->edit->remove_format = '移除格式';
 
     $lang->edit->help_remove_format = '移除格式';
@@ -141,7 +141,7 @@
     $lang->about_dblclick_in_editor = '對背景，文字，圖片，引用等組件按兩下，即可對其相關組件進行詳細設置。';
 
 
-    $lang->edit->rich_editor = '所見即所得';
+    $lang->edit->rich_editor = '所見即得';
     $lang->edit->html_editor = 'HTML';
     $lang->edit->extension ='延伸組件';
     $lang->edit->help = '使用說明';

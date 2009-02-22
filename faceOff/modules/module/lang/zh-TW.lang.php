@@ -37,13 +37,13 @@
     $lang->header_script = "Header Script";
     $lang->about_header_script = "可以直接輸入，並插入到 HTML的&lt;head&gt;之間。<br />可使用&lt;script&gt;, &lt;style&gt; 或 &lt;meta&gt; 等標籤。";
 
-    $lang->grant_access = "Access";
+    $lang->grant_access = "訪問";
     $lang->grant_manager = "管理";
 
     $lang->grant_to_all = "所有使用者";
-    $lang->grant_to_login_user = "已登入使用者";
-    $lang->grant_to_site_user = "誰訂閱用戶";
-    $lang->grant_to_group = "特定群組使用者";
+    $lang->grant_to_login_user = "已登入用戶";
+    $lang->grant_to_site_user = "網站用戶";
+    $lang->grant_to_group = "特定使用群組";
 
     $lang->cmd_add_shortcut = "新增到快捷選單";
     $lang->cmd_install = "安裝";
@@ -83,8 +83,8 @@
     $lang->about_grant_deatil = '가입한 사용자는 cafeXE등 분양형 가상 사이트에 가입을 한 로그인 사용자를 의미합니다';
     $lang->about_module = "除基本函式庫以外XE全部由模組組成。\n模組管理中列出所有已安裝的模組，因此易於管理。";
 
-    $lang->about_extra_vars_default_value = '當復選或單選的預設值需要很多個時，用 (,) 區隔。';
+    $lang->about_extra_vars_default_value = '當復選或單選的預設值需要很多個時，用逗號(,)區隔。';
     $lang->about_search_virtual_site = "請輸入想要搜尋的虛擬網站(XE網咖等)的網域名稱。<br/>가상 사이트이외의 모듈은 내용을 비우고 검색하시면 됩니다.  (http:// 不用輸入)";
     $lang->about_langcode = "언어별로 다르게 설정하고 싶으시면 언어코드 찾기를 이용해주세요";
-    $lang->about_file_extension= "%s 파일만 가능합니다.";
+    $lang->about_file_extension= "只允許%s檔案。";
 ?>

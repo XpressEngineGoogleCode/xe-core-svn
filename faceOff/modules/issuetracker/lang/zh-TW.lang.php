@@ -12,7 +12,7 @@
      $lang->cmd_view_info = '專案資訊';
      $lang->cmd_project_setting = '專案設置';
      $lang->cmd_release_setting = '發佈設置';
-     $lang->cmd_insert_package = '新增套裝包';
+     $lang->cmd_insert_package = '新增套裝軟體';
      $lang->cmd_insert_release = '新增發佈版';
      $lang->cmd_attach_file = '新增附加檔案';
      $lang->cmd_display_item = '顯示專案';
@@ -53,7 +53,7 @@
      $lang->complete = '完成';
      $lang->completed_date = '結束日期';
      $lang->order = '順序';
-     $lang->package = $lang->package_srl = '套裝包';
+     $lang->package = $lang->package_srl = '套裝軟體';
      $lang->release = $lang->release_srl = '發佈版';
      $lang->release_note = '發佈記錄';
      $lang->release_changes = '更新日誌';
@@ -104,8 +104,8 @@
     $lang->msg_changes_from = 'View changes from';
     $lang->duration = 'Duration';
     $lang->target_list = array(
-        'issue_created' => '變更問題',
-        'issue_changed' => '建立問題',
+        'issue_created' => '建立問題',
+        'issue_changed' => '變更問題',
         'commit' => 'Repository checkins'
         );
 ?>

@@ -12,18 +12,18 @@
     $lang->page = "頁面";
     $lang->module_id = "模組 ID";
     $lang->item_group_grant = "顯示群組";
-    $lang->cafe_info = "Cafe Infomation";
+    $lang->cafe_info = "網站資訊";
     $lang->cafe_admin = "網站管理者";
     $lang->do_selected_member = "選擇會員 : ";
 
     $lang->default_menus = array(
         'home' => '首頁',
         'notice' => '公告事項',
-        'levelup' => 'Lveel Up',
+        'levelup' => '等級審核',
         'freeboard' => '自由討論',
-        'view_total' => '查看全文',
+        'view_total' => '檢視全部',
         'view_comment' => '故事線',
-        'cafe_album' => 'CafeAlbum',
+        'cafe_album' => '網站相簿',
         'menu' => '選單',
         'default_group1' => '待審會員',
         'default_group2' => '準會員',
@@ -35,8 +35,8 @@
         "dispHomepageMemberGroupManage" => "會員群組管理",
         "dispHomepageMemberManage" => "會員列表",
         "dispHomepageTopMenu" => "主選單",
-        "dispHomepageComponent" => "기능 설정",
-        "dispHomepageCounter" => "접속 통계",
+        "dispHomepageComponent" => "功能設定",
+        "dispHomepageCounter" => "訪問統計",
         "dispHomepageMidSetup" => "詳細設定",
     );
     $lang->cmd_cafe_registration = "建立網站";
@@ -48,15 +48,15 @@
     $lang->cmd_select_index = "選擇初始頁面";
     $lang->cmd_add_new_menu = "新增選單";
     $lang->default_language = "預設語言";
-    $lang->about_default_language = "初めてアクセスするユーザーに見せるページの言語を指定します。";
+    $lang->about_default_language = "可以設置顯示語言給首次訪問的使用者。";
 
     $lang->about_cafe_act = array(
         "dispHomepageManage" => "可設定網站風格",
         "dispHomepageMemberGroupManage" => "可管理網站內的用戶群組",
         "dispHomepageMemberManage" => "可以檢視和管理會員",
         "dispHomepageTopMenu" => "可建立或管理左側或上端的選單",
-        "dispHomepageComponent" => "에디터 컴포넌트/ 애드온을 활성화 하거나 설정을 변경할 수 있습니다",
-        "dispHomepageCounter" => "Cafe의 접속 현황을 볼 수 있습니다",
+        "dispHomepageComponent" => "可選擇是否啟用網頁編輯器組件/附加元件",
+        "dispHomepageCounter" => "可以檢視虛擬網站的訪問數據統計。",
         "dispHomepageMidSetup" => "可詳細設定網站所使用的討論板，頁面等模組",
     );
     $lang->about_cafe = "網站模組可快速建立網站，且容易進行設定。";
