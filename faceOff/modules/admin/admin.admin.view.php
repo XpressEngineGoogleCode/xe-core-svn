@@ -63,7 +63,7 @@
                     Context::set('selected_module_info', $val);
                 }
             }
-            $package_modules[count($package_modules)-1]->position = "end";
+            if(count($package_modules)) $package_modules[count($package_modules)-1]->position = 'end';
             Context::set('package_modules', $package_modules);
             Context::set('installed_modules', $installed_modules);
 
