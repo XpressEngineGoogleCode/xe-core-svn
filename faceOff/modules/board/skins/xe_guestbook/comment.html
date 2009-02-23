@@ -1,7 +1,7 @@
 <!--@if($oDocument->getCommentCount())-->
 <div class="replyBox">
 
-    <a name="comment_{$comment->comment_srl}"></a>
+    <a name="comment<!--@if($comment->comment_srl)-->_{$comment->comment_srl}<!--@end-->"></a>
     {@ $_comment_list = $oDocument->getComments() }
     <!--@foreach($_comment_list as $key => $comment)-->
 
