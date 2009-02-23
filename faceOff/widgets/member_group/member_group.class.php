@@ -15,7 +15,6 @@
          * 결과를 만든후 print가 아니라 return 해주어야 한다
          **/
         function proc($args) {
-
             // 위젯 자체적으로 설정한 변수들을 체크
             $title = $args->title;
             $list_count = (int)$args->list_count;
@@ -28,7 +27,14 @@
                 if(!$group_name) continue;
                 $target_group[] = $group_name;
             }
-            if(!count($target_group)) return;
+
+            if(!count($target_group)) {
+                $site_module_info = Context::get('site_module_info');
+                $oMemberModel = &getModel('member');
+                $group_list = $oMemberModel->getGroups((int)$site_module_info->site_srl);
+                if(!$group_list) return;
+                $target_group = array_keys($group_list);
+            }
 
             $obj->selected_group_srl = implode(',',$target_group);
             $obj->list_count = $list_count;

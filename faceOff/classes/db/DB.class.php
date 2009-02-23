@@ -434,7 +434,7 @@
                         return $name.' in ('.$value.')';
                     break;
                 case 'notin' :
-                        return $name.' notin ('.$value.')';
+                        return $name.' not in ('.$value.')';
                     break;
                 case 'notequal' :
                         return $name.' <> '.$value;

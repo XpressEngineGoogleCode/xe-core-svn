@@ -585,7 +585,7 @@ function doChangeLangType(obj) {
 function setLangType(lang_type) {
     var expire = new Date();
     expire.setTime(expire.getTime()+ (7000 * 24 * 3600000));
-    xSetCookie('lang_type', lang_type, expire);
+    xSetCookie('lang_type', lang_type, expire, '/');
 }
 
 /* 미리보기 */

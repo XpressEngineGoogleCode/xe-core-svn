@@ -87,6 +87,7 @@ dl.widgetDivider dd{ display:none; margin:0;}
 /* widgetOlistA */
 .widgetOlistA { margin:0; padding:0; font-size:12px; line-height:1.5;}
 .widgetOlistA li{ margin-left:25px;}
+.widgetOlistA li sup{ font-size:9px; font-family:tahoma; padding-left:10px; }
 
 /* widgetDlistA */
 .widgetDlistA{ margin:0; padding:0; font-size:12px; line-height:1.5; zoom:1;}
@@ -363,3 +364,5 @@ dl.widgetDivider dd{ display:none; margin:0;}
 .widgetSearch .widgetXeInputText{ width:153px; height:16px; padding:2px 20px 2px 5px; vertical-align:middle; border:1px solid #666; border-top-color:#555; border-left-color:#555; background:#444; color:#fff;}
 .widgetSearch .widgetXeInputText:focus{ background:#494949;}
 .widgetSearch .widgetSearch{ position:absolute; top:3px; right:4px; vertical-align:middle;}
+
+address.period { font-style:normal; font-size:10px; font-family:tahoma; text-align:right;}

@@ -32,7 +32,7 @@
 
             // 썸네일 컬럼 수
             $args->cols_list_count = (int)$args->cols_list_count;
-            if(!$args->cols_list_count) $args->cols_list_count = 4;
+            if(!$args->cols_list_count) $args->cols_list_count = 5;
 
             // 제목 길이 자르기
             if(!$args->subject_cut_size) $args->subject_cut_size = 0;

@@ -52,6 +52,7 @@
 /* widgetOlistA */
 .widgetOlistA li,
 .widgetOlistA li a{ color:#666;}
+.widgetOlistA li sup{ color:#AAA;}
 
 /* widgetDlistA */
 .widgetDlistA dt{ color:#333;}
@@ -274,3 +275,4 @@
 .widgetMenuCgray li.active a{ background-image:url(../img/white/bgMenuCgray.gif);}
 .widgetMenuCgray li.active li.first{ background-image:url(../img/white/arrowMenuCgray.gif);}
 
+address.period { color:#AAA; }

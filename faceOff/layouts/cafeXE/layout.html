@@ -1,3 +1,4 @@
+<!--%import("./lang")-->
 <!--%import("css/layout.css")-->
 <!--%import("css/layout@cafe.css")-->
 
@@ -78,9 +79,6 @@
                     <!--// Menu Widget -->
                     <img class="zbxe_widget_output" widget="navigator" skin="tree" widgetstyle="simple" ws_colorset="{$layout_info->colorset}" ws_title="{$lang->menu}" />
 
-                    <!--// Logged Member List Widget -->
-                    <img class="zbxe_widget_output" widget="logged_members" skin="default"  widgetstyle="simple" ws_colorset="{$layout_info->colorset}" ws_title="{$lang->logged_users}" />
-
                     <!--// Visitor Status Widget -->
                     <img class="zbxe_widget_output" widget="counter_status" skin="default" widgetstyle="simple" ws_colorset="{$layout_info->colorset}" ws_title="{$lang->counter}" />
                 </div>
@@ -91,6 +89,10 @@
             <div id="cafeXeKnee">
                 <div class="cafeXeExtension">
                     <!--// Bottom Widget -->
+                    <img class="zbxe_widget_output" widget="member_group" skin="default" colorset="black" widgetstyle="simple" ws_colorset="{$layout->colorset}" ws_title="{$lang->new_members}" list_count="5" style="width:219px;float:left;margin-right:28px;"/>
+                    <img class="zbxe_widget_output" widget="rank_count" rankby="document" skin="default" colorset="black" widgetstyle="simple" ws_colorset="{$layout->colorset}" ws_title="{$lang->document_ranking}" list_count="5" style="width:219px;float:left;margin-right:28px;"/>
+                    <img class="zbxe_widget_output" widget="rank_count" rankby="comment" skin="default" colorset="black" widgetstyle="simple" ws_colorset="{$layout->colorset}" ws_title="{$lang->comment_ranking}" list_count="5" style="width:219px;float:left;margin-right:28px;"/>
+                    <img class="zbxe_widget_output" widget="logged_members" skin="default"  widgetstyle="simple" ws_colorset="{$layout_info->colorset}" ws_title="{$lang->logged_users}" list_count="99999" style="width:219px; float:left;margin-right:28px;" />
                 </div>
             </div>
             <!-- /#knee -->
