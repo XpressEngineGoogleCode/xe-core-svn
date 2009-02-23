@@ -11,4 +11,27 @@
     <author email_address="zero@zeroboard.com" link="http://blog.nzeo.com">
         <name xml:lang="ko">zero</name>
     </author>
+
+    <extra_vars>
+        <var name="target" type="select">
+            <title xml:lang="ko">Captcha 표시 대상</title>
+            <description xml:lang="ko">글/댓글 등록시 captcha가 동작할 대상을 정할 수 있습니다. 관리자는 무조건 제외됩니다</description>
+            <options value="">
+                <title xml:lang="ko">로그인하지 않은 사용자</title>
+            </options>
+            <options value="all">
+                <title xml:lang="ko">모든 사용자</title>
+            </options>
+        </var>
+        <var name="act_type" type="select">
+            <title xml:lang="ko">동작 방식</title>
+            <description xml:lang="ko">"1번만 동작"을 선택하시면 1번만 동작후 상태를 저장해서 다음부터 물어보지 않고 그렇지 않으면 매번 물어보게 됩니다</description>
+            <options value="onetime">
+                <title xml:lang="ko">1번만 동작</title>
+            </options>
+            <options value="everytime">
+                <title xml:lang="ko">매번 동작</title>
+            </options>
+        </var>
+    </extra_vars>
 </addon>
