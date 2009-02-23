@@ -56,21 +56,6 @@
 	</author>
 
 	<extra_vars>
-		<var id="title">
-			<type>text</type>
-			<name xml:lang="ko">제목</name>
-			<name xml:lang="jp">タイトル</name>
-			<name xml:lang="en">Title</name>
-			<name xml:lang="es">Título</name>
-			<name xml:lang="zh-CN">栏目名</name>
-			<name xml:lang="zh-TW">標題</name>
-			<description xml:lang="ko">최근 게시물의 제목으로 출력됩니다.</description>
-			<description xml:lang="jp">最新コンテンツのタイトルとして表示されます。</description>
-			<description xml:lang="en">It will be displayed as title of newest article.</description>
-			<description xml:lang="es">Esto será mostrado com el título de los documentos recientes.</description>
-			<description xml:lang="zh-CN">显示为会员列表的标题。</description>
-			<description xml:lang="zh-TW">顯示會員列表的標題。</description>
-		</var>
 		<var id="list_count">
 			<type>text</type>
 			<name xml:lang="ko">목록수</name>
