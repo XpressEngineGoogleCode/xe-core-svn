@@ -21,7 +21,7 @@
         if(Context::get('act')=='setCaptchaSession') {
             $f = FileHandler::readDir('./addons/captcha/icon');
             shuffle($f);
-            $key = rand(0,count($f));
+            $key = rand(0,count($f)-1);
             $keyword = str_replace('.gif','',$f[$key]);
             $_SESSION['captcha_keyword'] = $keyword;
             $target = Context::getLang('target_captcha');
@@ -74,7 +74,6 @@
             $sx = $_SESSION['captcha_x'];
             $sy = $_SESSION['captcha_y'];
 
-            debugPrint($_SESSION);
             if($x>=$sx && $x<=$sx+50 && $y>=$sy && $y<=$sy+50) $_SESSION['captcha_authed'] = true;
             else $_SESSION['captcha_authed'] = false;
 
