@@ -199,6 +199,9 @@
                 case 'catch':
                         $output = $this->planet->getCatchContentList($page);
                     break;
+                case 'fishing':
+                        $output = $this->planet->getFishingContentList($page);
+                    break;
                 case 'interest':
                         $output = $this->planet->getInterestTagContentList($date, $page);
                     break;
@@ -223,6 +226,10 @@
             // 낚은 글 수
             $output = executeQuery('planet.getCatchContentCount', $args);
             Context::set('total_catch', $output->data->count);
+
+            // 낚인 글 수
+            $output = executeQuery('planet.getFishingContentCount', $args);
+            Context::set('total_fishing', $output->data->count);
 
             // 플래닛의 메모 가져오기
             $memo_output = $oPlanetModel->getMemoList($this->module_srl);

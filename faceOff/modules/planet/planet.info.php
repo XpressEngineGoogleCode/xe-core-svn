@@ -248,6 +248,27 @@
         }
 
         /**
+         * @brief 내가 댓글을 단 글에 댓글이 달렸는데 확인을 하지 않은 글
+         **/
+        function getFishingContentList($page=1) {
+            if(!$page) $page = 1;
+
+            $args->module_srl = $this->getModuleSrl();
+            $args->page = $page;
+            $output = executeQueryArray('planet.getFishingContentList', $args);
+            if(!$output->toBool()) return $output;
+            if(count($output->data)) {
+                foreach($output->data as $key => $val) {
+                    unset($oPlanet);
+                    $oPlanet = new PlanetItem();
+                    $oPlanet->setAttribute($val);
+                    $output->data[$key] = $oPlanet;
+                }
+            }
+            return $output;
+        }
+
+        /**
          * @brief 관심 태그로 등록된 글 가져오기
          **/
         function getInterestTagContentList($date, $page=1) {

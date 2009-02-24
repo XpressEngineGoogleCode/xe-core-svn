@@ -55,6 +55,9 @@
         <action name="getPlanetMemoList" type="model" />
         <action name="getPlanetReplyList" type="model" />
 
+        <action name="procPlanetDeleteDocument" type="controller" />
+        <action name="procPlanetDeleteComment" type="controller" />
+
         <action name="procPlanetCreate" type="controller" />
         <action name="procPlanetColorsetModify" type="controller" />
         <action name="procPlanetPhotoModify" type="controller" />

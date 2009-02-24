@@ -20,6 +20,44 @@
         }
 
         /**
+         * @brief 플래닛 글 삭제
+         **/
+        function procPlanetDeleteDocument() {
+            $document_srl = Context::get('document_srl');
+            if(!$document_srl) return new Object(-1,'msg_invalid_request');
+
+            // document module model 객체 생성
+            $oDocumentController = &getController('document');
+
+            // 삭제 시도
+            $output = $oDocumentController->deleteDocument($document_srl);
+            if(!$output->toBool()) return $output;
+
+            // 성공 메세지 등록
+            $this->add('document_srl', $document_srl);
+            $this->setMessage('success_deleted');
+        }
+
+        /**
+         * @brief 코멘트 삭제
+         **/
+        function procPlanetDeleteComment() {
+            // 댓글 번호 확인
+            $comment_srl = Context::get('comment_srl');
+            if(!$comment_srl) return $this->doError('msg_invalid_request');
+
+            // comment 모듈의 controller 객체 생성
+            $oCommentController = &getController('comment');
+
+            $output = $oCommentController->deleteComment($comment_srl, $this->grant->manager);
+            if(!$output->toBool()) return $output;
+
+            $this->add('comment_srl', $comment_srl);
+            $this->add('document_srl', $output->get('document_srl'));
+            $this->setMessage('success_deleted');
+        }
+
+        /**
          * @brief 플래닛 생성
          **/
         function procPlanetCreate() {
@@ -568,7 +606,7 @@
 
             if(!$output->toBool()) return $output;
 
-            // notice 남김
+            // 낚은글 로그 남김 (글쓴이에게 알림)
             $logged_info = Context::get('logged_info');
             if($oDocument->get('member_srl') != $logged_info->member_srl) {
                 $h_args->module_srl = $obj->module_srl;
@@ -577,6 +615,23 @@
                 $checkOutput = executeQuery('planet.getCatch', $h_args);
                 if($checkOutput->data->count) executeQuery('planet.deleteCatch', $h_args);
                 executeQuery('planet.insertCatch', $h_args);
+            }
+
+            // 낚인글 로그 남김 (댓글을 쓰는 대상 글의 모든 댓글 사용자들에게 알림)
+            $f_args->document_srl = $obj->document_srl;
+            $f_args->member_srl = $logged_info->member_srl;
+            $output = executeQueryArray('planet.getFishings', $f_args);
+            if($output->toBool() && $output->data) {
+                $list_order = getNextSequence();
+                foreach($output->data as $val) {
+                    $val->module_srl;
+                    $args = null;
+                    $args->module_srl = $val->module_srl;
+                    $args->document_srl = $obj->document_srl;
+                    $args->list_order = -1*getNextSequence();
+                    $args->regdate = date("YmdHis");
+                    executeQuery('planet.insertFishings', $args);
+                }
             }
 
             $this->setMessage('success_registed');

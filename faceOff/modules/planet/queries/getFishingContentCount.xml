@@ -1,6 +1,6 @@
-<query id="getCatchContentCount" action="select">
+<query id="getFishingContentCount" action="select">
     <tables>
-        <table name="planet_catch" alias="planet_catch" />
+        <table name="planet_fishing" alias="planet_fishing" />
     </tables>
     <columns>
         <column name="count(*)" alias="count" />

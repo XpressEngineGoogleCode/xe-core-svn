@@ -12,6 +12,7 @@
     $lang->planet_whos_planet = "%s さんのプラネット";
     $lang->planet_whos_favorite = "%s さんのお気に入り";
     $lang->planet_whos_favorite_list = "'%s'さんがよく訪れるプラネット";
+    $lang->planet_favorite = "お気に入り";
 
     $lang->planet_welcome = "ようこそ！";
 

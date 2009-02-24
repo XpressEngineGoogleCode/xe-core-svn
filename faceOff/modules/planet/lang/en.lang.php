@@ -12,6 +12,7 @@
     $lang->planet_whos_planet = "%s's planet";
     $lang->planet_whos_favorite = "%s's favorite planets";
     $lang->planet_whos_favorite_list = "%s's favorite planets";
+    $lang->planet_favorite = "Favorites";
 
     $lang->planet_welcome = "Welcome!";
 
