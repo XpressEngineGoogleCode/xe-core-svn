@@ -44,6 +44,8 @@
 
         var $is_uploaded = false; ///< @brief 첨부파일이 업로드 된 요청이였는지에 대한 체크 플래그
 
+        var $widget_include_info_flag = false; // 위젯 정보 코드 출력
+
         /**
          * @brief 유일한 Context 객체를 반환 (Singleton)
          * Context는 어디서든 객체 선언없이 사용하기 위해서 static 하게 사용
@@ -618,7 +620,7 @@
          * @brief GET/POST방식일 경우 처리
          **/
         function _setRequestArgument() {
-            if($this->_getRequestMethod() == 'XMLRPC') return;
+            if($this->_getRequestMethod() == 'XMLRPC' || $this->_getRequestMethod() == 'JSON') return;
             if(!count($_REQUEST)) return;
 
             foreach($_REQUEST as $key => $val) {
@@ -1285,17 +1287,27 @@
             return file_exists(Context::getConfigFile()) && filesize(Context::getConfigFile());
         }
 
+
+        /**
+         * @brief 내용의 위젯이나 기타 기능에 대한 code를 실제 code로 변경을 위한 flag set
+         **/
+        function setTransWidgetCodeIncludeInfo($flag=false){
+            $oContext = &Context::getInstance();
+            $oContext->widget_include_info_flag = $flag ? true : false;
+        }
+
         /**
          * @brief 내용의 위젯이나 기타 기능에 대한 code를 실제 code로 변경
          **/
         function transContent($content) {
+
             // 사용자 정의 언어로 변경
             $oModuleController = &getController('module');
             $oModuleController->replaceDefinedLangCode($content);
             
             // 위젯 코드 변경 
             $oWidgetController = &getController('widget');
-            $content = $oWidgetController->transWidgetCode($content, false);
+            $content = $oWidgetController->transWidgetCode($content,$this->widget_include_info_flag);
 
             // 메타 파일 변경
             $content = preg_replace_callback('!<\!\-\-Meta:([^\-]*?)\-\->!is', array($this,'transMeta'), $content);
