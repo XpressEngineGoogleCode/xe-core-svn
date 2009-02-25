@@ -24,7 +24,7 @@
         /**
          * 파일 선택
          */
-        select : function(file_url, module_filebox_srl){
+        selectFile : function(file_url, module_filebox_srl){
             var target = $(opener.XE.filebox.selected);
             var target_name = target.attr('name');
 
@@ -48,7 +48,7 @@
         /**
          * 파일 삭제
          */
-        delete : function(module_filebox_srl){
+        deleteFile : function(module_filebox_srl){
             var params = {
                 'module_filebox_srl' : module_filebox_srl
             };

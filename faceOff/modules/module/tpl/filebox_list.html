@@ -38,9 +38,9 @@
         <td>{zdate($val->regdate,'Y-m-d H:i')}</td>
         <td>
             <!--@if(!$filter || (is_array($arrfilter) && in_array($val->fileextension,$arrfilter)))-->
-			<span class="small button black"><button type="button" onclick="XE.filebox.select('{getUrl('')}{$val->filename}','{$val->module_filebox_srl}');">{$lang->cmd_select}</button></span>
+            <span class="small button black"><button type="button" onclick="XE.filebox.selectFile('{getUrl('')}{$val->filename}','{$val->module_filebox_srl}');">{$lang->cmd_select}</button></span>
             <!--@end-->
-			<span class="small button"><button type="button" onclick="XE.filebox.delete('{$val->module_filebox_srl}');">{$lang->cmd_delete}</button></span>
+            <span class="small button"><button type="button" onclick="XE.filebox.deleteFile('{$val->module_filebox_srl}');">{$lang->cmd_delete}</button></span>
         </td>
     </tr>
 <!--@end-->
