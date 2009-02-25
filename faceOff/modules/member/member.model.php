@@ -28,7 +28,7 @@
             $logged_info = Context::get('logged_info');
             $act = Context::get('cur_act');
 
-            // 자신의 아이디를 클릭한 경우 
+            // 자신의 아이디를 클릭한 경우
             if($member_srl == $logged_info->member_srl) $member_info = $logged_info;
 
             // 다른 사람의 아이디를 클릭한 경우
@@ -55,7 +55,7 @@
             // 다른 사람의 아이디를 클릭한 경우
             if($member_srl != $logged_info->member_srl) {
 
-                // 메일 보내기 
+                // 메일 보내기
                 if($member_info->email_address) {
                     $url = 'mailto:'.$member_info->email_address;
                     $icon_path = './modules/member/tpl/images/icon_sendmail.gif';
@@ -64,11 +64,11 @@
             }
 
             // 홈페이지 보기
-            if($member_info->homepage) 
+            if($member_info->homepage)
                 $oMemberController->addMemberPopupMenu($member_info->homepage, 'homepage', './modules/member/tpl/images/icon_homepage.gif','blank');
 
             // 블로그 보기
-            if($member_info->blog) 
+            if($member_info->blog)
                 $oMemberController->addMemberPopupMenu($member_info->blog, 'blog', './modules/member/tpl/images/icon_blog.gif','blank');
 
             // trigger 호출 (after)
@@ -137,12 +137,12 @@
                         $groups[$default_group->group_srl] = $default_group->title;
                         $logged_info->group_list = $groups;
                     }
-                  
+
                     $logged_info->is_site_admin = false;
                 }
 
                 $_SESSION['logged_info'] = $logged_info;
-                
+
                 return $logged_info;
             }
             return NULL;
@@ -160,7 +160,7 @@
             if(!$output->data) return;
 
             $member_info = $this->arrangeMemberInfo($output->data);
-            $member_info->group_list = $this->getMemberGroups($member_info->member_srl);
+
             return $member_info;
         }
 
@@ -169,32 +169,42 @@
          **/
         function getMemberInfoByMemberSrl($member_srl, $site_srl = 0) {
             if(!$member_srl) return;
-            $args->member_srl = $member_srl;
-            $output = executeQuery('member.getMemberInfoByMemberSrl', $args);
-            if(!$output) return $output;
 
-            $member_info = $this->arrangeMemberInfo($output->data);
-            $member_info->group_list = $this->getMemberGroups($member_info->member_srl, $site_srl);
-            return $member_info;
+            if(!$GLOBALS['__member_info__'][$member_srl]) {
+                $args->member_srl = $member_srl;
+                $output = executeQuery('member.getMemberInfoByMemberSrl', $args);
+                if(!$output) return $output;
+
+                $this->arrangeMemberInfo($output->data, $site_srl);
+            }
+
+            return $GLOBALS['__member_info__'][$member_srl];
         }
 
         /**
          * @brief 사용자 정보 중 extra_vars와 기타 정보를 알맞게 편집
          **/
-        function arrangeMemberInfo($info) {
-            $info->profile_image = $this->getProfileImage($info->member_srl);
-            $info->image_name = $this->getImageName($info->member_srl);
-            $info->image_mark = $this->getImageMark($info->member_srl);
-            $info->signature = $this->getSignature($info->member_srl);
+        function arrangeMemberInfo($info, $site_srl = 0) {
+            if(!$GLOBALS['__member_info__'][$info->member_srl]) {
+                $info->profile_image = $this->getProfileImage($info->member_srl);
+                $info->image_name = $this->getImageName($info->member_srl);
+                $info->image_mark = $this->getImageMark($info->member_srl);
+                $info->signature = $this->getSignature($info->member_srl);
+                $info->group_list = $this->getMemberGroups($info->member_srl, $site_srl);
 
-            $extra_vars = unserialize($info->extra_vars);
-            unset($info->extra_vars);
-            if(!$extra_vars) return $info;
-            foreach($extra_vars as $key => $val) {
-                if(preg_match('/\|\@\|/i', $val)) $val = explode('|@|', $val);
-                if(!$info->{$key}) $info->{$key} = $val;
+                $extra_vars = unserialize($info->extra_vars);
+                unset($info->extra_vars);
+                if($extra_vars) {
+                    foreach($extra_vars as $key => $val) {
+                        if(preg_match('/\|\@\|/i', $val)) $val = explode('|@|', $val);
+                        if(!$info->{$key}) $info->{$key} = $val;
+                    }
+                }
+
+                $GLOBALS['__member_info__'][$info->member_srl] = $info;
             }
-            return $info;
+
+            return $GLOBALS['__member_info__'][$info->member_srl];
         }
 
         /**
@@ -485,7 +495,7 @@
         }
 
         /**
-         * @brief 프로필 이미지의 정보를 구함 
+         * @brief 프로필 이미지의 정보를 구함
          **/
         function getProfileImage($member_srl) {
             if(!isset($GLOBALS['__member_info__']['profile_image'][$member_srl])) {
