@@ -92,10 +92,11 @@
                     // 삭제 요청에 대한 변수를 구함
                     $del_var = $extra_vars->{"del_".$name};
                     unset($extra_vars->{"del_".$name});
-                    if($del_var == 'Y') {
+                    // 삭제 요청이 있거나, 새로운 파일이 업로드 되면, 기존 파일 삭제
+                    if($del_var == 'Y' || $image_obj['tmp_name']) {
                         FileHandler::removeFile($extra_vars->{$name});
                         $extra_vars->{$name} = '';
-                        continue;
+                        if($del_var == 'Y' && !$image_obj['tmp_name']) continue;
                     }
 
                     // 정상적으로 업로드된 파일이 아니면 무시
