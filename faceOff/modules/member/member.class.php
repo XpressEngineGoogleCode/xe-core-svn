@@ -1,10 +1,9 @@
 <?php
     /**
-     * @class  member 
+     * @class  member
      * @author zero (zero@nzeo.com)
      * @brief  member module의 high class
      **/
-
     class member extends ModuleObject {
 
         /**
@@ -143,6 +142,9 @@
             if(!$oDB->isColumnExists("member_group", "site_srl")) return true;
             if($oDB->isIndexExists("member_group","uni_member_group_title")) return true;
 
+            // image_mark 추가 (2009. 02. 14)
+            if(!$oDB->isColumnExists("member_group", "image_mark")) return true;
+
             return false;
         }
 
@@ -175,6 +177,11 @@
             }
             if($oDB->isIndexExists("member_group","uni_member_group_title")) {
                 $oDB->dropIndex("member_group","uni_member_group_title",true);
+            }
+
+            // image_mark 추가 (2009. 02. 14)
+            if(!$oDB->isColumnExists("member_group", "image_mark")) {
+                $oDB->addColumn("member_group", "image_mark", "text");
             }
 
             return new Object(0, 'success_updated');

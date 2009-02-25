@@ -36,6 +36,10 @@
     $lang->image_mark = 'Marca de la imagen';
     $lang->image_mark_max_width = 'Ancho Máximo';
     $lang->image_mark_max_height = 'Altura Máxima';
+    $lang->group_image_mark = 'Group Image Mark';
+    $lang->group_image_mark_max_width = 'Ancho Máximo';
+    $lang->group_image_mark_max_height = 'Altura Máxima';
+    $lang->group_image_mark_order = '그룹 이미지 마크 순서';
     $lang->enable_openid = 'Activar OpenID';
     $lang->enable_join = 'Permitir el registro del usuario';
     $lang->enable_confirm = '메일 인증 사용';
@@ -142,6 +146,7 @@
 
     $lang->msg_not_uploaded_image_name = 'Imagen del nombre no puede ser registrado';
     $lang->msg_not_uploaded_image_mark = 'Imagen de marca no puede ser resistrado';
+    $lang->msg_not_uploaded_group_image_mark = '그룹 이미지 마크를 등록할 수가 없습니다';
 
     $lang->msg_accept_agreement = 'Usted primero debe aceptar el acuerdo'; 
 
@@ -184,6 +189,7 @@
 
     $lang->about_image_name = "Permitir a los usuarios el uso de imagen del nombre en ves del nombre del usuario";
     $lang->about_image_mark = "Permitir a los usuarios el uso de imagen de marca delante de sus nombres";
+    $lang->about_group_image_mark = '사용자의 이름앞에 그룹 마크를 달 수 있습니다';
     $lang->about_profile_image = 'Permitir a los usuarios a utilizar nombre de la imagen en lugar de texto nombre';
     $lang->about_accept_agreement = "Yo he leído todo el acuerdo y acepto"; 
 

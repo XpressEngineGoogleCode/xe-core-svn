@@ -74,5 +74,6 @@
         <action name="procMemberAdminUpdateJoinForm" type="controller" standalone="true" />
         <action name="procMemberAdminInsertDeniedID" type="controller" standalone="true" />
         <action name="procMemberAdminUpdateDeniedID" type="controller" standalone="true" />
+        <action name="procMemberAdminGroupImageMarkUpdateOrder" type="controller" standalone="true" />
     </actions>
 </module>
