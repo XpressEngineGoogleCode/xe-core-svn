@@ -1,8 +1,8 @@
 <!--%import("filter/style_generate_code_in_page.xml")-->
 <!--%import("js/widget_admin.js")-->
 <!--%import("css/widget.css")-->
-<!--%import("../../module/tpl/js/filebox.js")-->
 <!--%import("../../admin/tpl/css/admin.css")-->
+<!--%load_js_plugin("filebox")-->
 
 
 <script type="text/javascript">
@@ -79,14 +79,13 @@
                     <!--@end-->
                 </select>
                 <!--@elseif($var->type == "filebox")-->
-                        <div id="filebox_preview_{$id}" style="width:100px;height:100px;display:none" >
-                        </div>
-<input type="hidden" name="{$id}" value="" />
-<span class="button black"><button type="button" onclick="openFileBox(jQuery('[name={$id}]','#fo_widget').get(0),'{$var->filter}')">{$lang->cmd_select}</button></span>
-<span id="filebox_unselect_{$id}" class="button red" style="display:none" ><button type="button" onclick="unselectFileBox('{$id}')">{$lang->cmd_delete}</button></span>
-<script type="text/javascript">//<![CDATA[
-    initFileBox('{$id}');
-//]]></script>
+                    <div id="filebox_preview_{$id}" style="width:100px;height:100px;display:none" ></div>
+                    <input type="hidden" name="{$id}" value="" />
+                    <span class="button black"><button type="button" onclick="XE.filebox.open(jQuery('[name={$id}]', '#fo_widget').get(0), '{$var->filter}')">{$lang->cmd_select}</button></span>
+                    <span id="filebox_cancel_{$id}" class="button red" style="display:none" ><button type="button" onclick="XE.filebox.cancel('{$id}')">{$lang->cmd_delete}</button></span>
+                    <script type="text/javascript">//<![CDATA[
+                        XE.filebox.init('{$id}');
+                    //]]></script>
 
 
                 <!--@end-->
