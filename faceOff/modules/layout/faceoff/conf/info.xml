@@ -90,7 +90,7 @@
             <title xml:lang="ge">Copyright Stationery </title>
             <title xml:lang="ru">Copyright Канцтовары</title>
             <title xml:lang="es">Papel del derecho de autor</title>
-            <description xml:lang="ko">레이아웃의 상단에 표시될 로고 글자를 입력해주세요. 로고 이미지가 있으면 표시되지 않습니다.</description>
+            <description xml:lang="ko">하단에 표시될 카피라이트 문구를 설정할 수 있습니다</description>
             <description xml:lang="jp">レイアウトの下部に表示されるcopyrightフレーズを入力してください。</description>
             <description xml:lang="zh-CN">布局显示在下方的版权声明请。</description>
             <description xml:lang="zh-TW">佈局顯示在下方的版權聲明請。</description>
