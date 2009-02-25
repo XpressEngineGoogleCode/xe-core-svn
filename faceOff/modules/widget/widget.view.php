@@ -105,7 +105,6 @@
             $this->setTemplateFile('widget_generate_code_in_page');
         }
 
-
         /**
          * @brief 페이지 관리에서 사용될 위젯 스타일 코드 생성 팝업
          **/
@@ -127,6 +126,5 @@
             $this->setLayoutFile('popup_layout');
             $this->setTemplateFile('widget_style_generate_code_in_page');
         }
-
     }
 ?>

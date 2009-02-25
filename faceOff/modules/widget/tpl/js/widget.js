@@ -215,6 +215,7 @@ function doAddContent(mid) {
 // 직접 내용을 입력하기 위한 에디터 활성화 작업 및 form 데이터 입력
 function doSyncPageContent() {
     if(opener && opener.selectedWidget) {
+
         var fo_obj = xGetElementById("content_fo");
         var sel_obj = opener.selectedWidget;
         fo_obj.style.value = getStyle(opener.selectedWidget);
@@ -246,7 +247,6 @@ function addContentWidget(fo_obj) {
     var module_srl = fo_obj.module_srl.value;
     var document_srl = fo_obj.document_srl.value;
     var content = editorGetContent(editor_sequence);
-
     var response_tags = new Array('error','message','document_srl');
     var params = new Array();
     params['editor_sequence'] = editor_sequence;
@@ -254,12 +254,19 @@ function addContentWidget(fo_obj) {
     params['module_srl'] = module_srl;
     params['document_srl'] = document_srl;
     exec_xml('widget',"procWidgetInsertDocument",params,completeAddContent,response_tags,params,fo_obj);
-
     return false;
+
 }
 
 function completeAddContent(ret_obj, response_tags, params, fo_obj) {
     var document_srl = ret_obj['document_srl'];
+
+    var contentWidget = opener.jQuery('div.widgetOutput[widget=widgetContent][document_srl='+document_srl+']');
+    var attr = null;
+    if(contentWidget.size()>0) {
+        attr = contentWidget.get(0).attributes;
+    }
+
     var tpl = ''+
         '<div class="widgetOutput" style="'+fo_obj.style.value+'" widget_padding_left="'+fo_obj.widget_padding_left.value+'" widget_padding_right="'+fo_obj.widget_padding_right.value+'" widget_padding_top="'+fo_obj.widget_padding_top.value+'" widget_padding_bottom="'+fo_obj.widget_padding_bottom.value+'" document_srl="'+document_srl+'" widget="widgetContent">'+
         '<div class="widgetResize"></div>'+
@@ -270,6 +277,17 @@ function completeAddContent(ret_obj, response_tags, params, fo_obj) {
         '<div class="widgetContent" style="display:none;width:1px;height:1px;overflow:hidden;"></div>'+
         '</div>';
 
+    var oTpl = jQuery(tpl);
+    if(attr) {
+        jQuery.each(attr,function(i){
+            if(!oTpl.attr(attr[i].name)){
+                oTpl.attr(attr[i].name,attr[i].value);
+            }
+        });
+    }
+
+    oTpl = jQuery('<div>').append(oTpl);
+    tpl = oTpl.html();
     opener.doAddWidgetCode(tpl);
     window.close();
 }

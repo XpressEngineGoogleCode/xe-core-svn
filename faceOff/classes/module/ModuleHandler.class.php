@@ -142,6 +142,8 @@
                 $this->mid = $module_info->mid;
                 $this->module_info = $module_info;
                 Context::setBrowserTitle($module_info->browser_title);
+                $part_config= $oModuleModel->getModulePartConfig('layout',$module_info->layout_srl);
+                Context::addHtmlHeader($part_config->header_script);
             }
 
             // 모듈정보에 module과 mid를 강제로 지정
@@ -266,7 +268,6 @@
                     // layout_srl이 있으면 해당 레이아웃 정보를 가져와 layout_path/ layout_file 위치 변경
                     $oLayoutModel = &getModel('layout');
                     $layout_info = $oLayoutModel->getLayout($oModule->module_info->layout_srl);
-
                     if($layout_info) {
 
                         // 레이아웃 정보중 extra_vars의 이름과 값을 $layout_info에 입력
@@ -275,7 +276,6 @@
                                 $layout_info->{$var_id} = $val->value;
                             }
                         }
-                        
                         // 레이아웃 정보중 menu를 Context::set
                         if($layout_info->menu_count) {
                             foreach($layout_info->menu as $menu_id => $menu) {
@@ -285,7 +285,7 @@
                         }
 
                         // 레이아웃 정보중 header_script가 있으면 헤더 추가
-                        if($layout_info->header_script) Context::addHtmlHeader($layout_info->header_script);
+                        //if($layout_info->header_script) Context::addHtmlHeader($layout_info->header_script);
 
                         // 레이아웃 정보를 Context::set
                         Context::set('layout_info', $layout_info);
@@ -294,7 +294,9 @@
                         $oModule->setLayoutFile('layout');
 
                         // 레이아웃이 수정되었을 경우 수정본을 지정
-                        $edited_layout = sprintf('./files/cache/layout/%d.html', $layout_info->layout_srl);
+                        $edited_layout = $oLayoutModel->getUserLayoutHtml($layout_info->layout_srl);
+                        $edited_layout_css = $oLayoutModel->getUserLayoutCss($layout_info->layout_srl);
+                        Context::addCSSFile($edited_layout_css);
                         if(file_exists($edited_layout)) $oModule->setEditedLayoutFile($edited_layout);
                     }
                 }

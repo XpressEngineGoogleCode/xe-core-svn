@@ -89,7 +89,7 @@
 <!--@if(count($group_list))-->
 <ol id="group_image_mark_order">
 <!--@if(count($config->group_image_mark_order))-->
-    <!--@foreach($config->group_image_mark_order as $group_srl)-->{debugPrint($group_list)}
+    <!--@foreach($config->group_image_mark_order as $group_srl)-->
         <li id="group_srl_{$group_srl}" class="<!--@if(!$group_list[$group_srl]->image_mark)-->inactive<!--@else-->active<!--@end-->"><!--@if($group_list[$group_srl]->image_mark)--><img src="{$group_list[$group_srl]->image_mark}" width="{$config->group_image_mark_max_width}" height="{$config->group_image_mark_max_height}" style="vertical-align: middle; margin-right: 3px;" /><!--@endif-->{$group_list[$group_srl]->title}</li>
     <!--@endforeach-->
 <!--@endif-->

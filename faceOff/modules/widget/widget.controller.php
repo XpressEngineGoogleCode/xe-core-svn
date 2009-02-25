@@ -101,9 +101,11 @@
             if(!$widget) return new Object(-1,'msg_invalid_request');
 //            if(!Context::get('skin')) return new Object(-1,Context::getLang('msg_widget_skin_is_null'));
             $attribute = $this->arrangeWidgetVars($widget, Context::getRequestVars(), $vars);
+
             // 결과물을 구함
             $oWidgetHandler = new WidgetHandler();
             $widget_code = $oWidgetHandler->execute($widget, $vars, true);
+
             $this->add('widget_code', $widget_code);
         }
 
@@ -245,16 +247,24 @@
          * @brief 컨텐츠 위젯 추가
          **/
         function procWidgetInsertDocument() {
+
             // 변수 구함
             $module_srl = Context::get('module_srl');
             $document_srl = Context::get('document_srl');
             $content = Context::get('content');
             $editor_sequence = Context::get('editor_sequence');
 
+            $err = 0;
+            $oLayoutModel = &getModel('layout');
+            $layout_info = $oLayoutModel->getLayout($module_srl);
+            if(!$layout_info || $layout_info->type != 'faceoff') $err++;
+
             // 대상 페이지 모듈 정보 구함
             $oModuleModel = &getModel('module');
             $page_info = $oModuleModel->getModuleInfoByModuleSrl($module_srl);
-            if(!$page_info->module_srl || $page_info->module != 'page') return new Object(-1,'msg_invalid_request');
+            if(!$page_info->module_srl || $page_info->module != 'page') $err++;
+            
+            if($err > 1) return new Object(-1,'msg_invalid_request');
 
             // 권한 체크
             $is_logged = Context::get('is_logged');

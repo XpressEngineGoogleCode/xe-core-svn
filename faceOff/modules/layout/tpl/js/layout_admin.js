@@ -42,3 +42,25 @@ function doMenuManagement(menu_id) {
     var url = current_url.setQuery('act','dispMenuAdminManagement').setQuery('menu_srl',menu_srl);
     winopen(url);
 }
+
+
+function checkFile(f){
+    var filename = jQuery('[name=user_layout_image]',f).val();
+    if(/\.(gif|jpg|jpeg|gif|png|swf|flv)$/i.test(filename)){
+        return true;
+    }else{
+        alert('only image and flash file');
+        return false;
+    }
+}
+
+function deleteFile(layout_srl,filename){
+    var params ={
+            "layout_srl":layout_srl
+            ,"filename":filename
+            };
+
+    jQuery.exec_json('layout.procLayoutAdminUserImageDelete', params, function(data){
+        document.location.reload();
+    });
+}

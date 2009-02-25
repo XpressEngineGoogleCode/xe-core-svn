@@ -9,13 +9,18 @@
         <th scope="row"><div>{$lang->layout_name}</div></th>
         <td>
             <select name="layout">
+                <option value="faceoff">faceoff 레이아웃</option>
+
+                <optgroup label="다운로드 레이아웃">
                 <!--@foreach($layout_list as $key => $val)-->
                 <option value="{$val->layout}" <!--@if($layout == $val->layout)-->selected="selected"<!--@end-->> <!--@if($val->title)-->{$val->title} ({$val->layout})<!--@else-->{$val->layout}<!--@end--></option>
                 <!--@end-->
+                </optgroup>
+
             </select>
         </td>
     </tr>
-    <tr class="row2">  
+    <tr class="row2">
         <th scope="row"><div>{$lang->title}</div></th>
         <td>
             <input type="text" name="title" value="{$info->title}" class="inputTypeText w400" />

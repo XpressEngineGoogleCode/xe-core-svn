@@ -170,6 +170,7 @@
             </script>
         <!--@elseif($var->type == "menu")-->
             <select name="{$id}" class="w300 fl">
+                <option value="">-</option>
                 <!--@foreach($menu_list as $key => $val)-->
                 <option value="{$val->menu_srl}">{$val->title}</option>
                 <!--@end-->

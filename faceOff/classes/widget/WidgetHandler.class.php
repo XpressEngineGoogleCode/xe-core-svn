@@ -135,6 +135,7 @@
 
             // 일반 페이지 호출일 경우 지정된 스타일만 꾸면서 바로 return 함
             if(!$include_info) {
+                if($args->id) $args->id = ' id="'.$args->id.'" ';
                 switch($widget) {
                     // 내용 직접 추가일 경우 
                     case 'widgetContent' :
@@ -145,7 +146,7 @@
                                 $body = base64_decode($args->body);
                             }
 
-                            $widget_content_header = sprintf('<div style="overflow:hidden;%s"><div style="%s">',$style, $inner_style);
+                            $widget_content_header = sprintf('<div %sstyle="overflow:hidden;%s"><div style="%s">', $args->id, $style,  $inner_style);
                             $widget_content_body = $body;
                             $widget_content_footer = '</div></div>';
 
@@ -153,12 +154,12 @@
 
                     // 위젯 박스일 경우
                     case 'widgetBox' :
-                            $widget_content_header = sprintf('<div style="overflow:hidden;%s;"><div style="%s"><div>', $style, $inner_style);
+                            $widget_content_header = sprintf('<div %sstyle="overflow:hidden;%s;"><div style="%s"><div>', $args->id, $style,  $inner_style);
                         break;
 
                     // 일반 위젯일 경우
                     default :
-                            $widget_content_header = sprintf('<div style="overflow:hidden;%s">',$style);
+                            $widget_content_header = sprintf('<div %sstyle="overflow:hidden;%s">',$args->id,$style);
                             $widget_content_body = sprintf('<div style="%s">%s</div>', $inner_style,$widget_content);
                             $widget_content_footer = '</div>';
                         break;
@@ -254,7 +255,6 @@
             }
 
             $output = $widget_content_header . $widget_content_body . $widget_content_footer;
-
 
             // 위젯 결과물 생성 시간을 debug 정보에 추가
             if(__DEBUG__==3) $GLOBALS['__widget_excute_elapsed__'] += getMicroTime() - $start;

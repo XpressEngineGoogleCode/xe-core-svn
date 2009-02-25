@@ -237,6 +237,14 @@
                         $options_count = count($options);
                         for($j=0;$j<$options_count;$j++) {
                             $buff .= sprintf('$widget_info->extra_var->%s->options["%s"] = "%s";', $id, $options[$j]->value->body, $options[$j]->name->body);
+
+                            if($options[$j]->attrs->default && $options[$j]->attrs->default=='true'){
+                                $buff .= sprintf('$widget_info->extra_var->%s->default_options["%s"] = true;', $id, $options[$j]->value->body);
+                            }
+
+                            if($options[$j]->attrs->init && $options[$j]->attrs->init=='true'){
+                                $buff .= sprintf('$widget_info->extra_var->%s->init_options["%s"] = true;', $id, $options[$j]->value->body);
+                            }
                         }
 
                     }

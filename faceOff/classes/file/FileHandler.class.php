@@ -18,8 +18,6 @@
             return $source;
         }
 
-
-
         /**
          * @brief 특정 디렉토리를 복사
          **/
@@ -58,7 +56,6 @@
             if($force=='Y') @unlink($target_dir.'/'.$target);
             @copy($source, $target_dir.'/'.$target);
         }
-
 
         /**
          * @brief 파일의 내용을 읽어서 return

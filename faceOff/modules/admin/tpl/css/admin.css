@@ -134,7 +134,7 @@
 #popup_content * { font-size:12px; }
 #popHeadder h4.xeAdmin, #popHeadder h1.xeAdmin, #popHeadder h3.xeAdmin { font-size:14px !important; font-family:Dotum !important; background:#f4f4f4 !important; padding:8px 30px 8px 15px !important; letter-spacing:-1px !important; border:none !important; margin:0 !important;}
 #popHeader h4.xeAdmin, #popHeader h1.xeAdmin, #popHeader h3.xeAdmin { font-size:14px !important; font-family:Dotum !important; background:#f4f4f4 !important; padding:8px 30px 8px 15px !important; letter-spacing:-1px !important; border:none !important; margin:0 !important;}
-#popHeader, #popBody, #popFooter { position:relative; *zoom:1; }
+#popHeader, #popBody, #popFooter { position:relative; *zoom:1; overflow:hidden;}
 #popBody, #popHistoryBody { margin:15px !important;}
 #popFooter { padding:10px 0 0 0; height:28px; text-align:center; background:#f4f4f4;}
 #popHeader { }

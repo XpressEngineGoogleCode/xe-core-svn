@@ -26,6 +26,7 @@
         var $css_files = array(); ///< @brief display시에 사용하게 되는 css files의 목록
 
         var $html_header = NULL; ///< @brief display시에 사용하게 되는 <head>..</head>내의 스크립트코드
+        var $body_header = NULL; ///< @brief display시에 사용하게 되는 <body> 바로 다음에 출력될 스크립트 코드
         var $html_footer = NULL; ///< @brief display시에 사용하게 되는 </body> 바로 앞에 추가될 코드
 
         var $path = ''; ///< zbxe의 경로
@@ -1232,6 +1233,36 @@
          **/
         function _getHtmlHeader() {
             return $this->html_header;
+        }
+
+        /**
+         * @brief BodyHeader 추가
+         **/
+        function addBodyHeader($header) {
+            $oContext = &Context::getInstance();
+            return $oContext->_addBodyHeader($header);
+        }
+
+        /**
+         * @brief BodyHeader 추가
+         **/
+        function _addBodyHeader($header) {
+            $this->body_header .= "\n".$header;
+        }
+
+        /**
+         * @brief BodyHeader return
+         **/
+        function getBodyHeader() {
+            $oContext = &Context::getInstance();
+            return $oContext->_getBodyHeader();
+        }
+
+        /**
+         * @brief BodyHeader return
+         **/
+        function _getBodyHeader() {
+            return $this->body_header;
         }
 
         /**

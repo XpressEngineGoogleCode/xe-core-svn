@@ -1,3 +1,7 @@
+/**
+ * @brief XE Colorpicker
+ * @author mygony (http://mygony.com)
+ **/
 jQuery(function($){
 	var ready  = false;
 	var tmp    = $('<span>').hide();
@@ -56,7 +60,7 @@ jQuery(function($){
 		init : function() {
 			var cp = this;
 			
-			this.element = $('<div class="xe_colorpicker"><div class="colorpicker"><div class="colortable"><div class="background"><div class="indicator"></div></div></div><div class="huebar"><div class="background"><div class="indicator"></div></div></div></div><div class="buttons"><button type="button" class="ok">OK</button><button type="button" class="cancel">Cancel</button></div></div>');
+			this.element = $('<div class="xe_colorpicker"><div class="colorpicker"><div class="colortable"><div class="background"><div class="indicator"></div></div></div><div class="huebar"><div class="background"><div class="indicator"></div></div></div></div><div class="buttons"><button type="button" class="ok">OK</button><button type="button" class="cancel">Cancel</button><button type="button" class="none">None</button></div></div>');
 			
 			this.picker    = this.element.find('> div.colorpicker');
 			this.colpane   = this.picker.find('div.colortable > div.background');
@@ -73,6 +77,7 @@ jQuery(function($){
 			
 			this.buttons.find('button.ok').click(method(this.ok,this));
 			this.buttons.find('button.cancel').click(method(this.cancel,this));
+			this.buttons.find('button.none').click(method(this.none,this));
 			
 			// only for IE6
 			if ($.browser.msie && parseInt($.browser.version) < 7) {
@@ -81,7 +86,8 @@ jQuery(function($){
 		},
 		show : function(input) {
 			var pos = (input=$(input)).offset(), pos_panel;
-			var par = input.get(0).offsetParent;
+			//var par = input.get(0).offsetParent;
+			var par = $("body").get(0);
 			var btn = this.buttons.hide();
 			var col = color(input.val());
 			
@@ -91,7 +97,7 @@ jQuery(function($){
 			this.color(col);
 			this._target.val(col);
 
-			pos_panel = this.element.hide().css({left:0,top:0}).appendTo( par ).show(300,function(){btn.slideDown(150)}).offset();
+			pos_panel = this.element.hide().css({'z-index':99999,left:0,top:0}).appendTo( par ).show(300,function(){btn.slideDown(150)}).offset();
 			this.element.css({left:pos.left-pos_panel.left,top:pos.top-pos_panel.top+input.get(0).offsetHeight});
 		},
 		hide : function() {
@@ -194,6 +200,10 @@ jQuery(function($){
 		},
 		cancel : function() {
 			this.color(this._backup);
+			this.hide();
+		},
+		none : function() {
+            this._target.attr('value','transparent');
 			this.hide();
 		}
 	};

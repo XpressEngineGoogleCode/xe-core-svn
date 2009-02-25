@@ -91,6 +91,7 @@ function getWidgetVars() {
 
 /* 페이지 모듈에서 내용의 위젯을 더블클릭하여 수정하려고 할 경우 */
 function doFillWidgetVars() {
+
     if(!opener || !opener.selectedWidget || !opener.selectedWidget.getAttribute("widget")) return;
 
     selected_node = opener.selectedWidget;
@@ -99,6 +100,20 @@ function doFillWidgetVars() {
     var skin = selected_node.getAttribute("skin");
     var colorset = selected_node.getAttribute("colorset");
     var widget_sequence = parseInt(selected_node.getAttribute("widget_sequence"),10);
+
+
+    var fo_widget = jQuery("#fo_widget");
+    var attrs = selected_node.attributes;
+    for (i=0; i< attrs.length ; i++){
+        var input = jQuery("[name='"+attrs[i].name+"']" ,'#fo_widget');
+
+        if( input.size() == 0 && attrs[i].name != 'style'){
+            fo_widget.prepend('<input type="hidden" name="'+attrs[i].name+'" value="'+attrs[i].value+'" />');
+        }
+    }
+
+
+
 
     var fo_obj = xGetElementById("fo_widget");
 
@@ -392,7 +407,7 @@ function MultiOrderDelete(id){
     var defaultObj = jQuery("[name='default_"+id+"']").val().split(',');
 
     var idx = selectedObj.selectedIndex;
-	if(idx<0) return;
+    if(idx<0) return;
     for(i=0;i<defaultObj.length;i++){
         if(jQuery.inArray(selectedObj.options[idx].value, defaultObj) > -1) return;
     }

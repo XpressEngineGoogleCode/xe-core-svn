@@ -444,7 +444,7 @@ $.exec_json = function(action,data,func){
     }
 };
 
-$.fn.exec_html = function(action,data,type){
+$.fn.exec_html = function(action,data,type,func,args){
     if(typeof(data) == 'undefined') data = {};
     if(!$.inArray(type, ['html','append','prepend'])) type = 'html';
 
@@ -464,6 +464,7 @@ $.fn.exec_html = function(action,data,type){
             ,success : function(html){
                 $("#waitingforserverresponse").css('visibility','hidden');
                 self[type](html);
+                if($.isFunction(func)) func(args);
             }
         });
     }
