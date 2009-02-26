@@ -42,18 +42,26 @@
         }
 
         function procHomepageChangeLayout() {
-            $layout = Context::get('layout');
-            if(!$layout || !is_dir(_XE_PATH_.'layouts/'.$layout)) return new Object(-1,'msg_invalid_request');
-
-            $layout_srl = $this->selected_layout->layout_srl;
-
-            if($layout == $this->selected_layout->layout) return;
-
             $oLayoutAdminController = &getAdminController('layout');
+            $oLayoutModel = &getModel('layout');
+
+            $layout = Context::get('layout');
+            if(!$layout || ($layout!='faceoff' && !is_dir(_XE_PATH_.'layouts/'.$layout))) return new Object(-1,'msg_invalid_request');
+
+            // 원래 레이아웃 정보를 가져옴
+            $layout_srl = $this->selected_layout->layout_srl;
             $args->layout_srl = $layout_srl;
-            $args->layout = $layout;
-            $args->layout_path = '';
-            return $oLayoutAdminController->updateLayout($args);
+            $output = executeQuery('layout.getLayout', $args);
+            if(!$output->toBool() || !$output->data) return $output;
+            $layout_info = $output->data;
+
+            if($layout == $layout_info->layout) return new Object();
+
+            $layout_info->layout = $layout;
+            $output = $oLayoutAdminController->updateLayout($layout_info);
+            if(!$output->toBool()) return $output;
+
+            $oLayoutAdminController->initLayout($layout_srl, $layout);
         }
 
         function procHomepageLayoutUpdate() {

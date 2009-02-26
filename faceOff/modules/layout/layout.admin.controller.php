@@ -45,10 +45,14 @@
         // faceOff 레이아웃을 경우 init
         function initLayout($layout_srl, $layout_name){
             $oLayoutModel = &getModel('layout');
-            if(!$oLayoutModel->useDefaultLayout($layout_name)) return;
 
-            // sample faceoff를 import
-            $this->importLayout($layout_srl, $this->module_path.'tpl/faceOff_sample.tar');
+            // faceOff일 경우 sample import
+            if($oLayoutModel->useDefaultLayout($layout_name)) {
+                $this->importLayout($layout_srl, $this->module_path.'tpl/faceOff_sample.tar');
+            // 디렉토리 제거
+            } else {
+                FileHandler::removeDir($oLayoutModel->getUserLayoutPath($layout_srl));
+            }
         }
 
         /**
