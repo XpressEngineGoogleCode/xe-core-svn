@@ -4,14 +4,16 @@
     <!--%import("./css/white.css")-->
 <!--@end-->
 
-<div class="widgetLanguage">
-    <p><a href="#" class="cafeXeA" onclick="jQuery('ul.langList').each(function(i){ jQuery(this).css('display',jQuery(this).css('display')=='block'?'none':'block');}); return false;">Language:{$lang_supported[$lang_type]}</a></p>
-    <ul class="langList" class="" style="right: 3px; top: 26px;">
-        <!-- class="" | class="open" -->
-        <!--@foreach($lang_supported as $key => $val)-->
-        <!--@if($key != $lang_type)-->
-        <li><a href="#" onclick="doChangeLangType('{$key}');return false;">{$val}</a></li>
-        <!--@end-->
-        <!--@end-->
-    </ul>
+<div class="widgetContainer">
+    <div class="widgetLanguage">
+        <p><a href="#" class="cafeXeA" onclick="jQuery('ul.langList').each(function(i){ jQuery(this).css('display',jQuery(this).css('display')=='block'?'none':'block');}); return false;">Language:{$lang_supported[$lang_type]}</a></p>
+        <ul class="langList" class="" style="right: 3px; top: 26px;">
+            <!-- class="" | class="open" -->
+            <!--@foreach($lang_supported as $key => $val)-->
+            <!--@if($key != $lang_type)-->
+            <li><a href="#" onclick="doChangeLangType('{$key}');return false;">{$val}</a></li>
+            <!--@end-->
+            <!--@end-->
+        </ul>
+    </div>
 </div>

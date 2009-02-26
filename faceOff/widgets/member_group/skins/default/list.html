@@ -4,7 +4,12 @@
     <!--%import("./css/white.css")-->
 <!--@end-->
 
-<ul class="widgetUlistA">
-<!--@foreach($widget_info->member_list as $key => $val)-->
-    <li><a href="#" onclick="return false;" class="member_{$val->member_srl}">{htmlspecialchars($val->nick_name)}</a></li>
-<!--@end-->
+<div class="widgetContainer">
+
+    <ul class="widgetUlistA">
+    <!--@foreach($widget_info->member_list as $key => $val)-->
+        <li><a href="#" onclick="return false;" class="member_{$val->member_srl}">{htmlspecialchars($val->nick_name)}</a></li>
+    <!--@end-->
+    </ul>
+
+</div>

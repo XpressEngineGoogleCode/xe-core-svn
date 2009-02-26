@@ -4,11 +4,13 @@
     <!--%import("./css/white.css")-->
 <!--@end-->
 
-<dl class="widgetCounter">
-    <dt>{$lang->today} :</dt>
-    <dd>{number_format($today_counter->unique_visitor)}</dd>
-    <dt>{$lang->yesterday} :</dt>
-    <dd>{number_format($yesterday_counter->unique_visitor)}</dd>
-    <dt>{$lang->total} :</dt>
-    <dd>{number_format($total_counter->unique_visitor)}</dd>
-</dl>
+<div class="widgetContainer">
+    <dl class="widgetCounter">
+        <dt>{$lang->today} :</dt>
+        <dd>{number_format($today_counter->unique_visitor)}</dd>
+        <dt>{$lang->yesterday} :</dt>
+        <dd>{number_format($yesterday_counter->unique_visitor)}</dd>
+        <dt>{$lang->total} :</dt>
+        <dd>{number_format($total_counter->unique_visitor)}</dd>
+    </dl>
+</div>

@@ -4,8 +4,10 @@
     <!--%import("./css/white.css")-->
 <!--@end-->
 
-<ul class="widgetUlistA">
-    <!--@foreach($widget_info->archive_list as $val)-->
-        <li><a href="{getSiteUrl($widget_info->domain,'mid',$widget_info->module_info->mid,'search_target','regdate','search_keyword',$val->month)}">{zdate($val->month,'Y. m')}</a> ({number_format($val->count)})</li>
-    <!--@end-->
-</ul>
+<div class="widgetContainer">
+    <ul class="widgetUlistA">
+        <!--@foreach($widget_info->archive_list as $val)-->
+            <li><a href="{getSiteUrl($widget_info->domain,'mid',$widget_info->module_info->mid,'search_target','regdate','search_keyword',$val->month)}">{zdate($val->month,'Y. m')}</a> ({number_format($val->count)})</li>
+        <!--@end-->
+    </ul>
+</div>
