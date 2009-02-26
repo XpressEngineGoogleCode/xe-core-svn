@@ -916,6 +916,7 @@
             if(!$email_address) return new Object(-1, 'msg_invalid_request');
 
             $oMemberModel = &getModel('member');
+            $oModuleModel = &getModel('module');
 
             // 메일 주소에 해당하는 회원이 있는지 검사
             $member_srl = $oMemberModel->getMemberSrlByEmailAddress($email_address);
