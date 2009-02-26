@@ -16,7 +16,7 @@
         <table cellspacing="0" class="crossTable ">
         <tr>
             <th><div>{$lang->column_name}</div></th>
-            <td class="wide"><input type="text" name="name" value="{$selected_var->name}" class="inputTypeText w200" /> </td>
+            <td class="wide"><input type="text" name="name" value="{$selected_var->name}" class="inputTypeText w200" id="name" /><a href="{getUrl('','module','module','act','dispModuleAdminLangcode','target','name')}" onclick="popopen(this.href);return false;" class="buttonSet buttonSetting"><span>{$lang->cmd_find_langcode}</span></a> </td>
         </tr>
         <tr>
             <th><div>{$lang->column_type}</div></th>
@@ -40,7 +40,7 @@
         </tr>
         <tr>
             <th><div>{$lang->description}</div></th>
-            <td><input type="text" name="desc" value="{$selected_var->desc}" class="inputTypeText w400" /></td>
+            <td><input type="text" name="desc" value="{$selected_var->desc}" id="desc" class="inputTypeText w400" /><a href="{getUrl('','module','module','act','dispModuleAdminLangcode','target','desc')}" onclick="popopen(this.href);return false;" class="buttonSet buttonSetting"><span>{$lang->cmd_find_langcode}</span></a></td>
         </tr>
         <tr>
             <th><div>{$lang->cmd_search}</div></th>
