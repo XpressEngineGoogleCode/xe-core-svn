@@ -20,14 +20,6 @@
             // 메뉴의 정렬 순서
             $widget_info->menu_align = $args->menu_align;
 
-            // 메뉴의 선택 깊이
-            if(!$args->start_depth) $args->start_depth = 1;
-            $widget_info->start_depth = $args->start_depth;
-
-            // DHTML 기능 사용
-            if($args->use_dhtml!='N') $args->use_dhtml = 'Y';
-            $widget_info->use_dhtml = $args->use_dhtml;
-
             // $args->menu_srl이 지정되어 있으면 해당 메뉴로, 그렇지 않다면 현재 레이아웃의 메뉴를 구함
             if(!$args->menu_srl) {
                 $current_module_info = Context::get('current_module_info');
@@ -59,25 +51,27 @@
             if(!$menu) return;
 
             // 시작 depth가 2이상, 즉 상위 메뉴 선택 이후 하위 메뉴 출력시 처리
-            if($widget_info->start_depth>1 && count($menu->list)) {
-                $tmp = $menu->list;
-                for($i=1;$i<$widget_info->start_depth;$i++) {
-                    if(count($tmp)) {
-                        foreach($tmp as $key => $val) {
-                            if($val['selected']) $tmp = $val['list'];
-                        }
+            if($args->start_depth == 2 && count($menu->list)) {
+                $t_menu = null;
+                foreach($menu->list as $key => $val) {
+                    if($val['selected']) {
+                        $t_menu->list = $val['list'];
+                        break;
                     }
                 }
-                if(!count($tmp)) return;
-                $menu->list = $tmp;
+                $menu = $t_menu;
             }
 
+            $widget_info->menu = $menu->list;
+
             $this->_arrangeMenu($arranged_list, $menu->list, 0);
-            $widget_info->menu = $arranged_list;
+            $widget_info->arranged_menu = $arranged_list;
 
             // men XML 파일
-            $widget_info->xml_file = sprintf('%sfiles/cache/menu/%d.xml.php', _XE_PATH_, $args->menu_srl);
+            $widget_info->xml_file = sprintf('%sfiles/cache/menu/%d.xml.php',getUrl(''), $args->menu_srl);
+            $widget_info->menu_srl = $args->menu_srl;
 
+            if($this->selected_node_srl) $widget_info->selected_node_srl = $this->selected_node_srl;
             Context::set('widget_info', $widget_info);
 
             // 템플릿 컴파일
@@ -107,13 +101,17 @@
                 $obj->title = $obj->text = $val['text'];
                 $obj->expand = $val['expand']=='Y'?true:false;
                 $obj->depth = $depth;
+                $obj->selected = $val['selected'];
                 $obj->child_count = 0;
                 $obj->childs = array();
 
-                if(Context::get('mid') == $obj->url) $selected = true;
-                else $selected = false;
-
-                $obj->selected = $selected;
+                if(Context::get('mid') == $obj->url){
+                    $selected = true;
+                    $this->selected_node_srl = $obj->node_srl;
+                    $obj->selected = true;
+                }else{
+                    $selected = false;
+                }
 
                 $list_order[$idx++] = $obj->node_srl;
 
