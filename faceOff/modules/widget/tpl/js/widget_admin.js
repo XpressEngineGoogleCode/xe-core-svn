@@ -101,26 +101,30 @@ function doFillWidgetVars() {
     var colorset = selected_node.getAttribute("colorset");
     var widget_sequence = parseInt(selected_node.getAttribute("widget_sequence"),10);
 
-
     var fo_widget = jQuery("#fo_widget");
+    var fo_obj = xGetElementById("fo_widget");
+    jQuery('#widget_skin').val(skin);
+
+    // 위젯 스타일 유지를 위한 hidden input 추가하고 값을 저장
     var attrs = selected_node.attributes;
     for (i=0; i< attrs.length ; i++){
-        var input = jQuery("[name='"+attrs[i].name+"']" ,'#fo_widget');
+        var name = attrs[i].name;
+        var value = jQuery(selected_node).attr(name);
+        if(jQuery("[name="+name+"]",fo_widget).size()>0 || !value || name == 'style') continue;
 
-        if( input.size() == 0 && attrs[i].name != 'style'){
-            fo_widget.prepend('<input type="hidden" name="'+attrs[i].name+'" value="'+attrs[i].value+'" />');
-        }
+        var dummy = xCreateElement("input");
+        dummy.type = 'hidden';
+        dummy.name = name;
+        dummy.value = value;
+        fo_obj.appendChild(dummy);
     }
 
-
-
-
-    var fo_obj = xGetElementById("fo_widget");
-
+    // 위젯의 속성 설정
     var obj_list = new Array();
     jQuery('form input, form select, form textarea').each( function() {
             obj_list.push(this);
     });
+
     for(var j=0;j<obj_list.length;j++) {
         var node = obj_list[j];
         if(node.name.indexOf('_')==0) continue;
@@ -132,6 +136,8 @@ function doFillWidgetVars() {
 
         switch(type) {
             case "hidden" :
+                    continue;
+                break;
             case "text" :
             case "textarea" :
                     var val = selected_node.getAttribute(name);
