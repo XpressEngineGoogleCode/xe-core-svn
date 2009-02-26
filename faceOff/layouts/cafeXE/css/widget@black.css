@@ -122,8 +122,8 @@
 
 /* widgetLanguage */
 .widgetLanguage p a{ color:#b3b3b3;}
-.widgetLanguage #language{ background:#fff; border:1px solid #ccc;}
-.widgetLanguage #language a{ color:#333;}
+.widgetLanguage .langList{ background:#fff; border:1px solid #ccc;}
+.widgetLanguage .langList a{ color:#333;}
 
 /* Widget Tree */
 .widgetTree ul{ background:url(../img/black/lineTreeVr.gif) repeat-y 0 -1px;}

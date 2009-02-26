@@ -5,8 +5,8 @@
 <!--@end-->
 
 <div class="widgetLanguage">
-    <p><a href="#language" class="cafeXeA" onclick="if(xGetElementById('language').style.display=='block'){ xGetElementById('language').style.display='none';}else{ xGetElementById('language').style.display='block';} return false;">Language:{$lang_supported[$lang_type]}</a></p>
-    <ul id="language" class="" style="right: 0pt; bottom: 15px;">
+    <p><a href="#" class="cafeXeA" onclick="jQuery('ul.langList').each(function(i){ jQuery(this).css('display',jQuery(this).css('display')=='block'?'none':'block');}); return false;">Language:{$lang_supported[$lang_type]}</a></p>
+    <ul class="langList" class="" style="right: 3px; top: 26px;">
         <!-- class="" | class="open" -->
         <!--@foreach($lang_supported as $key => $val)-->
         <!--@if($key != $lang_type)-->

@@ -224,9 +224,9 @@ dl.widgetDivider dd{ display:none; margin:0;}
 
 /* widgetLanguage */
 .widgetLanguage p{ float:right; margin:0;}
-.widgetLanguage #language{ display:none; position:absolute; margin:0; padding:0;}
-.widgetLanguage #language li{ list-style:none;}
-.widgetLanguage #language li a{ font-size:12px; display:block; padding:2px 5px;}
+.widgetLanguage .langList{ display:none; position:absolute; margin:0; padding:0; z-index:999;}
+.widgetLanguage .langList li{ list-style:none;}
+.widgetLanguage .langList li a{ font-size:12px; display:block; padding:2px 5px;}
 
 /* widgetTabA */
 .widgetTabA{ position:relative; margin:0; padding:0; *zoom:1; border-bottom:2px solid;}
