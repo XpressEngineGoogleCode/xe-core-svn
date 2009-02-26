@@ -29,11 +29,12 @@ var FaceOff = {
             },
             hover : function(data) {
                 var item = data.element;
+                if(item.parent().is('.noneToolBar')) return;
+
                 var args = data.arg.split(',');
                 var pos_item = item.offset();
                 var pos_preview = fo.preview.show().css({left:0,top:0}).offset();
                 var type, col, align;
-
                 type  = 'demo'+capitalize(args[0]=='t'?args[1]:fo.getLayoutType());
                 col   = 'demo'+(args[0]=='c'?args[1]:fo.getLayoutColumn()).toUpperCase();
                 align = 'demo'+capitalize(args[0]=='a'?args[1]:fo.getLayoutAlign());
@@ -71,6 +72,26 @@ var FaceOff = {
         }
 
         $('#xe , #body, #header, #footer, #neck, #knee, div.e1, div.e2, div.neck, div.knee').each( function(i) { $(this).find('a').css('color',$(this).css('color')).css('font-family',$(this).css('font-family')); } );
+
+        if($('#header').css('display')!='none') $('#useHeader').attr('checked',true);
+        else $('#useHeader').attr('checked',false);
+        if($('#footer').css('display')!='none') $('#useFooter').attr('checked',true);
+        else $('#useFooter').attr('checked',false);
+
+        $('#useHeader').click(function(event) {
+            if($('#useHeader').attr('checked')) {
+                $('#header').css('display','block');
+                $('#useHeader').attr('checked', true);
+            } else {
+                $('#header').css('display','none');
+                $('#useHeader').attr('checked', false);
+            }
+        });
+
+        $('#useFooter').click(function(event) {
+            if($('#useFooter').attr('checked')) $('#footer').css('display','block');
+            else $('#footer').css('display','none');
+        });
 
         // tab to select widget
         $(document).mousedown(function(event){
@@ -219,25 +240,24 @@ var FaceOff = {
     },
     getFaceoffStyle : function() {
         var sty = [];
-        var sel = $('html>body,#container[style],#header[style]:visible,#footer[style]:visible')
+        var sel = $('html>body,#container[style],#header[style],#footer[style]')
             .add('#neck[style]:visible, #knee[style]:visible, #body[style], #content[style] ')
             .add('div.neck[style]:visible, div.knee[style]:visible, div.e1[style]:visible, div.e2[style]:visible'); //div[id^=ex_][style]:visible,
 
         sel.each(function(){
             var bgImage = $(this).css("backgroundImage");
             if(bgImage && bgImage!='none') {
-                bgImage = bgImage.replace(/(.+)images\/([a-z0-9]+)\.(jpg|jpeg|gif|png|swf|flv)\)/i,'$2.$3');
-                $(this).css("backgroundImage",bgImage);
+                bgImage = bgImage.replace(/(.+)images\/([a-z0-9]+)\.(jpg|jpeg|gif|png|swf|flv)\)/i,'url(./images/$2.$3)');
+                $(this).css("background-image",bgImage);
             }
             var style = $(this).attr('style');
             if($(this).is('.neck, .knee, .e1, .e2')) {
-            if (!style) return;
+                if (!style) return;
                 if($(this).is('.e1')) sty.push( 'div.e1 { ' + style + ' } ');
                 else if($(this).is('.e2')) sty.push( 'div.e2 { ' + style + ' } ');
                 else if($(this).is('.neck')) sty.push( 'div.neck { ' + style + ' } ');
                 else if($(this).is('.knee')) sty.push( 'div.knee { ' + style + ' } ');
             }else if($(this).is('html>body')) {
-
                 style = 'background-color:' + $(this).css('backgroundColor')
                 + ';background-image:' + $(this).css('backgroundImage')
                 + ';background-repeat:' + $(this).css('backgroundRepeat');

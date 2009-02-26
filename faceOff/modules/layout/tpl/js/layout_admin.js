@@ -21,7 +21,7 @@ function doResetLayoutCode(layout_srl) {
 }
 
 /* 수정중인 레이아웃 미리보기 */
-function doPreviewLayoutCode() {
+function doPreviewLayoutCode(layout_srl) {
     jQuery('#fo_layout')
         .attr('target', "_LayoutPreview")
         .find('input[name=act]')

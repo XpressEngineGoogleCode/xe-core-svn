@@ -132,6 +132,7 @@
          * @brief 레이아웃 미리 보기
          **/
         function dispLayoutAdminPreview() {
+            debugPrint(Context::getRequestVars());
             $layout_srl = Context::get('layout_srl');
             $code = Context::get('code');
 
@@ -235,6 +236,7 @@
                 $name = trim($match[1][$i]);
                 $css = trim($match[2][$i]);
                 if(!$css) continue;
+                $css = str_replace('./images/',Context::getRequestUri().$oLayoutModel->getUserLayoutImagePath($layout_srl),$css);
                 $style[] .= sprintf('"%s":"%s"',$name,$css);
             }
 

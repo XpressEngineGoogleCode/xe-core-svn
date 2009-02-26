@@ -12,14 +12,16 @@
 
     <form id="fo_layout" action="{getUrl('')}" method="post" enctype="multipart/form-data" target="hidden_iframe">
     <input type="hidden" name="layout_srl" id="layout_srl" value="{$layout_info->layout_srl}" />
-
-    <h1>{$lang->layout_manager[0]}</h1>
-
     <div class="widgetMenu buttons">
         <ul class="widgetMenuList">
-            <li class="first"><button type="button" onclick="FaceOff.saveLayoutConfig()"><span>{$lang->layout_manager[1]}</span></button></li>
-            <li><button type="button" onclick="document.location.href=request_uri.setQuery('mid',current_mid)"><span>{$lang->layout_manager[2]}</span></button></li>
-            <li><button type="button" onclick="doResetLayoutCode('{$layout_srl}');return false"><span>{$lang->layout_manager[51]}</span></button></li>
+            <li><button type="button"><span>File</span></button>
+                <ul class="noneToolBar">
+                    <li class="menu" tb:type="radio" tb:arg=""><button type="button" onclick="FaceOff.saveLayoutConfig()">{$lang->layout_manager[1]}</button></li>
+                    <li class="menu" tb:type="radio" tb:arg=""><button type="button" onclick="document.location.href=request_uri.setQuery('mid',current_mid)">{$lang->layout_manager[2]}</button></li>
+                    <li class="menu" tb:type="radio" tb:arg=""><button type="button" onclick="doResetLayoutCode('{$layout_srl}');return false">{$lang->layout_manager[51]}</button></li>
+                </ul>
+
+            </li>
             <li><button type="button"><span>{$lang->layout_manager[3]}</span></button>
                 <ul>
                     <li class="menu" tb:type="radio" tb:arg="t,fixed"><button type="button">{$lang->layout_manager[6]}</button></li>
@@ -45,6 +47,11 @@
                 </ul>
             </li>
         </ul>
+
+        <fieldset class="hideOption">
+            <label for="useHeader"><input type="checkbox" id="useHeader" /> Header</label>
+            <label for="useFooter"><input type="checkbox" id="useFooter" /> Footer</label>
+        </fieldset>
     </div>
 
     <!-- smartmenu start -->
