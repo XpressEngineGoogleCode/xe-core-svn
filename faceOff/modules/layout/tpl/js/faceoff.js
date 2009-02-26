@@ -225,11 +225,12 @@ var FaceOff = {
                         if (!this.nodeName || !this.nodeValue) return;
 
                         var name = this.nodeName.toLowerCase(), val = this.nodeValue;
-                        if ('.contenteditable.src.widget.body.class.widget_width.widget_width_type.xdpx.xdpy.height.'.indexOf('.'+name+'.') > -1) return;
+                        if ('.style.contenteditable.src.widget.body.class.widget_width.widget_width_type.xdpx.xdpy.height.'.indexOf('.'+name+'.') > -1) return;
 
                         div.text(val);
                         attr.push(name+'="'+div.html()+'"');
                     });
+                    attr.push('style="'+$(this).attr('style')+'"');
 
 //                    return text.push('<img class="zbxe_widget_output" widget="'+type+'" addclass="section" '+attr.join(' ')+' />');
                     return text.push('<img class="zbxe_widget_output" widget="'+type+'" '+attr.join(' ')+' />');
