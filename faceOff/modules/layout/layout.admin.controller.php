@@ -68,7 +68,6 @@
             unset($extra_vars->layout);
             unset($extra_vars->title);
             unset($extra_vars->apply_layout);
-//            unset($extra_vars->header_script);
 
             $args = Context::gets('layout_srl','title');
 
@@ -89,6 +88,7 @@
                     if(Context::get('apply_layout')=='Y') {
                         $menu_args = null;
                         $menu_args->menu_srl = $menu_srl;
+                        $menu_args->site_srl = $layout_info->site_srl;
                         $output = executeQueryArray('layout.getLayoutModules', $menu_args);
                         if($output->data) {
                             $modules = array();
@@ -184,7 +184,6 @@
             $layout_srl = Context::get('layout_srl');
             return $this->deleteLayout($layout_srl);
         }
-
 
         function deleteLayout($layout_srl) {
             $oLayoutModel = &getModel('layout');
@@ -315,11 +314,13 @@
          * ini 로 저장한다 faceoff 용
          **/
         function procLayoutAdminUserValueInsert(){
+            $oModuleModel = &getModel('module');
+
             $mid = Context::get('mid');
             if(!$mid) return new Object(-1, 'msg_invalid_request');
 
-            $oModuleModel = &getModel('module');
-            $module_info = $oModuleModel->getModuleInfoByMid($mid);
+            $site_module_info = Context::get('site_module_info');
+            $module_info = $oModuleModel->getModuleInfoByMid($mid, $site_module_info->site_srl);
             $layout_srl = $module_info->layout_srl;
             if(!$layout_srl) return new Object(-1, 'msg_invalid_request');
 

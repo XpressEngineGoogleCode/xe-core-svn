@@ -91,6 +91,7 @@
                 $layout_title = $info->title;
                 $layout = $info->layout;
                 $layout_srl = $info->layout_srl;
+                $site_srl = $info->site_srl;
                 $vars = unserialize($info->extra_vars);
 
                 if($info->module_srl) {
@@ -141,6 +142,7 @@
             if(!$xml_obj) return;
 
             $buff = '';
+            $buff .= sprintf('$layout_info->site_srl = "%s";', $site_srl);
 
             if($xml_obj->version && $xml_obj->attrs->version == '0.2') {
                 // 레이아웃의 제목, 버전
