@@ -1718,6 +1718,8 @@
                 $_SESSION[$key] = '';
             }
             session_destroy();
+            setcookie(session_name(), '', time()-42000, '/');
+            setcookie('sso','',time()-42000, '/');
 
             if($_COOKIE['xeak']) {
                 $args->autologin_key = $_COOKIE['xeak'];

@@ -44,3 +44,8 @@ jQuery(function(){
     jQuery("table.rowTable tr").attr('class','').filter(":nth-child(even)").attr('class','bg1');
 });
 
+
+// 로그아웃
+function doAdminLogout() {
+    exec_xml('admin','procAdminLogout',new Array(), function() { location.reload(); });
+}

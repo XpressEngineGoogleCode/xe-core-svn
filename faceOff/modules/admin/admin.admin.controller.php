@@ -39,5 +39,13 @@
 
             $this->setMessage('success_updated');
         }
+
+        /**
+         * @brief 관리자 로그아웃
+         **/
+        function procAdminLogout() {
+            $oMemberController = &getController('member');
+            $oMemberController->procMemberLogout();
+        }
     }
 ?>
