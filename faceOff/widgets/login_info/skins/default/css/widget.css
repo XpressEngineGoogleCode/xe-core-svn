@@ -6,7 +6,7 @@
 .widgetLogin dl{ margin:0;}
 .widgetLogin dt{ display:none;}
 .widgetLogin dd{ margin:0 0 5px 0;}
-.widgetLogin dd .widgetXeInputText{ width:168px; height:16px;}
+.widgetLogin dd .widgetXeInputText{ width:90%; height:16px;}
 .widgetLogin p{ margin:5px 0;}
 .widgetLogin p .widgetXeInputCheck{ margin-right:5px;}
 .widgetLogin .help{ position:relative; width:100%; overflow:hidden; margin:10px 0 0 0; padding:0;}
