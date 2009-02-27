@@ -85,8 +85,8 @@
             Context::set('search_option', $search_option);
 
             // 게시글을 가져옴
-            $output = $this->dispBoardContentView();
-            if(!$output->toBool()) return;
+            $this->dispBoardContentView();
+//            if(!$output->toBool()) return;
 
             // 공지사항 목록을 구해서 context set (공지사항을 매페이지 제일 상단에 위치하기 위해서)
             $this->dispBoardNoticeList();
@@ -187,7 +187,7 @@
              **/
             Context::addJsFilter($this->module_path.'tpl/filter', 'insert_comment.xml');
         
-            return new Object();
+//            return new Object();
         }
 
         /**
