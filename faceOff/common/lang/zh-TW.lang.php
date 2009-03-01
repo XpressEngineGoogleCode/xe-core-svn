@@ -63,13 +63,13 @@
     $lang->cmd_layout_setup = '版面設置';
     $lang->cmd_layout_edit = '版面編輯';
     $lang->cmd_search_by_ipaddress = '以IP位址搜尋';
-    $lang->cmd_add_ip_to_spamfilter = '新增IP至垃圾過濾器';
+    $lang->cmd_add_ip_to_spamfilter = '封鎖此IP位址';
 
     $lang->enable = '可用';
     $lang->disable = '禁用';
 
     // 基本詞語
-    $lang->menu = 'Menu';
+    $lang->menu = '選單';
     $lang->no = '編號';
     $lang->notice = '公告';
     $lang->secret = '秘密';

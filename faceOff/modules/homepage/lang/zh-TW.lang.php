@@ -2,10 +2,10 @@
     /**
      * @file   zh-TW.lang.php
      * @author zero (zero@nzeo.com) 翻譯︰royallin
-     * @brief  CafeXE(homepage)基本模組
+     * @brief  虛擬網站(homepage)基本模組
      **/
 
-    $lang->cafe = "CafeXE"; 
+    $lang->cafe = "虛擬網站"; 
     $lang->cafe_title = "網站名稱";
     $lang->module_type = "目標";
     $lang->board = "討論板";
@@ -59,7 +59,7 @@
         "dispHomepageCounter" => "可以檢視虛擬網站的訪問數據統計。",
         "dispHomepageMidSetup" => "可詳細設定網站所使用的討論板，頁面等模組",
     );
-    $lang->about_cafe = "網站模組可快速建立網站，且容易進行設定。";
+    $lang->about_cafe = "虛擬網站模組可快速建立網站，且容易進行設定。";
     $lang->about_cafe_title = "只有在管理時才看的到此標題。";
     $lang->about_domain = "要建立網站必須要有個專屬域名。<br/>頂級域名或次級域名都可以。輸入時，請將XE安裝路徑也一起輸入。<br />例) www.zeroboard.com/zbxe";
     $lang->about_menu_names = "可指定語言。<br/>如果只輸入其中一項，其他語言將會顯示一樣。";
