@@ -272,9 +272,10 @@
 
                         // 레이아웃 정보중 extra_vars의 이름과 값을 $layout_info에 입력
                         if($layout_info->extra_var_count) {
+
                             foreach($layout_info->extra_var as $var_id => $val) {
                                 if($val->type == 'image') {
-                                    if(preg_match('/^\.\/files\/attach\/images\/(.+)/i',$val->value)) $val->value = Context::getRequestUri().substr($val->value,2);
+                                    if(preg_match('/^\.\/files\/attach\/images\/(.+)/i',$val->value)) $val->value = substr($val->value,2);
                                 }
                                 $layout_info->{$var_id} = $val->value;
                             }
