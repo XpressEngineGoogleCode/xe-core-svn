@@ -1318,7 +1318,7 @@
             $_SESSION['is_admin'] = '';
 
             // 비밀번호는 세션에 저장되지 않도록 지워줌;;
-            unset($member_info->password);
+            //unset($member_info->password);
 
             // 사용자 그룹 설정
             /*
