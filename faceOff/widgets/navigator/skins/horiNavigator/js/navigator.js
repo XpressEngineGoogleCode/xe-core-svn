@@ -92,7 +92,7 @@ WidgetNavigator.prototype.drawMenu = function(parent_srl){
         var t = jQuery(this);
 
         var m = t.attr('text');
-        m = '<a href="' + (t.attr('url')?t.attr('url'):'#') + '"'+(t.attr('open_window')=='Y'?' target="blank"':'')+'>'+m+'</a>';
+        m = '<a href="' + (t.attr('url')?request_uri.setQuery('mid',t.attr('url')):'#') + '"'+(t.attr('open_window')=='Y'?' target="blank"':'')+'>'+m+'</a>';
 
 
         jQuery('<li class="node_'+ t.attr('node_srl') +( i==0?'  ':'')+'" node_srl="'+ t.attr('node_srl')+'">')
