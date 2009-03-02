@@ -69,13 +69,13 @@
     $lang->disable = '不可';
 
     // 基本用語
-    $lang->menu = 'Menu';
+    $lang->menu = 'メニュー';
     $lang->no = '番号';
     $lang->notice = 'お知らせ';
     $lang->secret = '非公開';
     $lang->category = $lang->category_srl = 'カテゴリ';
     $lang->none_category = 'カテゴリ無し';
-    $lang->none_image = '이미지 없음';
+    $lang->none_image = 'イメージなし';
     $lang->document_srl = '書き込み番号';
     $lang->user_id = 'ユーザーＩＤ';
     $lang->author = '作成者';
@@ -118,7 +118,7 @@
     $lang->order_type = 'ソート方法';
     $lang->order_asc = '昇る';
     $lang->order_desc = '降下';
-    $lang->file = 'file';
+    $lang->file = 'ファイル';
 
     $lang->mid = 'モジュール名';
     $lang->layout = 'レイアウト';
