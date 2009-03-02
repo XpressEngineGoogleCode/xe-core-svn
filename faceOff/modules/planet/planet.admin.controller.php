@@ -20,7 +20,9 @@
             $module_info = $oPlanetModel->getPlanetConfig();
 
             // 이미 등록된 플래닛의 유무 체크
-            if($module_info->mid && $oModuleModel->getModuleInfoByMid($module_info->mid)) {
+            $_module_info = $oModuleModel->getModuleInfoByMid($module_info->mid);
+            if($module_info->mid && $_module_info) {
+                $module_info->module_srl = $_module_info->module_srl;
                 $is_registed = true;
             } else {
                 $is_registed = false;
