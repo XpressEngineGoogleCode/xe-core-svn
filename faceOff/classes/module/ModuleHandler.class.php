@@ -275,7 +275,7 @@
 
                             foreach($layout_info->extra_var as $var_id => $val) {
                                 if($val->type == 'image') {
-                                    if(preg_match('/^\.\/files\/attach\/images\/(.+)/i',$val->value)) $val->value = substr($val->value,2);
+                                    if(preg_match('/^\.\/files\/attach\/images\/(.+)/i',$val->value)) $val->value = Context::getRequestUri().substr($val->value,2);
                                 }
                                 $layout_info->{$var_id} = $val->value;
                             }

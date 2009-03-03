@@ -1,6 +1,6 @@
 <?php
     /**
-    * @class Context 
+    * @class Context
     * @author zero (zero@nzeo.com)
     * @brief  Request Argument/환경변수등의 모든 Context를 관리
     * Context 클래스는 Context::methodname() 처럼 쉽게 사용하기 위해 만들어진 객체를 받아서
@@ -16,7 +16,7 @@
         var $request_method = 'GET'; ///< @brief GET/POST/XMLRPC 중 어떤 방식으로 요청이 왔는지에 대한 값이 세팅. GET/POST/XML 3가지가 있음
         var $response_method = ''; ///< @brief HTML/XMLRPC 중 어떤 방식으로 결과를 출력할지 결정. (강제 지정전까지는 request_method를 따름)
 
-        var $context = NULL; ///< @brief request parameter 및 각종 환경 변수등을 정리하여 담을 변수 
+        var $context = NULL; ///< @brief request parameter 및 각종 환경 변수등을 정리하여 담을 변수
 
         var $db_info = NULL; ///< @brief DB 정보
         var $ftp_info = NULL; ///< @brief FTP 정보
@@ -41,7 +41,7 @@
 
         var $site_title = ''; ///< @brief 현 사이트의 browser title. Context::setBrowserTitle() 로 변경 가능
 
-        var $get_vars = NULL; ///< @brief form이나 get으로 요청이 들어온 변수만 별도로 관리 
+        var $get_vars = NULL; ///< @brief form이나 get으로 요청이 들어온 변수만 별도로 관리
 
         var $is_uploaded = false; ///< @brief 첨부파일이 업로드 된 요청이였는지에 대한 체크 플래그
 
@@ -221,7 +221,7 @@
             if(!$db_info->use_ssl) $db_info->use_ssl = 'none';
 
             $this->_setDBInfo($db_info);
-            
+
             $GLOBALS['_time_zone'] = $db_info->time_zone;
             $GLOBALS['_qmail_compatibility'] = $db_info->qmail_compatibility;
             $this->set('_use_ssl', $db_info->use_ssl);
@@ -819,41 +819,41 @@
                 $target = implode('.',$var_keys);
 
                 switch($target) {
-                    case 'mid' : 
+                    case 'mid' :
                         return $path.$get_vars['mid'];
-                    case 'document_srl' : 
+                    case 'document_srl' :
                         return $path.$get_vars['document_srl'];
-                    case 'act.mid' : 
+                    case 'act.mid' :
                         return sprintf('%s%s/%s',$path,$get_vars['mid'],$get_vars['act']);
-                    case 'document_srl.mid' : 
+                    case 'document_srl.mid' :
                         return sprintf('%s%s/%s',$path,$get_vars['mid'],$get_vars['document_srl']);
-                    case 'act.document_srl' : 
+                    case 'act.document_srl' :
                         return sprintf('%s%s/%s',$path,$get_vars['document_srl'],$get_vars['act']);
-                    case 'mid.page' : 
+                    case 'mid.page' :
                         return sprintf('%s%s/page/%s',$path,$get_vars['mid'],$get_vars['page']);
-                    case 'category.mid' : 
+                    case 'category.mid' :
                         return sprintf('%s%s/category/%s',$path,$get_vars['mid'],$get_vars['category']);
-                    case 'act.document_srl.key' : 
+                    case 'act.document_srl.key' :
                         return sprintf('%s%s/%s/%s',$path,$get_vars['document_srl'],$get_vars['key'],$get_vars['act']);
-                    case 'document_srl.mid.page' : 
+                    case 'document_srl.mid.page' :
                         return sprintf('%s%s/%s/page/%s',$path,$get_vars['mid'],$get_vars['document_srl'],$get_vars['page']);
-                    case 'category.mid.page' : 
+                    case 'category.mid.page' :
                         return sprintf('%s%s/category/%s/page/%s',$path,$get_vars['mid'],$get_vars['category'],$get_vars['page']);
                     case 'mid.search_keyword.search_target' :
                             switch($get_vars['search_target']) {
-                                case 'tag' : 
+                                case 'tag' :
                                     return sprintf('%s%s/tag/%s',$path,$get_vars['mid'],str_replace(' ','+',$get_vars['search_keyword']));
-                                case 'nick_name' : 
+                                case 'nick_name' :
                                     return sprintf('%s%s/writer/%s',$path,$get_vars['mid'],str_replace(' ','+',$get_vars['search_keyword']));
-                                case 'regdate' : 
+                                case 'regdate' :
                                     if(strlen($get_vars['search_keyword'])==8) return sprintf('%s%s/%04d/%02d/%02d',$path,$get_vars['mid'],substr($get_vars['search_keyword'],0,4),substr($get_vars['search_keyword'],4,2),substr($get_vars['search_keyword'],6,2));
-                                    elseif(strlen($get_vars['search_keyword'])==6) return sprintf('%s%s/%04d/%02d',$path,$get_vars['mid'],substr($get_vars['search_keyword'],0,4),substr($get_vars['search_keyword'],4,2)); 
+                                    elseif(strlen($get_vars['search_keyword'])==6) return sprintf('%s%s/%04d/%02d',$path,$get_vars['mid'],substr($get_vars['search_keyword'],0,4),substr($get_vars['search_keyword'],4,2));
                             }
                         break;
                     case 'act.document_srl.mid' :
                         return sprintf('%s%s/%s/%s',$path,$get_vars['mid'], $get_vars['act'],$get_vars['document_srl']);
                     case 'entry.mid' :
-                    	return sprintf('%s%s/entry/%s',$path,$get_vars['mid'],$get_vars['entry']);
+                        return sprintf('%s%s/entry/%s',$path,$get_vars['mid'],$get_vars['entry']);
                 }
             }
 
@@ -899,7 +899,7 @@
 
             if($domain) {
                 $target_url = trim($domain);
-                if(substr($target_url,-1) != '/') $target_url.= '/'; 
+                if(substr($target_url,-1) != '/') $target_url.= '/';
             } else {
                 $target_url= $_SERVER['HTTP_HOST'].getScriptPath();
             }
@@ -1335,18 +1335,20 @@
             // 사용자 정의 언어로 변경
             $oModuleController = &getController('module');
             $oModuleController->replaceDefinedLangCode($content);
-            
-            // 위젯 코드 변경 
+
+            // 위젯 코드 변경
             $oWidgetController = &getController('widget');
             $content = $oWidgetController->transWidgetCode($content,$this->widget_include_info_flag);
 
             // 메타 파일 변경
             $content = preg_replace_callback('!<\!\-\-Meta:([^\-]*?)\-\->!is', array($this,'transMeta'), $content);
-            
+
             // 에디터 컴포넌트를 찾아서 결과 코드로 변환
             $content = preg_replace_callback('!<div([^\>]*)editor_component=([^\>]*)>(.*?)\<\/div\>!is', array($this,'transEditorComponent'), $content);
             $content = preg_replace_callback('!<img([^\>]*)editor_component=([^\>]*?)\>!is', array($this,'transEditorComponent'), $content);
 
+            // style의 url 경로를 재정의 한다.
+            $content = preg_replace('/url\(http:\/\/([^ ]+)http:\/\//is','url(http://', $content);
             // body 내의 <style ..></style>를 header로 이동
             $content = preg_replace_callback('!<style(.*?)<\/style>!is', array($this,'moveStyleToHeader'), $content);
 
@@ -1417,7 +1419,7 @@
         function isGzEnabled() {
             if(
                 (defined('__OB_GZHANDLER_ENABLE__') && __OB_GZHANDLER_ENABLE__ == 1) &&
-                strpos($_SERVER['HTTP_ACCEPT_ENCODING'], 'gzip')!==false && 
+                strpos($_SERVER['HTTP_ACCEPT_ENCODING'], 'gzip')!==false &&
                 function_exists('ob_gzhandler') &&
                 extension_loaded('zlib')
             ) return true;
