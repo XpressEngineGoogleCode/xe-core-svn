@@ -388,30 +388,19 @@
             return $body;
         }
 
-        function _getRssItems($args){
-            // 날짜 형태
-            $DATE_FORMAT = $args->date_format ? $args->date_format : "Y-m-d H:i:s";
 
+       /**
+         * @brief rss 주소로 부터 내용을 받아오는 함수
+         * tistory 의 경우 원본 주소가 location 헤더를 뿜는다. (내용은 없음)이를 해결하기 위한 수정 - rss_reader 위젯과 방식 동일
+         **/
+        function requestRssContents($rss_url) {
             // request rss
-/*
-            $args->rss_url = Context::convertEncodingStr($args->rss_url);
-            $URL_parsed = parse_url($args->rss_url);
-            if(strpos($URL_parsed["host"],'naver.com')) $args->rss_url = iconv('UTF-8', 'euc-kr', $args->rss_url);
-            $args->rss_url = str_replace(array('%2F','%3F','%3A','%3D','%3B','%26'),array('/','?',':','=',';','&'),urlencode($args->rss_url));
-            
-            $buff = file_get_contents($args->rss_url);
-            if(!$buff) return new Object(-1, 'msg_fail_to_request_open');
-            
-            $encoding = preg_match("/<\?xml.*encoding=\"(.+)\".*\?>/i", $buff, $matches);
-            if($encoding && !preg_match("/UTF-8/i", $matches[1])) $buff = trim(iconv($matches[1]=="ks_c_5601-1987"?"EUC-KR":$matches[1], "UTF-8", $buff));
-*/
+            $rss_url = Context::convertEncodingStr($rss_url);
+            $URL_parsed = parse_url($rss_url);
+            if(strpos($URL_parsed["host"],'naver.com')) $rss_url = iconv('UTF-8', 'euc-kr', $rss_url);
+            $rss_url = str_replace(array('%2F','%3F','%3A','%3D','%3B','%26'),array('/','?',':','=',';','&'),urlencode($rss_url));
 
-            // request rss
-            $args->rss_url = Context::convertEncodingStr($args->rss_url);
-            $URL_parsed = parse_url($args->rss_url);
-            if(strpos($URL_parsed["host"],'naver.com')) $args->rss_url = iconv('UTF-8', 'euc-kr', $args->rss_url);
-            $args->rss_url = str_replace(array('%2F','%3F','%3A','%3D','%3B','%26'),array('/','?',':','=',';','&'),urlencode($args->rss_url));
-            $URL_parsed = parse_url($args->rss_url);
+            $URL_parsed = parse_url($rss_url);
 
             $host = $URL_parsed["host"];
             $port = $URL_parsed["port"];
@@ -422,7 +411,7 @@
 
             if ($URL_parsed["query"] != '') $path .= "?".$URL_parsed["query"];
 
-            $oReqeust = new HTTP_Request($args->rss_url);
+            $oReqeust = new HTTP_Request($rss_url);
             $oReqeust->addHeader('Content-Type', 'application/xml');
             $oReqeust->setMethod('GET');
 
@@ -435,7 +424,21 @@
             if (PEAR::isError($oResponse)) {
                 return new Object(-1, 'msg_fail_to_request_open');
             }
-            $buff = $oReqeust->getResponseBody();
+            $header = $oReqeust->getResponseHeader();
+            if($header['location']) {   
+                return $this->requestRssContents(trim($header['location']));
+            }
+            else {
+                return $oReqeust->getResponseBody();
+            }
+        }
+
+        function _getRssItems($args){
+            // 날짜 형태
+            $DATE_FORMAT = $args->date_format ? $args->date_format : "Y-m-d H:i:s";
+
+            $buff = $this->requestRssContents($args->rss_url);
+
             $encoding = preg_match("/<\?xml.*encoding=\"(.+)\".*\?>/i", $buff, $matches);
             if($encoding && !preg_match("/UTF-8/i", $matches[1])) $buff = trim(iconv($matches[1]=="ks_c_5601-1987"?"EUC-KR":$matches[1], "UTF-8", $buff));
 
