@@ -136,8 +136,8 @@ function doFillWidgetVars() {
 
         switch(type) {
             case "hidden" :
-                    continue;
-                break;
+                if(jQuery('[name=_' + node.name+']').size() == 0)  continue;
+
             case "text" :
             case "textarea" :
                     var val = selected_node.getAttribute(name);
