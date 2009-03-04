@@ -22,24 +22,28 @@ function doResetLayoutCode(layout_srl) {
 
 /* 수정중인 레이아웃 미리보기 */
 function doPreviewLayoutCode(layout_srl) {
+
     jQuery('#fo_layout')
         .attr('target', "_LayoutPreview")
         .find('input[name=act]')
             .val("dispLayoutAdminPreview")
         .end()
-        .submit()
-        .removeAttr('target')
-        .find('input[name=act]')
-            .val('');
+        .submit();
+//        .removeAttr('target').find('input[name=act]').val('');
 }
 
 
 /* 메뉴 관리로 이동 */
 function doMenuManagement(menu_id) {
     var menu_srl = jQuery('#fo_layout select[name='+menu_id+'] option:selected').val();
-    if(menu_srl == 0) return;
+    var url = '';
+    // 선택된 메뉴가 없으면
+    if(menu_srl == 0){
+        url = current_url.setQuery('module','admin').setQuery('act','dispMenuAdminInsert');
+    }else{
+        url = current_url.setQuery('act','dispMenuAdminManagement').setQuery('menu_srl',menu_srl);
+    }
 
-    var url = current_url.setQuery('act','dispMenuAdminManagement').setQuery('menu_srl',menu_srl);
     winopen(url);
 }
 
