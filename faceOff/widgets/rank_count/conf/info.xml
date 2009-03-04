@@ -121,30 +121,13 @@
             <name xml:lang="es">Con Grupo</name>
             <name xml:lang="ru">С группой</name>
             <name xml:lang="zh-TW">用戶組</name>
-            <description xml:lang="ko">출력할 회원 그룹명을 입력하세요. 예)준회원,정회원</description>
-            <description xml:lang="jp">出力する会員グループ名を入力してください（例：準会員、正会員）。</description>
-            <description xml:lang="zh-CN">请输入要显示的会员组。例)准会员,正会员</description>
-            <description xml:lang="en">Enables group's ranking</description>
-            <description xml:lang="es">Permite grupo de la clasificación</description>
-            <description xml:lang="ru">Включает учет рейтинга группы</description>
-            <description xml:lang="zh-TW">請輸入要顯示的會員組。例)準會員，正式會員</description>
-        </var>
-        <var id="without_group">
-            <type>member_group</type>
-            <name xml:lang="ko">그룹 제외</name>
-            <name xml:lang="jp">グループ除外</name>
-            <name xml:lang="zh-CN">豁免用户组</name>
-            <name xml:lang="en">Without Group</name>
-            <name xml:lang="es">Sin Grupo</name>
-            <name xml:lang="ru">Без группы</name>
-            <name xml:lang="zh-TW">排除用戶組</name>
-            <description xml:lang="ko">제외할 회원 그룹명을 입력하세요. 예)관리그룹</description>
-            <description xml:lang="jp">除外するグループ名を入力してください（例：管理グループ）</description>
-            <description xml:lang="zh-CN">请输入豁免用户组名。例)管理组</description>
-            <description xml:lang="en">Disables group's ranking</description>
-            <description xml:lang="es">Desactiva grupo de la clasificación</description>
-            <description xml:lang="ru">Выключает учет рейтинга группы</description>
-            <description xml:lang="zh-TW">請輸入要排除的用戶組名。例)管理組</description>
+            <description xml:lang="ko">출력할 회원 그룹명을 입력하세요. 예)준회원,정회원, (선택이 되지 않으면 출력이 되지 않습니다.)</description>
+            <description xml:lang="jp">出力する会員グループ名を入力してください（例：準会員、正会員）。(선택이 되지 않으면 출력이 되지 않습니다.)</description>
+            <description xml:lang="zh-CN">请输入要显示的会员组。例)准会员,正会员 (선택이 되지 않으면 출력이 되지 않습니다.)</description>
+            <description xml:lang="en">Enables group's ranking (선택이 되지 않으면 출력이 되지 않습니다.)</description>
+            <description xml:lang="es">Permite grupo de la clasificación (선택이 되지 않으면 출력이 되지 않습니다.)</description>
+            <description xml:lang="ru">Включает учет рейтинга группы (선택이 되지 않으면 출력이 되지 않습니다.)</description>
+            <description xml:lang="zh-TW">請輸入要顯示的會員組。例)準會員，正式會員 (선택이 되지 않으면 출력이 되지 않습니다.)</description>
         </var>
         <var id="period">
             <type>text</type>

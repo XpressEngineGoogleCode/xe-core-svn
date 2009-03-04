@@ -14,11 +14,16 @@
          * 결과를 만든후 print가 아니라 return 해주어야 한다
          **/
         function proc($args) {
+            // 그룹이 선택되지 않으면 출력이 되지 않는다.
+            if(!$args->with_group) return '';
+
             $site_module_info = Context::get('site_module_info');
             $obj->site_srl = (int)$site_module_info->site_srl;
             $obj->list_count = $args->list_count?$args->list_count:5;
-            if($args->with_group) $obj->selected_group_srl = $args->with_group;
-            if($args->without_group) $obj->selected_group_without_srl = $args->without_group;
+            $obj->selected_group_srl = $args->with_group;
+
+            //if($args->without_group) $obj->selected_group_without_srl = $args->without_group;
+
             if($args->period) {
                 $before_month_month_day = $this->convertDatetoDay( date("n") == 1 ? date("Y") - 1 : date("Y"),  date("n") == 1 ? 12 :  date("n") - 1);
                 $m = date("n");
