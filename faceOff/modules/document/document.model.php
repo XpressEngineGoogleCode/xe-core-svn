@@ -543,28 +543,21 @@
          * 속도나 여러가지 상황을 고려해서 카테고리 목록은 php로 생성된 script를 include하여 사용하는 것을 원칙으로 함
          **/
         function getCategoryList($module_srl) {
-            static $category_list = array();
+            // 대상 모듈의 카테고리 파일을 불러옴
+            $filename = sprintf("./files/cache/document_category/%s.php", $module_srl);
 
-            // 한 페이지에서 여러번 호출될 경우를 대비해서 static var로 보관 (php4때문에 다른 방법으로 구현)
-            if(!isset($category_list[$module_srl])) {
-
-                // 대상 모듈의 카테고리 파일을 불러옴
-                $filename = sprintf("./files/cache/document_category/%s.php", $module_srl);
-
-                // 대상 파일이 없으면 카테고리 캐시 파일을 재생성
-                if(!file_exists($filename)) {
-                    $oDocumentController = &getController('document');
-                    if(!$oDocumentController->makeCategoryFile($module_srl)) return array();
-                }
-
-                @include($filename);
-
-                // 카테고리의 정리
-                $document_category = array();
-                $this->_arrangeCategory($document_category, $menu->list, 0);
-                $category_list[$module_srl] = $document_category;
+            // 대상 파일이 없으면 카테고리 캐시 파일을 재생성
+            if(!file_exists($filename)) {
+                $oDocumentController = &getController('document');
+                if(!$oDocumentController->makeCategoryFile($module_srl)) return array();
             }
-            return $category_list[$module_srl];
+
+            @include($filename);
+
+            // 카테고리의 정리
+            $document_category = array();
+            $this->_arrangeCategory($document_category, $menu->list, 0);
+            return $document_category;
         }
 
         /**
