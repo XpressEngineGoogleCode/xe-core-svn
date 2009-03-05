@@ -132,7 +132,7 @@
          * @brief 레이아웃 미리 보기
          **/
         function dispLayoutAdminPreview() {
-            debugPrint(Context::getRequestVars());
+//            debugPrint(Context::getRequestVars());
             $layout_srl = Context::get('layout_srl');
             $code = Context::get('code');
 
@@ -143,6 +143,15 @@
             $oLayoutModel = &getModel('layout');
             $layout_info = $oLayoutModel->getLayout($layout_srl);
             if(!$layout_info) return new Object(-1, 'msg_invalid_request');
+
+            // faceoff 레이아웃일 경우 별도 처리
+            if($layout_info && $layout_info->type == 'faceoff') {
+                $oLayoutModel->doActivateFaceOff($layout_info);
+            }
+
+            // 관리자 레이아웃 수정화면에서 변경된 CSS가 있는지 조사
+            $edited_layout_css = $oLayoutModel->getUserLayoutCss($layout_srl);
+            if(file_exists($edited_layout_css)) Context::addCSSFile($edited_layout_css);
 
             // 레이아웃 정보중 extra_vars의 이름과 값을 $layout_info에 입력
             if($layout_info->extra_var_count) {

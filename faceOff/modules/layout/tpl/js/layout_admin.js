@@ -23,13 +23,11 @@ function doResetLayoutCode(layout_srl) {
 /* 수정중인 레이아웃 미리보기 */
 function doPreviewLayoutCode(layout_srl) {
 
-    jQuery('#fo_layout')
-        .attr('target', "_LayoutPreview")
-        .find('input[name=act]')
-            .val("dispLayoutAdminPreview")
-        .end()
-        .submit();
-//        .removeAttr('target').find('input[name=act]').val('');
+    jQuery('#fo_layout').attr('target', "_LayoutPreview");
+    jQuery('input[name=act]','#fo_layout').val("dispLayoutAdminPreview");
+    jQuery('#fo_layout').submit();
+    jQuery('#fo_layout').removeAttr('target');
+//        .submit().removeAttr('target').find('input[name=act]').val('');
 }
 
 
