@@ -569,7 +569,7 @@
             foreach($left_tables as $key => $val) {
                 $condition = $this->_getCondition($output->left_conditions[$key],$output->column_type);
                 if($condition){
-                    $left_join[] = $val . ' "'.$this->prefix.$output->tables[$key].'" as "'.$key  . '" on (' . $condition . ')';
+                    $left_join[] = $val . ' "'.$this->prefix.$output->_tables[$key].'" as "'.$key  . '" on (' . $condition . ')';
                 }
             }
 
