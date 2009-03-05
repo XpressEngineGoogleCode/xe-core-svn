@@ -64,6 +64,7 @@
 
             $db_info = Context::getDBInfo();
             $db_info->default_url = Context::get('default_url');
+            if($db_info->default_url && !preg_match('/^(http|https):\/\//i', $db_info->default_url)) $db_info->default_url = 'http://'.$db_info->default_url;
             $db_info->time_zone = $time_zone;
             $db_info->qmail_compatibility = $qmail_compatibility;
             $db_info->use_rewrite = $use_rewrite;
