@@ -18,6 +18,9 @@
          * @brief 위젯의 상세 정보(conf/info.xml)를 팝업 출력
          **/
         function dispWidgetInfo() {
+            // 위젯 스킨명이 있을 경우 위젯 스킨 상세 정보 함수로 출력
+            if(Context::get('skin')) return $this->dispWidgetSkinInfo();
+
             // 선택된 위젯 정보를 구함
             $oWidgetModel = &getModel('widget');
             $widget_info = $oWidgetModel->getWidgetInfo(Context::get('selected_widget'));
@@ -31,13 +34,34 @@
         }
 
         /**
+         * @brief 위젯 스킨의 상세 정보(skin.xml)를 팝업 출력
+         **/
+        function dispWidgetSkinInfo() {
+            $widget = Context::get('selected_widget');
+            $skin = Context::get('skin');
+
+            $path = sprintf('./widgets/%s/', $widget);
+
+            // 선택된 위젯 정보를 구함
+            $oModuleModel = &getModel('module');
+            $skin_info = $oModuleModel->loadSkinInfo($path, $skin);
+
+            Context::set('skin_info',$skin_info);
+
+            // 위젯을 팝업으로 지정
+            $this->setLayoutFile('popup_layout');
+
+            // 템플릿 파일 지정
+            $this->setTemplateFile('skin_info');
+        }
+
+        /**
          * @brief 위젯의 코드 생성기
          **/
         function dispWidgetGenerateCode() {
             // 선택된 위젯 정보를 구함
             $oWidgetModel = &getModel('widget');
 
-            $oWidgetModel = &getModel('widget');
             $widget_list = $oWidgetModel->getDownloadedWidgetList();
             $selected_widget = Context::get('selected_widget');
             if(!$selected_widget) $selected_widget = $widget_list[0]->widget;
