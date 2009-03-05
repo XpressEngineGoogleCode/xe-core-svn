@@ -246,7 +246,7 @@
 
             // 목록을 구하기 위한 대상 모듈/ 페이지 수/ 목록 수/ 페이지 목록 수에 대한 옵션 설정
             $args->module_srl = $this->module_srl; 
-            $args->page = Context::get('page');; 
+            $args->page = Context::get('page');
             $args->list_count = $this->list_count; 
             $args->page_count = $this->page_count; 
 

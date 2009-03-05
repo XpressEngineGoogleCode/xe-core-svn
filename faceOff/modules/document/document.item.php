@@ -389,7 +389,12 @@
 
         function getExtraValueHTML($idx) {
             $extra_vars = $this->getExtraVars();
-            return $extra_vars[$idx]->getValueHTML();
+            if(array_key_exists($idx,$extra_vars)){
+                return $extra_vars[$idx]->getValueHTML();
+            }else{
+                return '';
+            }
+
         }
 
         function getExtraVarsValue($key) {
