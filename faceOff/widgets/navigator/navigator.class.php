@@ -17,9 +17,6 @@
         function proc($args) {
             $oModuleModel = &getModel('module');
 
-            // 메뉴의 정렬 순서
-            $widget_info->menu_align = $args->menu_align;
-
             // $args->menu_srl이 지정되어 있으면 해당 메뉴로, 그렇지 않다면 현재 레이아웃의 메뉴를 구함
             if(!$args->menu_srl) {
                 $current_module_info = Context::get('current_module_info');
