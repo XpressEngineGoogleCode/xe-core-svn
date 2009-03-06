@@ -296,8 +296,8 @@
 
                         // 레이아웃이 수정되었을 경우 수정본을 지정
                         $edited_layout = $oLayoutModel->getUserLayoutHtml($layout_info->layout_srl);
-                        $edited_layout_css = $oLayoutModel->getUserLayoutCss($layout_info->layout_srl);
-                        Context::addCSSFile($edited_layout_css);
+//                        $edited_layout_css = $oLayoutModel->getUserLayoutCss($layout_info->layout_srl);
+//                        Context::addCSSFile($edited_layout_css);
                         if(file_exists($edited_layout)) $oModule->setEditedLayoutFile($edited_layout);
                     }
                 }

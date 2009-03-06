@@ -1046,17 +1046,20 @@
         /**
          * @brief js file을 추가
          **/
-        function addJsFile($file, $optimized = true, $targetie = '') {
+        function addJsFile($file, $optimized = true, $targetie = '',$index=null) {
             $oContext = &Context::getInstance();
-            return $oContext->_addJsFile($file, $optimized, $targetie);
+            return $oContext->_addJsFile($file, $optimized, $targetie,$index);
         }
 
         /**
          * @brief js file을 추가
          **/
-        function _addJsFile($file, $optimized, $targetie) {
+        function _addJsFile($file, $optimized, $targetie,$index) {
             if(in_array($file, $this->js_files)) return;
-            $this->js_files[] = array('file' => $file, 'optimized' => $optimized, 'targetie' => $targetie);
+
+            if(is_null($index)) $index=count($this->js_files);
+            for($i=$index;array_key_exists($i,$this->js_files);$i++);
+            $this->js_files[$i] = array('file' => $file, 'optimized' => $optimized, 'targetie' => $targetie);
         }
 
         /**
@@ -1091,6 +1094,8 @@
          * @brief array_unique와 동작은 동일하나 file 첨자에 대해서만 동작함
          **/
         function _getUniqueFileList($files) {
+            ksort($files);
+            $files = array_values($files);
             $filenames = array();
             $size = count($files);
             for($i = 0; $i < $size; ++ $i)
@@ -1099,6 +1104,7 @@
                     unset($files[$i]);
                 $filenames[] = $files[$i]['file'];
             }
+
             return $files;
         }
 
@@ -1122,19 +1128,22 @@
         /**
          * @brief CSS file 추가
          **/
-        function addCSSFile($file, $optimized = true, $media = 'all', $targetie = '') {
+        function addCSSFile($file, $optimized = true, $media = 'all', $targetie = '',$index = null) {
             $oContext = &Context::getInstance();
-            return $oContext->_addCSSFile($file, $optimized, $media, $targetie);
+            return $oContext->_addCSSFile($file, $optimized, $media, $targetie,$index);
         }
 
         /**
          * @brief CSS file 추가
          **/
-        function _addCSSFile($file, $optimized, $media, $targetie) {
+        function _addCSSFile($file, $optimized, $media, $targetie, $index) {
             if(in_array($file, $this->css_files)) return;
 
+            if(is_null($index)) $index=count($this->css_files);
+            for($i=$index;array_key_exists($i,$this->css_files);$i++);
+
             //if(preg_match('/^http:\/\//i',$file)) $file = str_replace(realpath("."), ".", realpath($file));
-            $this->css_files[] = array('file' => $file, 'optimized' => $optimized, 'media' => $media, 'targetie' => $targetie);
+            $this->css_files[$i] = array('file' => $file, 'optimized' => $optimized, 'media' => $media, 'targetie' => $targetie);
         }
 
         /**

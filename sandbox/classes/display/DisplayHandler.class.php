@@ -69,7 +69,9 @@
 
                     // 관리자 레이아웃 수정화면에서 변경된 CSS가 있는지 조사
                     $edited_layout_css = $oLayoutModel->getUserLayoutCss($layout_srl);
-                    if(file_exists($edited_layout_css)) Context::addCSSFile($edited_layout_css);
+
+
+                    if(file_exists($edited_layout_css)) Context::addCSSFile($edited_layout_css,true,'all','',100);
                 }
                 Context::set('layout_info', $layout_info);
 
