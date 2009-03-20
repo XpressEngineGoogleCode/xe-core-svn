@@ -91,7 +91,7 @@
             $obj = null;
 
             $obj->title = $document_info->Heading;
-            $obj->content = $document_info->Content;
+            $obj->content = nl2br($document_info->Content);
             $obj->readed_count = $document_info->Hits;
             $obj->voted_count = 0;
             $obj->user_id = $document_info->Author;
@@ -131,7 +131,7 @@
                 $comment_obj = null;
 
                 $comment_obj->is_secret = 'N';
-                $comment_obj->content = $comment_info->Content;
+                $comment_obj->content = nl2br($comment_info->Content);
                 $comment_obj->voted_count = 0;
                 $comment_obj->notify_message = 'N';
                 $comment_obj->password = $comment_info->passwd;
@@ -145,14 +145,16 @@
                 $comments[] = $comment_obj;
             }
 
+            $files = array();
 	    if($document_info->bofile) {
-                $filename = $file_info->source_filename;
                 $download_count = $file_info->download_count;
 
                 $file_obj->filename = $download_info->bofile;
                 $file_obj->file = realpath(sprintf("%s/upload/%s/%s/%s", $path, $document_info->Topic, $document_info->bcfile, $document_info->bofile));
                 $file_obj->download_count = 0;
                 $files[] = $file_obj;
+
+		if(preg_match('/\.(jpg|gif|png|jpeg)/',$download_info->bofile)) $obj->content .= '<br /><img src="'.$download_info->bofile.'" alt="" /><br />';
 	    }
             $obj->attaches = $files;
 
