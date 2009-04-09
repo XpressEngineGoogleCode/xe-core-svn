@@ -1,8 +1,0 @@
-<query id="updateDocumentsLangCode" action="update">
-    <tables>
-        <table name="documents" />
-    </tables>
-    <columns>
-        <column name="lang_code" var="lang_code" notnull="notnull" />
-    </columns>
-</query>
