@@ -1,6 +1,6 @@
 <?php 
     /**
-     * @brief zbxe export tool
+     * @brief xe export tool
      * @author zero (zero@zeroboard.com)
      **/
     @set_time_limit(0);
@@ -108,7 +108,7 @@
                 $obj->signature = $signature;
             }
 
-            // 확장변수 칸에 입력된 변수들은 제로보드XE의 멤버 확장변수를 통해서 사용될 수 있음
+            // 확장변수 칸에 입력된 변수들은 XE의 멤버 확장변수를 통해서 사용될 수 있음
             unset($extra_vars);
             $extra_vars = unserialize($member_info->extra_vars);
             if($form && $extra_vars) {

@@ -1,6 +1,6 @@
 <?php
     /**
-     * @brief zbxe export tool
+     * @brief xe export tool
      * @author zero (zero@zeroboard.com)
      **/
 
@@ -85,7 +85,7 @@
     <meta name="generator" content="zeroboard xe (http://www.zeroboard.com)" />
     <meta http-equiv="imagetoolbar" content="no" />
 
-    <title>zbxe data export tool ver 0.2</title>
+    <title>xe data export tool ver 0.2</title>
     <style type="text/css">
         body { font-family:arial; font-size:9pt; }
         input.input_text { width:400px; }
@@ -111,7 +111,7 @@
 </head>
 <body>
 
-    <h1>zbxe data export tool ver 0.2</h1>
+    <h1>xe data export tool ver 0.2</h1>
 
     <?php
         if($errMsg) {
@@ -131,11 +131,11 @@
 
         <ul>
             <li>
-                zbxe 가 설치된 경로를 입력해주세요.
+                xe 가 설치된 경로를 입력해주세요.
 
                 <blockquote>
-                예1) /home/아이디/public_html/zbxe<br />
-                예2) ../zbxe
+                예1) /home/아이디/public_html/xe<br />
+                예2) ../xe
                 </blockquote>
 
                 <input type="text" name="path" value="<?php print $_POST['path']?>" class="input_text" /><input type="submit" class="input_submit"value="설치 경로 입력" />
@@ -152,7 +152,7 @@
     <input type="hidden" name="path" value="<?php echo $path?>" />
 
         <h3>Step 2. 추출할 대상을 선택해주세요. (회원정보 또는 게시판)</h3>
-        <blockquote>zbxe는 회원정보와 그외 모듈 종류를 나누어 추출하실 수 있습니다.</blockquote>
+        <blockquote>xe는 회원정보와 그외 모듈 종류를 나누어 추출하실 수 있습니다.</blockquote>
 
         <ul>
             <li>

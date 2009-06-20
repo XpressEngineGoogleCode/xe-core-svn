@@ -1,6 +1,6 @@
 <?php
     /**
-     * @brief 제로보드XE에서 import할 수 있는 구조의 xml data를 출력하는 마이그레이션 공용 class
+     * @brief XE에서 import할 수 있는 구조의 xml data를 출력하는 마이그레이션 공용 class
      * @author zero@zeroboard.com
      **/
 
@@ -387,7 +387,7 @@
             print "</post>\r\n";
         }
 
-        // zbxe에서 경로 설정시 사용되는 함수
+        // xe에서 경로 설정시 사용되는 함수
         function getNumberingPath($no, $size=3) {
             $mod = pow(10,$size);
             $output = sprintf('%0'.$size.'d/', $no%$mod);
