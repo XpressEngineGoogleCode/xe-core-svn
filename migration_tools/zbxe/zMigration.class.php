@@ -377,8 +377,16 @@
             if(count($extra_vars)) {
                 print "<extra_vars>\r\n";
                 foreach($extra_vars as $key => $val) {
-                    print "<key>";
-                    $this->printString($val);
+                    print "<key>\r\n";
+                    if(is_object($val)) {
+                        foreach($val as $k => $v) {
+                            print '<'.$k.'>';
+                            $this->printString($v); 
+                            print '</'.$k.'>'."\r\n";
+                        }
+                    } else {
+                        $this->printString($val);
+                    }
                     print "</key>\r\n";
                 }
                 print "</extra_vars>\r\n";

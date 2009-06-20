@@ -351,6 +351,15 @@
             }
             $obj->attaches = $files;
 
+            // 확장변수 구함
+            $vars_query = sprintf("select var_idx, lang_code, value, eid from %s_document_extra_vars where document_srl = '%d'", $db_info->db_table_prefix, $document_info->document_srl);
+            $vars_result = $oMigration->query($vars_query);
+            $extra_vars = array();
+            while($var = $oMigration->fetch($vars_result)) {
+                $extra_vars[] = $var;
+            }
+            $obj->extra_vars = $extra_vars;
+
             $oMigration->printPostItem($document_info->document_srl, $obj, $exclude_attach);
         }
 
