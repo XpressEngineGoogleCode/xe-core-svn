@@ -1,7 +1,7 @@
 <?php 
     /**
      * @brief korweblog export tool
-     * @author zero (zero@zeroboard.com)
+     * @author zero (zero@xpressengine.com)
      **/
     @set_time_limit(0);
     require_once('./lib.inc.php');

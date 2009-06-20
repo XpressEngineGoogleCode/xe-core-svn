@@ -1,7 +1,7 @@
 <?php
     /**
      * @brief XE에서 import할 수 있는 구조의 xml data를 출력하는 마이그레이션 공용 class
-     * @author zero@zeroboard.com
+     * @author zero@xpressengine.com
      **/
 
     class zMigration {

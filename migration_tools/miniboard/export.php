@@ -1,7 +1,7 @@
 <?php 
     /**
      * @brief miniboard export tool
-     * @author zero (zero@zeroboard.com)
+     * @author zero (zero@xpressengine.com)
      **/
 
     @set_time_limit(0);
@@ -87,7 +87,7 @@
             if($member_info->icon) $obj->image_mark = sprintf("%s/%s", $path, $member_info->icon);
             $obj->profile_image = '';
 
-            // 확장변수 칸에 입력된 변수들은 제로보드XE의 멤버 확장변수를 통해서 사용될 수 있음
+            // 확장변수 칸에 입력된 변수들은 XE의 멤버 확장변수를 통해서 사용될 수 있음
             $obj->extra_vars = array(
                 'icq' => $member_info->icq,
                 'aol' => $member_info->aol,

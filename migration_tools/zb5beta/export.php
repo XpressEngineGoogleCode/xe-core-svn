@@ -1,7 +1,7 @@
 <?php 
     /**
      * @brief zb5beta export tool
-     * @author zero (zero@zeroboard.com)
+     * @author zero (zero@xpressengine.com)
      **/
     @set_time_limit(0);
 
@@ -112,7 +112,7 @@
                 $obj->profile_image = $profile_image;
             }
 
-            // 확장변수 칸에 입력된 변수들은 제로보드XE의 멤버 확장변수를 통해서 사용될 수 있음
+            // 확장변수 칸에 입력된 변수들은 XE의 멤버 확장변수를 통해서 사용될 수 있음
             unset($extra_vars);
             $extra_vars = unserialize( base64_decode( $member_info->extend_val) );
             if($extra_vars->homepage) $obj->homepage = $extra_vars->homepage;

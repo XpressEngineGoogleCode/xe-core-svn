@@ -1,7 +1,7 @@
 <?php
     /**
      * @brief wordpress export tool
-     * @author zero (zero@zeroboard.com)
+     * @author zero (zero@xpressengine.com)
      **/
 
     // zMigration class require
@@ -48,7 +48,7 @@
 <html lang="ko" xmlns="http://www.w3.org/1999/xhtml">
 <head>
     <meta http-equiv="content-type" content="text/html; charset=utf-8" />
-    <meta name="generator" content="zeroboard xe (http://www.zeroboard.com)" />
+    <meta name="generator" content="XpressEngine (http://www.xpressengine.com)" />
     <meta http-equiv="imagetoolbar" content="no" />
 
     <title>wordpress ver 2.0.x data export tool ver 0.2</title>
@@ -168,7 +168,7 @@
 
     <hr />
     <address>
-        powered by zero (zeroboard.com)
+        powered by zero (xpressengine.com)
     </address>
 </body>
 </html>

@@ -1,7 +1,7 @@
 <?php
     /**
      * @brief gnuboard4의 경로를 이용하여 DB정보를 얻어옴
-     * @author zero@zeroboard.com
+     * @author zero@xpressengine.com
      **/
     function getDBInfo($path) {
         if(substr($path,-1)=='/') $path = substr($path, 0, strlen($path)-1);
