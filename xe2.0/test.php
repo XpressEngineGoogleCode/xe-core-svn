@@ -1,6 +1,9 @@
 <?php
     require_once 'PHPUnit/Framework.php';
 
+    define('__ZBXE__', true);
+    require('./config/config.inc.php');
+
     function loadDir($path, &$test_suite)
     {
         $handle = opendir($path);
@@ -24,7 +27,7 @@
             $test_suite = new PHPUnit_Framework_TestSuite();
             $test_suite->setName('XETest');
             
-            $target_dirs = array("modules", "bricks");
+            $target_dirs = array("modules", "bricks", "config");
 
             foreach($target_dirs as $target_dir)
             {
