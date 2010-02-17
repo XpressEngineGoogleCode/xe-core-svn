@@ -1,5 +1,4 @@
 <?php
-
 interface iDebugPrinter {
 	public function debugPrint($debug_output, $display_option, $debug_backtrace);
 }
@@ -31,5 +30,4 @@ class DebugBrick {
 		self::$debugPrinter = $printer;
 	}
 }
-
 ?>

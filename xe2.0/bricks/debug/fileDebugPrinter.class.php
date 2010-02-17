@@ -1,5 +1,4 @@
 <?php
-
 class FileDebugPrinter implements iDebugPrinter {
 	private $debug_file; 
 
@@ -11,8 +10,8 @@ class FileDebugPrinter implements iDebugPrinter {
 	public function debugPrint($debug_output, $display_option, $debug_backtrace)
 	{
 		$first = array_shift($debug_backtrace);
-        $file_name = array_pop(explode(DIRECTORY_SEPARATOR, $first['file']));
-        $line_num = $first['line'];
+		$file_name = array_pop(explode(DIRECTORY_SEPARATOR, $first['file']));
+		$line_num = $first['line'];
 
 		if(function_exists("memory_get_usage"))
 		{
