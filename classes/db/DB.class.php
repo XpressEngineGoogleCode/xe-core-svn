@@ -67,6 +67,10 @@
             return $GLOBALS['__DB__'][$db_type];
         }
 
+		function create() {
+			return new DB;
+		}
+
         /**
          * @brief constructor
          * @return none
@@ -75,10 +79,6 @@
             $this->count_cache_path = _XE_PATH_.$this->count_cache_path;
             $this->cache_file = _XE_PATH_.$this->cache_file;
         }
-
-		function create() {
-			return new DB;
-		}
 
         /**
          * @brief returns list of supported db
