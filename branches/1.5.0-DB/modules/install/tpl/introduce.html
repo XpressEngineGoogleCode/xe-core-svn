@@ -1,0 +1,24 @@
+<!--#include("header.html")-->
+	<div id="body">
+<!--#include("progress_menu.html")-->
+		<span class="dummy"></span>
+		<div id="content">
+			<div class="agreement">{str_replace("\n", '<p/>', $lang->license)}</div>
+			<div class="btnArea">
+				<div class="fLeft">
+					<div class="select open" style="width:160px;">
+						<span class="ctrl"><span class="arrow"></span></span>
+						<button type="button" class="myValue selected">{$lang_supported[Context::getLangType()]}</button>
+						<ul class="aList" style="bottom:20px;top:auto">
+							<li loop="$lang_supported=>$key,$val"><a href="{getUrl('l', $key)}">{$val}</a></li>
+						</ul>
+					</div>
+				</div>
+				<div class="fRight">
+					<span class="btn icon"><span class="check"></span> <a href="{getUrl('', 'act', 'dispInstallCheckEnv')}">{$lang->cmd_agree_license}</a></span>
+				</div>
+			</div>
+		</div>
+	</div>
+
+<!--#include("footer.html")-->
