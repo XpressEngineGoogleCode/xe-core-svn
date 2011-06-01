@@ -163,7 +163,14 @@ http://xe-core.googlecode.com/svn/wiki/ko/img/ValidationProcess.png
 }}}
 
 == 필드 속성 ==
-`<field>` 요소에 사용할 속성을 설명합니다.
+`<field>` 요소는 유효성을 검사할 필드를 설정할 때 사용하며, `<fields>` 요소 안에 기술합니다. 예를 들어 `userid` 필드의 값을 *반드시 입력*해야하고 *사용자 아이디 규칙*을 통과하도록 만들려면 다음과 같이 작성합니다.
+{{{
+<?xml version="1.0" encoding="utf-9"?>
+<fields>
+    <field name="userid" rule="userid" required="true" />
+</fields>
+}}}
+`<field>` 요소에 사용하는 속성에 따라 다양한 검사가 가능합니다.
 
 === 적용할 규칙 ===
 `rule` 속성을 통해 적용할 규칙 이름을 설정합니다. 예를 들어, `userid` 필드에 알파벳만 허용하는 `alpha` 규칙을 적용하려면 다음과 같이 작성합니다.
@@ -192,7 +199,7 @@ http://xe-core.googlecode.com/svn/wiki/ko/img/ValidationProcess.png
 주의할 점은 여기서 말하는 문자열의 길이는 바이트(byte) 단위가 아닌 문자 단위라는 것입니다. 따라서, 한글 1글자와 알파벳 1글자는 길이가 같습니다. 길이를 바이트 단위로 체크하고 싶다면 길이 뒤에 문자`b`를 추가하면 됩니다. 예를 들어, 8바이트 이상 20바이트 이하로 값을 입력받고 싶다면 다음과 같이 작성합니다.
 {{{
 ...
-    <field name="userid" length="3b:6b" />
+    <field name="userid" length="8b:20b" />
 ...
 }}}
 
