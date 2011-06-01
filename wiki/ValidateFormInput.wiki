@@ -4,9 +4,9 @@
 <wiki:toc />
 
 = Overview =
-폼 입력값 유효성 검사는 버전에 따라 두 가지 방법으로 나누어집니다. 이전 버전에서는 *필터(filter)*라는 방법을 통해 클라이언트측에서만 데이터를 검사했으나, XE v1.5부터는 *룰셋(Ruleset)*이라는 새로운 유효성 검사 방법을 사해해 클라이언트측에서는 물론 서버측에서도 데이터의 유효성을 검사합니다.
+Form input values can be validated by two ways. 이전 버전에서는 *필터(filter)*라는 방법을 통해 클라이언트측에서만 데이터를 검사했으나, XE v1.5부터는 *룰셋(Ruleset)*이라는 새로운 유효성 검사 방법을 사용해 클라이언트측에서는 물론 서버측에서도 데이터의 유효성을 검사합니다.
 
-이 문서는 룰셋을 사용한 방법만을 다룰 것이므로 필터를 사용한 방법은 예전 위키의 [http://xe.xpressengine.net/index.php?mid=wiki&document_srl=18180630 XML Js Filter]를 참고하시기 바랍니다.
+This article describes only how to use rulesets. If you want information about the old way, visit [http://xe.xpressengine.net/index.php?mid=wiki&document_srl=18180630 XML Js Filter].
 
 == Why use this? ==
 필터에 비해 룰셋은 다음과 같은 장점이 있습니다.
@@ -19,7 +19,7 @@
 == How to work ==
 페이지를 처음 로드할 때 XE는 설정된 룰셋 파일을 읽어들여 룰셋을 자바스크립트 파일로 변경합니다. 웹 페이지 사용자가 폼 입력을 올바르게 마친 후 데이터를 서버로 전송하면 서버측에서도 룰셋 파일을 읽어 PHP 코드로 변환하고 이를 사용해 데이터를 다시 한번 검증합니다.
 
-http://xe-core.googlecode.com/svn/wiki/ValidationProcess.png
+http://xe-core.googlecode.com/svn/wiki/img/ValidationProcess.png
 
 서버측 데이터 검증 과정은 데이터가 모듈로 전달되기 전에 이루어지므로 이 점 유의하시기 바랍니다.
 
