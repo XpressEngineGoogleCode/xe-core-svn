@@ -19,7 +19,7 @@
 == 동작 원리 ==
 페이지를 처음 로드할 때 XE는 설정된 룰셋 파일을 읽어들여 룰셋을 자바스크립트 파일로 변경합니다. 웹 페이지 사용자가 폼 입력을 올바르게 마친 후 데이터를 서버로 전송하면 서버측에서도 룰셋 파일을 읽어 PHP 코드로 변환하고 이를 사용해 데이터를 다시 한번 검증합니다.
 
-http://xe-core.googlecode.com/svn/wiki/ValidationProcess.png
+http://xe-core.googlecode.com/svn/wiki/ko/ValidationProcess.png
 
 서버측 데이터 검증 과정은 데이터가 모듈로 전달되기 전에 이루어지므로 이 점 유의하시기 바랍니다.
 
