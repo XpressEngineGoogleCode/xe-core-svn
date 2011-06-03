@@ -4,9 +4,9 @@
 <wiki:toc />
 
 = Overview =
-Form input values can be validated by two ways. 이전 버전에서는 *필터(filter)*라는 방법을 통해 클라이언트측에서만 데이터를 검사했으나, XE v1.5부터는 *룰셋(Ruleset)*이라는 새로운 유효성 검사 방법을 사용해 클라이언트측에서는 물론 서버측에서도 데이터의 유효성을 검사합니다.
+Form input values can be validated by two ways. Filter, the traditional verifying method, only worked on the client-side. But Ruleset, which will be adopted from the XE version 1.5, can verify the data on both client-side and server-side.
 
-This article describes only how to use rulesets. If you want information about the old way, visit [http://xe.xpressengine.net/index.php?mid=wiki&document_srl=18180630 XML Js Filter].
+This article contains information on how to use rulesets only. If you want the information about Filter, visit [http://xe.xpressengine.net/index.php?mid=wiki&document_srl=18180630 XML Js Filter].
 
 == Why use this? ==
 필터에 비해 룰셋은 다음과 같은 장점이 있습니다.
@@ -21,6 +21,7 @@ This article describes only how to use rulesets. If you want information about t
 
 http://xe-core.googlecode.com/svn/wiki/img/ValidationProcess.png
 
+Notice that server-side validation will be executed before the data is transfered
 서버측 데이터 검증 과정은 데이터가 모듈로 전달되기 전에 이루어지므로 이 점 유의하시기 바랍니다.
 
 = Ruleset =
@@ -220,7 +221,7 @@ http://xe-core.googlecode.com/svn/wiki/img/ValidationProcess.png
 }}}
 
 === Modifier ===
-검사를 시작하거나 마친 후 검사 결과 또는 입력값을 변경할 수 있는 기능입니다. 예를 들어, *"숫자가 아닌 값만 허용"*이라는 규칙은 간단히 숫자를 검사하는 `number` 규칙과 `not` 변경자를 사용해 구현할 수 있습니다.
+검사를 시작하거나 마친 후 검사 결과 또는 입력값을 변경할 수 있는 기능입니다. For example, you can make a rule that _allow only not numbers_ with the `number` rule and the `not` modifier.
 {{{
 ...
     <field name="word" rule="number" modifier="not" />
