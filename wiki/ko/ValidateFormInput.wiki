@@ -179,9 +179,15 @@ http://xe-core.googlecode.com/svn/wiki/ko/img/ValidationProcess.png
     <field name="userid" rule="alpha" />
 ...
 }}}
+복수 개의 규칙을 적용하려면 규칙 이름을 쉼표로 구분하여 표시해주면 됩니다. 예를 들어, `number`와 `less_than_10` 규칙을 적용하려면 다음과 같이 작성합니다.
+{{{
+...
+    <field name="num_value" rule="number,less_than_10" />
+...
+}}}
 
 === 필수 요소 ===
-반드시 입력해야 하는 값은 `required` 속성을 설정하면 됩니다. 이 속성이 설정된 필드는 반드시 값을 입력해야 하며 그렇지 않으면 에러가 발생합니다. 예를 들어, `userid` 필드의 값을 반드시 입력하도록 만들려면 다음과 같이 작성합니다.
+반드시 입력해야 하는 값은 `required` 속성을 사용하여 설정합니다. 이 속성이 설정된 필드는 반드시 값을 입력해야 하며 그렇지 않으면 에러가 발생합니다. 예를 들어, `userid` 필드의 값을 반드시 입력하도록 만들려면 다음과 같이 작성합니다.
 {{{
 ...
     <field name="userid" required="true" />
@@ -229,3 +235,22 @@ http://xe-core.googlecode.com/svn/wiki/ko/img/ValidationProcess.png
 
 현재 지원하는 수정자는 `not` 밖에 없으며, 의미는 다음과 같습니다.
  * *not* : 검사 결과를 반대로 적용합니다.
+ 
+=== 조건부 ===
+`if` 요소는 특정 조건에 따라 값을 변경할 때 사용하며 기본 구조는 다음과 같습니다.
+{{{
+...
+    <field name="필드이름" ... />
+        <if test="표현식" attr="속성이름" value="변경할_속성값" />
+    </field>
+</mods>
+...
+}}}
+표현식에서 사용하는 필드의 이름은 반드시 `$` 기호를 앞에 붙여야 합니다. 예를 들어, `use_openid` 필드의 값이 `on`일 때 `user_openid`의 값을 필수 요소로 바꾸고 싶다면 다음과 같이 작성합니다.
+{{{
+...
+    <field name="user_openid" rule="userid">
+	    <if test="$use_openid == 'on'" attr="required" value="true" />
+	</field>
+...
+}}}
