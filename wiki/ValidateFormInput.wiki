@@ -251,7 +251,7 @@ Notice that server-side validation will be executed before the data is transfere
 {{{
 ...
     <field name="user_openid" rule="userid">
-	    <if test="$use_openid == 'on'" attr="required" value="true" />
-	</field>
+        <if test="$use_openid == 'on'" attr="required" value="true" />
+    </field>
 ...
 }}}

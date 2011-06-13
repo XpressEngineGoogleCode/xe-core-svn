@@ -250,7 +250,7 @@ http://xe-core.googlecode.com/svn/wiki/ko/img/ValidationProcess.png
 {{{
 ...
     <field name="user_openid" rule="userid">
-	    <if test="$use_openid == 'on'" attr="required" value="true" />
-	</field>
+        <if test="$use_openid == 'on'" attr="required" value="true" />
+    </field>
 ...
 }}}
