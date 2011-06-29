@@ -148,18 +148,18 @@ Notice that server-side validation will be executed before the data is transfere
 }}}
 
 ==== Expression : expr ====
-산술 연산 비교를 할 수 있습니다. 예를 들어 어떤 값이 10보다 작은지 확인하려면 다음과 같이 작성합니다.
+산술 연산 비교를 할 수 있습니다. 예를 들어 어떤 값이 10보다 작은지 확인하려면 다음과 같이 작성합니다. 단, <, >, & 문자는 XML에서 특수한 의미를 지니므로 각각 &lt;, &gt;, &amp; 와 같이 XML 엔티티로 변환해야 합니다.
 {{{
 ...
-    <rule name="less_than_10" type="expr" test="$$ < 10" />
+    <rule name="less_than_10" type="expr" test="$$ &lt; 10" />
 ...
 }}}
-이 코드에서 `$$`은 규칙을 적용한 필드의 값입니다.
+이 코드에서 `$$`은 규칙을 적용한 필드의 값을 뜻합니다.
 
 `AND` 또는 `OR` 연산자를 사용해 여러 개의 수식을 한번에 작성할 수도 있습니다.
 {{{
 ...
-    <rule name="2_to_9" type="expr" test="$$ < 10 && $$ > 1" />
+    <rule name="2_to_9" type="expr" test="$$ &lt; 10 &amp;&amp; $$ &gt; 1" />
 ...
 }}}
 
