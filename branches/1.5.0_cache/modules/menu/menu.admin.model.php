@@ -1,0 +1,145 @@
+<?php
+    /**
+     * @class  menuAdminModel
+     * @author NHN (developers@xpressengine.com)
+     * @version 0.1
+     * @brief admin model class of the menu module
+     **/
+
+    class menuAdminModel extends menu {
+
+        /**
+         * @brief Initialization
+         **/
+        function init() {
+        }
+
+        /**
+         * @brief Get a list of all menus
+         **/
+        function getMenuList($obj) {
+            if(!$obj->site_srl) {
+                $site_module_info = Context::get('site_module_info');
+                $obj->site_srl = (int)$site_module_info->site_srl;
+            }
+            $args->site_srl = $obj->site_srl;
+            $args->sort_index = $obj->sort_index;
+            $args->page = $obj->page?$obj->page:1;
+            $args->list_count = $obj->list_count?$obj->list_count:20;
+            $args->page_count = $obj->page_count?$obj->page_count:10;
+            // document.getDocumentList query execution
+            $output = executeQuery('menu.getMenuList', $args);
+            // Return if no result or an error occurs
+            if(!$output->toBool()||!count($output->data)) return $output;
+
+            return $output;
+        }
+
+        /**
+         * @brief Return all menus
+         **/
+        function getMenus($site_srl = null) {
+            if(!isset($site_srl)) {
+                $site_module_info = Context::get('site_module_info');
+                $site_srl = (int)$site_module_info->site_srl;
+            }
+            // Get information from the DB
+            $args->site_srl = $site_srl ;
+            $args->menu_srl = $menu_srl;
+            $output = executeQuery('menu.getMenus', $args);
+            if(!$output->data) return;
+            $menus = $output->data;
+            if(!is_array($menus)) $menus = array($menus);
+            return $menus;
+        }
+
+        /**
+         * @brief Get information of a new menu from the DB
+         * Return DB and XML information of the menu
+         **/
+        function getMenu($menu_srl) {
+            // Get information from the DB
+            $args->menu_srl = $menu_srl;
+            $output = executeQuery('menu.getMenu', $args);
+            if(!$output->data) return;
+            
+            $menu_info = $output->data;
+            $menu_info->xml_file = sprintf('./files/cache/menu/%s.xml.php',$menu_srl);
+            $menu_info->php_file = sprintf('./files/cache/menu/%s.php',$menu_srl);
+            return $menu_info;
+        }
+
+        /**
+         * @brief Return item information of the menu_srl
+         * group_srls uses a seperator with comma(,) and converts to an array by explode
+         **/
+        function getMenuItemInfo($menu_item_srl) {
+            // Get the menu information if menu_item_srl exists
+            $args->menu_item_srl = $menu_item_srl;
+            $output = executeQuery('menu.getMenuItem', $args);
+            $node = $output->data;
+            if($node->group_srls) $node->group_srls = explode(',',$node->group_srls);
+            else $node->group_srls = array();
+
+            $tmp_name = unserialize($node->name);
+            if($tmp_name && count($tmp_name) ) {
+                $selected_lang = array();
+                $rand_name = $tmp_name[Context::getLangType()];
+                if(!$rand_name) $rand_name = array_shift($tmp_name);
+                $node->name = $rand_name;
+            }
+            return $node;
+        }
+
+        /**
+         * @brief Return menu name in each language to support multi-language
+         */
+        function getMenuItemNames($source_name, $site_srl = null) {
+            if(!$site_srl) {
+                $site_module_info = Context::get('site_module_info');
+                $site_srl = (int)$site_module_info->site_srl;
+            }
+            // Get language code
+            $oModuleAdminModel = &getAdminModel('module');
+            return $oModuleAdminModel->getLangCode($site_srl, $source_name);
+        }
+
+        /**
+         * @brief Get a template by using the menu_srl and retrun.
+         * Return html after compiling tpl on the server in order to add menu information on the admin page
+         **/
+        function getMenuAdminTplInfo() {
+            // Get information on the menu for the parameter settings
+            $menu_item_srl = Context::get('menu_item_srl');
+            $parent_srl = Context::get('parent_srl');
+            // Get a list of member groups
+            $oMemberModel = &getModel('member');
+            $group_list = $oMemberModel->getGroups();
+            Context::set('group_list', $group_list);
+            // Add a sub-menu if there is parent_srl but not menu_item_srl
+            if(!$menu_item_srl && $parent_srl) {
+                // Get information of the parent menu
+                $parent_info = $this->getMenuItemInfo($parent_srl);
+                // Default parameter settings for a new menu
+                $item_info->menu_item_srl = getNextSequence();
+                $item_info->parent_srl = $parent_srl;
+                $item_info->parent_menu_name = $parent_info->name;
+            // In case of modifying the existing menu or addting a new menu to the root
+            } else {
+                // Get information of the menu if menu_item_srl exists
+                if($menu_item_srl) $item_info = $this->getMenuItemInfo($menu_item_srl);
+                // Get only menu_item_srl if no values found, considering it as adding a new menu
+                if(!$item_info->menu_item_srl) {
+                    $item_info->menu_item_srl = getNextSequence();
+                }
+            }
+            Context::set('item_info', $item_info);
+            // Compile the template file into tpl variable and then return it
+            $oTemplate = &TemplateHandler::getInstance();
+            $tpl = $oTemplate->compile($this->module_path.'tpl', 'menu_item_info');
+
+            $this->add('tpl', str_replace("\n"," ",$tpl));
+        }
+
+    }
+?>
