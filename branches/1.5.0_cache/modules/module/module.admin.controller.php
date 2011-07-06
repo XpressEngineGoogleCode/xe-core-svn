@@ -295,7 +295,13 @@
                 // Register
                 $oModuleController->insertModuleSkinVars($module_srl, $obj);
             }
-
+        	//remove from cache
+            $oCacheHandler = &CacheHandler::getInstance('object');
+            if($oCacheHandler->isSupport()){
+            	$cache_key = 'object:'.$module_srl;
+            	$oCacheHandler->delete($cache_key);
+            }
+            
             $this->setLayoutPath('./common/tpl');
             $this->setLayoutFile('default_layout.html');
             $this->setTemplatePath('./modules/module/tpl');
