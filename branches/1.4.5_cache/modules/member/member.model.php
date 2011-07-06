@@ -193,15 +193,27 @@
         /**
          * @brief member_srl로 사용자 정보 return
          **/
-        function getMemberInfoByMemberSrl($member_srl, $site_srl = 0) {
+        function getMemberInfoByMemberSrl($member_srl, $site_srl = 0, $columnList = array()) {
             if(!$member_srl) return;
 
-            if(!$GLOBALS['__member_info__'][$member_srl]) {
-                $args->member_srl = $member_srl;
-                $output = executeQuery('member.getMemberInfoByMemberSrl', $args);
-                if(!$output->data) return;
-
-                $this->arrangeMemberInfo($output->data, $site_srl);
+			//columnList size zero... get full member info
+            if(!$GLOBALS['__member_info__'][$member_srl] || count($columnList) == 0) {
+            //if(true) {
+	            $oCacheHandler = &CacheHandler::getInstance('object');
+				if($oCacheHandler->isSupport()){
+					$cache_key = 'object:'.$member_srl;
+					$output = $oCacheHandler->get($cache_key);
+				}
+				if(!$output){
+					$args->member_srl = $member_srl;
+	                $output = executeQuery('member.getMemberInfoByMemberSrl', $args, $columnList);
+	                if(!$output->data) return;
+	                
+	                if($oCacheHandler->isSupport()) $oCacheHandler->put($cache_key,$output);
+				}
+				
+				$this->arrangeMemberInfo($output->data, $site_srl);
+                
             }
 
             return $GLOBALS['__member_info__'][$member_srl];

@@ -37,14 +37,24 @@
          * 생성된 레이아웃의 DB정보+XML정보를 return
          **/
         function getLayout($layout_srl) {
-            // 일단 DB에서 정보를 가져옴
-            $args->layout_srl = $layout_srl;
-            $output = executeQuery('layout.getLayout', $args);
-            if(!$output->data) return;
-
-            // layout, extra_vars를 정리한 후 xml 파일 정보를 정리해서 return
-            $layout_info = $this->getLayoutInfo($layout, $output->data, $output->data->layout_type);
-            return $layout_info;
+            // cache controll
+			$oCacheHandler = &CacheHandler::getInstance('object');
+			if($oCacheHandler->isSupport()){
+				$cache_key = 'object:'.$layout_srl;
+				$layout_info = $oCacheHandler->get($cache_key);
+			}
+			if(!$layout_info) {
+				// Get information from the DB
+	            $args->layout_srl = $layout_srl;
+	            $output = executeQuery('layout.getLayout', $args);
+	            if(!$output->data) return;
+	            // Return xml file informaton after listing up the layout and extra_vars
+	            $layout_info = $this->getLayoutInfo($layout, $output->data, $output->data->layout_type);
+	            //insert in cache
+	            if($oCacheHandler->isSupport()) $oCacheHandler->put($cache_key,$layout_info);
+			}    	
+        	return $layout_info;
+        	
         }
 
         /**
