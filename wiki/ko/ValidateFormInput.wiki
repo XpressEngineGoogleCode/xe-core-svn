@@ -165,7 +165,7 @@ http://xe-core.googlecode.com/svn/wiki/ko/img/ValidationProcess.png
 == 필드 속성 ==
 `<field>` 요소는 유효성을 검사할 필드를 설정할 때 사용하며, `<fields>` 요소 안에 기술합니다. 예를 들어 `userid` 필드의 값을 *반드시 입력*해야하고 *사용자 아이디 규칙*을 통과하도록 만들려면 다음과 같이 작성합니다.
 {{{
-<?xml version="1.0" encoding="utf-9"?>
+<?xml version="1.0" encoding="utf-8"?>
 <fields>
     <field name="userid" rule="userid" required="true" />
 </fields>
@@ -235,7 +235,7 @@ http://xe-core.googlecode.com/svn/wiki/ko/img/ValidationProcess.png
 
 현재 지원하는 수정자는 `not` 밖에 없으며, 의미는 다음과 같습니다.
  * *not* : 검사 결과를 반대로 적용합니다.
- 
+
 === 조건부 ===
 `if` 요소는 특정 조건에 따라 값을 변경할 때 사용하며 기본 구조는 다음과 같습니다.
 {{{
@@ -243,7 +243,6 @@ http://xe-core.googlecode.com/svn/wiki/ko/img/ValidationProcess.png
     <field name="필드이름" ... />
         <if test="표현식" attr="속성이름" value="변경할_속성값" />
     </field>
-</mods>
 ...
 }}}
 표현식에서 사용하는 필드의 이름은 반드시 `$` 기호를 앞에 붙여야 합니다. 예를 들어, `use_openid` 필드의 값이 `on`일 때 `user_openid`의 값을 필수 요소로 바꾸고 싶다면 다음과 같이 작성합니다.

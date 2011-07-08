@@ -237,7 +237,7 @@ Notice that server-side validation will be executed before the data is transfere
 현재 지원하는 수정자는 `not` 밖에 없으며, 의미는 다음과 같습니다.
  * *not* : 검사 결과를 반대로 적용합니다.
  
- === Conditional Statement ===
+=== Conditional Statement ===
 `if` 요소는 특정 조건에 따라 값을 변경할 때 사용하며 기본 구조는 다음과 같습니다.
 {{{
 ...
