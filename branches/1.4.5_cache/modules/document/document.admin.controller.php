@@ -51,8 +51,7 @@
             $triggerObj->document_srls = implode(',',$document_srl_list);
             $triggerObj->module_srl = $module_srl;
             $triggerObj->category_srl = $category_srl;
-
-            // Call trigger (before)
+            // Call a trigger (before)
             $output = ModuleHandler::triggerCall('document.moveDocumentModule', 'before', $triggerObj);
             if(!$output->toBool()) {
                 $oDB->rollback();
@@ -68,8 +67,7 @@
 
                 unset($obj);
                 $obj = $oDocument->getObjectVars();
-
-                // 대상 모듈이 다를 경우 첨부파일 이동
+                // Move the attached file if the target module is different
                 if($module_srl != $obj->module_srl && $oDocument->hasUploadedFiles()) {
                     $oFileController = &getController('file');
 
@@ -80,24 +78,21 @@
                         $file_info['name'] = $val->source_filename;
                         $inserted_file = $oFileController->insertFile($file_info, $module_srl, $obj->document_srl, $val->download_count, true);
                         if($inserted_file && $inserted_file->toBool()) {
-                            // 이미지/동영상등일 경우
+                            // for image/video files
                             if($val->direct_download == 'Y') {
                                 $source_filename = substr($val->uploaded_filename,2);
                                 $target_filename = substr($inserted_file->get('uploaded_filename'),2);
                                 $obj->content = str_replace($source_filename, $target_filename, $obj->content);
-
-                            // binary 파일일 경우
+                            // For binary files
                             } else {
                                 $obj->content = str_replace('file_srl='.$val->file_srl, 'file_srl='.$inserted_file->get('file_srl'), $obj->content);
                                 $obj->content = str_replace('sid='.$val->sid, 'sid='.$inserted_file->get('sid'), $obj->content);
                             }
                         }
-
-                        // 기존 파일 삭제
+                        // Delete an existing file
                         $oFileController->deleteFile($val->file_srl);
                     }
-
-                    // 등록된 모든 파일을 유효로 변경
+                    // Set the all files to be valid
                     $oFileController->setFilesValid($obj->document_srl);
                 }
 
@@ -105,8 +100,7 @@
                 {
                     $oDocumentController->deleteDocumentAliasByDocument($obj->document_srl);
                 }
-
-                // 게시물의 모듈 이동
+                // Move a module of the article
                 $obj->module_srl = $module_srl;
                 $obj->category_srl = $category_srl;
                 $output = executeQuery('document.updateDocumentModule', $obj);
@@ -114,8 +108,7 @@
                     $oDB->rollback();
                     return $output;
                 }
-
-                // 카테고리가 변경되었으면 검사후 없는 카테고리면 0으로 세팅
+                // Set 0 if a new category doesn't exist after catergory change
                 if($source_category_srl != $category_srl) {
                     if($source_category_srl) $oDocumentController->updateCategoryCount($oDocument->get('module_srl'), $source_category_srl);
                     if($category_srl) $oDocumentController->updateCategoryCount($module_srl, $category_srl);
@@ -125,8 +118,7 @@
 
             $args->document_srls = implode(',',$document_srl_list);
             $args->module_srl = $module_srl;
-
-            // 댓글의 이동
+            // move the comment
             $output = executeQuery('comment.updateCommentModule', $args);
             if(!$output->toBool()) {
                 $oDB->rollback();
@@ -138,22 +130,19 @@
                 $oDB->rollback();
                 return $output;
             }
-
-            // 엮인글의 이동
+            // move the trackback 
             $output = executeQuery('trackback.updateTrackbackModule', $args);
             if(!$output->toBool()) {
                 $oDB->rollback();
                 return $output;
             }
-
-            // 태그
+            // Tags
             $output = executeQuery('tag.updateTagModule', $args);
             if(!$output->toBool()) {
                 $oDB->rollback();
                 return $output;
             }
-
-            // Call trigger (before)
+            // Call a trigger (before)
             $output = ModuleHandler::triggerCall('document.moveDocumentModule', 'after', $triggerObj);
             if(!$output->toBool()) {
                 $oDB->rollback();
@@ -161,6 +150,23 @@
             }
             
             $oDB->commit();
+	        //remove from cache
+	        $oCacheHandler = &CacheHandler::getInstance('object');
+	        if($oCacheHandler->isSupport()) 
+	        {
+	        	foreach($document_srl_list as $document_srl)
+	        	{
+	        		$cache_key = 'object:'.$document_srl;
+	            	$oCacheHandler->delete($cache_key);
+	        	}
+	            $cache_object = $oCacheHandler->get('module_list_documents');
+	            foreach ($cache_object as $object){
+	            	$cache_key_object = $object;
+	                $oCacheHandler->delete($cache_key_object);
+	            }
+	            $oCacheHandler->delete('module_list_documents');
+	        }
+            
             return new Object();
         }
 
@@ -284,7 +290,30 @@
          **/
         function deleteModuleDocument($module_srl) {
             $args->module_srl = $module_srl;
+            $oDocumentModel = &getModel('document');
+            $args->module_srl = $module_srl;
+            $document_list = $oDocumentModel->getDocumentList($args);
+            $documents = $document_list->data;
             $output = executeQuery('document.deleteModuleDocument', $args);
+            foreach ($documents as $oDocument){
+            	$document_srl_list[] = $oDocument->document_srl;
+            }
+        	//remove from cache
+	        $oCacheHandler = &CacheHandler::getInstance('object');
+	        if($oCacheHandler->isSupport()) 
+	        {
+	        	foreach($document_srl_list as $document_srl)
+	        	{
+	        		$cache_key = 'object:'.$document_srl;
+	            	$oCacheHandler->delete($cache_key);
+	        	}
+	            $cache_object = $oCacheHandler->get('module_list_documents');
+	            foreach ($cache_object as $object){
+	            	$cache_key_object = $object;
+	                $oCacheHandler->delete($cache_key_object);
+	            }
+	            $oCacheHandler->delete('module_list_documents');
+	        }
             return $output;
         }
 

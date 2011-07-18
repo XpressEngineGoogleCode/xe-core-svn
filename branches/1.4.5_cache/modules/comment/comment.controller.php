@@ -103,20 +103,18 @@
          **/
         function insertComment($obj, $manual_inserted = false) {
             $obj->__isupdate = false;
-            // trigger 호출 (before)
+            // call a trigger (before)
             $output = ModuleHandler::triggerCall('comment.insertComment', 'before', $obj);
             if(!$output->toBool()) return $output;
-
-            // document_srl에 해당하는 글이 있는지 확인
+            // check if a posting of the corresponding document_srl exists
             $document_srl = $obj->document_srl;
             if(!$document_srl) return new Object(-1,'msg_invalid_document');
-
-            // document model 객체 생성
+            // get a object of document model
             $oDocumentModel = &getModel('document');
 
             // even for manual_inserted if password exists, md5 it.
             if($obj->password) $obj->password = md5($obj->password);
-            // 원본글을 가져옴
+            // get the original posting
             if(!$manual_inserted) {
                 $oDocument = $oDocumentModel->getDocument($document_srl);
 
@@ -124,8 +122,7 @@
                 if($oDocument->isLocked()) return new Object(-1,'msg_invalid_request');
 
                 if($obj->homepage &&  !preg_match('/^[a-z]+:\/\//i',$obj->homepage)) $obj->homepage = 'http://'.$obj->homepage;
-
-                // 로그인 된 회원일 경우 회원의 정보를 입력
+                // input the member's information if logged-in
                 if(Context::get('is_logged')) {
                     $logged_info = Context::get('logged_info');
                     $obj->member_srl = $logged_info->member_srl;
@@ -136,24 +133,20 @@
                     $obj->homepage = $logged_info->homepage;
                 }
             }
-
-            // 로그인정보가 없고 사용자 이름이 없으면 오류 표시
+            // error display if neither of log-in info and user name exist.
             if(!$logged_info->member_srl && !$obj->nick_name) return new Object(-1,'msg_invalid_request');
 
             if(!$obj->comment_srl) $obj->comment_srl = getNextSequence();
-
-            // 순서를 정함
+            // determine the order
             $obj->list_order = getNextSequence() * -1;
-
-            // 내용에서 XE만의 태그를 삭제
+            // remove XE's own tags from the contents
             $obj->content = preg_replace('!<\!--(Before|After)(Document|Comment)\(([0-9]+),([0-9]+)\)-->!is', '', $obj->content);
 			if(Mobile::isFromMobilePhone())
 			{
 				$obj->content = nl2br(htmlspecialchars($obj->content));
 			}
             if(!$obj->regdate) $obj->regdate = date("YmdHis");
-
-            // 세션에서 최고 관리자가 아니면 iframe, script 제거
+            // remove iframe and script if not a top administrator on the session.
             if($logged_info->is_admin != 'Y') $obj->content = removeHackTag($obj->content);
 
             if(!$obj->notify_message) $obj->notify_message = 'N';
@@ -162,38 +155,32 @@
             // begin transaction
             $oDB = &DB::getInstance();
             $oDB->begin();
-
-            // 댓글 목록 부분을 먼저 입력
+            // Enter a list of comments first
             $list_args->comment_srl = $obj->comment_srl;
             $list_args->document_srl = $obj->document_srl;
             $list_args->module_srl = $obj->module_srl;
             $list_args->regdate = $obj->regdate;
-
-            // 부모댓글이 없으면 바로 데이터를 설정
+            // If parent comment doesn't exist, set data directly
             if(!$obj->parent_srl) {
                 $list_args->head = $list_args->arrange = $obj->comment_srl;
                 $list_args->depth = 0;
-
-            // 부모댓글이 있으면 부모글의 정보를 구해옴
+            // If parent comment exists, get information of the parent comment
             } else {
-                // 부모댓글의 정보를 구함
+                // get information of the parent comment posting
                 $parent_args->comment_srl = $obj->parent_srl;
                 $parent_output = executeQuery('comment.getCommentListItem', $parent_args);
-
-                // 부모댓글이 존재하지 않으면 return
+                // return if no parent comment exists
                 if(!$parent_output->toBool() || !$parent_output->data) return;
                 $parent = $parent_output->data;
 
                 $list_args->head = $parent->head;
                 $list_args->depth = $parent->depth+1;
-
-                // depth가 2단계 미만이면 별도의 update문 없이 insert만으로 쓰레드 정리
+                // if the depth of comments is less than 2, execute insert.
                 if($list_args->depth<2) {
                     $list_args->arrange = $obj->comment_srl;
-
-                // depth가 2단계 이상이면 반업데이트 실행
+                // if the depth of comments is greater than 2, execute update.
                 } else {
-                    // 부모 댓글과 같은 head를 가지고 depth가 같거나 작은 댓글중 제일 위 댓글을 구함
+                    // get the top listed comment among those in lower depth and same head with parent's.
                     $p_args->head = $parent->head;
                     $p_args->arrange = $parent->arrange;
                     $p_args->depth = $parent->depth;
@@ -211,31 +198,23 @@
 
             $output = executeQuery('comment.insertCommentList', $list_args);
             if(!$output->toBool()) return $output;
-
-            // 댓글 본문을 입력
+            // insert comment
             $output = executeQuery('comment.insertComment', $obj);
             if(!$output->toBool()) {
                 $oDB->rollback();
                 return $output;
             }
-
-            // comment model객체 생성
+            // creat the comment model object
             $oCommentModel = &getModel('comment');
-
-            // 해당 글의 전체 댓글 수를 구해옴
+            // get the number of all comments in the posting
             $comment_count = $oCommentModel->getCommentCount($document_srl);
-
-            // document의 controller 객체 생성
+            // create the controller object of the document
             $oDocumentController = &getController('document');
-
-            // 해당글의 댓글 수를 업데이트
+            // Update the number of comments in the post
             $output = $oDocumentController->updateCommentCount($document_srl, $comment_count, $obj->nick_name, true);
-
-            // 댓글의 권한을 부여
+            // grant autority of the comment
             $this->addGrant($obj->comment_srl);
-
-
-            // trigger 호출 (after)
+            // call a trigger(after)
             if($output->toBool()) {
                 $trigger_output = ModuleHandler::triggerCall('comment.insertComment', 'after', $obj);
                 if(!$trigger_output->toBool()) {
@@ -248,10 +227,9 @@
             $oDB->commit();
 
             if(!$manual_inserted) {
-                // 원본글에 알림(notify_message)가 설정되어 있으면 메세지 보냄
+                // send a message if notify_message option in enabled in the original article
                 $oDocument->notify(Context::getLang('comment'), $obj->content);
-
-                // 원본 댓글이 있고 원본 댓글에 알림(notify_message)가 있으면 메세지 보냄
+                // send a message if notify_message option in enabled in the original comment
                 if($obj->parent_srl) {
                     $oParent = $oCommentModel->getComment($obj->parent_srl);
 					if ($oParent->get('member_srl') != $oDocument->get('member_srl')) {
@@ -262,6 +240,18 @@
 
 
             $output->add('comment_srl', $obj->comment_srl);
+            
+        	//remove from cache
+            $oCacheHandler = &CacheHandler::getInstance('object');
+            if($oCacheHandler->isSupport()) 
+            {
+            	$cache_object = $oCacheHandler->get('comment_list_document_pages');
+            	foreach ($cache_object as $object){
+            		$cache_key = $object;
+                	$oCacheHandler->delete($cache_key);
+            	}
+                $oCacheHandler->delete('comment_list_document_pages');
+            }
             return $output;
         }
 
@@ -270,14 +260,12 @@
          **/
         function updateComment($obj, $is_admin = false) {
             $obj->__isupdate = true;
-            // trigger 호출 (before)
+            // call a trigger (before)
             $output = ModuleHandler::triggerCall('comment.updateComment', 'before', $obj);
             if(!$output->toBool()) return $output;
-
-            // comment model 객체 생성
+            // create a comment model object
             $oCommentModel = &getModel('comment');
-
-            // 원본 데이터를 가져옴
+            // get the original data
             $source_obj = $oCommentModel->getComment($obj->comment_srl);
             if(!$source_obj->getMemberSrl()) {
                 $obj->member_srl = $source_obj->get('member_srl');
@@ -286,14 +274,12 @@
                 $obj->email_address = $source_obj->get('email_address');
                 $obj->homepage = $source_obj->get('homepage');
             }
-
-            // 권한이 있는지 확인
+            // check if permission is granted
             if(!$is_admin && !$source_obj->isGranted()) return new Object(-1, 'msg_not_permitted');
 
             if($obj->password) $obj->password = md5($obj->password);
             if($obj->homepage &&  !preg_match('/^[a-z]+:\/\//i',$obj->homepage)) $obj->homepage = 'http://'.$obj->homepage;
-
-            // 로그인 되어 있고 작성자와 수정자가 동일하면 수정자의 정보를 세팅
+            // set modifier's information if logged-in and posting author and modifier are matched.
             if(Context::get('is_logged')) {
                 $logged_info = Context::get('logged_info');
                 if($source_obj->member_srl == $logged_info->member_srl) {
@@ -304,8 +290,7 @@
                     $obj->homepage = $logged_info->homepage;
                 }
             }
-
-            // 로그인한 유저가 작성한 글인데 nick_name이 없을 경우
+            // if nick_name of the logged-in author doesn't exist
             if($source_obj->get('member_srl')&& !$obj->nick_name) {
                 $obj->member_srl = $source_obj->get('member_srl');
                 $obj->user_name = $source_obj->get('user_name');
@@ -316,25 +301,21 @@
 
 
 			if(!$obj->content) $obj->content = $source_obj->get('content');
-
-            // 내용에서 XE만의 태그를 삭제
+            // remove XE's wn tags from contents
             $obj->content = preg_replace('!<\!--(Before|After)(Document|Comment)\(([0-9]+),([0-9]+)\)-->!is', '', $obj->content);
-
-            // 세션에서 최고 관리자가 아니면 iframe, script 제거
+            // remove iframe and script if not a top administrator on the session
             if($logged_info->is_admin != 'Y') $obj->content = removeHackTag($obj->content);
 
             // begin transaction
             $oDB = &DB::getInstance();
             $oDB->begin();
-
-            // 업데이트
+            // Update
             $output = executeQuery('comment.updateComment', $obj);
             if(!$output->toBool()) {
                 $oDB->rollback();
                 return $output;
             }
-
-            // trigger 호출 (after)
+            // call a trigger (after)
             if($output->toBool()) {
                 $trigger_output = ModuleHandler::triggerCall('comment.updateComment', 'after', $obj);
                 if(!$trigger_output->toBool()) {
@@ -347,6 +328,18 @@
             $oDB->commit();
 
             $output->add('comment_srl', $obj->comment_srl);
+            
+        	//remove from cache
+            $oCacheHandler = &CacheHandler::getInstance('object');
+            if($oCacheHandler->isSupport()) 
+            {
+            	$cache_object = $oCacheHandler->get('comment_list_document_pages');
+            	foreach ($cache_object as $object){
+            		$cache_key = $object;
+                	$oCacheHandler->delete($cache_key);
+            	}
+                $oCacheHandler->delete('comment_list_document_pages');
+            }
             return $output;
         }
 
@@ -357,28 +350,23 @@
 
             // comment model 객체 생성
             $oCommentModel = &getModel('comment');
-
-            // 기존 댓글이 있는지 확인
+            // check if comment already exists
             $comment = $oCommentModel->getComment($comment_srl);
             if($comment->comment_srl != $comment_srl) return new Object(-1, 'msg_invalid_request');
             $document_srl = $comment->document_srl;
-
-            // trigger 호출 (before)
+            // call a trigger (before)
             $output = ModuleHandler::triggerCall('comment.deleteComment', 'before', $comment);
             if(!$output->toBool()) return $output;
-
-            // 해당 댓글에 child가 있는지 확인
+            // check if child comment exists on the comment
             $child_count = $oCommentModel->getChildCommentCount($comment_srl);
             if($child_count>0) return new Object(-1, 'fail_to_delete_have_children');
-
-            // 권한이 있는지 확인
+            // check if permission is granted
             if(!$is_admin && !$comment->isGranted()) return new Object(-1, 'msg_not_permitted');
 
             // begin transaction
             $oDB = &DB::getInstance();
             $oDB->begin();
-
-            // 삭제
+            // Delete
             $args->comment_srl = $comment_srl;
             $output = executeQuery('comment.deleteComment', $args);
             if(!$output->toBool()) {
@@ -387,21 +375,17 @@
             }
 
             $output = executeQuery('comment.deleteCommentList', $args);
-
-            // 댓글 수를 구해서 업데이트
+            // update the number of comments
             $comment_count = $oCommentModel->getCommentCount($document_srl);
-
-            // document의 controller 객체 생성
+            // create the controller object of the document
             $oDocumentController = &getController('document');
-
-            // 해당글의 댓글 수를 업데이트
+            // update comment count of the article posting 
             $output = $oDocumentController->updateCommentCount($document_srl, $comment_count, null, false);
             if(!$output->toBool()) {
                 $oDB->rollback();
                 return $output;
             }
-
-            // trigger 호출 (after)
+            // call a trigger (after)
             if($output->toBool()) {
                 $trigger_output = ModuleHandler::triggerCall('comment.deleteComment', 'after', $comment);
                 if(!$trigger_output->toBool()) {
@@ -410,10 +394,28 @@
                 }
             }
 
+			if(!$isMoveToTrash)
+			{
+				$this->_deleteDeclaredComments($args);
+				$this->_deleteVotedComments($args);
+			}
+
             // commit
             $oDB->commit();
 
             $output->add('document_srl', $document_srl);
+            
+        	//remove from cache
+            $oCacheHandler = &CacheHandler::getInstance('object');
+            if($oCacheHandler->isSupport()) 
+            {
+            	$cache_object = $oCacheHandler->get('comment_list_document_pages');
+            	foreach ($cache_object as $object){
+            		$cache_key = $object;
+                	$oCacheHandler->delete($cache_key);
+            	}
+                $oCacheHandler->delete('comment_list_document_pages');
+            }
             return $output;
         }
 
@@ -421,37 +423,53 @@
          * @brief 특정 글의 모든 댓글 삭제
          **/
         function deleteComments($document_srl) {
-            // document model객체 생성
+            // create the document model object
             $oDocumentModel = &getModel('document');
             $oCommentModel = &getModel('comment');
-
-            // 권한이 있는지 확인
+            // check if permission is granted
             $oDocument = $oDocumentModel->getDocument($document_srl);
             if(!$oDocument->isExists() || !$oDocument->isGranted()) return new Object(-1, 'msg_not_permitted');
-
-            // 댓글 목록을 가져와서 일단 trigger만 실행 (일괄 삭제를 해야 하기에 최대한 처리 비용을 줄이기 위한 방법)
+            // get a list of comments and then execute a trigger(way to reduce the processing cost for delete all)
             $args->document_srl = $document_srl;
             $comments = executeQueryArray('comment.getAllComments',$args);
             if($comments->data) {
+				$commentSrlList = array();
                 foreach($comments->data as $key => $comment) {
-                    // trigger 호출 (before)
+					array_push($commentSrlList, $comment->comment_srl);
+                    // call a trigger (before)
                     $output = ModuleHandler::triggerCall('comment.deleteComment', 'before', $comment);
                     if(!$output->toBool()) continue;
-
-                    // trigger 호출 (after)
+                    // call a trigger (after)
                     $output = ModuleHandler::triggerCall('comment.deleteComment', 'after', $comment);
                     if(!$output->toBool()) continue;
                 }
             }
-
-            // 댓글 본문 삭제
+            // delete the comment
             $args->document_srl = $document_srl;
             $output = executeQuery('comment.deleteComments', $args);
             if(!$output->toBool()) return $output;
-
-            // 댓글 목록 삭제
+            // Delete a list of comments
             $output = executeQuery('comment.deleteCommentsList', $args);
 
+			//delete declared, declared_log, voted_log
+			if(is_array($commentSrlList) && count($commentSrlList)>0)
+			{
+				unset($args);
+				$args->comment_srl = join(',', $commentSrlList);
+				$this->_deleteDeclaredComments($args);
+				$this->_deleteVotedComments($args);
+			}
+        	//remove from cache
+            $oCacheHandler = &CacheHandler::getInstance('object');
+            if($oCacheHandler->isSupport()) 
+            {
+            	$cache_object = $oCacheHandler->get('comment_list_document_pages');
+            	foreach ($cache_object as $object){
+            		$cache_key = $object;
+                	$oCacheHandler->delete($cache_key);
+            	}
+                $oCacheHandler->delete('comment_list_document_pages');
+            }
             return $output;
         }
 

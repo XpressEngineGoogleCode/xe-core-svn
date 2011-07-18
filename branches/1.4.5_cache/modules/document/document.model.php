@@ -98,15 +98,27 @@
          **/
         function getDocument($document_srl=0, $is_admin = false, $load_extra_vars=true) {
             if(!$document_srl) return new documentItem();
+        	
+            // cache controll
+			$oCacheHandler = &CacheHandler::getInstance('object');
+			if($oCacheHandler->isSupport()){
+				$cache_key = 'object:'.$document_srl;
+				$document_info = $oCacheHandler->get($cache_key);
+			}
+			if(!$document_info){
+				if(!isset($GLOBALS['XE_DOCUMENT_LIST'][$document_srl])) {
+	                $oDocument = new documentItem($document_srl, $load_extra_vars, $columnList);
+	                $GLOBALS['XE_DOCUMENT_LIST'][$document_srl] = $oDocument;
+	                if($load_extra_vars) $this->setToAllDocumentExtraVars();
+            	}
+            	if($is_admin) $GLOBALS['XE_DOCUMENT_LIST'][$document_srl]->setGrant();
 
-            if(!isset($GLOBALS['XE_DOCUMENT_LIST'][$document_srl])) {
-                $oDocument = new documentItem($document_srl, $load_extra_vars);
-                $GLOBALS['XE_DOCUMENT_LIST'][$document_srl] = $oDocument;
-                if($load_extra_vars) $this->setToAllDocumentExtraVars();
-            }
-            if($is_admin) $GLOBALS['XE_DOCUMENT_LIST'][$document_srl]->setGrant();
-
-            return $GLOBALS['XE_DOCUMENT_LIST'][$document_srl];
+            	$document_info = $GLOBALS['XE_DOCUMENT_LIST'][$document_srl];
+            	//insert in cache
+	            if($oCacheHandler->isSupport()) $oCacheHandler->put($cache_key,$document_info);
+			}
+            
+			return $document_info;
         }
 
         /**
@@ -159,192 +171,227 @@
         /**
          * @brief module_srl값을 가지는 문서의 목록을 가져옴
          **/
-        function getDocumentList($obj, $except_notice = false, $load_extra_vars=true) {
-            // 정렬 대상과 순서 체크
-            if(!in_array($obj->sort_index, array('list_order','regdate','last_update','update_order','readed_count','voted_count','comment_count','trackback_count','uploaded_count','title','category_srl'))) $obj->sort_index = 'list_order';
-            if(!in_array($obj->order_type, array('desc','asc'))) $obj->order_type = 'asc';
-
-            // module_srl 대신 mid가 넘어왔을 경우는 직접 module_srl을 구해줌
-            if($obj->mid) {
-                $oModuleModel = &getModel('module');
-                $obj->module_srl = $oModuleModel->getModuleSrlByMid($obj->mid);
-                unset($obj->mid);
-            }
-
-            // 넘어온 module_srl은 array일 수도 있기에 array인지를 체크
-            if(is_array($obj->module_srl)) $args->module_srl = implode(',', $obj->module_srl);
-            else $args->module_srl = $obj->module_srl;
-
-            // 제외 module_srl에 대한 검사
-            if(is_array($obj->exclude_module_srl)) $args->exclude_module_srl = implode(',', $obj->exclude_module_srl);
-            else $args->exclude_module_srl = $obj->exclude_module_srl;
-
-            // 변수 체크
-            $args->category_srl = $obj->category_srl?$obj->category_srl:null;
-            $args->sort_index = $obj->sort_index;
-            $args->order_type = $obj->order_type;
-            $args->page = $obj->page?$obj->page:1;
-            $args->list_count = $obj->list_count?$obj->list_count:20;
-            $args->page_count = $obj->page_count?$obj->page_count:10;
-            $args->start_date = $obj->start_date?$obj->start_date:null;
-            $args->end_date = $obj->end_date?$obj->end_date:null;
-            $args->member_srl = $obj->member_srl;
-
-            // 카테고리가 선택되어 있으면 하부 카테고리까지 모두 조건에 추가
-            if($args->category_srl) {
-                $category_list = $this->getCategoryList($args->module_srl);
-                $category_info = $category_list[$args->category_srl];
-                $category_info->childs[] = $args->category_srl;
-                $args->category_srl = implode(',',$category_info->childs);
-            }
-
-            // 기본으로 사용할 query id 지정 (몇가지 검색 옵션에 따라 query id가 변경됨)
-            $query_id = 'document.getDocumentList';
-
-            // 내용검색일 경우 document division을 지정하여 검색하기 위한 처리
-            $use_division = false;
-
-            // 검색 옵션 정리
-            $searchOpt->search_target = $obj->search_target;
-            $searchOpt->search_keyword = $obj->search_keyword;
-			$this->_setSearchOption($searchOpt, &$args, &$query_id, &$use_division);
-
-            /**
-             * division은 list_order의 asc 정렬일때만 사용할 수 있음
-             **/
-            if($args->sort_index != 'list_order' || $args->order_type != 'asc') $use_division = false;
-
-            /**
-             * 만약 use_division이 true일 경우 document division을 이용하도록 변경
-             **/
-            if($use_division) {
-                // 시작 division
-                $division = (int)Context::get('division');
-
-                // division값이 없다면 제일 상위
-                if(!$division) {
-                    $division_args->module_srl = $args->module_srl;
-                    $division_args->exclude_module_srl = $args->exclude_module_srl;
-                    $division_args->list_count = 1;
-                    $division_args->sort_index = $args->sort_index;
-                    $division_args->order_type = $args->order_type;
-                    $output = executeQuery("document.getDocumentList", $division_args);
-                    if($output->data) {
-                        $item = array_pop($output->data);
-                        $division = $item->list_order;
-                    }
-                    $division_args = null;
-                }
-
-                // 마지막 division
-                $last_division = (int)Context::get('last_division');
-
-                // 지정된 division에서부터 5000개 후의 division값을 구함
-                if(!$last_division) {
-                    $last_division_args->module_srl = $args->module_srl;
-                    $last_division_args->exclude_module_srl = $args->exclude_module_srl;
-                    $last_division_args->list_count = 1;
-                    $last_division_args->sort_index = $args->sort_index;
-                    $last_division_args->order_type = $args->order_type;
-                    $last_division_args->list_order = $division;
-                    $last_division_args->page = 5001;
-                    $output = executeQuery("document.getDocumentDivision", $last_division_args);
-                    if($output->data) {
-                        $item = array_pop($output->data);
-                        $last_division = $item->list_order;
-                    }
-
-                }
-
-                // last_division 이후로 글이 있는지 확인
-                if($last_division) {
-                    $last_division_args = null;
-                    $last_division_args->module_srl = $args->module_srl;
-                    $last_division_args->exclude_module_srl = $args->exclude_module_srl;
-                    $last_division_args->list_order = $last_division;
-                    $output = executeQuery("document.getDocumentDivisionCount", $last_division_args);
-                    if($output->data->count<1) $last_division = null;
-                }
-
-                $args->division = $division;
-                $args->last_division = $last_division;
-                Context::set('division', $division);
-                Context::set('last_division', $last_division);
-            }
-
-            // document.getDocumentList 쿼리 실행
-            // 만약 query_id가 getDocumentListWithinComment 또는 getDocumentListWithinTag일 경우 group by 절 사용 때문에 쿼리를 한번더 수행
-            if(in_array($query_id, array('document.getDocumentListWithinComment', 'document.getDocumentListWithinTag'))) {
-                $group_args = clone($args);
-                $group_args->sort_index = 'documents.'.$args->sort_index;
-                $output = executeQueryArray($query_id, $group_args);
-                if(!$output->toBool()||!count($output->data)) return $output;
-
-                foreach($output->data as $key => $val) {
-                    if($val->document_srl) $target_srls[] = $val->document_srl;
-                }
-
-                $page_navigation = $output->page_navigation;
-                $keys = array_keys($output->data);
-                $virtual_number = $keys[0];
-
-                $target_args->document_srls = implode(',',$target_srls);
-                $target_args->list_order = $args->sort_index;
-                $target_args->order_type = $args->order_type;
-                $target_args->list_count = $args->list_count;
-                $target_args->page = 1;
-                $output = executeQueryArray('document.getDocuments', $target_args);
-                $output->page_navigation = $page_navigation;
-                $output->total_count = $page_navigation->total_count;
-                $output->total_page = $page_navigation->total_page;
-                $output->page = $page_navigation->cur_page;
-            } else {
-                $output = executeQueryArray($query_id, $args);
-            }
-
-            // 결과가 없거나 오류 발생시 그냥 return
-            if(!$output->toBool()||!count($output->data)) return $output;
-
-            $idx = 0;
-            $data = $output->data;
-            unset($output->data);
-
-            if(!isset($virtual_number))
-            {
-                $keys = array_keys($data);
-                $virtual_number = $keys[0];
-            }
-
-            if($except_notice) {
-                foreach($data as $key => $attribute) {
-                    if($attribute->is_notice == 'Y') $virtual_number --;
-                }
-            }
-
-            foreach($data as $key => $attribute) {
-                if($except_notice && $attribute->is_notice == 'Y') continue;
-                $document_srl = $attribute->document_srl;
-                if(!$GLOBALS['XE_DOCUMENT_LIST'][$document_srl]) {
-                    $oDocument = null;
-                    $oDocument = new documentItem();
-                    $oDocument->setAttribute($attribute, false);
-                    if($is_admin) $oDocument->setGrant();
-                    $GLOBALS['XE_DOCUMENT_LIST'][$document_srl] = $oDocument;
-                }
-
-                $output->data[$virtual_number] = $GLOBALS['XE_DOCUMENT_LIST'][$document_srl];
-                $virtual_number --;
-
-            }
-            
-			if($load_extra_vars) $this->setToAllDocumentExtraVars();
-
-            if(count($output->data)) {
-                foreach($output->data as $number => $document) {
-                    $output->data[$number] = $GLOBALS['XE_DOCUMENT_LIST'][$document->document_srl];
-                }
-            }
-
+        function getDocumentList($obj, $except_notice = false, $load_extra_vars=true, $columnList = array()) {
+        	// cache controll
+			$oCacheHandler = &CacheHandler::getInstance('object');
+			if($oCacheHandler->isSupport()){
+				$cache_key = 'object:'.$obj->module_srl.'_documents';
+				$output = $oCacheHandler->get($cache_key);
+				$cache_object = $oCacheHandler->get('module_list_documents');
+				if($cache_object) {
+					if(!in_array($cache_key, $cache_object)) {
+						$cache_object[]=$cache_key;
+						$oCacheHandler->put('module_list_documents',$cache_object);
+					}
+				} else {
+					$cache_object = array();
+					$cache_object[] = $cache_key;
+					$oCacheHandler->put('module_list_documents',$cache_object);
+				}
+			}
+        	if(!$output){
+	        	
+	        	$logged_info = Context::get('logged_info');
+				$sort_check = $this->_setSortIndex($obj, $load_extra_vars);
+	
+				$obj->sort_index = $sort_check->sort_index;
+				// Check the target and sequence alignment
+	            if(!in_array($obj->order_type, array('desc','asc'))) $obj->order_type = 'asc';
+	            // If that came across mid module_srl instead of a direct module_srl guhaejum
+	            if($obj->mid) {
+	                $oModuleModel = &getModel('module');
+	                $obj->module_srl = $oModuleModel->getModuleSrlByMid($obj->mid);
+	                unset($obj->mid);
+	            }
+	            // Module_srl passed the array may be a check whether the array
+	            if(is_array($obj->module_srl)) $args->module_srl = implode(',', $obj->module_srl);
+	            else $args->module_srl = $obj->module_srl;
+	            // Except for the test module_srl
+	            if(is_array($obj->exclude_module_srl)) $args->exclude_module_srl = implode(',', $obj->exclude_module_srl);
+	            else $args->exclude_module_srl = $obj->exclude_module_srl;
+	            // Variable check
+	            $args->category_srl = $obj->category_srl?$obj->category_srl:null;
+	            $args->sort_index = $obj->sort_index;
+	            $args->order_type = $obj->order_type;
+	            $args->page = $obj->page?$obj->page:1;
+	            $args->list_count = $obj->list_count?$obj->list_count:20;
+	            $args->page_count = $obj->page_count?$obj->page_count:10;
+	            $args->start_date = $obj->start_date?$obj->start_date:null;
+	            $args->end_date = $obj->end_date?$obj->end_date:null;
+	            $args->member_srl = $obj->member_srl;
+				$args->statusList = $obj->statusList?$obj->statusList:array('SECRET', 'PUBLIC', 'PUBLISH');
+				if($logged_info->is_admin == 'Y') $args->statusList = array('SECRET', 'PUBLIC', 'PUBLISH');
+	            // Category is selected, further sub-categories until all conditions
+	            if($args->category_srl) {
+	                $category_list = $this->getCategoryList($args->module_srl);
+	                $category_info = $category_list[$args->category_srl];
+	                $category_info->childs[] = $args->category_srl;
+	                $args->category_srl = implode(',',$category_info->childs);
+	            }
+	            // Used to specify the default query id (based on several search options to query id modified)
+	            $query_id = 'document.getDocumentList';
+	            // If the search by specifying the document division naeyonggeomsaekil processed for
+	            $use_division = false;
+	
+	            // Search options
+	            $searchOpt->search_target = $obj->search_target;
+	            $searchOpt->search_keyword = $obj->search_keyword;
+				$this->_setSearchOption($searchOpt, $args, $query_id, $use_division);
+	
+				if ($sort_check->isExtraVars)
+				{
+					$query_id = 'document.getDocumentListExtraSort';
+					$output = executeQueryArray($query_id, $args);
+				}
+				else
+				{
+					/**
+					 * list_order asc sort of division that can be used only when
+					 **/
+					if($args->sort_index != 'list_order' || $args->order_type != 'asc') $use_division = false;
+	
+					/**
+					 * If it is true, use_division changed to use the document division
+					 **/
+					if($use_division) {
+						// Division begins
+						$division = (int)Context::get('division');
+	
+						// order by list_order and (module_srl===0 or module_srl many count), therefore case table full scan
+						if($args->sort_index == 'list_order' && ($args->exclude_module_srl === 0 || count($args->module_srl) > 10))
+						{
+							$listSqlID = 'document.getDocumentListUseIndex';
+							$divisionSqlID = 'document.getDocumentDivisionUseIndex';
+						}
+						else
+						{
+							$listSqlID = 'document.getDocumentList';
+							$divisionSqlID = 'document.getDocumentDivision';
+						}
+	
+						// If you do not value the best division top
+						if(!$division) {
+							$division_args->module_srl = $args->module_srl;
+							$division_args->exclude_module_srl = $args->exclude_module_srl;
+							$division_args->list_count = 1;
+							$division_args->sort_index = $args->sort_index;
+							$division_args->order_type = $args->order_type;
+							$division_args->statusList = $args->statusList;
+							$output = executeQuery($listSqlID, $division_args, $columnList);
+							if($output->data) {
+								$item = array_pop($output->data);
+								$division = $item->list_order;
+							}
+							$division_args = null;
+						}
+						// The last division
+						$last_division = (int)Context::get('last_division');
+						// Division after division from the 5000 value of the specified Wanted
+						if(!$last_division) {
+							$last_division_args->module_srl = $args->module_srl;
+							$last_division_args->exclude_module_srl = $args->exclude_module_srl;
+							$last_division_args->list_count = 1;
+							$last_division_args->sort_index = $args->sort_index;
+							$last_division_args->order_type = $args->order_type;
+							$last_division_args->list_order = $division;
+							$last_division_args->page = 5001;
+							$output = executeQuery($divisionSqlID, $last_division_args, $columnList);
+							if($output->data) {
+								$item = array_pop($output->data);
+								$last_division = $item->list_order;
+							}
+						}
+						// Make sure that after last_division article
+						if($last_division) {
+							$last_division_args = null;
+							$last_division_args->module_srl = $args->module_srl;
+							$last_division_args->exclude_module_srl = $args->exclude_module_srl;
+							$last_division_args->list_order = $last_division;
+							$output = executeQuery("document.getDocumentDivisionCount", $last_division_args);
+							if($output->data->count<1) $last_division = null;
+						}
+	
+						$args->division = $division;
+						$args->last_division = $last_division;
+						Context::set('division', $division);
+						Context::set('last_division', $last_division);
+					}
+					// document.getDocumentList query execution
+					// Query_id if you have a group by clause getDocumentListWithinTag getDocumentListWithinComment or used again to perform the query because
+					if(in_array($query_id, array('document.getDocumentListWithinComment', 'document.getDocumentListWithinTag'))) {
+						$group_args = clone($args);
+						$group_args->sort_index = 'documents.'.$args->sort_index;
+						$output = executeQueryArray($query_id, $group_args);
+						if(!$output->toBool()||!count($output->data)) return $output;
+	
+						foreach($output->data as $key => $val) {
+							if($val->document_srl) $target_srls[] = $val->document_srl;
+						}
+	
+						$page_navigation = $output->page_navigation;
+						$keys = array_keys($output->data);
+						$virtual_number = $keys[0];
+	
+						$target_args->document_srls = implode(',',$target_srls);
+						$target_args->list_order = $args->sort_index;
+						$target_args->order_type = $args->order_type;
+						$target_args->list_count = $args->list_count;
+						$target_args->page = 1;
+						$output = executeQueryArray('document.getDocuments', $target_args);
+						$output->page_navigation = $page_navigation;
+						$output->total_count = $page_navigation->total_count;
+						$output->total_page = $page_navigation->total_page;
+						$output->page = $page_navigation->cur_page;
+					} else {
+						$output = executeQueryArray($query_id, $args, $columnList);
+					}
+				} 
+				// Return if no result or an error occurs
+				if(!$output->toBool()||!count($output->data)) return $output;
+	
+				$idx = 0;
+				$data = $output->data;
+				unset($output->data);
+	
+				if(!isset($virtual_number))
+				{
+					$keys = array_keys($data);
+					$virtual_number = $keys[0];
+				}
+	
+				if($except_notice) {
+					foreach($data as $key => $attribute) {
+						if($attribute->is_notice == 'Y') $virtual_number --;
+					}
+				}
+	
+				foreach($data as $key => $attribute) {
+					if($except_notice && $attribute->is_notice == 'Y') continue;
+					$document_srl = $attribute->document_srl;
+					if(!$GLOBALS['XE_DOCUMENT_LIST'][$document_srl]) {
+						$oDocument = null;
+						$oDocument = new documentItem();
+						$oDocument->setAttribute($attribute, false);
+						if($is_admin) $oDocument->setGrant();
+						$GLOBALS['XE_DOCUMENT_LIST'][$document_srl] = $oDocument;
+					}
+	
+					$output->data[$virtual_number] = $GLOBALS['XE_DOCUMENT_LIST'][$document_srl];
+					$virtual_number --;
+	
+				}
+	
+				if($load_extra_vars) $this->setToAllDocumentExtraVars();
+	
+	            if(count($output->data)) {
+	                foreach($output->data as $number => $document) {
+	                    $output->data[$number] = $GLOBALS['XE_DOCUMENT_LIST'][$document->document_srl];
+	                }
+	            }
+	            //insert in cache
+	            if($oCacheHandler->isSupport()) $oCacheHandler->put($cache_key,$output);
+			
+        	}
             return $output;
         }
 
