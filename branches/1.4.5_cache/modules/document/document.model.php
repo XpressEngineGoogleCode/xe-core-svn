@@ -2,34 +2,34 @@
     /**
      * @class  documentModel
      * @author NHN (developers@xpressengine.com)
-     * @brief  document 모듈의 model 클래스
+     * @brief  document ??? model ???
      **/
 
     class documentModel extends document {
 
         /**
-         * @brief 초기화
+         * @brief ???
          **/
         function init() {
         }
 
         /**
-         * @brief document에 대한 권한을 세션값으로 체크
+         * @brief document? ?? ??? ????? ??
          **/
         function isGranted($document_srl) {
             return $_SESSION['own_document'][$document_srl];
         }
 
         /**
-         * @brief 확장변수를 매 문서마다 처리하지 않기 위해 매크로성으로 일괄 select 및 적용
+         * @brief ????? ? ???? ???? ?? ?? ?????? ?? select ? ??
          **/
         function setToAllDocumentExtraVars() {
             static $checked_documents = array();
 
-            // XE에서 모든 문서 객체는 XE_DOCUMENT_LIST라는 전역 변수에 세팅을 함
+            // XE?? ?? ?? ??? XE_DOCUMENT_LIST?? ?? ??? ??? ?
             if(!count($GLOBALS['XE_DOCUMENT_LIST'])) return;
 
-            // 모든 호출된 문서 객체를 찾아서 확장변수가 설정되었는지를 확인
+            // ?? ??? ?? ??? ??? ????? ??????? ??
             $document_srls = array();
             foreach($GLOBALS['XE_DOCUMENT_LIST'] as $key => $val) {
                 if(!$val->document_srl || $checked_documents[$val->document_srl]) continue;
@@ -37,10 +37,10 @@
                 $document_srls[] = $val->document_srl;
             }
 
-            // 검출된 문서 번호가 없으면 return
+            // ??? ?? ??? ??? return
             if(!count($document_srls)) return;
 
-            // 확장변수 미지정된 문서에 대해서 일단 현재 접속자의 언어코드로 확장변수를 검색
+            // ???? ???? ??? ??? ?? ?? ???? ????? ????? ??
             $obj->document_srl = implode(',',$document_srls);
             $output = executeQueryArray('document.getDocumentExtraVars', $obj);
             if($output->toBool() && $output->data) {
@@ -63,7 +63,7 @@
                 $vars = $extra_vars[$document_srl];
                 $document_lang_code = $GLOBALS['XE_DOCUMENT_LIST'][$document_srl]->get('lang_code');
 
-                // 확장변수 처리
+                // ???? ??
                 if(count($extra_keys)) {
                 foreach($extra_keys as $idx => $key) {
                         $val = $vars[$idx];
@@ -79,10 +79,10 @@
                 $evars = new ExtraVar($module_srl);
                 $evars->setExtraVarKeys($extra_keys);
 
-                // 제목 처리
+                // ?? ??
                 if($vars[-1][$user_lang_code]) $GLOBALS['XE_DOCUMENT_LIST'][$document_srl]->add('title',$vars[-1][$user_lang_code]);
 
-                // 내용 처리
+                // ?? ??
                 if($vars[-2][$user_lang_code]) $GLOBALS['XE_DOCUMENT_LIST'][$document_srl]->add('content',$vars[-2][$user_lang_code]);
 			
                 if($vars[-1][$user_lang_code] || $vars[-2][$user_lang_code]){ 
@@ -94,35 +94,23 @@
         }
 
         /**
-         * @brief 문서 가져오기
+         * @brief ?? ????
          **/
         function getDocument($document_srl=0, $is_admin = false, $load_extra_vars=true) {
             if(!$document_srl) return new documentItem();
-        	
-            // cache controll
-			$oCacheHandler = &CacheHandler::getInstance('object');
-			if($oCacheHandler->isSupport()){
-				$cache_key = 'object:'.$document_srl;
-				$document_info = $oCacheHandler->get($cache_key);
-			}
-			if(!$document_info){
-				if(!isset($GLOBALS['XE_DOCUMENT_LIST'][$document_srl])) {
-	                $oDocument = new documentItem($document_srl, $load_extra_vars, $columnList);
-	                $GLOBALS['XE_DOCUMENT_LIST'][$document_srl] = $oDocument;
-	                if($load_extra_vars) $this->setToAllDocumentExtraVars();
-            	}
-            	if($is_admin) $GLOBALS['XE_DOCUMENT_LIST'][$document_srl]->setGrant();
 
-            	$document_info = $GLOBALS['XE_DOCUMENT_LIST'][$document_srl];
-            	//insert in cache
-	            if($oCacheHandler->isSupport()) $oCacheHandler->put($cache_key,$document_info);
-			}
-            
-			return $document_info;
+            if(!isset($GLOBALS['XE_DOCUMENT_LIST'][$document_srl])) {
+                $oDocument = new documentItem($document_srl, $load_extra_vars);
+                $GLOBALS['XE_DOCUMENT_LIST'][$document_srl] = $oDocument;
+                if($load_extra_vars) $this->setToAllDocumentExtraVars();
+            }
+            if($is_admin) $GLOBALS['XE_DOCUMENT_LIST'][$document_srl]->setGrant();
+
+            return $GLOBALS['XE_DOCUMENT_LIST'][$document_srl];
         }
 
         /**
-         * @brief 여러개의 문서들을 가져옴 (페이징 아님)
+         * @brief ???? ???? ??? (??? ??)
          **/
         function getDocuments($document_srls, $is_admin = false, $load_extra_vars=true) {
             if(is_array($document_srls)) {
@@ -169,10 +157,10 @@
         }
 
         /**
-         * @brief module_srl값을 가지는 문서의 목록을 가져옴
+         * @brief module_srl?? ??? ??? ??? ???
          **/
-        function getDocumentList($obj, $except_notice = false, $load_extra_vars=true, $columnList = array()) {
-        	// cache controll
+        function getDocumentList($obj, $except_notice = false, $load_extra_vars=true) {
+            // cache controll
 			$oCacheHandler = &CacheHandler::getInstance('object');
 			if($oCacheHandler->isSupport()){
 				$cache_key = 'object:'.$obj->module_srl.'_documents';
@@ -190,213 +178,198 @@
 				}
 			}
         	if(!$output){
-	        	
-	        	$logged_info = Context::get('logged_info');
-				$sort_check = $this->_setSortIndex($obj, $load_extra_vars);
-	
-				$obj->sort_index = $sort_check->sort_index;
-				// Check the target and sequence alignment
-	            if(!in_array($obj->order_type, array('desc','asc'))) $obj->order_type = 'asc';
-	            // If that came across mid module_srl instead of a direct module_srl guhaejum
-	            if($obj->mid) {
-	                $oModuleModel = &getModel('module');
-	                $obj->module_srl = $oModuleModel->getModuleSrlByMid($obj->mid);
-	                unset($obj->mid);
-	            }
-	            // Module_srl passed the array may be a check whether the array
-	            if(is_array($obj->module_srl)) $args->module_srl = implode(',', $obj->module_srl);
-	            else $args->module_srl = $obj->module_srl;
-	            // Except for the test module_srl
-	            if(is_array($obj->exclude_module_srl)) $args->exclude_module_srl = implode(',', $obj->exclude_module_srl);
-	            else $args->exclude_module_srl = $obj->exclude_module_srl;
-	            // Variable check
-	            $args->category_srl = $obj->category_srl?$obj->category_srl:null;
-	            $args->sort_index = $obj->sort_index;
-	            $args->order_type = $obj->order_type;
-	            $args->page = $obj->page?$obj->page:1;
-	            $args->list_count = $obj->list_count?$obj->list_count:20;
-	            $args->page_count = $obj->page_count?$obj->page_count:10;
-	            $args->start_date = $obj->start_date?$obj->start_date:null;
-	            $args->end_date = $obj->end_date?$obj->end_date:null;
-	            $args->member_srl = $obj->member_srl;
-				$args->statusList = $obj->statusList?$obj->statusList:array('SECRET', 'PUBLIC', 'PUBLISH');
-				if($logged_info->is_admin == 'Y') $args->statusList = array('SECRET', 'PUBLIC', 'PUBLISH');
-	            // Category is selected, further sub-categories until all conditions
-	            if($args->category_srl) {
-	                $category_list = $this->getCategoryList($args->module_srl);
-	                $category_info = $category_list[$args->category_srl];
-	                $category_info->childs[] = $args->category_srl;
-	                $args->category_srl = implode(',',$category_info->childs);
-	            }
-	            // Used to specify the default query id (based on several search options to query id modified)
-	            $query_id = 'document.getDocumentList';
-	            // If the search by specifying the document division naeyonggeomsaekil processed for
-	            $use_division = false;
-	
-	            // Search options
-	            $searchOpt->search_target = $obj->search_target;
-	            $searchOpt->search_keyword = $obj->search_keyword;
-				$this->_setSearchOption($searchOpt, $args, $query_id, $use_division);
-	
-				if ($sort_check->isExtraVars)
-				{
-					$query_id = 'document.getDocumentListExtraSort';
-					$output = executeQueryArray($query_id, $args);
-				}
-				else
-				{
-					/**
-					 * list_order asc sort of division that can be used only when
-					 **/
-					if($args->sort_index != 'list_order' || $args->order_type != 'asc') $use_division = false;
-	
-					/**
-					 * If it is true, use_division changed to use the document division
-					 **/
-					if($use_division) {
-						// Division begins
-						$division = (int)Context::get('division');
-	
-						// order by list_order and (module_srl===0 or module_srl many count), therefore case table full scan
-						if($args->sort_index == 'list_order' && ($args->exclude_module_srl === 0 || count($args->module_srl) > 10))
-						{
-							$listSqlID = 'document.getDocumentListUseIndex';
-							$divisionSqlID = 'document.getDocumentDivisionUseIndex';
-						}
-						else
-						{
-							$listSqlID = 'document.getDocumentList';
-							$divisionSqlID = 'document.getDocumentDivision';
-						}
-	
-						// If you do not value the best division top
-						if(!$division) {
-							$division_args->module_srl = $args->module_srl;
-							$division_args->exclude_module_srl = $args->exclude_module_srl;
-							$division_args->list_count = 1;
-							$division_args->sort_index = $args->sort_index;
-							$division_args->order_type = $args->order_type;
-							$division_args->statusList = $args->statusList;
-							$output = executeQuery($listSqlID, $division_args, $columnList);
-							if($output->data) {
-								$item = array_pop($output->data);
-								$division = $item->list_order;
-							}
-							$division_args = null;
-						}
-						// The last division
-						$last_division = (int)Context::get('last_division');
-						// Division after division from the 5000 value of the specified Wanted
-						if(!$last_division) {
-							$last_division_args->module_srl = $args->module_srl;
-							$last_division_args->exclude_module_srl = $args->exclude_module_srl;
-							$last_division_args->list_count = 1;
-							$last_division_args->sort_index = $args->sort_index;
-							$last_division_args->order_type = $args->order_type;
-							$last_division_args->list_order = $division;
-							$last_division_args->page = 5001;
-							$output = executeQuery($divisionSqlID, $last_division_args, $columnList);
-							if($output->data) {
-								$item = array_pop($output->data);
-								$last_division = $item->list_order;
-							}
-						}
-						// Make sure that after last_division article
-						if($last_division) {
-							$last_division_args = null;
-							$last_division_args->module_srl = $args->module_srl;
-							$last_division_args->exclude_module_srl = $args->exclude_module_srl;
-							$last_division_args->list_order = $last_division;
-							$output = executeQuery("document.getDocumentDivisionCount", $last_division_args);
-							if($output->data->count<1) $last_division = null;
-						}
-	
-						$args->division = $division;
-						$args->last_division = $last_division;
-						Context::set('division', $division);
-						Context::set('last_division', $last_division);
-					}
-					// document.getDocumentList query execution
-					// Query_id if you have a group by clause getDocumentListWithinTag getDocumentListWithinComment or used again to perform the query because
-					if(in_array($query_id, array('document.getDocumentListWithinComment', 'document.getDocumentListWithinTag'))) {
-						$group_args = clone($args);
-						$group_args->sort_index = 'documents.'.$args->sort_index;
-						$output = executeQueryArray($query_id, $group_args);
-						if(!$output->toBool()||!count($output->data)) return $output;
-	
-						foreach($output->data as $key => $val) {
-							if($val->document_srl) $target_srls[] = $val->document_srl;
-						}
-	
-						$page_navigation = $output->page_navigation;
-						$keys = array_keys($output->data);
-						$virtual_number = $keys[0];
-	
-						$target_args->document_srls = implode(',',$target_srls);
-						$target_args->list_order = $args->sort_index;
-						$target_args->order_type = $args->order_type;
-						$target_args->list_count = $args->list_count;
-						$target_args->page = 1;
-						$output = executeQueryArray('document.getDocuments', $target_args);
-						$output->page_navigation = $page_navigation;
-						$output->total_count = $page_navigation->total_count;
-						$output->total_page = $page_navigation->total_page;
-						$output->page = $page_navigation->cur_page;
-					} else {
-						$output = executeQueryArray($query_id, $args, $columnList);
-					}
-				} 
-				// Return if no result or an error occurs
-				if(!$output->toBool()||!count($output->data)) return $output;
-	
-				$idx = 0;
-				$data = $output->data;
-				unset($output->data);
-	
-				if(!isset($virtual_number))
-				{
-					$keys = array_keys($data);
-					$virtual_number = $keys[0];
-				}
-	
-				if($except_notice) {
-					foreach($data as $key => $attribute) {
-						if($attribute->is_notice == 'Y') $virtual_number --;
-					}
-				}
-	
-				foreach($data as $key => $attribute) {
-					if($except_notice && $attribute->is_notice == 'Y') continue;
-					$document_srl = $attribute->document_srl;
-					if(!$GLOBALS['XE_DOCUMENT_LIST'][$document_srl]) {
-						$oDocument = null;
-						$oDocument = new documentItem();
-						$oDocument->setAttribute($attribute, false);
-						if($is_admin) $oDocument->setGrant();
-						$GLOBALS['XE_DOCUMENT_LIST'][$document_srl] = $oDocument;
-					}
-	
-					$output->data[$virtual_number] = $GLOBALS['XE_DOCUMENT_LIST'][$document_srl];
-					$virtual_number --;
-	
-				}
-	
-				if($load_extra_vars) $this->setToAllDocumentExtraVars();
-	
-	            if(count($output->data)) {
-	                foreach($output->data as $number => $document) {
-	                    $output->data[$number] = $GLOBALS['XE_DOCUMENT_LIST'][$document->document_srl];
-	                }
-	            }
-	            //insert in cache
-	            if($oCacheHandler->isSupport()) $oCacheHandler->put($cache_key,$output);
-			
-        	}
+			// ?? ??? ?? ??
+            if(!in_array($obj->sort_index, array('list_order','regdate','last_update','update_order','readed_count','voted_count','comment_count','trackback_count','uploaded_count','title','category_srl'))) $obj->sort_index = 'list_order';
+            if(!in_array($obj->order_type, array('desc','asc'))) $obj->order_type = 'asc';
+
+            // module_srl ?? mid? ???? ??? ?? module_srl? ???
+            if($obj->mid) {
+                $oModuleModel = &getModel('module');
+                $obj->module_srl = $oModuleModel->getModuleSrlByMid($obj->mid);
+                unset($obj->mid);
+            }
+
+            // ??? module_srl? array? ?? ??? array??? ??
+            if(is_array($obj->module_srl)) $args->module_srl = implode(',', $obj->module_srl);
+            else $args->module_srl = $obj->module_srl;
+
+            // ?? module_srl? ?? ??
+            if(is_array($obj->exclude_module_srl)) $args->exclude_module_srl = implode(',', $obj->exclude_module_srl);
+            else $args->exclude_module_srl = $obj->exclude_module_srl;
+
+            // ?? ??
+            $args->category_srl = $obj->category_srl?$obj->category_srl:null;
+            $args->sort_index = $obj->sort_index;
+            $args->order_type = $obj->order_type;
+            $args->page = $obj->page?$obj->page:1;
+            $args->list_count = $obj->list_count?$obj->list_count:20;
+            $args->page_count = $obj->page_count?$obj->page_count:10;
+            $args->start_date = $obj->start_date?$obj->start_date:null;
+            $args->end_date = $obj->end_date?$obj->end_date:null;
+            $args->member_srl = $obj->member_srl;
+
+            // ????? ???? ??? ?? ?????? ?? ??? ??
+            if($args->category_srl) {
+                $category_list = $this->getCategoryList($args->module_srl);
+                $category_info = $category_list[$args->category_srl];
+                $category_info->childs[] = $args->category_srl;
+                $args->category_srl = implode(',',$category_info->childs);
+            }
+
+            // ???? ??? query id ?? (??? ?? ??? ?? query id? ???)
+            $query_id = 'document.getDocumentList';
+
+            // ????? ?? document division? ???? ???? ?? ??
+            $use_division = false;
+
+            // ?? ?? ??
+            $searchOpt->search_target = $obj->search_target;
+            $searchOpt->search_keyword = $obj->search_keyword;
+			$this->_setSearchOption($searchOpt, &$args, &$query_id, &$use_division);
+
+            /**
+             * division? list_order? asc ????? ??? ? ??
+             **/
+            if($args->sort_index != 'list_order' || $args->order_type != 'asc') $use_division = false;
+
+            /**
+             * ?? use_division? true? ?? document division? ????? ??
+             **/
+            if($use_division) {
+                // ?? division
+                $division = (int)Context::get('division');
+
+                // division?? ??? ?? ??
+                if(!$division) {
+                    $division_args->module_srl = $args->module_srl;
+                    $division_args->exclude_module_srl = $args->exclude_module_srl;
+                    $division_args->list_count = 1;
+                    $division_args->sort_index = $args->sort_index;
+                    $division_args->order_type = $args->order_type;
+                    $output = executeQuery("document.getDocumentList", $division_args);
+                    if($output->data) {
+                        $item = array_pop($output->data);
+                        $division = $item->list_order;
+                    }
+                    $division_args = null;
+                }
+
+                // ??? division
+                $last_division = (int)Context::get('last_division');
+
+                // ??? division???? 5000? ?? division?? ??
+                if(!$last_division) {
+                    $last_division_args->module_srl = $args->module_srl;
+                    $last_division_args->exclude_module_srl = $args->exclude_module_srl;
+                    $last_division_args->list_count = 1;
+                    $last_division_args->sort_index = $args->sort_index;
+                    $last_division_args->order_type = $args->order_type;
+                    $last_division_args->list_order = $division;
+                    $last_division_args->page = 5001;
+                    $output = executeQuery("document.getDocumentDivision", $last_division_args);
+                    if($output->data) {
+                        $item = array_pop($output->data);
+                        $last_division = $item->list_order;
+                    }
+
+                }
+
+                // last_division ??? ?? ??? ??
+                if($last_division) {
+                    $last_division_args = null;
+                    $last_division_args->module_srl = $args->module_srl;
+                    $last_division_args->exclude_module_srl = $args->exclude_module_srl;
+                    $last_division_args->list_order = $last_division;
+                    $output = executeQuery("document.getDocumentDivisionCount", $last_division_args);
+                    if($output->data->count<1) $last_division = null;
+                }
+
+                $args->division = $division;
+                $args->last_division = $last_division;
+                Context::set('division', $division);
+                Context::set('last_division', $last_division);
+            }
+
+            // document.getDocumentList ?? ??
+            // ?? query_id? getDocumentListWithinComment ?? getDocumentListWithinTag? ?? group by ? ?? ??? ??? ??? ??
+            if(in_array($query_id, array('document.getDocumentListWithinComment', 'document.getDocumentListWithinTag'))) {
+                $group_args = clone($args);
+                $group_args->sort_index = 'documents.'.$args->sort_index;
+                $output = executeQueryArray($query_id, $group_args);
+                if(!$output->toBool()||!count($output->data)) return $output;
+
+                foreach($output->data as $key => $val) {
+                    if($val->document_srl) $target_srls[] = $val->document_srl;
+                }
+
+                $page_navigation = $output->page_navigation;
+                $keys = array_keys($output->data);
+                $virtual_number = $keys[0];
+
+                $target_args->document_srls = implode(',',$target_srls);
+                $target_args->list_order = $args->sort_index;
+                $target_args->order_type = $args->order_type;
+                $target_args->list_count = $args->list_count;
+                $target_args->page = 1;
+                $output = executeQueryArray('document.getDocuments', $target_args);
+                $output->page_navigation = $page_navigation;
+                $output->total_count = $page_navigation->total_count;
+                $output->total_page = $page_navigation->total_page;
+                $output->page = $page_navigation->cur_page;
+            } else {
+                $output = executeQueryArray($query_id, $args);
+            }
+
+            // ??? ??? ?? ??? ?? return
+            if(!$output->toBool()||!count($output->data)) return $output;
+
+            $idx = 0;
+            $data = $output->data;
+            unset($output->data);
+
+            if(!isset($virtual_number))
+            {
+                $keys = array_keys($data);
+                $virtual_number = $keys[0];
+            }
+
+            if($except_notice) {
+                foreach($data as $key => $attribute) {
+                    if($attribute->is_notice == 'Y') $virtual_number --;
+                }
+            }
+
+            foreach($data as $key => $attribute) {
+                if($except_notice && $attribute->is_notice == 'Y') continue;
+                $document_srl = $attribute->document_srl;
+                if(!$GLOBALS['XE_DOCUMENT_LIST'][$document_srl]) {
+                    $oDocument = null;
+                    $oDocument = new documentItem();
+                    $oDocument->setAttribute($attribute, false);
+                    if($is_admin) $oDocument->setGrant();
+                    $GLOBALS['XE_DOCUMENT_LIST'][$document_srl] = $oDocument;
+                }
+
+                $output->data[$virtual_number] = $GLOBALS['XE_DOCUMENT_LIST'][$document_srl];
+                $virtual_number --;
+
+            }
+            
+			if($load_extra_vars) $this->setToAllDocumentExtraVars();
+
+            if(count($output->data)) {
+                foreach($output->data as $number => $document) {
+                    $output->data[$number] = $GLOBALS['XE_DOCUMENT_LIST'][$document->document_srl];
+                }
+            }
+			//insert in cache
+	        if($oCacheHandler->isSupport()) $oCacheHandler->put($cache_key,$output);
+			}
             return $output;
         }
 
         /**
-         * @brief module_srl값을 가지는 문서의 공지사항만 가져옴
+         * @brief module_srl?? ??? ??? ????? ???
          **/
         function getNoticeList($obj) {
             $args->module_srl = $obj->module_srl;
@@ -425,8 +398,8 @@
         }
 
         /**
-         * @brief document의 확장 변수 키값을 가져오는 함수
-         * $form_include : 글 작성시에 필요한 확장변수의 input form 추가 여부
+         * @brief document? ?? ?? ??? ???? ??
+         * $form_include : ? ???? ??? ????? input form ?? ??
          **/
         function getExtraKeys($module_srl) {
             if(is_null($GLOBALS['XE_EXTRA_KEYS'][$module_srl])) {
@@ -445,11 +418,11 @@
         }
 
         /**
-         * @brief 특정 document의 확장 변수 값을 가져오는 함수
+         * @brief ?? document? ?? ?? ?? ???? ??
          **/
         function getExtraVars($module_srl, $document_srl) {
             if(!isset($GLOBALS['XE_EXTRA_VARS'][$document_srl])) {
-                // 확장변수 값을 추출하여 세팅
+                // ???? ?? ???? ??
                 $oDocument = $this->getDocument($document_srl, false);
                 $GLOBALS['XE_DOCUMENT_LIST'][$document_srl] = $oDocument;
                 $this->setToAllDocumentExtraVars();
@@ -459,27 +432,27 @@
         }
 
         /**
-         * @brief 선택된 게시물의 팝업메뉴 표시
+         * @brief ??? ???? ???? ??
          *
-         * 인쇄, 스크랩, 추천, 비추천, 신고 기능 추가
+         * ??, ???, ??, ???, ?? ?? ??
          **/
         function getDocumentMenu() {
 
-            // 요청된 게시물 번호와 현재 로그인 정보 구함
+            // ??? ??? ??? ?? ??? ?? ??
             $document_srl = Context::get('target_srl');
             $mid = Context::get('cur_mid');
             $logged_info = Context::get('logged_info');
             $act = Context::get('cur_act');
 
-            // menu_list 에 "표시할글,target,url" 을 배열로 넣는다
+            // menu_list ? "????,target,url" ? ??? ???
             $menu_list = array();
 
-            // trigger 호출
+            // trigger ??
             ModuleHandler::triggerCall('document.getDocumentMenu', 'before', $menu_list);
 
             $oDocumentController = &getController('document');
 
-            // 회원이어야만 가능한 기능
+            // ?????? ??? ??
             if($logged_info->member_srl) {
 
 				$oDocumentModel = &getModel('document');
@@ -491,40 +464,40 @@
 				$oModuleModel = &getModel('module');
 				$document_config = $oModuleModel->getModulePartConfig('document',$module_srl);
 				if($document_config->use_vote_up!='N' && $member_srl!=$logged_info->member_srl){
-					// 추천 버튼 추가
+					// ?? ?? ??
 					$url = sprintf("doCallModuleAction('document','procDocumentVoteUp','%s')", $document_srl);
 					$oDocumentController->addDocumentPopupMenu($url,'cmd_vote','./modules/document/tpl/icons/vote_up.gif','javascript');
 				}
 
 				if($document_config->use_vote_down!='N' && $member_srl!=$logged_info->member_srl){
-					// 비추천 버튼 추가
+					// ??? ?? ??
 					$url= sprintf("doCallModuleAction('document','procDocumentVoteDown','%s')", $document_srl);
 					$oDocumentController->addDocumentPopupMenu($url,'cmd_vote_down','./modules/document/tpl/icons/vote_down.gif','javascript');
 				}
 
-                // 신고 기능 추가
+                // ?? ?? ??
                 $url = sprintf("doCallModuleAction('document','procDocumentDeclare','%s')", $document_srl);
                 $oDocumentController->addDocumentPopupMenu($url,'cmd_declare','./modules/document/tpl/icons/declare.gif','javascript');
 
-                // 스크랩 버튼 추가
+                // ??? ?? ??
                 $url = sprintf("doCallModuleAction('member','procMemberScrapDocument','%s')", $document_srl);
                 $oDocumentController->addDocumentPopupMenu($url,'cmd_scrap','./modules/document/tpl/icons/scrap.gif','javascript');
             }
 
-            // 인쇄 버튼 추가
+            // ?? ?? ??
             $url = getUrl('','module','document','act','dispDocumentPrint','document_srl',$document_srl);
             $oDocumentController->addDocumentPopupMenu($url,'cmd_print','./modules/document/tpl/icons/print.gif','printDocument');
 
-            // trigger 호출 (after)
+            // trigger ?? (after)
             ModuleHandler::triggerCall('document.getDocumentMenu', 'after', $menu_list);
 
-            // 관리자일 경우 ip로 글 찾기
+            // ???? ?? ip? ? ??
             if($logged_info->is_admin == 'Y') {
                 $oDocumentModel = &getModel('document');
                 $oDocument = $oDocumentModel->getDocument($document_srl);
 
                 if($oDocument->isExists()) {
-                    // ip주소에 해당하는 글 찾기
+                    // ip??? ???? ? ??
                     $url = getUrl('','module','admin','act','dispDocumentAdminList','search_target','ipaddress','search_keyword',$oDocument->get('ipaddress'));
                     $icon_path = './modules/member/tpl/images/icon_management.gif';
                     $oDocumentController->addDocumentPopupMenu($url,'cmd_search_by_ipaddress',$icon_path,'TraceByIpaddress');
@@ -534,22 +507,22 @@
                 }
             }
 
-            // 팝업메뉴의 언어 변경
+            // ????? ?? ??
             $menus = Context::get('document_popup_menu_list');
             $menus_count = count($menus);
             for($i=0;$i<$menus_count;$i++) {
                 $menus[$i]->str = Context::getLang($menus[$i]->str);
             }
 
-            // 최종적으로 정리된 팝업메뉴 목록을 구함
+            // ????? ??? ???? ??? ??
             $this->add('menus', $menus);
         }
 
         /**
-         * @brief module_srl에 해당하는 문서의 전체 갯수를 가져옴
+         * @brief module_srl? ???? ??? ?? ??? ???
          **/
         function getDocumentCount($module_srl, $search_obj = NULL) {
-            // 검색 옵션 추가
+            // ?? ?? ??
             $args->module_srl = $module_srl;
             $args->s_title = $search_obj->s_title;
             $args->s_content = $search_obj->s_content;
@@ -561,15 +534,15 @@
 
             $output = executeQuery('document.getDocumentCount', $args);
 
-            // 전체 갯수를 return
+            // ?? ??? return
             $total_count = $output->data->count;
             return (int)$total_count;
         }
         /**
-         * @brief 해당 document의 page 가져오기, module_srl이 없으면 전체에서..
+         * @brief ?? document? page ????, module_srl? ??? ????..
          **/
         function getDocumentPage($oDocument, $opt) {
-            // 정렬 형식에 따라서 query args 변경
+            // ?? ??? ??? query args ??
             switch($opt->sort_index) {
                 case 'update_order' :
                         if($opt->order_type == 'desc') $args->rev_update_order = $oDocument->get('update_order');
@@ -594,12 +567,12 @@
             $args->sort_index = $opt->sort_index;
             $args->order_type = $opt->order_type;
 
-            // 검색 옵션 정리
+            // ?? ?? ??
             $searchOpt->search_target = $opt->search_target;
             $searchOpt->search_keyword = $opt->search_keyword;
 			$this->_setSearchOption($searchOpt, &$args, &$query_id, &$use_division);
 
-            // 전체 갯수를 구한후 해당 글의 페이지를 검색
+            // ?? ??? ??? ?? ?? ???? ??
             $output = executeQuery('document.getDocumentPage', $args);
             $count = $output->data->count;
             $page = (int)(($count-1)/$opt->list_count)+1;
@@ -607,7 +580,7 @@
         }
 
         /**
-         * @brief 카테고리의 정보를 가져옴
+         * @brief ????? ??? ???
          **/
         function getCategory($category_srl) {
             $args->category_srl = $category_srl;
@@ -628,7 +601,7 @@
         }
 
         /**
-         * @brief 특정 카테고리에 child가 있는지 체크
+         * @brief ?? ????? child? ??? ??
          **/
         function getCategoryChlidCount($category_srl) {
             $args->category_srl = $category_srl;
@@ -638,14 +611,14 @@
         }
 
         /**
-         * @brief 특정 모듈의 카테고리 목록을 가져옴
-         * 속도나 여러가지 상황을 고려해서 카테고리 목록은 php로 생성된 script를 include하여 사용하는 것을 원칙으로 함
+         * @brief ?? ??? ???? ??? ???
+         * ??? ???? ??? ???? ???? ??? php? ??? script? include?? ???? ?? ???? ?
          **/
         function getCategoryList($module_srl) {
-            // 대상 모듈의 카테고리 파일을 불러옴
+            // ?? ??? ???? ??? ???
             $filename = sprintf("./files/cache/document_category/%s.php", $module_srl);
 
-            // 대상 파일이 없으면 카테고리 캐시 파일을 재생성
+            // ?? ??? ??? ???? ?? ??? ???
             if(!file_exists($filename)) {
                 $oDocumentController = &getController('document');
                 if(!$oDocumentController->makeCategoryFile($module_srl)) return array();
@@ -653,14 +626,14 @@
 
             @include($filename);
 
-            // 카테고리의 정리
+            // ????? ??
             $document_category = array();
             $this->_arrangeCategory($document_category, $menu->list, 0);
             return $document_category;
         }
 
         /**
-         * @brief 카테고리를 1차 배열 형식으로 변경하는 내부 method
+         * @brief ????? 1? ?? ???? ???? ?? method
          **/
         function _arrangeCategory(&$document_category, $list, $depth) {
             if(!count($list)) return;
@@ -688,7 +661,7 @@
 
                 $list_order[$idx++] = $obj->category_srl;
 
-                // 부모 카테고리가 있으면 자식노드들의 데이터를 적용
+                // ?? ????? ??? ?????? ???? ??
                 if($obj->parent_srl) {
 
                     $parent_srl = $obj->parent_srl;
@@ -715,7 +688,7 @@
         }
 
         /**
-         * @brief 카테고리에 속한 문서의 갯수를 구함
+         * @brief ????? ?? ??? ??? ??
          **/
         function getCategoryDocumentCount($module_srl, $category_srl) {
             $args->module_srl = $module_srl;
@@ -725,7 +698,7 @@
         }
 
         /**
-         * @brief 문서 category정보의 xml 캐시 파일을 return
+         * @brief ?? category??? xml ?? ??? return
          **/
         function getCategoryXmlFile($module_srl) {
             $xml_file = sprintf('files/cache/document_category/%s.xml.php',$module_srl);
@@ -737,7 +710,7 @@
         }
 
         /**
-         * @brief 문서 category정보의 php 캐시 파일을 return
+         * @brief ?? category??? php ?? ??? return
          **/
         function getCategoryPhpFile($module_srl) {
             $php_file = sprintf('files/cache/document_category/%s.php',$module_srl);
@@ -749,7 +722,7 @@
         }
 
         /**
-         * @brief 월별 글 보관현황을 가져옴
+         * @brief ?? ? ????? ???
          **/
         function getMonthlyArchivedList($obj) {
             if($obj->mid) {
@@ -758,7 +731,7 @@
                 unset($obj->mid);
             }
 
-            // 넘어온 module_srl은 array일 수도 있기에 array인지를 체크
+            // ??? module_srl? array? ?? ??? array??? ??
             if(is_array($obj->module_srl)) $args->module_srl = implode(',', $obj->module_srl);
             else $args->module_srl = $obj->module_srl;
 
@@ -771,7 +744,7 @@
         }
 
         /**
-         * @brief 특정달의 일별 글 현황을 가져옴
+         * @brief ???? ?? ? ??? ???
          **/
         function getDailyArchivedList($obj) {
             if($obj->mid) {
@@ -780,7 +753,7 @@
                 unset($obj->mid);
             }
 
-            // 넘어온 module_srl은 array일 수도 있기에 array인지를 체크
+            // ??? module_srl? array? ?? ??? array??? ??
             if(is_array($obj->module_srl)) $args->module_srl = implode(',', $obj->module_srl);
             else $args->module_srl = $obj->module_srl;
             $args->regdate = $obj->regdate;
@@ -794,7 +767,7 @@
         }
 
         /**
-         * @brief 특정 모듈의 분류를 구함
+         * @brief ?? ??? ??? ??
          **/
         function getDocumentCategories() {
             if(!Context::get('is_logged')) return new Object(-1,'msg_not_permitted');
@@ -802,7 +775,7 @@
             $categories= $this->getCategoryList($module_srl);
             $lang = Context::get('lang');
 
-            // 분류 없음 추가
+            // ?? ?? ??
             $output = "0,0,{$lang->none_category}\n";
             if($categories){
                 foreach($categories as $category_srl => $category) {
@@ -813,7 +786,7 @@
         }
 
         /**
-         * @brief 문서 설정 정보를 구함
+         * @brief ?? ?? ??? ??
          **/
         function getDocumentConfig() {
             if(!$GLOBALS['__document_config__']) {
@@ -826,21 +799,21 @@
         }
 
         /**
-         * @brief 공통 :: 모듈의 확장 변수 관리
-         * 모듈의 확장변수 관리는  모든 모듈에서 document module instance를 이용할때 사용할 수 있음
+         * @brief ?? :: ??? ?? ?? ??
+         * ??? ???? ???  ?? ???? document module instance? ???? ??? ? ??
          **/
         function getExtraVarsHTML($module_srl) {
-            // 기존의 extra_keys 가져옴
+            // ??? extra_keys ???
             $extra_keys = $this->getExtraKeys($module_srl);
             Context::set('extra_keys', $extra_keys);
 
-            // grant 정보를 추출
+            // grant ??? ??
             $oTemplate = &TemplateHandler::getInstance();
             return $oTemplate->compile($this->module_path.'tpl', 'extra_keys');
         }
 
         /**
-         * @brief 공통 :: 모듈의 카테고리 변수 관리
+         * @brief ?? :: ??? ???? ?? ??
          **/
         function getCategoryHTML($module_srl) {
             $category_xml_file = $this->getCategoryXmlFile($module_srl);
@@ -848,50 +821,50 @@
             Context::set('category_xml_file', $category_xml_file);
 
 			Context::loadJavascriptPlugin('ui.tree');
-            // grant 정보를 추출
+            // grant ??? ??
             $oTemplate = &TemplateHandler::getInstance();
             return $oTemplate->compile($this->module_path.'tpl', 'category_list');
         }
 
         /**
-         * @brief 특정 카테고리의 정보를 이용하여 템플릿을 구한후 return
-         * 관리자 페이지에서 특정 메뉴의 정보를 추가하기 위해 서버에서 tpl을 컴파일 한후 컴파일 된 html을 직접 return
+         * @brief ?? ????? ??? ???? ???? ??? return
+         * ??? ????? ?? ??? ??? ???? ?? ???? tpl? ??? ?? ??? ? html? ?? return
          **/
         function getDocumentCategoryTplInfo() {
             $oModuleModel = &getModel('module');
             $oMemberModel = &getModel('member');
 
-            // 해당 메뉴의 정보를 가져오기 위한 변수 설정
+            // ?? ??? ??? ???? ?? ?? ??
             $module_srl = Context::get('module_srl');
             $module_info = $oModuleModel->getModuleInfoByModuleSrl($module_srl);
 
-            // 권한 체크 
+            // ?? ?? 
             $grant = $oModuleModel->getGrant($module_info, Context::get('logged_info'));
             if(!$grant->manager) return new Object(-1,'msg_not_permitted');
 
             $category_srl = Context::get('category_srl');
             $parent_srl = Context::get('parent_srl');
 
-            // 회원 그룹의 목록을 가져옴
+            // ?? ??? ??? ???
             $group_list = $oMemberModel->getGroups($module_info->site_srl);
             Context::set('group_list', $group_list);
 
-            // parent_srl이 있고 category_srl 이 없으면 하부 메뉴 추가임
+            // parent_srl? ?? category_srl ? ??? ?? ?? ???
             if(!$category_srl && $parent_srl) {
-                // 상위 메뉴의 정보를 가져옴
+                // ?? ??? ??? ???
                 $parent_info = $this->getCategory($parent_srl);
 
-                // 추가하려는 메뉴의 기본 변수 설정 
+                // ????? ??? ?? ?? ?? 
                 $category_info->category_srl = getNextSequence();
                 $category_info->parent_srl = $parent_srl;
                 $category_info->parent_category_title = $parent_info->title;
 
-            // root에 메뉴 추가하거나 기존 메뉴의 수정일 경우
+            // root? ?? ????? ?? ??? ??? ??
             } else {
-                // category_srl 이 있으면 해당 메뉴의 정보를 가져온다
+                // category_srl ? ??? ?? ??? ??? ????
                 if($category_srl) $category_info = $this->getCategory($category_srl);
 
-                // 찾아진 값이 없다면 신규 메뉴 추가로 보고 category_srl값만 구해줌
+                // ??? ?? ??? ?? ?? ??? ?? category_srl?? ???
                 if(!$category_info->category_srl) {
                     $category_info->category_srl = getNextSequence();
                 }
@@ -901,16 +874,16 @@
             $category_info->title = htmlspecialchars($category_info->title);
             Context::set('category_info', $category_info);
 
-            // template 파일을 직접 컴파일한후 tpl변수에 담아서 return한다.
+            // template ??? ?? ????? tpl??? ??? return??.
             $oTemplate = &TemplateHandler::getInstance();
             $tpl = $oTemplate->compile('./modules/document/tpl', 'category_info');
             $tpl = str_replace("\n",'',$tpl);
 
-            // 사용자 정의 언어 변경
+            // ??? ?? ?? ??
             $oModuleController = &getController('module');
             $oModuleController->replaceDefinedLangCode($tpl);
 
-            // return 할 변수 설정
+            // return ? ?? ??
             $this->add('tpl', $tpl);
         }
 
@@ -953,11 +926,11 @@
         }
 
         /**
-         * @brief module_srl값을 가지는 문서의 목록을 가져옴
+         * @brief module_srl?? ??? ??? ??? ???
          **/
         function getTrashList($obj) {
 
-            // 변수 체크
+            // ?? ??
             $args->category_srl = $obj->category_srl?$obj->category_srl:null;
             $args->sort_index = $obj->sort_index;
             $args->order_type = $obj->order_type?$obj->order_type:'desc';
@@ -966,7 +939,7 @@
             $args->page_count = $obj->page_count?$obj->page_count:10;
 
 
-            // 검색 옵션 정리
+            // ?? ?? ??
             $search_target = $obj->search_target;
             $search_keyword = $obj->search_keyword;
             if($search_target && $search_keyword) {
@@ -1070,9 +1043,9 @@
 		}
 
         /**
-         * @brief 게시물 목록의 검색 옵션을 Setting함(2011.03.08 - cherryfilter)
-		 * page변수가 없는 상태에서 page 값을 알아오는 method(getDocumentPage)는 검색하지 않은 값을 return해서 검색한 값을 가져오도록 검색옵션이 추가 됨.
-		 * 검색옵션의 중복으로 인해 private method로 별도 분리
+         * @brief ??? ??? ?? ??? Setting?(2011.03.08 - cherryfilter)
+		 * page??? ?? ???? page ?? ???? method(getDocumentPage)? ???? ?? ?? return?? ??? ?? ????? ????? ?? ?.
+		 * ????? ???? ?? private method? ?? ??
          **/
 		function _setSearchOption($searchOpt, &$args, &$query_id, &$use_division)
 		{
