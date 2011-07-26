@@ -15,37 +15,37 @@
 <table id="listTable">
 <thead>
   <tr>
-    <th>제목</th>
+    <th>Title</th>
     <th><input type="checkbox" name="cbox[]" title="모두 체크/해제" /></th>
   </tr>
 </thead>
 <tbody>
   <tr>
-    <td>정찬명님 보세요.</td>
+    <td>Good morning!</td>
     <td><input type="checkbox" name="cbox[]" /></td>
   </tr>
   <tr>
-    <td>체리필터님 보세요.</td>
+    <td>즐거운 아침입니다!</td>
     <td><input type="checkbox" name="cbox[]" /></td>
   </tr>
   <tr>
-    <td>행복한고니님 보세요.</td>
+    <td>おはようございます!</td>
     <td><input type="checkbox" name="cbox[]" /></td>
   </tr>
 </tbody>
 <tfoot>
   <tr>
-    <th>제목</th>
+    <th>Title</th>
     <th><input type="checkbox" name="cbox[]" title="모두 체크/해제" /></th>
   </tr>
 </tfoot>
 </table>
 }}}
-약간의 CSS를 더하면 이 테이블은 화면에서 다음과 같이 보입니다. CSS는 중요한 내용이 아니므로 생략했습니다.
+약간의 CSS를 더하면 이 테이블은 화면에서 다음과 같이 보입니다. CSS는 중요한 내용이 아니므로 여기서 다루지 않습니다.
 
-[그림]
+http://xe-core.googlecode.com/svn/wiki/img/AdminuiCheckboxExample.png
 
-이제 테이블 헤더 셀(th) 안에 있는 체크박스를 클릭하면 클릭한 체크박스의 체크 여부에 따라 해당 테이블에서 같은 이름을 가진 체크박스가 모두 체크되거나 체크 해제됩니다. 위 그림에서는 가장 상단에 있는 체크박스와 가장 하단에 있는 체크박스를 클릭하면 그 외의 모든 체크 박스에 영향을 줍니다.
+이제 테이블 헤더 셀(th) 안에 있는 체크박스를 클릭하면 클릭한 체크박스의 체크 여부에 따라 해당 테이블에서 *같은 이름*을 가진 체크박스가 모두 체크되거나 체크 해제됩니다. 위 그림에서는 가장 상단에 있는 체크박스와 가장 하단에 있는 체크박스를 클릭하면 그 외의 모든 체크 박스에 영향을 줍니다.
 
 체크박스를 모두 업데이트하고 나면 체크박스가 속한 `table` 요소에 `update-checkbox`라는 사용자정의 이벤트를 발생시킵니다. 따라서, 체크박스를 모두 업데이트하고 난 후에 실행하고 싶은 코드가 있다면 해당 테이블에 `update-checkbox` 이벤트 핸들러를 바인딩하면 됩니다.
 {{{
@@ -77,7 +77,7 @@ jQuery('#listTable')
  * *`duration`* : 효과를 실행할 시간. `fast`, `slow` 또는 밀리초 단위의 시간 숫자
 
 === Events ===
-프로그램에서 사용자 액션을 통하지 않고 토글 콘텐츠를 펼치거나 접으려면 앵커 요소에서 사용자 정의 이벤트 `open.tc` 또는 `close.tc`를 실행합니다. jQuery를 사용하면 다음과 같이 실행할 수 있습니다.
+프로그램에서 사용자 액션을 통하지 않고 토글 콘텐츠를 펼치거나 접으려면 앵커 요소에서 사용자 정의 이벤트 `open.tc` 또는 `close.tc`를 실행합니다. jQuery를 사용하면 다음과 같이 실행할 수  있습니다. 콘텐츠를 펼칠 때는 `'open.tc'`를 접을 때는 `'close.tc'`를 사용합니다.
 {{{
 <a href="#contents" class="tgAnchor">보이기/숨기기</a>
 
@@ -85,7 +85,6 @@ jQuery('#listTable')
 jQuery('a.tgAnchor').trigger('open.tc'); // 콘텐츠 펼치기
 </script>
 }}}
-콘텐츠를 펼칠 때는 `'open.tc'`를 접을 때는 `'close.tc'`를 사용합니다.
 
 만약 콘텐츠를 펼치기 전/후 또는 접기 전/후에 어떤 코드를 실행하고 싶다면 앞서 말한 이벤트에 `after-` 또는 `before-`를 추가하여 이벤트 핸들러를 할당하면 됩니다. 예를 들어, *콘텐츠를 펼치기 전*에 실행하고 싶은 코드는 다음과 같이 할당할 수 있습니다.
 {{{
@@ -94,6 +93,7 @@ jQuery('a.tgAnchor')
         // 콘텐츠를 펼치기 직전에 실행할 코드
     });
 }}}
+
 마찬가지로 닫은 직후에 실행할 코드는 다음과 같이 할당할 수 있습니다. `after-`로 할당한 이벤트 핸들러는 애니메이션이 모두 끝난 후에 실행된다는 점에 주의하셔야 합니다.
 {{{
 jQuery('a.tgAnchor')
