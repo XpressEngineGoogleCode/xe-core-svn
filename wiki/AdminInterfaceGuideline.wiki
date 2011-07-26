@@ -1,0 +1,103 @@
+#summary UI guideline for administrative interface
+#labels Phase-Implementation,UI
+
+<wiki:toc max_depth="2" />
+
+= Introduction =
+관리자 인터페이스를 작성할 때 사용할 수 있는 UI 가이드라인입니다. 이 가이드라인에는 관리자 모듈에 포함된 라이브러리를 사용하는 방법도 포함하고 있습니다.
+
+= User Interface Widgets =
+관리자 인터페이스에 미리 정의된 위젯에 대한 설명입니다.
+
+== Setting All Checkbox  ==
+특정 테이블에서 테이블 헤더(thead) 또는 테이블 푸터(tfoot)에 포함된 체크박스를 클릭했을 때 이와 관련있는 체크박스를 모두 선택합니다. 예를 들어 다음과 같은 테이블이 있다고 가정해보겠습니다.
+{{{
+<table id="listTable">
+<thead>
+  <tr>
+    <th>제목</th>
+    <th><input type="checkbox" name="cbox[]" title="모두 체크/해제" /></th>
+  </tr>
+</thead>
+<tbody>
+  <tr>
+    <td>정찬명님 보세요.</td>
+    <td><input type="checkbox" name="cbox[]" /></td>
+  </tr>
+  <tr>
+    <td>체리필터님 보세요.</td>
+    <td><input type="checkbox" name="cbox[]" /></td>
+  </tr>
+  <tr>
+    <td>행복한고니님 보세요.</td>
+    <td><input type="checkbox" name="cbox[]" /></td>
+  </tr>
+</tbody>
+<tfoot>
+  <tr>
+    <th>제목</th>
+    <th><input type="checkbox" name="cbox[]" title="모두 체크/해제" /></th>
+  </tr>
+</tfoot>
+</table>
+}}}
+약간의 CSS를 더하면 이 테이블은 화면에서 다음과 같이 보입니다. CSS는 중요한 내용이 아니므로 생략했습니다.
+
+[그림]
+
+이제 테이블 헤더 셀(th) 안에 있는 체크박스를 클릭하면 클릭한 체크박스의 체크 여부에 따라 해당 테이블에서 같은 이름을 가진 체크박스가 모두 체크되거나 체크 해제됩니다. 위 그림에서는 가장 상단에 있는 체크박스와 가장 하단에 있는 체크박스를 클릭하면 그 외의 모든 체크 박스에 영향을 줍니다.
+
+체크박스를 모두 업데이트하고 나면 체크박스가 속한 `table` 요소에 `update-checkbox`라는 사용자정의 이벤트를 발생시킵니다. 따라서, 체크박스를 모두 업데이트하고 난 후에 실행하고 싶은 코드가 있다면 해당 테이블에 `update-checkbox` 이벤트 핸들러를 바인딩하면 됩니다.
+{{{
+jQuery('#listTable')
+    .bind('update.checkbox', function(event, name, checked) {
+        // 테이블의 체크박스를 모두 업데이트 한 후 실행할 코드
+        // name은 업데이트한 체크박스의 name
+        // checked는 업데이트한 체크박스의 체크 여부
+    });
+}}}
+
+== Toggle Contents ==
+메뉴 등과 같이 사용자의 액션에 따라 콘텐츠를 토글할 때 사용합니다. 토글 콘텐츠는 크게 두 개의 요소로 이루어지는데, 하나는 앵커 요소로 이 요소를 클릭하면 콘텐츠를 보이거나 숨기며 다른 하나는 콘텐츠를 포함하는 콘텐츠 요소입니다.
+
+=== Basics ===
+토글 콘텐츠에 사용할 앵커 요소는 클래스 속성에 `tgAnchor`라는 클래스 이름을 포함해야 합니다. 앵커 요소는 클릭 이벤트를 받아서 콘텐츠를 보이거나 감추는 기능을 하는데, 그 밖에 콘텐츠를 보이거나 감출 때 사용할 효과에 대한 정보도 포함합니다. 예를 들어, 보이거나 숨길 콘텐츠의 아이디는 href 속성을 통해 다음과 같이 정의할 수 있습니다.
+{{{
+<a href="#contents" class="tgAnchor">보이기/숨기기</a>
+<div id="contents">보이거나 숨길 콘텐츠</div>
+}}}
+
+또한 `data-effect` 속성을 통해 사용할 효과의 종류를, `data-duration` 속성을 통해 효과가 진행될 시간을 정의할 수 있습니다. 다음 코드는 콘텐츠를 펼쳐지거나 접을 때 슬라이딩 효과를 사용하는 예제입니다.
+{{{
+<a href="#contents" class="tgAnchor" data-effect="slide">보이기/숨기기</a>
+<div id="contents">보이거나 숨길 콘텐츠</div>
+}}}
+앵커 요소에 사용할 수 있는 옵션 속성은 다음과 같습니다. 접두어 `data-`는 생략했습니다.
+ * *`effect`* : 접거나 펼칠 때 사용할 효과. `slide`, `fade`, `none` 중 선택. 기본값은 `none`
+ * *`duration`* : 효과를 실행할 시간. `fast`, `slow` 또는 밀리초 단위의 시간 숫자
+
+=== Events ===
+프로그램에서 사용자 액션을 통하지 않고 토글 콘텐츠를 펼치거나 접으려면 앵커 요소에서 사용자 정의 이벤트 `open.tc` 또는 `close.tc`를 실행합니다. jQuery를 사용하면 다음과 같이 실행할 수 있습니다.
+{{{
+<a href="#contents" class="tgAnchor">보이기/숨기기</a>
+
+<script type="text/javascript">
+jQuery('a.tgAnchor').trigger('open.tc'); // 콘텐츠 펼치기
+</script>
+}}}
+콘텐츠를 펼칠 때는 `'open.tc'`를 접을 때는 `'close.tc'`를 사용합니다.
+
+만약 콘텐츠를 펼치기 전/후 또는 접기 전/후에 어떤 코드를 실행하고 싶다면 앞서 말한 이벤트에 `after-` 또는 `before-`를 추가하여 이벤트 핸들러를 할당하면 됩니다. 예를 들어, *콘텐츠를 펼치기 전*에 실행하고 싶은 코드는 다음과 같이 할당할 수 있습니다.
+{{{
+jQuery('a.tgAnchor')
+    .bind('before-open.tc', function(){
+        // 콘텐츠를 펼치기 직전에 실행할 코드
+    });
+}}}
+마찬가지로 닫은 직후에 실행할 코드는 다음과 같이 할당할 수 있습니다. `after-`로 할당한 이벤트 핸들러는 애니메이션이 모두 끝난 후에 실행된다는 점에 주의하셔야 합니다.
+{{{
+jQuery('a.tgAnchor')
+    .bind('after-close.tc', function(){
+        // 콘텐츠를 접은 직후 실행할 코드
+    });
+}}}
