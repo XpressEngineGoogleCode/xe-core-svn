@@ -16,9 +16,16 @@
 <thead>
   <tr>
     <th>Title</th>
-    <th><input type="checkbox" name="cbox[]" title="모두 체크/해제" /></th>
+    <th><input type="checkbox" data-name="cbox[]" title="모두 체크/해제" /></th>
   </tr>
 </thead>
+<tfoot>
+  <tr>
+    <th>Title</th>
+    <th><input type="checkbox" data-name="cbox[]" title="모두 체크/해제" /></th>
+  </tr>
+</tfoot>
+
 <tbody>
   <tr>
     <td>Good morning!</td>
@@ -33,19 +40,18 @@
     <td><input type="checkbox" name="cbox[]" /></td>
   </tr>
 </tbody>
-<tfoot>
-  <tr>
-    <th>Title</th>
-    <th><input type="checkbox" name="cbox[]" title="모두 체크/해제" /></th>
-  </tr>
-</tfoot>
 </table>
 }}}
 약간의 CSS를 더하면 이 테이블은 화면에서 다음과 같이 보입니다. CSS는 중요한 내용이 아니므로 여기서 다루지 않습니다.
 
 http://xe-core.googlecode.com/svn/wiki/img/AdminuiCheckboxExample.png
 
-이제 테이블 헤더 셀(th) 안에 있는 체크박스를 클릭하면 클릭한 체크박스의 체크 여부에 따라 해당 테이블에서 *같은 이름*을 가진 체크박스가 모두 체크되거나 체크 해제됩니다. 위 그림에서는 가장 상단에 있는 체크박스와 가장 하단에 있는 체크박스를 클릭하면 그 외의 모든 체크 박스에 영향을 줍니다.
+이제 테이블 헤더 또는 푸터에 있는 체크 박스를 클릭하면 다음과 같은 과정을 거칩니다.
+ # 클릭한 체크 박스에 `data-name` 속성이 있는지 찾고, 있으면 이 값을 기억해둡니다.
+ # 테이블에서 `data-name` 속성의 값과 일치하는 `name`을 가진 체크박스를 모두 구합니다.
+ # 1에서 클릭한 체크박스가 체크되어 있으면 2에서 구한 체크박스를 모두 체크하고, 그렇지 않으면 2에서 구한 체크 박스를 모두 체크 해제합니다.
+
+위 그림에서는 가장 상단에 있는 체크박스나 가장 하단에 있는 체크박스를 클릭하면 테이블의 모든 체크박스가 선택되고, 다시 한번 가장 상단이나 가장 하단에 있는 체크 박스를 클릭하면 모든 체크박스의 체크 표시가 해제됩니다.
 
 체크박스를 모두 업데이트하고 나면 체크박스가 속한 `table` 요소에 `update-checkbox`라는 사용자정의 이벤트를 발생시킵니다. 따라서, 체크박스를 모두 업데이트하고 난 후에 실행하고 싶은 코드가 있다면 해당 테이블에 `update-checkbox` 이벤트 핸들러를 바인딩하면 됩니다.
 {{{
