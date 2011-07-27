@@ -27,7 +27,7 @@ module.xml은 모듈의 권한, 퍼미션, 액션 등을 정의합니다.
     </permissions>
     <menus>
         ...
-        <menu name="board_list">
+        <menu name="board_list" type="site">
             <title xml:lang="ko">게시판 목록</title>
         </menu>
         ...
@@ -111,7 +111,7 @@ menus 노드는 여러 menu 노드를 자식 노드로 가질 수 있습니다. 
 {{{
 <menus>
     ...
-    <menu name="board_list">
+    <menu name="board_list" type="site">
         <title xml:lang="ko">게시판 목록</title>
     </menu>
     ...
@@ -123,6 +123,7 @@ menu 노드는 아래 속성을 가집니다.
 *menu 노드의 속성*
 || *속성* || *설명* ||
 || *name* || 메뉴의 이름을 정의합니다. 이 이름은 actions에서 이 메뉴에 지정될 액션을 정의하는 데 사용됩니다. ||
+|| *type* || Super admin 화면에 사용되는 메뉴라면 type="super"로 설정합니다. Site Admin 화면에 사용되는 메뉴라면 type="site"로 설정합니다. 양쪽 모두에 사용된다면 type="all"로 설정합니다. ||
 
 title 노드에는 실제 표시될 메뉴명을 body에 적어줍니다.이때 xml:lang 속성을 이용하여 각 언어별 메뉴명을 지정해 줄 수 있습니다.
 
