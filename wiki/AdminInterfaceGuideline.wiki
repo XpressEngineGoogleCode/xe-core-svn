@@ -114,7 +114,7 @@ jQuery('a.tgAnchor')
 
 http://xe-core.googlecode.com/svn/wiki/img/AdminUIModalExample.png
 
-== Basics ==
+=== Basics ===
 모달창을 표시하기 위한 앵커 요소는 클래스 속성에 `modalAnchor` 클래스 이름을 *반드시* 포함해야 합니다. 또한 모달창으로 사용할 `div` 요소는 클래스 속성에 `modal` 클래스를 반드시 포함해야 합니다.
 
 또한 모달 앵커 요소의 `href` 속성은 모달 콘텐츠 `div` 요소의 아이디를 가리켜야 합니다. 예를 들어 콘텐츠 요소의 아이디가 `modalWindow`라면 앵커 요소는 다음과 같이 작성할 수 있습니다.
@@ -145,7 +145,7 @@ http://xe-core.googlecode.com/svn/wiki/img/AdminUIModalExample2.png
  * *`effect`* : 모달창을 표시할 때 사용할 효과. 선택 가능한 값은 `fade`(기본값), `rise`
  * *`duration`* : 효과를 실행할 시간. fast, slow 또는 밀리초 단위의 시간 숫자
 
-== Events ==
+=== Events ===
 프로그램에서 사용자 액션을 통하지 않고 모달창을 띄우거나 닫고 싶으면 jQuery 함수를 사용해 앵커 요소를 선택한 후 선택한 jQuery 요소에서 `open.mw` 또는 `close.mw`를 사용합니다. 모달창을 열려면 `open.mw`를, 닫으려면 `close.mw`를 사용합니다.
 {{{
 <a href="#modalWindow" class="modalAnchor">모달창 열기</a>
