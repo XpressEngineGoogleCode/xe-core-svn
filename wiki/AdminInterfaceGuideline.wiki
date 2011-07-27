@@ -69,14 +69,15 @@ jQuery('#listTable')
 === Basics ===
 토글 콘텐츠에 사용할 앵커 요소는 클래스 속성에 `tgAnchor`라는 클래스 이름을 *반드시* 포함해야 하며, 콘텐츠 블럭은 클래스 속성에 `tgContent`라는 클래스 이름을 *반드시* 포함해야 합니다. 앵커 요소는 클릭 이벤트를 받아서 콘텐츠를 보이거나 감추는 기능을 하며, 콘텐츠를 보이거나 감출 때 사용할 효과에 대한 정보를 포함하기도 합니다. 예를 들어, 보이거나 숨길 콘텐츠의 아이디는 href 속성을 통해 다음과 같이 정의할 수 있습니다.
 {{{
-<a href="#contents" class="tgAnchor">보이기/숨기기</a>
-<div id="contents" class="tgContent">보이거나 숨길 콘텐츠</div>
+<a href="#content" class="tgAnchor">보이기/숨기기</a>
+<div id="content" class="tgContent">보이거나 숨길 콘텐츠</div>
 }}}
-
+위 코드는 앵커 요소 `href` 속성의 값으로 `#content`를 사용하고, 콘텐츠 영역의 아이디로 `content`를 사용하여 두 개의 요소를 서로 연결했습니다. 앵커 요소가 콘텐츠 영역을 가리켜야 한다는 점을 명심하셔야 합니다.
+ 
 또한 `data-effect` 속성을 통해 사용할 효과의 종류를, `data-duration` 속성을 통해 효과가 진행될 시간을 정의할 수 있습니다. 다음 코드는 콘텐츠를 펼쳐지거나 접을 때 슬라이딩 효과를 사용하는 예제입니다.
 {{{
-<a href="#contents" class="tgAnchor" data-effect="slide">보이기/숨기기</a>
-<div id="contents" class="tgContent">보이거나 숨길 콘텐츠</div>
+<a href="#content" class="tgAnchor" data-effect="slide">보이기/숨기기</a>
+<div id="content" class="tgContent">보이거나 숨길 콘텐츠</div>
 }}}
 앵커 요소에 사용할 수 있는 옵션 속성은 다음과 같습니다. 접두어 `data-`는 생략했습니다.
  * *`effect`* : 접거나 펼칠 때 사용할 효과. `slide`, `fade`, `none` 중 선택. 기본값은 `none`
@@ -85,7 +86,7 @@ jQuery('#listTable')
 === Events ===
 프로그램에서 사용자 액션을 통하지 않고 토글 콘텐츠를 펼치거나 접으려면 앵커 요소에서 사용자 정의 이벤트 `open.tc` 또는 `close.tc`를 실행합니다. jQuery를 사용하면 다음과 같이 실행할 수  있습니다. 콘텐츠를 펼칠 때는 `'open.tc'`를 접을 때는 `'close.tc'`를 사용합니다.
 {{{
-<a href="#contents" class="tgAnchor">보이기/숨기기</a>
+<a href="#content" class="tgAnchor">보이기/숨기기</a>
 
 <script type="text/javascript">
 jQuery('a.tgAnchor').trigger('open.tc'); // 콘텐츠 펼치기
