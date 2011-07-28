@@ -110,6 +110,17 @@
 
         function gc($maxlifetime) {
             if(!$this->session_started) return;
+            $expired_sessions = executeQueryArray('session.getExpiredSessions');
+            if($expired_session){
+            	foreach ($expired_sessions as $session_key){
+            	//remove session from cache
+		        	$oCacheHandler = &CacheHandler::getInstance('object');
+		            if($oCacheHandler->isSupport()) {
+		            	$cache_key = 'object:'.$session_key;
+		            	$oCacheHandler->delete($cache_key);
+		            }
+            	}
+            }
             executeQuery('session.gcSession');
             return true;
         }
