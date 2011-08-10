@@ -26,33 +26,33 @@
       * [ClassXmlJsFilter XmlJsFilter]
       * [ClassXmlQueryParser XmlQueryParser]
   * [Modules]
-    * *[ModuleAddon addon]* -
-    * *[ModuleAdmin admin]* -
-    * *[ModuleAutoInstall autoinstall]* -
-    * *[ModuleComment comment]* -
-    * *[ModuleCommunication communication]* -
-    * *[ModuleCounter counter]* -
-    * *[ModuleDocument document]* -
-    * *[ModuleEditor editor]* -
-    * *[ModuleFile file]* -
-    * *[ModuleImporter importer]* -
-    * *[ModuleInstall install]* -
-    * *[ModuleIntegrationSearch integration_search]* -
-    * *[ModuleLayout layout]* -
-    * *[ModuleMember member]* -
-    * *[ModuleMenu menu]* -
-    * *[ModuleMessage message]* -
-    * *[ModuleModule module]* -
-    * *[ModulePage page]* -
-    * *[ModulePoint point]* -
-    * *[ModulePoll poll]* -
-    * *[ModuleRSS rss]* -
-    * *[ModuleSession session]* -
-    * *[ModuleSite site]* -
-    * *[ModuleSpamFilter spamfilter]* -
-    * *[ModuleSyndication syndication]* -
-    * *[ModuleTag tag]* -
-    * *[ModuleTrackback trackback]* -
-    * *[ModuleTrash trash]* -
-    * *[ModuleWidget widget]* -
-    * *[ModuleWisiwyg wysiwyg]* - Load a WYSIWYG html editor with custom settings
+    * [ModuleAddon addon]
+    * [ModuleAdmin admin]
+    * [ModuleAutoInstall autoinstall]
+    * [ModuleComment comment]
+    * [ModuleCommunication communication]
+    * [ModuleCounter counter]
+    * [ModuleDocument document]
+    * [ModuleEditor editor]
+    * [ModuleFile file]
+    * [ModuleImporter importer]
+    * [ModuleInstall install]
+    * [ModuleIntegrationSearch integration_search]
+    * [ModuleLayout layout]
+    * [ModuleMember member]
+    * [ModuleMenu menu]
+    * [ModuleMessage message]
+    * [ModuleModule module]
+    * [ModulePage page]
+    * [ModulePoint point]
+    * [ModulePoll poll]
+    * [ModuleRSS rss]
+    * [ModuleSession session]
+    * [ModuleSite site]
+    * [ModuleSpamFilter spamfilter]
+    * [ModuleSyndication syndication]
+    * [ModuleTag tag]
+    * [ModuleTrackback trackback]
+    * [ModuleTrash trash]
+    * [ModuleWidget widget]
+    * [ModuleWisiwyg wysiwyg]
