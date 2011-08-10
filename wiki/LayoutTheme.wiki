@@ -16,9 +16,9 @@ When you set a theme and save it, it is applied to the layouts and module skins 
 ===Location of theme===
 Upload each theme folder to the /XE installation path/themes folder.
 {{{
-/XE installation path/themes/[title of theme]
+/XE installation path/themes/{{{[title of theme]}}}
 }}}
-===/XE installation path/themes/[title of theme]/conf/info.xml===
+===/XE installation path/themes/{{{[title of theme]}}}/conf/info.xml===
 Create an info.xml by using the following structure.
 {{{
 <?xml version="1.0" encoding="UTF-8"?>
@@ -41,7 +41,7 @@ Create an info.xml by using the following structure.
 			<directory path="./modules/page/skins/default" />
 		</skinInfo>
 		<skinInfo>
-			<directory path="./themes/[title of theme]/modules/board" />
+			<directory path="./themes/{{{[title of theme]}}}/modules/board" />
 		</skinInfo>
 		<skinInfo>
 			<directory path="./widgets/loggin_info/skins/xe_loggin_form" />
@@ -61,9 +61,9 @@ Create an info.xml by using the following structure.
 <li>directory path : Location of directory which contains skin files</li>
 </ul>
 
-===/XE installation path/themes/[title of theme]/modules/module name===
+===/XE installation path/themes/{{{[title of theme]}}}/modules/module name===
 Upload the skin of module to be created, in the same structure as that of the previous module skin. 
-===/XE installation path/themes/[title of theme]/layouts/[layout name]===
+===/XE installation path/themes/{{{[title of theme]}}}/layouts/{{{[layout name]}}}===
 Upload the layout to be created, in the same structure as that of the previous layout.
 == How to set a theme==
 Select the Theme from the XE Admin Page.
