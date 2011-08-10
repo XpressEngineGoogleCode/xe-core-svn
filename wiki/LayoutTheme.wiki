@@ -1,29 +1,81 @@
-=Layout Theme=
-==개요==
-모듈별 스킨 추가시 사용자는 스킨 파일을 모듈별 폴더에 각각 업로드해야 합니다. 
-레이아웃 테마를 이용하면, XE스킨 제작자가 모듈별 스킨 파일을 레이아웃에 포함시켜 배포할 경우, 사용자는 별도의 모듈 스킨 설치 없이 함께 포함된 모듈 스킨을 사용할 수 있습니다. 
-===장점===
-XE스킨 제작자들은 레이아웃 제작 배포시 모듈별 스킨을 함께 배포하여 디자인 통일성을 높일 수 있습니다. 
-사이트 운영자들은 일반적으로 레이아웃과 함께 배포되는 모듈별 스킨을 일일이 찾아서 설치할 필요가 없습니다.
+#summary Theme specification
+#labels Phase-Implementation
 
-===동작 원리===
-모듈실행시 선택된 레이아웃에 실행되고 있는 모듈 스킨이 포함된 경우, 현재 모듈에 설정되어있는 스킨을 사용하지 않고 레이아웃에 함께 배포된 스킨을 사용합니다. 
+<wiki:toc />
+=Theme=
+==Overview==
+XE's design elements consist of layouts, module skins and widget skins. When you want to change them or add new one, you need to install each element and change its setting one by one. Besides, even if you create both layout and module skin, you need to separate them in a different zip file. To deal with such inconvenience, XE provides a new feature, theme.
+Theme enables you to conveniently manage module skins and layouts to create more unified website design.
+===Features===
+XE skin creators can release the created layouts and module skins together in one file. 
+Website administrators can change the website design all at once, by just setting its main theme.
+===How it works===
+When you set a theme and save it, it is applied to the layouts and module skins of all the website module instances at once.
 
-==제작 방법==
-===info.xml수정===
+==How to create==
+===Location of theme===
+Upload each theme folder to the /XE installation path/themes folder.
 {{{
-....
-<skins>
-	<skin type="module" name="모듈이름(=모듈 폴더명)" skin="스킨이름(=스킨 폴더명)" />
-	<skin type="module" name="message" skin="xe_theme" />
-</skins>
+/XE installation path/themes/[title of theme]
 }}}
-위와 같이 함께 배포할 모듈 스킨 정보를 입력합니다. 
+===/XE installation path/themes/[title of theme]/conf/info.xml===
+Create an info.xml by using the following structure.
+{{{
+<?xml version="1.0" encoding="UTF-8"?>
+<theme>
+	<version>Version</version>
+	<title xml:lang="ko">테마이름</title>
+	<title xml:lang="en">Title of Theme</title>
+	<date>Date</date>
+	<publisher email_address="" link="">
+		<name xml:lang="ko">편집/제작자 이름</name>
+		<name xml:lang="en">Name of Publisher</name>
+	</publisher>
+	<description xml:lang="ko">테마 설명</description>
+	<description xml:lang="en">Description</description>
+	<layout>
+		<directory path="./layouts/xe_official" />
+	</layout>
+	<skinInfos>
+		<skinInfo>
+			<directory path="./modules/page/skins/default" />
+		</skinInfo>
+		<skinInfo>
+			<directory path="./themes/[title of theme]/modules/board" />
+		</skinInfo>
+		<skinInfo>
+			<directory path="./widgets/loggin_info/skins/xe_loggin_form" />
+		</skinInfo>
+	</skinInfos>
+</theme>
+<!-- The file path ./ means /XE installation path. -->
+}}}
 <ul>
-<li>name : 모듈 이름을 뜻하며, 실제 모듈 설치 경로의 폴더명을 의미합니다.</li>
-<li>skin : 사용될 스킨 이름을 뜻하며, ./layouts/레이아웃 이름/theme_skin/ 폴더 밑의 스킨 폴더명을 의미합니다.</li>
+<li>version : Version name</li>
+<li>title : Theme title</li>
+<li>date : Creation date</li>
+<li>publisher : Publisher who edited and created this theme</li>
+<li>description : Description of theme</li>
+<li>layout : Theme layout (1 at least)</li>
+<li>skinInfos : Skins (one for each module, not duplicated)</li>
+<li>directory path : Location of directory which contains skin files</li>
 </ul>
 
-===theme_skin 폴더 추가===
-모듈에서 사용할 스킨 파일을 theme_skin폴더 밑에 업로드합니다.
-(테마의 스킨파일이 없는 경우, 모듈에 설정된 스킨파일을 사용합니다.)
+===/XE installation path/themes/[title of theme]/modules/module name===
+Upload the skin of module to be created, in the same structure as that of the previous module skin. 
+===/XE installation path/themes/[title of theme]/layouts/[layout name]===
+Upload the layout to be created, in the same structure as that of the previous layout.
+== How to set a theme==
+Select the Theme from the XE Admin Page.
+Select a theme to apply from the installed themes and save it.
+If you don't want to apply all the layouts and skins in the selected theme, you can select other skins or layouts and save them.
+==Updates==
+===Layout===
+You can create the layout in the installed theme as well as those installed in the layouts folder.
+When you select a theme, a layout instance named after the theme-title is automatically created.
+If the layout instance whose name is the same as the theme-title already exists, nothing is created.
+(If you change the title of theme layout automatically created, a layout instance named after the changed theme-title is automatically created when you set the theme again.
+You can manage the automatically created theme layout by using the Layout Management menu.
+===Module skins===
+You can select the skin folders included in the theme as well as those installed in the modules.
+

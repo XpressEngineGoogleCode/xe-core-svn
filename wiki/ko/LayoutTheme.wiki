@@ -1,0 +1,86 @@
+#summary 테마 스팩
+#labels Phase-Implementation
+
+<wiki:toc />
+=Theme=
+==개요==
+XE의 디자인 요소는 레이아웃, 모듈 스킨, 위젯 스킨으로 분류됩니다. 디자인 요소를 변경하거나 추가할 경우 레이아웃/모듈 스킨/위젯 스킨을 각각 설치하고 변경할 모듈의 설정을 일일이 수정하여 적용해야 합니다.
+또한 스킨 제작자는 레이아웃과 모듈 스킨을 모두 제작할 경우에 각각 다른 파일로 묶어(zip형식) 제공해야 합니다. 
+Theme는 모듈 스킨과 레이아웃을 편리하게 관리하고, 이를 통하여 사이트 디자인 통일성을 높이기 위한 XE의 새로운 기능입니다. 
+===장점===
+XE스킨 제작자들은 제작한 레이아웃과 모듈 스킨을 묶어 함께 배포할 수 있습니다.
+사이트 운영자들은 사이트 메인 테마 설정만으로 사이트 디자인을 일괄 변경하고 이를 통하여 디자인 통일성을 높일 수 있습니다. 
+===동작 원리===
+테마 설정 저장시 사이트의 모든 모듈 인스턴스의 레이아웃과 모듈스킨이 선택 내용으로 일괄 적용됩니다.
+
+==제작 방법==
+===저장 위치===
+새로운 /XE설치경로/themes 폴더 밑에 각 테마 폴더를 업로드 합니다.
+{{{
+/XE설치경로/themes/[테마이름]
+}}}
+===/XE설치경로/themes/[테마이름]/conf/info.xml===
+아래 구조를 갖는 info.xml을 생성합니다.
+{{{
+<?xml version="1.0" encoding="UTF-8"?>
+<theme>
+	<version>버전</version>
+	<title xml:lang="ko">테마이름</title>
+	<title xml:lang="en">title of Theme</title>
+	<date>제작일</date>
+	<publisher email_address="" link="">
+		<name xml:lang="ko">편집/제작자 이름</name>
+		<name xml:lang="en">name of Publisher</name>
+	</publisher>
+	<description xml:lang="ko">테마 설명</description>
+	<description xml:lang="ko">description</description>
+	<layout>
+		<directory path="./layouts/xe_official" />
+	</layout>
+	<skinInfos>
+		<skinInfo>
+			<directory path="./modules/page/skins/default" />
+		</skinInfo>
+		<skinInfo>
+			<directory path="./themes/[테마이름]/modules/board" />
+		</skinInfo>
+		<skinInfo>
+			<directory path="./widgets/loggin_info/skins/xe_loggin_form" />
+		</skinInfo>
+	</skinInfos>
+</theme>
+<!--파일경로 ./ 는 /XE설치경로 를 의미합니다.-->
+}}}
+<ul>
+<li>version : 버전 이름</li>
+<li>title : 테마 이름</li>
+<li>date : 테마 제작일</li>
+<li>publisher : 테마 편집/제작자</li>
+<li>description : 테마 설명</li>
+<li>layout : 테마 레이아웃(필수 1개)</li>
+<li>skinInfos : 스킨들(각 모듈별 1개 중복 불가)</li>
+<li>directory path : 스킨파일을 포함하고 있는 폴더 위치</li>
+</ul>
+
+===/XE설치경로/themes/[테마이름]/modules/모듈 이름===
+신규로 생성할 모듈의 스킨을 업로드.
+구조는 기존 모듈 스킨 과 동일.
+
+===/XE설치경로/themes/[테마이름]/layouts/[레이아웃 이름]===
+신규로 생성할 레이아웃을 업로드.
+구조는 기존 레이아웃 과 동일.
+
+==theme 설정==
+관리자 > 테마
+설치된 테마 중 적용할 테마를 선택 후 저장
+선택한 테마 내용중 적용을 원하지 않거나, 다른 스킨 or 레이아웃을 선택할 수 있음.
+
+==변경 사항==
+===레이아웃===
+layouts폴더 내 설치된 레이아웃 외에 설치된 theme에 포함된 레이아웃도 생성 가능하도록 범위 확대
+theme 선택시 자동으로 theme-title이름으로 레이아웃 객체를 생성함.
+theme내 레이아웃과 동일하고 theme-title이름으로 레이아웃 객체가 있다면 추가 생성하지 않음.
+(자동생성된 theme레이아웃의 이름을 변경 할 경우 테마 재설정시 다시 자동으로 theme-title이름으로 레이아웃 객체 생성)
+자동으로 생성된 theme레이아웃은 기존의 레이아웃 관리 화면에서 관리 가능
+===모듈스킨 선택===
+모듈내 설치된 스킨 외에 theme에 신규로 포함된 스킨 폴더도 선택 가능하도록 범위 확대
