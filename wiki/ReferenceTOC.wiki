@@ -1,7 +1,7 @@
   * [Classes]
     * [ClassCacheHandler CacheHandler]
     * [ClassContext Context]
-    * [ClassDB DB] - Database manipulation
+    * [ClassDB DB]
     * [ClassDisplayHandler DisplayHandler]
       * [ClassHTMLDisplayHandler HTMLDisplayHandler]
       * [ClassJSONDisplayHandler JSONDisplayHandler]
