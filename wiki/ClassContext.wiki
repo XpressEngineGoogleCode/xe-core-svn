@@ -1,0 +1,55 @@
+#summary Reference for Context class
+#sidebar ReferenceTOC
+
+<wiki:toc max_depth="2" />
+
+= Introduction =
+Context는 XE를 작동하는 중에 다루는 대부분의 데이터(GET/POST 파라미터, 언어, DB 계정, FTP 계정 등)를 다루는 클래스이다. 내부적으로는 인스턴스를 생성하지만 클래스 바깥에서 호출할 때는 Context::methodName 과 같이 정적 호출을 주로 사용한다.
+
+= Properties =
+모든 프로퍼티는 _private_ 또는 _protected_라고 가정하므로 직접 접근하면 안된다.
+
+= Methods =
+== close( ) ==
+DB 커넥션, 세션 등 사용한 리소스를 모두 메모리에서 해제한다.
+
+== loadDBInfo( ) ==
+데이터베이스를 접근할 때 필요한 정보를 읽어들입니다. XE를 시작할 때 자동으로 호출되므로 모듈, 애드온 등을 개발할 때는 이 메소드를 호출하지 않고 _[#getDBInfo getDBInfo()]_를 사용해도 된다.
+
+읽어들인 값은 _[#getDBInfo(_) getDBInfo()]_를 통해 얻을 수 있다.
+
+== getDBType( ) ==
+데이터베이스의 타입을 반환한다. 반환되는 값은 데이터베이스의 타입을 뜻하는 문자열이다. 데이터베이스 타입의 예는 다음과 같다.
+
+|| 문자열 || 의미 ||
+|| cubrid || 큐브리드(cubrid) ||
+|| firebird || 파이어버드(Firebird) ||
+|| mssql || 마이크로소프트 SQL(MS-SQL) ||
+|| mysql || MySQL ||
+|| mysql_innodb || MySQL (InnoDB 엔진) ||
+|| mysqli || MySQL (개선된 PHP-MySQL 확장기능 사용) ||
+|| postgresql || PostgreSQL ||
+|| sqlite2 || SQLite2 (1.5.0 이후 지원하지 않음) ||
+|| sqlite3 || SQLite3 ||
+
+== setDBInfo($db_info) ==
+데이터베이스 정보를 메모리에 설정한다. 파일로 저장되지는 않으므로 다음 실행시에는 영향을 주지 않는다.
+
+*파라미터*
+  * *$db_info* : 데이터베이스 정보를 포함한 stdClass 객체
+
+설정할 데이터베이스 정보는 다음과 같은 속성을 포함할 수 있다.
+  * db_type : 데이터베이스 타입. 사용할 수 있는 데이터베이스 타입은 [#getDBType(_) getDBType( )] 참고.
+  * db_port : 데이터베이스 서버의 포트 번호
+  * db_hostname : 데이터베이스 서버의 호스트 이름
+  * db_userid : 데이터베이스 사용자 이름
+  * db_password : 데이터베이스 사용 패스워드
+  * db_database : 데이터베이스 이름
+  * db_table_prefix : 테이블을 생성하고 접근할 때 사용할 접두어.
+  * default_url : XE가 설치된 웹 주소
+  * lang_type : 기본 언어. ISO-639 두 자리 코드의 일부를 사용.
+  * use_rewrite : 짧은 주소를 사용하는지 여부. 사용하면 'Y', 그렇지 않으면 'N'
+  * time_zone : 시간대(timezone)
+
+== getDBInfo( ) ==
+데이터베이스 정보를 가져온다. 데이터베이스 정보의 속성은 [#setDBInfo($db_info) setDBInfo($db_info)]를 참고하면 된다.
