@@ -39,17 +39,17 @@ DB 커넥션, 세션 등 사용한 리소스를 모두 메모리에서 해제한
   * *$db_info* : 데이터베이스 정보를 포함한 stdClass 객체
 
 설정할 데이터베이스 정보는 다음과 같은 속성을 포함할 수 있다.
-  * db_type : 데이터베이스 타입. 사용할 수 있는 데이터베이스 타입은 [#getDBType(_) getDBType( )] 참고.
-  * db_port : 데이터베이스 서버의 포트 번호
-  * db_hostname : 데이터베이스 서버의 호스트 이름
-  * db_userid : 데이터베이스 사용자 이름
-  * db_password : 데이터베이스 사용 패스워드
-  * db_database : 데이터베이스 이름
-  * db_table_prefix : 테이블을 생성하고 접근할 때 사용할 접두어.
-  * default_url : XE가 설치된 웹 주소
-  * lang_type : 기본 언어. ISO-639 두 자리 코드의 일부를 사용.
-  * use_rewrite : 짧은 주소를 사용하는지 여부. 사용하면 'Y', 그렇지 않으면 'N'
-  * time_zone : 시간대(timezone)
+  * *db_type* : 데이터베이스 타입. 사용할 수 있는 데이터베이스 타입은 [#getDBType(_) getDBType( )] 참고.
+  * *db_port* : 데이터베이스 서버의 포트 번호
+  * *db_hostname* : 데이터베이스 서버의 호스트 이름
+  * *db_userid* : 데이터베이스 사용자 이름
+  * *db_password* : 데이터베이스 사용 패스워드
+  * *db_database* : 데이터베이스 이름
+  * *db_table_prefix* : 테이블을 생성하고 접근할 때 사용할 접두어.
+  * *default_url* : XE가 설치된 웹 주소
+  * *lang_type* : 기본 언어. ISO-639 두 자리 코드의 일부를 사용.
+  * *use_rewrite* : 짧은 주소를 사용하는지 여부. 사용하면 'Y', 그렇지 않으면 'N'
+  * *time_zone* : 시간대(timezone)
 
 == getDBInfo( ) ==
 데이터베이스 정보를 가져온다. 데이터베이스 정보의 속성은 [#setDBInfo($db_info) setDBInfo($db_info)]를 참고하면 된다.
