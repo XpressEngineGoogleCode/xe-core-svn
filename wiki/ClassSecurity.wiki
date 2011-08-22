@@ -1,0 +1,59 @@
+#summary Reference for Security class
+#sidebar ReferenceTOC
+
+<wiki:toc max_depth="2" />
+
+= Introduction =
+Security는 XE의 입출력 데이터와 관련한 보안 기능을 실행하는 클래스이다.
+
+= Properties =
+모든 프로퍼티는 _private_ 또는 _protected_ 라고 가정하므로 직접 접근하면 안된다.
+
+= Methods =
+== 생성자 ==
+{{{
+new Security($context_var = null)
+}}}
+*파라미터*
+  * *$context_var* : 대상 컨텍스트 변수. 입력하지 않으면 Context 클래스에 저장된 변수를 대상으로 한다.
+
+== encodeHTML ==
+{{{
+mixed encodeHTML($var_name, ...)
+}}}
+*파라미터*
+  * *$var_name* : 변환할 속성 이름
+
+대상 컨텍스트에서 주어진 속성 이름($var_name ...)에 해당하는 문자열을 찾아 HTML 특수 문자를 엔티티 형태로 변환한다.
+예를 들어 다음과 같은 대상 컨텍스트가 주어졌다고 가정해보자.
+{{{
+$context = array(
+	'elem1' => '<strong>Strong</strong> Baby',
+	'elem2' => array('First <b>1</b>', 'Second <b>2</b>', 'Thirc <b>3</b>')
+	'elem3' => 3.14
+);
+
+$security = new Security($context);
+}}}
+여기서 `$context['elem1']` 요소만 변환하고 싶으면 다음과 같이 실행한다.
+{{{
+$security->encodeHTML('elem1');
+}}}
+두 개 이상의 요소를 변환하고 싶으면 인수를 여러개 전달하면 된다(앞의 코드를 지우고 페이지를 다시 읽어들여야 의도대로 동작한다).
+{{{
+$security->encodeHTML('elem1', 'elem3');
+}}}
+단, `$context['elem3']`는 숫자 형식이므로 변환이 되지 않고 따라서 함수의 실행 결과는 바로 앞에서 실행한 결과와 같다.
+만약 `$context['elem2'][0]` 요소만 변환하고 싶다면 다음과 같이 점 문법(dot syntax)를 사용한다.
+{{{
+$security->encodeHTML('elem2.0');
+}}}
+`$context['elem2']`의 모든 요소를 변환하고 싶다면 점 문법 뒤에 아무것도 입력하지 않는다.
+{{{
+$security->encodeHTML('elem2.');
+}}}
+다음은 문법의 몇 가지 예제이다.
+{{{
+$security->encodeHTML('elem1', 'elem2.first'); // elem1 속성과 elem2 속성의 first 항목
+$security->encodeHTML('elem2..array.');
+}}}
