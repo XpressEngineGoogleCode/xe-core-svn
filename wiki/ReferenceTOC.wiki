@@ -18,7 +18,7 @@
     * [ClassModuleObject ModuleObject]
     * [ClassObject Object]
     * [ClassPageHandler PageHandler]
-	* [ClassSecurity Security]
+    * [ClassSecurity Security]
     * [ClassTemplateHandler TemplateHandler]
     * [ClassValidator Validator]
     * [ClassWidgetHandler WidgetHandler]
