@@ -12,10 +12,10 @@ Security는 XE의 입출력 데이터와 관련한 보안 기능을 실행하는
 = Methods =
 == 생성자 ==
 {{{
-new Security($context_var = null)
+$security = new Security(mixed $context_var = null)
 }}}
 *파라미터*
-  * *$context_var* : 대상 컨텍스트 변수. 입력하지 않으면 Context 클래스에 저장된 변수를 대상으로 한다.
+  * *$context_var* : 대상 컨텍스트 변수. 배열이나 객체을 인수로 전달하며 전달하지 않으면 Context 클래스에 저장된 변수를 대상으로 한다.
 
 == encodeHTML ==
 {{{
