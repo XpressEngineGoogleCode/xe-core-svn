@@ -2,4 +2,4 @@
 #sidebar ReferenceTOC
 
 = Introduction =
-Abstract class for Handlers.
+Abstract class for Handlers. This is an empty class which include no properties and no methods.
