@@ -1,0 +1,5 @@
+#summary Reference for Handler class
+#sidebar ReferenceTOC
+
+= Introduction =
+Abstract class for Handlers.
