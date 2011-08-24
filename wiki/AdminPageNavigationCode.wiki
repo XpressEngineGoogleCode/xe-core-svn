@@ -1,0 +1,40 @@
+#summary XE 1.5부터 관리자 화면에서 사용하는 페이지 네이게이션 코드
+
+XE 1.5부터 관리자 페이지에서 페이지 네비게이션을 위해 아래 코드를 사용합니다.
+Hidden 폼 중 error_erturn_url, module, act를 제외한 파라미터는 각자 페이지에서 필요한 파라미터로 수정해서 사용합니다.
+
+페이지 표시 개수는 5개를 권장합니다.
+
+{{{
+
+<form action="./" class="pagination" cond="$page_navigation">
+	<input type="hidden" name="error_return_url" value="" />
+	<input type="hidden" name="module" value="{$module}" />
+	<input type="hidden" name="act" value="{$act}" />
+	<input cond="$order_target" type="hidden" name="order_target" value="{$order_target}" />
+	<input cond="$order_type" type="hidden" name="order_type" value="{$order_type}" />
+	<input cond="$category_srl" type="hidden" name="category_srl" value="{$category_srl}" />
+	<input cond="$childrenList" type="hidden" name="childrenList" value="{$childrenList}" />
+	<input cond="$search_keyword" type="hidden" name="search_keyword" value="{$search_keyword}" />
+
+	<a href="{getUrl('page', '')}" class="direction">&laquo; FIRST</a>
+	<block cond="$page_navigation->first_page + $page_navigation->page_count > $page_navigation->last_page && $page_navigation->page_count != $page_navigation->total_page">
+		<a href="{getUrl('page', '')}">1</a>
+		<a href="#goTo" class="tgAnchor" title="{$lang->cmd_go_to_page}">...</a>
+	</block>
+	<!--@while($page_no = $page_navigation->getNextPage())-->
+		{@$last_page = $page_no}
+		<strong cond="$page_no == $page">{$page_no}</strong>
+		<a cond="$page_no != $page" href="{getUrl('page', $page_no)}">{$page_no}</a>
+	<!--@end-->
+	<block cond="$last_page != $page_navigation->last_page">
+		<a href="#goTo" class="tgAnchor" title="{$lang->cmd_go_to_page}">...</a>
+		<a href="{getUrl('page', $page_navigation->last_page)}">{$page_navigation->last_page}</a>
+	</block>
+	<a href="{getUrl('page', $page_navigation->last_page)}" class="direction">LAST &raquo;</a>
+	<span id="goTo" class="tgContent">
+		<input name="page" title="{$lang->cmd_go_to_page}" />
+		<button type="submit">Go</button>
+	</span>
+</form>
+}}}
