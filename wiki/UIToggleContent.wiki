@@ -1,0 +1,48 @@
+#summary Toggle Contents UI guideline for administrative interface
+#labels UI
+#sidebar DesignGuideTOC
+
+메뉴 등과 같이 사용자의 액션에 따라 콘텐츠를 토글할 때 사용한다. 토글 콘텐츠는 크게 두 개의 요소로 이루어지는데, 하나는 앵커 요소로 이 요소를 클릭하면 콘텐츠를 보이거나 숨기며 다른 하나는 콘텐츠를 포함하는 콘텐츠 요소입니다.
+
+=== Basics ===
+토글 콘텐츠에 사용할 앵커 요소는 클래스 속성에 `tgAnchor`라는 클래스 이름을 *반드시* 포함해야 하며, 콘텐츠 블럭은 클래스 속성에 `tgContent`라는 클래스 이름을 *반드시* 포함해야 한다. 앵커 요소는 클릭 이벤트를 받아서 콘텐츠를 보이거나 감추는 기능을 하며, 콘텐츠를 보이거나 감출 때 사용할 효과에 대한 정보를 포함하기도 한다. 예를 들어, 보이거나 숨길 콘텐츠의 아이디는 href 속성을 통해 다음과 같이 정의할 수 있다.
+{{{
+<a href="#content" class="tgAnchor">보이기/숨기기</a>
+<div id="content" class="tgContent">보이거나 숨길 콘텐츠</div>
+}}}
+위 코드는 앵커 요소 `href` 속성의 값으로 `#content`를 사용하고, 콘텐츠 영역의 아이디로 `content`를 사용하여 두 개의 요소를 서로 연결했다. 앵커 요소가 콘텐츠 영역을 가리켜야 한다는 점을 명심하셔야 한다.
+ 
+또한 `data-effect` 속성을 통해 사용할 효과의 종류를, `data-duration` 속성을 통해 효과가 진행될 시간을 정의할 수 있다. 다음 코드는 콘텐츠를 펼쳐지거나 접을 때 슬라이딩 효과를 사용하는 예제입니다.
+{{{
+<a href="#content" class="tgAnchor" data-effect="slide">보이기/숨기기</a>
+<div id="content" class="tgContent">보이거나 숨길 콘텐츠</div>
+}}}
+앵커 요소에 사용할 수 있는 옵션 속성은 다음과 같습니다. 접두어 `data-`는 생략했다.
+ * *`effect`* : 접거나 펼칠 때 사용할 효과. `slide`, `fade`, `none` 중 선택. 기본값은 `none`
+ * *`duration`* : 효과를 실행할 시간. `fast`, `slow` 또는 밀리초 단위의 시간 숫자
+
+=== Events ===
+프로그램에서 사용자 액션을 통하지 않고 토글 콘텐츠를 펼치거나 접으려면 jQuery 함수를 사용해 앵커 요소를 선택한 후 사용자 정의 이벤트 `open.tc` 또는 `close.tc`를 실행한다. jQuery를 사용하면 다음과 같이 실행할 수 있다. 콘텐츠를 펼칠 때는 `'open.tc'`를 접을 때는 `'close.tc'`를 사용한다.
+{{{
+<a href="#content" class="tgAnchor">보이기/숨기기</a>
+
+<script type="text/javascript">
+jQuery('a.tgAnchor').trigger('open.tc'); // 콘텐츠 펼치기
+</script>
+}}}
+
+만약 콘텐츠를 펼치기 전/후 또는 접기 전/후에 어떤 코드를 실행하고 싶다면 앞서 말한 이벤트에 `after-` 또는 `before-`를 추가하여 이벤트 핸들러를 할당한다. 예를 들어, *콘텐츠를 펼치기 전*에 실행하고 싶은 코드는 다음과 같이 할당할 수 있다.
+{{{
+jQuery('a.tgAnchor')
+    .bind('before-open.tc', function(){
+        // 콘텐츠를 펼치기 직전에 실행할 코드
+    });
+}}}
+
+마찬가지로 닫은 직후에 실행할 함수는 다음과 같이 할당할 수 있다. `after-`로 할당한 이벤트 핸들러는 애니메이션이 모두 끝난 후에 실행된다는 점에 주의해야 한다.
+{{{
+jQuery('a.tgAnchor')
+    .bind('after-close.tc', function(){
+        // 콘텐츠를 접은 직후 실행할 코드
+    });
+}}}

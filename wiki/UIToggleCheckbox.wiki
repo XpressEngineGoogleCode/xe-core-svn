@@ -1,0 +1,66 @@
+#summary Toggle Checkbox UI guideline for administrative interface
+#labels UI
+#sidebar DesignGuideTOC
+
+특정 테이블에서 테이블 헤더(thead) 또는 테이블 푸터(tfoot)에 포함된 체크박스를 클릭했을 때 이와 관련있는 체크박스를 모두 선택하거나 체크를 해제한다.
+
+= Basics =
+토글 체크박스 기능을 사용하기 위해서는 몇 가지 규칙이 필요하다.
+ # 전체를 토글하는 체크박스(이하 토글 체크박스)는 반드시 테이블 헤더(thead) 또는 테이블 푸터(tfoot)의 자손 노드여야 한다.
+ # 토글 체크박스는 `name` 속성을 가질 수 없다. 대신 사용자 정의 데이터 속성인 `data-name`에 토글할 대상 체크박스의 `name`을 설정해줍니다.
+ # 토글 체크박스를 클릭하면 같은 테이블에 속해있고 `data-name`의 값과 같은 `name`을 가진 체크박스를 모두 토글 체크박스의 상태와 똑같이 만듭니다.
+ # 체크 박스는 체크된 상태(checked)/체크되지 않은 상태(unchecked)만 지원할 뿐 중간 상태(indeterminate state)는 지원하지 않는다.
+
+다음은 위 규칙에 작성한 HTML 코드입니다.
+{{{
+<table id="listTable">
+<thead>
+  <tr>
+    <th>Title</th>
+    <th><input type="checkbox" data-name="cbox[]" title="모두 체크/해제" /></th>
+  </tr>
+</thead>
+<tfoot>
+  <tr>
+    <th>Title</th>
+    <th><input type="checkbox" data-name="cbox[]" title="모두 체크/해제" /></th>
+  </tr>
+</tfoot>
+<tbody>
+  <tr>
+    <td>Good morning!</td>
+    <td><input type="checkbox" name="cbox[]" /></td>
+  </tr>
+  <tr>
+    <td>즐거운 아침입니다!</td>
+    <td><input type="checkbox" name="cbox[]" /></td>
+  </tr>
+  <tr>
+    <td>おはようございます!</td>
+    <td><input type="checkbox" name="cbox[]" /></td>
+  </tr>
+</tbody>
+</table>
+}}}
+약간의 CSS를 더하면 이 테이블은 화면에서 다음과 같이 보입니다. CSS는 중요한 내용이 아니므로 여기서 다루지 않는다.
+
+http://xe-core.googlecode.com/svn/wiki/img/AdminuiCheckboxExample.png
+
+이제 테이블 헤더 또는 푸터에 있는 체크 박스를 클릭하면 다음과 같은 과정을 거칩니다.
+ # 클릭한 체크 박스에 `data-name` 속성이 있는지 찾고, 있으면 이 값을 기억해둡니다.
+ # 테이블에서 `data-name` 속성의 값과 일치하는 `name`을 가진 체크박스를 모두 구한다.
+ # 1에서 클릭한 체크박스가 체크되어 있으면 2에서 구한 체크박스를 모두 체크하고, 그렇지 않으면 2에서 구한 체크 박스를 모두 체크 해제한다.
+
+위 그림에서는 가장 상단에 있는 체크박스나 가장 하단에 있는 체크박스를 클릭하면 테이블의 모든 체크박스가 선택되고, 다시 한번 가장 상단이나 가장 하단에 있는 체크 박스를 클릭하면 모든 체크박스의 체크 표시가 해제된다.
+
+= Events =
+
+체크박스를 모두 업데이트하고 나면 체크박스가 속한 `table` 요소에 `update.checkbox`라는 사용자정의 이벤트를 발생시킵니다. 따라서, 체크박스를 모두 업데이트하고 난 후에 실행하고 싶은 코드가 있다면 해당 테이블에 `update.checkbox` 이벤트 핸들러를 바인딩하면 된다.
+{{{
+jQuery('#listTable')
+    .bind('update.checkbox', function(event, name, checked) {
+        // 테이블의 체크박스를 모두 업데이트 한 후 실행할 코드
+        // name은 업데이트한 체크박스의 name
+        // checked는 업데이트한 체크박스의 체크 여부
+    });
+}}}

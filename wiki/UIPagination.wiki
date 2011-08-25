@@ -1,12 +1,14 @@
-#summary XE 1.5부터 관리자 화면에서 사용하는 페이지 네이게이션 코드
+#summary Pagination UI guideline for administrative interface
+#labels UI
+#sidebar DesignGuideTOC
 
-XE 1.5부터 관리자 페이지에서 페이지 네비게이션을 위해 아래 코드를 사용합니다.
-Hidden 폼 중 error_erturn_url, module, act를 제외한 파라미터는 각자 페이지에서 필요한 파라미터로 수정해서 사용합니다.
+한 페이지에 표시하기 어려운 목록 콘텐츠를 여러 페이지로 분할할 때 현재 페이지의 위치를 알고 다른 페이지로 쉽게 이동할 수 있는 UI이다.
 
-페이지 표시 개수는 5개를 권장합니다.
+http://xe-core.googlecode.com/svn/wiki/img/AdminuiPaginationExample.png
 
+= Basics =
+템플릿에서는 다음과 같은 코드를 사용하면 된다. 단, [ClassPageHandler PageHandler] 객체가 $page_navigation에 할당되어 있어야 한다.
 {{{
-
 <form action="./" class="pagination" cond="$page_navigation">
 	<input type="hidden" name="error_return_url" value="" />
 	<input type="hidden" name="module" value="{$module}" />
@@ -22,11 +24,11 @@ Hidden 폼 중 error_erturn_url, module, act를 제외한 파라미터는 각자
 		<a href="{getUrl('page', '')}">1</a>
 		<a href="#goTo" class="tgAnchor" title="{$lang->cmd_go_to_page}">...</a>
 	</block>
-	<!--@while($page_no = $page_navigation->getNextPage())-->
+	<block loop="$page_no = $page_navigation->getNextPage()">
 		{@$last_page = $page_no}
 		<strong cond="$page_no == $page">{$page_no}</strong>
 		<a cond="$page_no != $page" href="{getUrl('page', $page_no)}">{$page_no}</a>
-	<!--@end-->
+	</block>
 	<block cond="$last_page != $page_navigation->last_page">
 		<a href="#goTo" class="tgAnchor" title="{$lang->cmd_go_to_page}">...</a>
 		<a href="{getUrl('page', $page_navigation->last_page)}">{$page_navigation->last_page}</a>
