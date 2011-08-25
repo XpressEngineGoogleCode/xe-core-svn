@@ -84,7 +84,7 @@
 
 이 테이블을 작성한 후 웹 브라우저에서 열면 다음과 같이 보인다.
 
-http://xe-core.googlecode.com/svn/wiki/img/AdminUISortableTableExample.png.png
+http://xe-core.googlecode.com/svn/wiki/img/AdminUISortableTableExample.png
 
 이제 테이블에 있는 드래그 핸들러를 드래그하면 줄의 순서를 변경할 수 있다.
 
