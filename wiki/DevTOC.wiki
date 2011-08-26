@@ -1,3 +1,4 @@
   * [JsOverview		Develop JavaScript]
     * [JsIntro		What is JAF?]
     * [JsAppPlugin	Apps and Plugins]
+    * [JsAPIMessage	API Messages]
