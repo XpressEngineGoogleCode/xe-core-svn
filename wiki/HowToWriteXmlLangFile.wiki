@@ -1,9 +1,9 @@
 <wiki:toc max_depth="3" />
 
 =개요=
-XE UI요소의 다국어 지원을 위해 새로운 XML 언어파일 제작방법
+XE UI요소의 다국어 지원을 위해 새로운 XML 언어파일 작성방법
 
-=제작방법=
+=작성방법=
 ==저장위치 및 파일명==
 기존 php 파일 방식과 같은 위치인 {{{*}}}/lang 폴더 아래 lang.xml 파일명으로 작성합니다.
 {{{
@@ -33,7 +33,6 @@ XE UI요소의 다국어 지원을 위해 새로운 XML 언어파일 제작방�
     </item>
     <item name="captcha_denied">
         <value xml:lang="ko"><![CDATA[잘못 입력하셨습니다]]></value>
-        <value xml:lang="en"><![CDATA[You have typed wrong characters.]]></value>
         <value xml:lang="zh-TW"><![CDATA[輸入錯誤]]></value>
     </item>
 </lang>
@@ -65,7 +64,7 @@ en
     $lang->about_captcha = "Please type in the displayed characters in the same order. They are case-insensitive.";
     $lang->captcha_reload = 'Refresh the image';
     $lang->captcha_play = 'Pronounce the letters';
-    $lang->captcha_denied = 'You have typed wrong characters.';
+    $lang->captcha_denied = '잘못 입력하셨습니다';
 ?>
 }}}
 
@@ -85,7 +84,7 @@ jp, zh-CN, fr, de, ru, es, tr, vi, mn
     $lang->about_captcha = "Please type in the displayed characters in the same order. They are case-insensitive.";
     $lang->captcha_reload = 'Refresh the image';
     $lang->captcha_play = 'Pronounce the letters';
-    $lang->captcha_denied = 'You have typed wrong characters.';
+    $lang->captcha_denied = '잘못 입력하셨습니다';
 ?>
 }}}
 
