@@ -26,7 +26,7 @@ var App = xe.createApp("AppName", {
 
 createApp 메소드의 첫 번째 인수는 앱의 이름을 뜻하는 문자열이고 두 번째 인수는 앱의 내용을 정의하는 Object이다. 메소드를 실행한 후 반환되는 값은 객체 지향 프로그래밍에서 말하는 클래스와 같은 상태이므로 실제로 사용하려면 인스턴스로 만들어야 한다.
 
-앱 작성에 대해 보다 자세한 내용은 [#앱_작성 앱 작성]을 참고하면 된다.
+앱 작성에 대해 보다 자세한 내용은 [#%EC%95%B1_%EC%9E%91%EC%84%B1 앱 작성]을 참고하면 된다.
 
 === 플러그인 정의 ===
 xe.createPlugin() 메소드를 사용하면 플러그인을 작성할 수 있다. 
@@ -297,7 +297,7 @@ var Plugin = xe.createPlugin("pluginName", {
     }
 });
 }}}
-하나의 플러그인에 생성자는 한 개만 있어야 한다. 그러나, 속성값, 메소드, API 리스너는 이름만 다르다면 여러 개가 있어도 상관없다. 속성, 생성자, 메소드, API 리스너에 대한 자세한 설명은 [#앱 _작성앱 작성]을 참고하면 된다.
+하나의 플러그인에 생성자는 한 개만 있어야 한다. 그러나, 속성값, 메소드, API 리스너는 이름만 다르다면 여러 개가 있어도 상관없다. 속성, 생성자, 메소드, API 리스너에 대한 자세한 설명은 [#%EC%95%B1_%EC%9E%91%EC%84%B1 앱 작성]을 참고하면 된다.
 
 === 플러그인 이름 구하기 ===
 플러그인 인스턴스를 통해 앱 이름을 구할 때는 `getName()` 메소드를 사용한다.
@@ -328,9 +328,9 @@ var App = xe.createApp("appName", {
 });
 
 var Plugin = xe.createPlugin("pluginName", {
-getOwnerAppName : function(arg1, arg2) {
-    if (this.oApp) {
-alert(this.oApp.getName());
+    getOwnerAppName : function(arg1, arg2) {
+        if (this.oApp) {
+            alert(this.oApp.getName());
         } else {
             alert("등록되지 않은 플러그인");
         }
@@ -340,10 +340,10 @@ alert(this.oApp.getName());
 var app = new App();
 var plugin = new Plugin();
 
-plugin.getOwnerAppName(); // ‘등록되지 않은 플러그인’ 출력
+plugin.getOwnerAppName(); // "등록되지 않은 플러그인" 출력
 
 app.registerPlugin(plugin);
-plugin.getOwnerAppName(); // ‘appName’ 출력
+plugin.getOwnerAppName(); // "appName" 출력
 }}}
 
 === 메시지 전달 ===
