@@ -1,6 +1,6 @@
 #summary Describe what is JAF
 #labels UI
-#sidebar JsTOC
+#sidebar DevTOC
 
 = 앱과 플러그인 =
 
