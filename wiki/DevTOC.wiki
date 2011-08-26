@@ -2,3 +2,4 @@
     * [JsIntro		What is JAF?]
     * [JsAppPlugin	Apps and Plugins]
     * [JsAPIMessage	API Messages]
+    * [JsBuiltInApps	Built-in Apps]
