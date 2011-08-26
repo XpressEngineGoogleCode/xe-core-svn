@@ -1,12 +1,13 @@
 #summary Reference for Security class
 #sidebar ReferenceTOC
 
+= Security 클래스 =
+
 <wiki:toc max_depth="2" />
 
-= 개요 =
 Security는 XE의 입출력 데이터와 관련한 보안 기능을 실행하는 클래스이다.
 
-= 생성자 =
+== 생성자 ==
 {{{
 $security = new Security(mixed $context_var = null)
 }}}
@@ -14,11 +15,11 @@ $security = new Security(mixed $context_var = null)
 *파라미터*
   * *$context_var* : 대상 컨텍스트 변수. 배열이나 객체을 인수로 전달하며 전달하지 않으면 Context 클래스에 저장된 변수를 대상으로 한다.
 
-= 프로퍼티 =
+== 프로퍼티 ==
 모든 프로퍼티는 _private_ 또는 _protected_ 라고 가정하므로 직접 접근하면 안된다.
 
-= 메소드 =
-== encodeHTML ==
+== 메소드 ==
+=== encodeHTML ===
 {{{
 mixed encodeHTML(string $var_name, ...)
 }}}
@@ -30,9 +31,9 @@ mixed encodeHTML(string $var_name, ...)
 예를 들어 다음과 같은 대상 컨텍스트가 주어졌다고 가정해보자.
 {{{
 $context = array(
-	'elem1' => '<strong>Strong</strong> Baby',
-	'elem2' => array('First <b>1</b>', 'Second <b>2</b>', 'Thirc <b>3</b>')
-	'elem3' => 3.14
+    'elem1' => '<strong>Strong</strong> Baby',
+    'elem2' => array('First <b>1</b>', 'Second <b>2</b>', 'Thirc <b>3</b>')
+    'elem3' => 3.14
 );
 
 $security = new Security($context);

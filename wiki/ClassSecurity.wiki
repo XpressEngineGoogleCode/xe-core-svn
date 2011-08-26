@@ -1,12 +1,13 @@
 #summary Reference for Security class
 #sidebar ReferenceTOC
 
+= Security Class =
+
 <wiki:toc max_depth="2" />
 
-= Introduction =
 This class helps to solve or workaround security issues for incoming and output data.
 
-= Constructor =
+== Constructor ==
 {{{
 $security = new Security(mixed $context_var = null)
 }}}
@@ -17,8 +18,8 @@ $security = new Security(mixed $context_var = null)
 = Properties =
 모든 프로퍼티는 _private_ 또는 _protected_ 라고 가정하므로 직접 접근하면 안된다.
 
-= Methods =
-== encodeHTML ==
+== Methods ==
+=== encodeHTML ===
 {{{
 mixed encodeHTML(string $var_name, ...)
 }}}
@@ -30,9 +31,9 @@ mixed encodeHTML(string $var_name, ...)
 예를 들어 다음과 같은 대상 컨텍스트가 주어졌다고 가정해보자.
 {{{
 $context = array(
-	'elem1' => '<strong>Strong</strong> Baby',
-	'elem2' => array('First <b>1</b>', 'Second <b>2</b>', 'Thirc <b>3</b>')
-	'elem3' => 3.14
+    'elem1' => '<strong>Strong</strong> Baby',
+    'elem2' => array('First <b>1</b>', 'Second <b>2</b>', 'Thirc <b>3</b>')
+    'elem3' => 3.14
 );
 
 $security = new Security($context);
