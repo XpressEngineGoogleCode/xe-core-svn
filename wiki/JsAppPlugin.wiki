@@ -1,0 +1,354 @@
+#summary Describe what is JAF
+#labels UI
+#sidebar JsTOC
+
+= 앱과 플러그인 =
+
+<wiki:toc />
+
+앱과 플러그인은 JAF를 구성하는 두 개의 축이다. 이 페이지에서는 앱/플러그인의 개념과 작성하는 방법 등을 알아본다.
+
+== 전역 객체 xe ==
+전역 객체 xe는 앱을 관리하는 최상위 객체이다. 앱과 플러그인을 작성하는 것은 물론 앱을 등록하거나 관리하는 역할을 한다. 각 메소드는 기능별로 다음과 같이 분류할 수 있다.
+
+  * createApp : 앱 작성
+  * createPlugin : 플러그인 작성
+  * registerApp/unregisterApp : 앱 인스턴스를 xe 객체에 등록 또는 등록해제
+  * getApp/getApps : xe 객체에 등록된 앱 목록 반환
+
+=== 앱 정의 ===
+xe.createApp 메소드를 사용하면 앱을 작성할 수 있다.
+{{{
+var App = xe.createApp("AppName", {
+    … 앱 코드 …
+});
+}}}
+
+createApp 메소드의 첫 번째 인수는 앱의 이름을 뜻하는 문자열이고 두 번째 인수는 앱의 내용을 정의하는 Object이다. 메소드를 실행한 후 반환되는 값은 객체 지향 프로그래밍에서 말하는 클래스와 같은 상태이므로 실제로 사용하려면 인스턴스로 만들어야 한다.
+
+앱 작성에 대해 보다 자세한 내용은 [앱 작성]을 참고하면 된다.
+
+=== 플러그인 정의 ===
+xe.createPlugin() 메소드를 사용하면 플러그인을 작성할 수 있다. 
+{{{
+var Plugin = xe.createPlugin("PluginName", {
+   … 플러그인 코드 …
+});
+}}}
+
+`createPlugin()` 메소드에는 두 개의 인수를 전달한다.
+  * 첫 번째 인수는 플러그인의 이름을 뜻하는 문자열이다.
+  * 두 번째 인수는 플러그인의 내용을 정의하는 Object 객체이다.
+
+  메소드를 실행한 후에는 `createApp()`을 실행했을 때와 같이 클래스를 반환하므로 실제로 사용하려면 반드시 인스턴스로 만들어야 한다.
+
+=== 앱 등록/등록해제 ==
+앞서 언급했듯이 작성된 앱을 사용하려면 먼저 인스턴스로 만든 후 인스턴스를 전역 객체에 등록해야 한다.
+일반적인 자바스크립트 객체는 다음과 같이 `new` 연산자를 사용해 인스턴스를 만들 수 있다.
+{{{
+// Date 객체의 인스턴스 생성
+var date = new Date();
+}}}
+
+앱도 위와 같은 방법으로 `new` 연산자를 사용해 인스턴스를 만들 수 있다. 작성된 인스턴스는 `xe.registerApp()` 메소드를 통해 전역 객체에 등록한다.
+{{{
+// App 객체의 인스턴스 생성
+var app = new App();
+
+// App 인스턴스를 전역 객체에 등록
+xe.registerApp(app);
+}}}
+`registerApp()` 메소드는 등록할 앱의 인스턴스 객체를 인수로 받는다.
+
+더 이상 앱을 사용하고 싶지 않다면 등록된 앱을 해제할 수 있다. 앱을 등록 해제할 때는 `xe.unregisterApp()` 메소드를 사용한다.
+{{{
+// App 인스턴스 등록 해제
+xe.registerApp(app);
+}}}
+`registerApp()`과 유사하게 `unregisterApp()`은 등록 해제할 앱의 인스턴스 객체를 인수로 받는다.
+
+=== 앱 객체 가져오기 ===
+등록된 앱은 `getApp()` 또는 `getApps()` 메소드를 통해 가져올 수 있다. 등록된 모든 앱의 목록을 구할 때는 `getApps()` 메소드를 사용하고, 특정 앱만 구할 때는 `getApp()` 메소드를 사용한다.
+{{{
+// 등록된 모든 앱의 목록 구하기
+var app_list = xe.getApps();
+
+// Validator 앱의 인스턴스 가져오기
+var validator = xe.getApp("Validator");
+}}}
+`getApp()` 메소드의 첫 번째 인수는 가져오고자 하는 앱의 이름이다. 앱 이름은 `createApp()` 메소드를 사용할 때 첫 번째 인수로 전달한 값이다. `getApp()` 메소드는 구하고자 하는 이름의 앱이 등록되어있으면 앱의 인스턴스 객체를 반환하지만 등록되어있지 않으면 `null`을 반환한다. `getApps()` 메소드는 등록된 앱이 하나도 없으면 빈 배열을 반환한다.
+
+== 앱 ==
+=== 앱 작성 ===
+앞서 다룬 바와 같이 앱은 `xe.createApp()` 메소드를 통해 작성할 수 있다. 기본적인 앱의 구조는 다음과 같습니다.
+{{{
+var App = xe.createApp("AppName", {
+    // 속성
+    propName : 속성값, 
+
+    // 생성자
+    init : function() {
+.. 생성자 내용 ..
+    },
+
+    // 메소드
+    methodName : function(arg1, arg2) {
+        .. 메소드 내용 ..
+    },
+
+    // API 리스너
+    API_APINAME : function(sender, params) {
+        .. API 리스너 내용 ..
+    }
+});
+}}}
+생성자는 하나만 존재해야 하지만, 속성값, 메소드, API 리스너(Listener)는 이름만 다르다면 여러 개가 존재해도 상관없다.
+
+=== 속성 ===
+진행 상태 등 각종 필요한 값을 저장해둡니다. 필요에 따라 추가하면 되나 필요하지 않다면 작성하지 않아도 괜찮다.
+
+=== 생성자 ===
+생성자 함수는 앱을 인스턴스로 만들 때 실행하는 코드를 포함한다. 주로 속성이나 상태의 초기값을 설정할 때 사용한다. 함수를 작성할 때 이름을 `init()`으로 작성하면 생성자로 사용된다.
+{{{
+/**
+ * 입력된 값을 일정 수만큼 증가시키는 앱
+ */
+var Increase = xe.createApp("Increase", {
+    // 증가시킬 값
+    plus : 0,
+
+    // 생성자
+    init : function(howMany) {
+        this.plus = howMany;
+    }
+});
+
+// Increase 앱의 인스턴스 생성
+var increase = new Increase(10);
+}}}
+
+=== 메소드 ===
+함수나 메소드는 특정 인수를 받아서 결과값을 반환하는 일련의 프로그래밍 코드를 말한다. 이 중 객체에 종속적인 함수를 특별히 메소드라고 부릅니다. JAF에서는 확장이 필요한 부분에는 API 리스너를 사용하고, 그렇지 않는 부분에는 메소드를 사용한다.
+{{{
+/**
+ * 입력된 값을 일정 수만큼 증가시키는 앱
+ */
+var Increase = xe.createApp("Increase", {
+// 증가시킬 값
+plus : 0,
+
+// 생성자
+init : function(howMany) {
+this.plus = howMany;
+}, 
+
+    // 증가할 값을 반환하는 메소드
+    getPlusValue : function() {
+        return this.plus;
+    }
+});
+
+// Increase 앱의 인스턴스 생성
+var increase = new Increase(10);
+
+// "10" 출력
+alert(increase.getPlusValue());
+}}}
+
+=== API 리스너 ===
+API 리스너(Listener)는 API 메시지를 수신할 수 있는 메소드이다. 메소드의 이름은 반드시 `API_메시지`와 같이 작성해야 한다. API 메시지를 전달하고 사용하는 방법은 [JsAPIMessage API 메시지]를 참고하면 된다.
+{{{
+/**
+ * 입력된 값을 일정 수만큼 증가시키는 앱
+ */
+var Increase = xe.createApp("Increase", {
+// 증가시킬 값
+plus : 0,
+
+// 생성자
+init : function(howMany) {
+this.plus = howMany;
+}, 
+
+    // 증가할 값을 반환하는 메소드
+    getPlusValue : function() {
+        return this.plus;
+    },
+
+    // SET_VALUE 메시지를 수신하는 API 리스너
+    API_SET_VALUE : function(sender, params) {
+        this.plus = params[0];
+    }
+});
+
+// Increase 앱의 인스턴스 생성
+var increase = new Increase(10);
+
+// "10" 출력
+alert(increase.getPlusValue());
+
+// 모든 앱에 SET_VALUE 메시지 전달
+xe.broadcast("SET_VALUE", [20]);
+
+// "20" 출력
+alert(increase.getPlusValue());
+}}}
+모든 API 리스너는 항상 두 개의 인수를 가지는데, 첫 번째 인수는 메시지를 전달한 객체이고 두 번째 인수는 메시지를 전달할 때 함께 전달한 인수 배열이다. 메시지를 전달하는 방법은 [#메시지_전달 메시지 전달]을 참고하면 된다.
+
+=== 앱 이름 구하기 ===
+앱 인스턴스를 통해 앱 이름을 구할 때는 `getName()` 메소드를 사용한다.
+{{{
+/**
+ * Sample 앱
+ */
+var Sample = xe.createApp("Sample”, {
+// 생성자
+init : function() {
+}
+});
+
+// Sample 앱의 인스턴스 생성
+var sample = new Sample ();
+
+alert(sample.getName()); // "Sample" 출력
+}}}
+
+=== 메시지 전달 ===
+메시지는 `cast()`와 `broadcast()` 메소드를 사용해 전달할 수 있다. 두 메소드에 전달하는 인수와 사용법은 동일하다.
+{{{
+앱인스턴스.cast(메시지, 메시지 인수 배열);
+}}}
+`cast()` 또는 `broadcast()` 메소드의 첫 번째 인수는 전달할 메시지 문자열이다. 예를 들어 `SET_VALUE`라는 메시지를 전달하고 싶다면 첫 번째 인수에 `"SET_VALUE"` 문자열을 전달하면 된다. 두 번째 인수는 API 리스너에 인수로 전달할 배열이다. 전달한 인수 배열은 API 리스너의 두 번째 인수로 전달된다.
+{{{
+var ExampleA = xe.createApp("ExampleA", {
+// ALERT 메시지를 수신하는 리스너
+    API_ALERT : function(sender, params) {
+        alert("A: "+params[0]);
+    }
+});
+var exampleA = new ExampleA();
+xe.registerApp(exampleA);
+
+// "A: Hello" 출력
+exampleA.cast("ALERT", ["Hello"]);
+}}}
+위 코드에서 메시지 인수 배열은 `exampleA.cast("ALERT", ["Hello"]);`의 두 번째 인수 즉 `["Hello"]` 배열이다. `cast()` 메소드를 통해 전달한 메시지 인수는 `params`에 그대로 참조된다. 즉, `params`의 값은 `["Hello"]` 이다. 따라서 `params[0]`의 값은 `"Hello"`가 되어 결과적으로 `"A: Hello"`가 출력된다.
+`cast()`와 `broadcast()`의 사용법은 동일하지만 다른 용도로 사용한다. cast는 메시지를 메시지가 출발한 앱 안에만 전달하는 반면, `broadcast()`는 모든 앱에 메시지를 전달한다. 다음 예제는 간단한 두 개의 앱을 대상으로 `cast()`와 `broadcast()`가 메시지를 어떻게 전달하는지 보여줍니다.
+{{{
+var ExampleA = xe.createApp("ExampleA", {
+// ALERT 메시지를 수신하는 리스너
+    API_ALERT : function(sender, params) {
+        alert("A: "+params[0]);
+    }
+});
+
+var ExampleB = xe.createApp("ExampleB", {
+    // ALERT 메시지를 수신하는 리스너
+API_ALERT : function(sender, params) {
+        alert("B: "+params[0]);
+    }
+});
+
+var exampleA = new ExampleA();
+var exampleB = new ExampleB();
+
+xe.registerApp(exampleA);
+xe.registerApp(exampleB);
+
+// cast 메소드는 전달한 앱에만 전달된다.
+//  "A: Hello" 출력
+exampleA.cast("ALERT", ["Hello"]);
+
+// broadcast 메소드는 모든 앱에 전달된다.
+// "A: Hello" 출력 후 "B: Hello" 출력
+exampleA.broadcast("ALERT", ["Hello"]);
+}}}
+이 코드에서 `cast()` 메소드를 통해 `ALERT` 메시지를 전달하면 메시지가 출발한 앱, 즉 `exampleA`에만 메시지가 전달된다. 반면에 `broadcast()`를 사용하면 `exampleA`는 물론, `exampleB`에도 `ALERT` 메시지가 전달된다.
+또한, `cast()` 메소드는 값을 반환하는 반면 `broadcast()`는 값을 반환하지 않는다.
+
+=== 플러그인 등록 ===
+플러그인은 `registerPlugin()` 메소드를 통해 앱에 등록할 수 있다. 플러그인을 앱에 등록하려면 등록하려는 앱 인스턴스의 `registerPlugin()` 메소드에 등록할 플러그인의 인스턴스를 인수로 전달한다.
+{{{
+앱_인스턴스.registerPlugin(플러그인_인스턴스);
+}}}
+
+
+== 플러그인 ==
+=== 플러그인 작성 ===
+플러그인은 `xe.createPlugin()` 메소드를 통해 작성할 수 있다. 기본적인 플러그인의 구조는 다음과 같습니다.
+{{{
+var Plugin = xe.createPlugin("pluginName", {
+    // 속성
+    propName : 속성값,
+
+    // 생성자
+    init : function() {
+        .. 생성자 내용 ..
+    },
+
+    // 메소드
+    methodName : function(arg1, arg2) {
+        .. 메소드 내용 ..
+    },
+
+    // API 리스너
+    API_APINAME : function(sender, params) {
+        .. API 리스너 내용 ..
+    }
+});
+}}}
+하나의 플러그인에 생성자는 한 개만 있어야 한다. 그러나, 속성값, 메소드, API 리스너는 이름만 다르다면 여러 개가 있어도 상관없다. 속성, 생성자, 메소드, API 리스너에 대한 자세한 설명은 [#앱 _작성앱 작성]을 참고하면 된다.
+
+=== 플러그인 이름 구하기 ===
+플러그인 인스턴스를 통해 앱 이름을 구할 때는 `getName()` 메소드를 사용한다.
+{{{
+/**
+ * SamplePlugin 플러그인
+ */
+var SamplePlugin = xe.createPlugin("SamplePlugin", {
+// 생성자
+init : function() {
+}
+});
+
+// SamplePlugin 플러그인의 인스턴스 생성
+var sample_plugin = new SamplePlugin();
+
+alert(sample_plugin.getName()); // ‘SamplePlugin’ 출력
+}}}
+
+=== 플러그인을 등록한 앱 구하기 ===
+플러그인을 등록한 앱의 인스턴스에는 `oApp` 속성을 통해 접근할 수 있다. 플러그인이 아직 앱에 등록되지 않았다면 `oApp`의 값은 `null`이다.
+{{{
+/**
+ * 상위 앱에 접근하는 예제 플러그인
+ */
+var App = xe.createApp("appName", {
+    dummy : 1
+});
+
+var Plugin = xe.createPlugin("pluginName", {
+getOwnerAppName : function(arg1, arg2) {
+    if (this.oApp) {
+alert(this.oApp.getName());
+        } else {
+            alert("등록되지 않은 플러그인");
+        }
+    }
+});
+
+var app = new App();
+var plugin = new Plugin();
+
+plugin.getOwnerAppName(); // ‘등록되지 않은 플러그인’ 출력
+
+app.registerPlugin(plugin);
+plugin.getOwnerAppName(); // ‘appName’ 출력
+}}}
+
+=== 메시지 전달 ===
+플러그인도 앱과 마찬가지로 `cast()` 또는 `broadcast()` 메소드를 통해 메시지를 전달한다. 첫 번째 인수에는 전달할 메시지, 두 번째 인수에는 API 리스너에 인수로 전달할 배열을 입력한다.
+{{{
+플러그인_인스턴스.cast(메시지, 메시지 인수 배열);
+}}}
+`cast()`, `broadcast()` 함수에 대한 자세한 사용 방법은 [#메시지_전달 메시지 전달]을 참고하시기 바랍니다.
