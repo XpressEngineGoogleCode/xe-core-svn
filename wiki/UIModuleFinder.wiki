@@ -1,0 +1,45 @@
+#summary Module Finder UI guideline for administrative interface
+#labels UI
+#sidebar DesignGuideTOC
+
+= Module Finder =
+
+특정 모듈을 찾아야 할 필요가 있을 때 사용하는 UI 패턴이다. 이 UI르 통해 선택할 수 있는 값은 모듈 종류, 모듈 아이디(고유 숫자)이다.
+
+== Basics ==
+모듈 검색기의 모든 컨트롤은 `modulefinder`라는 클래스를 가진 컨테이너의 하위 요소여야 한다.
+
+모듈 검색기를 사용하기 위해 필요한 규칙은 다음과 같다.
+  # 모든 컨트롤은 `modulefinder`라는 클래스를 가진 요소의 하위 요소이다.
+  # 가상 사이트를 검색하는 버튼은 `tgAnchor` 및 `findsite`라는 클래스를 가지는 앵커 요소(&lt;a&gt;)이다.
+  # 가상 사이트를 검색하기 위해 도메인을 입력하는 텍스트 입력 상자는 반드시 가상 사이트 검색 앵커 요소 바로 앞에 위치한 형제 노드여야 한다.
+  # 가상 사이트 검색 결과는 `tgContent` 및 `suggestion`이라는 클래스를 가진 요소의 자식 요소인 `ul`에 표시된다.
+  # 가상 사이트를 선택하면 해당 가상 사이트에 속한 모듈의 종류와 모듈 목록을 표시한다. 모듈의 종류는 `moduleList`라는 클래스를 가진 `select` 요소에 표시되고, 모듈 목록은 `moduleIdList`라는 클래스를 가진 `select` 요소에 표시된다.
+
+다음은 위 규칙을 만족하는 모듈 검색기의 예시이다.
+{{{
+<ul>
+<li class="modulefinder">
+    <p class="q">방명록 데이터를 어디로 옮길까요?</p>
+    <div class="a">
+        <input type="text" name="site_keyword" /> <a href="#suggestion3" class="tgAnchor findsite">사이트 찾기</a>
+        <div id="suggestion3" class="tgContent suggestion">
+            <ul>
+            </ul>
+        </div>
+    </div>
+    <p class="a">
+        <select class="moduleList"></select>
+    </p>
+    <p class="a">
+        <select class="moduleIdList"></select>
+    </p>
+</li>
+</ul>
+}}}
+
+위 코드를 작성한 후 웹 브라우저에서 열고 사이트 검색을 실행하면 다음과 같은 화면을 볼 수 있다.
+
+http://xe-core.googlecode.com/svn/wiki/img/AdminUIModuleFinderExample.png
+
+사이트 검색을 실행하기 전에는 모듈 종류와 모듈 목록이 화면에 나타나지 않을 수도 있다.
