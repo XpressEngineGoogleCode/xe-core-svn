@@ -1,0 +1,30 @@
+#summary Multi Language Editor UI guideline for administrative interface
+#labels UI
+#sidebar DesignGuideTOC
+
+= Multi Language Editor =
+
+사용자 정의 다국어를 선택하거나 추가 또는 수정할 때 사용할 수 있는 UI 패턴이다.
+
+http://xe-core.googlecode.com/svn/wiki/img/AdminuiPaginationExample.png
+
+== Basics ==
+다국어 편집기 UI는 다음 템플릿 코드를 수정하여 사용할 수 있다.
+{{{
+<div class="multiLangEdit">
+    <input type="hidden" class="vLang" />
+    <input type="text" class="vLang" />
+    <div class="suggestion">
+        <ul></ul>
+    </div>
+    <div id="langEdit" class="langEdit tgContent">
+        <ul>
+            <li class="ko"><label for="ko_var1">Korean</label> <input type="text" /></li>
+            <li class="en"><label for="en_var1">English</label> <input type="text" /></li>
+            ...
+        </ul>
+    </div>
+    <span class="desc"><a href="#langEdit" class="editUserLang tgAnchor">Multi-language</a></span>
+</div>
+}}}
+가장 상위에 있는 `&lt;div&gt;` 요소는 클래스 이름만 그대로 유지한다면 다른 요소로 대체해도 관계없다.
