@@ -1,0 +1,78 @@
+#summary File Box UI guideline for administrative interface
+#labels UI
+#sidebar DesignGuideTOC
+
+= File Box =
+
+위젯 등에 필요한 그림이 등록되어 있는 파일 박스의 그림 목록을 보고 선택할 수 있는 UI이다.
+
+== Basics ==
+파일 박스를 표시하기 위한 앵커 요소는 클래스 속성에 모달 윈도우를 띄우기 위한 `modalAnchor`와 파일 박스 앵커를 나타내는 `filebox` 클래스 이름을 *반드시* 포함해야 한다. 또한 파일 박스가 표시될 모달창의 요소 아이디를 가리켜야 한다.
+
+{{{
+<form class="form">
+	<ul>
+		<li>
+			<p class="q">배경 이미지</p>
+			<p class="a">
+				<input type="hidden" name="background_image" />
+				<a href="#modalFilebox" class="modalAnchor filebox">선택</a>
+			</p>
+		</li>
+	</ul>
+</form>
+}}}
+
+http://xe-core.googlecode.com/svn/wiki/img/AdminUIFileBoxExample.png
+
+파일 박스를 나타낼 모달 윈도우의 자식요소는 `portlet` 클래스 이름을 *반드시* 포함해야 한다. 또한 파일 박스 목록을 나타내기 위해 `filebox_list` 클래스 이름을 가진 요소를 *반드시* 포함해야 한다.
+
+그외의 모달 윈도우 부분은 자유롭게 사용하면 된다.
+
+{{{
+<div class="modal" id="modalFilebox">
+	<div class="fg portlet">
+		<h2 class="h2">FileBox</h2>
+		<div class="filebox_list"></div>
+	</div>
+</div>
+}}}
+
+파일 박스 목록의 그림을 나타내는 img 요소는 `filebox_item` 클래스를 가지고 있다. 아래와 같이 스타일 시트를 사용하여 그림을 자유롭게 꾸밀 수 있다.
+
+{{{
+<style type="text/css">
+	.filebox_item { border: 1px solid #ccc!important; padding: 5px; max-height: 200px; }
+</style>
+}}}
+
+http://xe-core.googlecode.com/svn/wiki/img/AdminUIFileBoxExample2.png
+
+파일 박스의 그림 중 하나를 선택하면 앵커 요소의 `filebox.seleted` 이벤트가 실행된다. 이 이벤트의 콜백 함수의 인자로 선택된 그림의 주소가 전달된다. 이 주소를 이용하여 알맞게 사용하면 된다.
+
+아래는 이벤트 콜백 함수의 예이다. 이 함수에서는 선택된 그림를 표시해주고 그림의 주소를 input 요소의 값으로 지정한다.
+
+{{{
+jQuery(document).ready(function($){
+	$('.filebox').bind('filebox.selected', function(e, src){
+		$(this)
+			.siblings()
+			.filter(function(){
+				return this.nodeName.toLowerCase() != 'input';
+			})
+			.remove();
+
+		$(this).before('<img src="'+src+'" alt=""> <button class="filebox_del text" type="button">삭제</button>');
+
+		$(this).siblings('input').val(src);
+
+		$('.filebox_del').bind('click', function(){
+			$(this).siblings('input').val('');
+			$(this).prev('img').remove();
+			$(this).remove();
+		});
+	});
+});
+}}}
+
+http://xe-core.googlecode.com/svn/wiki/img/AdminUIFileBoxExample3.png
