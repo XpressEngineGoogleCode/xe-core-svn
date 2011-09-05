@@ -413,7 +413,7 @@
      * @brief YmdHis의 시간 형식을 지금으로 부터 몇분/몇시간전, 1일 이상 차이나면 format string return
      **/
     function getTimeGap($date, $format = 'Y.m.d') {
-        $gap = time() - ztime($date);
+        $gap = time() - zgap() - ztime($date);
 
         $lang_time_gap = Context::getLang('time_gap');
         if($gap<60) $buff = sprintf($lang_time_gap['min'], (int)($gap / 60)+1);
@@ -944,7 +944,7 @@
 		$logged_info = Context::get('logged_info');
 
 		if($writer_member_srl != $logged_info->member_srl && ($logged_info->is_admin == "Y" || $oModuleModel->isSiteAdmin($logged_info)) )
-		{   
+		{
 			if($writer_member_srl)
 			{
 				$oMemberModel =& getModel('member');
@@ -955,9 +955,9 @@
 				}
 			}
 			$security_msg = "<div style='border: 1px solid #DDD; background: #FAFAFA; text-align:center; margin: 1em 0;'><p style='margin: 1em;'>".Context::getLang('security_warning_embed')."</p></div>";
-			$content = preg_replace('/<object[^>]+>(.*?<\/object>)?/is', $security_msg, $content);
-			$content = preg_replace('/<embed[^>]+>(\s*<\/embed>)?/is', $security_msg, $content);
-			$content = preg_replace('/<img[^>]+editor_component="multimedia_link"[^>]*>(\s*<\/img>)?/is', $security_msg, $content);
+			$content = preg_replace('/<object[^>]+>?(.*?<\/object>)?/is', $security_msg, $content);
+			$content = preg_replace('/<embed[^>]+>?(\s*<\/embed>)?/is', $security_msg, $content);
+			$content = preg_replace('/<img[^>]+editor_component="multimedia_link"[^>]*>?(\s*<\/img>)?/is', $security_msg, $content);
 		}
 
 		return;
