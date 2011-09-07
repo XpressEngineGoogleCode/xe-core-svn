@@ -1,6 +1,6 @@
   * [AdminUIGuideline AdminUI Guideline]
     * [UIToggleCheckbox Toggle Checkbox]
-    * [UIToggleContent Toggle Contents]
+    * [UIContentToggler Content Toggler]
     * [UIModalWindow Modal Window]
     * [UIPagination Pagination]
     * [UISortableTable Sortable Table]
