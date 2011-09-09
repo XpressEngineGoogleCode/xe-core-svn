@@ -50,10 +50,12 @@
 `div#langEdit` 요소는 페이지에서 한 번만 입력하면 되며, 다국어 편집 링크 `a.editUserLang.tgAnchor`는 `href` 속성을 사용해 `#langEdit` 요소를 가리켜야 한다.
 
 `input.vLang` 요소의 첫 번째 요소에는 다국어의 고유한 이름(`name`)이, 두 번째 요소에는 현재 사용 중인 언어의 텍스트값(`value`)이 저장된다. 예를 들어, DB에 다음과 같이 저장된 다국어 텍스트가 있다고 가정해보자.
-|| name || lang_code || value ||
+
+|| *name* || *lang_code* || *value* ||
 || userlang1234 || en || Hello ||
 || userlang1234 || ko || 안녕하세요 ||
 || userlang1234 || jp || こんにちは ||
+
 사용자 환경의 사용중인 언어가 한국어(`ko`)일 때 `userlang1234` 다국어 텍스트를 적용한 `input.vLang`의 값은 다음과 동등하다.
 {{{
 <div class="multiLangEdit">
