@@ -10,25 +10,54 @@
 다국어 편집기 UI는 다음 템플릿 코드를 수정하여 사용할 수 있다.
 {{{
 <div class="multiLangEdit">
-    <input type="hidden" class="vLang" />
-    <input type="text" class="vLang" />
-    <div class="suggestion">
-        <ul></ul>
+    <input type="hidden" class="vLang" /><input type="text" class="vLang" />
+    <span class="desc"><a href="#langEdit" class="editUserLang tgAnchor">Edit Multilingual text</a></span>
+</div>
+...
+...
+<!-- Multilingual editor layer -->
+<div id="langEdit" class="langEdit tgContent">
+    <ul class="langList"></ul>
+    <div id="langInput">
+        <h2>다국어 <strong>수정</strong> | <a href="#langEdit">추가</a></h2>
     </div>
-    <div id="langEdit" class="langEdit tgContent">
-        <ul>
-            <li class="ko"><label for="ko_var1">Korean</label> <input type="text" /></li>
-            <li class="en"><label for="en_var1">English</label> <input type="text" /></li>
-            ...
-        </ul>
+    <ul>
+        {@
+            /* move current language to the top */
+            $a = array($lang_type=>$lang_supported[$lang_type]);
+            unset($lang_supported[$lang_type]);
+            $lang_supported = array_merge($a, $lang_supported);
+        }
+        <li loop="$lang_supported=>$code,$name" class="{$code}"><label for="{$code}_var1">{$name}</label> <input type="text" value="" id="{$code}_var1" /></li>
+    </ul>
+    <div class="action">
+        <div class="btnArea">
+            <span class="btn small"><input type="submit" value="사용|저장 후 사용" /></span>
+        </div>
+        <p><a href="{getUrl('act','dispModuleAdminLangcode')}">다국어 텍스트 관리</a></p>
     </div>
-    <span class="desc"><a href="#langEdit" class="editUserLang tgAnchor">Multi-language</a></span>
 </div>
 }}}
-가장 상위에 있는 `div` 요소는 클래스 이름만 그대로 유지한다면 다른 요소로 대체해도 관계없다. 반드시 지켜야 하는 규칙은 다음과 같다.
-  * 최상위 객체는 `multiLangEdit` 클래스를 가지고 있어야 한다.
-  * 편집기 UI에는 반드시 `vLang` 클래스를 가진 입력 요소가 2개 있어야 하며, 그 중 첫 번째 요소는 다국어 언어의 고유키를 저장하고 두 번째 요소는 다국어 언어의 문자열을 저장한다.
-  * 자동 완성 결과는 `suggestion`이라는 클래스를 가진 요소의 자식인 `ul` 요소에 목록으로 표시된다.
-  * `a.editUserLang.tgAnchor` 요소를 클릭하면 `href` 속성이 가리키는 요소를 화면에 표시한다.
-  * 다국어 문자열은 `langEdit tgContent`라는 클래스를 가진 요소에서 편집한다. 이 요소 하위에는 `ul` 요소가 있는데 `ul` 요소의 자식 요소인 `li`는 언어 코드를 클래스로 가진다. 예를 들어, 영어라면 `en` 한국어라면 `ko`를 클래스로 가진다.
-  * 다국어 편집 레이어를 표시할 때 `li` 요소 아래에 있는 `input` 요소에 자동으로 값이 채워진다.
+
+`div.multiLangEdit` 요소는 클래스 이름만 그대로 유지한다면 다른 요소로 대체해도 상관없다. 예를 들어, `div`요소 대신 `td`를 다음과 같이 사용할 수 있다.
+{{{
+<td class="multiLangEdit">
+    <input type="hidden" class="vLang" /><input type="text" class="vLang" />
+    <span class="desc"><a href="#langEdit" class="editUserLang tgAnchor">Edit Multilingual text</a></span>
+</td>
+}}}
+
+`div#langEdit` 요소는 페이지에서 한 번만 입력하면 되며, 다국어 편집 링크 `a.editUserLang.tgAnchor`는 `href` 속성을 사용해 `#langEdit` 요소를 가리켜야 한다.
+
+`input.vLang` 요소의 첫 번째 요소에는 다국어의 고유한 이름(`name`)이, 두 번째 요소에는 현재 사용 중인 언어의 텍스트값(`value`)이 저장된다. 예를 들어, DB에 다음과 같이 저장된 다국어 텍스트가 있다고 가정해보자.
+|| name || lang_code || value ||
+|| userlang1234 || en || Hello ||
+|| userlang1234 || ko || 안녕하세요 ||
+|| userlang1234 || jp || こんにちは ||
+사용자 환경의 사용중인 언어가 한국어(`ko`)일 때 `userlang1234` 다국어 텍스트를 적용한 `input.vLang`의 값은 다음과 동등하다.
+{{{
+<div class="multiLangEdit">
+    <input type="hidden" class="vLang" value="$user_lang-&gt;userlang1234" /><input type="text" class="vLang" value="안녕하세요" />
+    ....
+</div>
+}}}
