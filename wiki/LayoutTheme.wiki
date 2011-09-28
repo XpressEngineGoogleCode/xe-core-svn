@@ -43,9 +43,6 @@ Create an info.xml by using the following structure.
 		<skinInfo>
 			<directory path="./themes/{{{[title of theme]}}}/modules/board" />
 		</skinInfo>
-		<skinInfo>
-			<directory path="./widgets/loggin_info/skins/xe_loggin_form" />
-		</skinInfo>
 	</skinInfos>
 </theme>
 <!-- The file path ./ means /XE installation path. -->
@@ -78,4 +75,3 @@ If the layout instance whose name is the same as the theme-title already exists,
 You can manage the automatically created theme layout by using the Layout Management menu.
 ===Module skins===
 You can select the skin folders included in the theme as well as those installed in the modules.
-
