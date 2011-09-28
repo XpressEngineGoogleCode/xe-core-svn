@@ -44,9 +44,6 @@ XE스킨 제작자들은 제작한 레이아웃과 모듈 스킨을 묶어 함�
 		<skinInfo>
 			<directory path="./themes/[테마이름]/modules/board" />
 		</skinInfo>
-		<skinInfo>
-			<directory path="./widgets/loggin_info/skins/xe_loggin_form" />
-		</skinInfo>
 	</skinInfos>
 </theme>
 <!--파일경로 ./ 는 /XE설치경로 를 의미합니다.-->
