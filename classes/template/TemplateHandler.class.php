@@ -2,19 +2,19 @@
     /**
      * @class TemplateHandler
      * @author NHN (developers@xpressengine.com)
-     * @brief template compiler 
+     * @brief template compiler
      * @version 0.1
-     * @remarks It compiles template file by using regular expression into php 
-     *          code, and XE caches compiled code for further uses 
+     * @remarks It compiles template file by using regular expression into php
+     *          code, and XE caches compiled code for further uses
      **/
 
     class TemplateHandler extends Handler {
 
         var $compiled_path = './files/cache/template_compiled/'; ///< path of compiled caches files
 
-        var $path = null; ///< target directory 
+        var $path = null; ///< target directory
         var $filename = null; ///< target filename
-        var $file = null; ///< target file (fullpath) 
+        var $file = null; ///< target file (fullpath)
 		var $xe_path = null;  ///< XpressEngine base path
 		var $web_path = null; ///< tpl file web path
 		var $compiled_file = null; ///< tpl file web path
@@ -42,11 +42,11 @@
 		 * @brief set variables for template compile
 		 **/
 		function init($tpl_path, $tpl_filename, $tpl_file) {
-            // verify arguments 
+            // verify arguments
             if(substr($tpl_path,-1)!='/') $tpl_path .= '/';
 			if(!file_exists($tpl_path.$tpl_filename)&&file_exists($tpl_path.$tpl_filename.'.html')) $tpl_filename .= '.html';
 
-            // create tpl_file variable 
+            // create tpl_file variable
             if(!$tpl_file) $tpl_file = $tpl_path.$tpl_filename;
 
 			// set template file infos.
@@ -60,7 +60,7 @@
 			$this->web_path = $this->xe_path.str_replace(_XE_PATH_,'',$this->path);
 
 			// get compiled file name
-			$this->compiled_file = sprintf('%s%s.compiled.php',$this->compiled_path, md5($this->file));
+			$this->compiled_file = sprintf('%s%s.compiled.php',$this->compiled_path, md5($this->file . __ZBXE_VERSION__));
 
 			// compare various file's modified time for check changed
 			$this->handler_mtime = filemtime(_XE_PATH_.'classes/template/TemplateHandler.class.php');
@@ -69,11 +69,11 @@
 		}
 
         /**
-         * @brief compiles specified tpl file and execution result in Context into resultant content 
+         * @brief compiles specified tpl file and execution result in Context into resultant content
          * @param[in] $tpl_path path of the directory containing target template file
          * @param[in] $tpl_filename target template file's name
-         * @param[in] $tpl_file if specified use it as template file's full path 
-         * @return Returns compiled result in case of success, NULL otherwise 
+         * @param[in] $tpl_file if specified use it as template file's full path
+         * @return Returns compiled result in case of success, NULL otherwise
          */
         function compile($tpl_path, $tpl_filename, $tpl_file = '') {
             // store the starting time for debug information
@@ -136,46 +136,46 @@
         }
 
         /**
-         * @brief compile a template file specified in $tpl_file and 
+         * @brief compile a template file specified in $tpl_file and
          * @pre files specified by $tpl_file exists.
          * @param[in] $tpl_file path of tpl file
          * @param[in] $compiled_tpl_file if specified, write compiled result into the file
-         * @return compiled result in case of success or NULL in case of error 
+         * @return compiled result in case of success or NULL in case of error
          **/
         function parse() {
 			if(!file_exists($this->file)) return;
 
-            // read tpl file 
+            // read tpl file
             $buff = FileHandler::readFile($this->file);
 
 			// replace value of src in img/input/script tag
 			$buff = preg_replace_callback('/<(img|input|script)([^>]*)src="([^"]*?)"/is', array($this, '_replacePath'), $buff);
 
-			// loop 템플릿 문법을 변환
+			// replace the loop template syntax
 			$buff = $this->_replaceLoop($buff);
 
-			// cond 템플릿 문법을 변환
+			// |replace the cond template syntax
 			$buff = $this->_replaceCond($buff);
 
-			// |cond 템플릿 문법을 변환
+			// replace the cond template syntax
 			$buff = preg_replace_callback("/<\/?(\w+)((\s+\w+(\s*=\s*(?:\".*?\"|'.*?'|[^'\">\s]+))?)+\s*|\s*)\/?>/i", array($this, '_replacePipeCond'), $buff);
 
-			// include 태그의 변환
+			// replace the include tags
 			$buff = preg_replace_callback('!<include ([^>]+)>!is', array($this, '_replaceInclude'), $buff);
 
-			// unload/ load 태그의 변환
+			// replace unload/load tags
 			$buff = preg_replace_callback('!<(unload|load) ([^>]+)>!is', array($this, '_replaceLoad'), $buff);
 
-			// 가상 태그인 block의 변환
+			// replace block which is a virtual tag
 			$buff = preg_replace('/<block([ ]*)>|<\/block>/is','',$buff);
 
             // replace include <!--#include($filename)-->
             $buff = preg_replace_callback('!<\!--#include\(([^\)]*?)\)-->!is', array($this, '_compileIncludeToCode'), $buff);
 
-            // replace <!--@, --> 
+            // replace <!--@, -->
             $buff = preg_replace_callback('!<\!--@(.*?)-->!is', array($this, '_compileFuncToCode'), $buff);
 
-            // remove comments <!--// ~ --> 
+            // remove comments <!--// ~ -->
             $buff = preg_replace('!(\n?)( *?)<\!--//(.*?)-->!is', '', $buff);
 
             // import xml filter/ css/ js/ files <!--%import("filename"[,optimized=true|false][,media="media"][,targetie="lt IE 6|IE 7|gte IE 8|..."])--> (media is applied to only css)
@@ -187,10 +187,13 @@
             // javascript plugin import
             $buff = preg_replace_callback('!<\!--%load_js_plugin\(\"([^\"]*?)\"\)-->!is', array($this, '_compileLoadJavascriptPlugin'), $buff);
 
+			// form auto generation
+			$buff = preg_replace_callback('/(<form(?:<\?php.+?\?>|[^<>]+)*?>)(.*?)(<\/form>)/is', array($this, '_compileFormAuthGeneration'), $buff);
+
             // replace variables
             $buff = preg_replace_callback('/\{[^@^ ]([^\{\}\n]+)\}/i', array($this, '_compileVarToContext'), $buff);
 
-			// PHP 변수형의 변환 ($문자등을 공유 context로 변환)
+			// replace PHP variable types(converts characters like $ into shared context)
 			$buff = $this->_replaceVarInPHP($buff);
 
             // replace parts not displaying results
@@ -200,8 +203,61 @@
             $this->buff = '<?php if(!defined("__ZBXE__")) exit();?>'.$buff;
         }
 
+		/**
+		 * @brief 1. remove ruleset from form tag
+		 * 2. add hidden tag with ruleset value
+		 * 3. if empty default hidden tag, generate hidden tag (ex:mid, vid, act...)
+		 * 4. generate return url, return url use in server side validator
+		 **/
+		function _compileFormAuthGeneration($matches)
+		{
+			// form ruleset attribute move to hidden tag
+			if($matches[1])
+			{
+				preg_match('/ruleset="([^"]*?)"/is', $matches[1], $m);
+				if($m[0])
+				{
+					$matches[1] = preg_replace('/'.$m[0].'/i', '', $matches[1]);
+					$matches[2] = '<input type="hidden" name="ruleset" value="'.$m[1].'" />'.$matches[2];
+
+					if (strpos($m[1],'@') !== false){
+						$path = str_replace('@', '', $m[1]);
+						$validator   = new Validator("./files/ruleset/{$path}.xml");
+						$validator->setCacheDir('files/cache');
+						$matches[1]  = '<?php Context::addJsFile("'.$validator->getJsPath().'") ?'.'>'.$matches[1];
+					}else if(preg_match('@(?:^|\.?/)(modules/[\w-]+)@', $this->path, $mm)) {
+						$module_path = $mm[1];
+						$validator   = new Validator("{$module_path}/ruleset/{$m[1]}.xml");
+						$validator->setCacheDir('files/cache');
+						$matches[1]  = '<?php Context::addJsFile("'.$validator->getJsPath().'") ?'.'>'.$matches[1];
+					}
+				}
+			}
+
+			// if not exists default hidden tag, generate hidden tag
+			preg_match_all('/<input[^>]* name="(act|mid|vid)"/is', $matches[2], $m2);
+			$checkVar = array('act', 'mid', 'vid');
+			$resultArray = array_diff($checkVar, $m2[1]);
+			if(is_array($resultArray))
+			{
+				$generatedHidden = '';
+				foreach($resultArray AS $key=>$value)
+				{
+					$generatedHidden .= '<input type="hidden" name="'.$value.'" value="{$'.$value.'}">';
+				}
+				$matches[2] = $generatedHidden.$matches[2];
+			}
+
+			// return url generate
+			preg_match('/<input[^>]*name="error_return_url"[^>]*>/is', $matches[2], $m3);
+			if(!$m3[0]) $matches[2] = '<input type="hidden" name="error_return_url" value="{getRequestUriByServerEnviroment()}" />'.$matches[2];
+
+			$matches[0] = '';
+			return implode($matches);
+		}
+
         /**
-         * @brief fetch using ob_* function 
+         * @brief fetch using ob_* function
          * @param[in] $compiled_tpl_file path of compiled template file
          * @param[in] $buff if buff is not null, eval it instead of including compiled template file
          * @param[in] $tpl_path set context's tpl path
@@ -213,7 +269,7 @@
             $__Context = &$GLOBALS['__Context__'];
             $__Context->tpl_path = $this->path;
 
-            if($_SESSION['is_logged']) $__Context->logged_info = $_SESSION['logged_info'];
+            if($_SESSION['is_logged']) $__Context->logged_info = Context::get('logged_info');
 
             ob_start();
 			$eval_str = "?>".$this->buff;
@@ -227,7 +283,7 @@
          * @param[in] $matches match
          * @return changed result
          **/
-		function _replacePath($matches) 
+		function _replacePath($matches)
 		{
 			preg_match_all('/src="([^"]*?)"/is', $matches[0], $m);
 			for($i=0,$c=count($m[0]);$i<$c;$i++) {
@@ -235,7 +291,7 @@
 				if(substr($path,0,1)=='/' || substr($path,0,1)=='{' || strpos($path,'://')!==false) continue;
 				if(substr($path,0,2)=='./') $path = substr($path,2);
 				$target = $this->web_path.$path;
-				while(strpos($target,'/../')!==false) 
+				while(strpos($target,'/../')!==false)
 				{
 					$target = preg_replace('/\/([^\/]+)\/\.\.\//','/',$target);
 				}
@@ -246,7 +302,7 @@
 		}
 
 		/**
-		 * @brief loop 문법의 변환
+		 * @brief replace loop syntax
 		 **/
 		function _replaceLoop($buff)
 		{
@@ -258,18 +314,11 @@
 				$pre_pos = strrpos($pre, '<');
 
 				preg_match('/^ loop="([^"]+)"/i',$next,$m);
-				$orgTag = $tag = substr($next,0,strlen($m[0]));
+				$tag = substr($next,0,strlen($m[0]));
 				$next = substr($next,strlen($m[0]));
 				$next_pos = strpos($next, '<');
 
 				$tag = substr($pre, $pre_pos). $tag. substr($next, 0, $next_pos);
-				// search end tag
-				/* tag as '<br cond="condition"/>blahblah' to be '<br cond="condition"/>' */
-				preg_match('/\/>(\w+)/',$tag, $mm);
-				if ($mm[1]){
-					$next_pos = strpos($next, $mm[1]);
-					$tag = substr($pre, $pre_pos). $orgTag. substr($next, 0, $next_pos);
-				}
 				$pre = substr($pre, 0, $pre_pos);
 				$next  = substr($next, $next_pos);
 
@@ -292,30 +341,21 @@
 					if(false!== $fpos = strpos($loop,'=>'))
 					{
 						$target = trim(substr($loop,0,$fpos));
-						if(substr($target, 0, 1) == '$') $target = sprintf('$__Context->%s ', substr($target, 1));
-
 						$vars = trim(substr($loop,$fpos+2));
 						if(false===strpos($vars,','))
 						{
-							if(substr($vars, 0, 1) == '$') $vars = sprintf('$__Context->%s ', substr($vars, 1));
-
 							$tag_head .= '<?php if(count('.$target.')) { foreach('.$target.' as '.$vars.') { ?>';
 							$tag_tail .= '<?php } } ?>';
 						}
 						else
 						{
 							$t = explode(',',$vars);
-							foreach($t as $key => $val){
-								if(substr(trim($val), 0, 1) == '$') $val = sprintf('$__Context->%s ', substr(trim($val), 1));
-								$t[$key] = trim($val);
-							}
 							$tag_head .= '<?php if(count('.$target.')) { foreach('.$target.' as '.trim($t[0]).' => '.trim($t[1]).') { ?>';
 							$tag_tail .= '<?php } } ?>';
 						}
 					}
 					elseif(false!==strpos($loop,';'))
 					{
-						$loop = preg_replace('/\$(\w+)/', '$__Context->$1', $loop);
 						$tag_head .= '<?php for('.$loop.'){ ?>';
 						$tag_tail .= '<?php } ?>';
 					}
@@ -330,7 +370,7 @@
 					}
 				}
 
-				if(substr(trim($tag),-2)!='/>') 
+				if(substr(trim($tag),-2)!='/>')
 				{
 					while(false !== $close_pos = strpos($next, '</'.$tag_name))
 					{
@@ -347,16 +387,14 @@
 		}
 
 		/**
-		 * @brief pipe cond, |cond= 의 변환
+		 * @brief replace pipe cond and |cond=
 		 **/
 		function _replacePipeCond($matches)
 		{
 			if(strpos($matches[0],'|cond')!==false) {
 				while(strpos($matches[0],'|cond="')!==false) {
-					if(preg_match('/ (\w+)=\"([^\"]+)\"\|cond=\"([^\"]+)\"/is', $matches[0], $m)){
-						$m[3] = preg_replace('/^\$(\w+)/', '$__Context->$1', $m[3]);
+					if(preg_match('/ (\w+)=\"([^\"]+)\"\|cond=\"([^\"]+)\"/is', $matches[0], $m))
 						$matches[0] = str_replace($m[0], sprintf('<?php if(%s) {?> %s="%s"<?php }?>', $m[3], $m[1], $m[2]), $matches[0]);
-					}
 				}
 			}
 
@@ -364,7 +402,7 @@
 		}
 
 		/**
-		 * @brief cond 문법의 변환
+		 * @brief replace cond syntax
 		 **/
 		function _replaceCond($buff)
 		{
@@ -375,19 +413,18 @@
 
 				$pre_pos = strrpos($pre, '<');
 
-				preg_match('/<(\/|[a-z])/i',$next,$m);
+				$isClosedTagUse = true;
+				preg_match('/<(\/|[!DOCTYPE]|[a-z])/i',$next,$m);
+				// if not use closed tag, find simple closed tag
+				if(!$m[0]) {
+					$isClosedTagUse = false;
+					preg_match('/[^->]\/?>/',$next,$m);
+				}
 				if(!$m[0]) return $buff;
-				$next_pos = strpos($next, $m[0]);
+				if($isClosedTagUse) $next_pos = strpos($next, $m[0]);
+				else $next_pos = strpos($next, $m[0])+2;
 
 				$tag = substr($pre, $pre_pos). substr($next, 0, $next_pos);
-
-				// search end tag
-				/* tag as '<br cond="condition"/>blahblah' to be '<br cond="condition"/>' */
-				preg_match('/\/>(\w+)/',$tag, $mm);
-				if ($mm[1]){
-					$next_pos = strpos($next, $mm[1]);
-					$tag = substr($pre, $pre_pos). substr($next, 0, $next_pos);
-				}
 				$pre = substr($pre, 0, $pre_pos);
 				$next  = substr($next, $next_pos);
 				$tag_name = trim(substr($tag,1,strpos($tag,' ')));
@@ -397,11 +434,10 @@
 				{
 					for($i=0,$c=count($m[0]);$i<$c;$i++)
 					{
-						$m[1][$i] = preg_replace('/^\$(\w+)/', '$__Context->$1', $m[1][$i]);
 						$tag_head .= '<?php if('.$m[1][$i].') { ?>';
 						$tag_tail .= '<?php } ?>';
 					}
-				} 
+				}
 
 				if(!preg_match('/ cond="([^"]+)"/is',$tag)) {
 					print "<strong>Invalid XpressEngine Template Syntax</strong><br/>";
@@ -411,11 +447,11 @@
 				}
 
 				$tag = preg_replace('/ cond="([^"]+)"/is','', $tag);
-				if(substr(trim($tag),-2)=='/>') 
+				if(substr(trim($tag),-2)=='/>')
 				{
 					$buff = $pre.$tag_head.$tag.$tag_tail.$next;
-				} 
-				else 
+				}
+				else
 				{
 					while(false !== $close_pos = strpos($next, '</'.$tag_name))
 					{
@@ -428,14 +464,14 @@
 					$buff = $pre.$tag_head.$tag.$tag_tail.$next;
 				}
 			}
-			
+
 			return $buff;
 		}
 
 		/**
-		 * @brief 다른 template파일을 include하는 include tag의 변환
+		 * @brief replace include tags which include other template files
 		 **/
-		function _replaceInclude($matches) 
+		function _replaceInclude($matches)
 		{
 			if(!preg_match('/target=\"([^\"]+)\"/is',$matches[0], $m)) {
 				print '"target" attribute missing in "'.htmlspecialchars($matches[0]);
@@ -469,7 +505,7 @@
 		}
 
 		/**
-		 * @brief load 태그의 변환
+		 * @brief replace load tags
 		 **/
 		function _replaceLoad($matches) {
 			$output = $matches[0];
@@ -488,10 +524,10 @@
 			$base_path = $this->path;
 
 			$target = $attrs['target'];
-            if(!preg_match('/^(http|https)/i',$target)) 
+            if(!preg_match('/^(http|https)/i',$target))
             {
                 if(substr($target,0,2)=='./') $target = substr($target,2);
-                if(substr($target,0,1)!='/') $target = $web_path.$target;
+                //if(substr($target,0,1)!='/') $target = $web_path.$target;
             }
 
 			if(!$attrs['index']) $attrs['index'] = 'null';
@@ -505,11 +541,9 @@
 
 			// otherwise try to load xml, css, js file
 			} else {
-				if(substr($target,0,1)!='/' && !preg_match('/^(http|https)/i',$target)) $source_filename = $base_path.$target;
+				if(substr($target,0,1)!='/') $source_filename = $base_path.$target;
 				else $source_filename = $target;
-
-				if(!preg_match('/^(http|https)/i',$source_filename)) 
-					$source_filename = str_replace(array('/./','//'),'/',$source_filename);
+				$source_filename = str_replace(array('/./','//'),'/',$source_filename);
 
 				// get filename and path
 				$tmp_arr = explode("/",$source_filename);
@@ -521,13 +555,22 @@
 				$tmp_arr = explode(".",$filename);
 				$ext = strtolower(array_pop($tmp_arr));
 
+				$output = '<?php '.
+							'$_load_filename = \'' . preg_replace('/\{([^@^ ][^\{\}\n]+)\}/i', "'.\\1.'", $filename) . '\';'.
+							'$_load_source_filename = \'' . preg_replace('/\{([^@^ ][^\{\}\n]+)\}/i', "'.\\1.'", $source_filename) . '\';';
+				foreach($attrs as $key => $val)
+				{
+					$output .= '$_load_attrs[\''.$key.'\'] = \'' . preg_replace('/\{([^@^ ][^\{\}\n]+)\}/i', "'.\\1.'", $val) . '\';';
+				}
+				$output .= '?>';
+
 				// according to ext., import the file
 				switch($ext) {
 					// xml js filter
 					case 'xml' :
 							if(preg_match('/^(http|https)/i',$source_filename)) return;
 							// create an instance of XmlJSFilter class, then create js and handle Context::addJsFile
-							$output = sprintf(
+							$output .= sprintf(
 								'<?php%s'.
 								'require_once("./classes/xml/XmlJsFilter.class.php");%s'.
 								'$oXmlFilter = new XmlJSFilter("%s","%s");%s'.
@@ -545,30 +588,31 @@
 					// css file
 					case 'css' :
 							if($type == 'unload') {
-								$output = '<?php Context::unloadCSSFile("'.$source_filename.'"); ?>';
+								$output = sprintf("<?php Context::unloadFile('%s', '%s', '%s'); ?>", $source_filename, $attrs['targetie'], $attrs['media']);
 							} else {
 								$meta_file = $source_filename;
-								$output = '<?php Context::addCSSFile("'.$source_filename.'",false,"'.$attrs['media'].'","'.$attrs['targetie'].'",'.$attrs['index'].'); ?>';
+								$output .= '<?php Context::loadFile(array($_load_source_filename, $_load_attrs[\'media\'], $_load_attrs[\'targetie\'], $_load_attrs[\'index\']), $_load_attrs[\'usecdn\'], $_load_attrs[\'cdnprefix\'], $_load_attrs[\'cdnversion\']);?>';
 							}
 						break;
 					// js file
 					case 'js' :
 							if($type == 'unload') {
-								$output = '<?php Context::unloadJsFile("'.$source_filename.'"); ?>';
+								$output = sprintf("<?php Context::unloadFile('%s', '%s'); ?>", $source_filename, $attrs['targetie']);
 							} else {
 								$meta_file = $source_filename;
-								$output = '<?php Context::addJsFile("'.$source_filename.'",false,"'.$attrs['targetie'].'",'.$attrs['index'].',"'.$attrs['type'].'"); ?>';
+								$output .= '<?php Context::loadFile(array($_load_source_filename, $_load_attrs[\'type\'], $_load_attrs[\'targetie\'], $_load_attrs[\'index\']), $_load_attrs[\'usecdn\'], $_load_attrs[\'cdnprefix\'], $_load_attrs[\'cdnversion\']);?>';
 							}
 						break;
 				}
 			}
 
+			$output .= '<?php unset($_load_attrs); ?>';
 			if($meta_file) $output = '<!--#Meta:'.$meta_file.'-->'.$output;
 			return $output;
 		}
 
 		/**
-		 * @brief $문자 의 PHP 변수 변환
+		 * @brief replace PHP variables of $ character
 		 **/
 		function _replaceVarInPHP($buff) {
 			$head = $tail = '';
@@ -587,7 +631,7 @@
 
 
 		/**
-		 * @brief php5의 class::$변수명의 경우 context를 사용하지 않아야 하기에 함수로 대체
+		 * @brief if class::$variable_name in php5, replace the function not to use context
 		 **/
 		function _replaceVarString($matches)
 		{
@@ -636,7 +680,7 @@
             $filename = array_pop($tmp_arr);
             $path = implode('/', $tmp_arr).'/';
 
-            // try to include 
+            // try to include
             $output = sprintf(
                 '<?php%s'.
                 '$oTemplate = &TemplateHandler::getInstance();%s'.
@@ -652,8 +696,8 @@
         }
 
         /**
-         * @brief replace $... variables in { } with Context::get(...) 
-         * @param[in] $matches match 
+         * @brief replace $... variables in { } with Context::get(...)
+         * @param[in] $matches match
          * @return replaced result in case of success or NULL in case of error
          **/
         function _compileVarToContext($matches) {
@@ -757,7 +801,7 @@
 
 
         /**
-         * @brief replace xe specific code, "<!--%filename-->" with appropriate php code 
+         * @brief replace xe specific code, "<!--%filename-->" with appropriate php code
          * @param[in] $matches match
          * @return Returns modified result or NULL in case of error
          **/
@@ -824,19 +868,19 @@
                     // css file
                     case 'css' :
                             if(preg_match('/^(http|\/)/i',$source_filename)) {
-                                $output = sprintf('<?php Context::addCSSFile("%s", %s, "%s", "%s", %s); ?>', $source_filename, 'false', $media, $targetie, $index);
+                                $output = sprintf('<?php Context::loadFile(array("%s", "%s", "%s", "%s")); ?>', $source_filename, $media, $targetie, $index);
                             } else {
 								$meta_file = $base_path.$filename;
-                                $output = sprintf('<?php Context::addCSSFile("%s%s", %s, "%s", "%s", %s); ?>', $base_path, $filename, $optimized, $media, $targetie, $index);
+                                $output = sprintf('<?php Context::loadFile(array("%s%s", "%s", "%s", "%s")); ?>', $base_path, $filename, $media, $targetie, $index);
                             }
                         break;
                     // js file
                     case 'js' :
                             if(preg_match('/^(http|\/)/i',$source_filename)) {
-                                $output = sprintf('<?php Context::addJsFile("%s", %s, "%s", %s,"%s"); ?>', $source_filename, 'false', $targetie, $index, $type);
+                                $output = sprintf('<?php Context::loadFile(array("%s", "%s", "%s","%s")); ?>', $source_filename, $type, $targetie, $index);
                             } else {
 								$meta_file = $base_path.$filename;
-                                $output = sprintf('<?php Context::addJsFile("%s%s", %s, "%s", %s, "%s"); ?>', $base_path, $filename, $optimized, $targetie, $index, $type);
+                                $output = sprintf('<?php Context::loadFile(array("%s%s", "%s", "%s", "%s")); ?>', $base_path, $filename, $type, $targetie, $index);
                             }
                         break;
                 }
@@ -847,7 +891,7 @@
         }
 
         /**
-         * @brief import javascript plugin 
+         * @brief import javascript plugin
          * @param[in] $matches match
          * @return result loading the plugin
          * @remarks javascript plugin works as optimized = false
@@ -859,12 +903,12 @@
         }
 
         /**
-         * @brief remove loading part of css/ js file 
+         * @brief remove loading part of css/ js file
          * @param[in] $matches match
          * @return removed result
          **/
         function _compileUnloadCode($matches) {
-            // find xml file 
+            // find xml file
             $base_path = $this->path;
             $given_file = trim($matches[1]);
             if(!$given_file) return;
@@ -893,17 +937,17 @@
                 // css file
                 case 'css' :
                         if(preg_match('/^(http|https|\/)/i',$source_filename)) {
-                            $output = sprintf('<?php Context::unloadCSSFile("%s", %s, "%s", "%s"); ?>', $source_filename, 'false', $media, $targetie);
+                            $output = sprintf('<?php Context::unloadFile("%s", "%s", "%s"); ?>', $source_filename, $targetie, $media);
                         } else {
-                            $output = sprintf('<?php Context::unloadCSSFile("%s%s", %s, "%s", "%s"); ?>', $base_path, $filename, $optimized, $media, $targetie);
+                            $output = sprintf('<?php Context::unloadFile("%s%s", "%s", "%s"); ?>', $base_path, $filename, $targetie, $media);
                         }
                     break;
                 // js file
                 case 'js' :
                         if(preg_match('/^(http|https|\/)/i',$source_filename)) {
-                            $output = sprintf('<?php Context::unloadJsFile("%s", %s, "%s"); ?>', $source_filename, 'false', $targetie);
+                            $output = sprintf('<?php Context::unloadFile("%s", "%s"); ?>', $source_filename, $targetie);
                         } else {
-                            $output = sprintf('<?php Context::unloadJsFile("%s%s", %s, "%s"); ?>', $base_path, $filename, $optimized, $targetie);
+                            $output = sprintf('<?php Context::unloadFile("%s%s", "%s"); ?>', $base_path, $filename, $targetie);
                         }
                     break;
             }
