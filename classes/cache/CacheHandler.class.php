@@ -8,12 +8,13 @@
      **/
 
     class CacheHandler extends Handler {
-			
-		var $handler = null;
 
-        function &getInstance($target='object') {
-			return new CacheHandler($target);
-        }
+		var $handler = null;
+                var $keyGroupVersions = null;
+
+                function &getInstance($target='object') {
+                    return new CacheHandler($target);
+                }
 
 		function CacheHandler($target, $info=null) {
 			if(!$info) $info = Context::getDBInfo();
@@ -21,13 +22,13 @@
 				if($target == 'object'){
 					if($info->use_object_cache =='apc') $type = 'apc';
 					else if(substr($info->use_object_cache,0,8)=='memcache'){
-						$type = 'memcache'; 
+						$type = 'memcache';
 						$url = $info->use_object_cache;
 					}
 				}else if($target == 'template'){
 					if($info->use_template_cache =='apc') $type = 'apc';
 					else if(substr($info->use_template_cache,0,8)=='memcache'){
-						$type = 'memcache'; 
+						$type = 'memcache';
 						$url = $info->use_template_cache;
 					}
 				}
@@ -36,6 +37,11 @@
 					$class = 'Cache' . ucfirst($type);
 					include_once sprintf('%sclasses/cache/%s.class.php', _XE_PATH_, $class);
 					$this->handler = call_user_func(array($class,'getInstance'), $url);
+                                        $this->keyGroupVersions = $this->handler->get('key_group_versions', 0);
+                                        if(!$this->keyGroupVersions) {
+                                            $this->keyGroupVersions = array();
+                                            $this->handler->put('key_group_versions', $this->keyGroupVersions, 0);
+                                        }
 				}
 			}
 		}
@@ -69,6 +75,32 @@
 			if(!$this->handler) return false;
 			return $this->handler->truncate();
 		}
+
+                /**
+                 * Function used for generating keys for similar objects.
+                 *
+                 * Ex: 1:document:123
+                 *     1:document:777
+                 *
+                 * This allows easily removing all object of type "document"
+                 * from cache by simply invalidating the group key.
+                 *
+                 * The new key will be 2:document:123, thus forcing the document
+                 * to be reloaded from the database.
+                 */
+                function getGroupKey($keyGroupName, $key){
+                    if(!$this->keyGroupVersions[$keyGroupName]){
+                        $this->keyGroupVersions[$keyGroupName] = 1;
+                        $this->handler->put('key_group_versions', $this->keyGroupVersions, 0);
+                    }
+
+                    return $this->keyGroupVersions[$keyGroupName] . ':' . $keyGroupName . ':' . $key;
+                }
+
+                function invalidateGroupKey($keyGroupName){
+                    $this->keyGroupVersions[$keyGroupName]++;
+                    $this->handler->put('key_group_versions', $this->keyGroupVersions, 0);
+                }
     }
 
 	class CacheBase{
