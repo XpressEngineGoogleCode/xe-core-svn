@@ -114,7 +114,7 @@ HTML 요소와 함께 사용하는 형태의 문법이다. 블럭 문법과 달�
 {{{
 <?php if($cond){ ?><img src="img.jpg" alt="Sample image" /><?php } ?>
 }}}
-이 밖에 속성과 함께 사용하는 *속성 조건문*도 있다.
+이 밖에 속성과 함께 사용하는 *속성 조건문*도 있다. 
 
 === 속성 조건문 ===
 다른 문법이 DOM 요소에 작용하는 반면, 속성 조건문은 특정 속성에만 작용한다.
@@ -247,6 +247,12 @@ $active = false 일 때
     <a href="link1.html">Link1</a>
     <a href="link2.html">Link2</a>
 <?php } ?>
+}}}
+
+가상 노드는 템플릿 파일 안에 있는 다른 HTML 요소와 동등하게 하나의 완전한 노드로 취급되어야 한다. 다시 말해 다음과 같이 노드를 기술할 때 가상 노드를 *사용할 수 없다.*
+{{{
+// 잘못된 사용법
+<a href="link.html" <block cond="$style">style="{$style}"</block> class="link">Link</a>
 }}}
 
 == 블럭 제어문 ==
