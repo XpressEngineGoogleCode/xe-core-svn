@@ -9,10 +9,11 @@
 
     class Object {
 
-        var $error = 0; ///< 에러 코드 (0이면 에러 아님)
-        var $message = 'success'; ///< 에러 메세지 (success이면 에러 아님)
+        var $error = 0; // / "Error code (if 0, it is not an error)
+        var $message = 'success'; // / "Error message (if success, it is not an error)
 
-        var $variables = array(); ///< 추가 변수
+        var $variables = array(); // /< an additional variable
+        var $httpStatusCode = NULL; ///< http status code.
 
         /**
          * @brief constructor
@@ -36,6 +37,16 @@
         function getError() {
             return $this->error;
         }
+
+		function setHttpStatusCode($code = '200')
+		{
+			$this->httpStatusCode = $code;
+		}
+
+		function getHttpStatusCode()
+		{
+			return $this->httpStatusCode;
+		}
 
         /**
          * @brief Setter to set set the error message
