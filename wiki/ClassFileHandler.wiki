@@ -85,7 +85,7 @@ FileObject openFile(string $filename, string $mode)
   * *$filename* : 대상 파일 이름
   * *$mode* : 파일 열기 모드. 사용할 수 있는 값은 [open open()] 참고.
 
-*Return Values*<br>FileObject 객체의 인스턴스
+*Return Values*<br>[ClassFileObject FileObject] 클래스의 인스턴스
 
 == hasContent ==
 {{{
@@ -98,5 +98,5 @@ bool hasContent(string $filename)
 
 *Return Values*<br>콘텐츠가 있으면 _true_ 그렇지 않으면 _false_ 를 반환한다.
 
-== See Also ==
+= See Also =
 [ClassFileObject FileObject 클래스]

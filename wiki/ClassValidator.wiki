@@ -7,18 +7,18 @@
 
 Validator 클래스는 사용자 입력 데이터가 프로그램에서 요구하는 적절한 형식을 갖추고 있는지 확인하고 결과를 불리언(Boolean) 값으로 반환한다. XpressEngine 1.5.0부터 추가된 룰셋(ruleset) 기능을 지원하기 위해 추가되었다.
 
-== Constructor ==
+= Constructor =
 {{{
 $validator = new Validator(string $xml_path='');
 }}}
 *파라미터*
   * *$xml_path* : 룰셋 파일의 위치. 절대 경로 또는 *XE설치경로* 에 대한 상대경로로 파일의 위치를 입력한다.
 
-== Properties ==
+= Properties =
 모든 프로퍼티는 _private_ 또는 _protected_ 이므로 직접 접근할 수 없다.
 
-== Methods ==
-=== load ===
+= Methods =
+== load ==
 {{{
 bool load(string $xml_path);
 }}}
@@ -29,7 +29,7 @@ bool load(string $xml_path);
 *파라미터*
   * *$xml_path* : 룰셋 파일의 위치. 절대 경로 또는 *XE설치경로* 에 대한 상대경로로 파일의 위치를 입력한다.
   
-=== setCacheDir ===
+== setCacheDir ==
 {{{
 void setCacheDir(string $cache_dir);
 }}}
@@ -38,7 +38,7 @@ void setCacheDir(string $cache_dir);
 *파라미터*
   * *$cache_dir* : 캐시 경로. 기본값은 `./files/cache` 이다.
   
-=== validate ===
+== validate ==
 {{{
 bool valdate(array $fields = array());
 }}}
@@ -48,5 +48,5 @@ bool valdate(array $fields = array());
   * *$fields* : 유효성을 검사할 필드 배열
 
 
-== See Also ==
+= See Also =
 룰셋 기능을 사용하여 입력값을 검증하는 방법은 ValidateFormInput 문서를 참고하면 된다.

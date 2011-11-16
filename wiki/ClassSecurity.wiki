@@ -7,7 +7,7 @@
 
 This class helps to solve or workaround security issues for incoming and output data.
 
-== Constructor ==
+= Constructor =
 {{{
 $security = new Security(mixed $context_var = null)
 }}}
@@ -15,11 +15,11 @@ $security = new Security(mixed $context_var = null)
 *Parameters*
   * *$context_var* : 대상 컨텍스트 변수. 배열이나 객체을 인수로 전달하며 전달하지 않으면 Context 클래스에 저장된 변수를 대상으로 한다.
 
-== Properties ==
+= Properties =
 모든 프로퍼티는 _private_ 또는 _protected_ 라고 가정하므로 직접 접근할 수 없다.
 
-== Methods ==
-=== encodeHTML ===
+= Methods =
+== encodeHTML ==
 {{{
 mixed encodeHTML(string $var_name, ...)
 }}}
