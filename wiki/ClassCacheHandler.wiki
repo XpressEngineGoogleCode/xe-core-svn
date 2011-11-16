@@ -1,7 +1,7 @@
 #summary Reference for CacheHandler class
 #sidebar ReferenceTOC
 
-= CacheHandler Class =
+= !CacheHandler Class =
 
 <wiki:toc max_depth="2" />
 

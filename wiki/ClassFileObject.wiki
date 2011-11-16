@@ -1,7 +1,7 @@
 #summary Reference for FileObject class
 #sidebar ReferenceTOC
 
-= FileObject Class =
+= !FileObject Class =
 
 <wiki:toc max_depth="2" />
 
