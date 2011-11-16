@@ -1,0 +1,88 @@
+#summary Reference for FileObject class
+#sidebar ReferenceTOC
+
+= FileObject Class =
+
+<wiki:toc max_depth="2" />
+
+1개 파일을 객체로 다루는 클래스이다.
+
+= Constructor =
+{{{
+$fileObject = new FileObject(string $filepath, string $mode);
+}}}
+*Parameters*
+  * *$filepath* : 이 클래스에서 다룰 파일의 경로
+  * *$mode* : 파일 열기 모드. 사용할 수 있는 값은 [open open()] 참고.
+
+= Properties =
+모든 프로퍼티는 _private_ 또는 _protected_ 라고 가정하므로 직접 접근할 수 없다.
+
+= Methods =
+== append ==
+{{{
+void append(string $filename_to_append)
+}}}
+현재 파일에 전달한 파일의 콘텐츠를 덧붙인다.
+
+*Parameters*
+  * *$filename_to_append* : 덧붙일 파일의 경로 문자열
+
+== close ==
+{{{
+void close()
+}}}
+파일 포인터를 해제한다.
+
+== feof ==
+{{{
+bool feof()
+}}}
+파일 포인터가 파일 끝을 가리키고 있는지 확인한다.
+
+*Return Values*<br>파일 끝이라면 _true_ 를 그렇지 않으면 _false_ 를 반환한다.
+
+== getPath ==
+{{{
+string getPath()
+}}}
+파일의 경로를 반환한다.
+
+*Return Values*<br>성공하면 파일의 경로 문자열 반환하고 그렇지 않으면 _null_ 을 반환한다.
+
+== open ==
+{{{
+/* 파일을 열고 파일 포인터를 저장해둔다. */
+
+bool open(string $filepath, string $mode)
+}}}
+*Parameters*
+  * *$filepath* : 파일의 경로
+  * *$mode* : 파일 열기 모드. [http://php.net/manual/en/function.fopen.php PHP fopen()] 매뉴얼의 _mode_ 항목 참조.
+
+*Return Values*<br> 파일 포인터를 잘 열었으면 _true_ , 그렇지 않으면 _false_ 를 반환한다.
+
+== read ==
+{{{
+string read(int $length = 1024)
+}}}
+파일로부터 데이터를 읽어들인다.
+
+*Parameters*
+  * *$length* : 읽어들일 데이터의 크기
+
+*Return Values*<br>성공하면 읽어들인 데이터 문자열을 반환하고, 실패하면 _false_ 를 반환한다.
+
+== write ==
+{{{
+int write(string $str)
+}}}
+전달한 인수 콘텐츠를 파일에 저장한다.
+
+*Parameters*
+  * *$str* : 파일에 쓸 콘텐츠
+
+*Return Values*<br>성공하면 저장한 데이터의 바이트 수를 반환하고, 실패하면 _false_ 를 반환한다.
+
+= See Also =
+[ClassFileHandler FileHandler 클래스]

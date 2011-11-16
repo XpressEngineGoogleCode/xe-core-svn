@@ -57,3 +57,4 @@
     * [ModuleTrash trash]
     * [ModuleWidget widget]
     * [ModuleWisiwyg wysiwyg]
+  * [Functions]

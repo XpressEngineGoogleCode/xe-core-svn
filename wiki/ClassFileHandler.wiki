@@ -1,0 +1,102 @@
+#summary Reference for FileHandler class
+#sidebar ReferenceTOC
+
+= FileHandler Class =
+
+<wiki:toc max_depth="2" />
+
+파일을 다루는 정적 클래스이다.
+
+= Constructor =
+정적 클래스이므로 생성자가 없다.
+
+= Properties =
+모든 프로퍼티는 _private_ 또는 _protected_ 라고 가정하므로 직접 접근할 수 없다.
+
+= Methods =
+== getRealPath ==
+{{{
+string getRealPath(string $source)
+}}}
+대상 파일 경로를 절대 경로로 변환한다.
+
+*Parameters*
+  * *$source* : 대상 파일 경로
+
+== copyDir ==
+{{{
+void copyDir(string $source_dir, string $target_dir, string $filter=null, string $type=null)
+}}}
+디렉토리를 복사한다.
+
+*Parameters*
+  * *$source_dir* : 원본 디렉토리의 경로
+  * *$target_dir* : 대상 디렉토리의 경로
+  * *$filter* : 복사할 파일이나 디렉토리를 선택하는 정규표현식. 필터 정규식에 일치하는 파일이나 디렉토리만 대상 경로로 복사한다.
+  * *$type* : 이 값이 'force' 이면 겹치는 파일이 존재하는 경우 무조건 덮어씌운다.
+
+== copyFile ==
+
+
+== readFile ==
+
+
+== writeFile ==
+
+== removeFile ==
+
+== rename ==
+
+== moveFile ==
+
+== moveDir ==
+
+== readDir ==
+
+== makeDir ==
+
+== removeDir ==
+
+== removeBlankDir ==
+
+== removeFilesInDir ==
+
+== filesize ==
+
+== getRemoteResource ==
+
+== getRemoteFile ==
+
+== returnBytes ==
+
+== checkMemoryLoadImage ==
+
+== readIniFile ==
+
+== writeIniFile ==
+
+== openFile ==
+{{{
+FileObject openFile(string $filename, string $mode)
+}}}
+대상 파일을 열고 이 파일을 다루는 FileObject 인스턴스를 반환한다.
+
+*Parameters*
+  * *$filename* : 대상 파일 이름
+  * *$mode* : 파일 열기 모드. 사용할 수 있는 값은 [open open()] 참고.
+
+*Return Values*<br>FileObject 객체의 인스턴스
+
+== hasContent ==
+{{{
+bool hasContent(string $filename)
+}}}
+파일에 콘텐츠가 있는지 확인한다.
+
+*Parameters*
+  * *$filename* : 확인할 파일의 경로
+
+*Return Values*<br>콘텐츠가 있으면 _true_ 그렇지 않으면 _false_ 를 반환한다.
+
+== See Also ==
+[ClassFileObject FileObject 클래스]
