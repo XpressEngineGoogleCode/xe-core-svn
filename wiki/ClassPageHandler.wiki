@@ -1,0 +1,47 @@
+#summary Reference for PageHandler class
+#sidebar ReferenceTOC
+
+= !PageHandler Class =
+
+<wiki:toc max_depth="2" />
+
+페이지 탐색을 다루는 클래스.
+
+= Constructor =
+{{{
+$pageHandler = new PageHandler(int $total_count, int $total_page, int $current_page, int $page_count = 10)
+}}}
+
+*Parameters*
+  * *$total_count* : 전체 데이터의 갯수
+  * *$total_page* : 전체 페이지 갯수
+  * *$cur_page* : 현재 페이지 번호
+  * *$page_count* : 한 번에 표시할 페이지 링크의 갯수
+
+= Properties =
+모든 프로퍼티는 _private_ 또는 _protected_ 라고 가정하므로 직접 접근할 수 없다.
+
+= Methods =
+== getNextPage ==
+{{{
+int getNextPage()
+}}}
+현재 페이지에서 이동할 수 있는 다음 페이지의 페이지 번호를 반환한다.
+만약 이동할 다음 페이지가 없으면 0을 반환한다.
+
+*Parameters*
+  * *$source* : 대상 파일 경로
+
+*Return Values*<br>다음 페이지 번호
+
+== getPage ==
+{{{
+int getPage(int $offset)
+}}}
+현재 페이지 번호에 *$offset* 만큼 더한 페이지 번호를 반환한다.
+만약 더한 숫자가 전체 페이지 갯수보다 크면 전체 페이지 갯수를 반환한다.
+
+*Parameters*
+  * *$offset* : 현재 페이지에 더할 숫자
+
+*Return Values*<br>페이지 번호
