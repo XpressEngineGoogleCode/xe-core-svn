@@ -1,0 +1,67 @@
+#summary Reference for TemplateHandler class
+#sidebar ReferenceTOC
+
+= !TemplateHandler Class =
+
+<wiki:toc max_depth="2" />
+
+템플릿 파일을 PHP 파일로 컴파일하는 등 각종 템플릿 관련 기능을 담당하는 클래스.
+
+*컴파일* 은 템플릿 문자열을 PHP 코드로 변환하는 과정을 뜻하며,
+*실행* 은 템플릿 문자열을 PHP 코드로 바꾼 후 PHP 코드를 실행하는 과정을 뜻한다.
+
+= Constructor =
+{{{
+$templateHandler = new TemplateHandler()
+}}}
+
+= Properties =
+모든 프로퍼티는 _private_ 또는 _protected_ 라고 가정하므로 직접 접근할 수 없다.
+
+= Methods =
+== init ==
+{{{
+void init(string $tpl_path, string $tpl_filename, $tpl_file = '')
+}}}
+컴파일 전에 템플릿 파일 등에 대한 변수와 환경을 저장한다.
+
+*Parameters*
+  * *$tpl_path* : 변환할 템플릿 파일의 디렉토리 이름. 이미지, JS, CSS 파일의 경로를 변경할 때 기준이 된다.
+  * *$tpl_filename* : 변환할 템플릿 파일의 파일 이름.
+  * *$tpl_file* : 실제로 읽어들일 파일의 경로.
+
+== compile ==
+{{{
+string compileDirect(string $tpl_path, string $tpl_filename, $tpl_file = '')
+}}}
+템플릿 파일을 실행한 결과(일반적으로 HTML 코드)를 반환한다.
+
+*Parameters*
+  * *$tpl_path* : 변환할 템플릿 파일의 디렉토리 이름. 이미지, JS, CSS 파일의 경로를 변경할 때 기준이 된다.
+  * *$tpl_filename* : 변환할 템플릿 파일의 파일 이름.
+  * *$tpl_file* : 실제로 호출할 파일의 경로.
+
+*Return Values*<br>템플릿 파일을 실행한 결과 문자열
+
+== compileDirect ==
+{{{
+string compileDirect(string $tpl_path, string $tpl_filename)
+}}}
+템플릿 파일을 PHP로 변환한 결과를 반환한다.
+
+*Parameters*
+  * *$tpl_path* : 변환할 템플릿 파일의 디렉토리 이름
+  * *$tpl_filename* : 변환할 템플릿 파일의 파일 이름
+
+*Return Values*<br>템플릿 파일의 콘텐츠를 변환한 PHP 코드
+
+== parse ==
+{{{
+string parse($buff = null)
+}}}
+템플릿 문자열을 PHP로 변환한 결과를 반환한다.
+
+*Parameters*
+  * *$buff* : 변환할 템플릿 문자열
+
+*Return Values*<br>템플릿 문자열을 변환한 PHP 코드
