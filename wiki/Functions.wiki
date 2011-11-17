@@ -1,7 +1,7 @@
 #summary Reference for Global Functions
 #sidebar ReferenceTOC
 
-= !Functions =
+= Functions =
 
 <wiki:toc max_depth="2" />
 
