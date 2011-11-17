@@ -23,7 +23,7 @@ string getUrl([string $key, (string/int) $value]);
   * *$key* : 파라미터의 키.
   * *$value* : 파라미터의 값.
 
-*Return Values* 현재 URL에서 주어진 파라미터의 값을 변경한 새로운 URL 문자열.
+*Return Values*<br> 현재 URL에서 주어진 파라미터의 값을 변경한 새로운 URL 문자열.
 
 
 == getNotEncodedUrl ==
@@ -39,7 +39,7 @@ string getNotEncodedUrl([string $key, (string/int) $value]);
   * *$key* : 파라미터의 키.
   * *$value* : 파라미터의 값.
 
-*Return Values* 현재 URL에서 주어진 파라미터의 값을 변경하고 인코딩 하지 않은 새로운 URL 문자열.
+*Return Values*<br> 현재 URL에서 주어진 파라미터의 값을 변경하고 인코딩 하지 않은 새로운 URL 문자열.
 
 == getAutoEncodedUrl ==
 {{{
@@ -54,7 +54,7 @@ string getAutoEncodedUrl([string $key, (string/int) $value]);
   * *$key* : 파라미터의 키.
   * *$value* : 파라미터의 값.
 
-*Return Values* 현재 URL에서 주어진 파라미터의 값이 인코딩 되지 않은 경우에만 인코등한 새로운 URL 문자열.
+*Return Values*<br> 현재 URL에서 주어진 파라미터의 값이 인코딩 되지 않은 경우에만 인코등한 새로운 URL 문자열.
 
 == getFullUrl ==
 {{{
@@ -69,4 +69,4 @@ string getFullUrl ([string $key, (string/int) $value]);
   * *$key* : 파라미터의 키.
   * *$value* : 파라미터의 값.
 
-*Return Values* 현재 URL에서 주어진 파라미터로 변경하고 프로토콜과 도메인 정보를 포함한 새로운 URL 문자열.
+*Return Values*<br> 현재 URL에서 주어진 파라미터로 변경하고 프로토콜과 도메인 정보를 포함한 새로운 URL 문자열.
