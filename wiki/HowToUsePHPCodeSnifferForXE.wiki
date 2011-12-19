@@ -16,7 +16,7 @@ svn export http://xe-tools.googlecode.com/svn/trunk/CodeSniffer/Standards/Xpress
 \ php/installed/path/lib/php/PHP/CodeSniffer/Standard/XpressEngine
 }}}
 
-== 사용방법 ==
+== How to use ==
 You can check that a your PHP Code follows XE Coding Convetion by `php_codesniffer`
 {{{
 php/installed/path/bin/phpcs --standard=XpressEngine {파일명 또는 디렉토리}
