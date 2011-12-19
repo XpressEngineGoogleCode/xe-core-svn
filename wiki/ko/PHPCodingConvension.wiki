@@ -1,20 +1,18 @@
 <wiki:toc max_depth="3" />
 
 = PHP Coding Convension =
-PHP_CodeSniffer is a Coding Convention tool for PHP, which can be installed by using PEAR. PHP_CodeSniffer for XE needs to be installed separately. 
-And you can check that a your PHP Code follows [HowToUsePHPCodeSnifferForXE].
+Coding Convention은 XE를 개발함에 있어 일관된 코드 및 주석 형식을 유지함으로 보다 효율적인 개발을 할 수 있기 위함입니다. [HowToUsePHPCodeSnifferForXE]로 Coding Convention 준수 여부를 확인 할 수 있습니다.
 
 == File ==
 === File Format ===
-Save every file with UTF-8 encoding,  and use Unix-style LF line-endings.
+File은 항상 UTF-8 encoding으로 저장한다. 또한 줄끝 문자는 Unix Type을 따른다(LF)
 
 === PHP Closing Tag ===
-Do not use PHP Closing tag “?>” to prevent additional white spaces that could really mess up your website or application.
+PHP Closing Tag인 ?> 문자 뒤에 공백 문자가 포함될 경우 발생할 수 있는 오류를 줄이고자 Closing Tag를 사용하지 않는다.
 
 === File End Comment ===
-Writing comments at the end of the file.
-The comments must contain the file name and the file path which should be the relative path of the application root.
-
+다음과 같은 주석을 표기하여 Source의 마지막임을 표현한다.
+주석에 표기해야 할 내용은 파일명과 위치 정보이며 위치정보는 application root로부터의 상태 경로로 표기한다.
 
 *INCORRECT*
 {{{
@@ -43,7 +41,7 @@ echo "Here's my code!";
 }}}
 
 === Code Indenting ===
-Use Tab characters for code indentation, do not set  the default code indenting value. 
+indent는 tab을 사용하고, 기본 indent는 부여하지 않는다.
 
 *INCORRECT*
 {{{
@@ -67,8 +65,8 @@ class Test
 
 
 == Control Structures ==
-=== {} usage of for, foreach, if, while ===
-The opening and closing braces are always written on their own line (i.e. a line break must be placed on both braces). 
+=== for, foreach, if, while 의 { } 사용 ===
+{ } 는 항상 줄바꿈하여 사용한다.
 
 *INCORRECT*
 {{{
@@ -105,7 +103,7 @@ if(true)
 }
 }}}
 
-=== () usage of for, foreach, if, while ===
+=== for, foreach, if, while 의 ( ) 사용 ===
 *INCORRECT*
 {{{
 <?php
@@ -132,28 +130,27 @@ if(true)
 
 == Values ==
 === Constants ===
-Constants should always be fully uppercase.
-Constants should be named depend on their applicable scope.
-If a constant variable is used globally, then use symbol ‘__’ as its prefix and postfix.  
-
+상수의 사용은 기본적으로 대문자를 원칙으로 한다.
+상수의 사용 범위에 따라 네이밍을 달리 한다.
+XE 전역에서 사용되는 경우 prefix, postfix에 '__'를 사용한다.
 
 *INCORRECT*
 {{{
 <?php
-define('myConstant', '1.4.5');   //Can not use lowercase
-define('V', '1.4.5');                      //Constant can not be a single letter
-define('A_B_C', '1.4.5');            //No semantics, the constant is difficult to understand 
+define('myConstant', '1.4.5');   //소문자 사용 금지
+define('V', '1.4.5');                      //한글자로 된 상수 문자 사용 금지
+define('A_B_C', '1.4.5');            //의미 없는 문자로 그 뜻을 알기 어려운 문자 사용 금지
 }}}
 
 *CORRECT*
 {{{
 <?php
-define('__ZBXE_VERSION__', '1.4.5'); //A global constant 
-define('ZBXE_VERSION', '1.4.5');     //Not a global constant, 
+define('__ZBXE_VERSION__', '1.4.5'); //전역 상수
+define('ZBXE_VERSION', '1.4.5');     //XE 전체에서 사용되지 않을 경우 사용 가능
 }}}
 
 === TRUE, FALSE, and NULL ===
-TRUE, FALSE, NULL keywords should always be fully uppercase.
+TRUE, FALSE, NULL과 같이 PHP 내부적으로 미리 정의된 상수는 대문자만을 사용한다.
 
 *INCORRECT*
 {{{
@@ -180,8 +177,8 @@ function foo($bar = NULL)
 }}}
 
 === Strings ===
-When a string is literal (contains no variable substitutions), the apostrophe or "single quote" should always be used to demarcate the string. Because if the string is enclosed in double-quotes, PHP will try to parse its content, so the capability will be decreased.
-But if a literal string (e.g. SQL query) itself contains apostrophes or ‘single quote’, it is permitted to demarcate the string with "double quotes".  
+String을 정의할 경우 double-quotation을 사용하지 않는다. double-quotation의 경우 해당 내용을 php가 parsing 함으로 속도 저하의 원인이 된다.
+단 Query와 같이 String 내에 single-quotation을 사용해야 하는 경우에는 double-quotation을 사용할 수 있다.
 
 *INCORRECT*
 {{{
@@ -198,7 +195,8 @@ But if a literal string (e.g. SQL query) itself contains apostrophes or ‘singl
 }}}
 
 === Bracket, Parenthetic 공백 ===
-Parenthesis and brackets should not use any additional white spaces when declare, do-while, elseif, for, foreach, if, switch, while; the exception is that a space should always follow PHP control structures and logic that  accept argument with parenthesis.
+declare, do-while, elseif, for, foreach, if, switch, while 등에서 bracket 사용시 맨 앞뒤 공백은 사용하지 않는다.
+php에서 로직을 control 하기 위해 사용하는 곳에는 예외로 한다. 
 
 *INCORRECT*
 {{{
@@ -225,7 +223,7 @@ foreach ($query->result() as $row) // single space following PHP control structu
 }}}
 
 === One Statement Per Line ===
-Do not combine multiple variables on one line.
+한줄에 여러개의 변수를 선언하지 않는다.
 
 *INCORRECT*
 {{{
@@ -242,7 +240,8 @@ $bat = str_replace($foo, $bar, $bag);
 
 == Class ==
 === Class Naming(draft) ===
-Class naming in XE should be utilized CamelCase, which states that multiple words shouldn’t separated with an underscore. The Class name must be same as the file name. Do not create multiple classes in a single file. (draft)
+Class의 Naming은 CamelCase를 따른다. 또한 Class의 이름과 File의 작명은 항상 같게 만든다.
+1개의 파일 내 여러개의 Class를 사용하지 않는다.(draft)
 
 *INCORRECT*
 {{{
@@ -251,7 +250,7 @@ class databaseConnection extends PDO {
 }
 }}}
 
-*CORRECT - file name : DatabaseConnection.php*
+*CORRECT - file명 DatabaseConnection.php*
 {{{
 <?php
 class DatabaseConnection extends PDO 
@@ -259,7 +258,8 @@ class DatabaseConnection extends PDO
 }
 }}}
 
-Do not use a special word as a Class name, in order to prevent conflict with other name spaces. 
+Class 명은 일반적인 단어를 사용하지 않는다.
+일반적인 단어를 사용할 경우 다른 프로그램과의 네임스페이스 충돌로 인한 오작동의 우려가 있다.
 
 *INCORRECT*
 {{{
@@ -276,7 +276,8 @@ class PreImport
 }}}
 
 === Method and Properties Naming(draft) ===
-The first character of a method or a variable name should always be lowercase, the methods and variables  should be  named to clearly indicate their function. Similar with Class naming, use CamelCase in the method and variable naming.     
+method와 변수명의 Naming은 첫 글자는 소문자로 시작하는 lowerCamelCase를 따른다.
+변수명은 가능한한 매우 쉬운 단어를 사용해야 하며 변수명만 보고서도 무엇을 의미하는지 알 수 있도록 명확히 작명해야 한다.
 
 *INCORRECT*
 {{{
@@ -297,7 +298,7 @@ class Test
 }}}
 
 === Default Function and Method Arguments ===
-When provide function or Class argument defaults, please follow the below style.
+function and Class method의 Arguments 기본 값을 사용할 경우 다음과 같은 형태를 따른다. 
 
 *INCORRECT*
 {{{
@@ -310,7 +311,7 @@ function foo($bar = '', $baz = FALSE)
 }}}
 
 === Class Constructor Calls ===
-Use () even if there is no argument.
+Argument가 없는 경우에도 ( )사용하는 형태를 따른다.
 
 *CORRECT*
 {{{
@@ -338,7 +339,7 @@ $var = foo($bar, $baz, $quux);
 $var = foo($bar = NULL, $baz, $quux);
 }}}
 
-=== {} Usage of Class and method ===
+=== class와 method 의 { } 사용 ===
 *INCORRECT*
 {{{
 <?php
@@ -363,15 +364,15 @@ class DatabaseConnection extends PDO
 
 == Commenting ==
 === Class ===
-Add comments before the declaration for a Class or a method, add a single line comment to source code if needed.
+주석은 Class, method 상단에 기본적으로 추가하는 부분과 Source의 흐름 상 필요한 곳에 넣는 한줄짜리 주석으로 분류한다.
 
-Comments preceding a Class 
+Class 상단에 들어가는 주석은 다음과 같은 형태를 따른다.
 *CORRECT*
 {{{
 <?php
 /**
- * @brief Class  (required)
- * @developer nick or name (required)
+ * @brief Class의 간략한 설명 (필수)
+ * @developer 개발자 nick or name (필수)
  * @date 
  */
 class SomeClass 
@@ -381,18 +382,18 @@ class SomeClass
 
 
 === method & function ===
-Comments preceding a method (function)
+method 상단에 들어가는 주석은 다음과 같은 형태를 따른다.
 
 *CORRECT*
 {{{
 /**
- * @brief method  (required)
- * @access public, protected, private  (required)
- * @param $param1 : bla bla  (required if $param exists)
+ * @brief method의 간략한 설명 (필수)
+ * @access public, protected, private 중 선택 (필수)
+ * @param $param1 : bla bla  ($param이 있을시 필수)
  * @param $param2 : bla bla
- * @return String, boolean, int, void  (required)
- * @developer nick or name (required)
- * @date
+ * @return String, boolean, int, void 등 (필수)
+ * @developer 개발자 nick or name (필수)
+ * @date 
  */
 function someMethod($param1, $param2)
 {
@@ -400,7 +401,7 @@ function someMethod($param1, $param2)
 }}}
 
 === Common ===
-Use ‘//’ for normal commenting, do not use ‘#’
+일반 주석은 ‘//’ 만 사용하는 형태를 따른다. ‘#’ 사용 금지
 
 *CORRECT*
 {{{
@@ -408,7 +409,7 @@ Use ‘//’ for normal commenting, do not use ‘#’
 $parts = explode("\n", $str);
 }}}
 
-Also comment blank lines when commenting multiple lines 
+여러 줄의 주석을 사용하는 경우 공백 라인도 주석으로 포함한다.
 *CORRECT*
 {{{
 // A longer comment that needs to give greater detail on what is
@@ -424,7 +425,7 @@ $parts = $this->foo($parts);
 
 
 == Operator ==
-Add white space before and after Operator
+Operrator 앞뒤로 공백을 추가 한다.
 
 *INCORRECT*
 {{{
