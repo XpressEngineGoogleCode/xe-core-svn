@@ -1,7 +1,5 @@
 #labels Phase-Implementation
-<wiki:toc max_depth="3" />
-
-= How To Use PHP Code Sniffer For XE =
+= How To Use PHP Code Sniffer For XE <g:plusone size="medium"></g:plusone> =
 `PHP_CodeSniffer`는 PHP로 제작된 Coding Convention을 체크하는 툴입니다. PEAR로 쉽게 설치 할 수 있으며, XE의 [PHPCodingConvension]을 체크하기 위해서는 XE 용 Standard를 별도로 다운로드 해야합니다.
 
 == Install == 

@@ -1,7 +1,5 @@
 #labels Phase-Implementation
-<wiki:toc max_depth="3" />
-
-= How To Use PHP Code Sniffer For XE =
+= How To Use PHP Code Sniffer For XE <g:plusone size="medium"></g:plusone> =
 `PHP_CodeSniffer` is a tool for checking Coding Covention made by PHP. You can install it by Pear. And you have to install the XE Standard for [PHPCodingConvension] of XE.
 
 == Install == 

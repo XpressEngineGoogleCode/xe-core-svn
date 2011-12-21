@@ -1,8 +1,8 @@
-<wiki:toc max_depth="3" />
-
-= PHP Coding Convension =
+= PHP Coding Convension <g:plusone size="medium"></g:plusone> =
 PHP_CodeSniffer is a Coding Convention tool for PHP, which can be installed by using PEAR. PHP_CodeSniffer for XE needs to be installed separately. 
 And you can check that a your PHP Code follows [HowToUsePHPCodeSnifferForXE].
+
+<wiki:toc max_depth="3" />
 
 == File ==
 === File Format ===

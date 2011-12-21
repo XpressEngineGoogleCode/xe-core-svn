@@ -1,7 +1,7 @@
-<wiki:toc max_depth="3" />
-
-= PHP Coding Convension =
+= PHP Coding Convension <g:plusone size="medium"></g:plusone> =
 Coding Convention은 XE를 개발함에 있어 일관된 코드 및 주석 형식을 유지함으로 보다 효율적인 개발을 할 수 있기 위함입니다. [HowToUsePHPCodeSnifferForXE]로 Coding Convention 준수 여부를 확인 할 수 있습니다.
+
+<wiki:toc max_depth="3" />
 
 == File ==
 === File Format ===
