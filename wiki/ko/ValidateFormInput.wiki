@@ -25,13 +25,19 @@ http://xe-core.googlecode.com/svn/wiki/ko/img/ValidationProcess.png
 서버측 데이터 검증 과정은 데이터가 모듈로 전달되기 전에 이루어지므로 이 점 유의하시기 바랍니다.
 
 == 룰셋==
-룰셋 파일은 모듈 바로 아래에 `ruleset`이라는 디렉토리를 만들어 추가할 수 있습니다. 예를 들어, 페이지(page) 모듈에 사용할 룰셋은 `./modules/page/ruleset`에 저장합니다.
+1. basic 룰셋 : 룰셋 파일은 모듈 바로 아래에 `ruleset`이라는 디렉토리를 만들어 추가할 수 있습니다. 예를 들어, 페이지(page) 모듈에 사용할 룰셋은 `./modules/page/ruleset`에 저장합니다. 
+2. dynamic 룰셋 : 회원과 같이 운영자 설정에 따라 입력폼이 다른 경우는 'dynamic 룰셋'을 이용합니다. dynamic 룰셋 파일들은 './files/ruleset/'에 저장되며, dynamic룰셋 지정은 룰셋이름에 '@'를 붙여 이용합니다.
+3. auto 룰셋 : 게시판과 같이 모듈별로 확장 변수가 존재 하는 경우는 'auto 룰셋'을 이용합니다. auto 룰셋 파일들은 './files/ruleset/기본룰셋명.mid.xml'로 저장되며, auto룰셋 지정은 룰셋이름에 '#'을 붙여 이용합니다.
 
 === 사용법 ===
-룰셋 파일은 모듈 정보 파일 `module.xml`과 템플릿(또는 스킨) 파일에서 설정해주어야 합니다. 이해를 돕기 위해 로그인 과정을 예로 들어보겠습니다. 로그인 과정은 `member` 모듈의 컨트롤러 메소드인 `procMemberLogin()`에서 처리합니다.
+룰셋 파일은 모듈 정보 파일 `module.xml`과 템플릿(또는 스킨) 파일에서 설정해주어야 합니다. 
+1. basic 룰셋(예: 페이지 추가) : 페이지 추가 과정은 'page' 모듈의 컨트롤러 메소드인 'procPageAdminInsert()'에서 처리합니다.
+2. dynamic 룰셋(예: 로그인) : 로그인 과정은 `member` 모듈의 컨트롤러 메소드인 `procMemberLogin()`에서 처리합니다.
+3. auto 룰셋(예: 확장변수가 있는 게시판 글 작성) : 게시판에 신규 글 등록 과정은 'board' 모듈의 컨트롤러 메소드인 'procBoardInsertDocument()'에서 처리합니다.
 
 ==== 모듈 설정 ====
-모듈 정보가 있는 파일을 열어 실행 전에 데이터를 검증할 메소드를 찾습니다. 예시에서는 `procMemberLogin()` 실행에 앞서 데이터의 유효성을 검사할 것이므로 다음과 같이 작성합니다.
+모듈 정보가 있는 파일을 열어 실행 전에 데이터를 검증할 메소드를 찾습니다. 
+1. basic 룰셋 : 예시에서는 procPageAdminInsert()` 실행에 앞서 데이터의 유효성을 검사할 것이므로 다음과 같이 작성합니다.
 
 {{{
 <?xml version="1.0" encoding="utf=8"?>
@@ -40,16 +46,70 @@ http://xe-core.googlecode.com/svn/wiki/ko/img/ValidationProcess.png
     <permissions />
     <actions>
     ...
-        <action name="procMemberLogin" type="controller" ruleset="login" standalone="true" />
+        <action name="procPageAdminInsert" type="controller" ruleset="insertPage" />
     ...
     </actions>
 </module>
 }}}
 
-다시 말해, `<action />` 태그에 *`rulest="login"`*과 같이 속성을 설정하면 `procMemberLogin()` 메서드를 실행하기 전에 `login`이라는 이름의 룰셋을 실행하여 입력값의 유효성을 확인한다는 뜻입니다.
+다시 말해, `<action />` 태그에 *`rulest="insertPage"`*과 같이 속성을 설정하면 `procPageAdminInsert()` 메서드를 실행하기 전에 `insertPage`이라는 이름의 룰셋을 실행하여 입력값의 유효성을 확인한다는 뜻입니다.
+
+2. dynamic 룰셋 : 예시에서는 `procMemberLogin()` 실행에 앞서 데이터의 유효성을 검사할 것이므로 다음과 같이 작성합니다.
+
+{{{
+<?xml version="1.0" encoding="utf=8"?>
+<module>
+    <grants />
+    <permissions />
+    <actions>
+    ...
+        <action name="procMemberLogin" type="controller" ruleset="@login" standalone="true" />
+    ...
+    </actions>
+</module>
+}}}
+
+다시 말해, `<action />` 태그에 *`ruleset="@login"`*과 같이 속성을 설정하면 `procMemberLogin()` 메서드를 실행하기 전에 `login`이라는 이름의 룰셋을 실행하여 입력값의 유효성을 확인한다는 뜻입니다.
+위의 경우 ruleset파일은 './files/ruleset/login.xml'을 참조하게 됩니다.
+
+3. auto 룰셋 : 예시에서는 `procBoardInsertDocument()` 실행에 앞서 데이터의 유효성을 검사할 것이므로 다음과 같이 작성합니다.
+
+{{{
+<?xml version="1.0" encoding="utf=8"?>
+<module>
+    <grants />
+    <permissions />
+    <actions>
+    ...
+        <action name="procBoardInsertDocument" type="controller" ruleset="#insertDocument" />
+    ...
+    </actions>
+</module>
+}}}
+
+다시 말해, `<action />` 태그에 *`ruleset="#insertDocument"`*과 같이 속성을 설정하면 `procBoardInsertDocument()` 메서드를 실행하기 전에 `insertDocument`이라는 이름의 룰셋을 실행하여 입력값의 유효성을 확인한다는 뜻입니다.
+위의 경우 ruleset파일은 './files/ruleset/insertDocument.[모듈 id].xml'을 참조하게 됩니다.
 
 ==== 템플릿 설정 ====
-폼을 전송하기 직전에 데이터를 검증할 룰셋을 정합니다. 예를 들어, 로그인 폼을 다음과 같이 작성했다고 가정해보겠습니다.
+폼을 전송하기 직전에 데이터를 검증할 룰셋을 정합니다. 
+1. basic 룰셋
+예를 들어, 페이지 입력 폼을 다음과 같이 작성했다고 가정해보겠습니다.
+{{{
+<form method="post">
+    모듈 ID : <input type="text" name="mid" />
+    브라우저 타이틀 : <input type="text" name="browser_title" />
+</form>
+}}}
+이 폼에 룰셋을 적용하려면 다음과 같이 작성합니다.
+{{{
+<form ruleset="insertPage" method="post">
+    모듈 ID : <input type="text" name="mid" />
+    브라우저 타이틀 : <input type="text" name="browser_title" />
+</form>
+}}}
+
+2. dynamic 룰셋
+예를 들어, 로그인 폼을 다음과 같이 작성했다고 가정해보겠습니다.
 {{{
 <form method="post">
     아이디 : <input type="text" name="user_id" />
@@ -58,14 +118,30 @@ http://xe-core.googlecode.com/svn/wiki/ko/img/ValidationProcess.png
 }}}
 이 폼에 룰셋을 적용하려면 다음과 같이 작성합니다.
 {{{
-<form ruleset="login" method="post">
+<form ruleset="@login" method="post">
     아이디 : <input type="text" name="user_id" />
     패스워드 : <input type="password" name="password" />
 </form>
 }}}
 
+3. auto 룰셋
+예를 들어, 게시글 입력 폼을 다음과 같이 작성했다고 가정해보겠습니다.
+{{{
+<form method="post">
+	제목 : <input type="text" name="title" />
+    내용 : <input type="text" name="contents" />
+</form>
+}}}
+이 폼에 게시판 별 확장 변수 체크를 위해 auto 룰셋을 적용하려면 다음과 같이 작성합니다.
+{{{
+<form ruleset="#insertDocument.{$mid}" method="post">
+    제목 : <input type="text" name="title" />
+    내용 : <input type="text" name="contents" />
+</form>
+}}}
+
 === 파일 구조 ===
-룰셋 파일은 XML 형식으로 작성되고, 모듈 디렉토리 바로 아래에 `ruleset`이라는 디렉토리를 만든 후 그 안에 저장합니다. 예를 들어 `member`모듈에서 사용되는 `login` 룰셋 파일의 경로는 `./modules/member/ruleset/login.xml`입니다.
+룰셋 파일은 XML 형식으로 작성되고, 모듈 디렉토리 바로 아래에 `ruleset`이라는 디렉토리를 만든 후 그 안에 저장합니다. 예를 들어 `page`모듈에서 사용되는 `insertPage` 룰셋 파일의 경로는 `./modules/page/ruleset/insertPage.xml`입니다.
 
 파일의 기본 구조는 다음과 같습니다.
 
