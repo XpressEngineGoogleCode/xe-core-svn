@@ -1,0 +1,20 @@
+<phpunit bootstrap="./Bootstrap.php">
+	<php>
+		<var name="DB_DSN" value="mysql:dbname=v150;host=localhost" />
+		<var name="DB_USER" value="ovclas" />
+		<var name="DB_PASSWD" value="12345" />
+		<var name="DB_DBNAME" value="v150" />
+	</php>
+	<testsuites>
+		<testsuite name="XE Core Test Suite">
+			<directory>.</directory>
+			<exclude>./classes/context/Context.mock.php</exclude>
+			<exclude>./classes/db/</exclude>
+			<exclude>./classes/frontendfile/FrontEndFileHandlerTest.php</exclude>
+		</testsuite>
+	</testsuites>
+	<logging>
+		<log type="junit" target="./logs/junit.xml" />
+		<log type="coverage-clover" target="./logs/clover.xml"/>
+	</logging>
+</phpunit>
