@@ -50,18 +50,18 @@ As a core file of driver, it defines functions for sharing of the driver.
 This file contains the driver information. The structure of this XML file is shown below: 
 {{{
 <driver>
-		<title xml:lang=”ko”>드라이버 제목</title>
-		<display_name xml:lang=”ko”>드라이버 이름(드라이버 정보 출력 시 사용)</display_name>
-		<description xml:lang=”ko”>드라이버 설명</description>
-		<license link=”라이선스 정보”>라이선스 설명</license>
+		<title xml:lang=”ko”>title of driver</title>
+		<display_name xml:lang=”ko”>name of driver</display_name>
+		<description xml:lang=”ko”>driver information</description>
+		<license link=”license information link”>license information</license>
 		<version>1.0</version>
-		<date>제작일</date>
-		<author email_address=”이메일 주소”  link=”제작자 홈페이지”>
-			<name xml:lang=”ko”>제작자 이름</name>
+		<date>release date</date>
+		<author email_address=”email address of author”  link=”hompage url of author”>
+			<name xml:lang=”ko”>name of author</name>
 		</author>
 
 		<options>
-			<option name=”옵션 명” value=”값” />
+			<option name=”name of option” value=”value” />
 		</options>
 </driver>
 }}}
