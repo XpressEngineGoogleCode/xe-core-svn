@@ -1,0 +1,78 @@
+#summary One-sentence summary of this page.
+
+= Introduction =
+
+This section describes how to create MemberDriver. The files and folders mentioned below are under ./modules/member/, the path of member module.
+
+
+= Details =
+
+== Step1. Set the option of member management which an XE driver will support. ==
+{{{
+./drivers/{driver name}/conf/info.xml
+<drivers>
+…
+<options>
+	<!-- //whether to support signup function -->
+<option name=”signup” value=”Y/N” />
+<!-- //whether to support Form type login page -->
+<option name=”form” value=”Y/N” />
+<!-- //whether to support Button type login page -->
+<option name=”button” value=”Y/N” />
+<!-- //whether to support ButtonText type login page -->
+<option name=”buttontext” value=”Y/N” />
+<!-- //whether to support Banner type login page -->
+<option name=”banner” value=”Y/N” />
+</options>
+</drivers>
+}}}
+
+== Step2. Create a template file. ==
+<ul>
+<li>Create an XE template file under the ./drivers/{driver name}/tpl.</li>
+<li>Mandatory template file
+<ul>
+<li>config.html: Defines the contents to be displayed when you select Member Setting > Driver Setting of XE Admin.</li>
+</ul></li>
+<li>Optional template file
+<ul>
+<li>form.html: This file defines the contents to be displayed for the login form if the form option is set as 'Y' (the login process should work).</li> 
+<li>preview.form.html: This file defines the contents to be displayed for the Login Setting of admin if the form option is set as 'Y' (the contents should include UIs for page configuration only).</li>
+<li>button.html: This file defines the contents to be displayed for the login form if the button option is set as 'Y' (the login process should work).</li>
+<li>preview.button.html: This file defines the contents to be displayed for the login setting of admin if the button option is set as 'Y' (the contents should include UIs for page configuration only).</li>
+<li>buttontext.html: This file defines the contents to be displayed for the login form if the buttontext option is set as 'Y' (the login process should work).</li>
+<li>preview.buttontext.html: This file defines the contents to be displayed for the login setting of admin if the buttontext option is set as 'Y' (the contents should include UIs for page configuration only).</li>
+<li>banner.html: This file defines the contents to be displayed for the login form if the banner option is 'Y' (the login process should work).</li>
+<li>preview.banner.html: This file defines the contents to be displayed for the login setting of admin if the banner option is set as 'Y' (the contents should include UIs for page configuration only).</li></ul></li>
+</ul>
+
+== Step3. Implement MemberVo{driver name}. ==
+<ul>
+<li>Inherit ./classes/MemberVO.php and create ./drivers/{driver name}/MemberVo{driver name}.php file.</li>
+<li>Mandatory functions
+<ul>
+<li>setMemberInfo(): This function sets the member information obtained from the member DB.</li>
+<li>getMemberInfo(): This function returns the member information in the form of stdClass.</li>
+<li>getDisplayName(): This function returns the name of member to be used when the member information is displayed (for example, it returns a nick_name for the existing XE member module).</li></ul></li>
+</ul>
+
+==Step 4. Implement MemberDriver{driver name}. ==
+<ul>
+<li>Create ./drivers/{driver name}/MemberDriver{driver name}.php file, inheriting from ./drivers/MemberDriver.php.</li>
+<li>Mandatory functions<ul>
+<li>Functions which inherit the Driver.php</li>
+<li>getInterfaceNames(): When you need to create an act that is not defined by a module, this function defines (disp|proc){module name}DriverInterface for an act value and an interface act for a dact value. The values of interface dact should be predefined in the interface.</li> 
+<li>getMemberVo($memberSrl): This function returns the member information related to memberSrl in the form of MemberVo{driver nane} instance.</li>
+<li>insertMember($memberInfo, $passwordIsHashed): This function defines the process of signing up.</li>
+<li>deleteMember($memberSrl): This function defines the process of deleting members.</li>
+<li>updateMember($memberInfo): This function defines the process of updating member information.</li>
+<li>doSignin($memberSrl): This function returns whether the member of $memberSrl can log in the website or not.</li> 
+<li>validateLoginInfo($loginInfo): This function validates the values ($loginInfo) that is delivered when a user attempts to log in and returns the member information related to the loginInfo in the type of VO.</li>
+<li>getSignupFormInfo():Implement this function if the driver supports signup process. This function returns a member information input form.</li>
+<li>getModifyFormInfo(): This function returns a member information input form to be used to modify member information.</li>
+<li>createSignupRuleset(): Implement this function if the driver supports signup process. This function creates a ruleset file to be used for the member information input form.</li>
+<li>createSigninRuleset(): This function creates a ruleset file to be used when a member logs in the website.</li>
+<li>createAdminInsertRuleset(): This function creates a ruleset file to be used when the admin adds a new member.</li></ul></li>
+<li>Optional functions<ul>
+<li>get{template name}Tpl(): This function interprets a template required for Admin Setup and returns it. You need to create template files for each function and save them under./drivers/{driver name}/tpl; inherit a parent function and redefine the function only when you have additional variables to set.</li></ul></li>
+</ul>
