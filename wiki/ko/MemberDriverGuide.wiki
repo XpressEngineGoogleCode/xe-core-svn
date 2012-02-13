@@ -1,0 +1,78 @@
+#summary One-sentence summary of this page.
+
+= Introduction =
+
+Member Driver제작 가이드입니다. (member 모듈 폴더 위치인 ./modules/member/를 기준으로 설명한다.)
+
+
+= Details =
+
+== Step1. 드라이버가 지원할 회원 기능의 옵션 설정. ==
+{{{
+./drivers/{driver name}/conf/info.xml
+<drivers>
+…
+<options>
+	<!-- //회원가입 기능 지원 여부  -->
+<option name=”signup” value=”Y/N” />
+<!-- //Form형식 로그인 화면 지원 여부  -->
+<option name=”form” value=”Y/N” />
+<!-- //Button형식 로그인 화면 지원 여부  -->
+<option name=”button” value=”Y/N” />
+<!-- //ButtonText형식 로그인 화면 지원 여부  -->
+<option name=”buttontext” value=”Y/N” />
+<!-- //Banner형식 로그인 화면 지원 여부  -->
+<option name=”banner” value=”Y/N” />
+</options>
+</drivers>
+}}}
+
+== Step2. 템플릿 파일 생성 ==
+<ul>
+<li>./drivers/{driver name}/tpl 하위에 사용 할 XE 템플릿 html을 생성한다.</li>
+<li>필수 생성 template 파일
+<ul>
+<li>config.html: 관리자의 회원 설정 > 드라이버 설정 에 노출될 내용을 구현한다.</li>
+</ul></li>
+<li>옵션에 따른 template파일
+<ul>
+<li>form.html: form 옵션의 값이 Y인 경우, 로그인 폼에 노출될 내용을 구현한다. (실제 로그인 동작이 가능해야 한다.) </li> 
+<li>preview.form.html: form 옵션의 값이 Y인 경우, 관리자의 로그인 설정 에 노출될 내용을 구현한다. (화면 구성을 위한 UI만 포함해야 한다.)</li>
+<li>button.html: button 옵션의 값이 Y인 경우, 로그인 폼에 노출될 내용을 구현한다. (실제 로그인 동작이 가능해야 한다.)</li>
+<li>preview.button.html: button 옵션의 값이 Y인 경우, 관리자의 로그인 설정에 노출될 내용을 구현한다. (화면 구성을 위한 UI만 포함해야 한다.)</li>
+<li>buttontext.html: buttontext 옵션의 값이 Y인 경우, 로그인 폼에 노출될 내용을 구현한다. (실제 로그인 동작이 가능해야 한다.) </li>
+<li>preview.buttontext.html: buttontext 옵션의 값이 Y인 경우, 관리자의 로그인 설정에 노출될 내용을 구현한다. (화면 구성을 위한 UI만 포함해야 한다.)</li>
+<li>banner.html: banner 옵션의 값이 Y인 경우, 로그인 폼에 노출될 내용을 구현한다. (실제 로그인 동작이 가능해야 한다.)</li>
+<li>preview.banner.html: banner 옵션의 값이 Y인 경우, 관리자의 로그인 설정에 노출될 내용을 구현한다. (화면 구성을 위한 UI만 포함해야 한다.)</li></ul></li>
+</ul>
+
+== Step 3. MemberVo{driver name} 구현 ==
+<ul>
+<li>./classes/MemberVO.php를 상속하여 ./drivers/{driver name}/MemberVo{driver name}.php 파일을 생성한다.</li>
+<li>필수 구현 함수
+<ul>
+<li>setMemberInfo(): 획득한  회원정보를 설정한다.</li>
+<li>getMemberInfo(): 회원 정보를 stdClass형식으로 반환한다.</li>
+<li>getDisplayName(): 회원 정보 출력 시 사용할 회원의 정보를 반환한다. (예 : 기존 XE회원 모듈의 경우 nick_name을 반환)</li></ul></li>
+</ul>
+
+==Step 4. MemberDriver{driver name}구현 ==
+<ul>
+<li>./drivers/MemberDriver.php를 상속하여 ./drivers/{driver name}/MemberDriver{driver name}.php파일을 생성한다.</li>
+<li>필수 구현 함수<ul>
+<li>Driver.php 상속 함수들</li>
+<li>getInterfaceNames(): 모듈에서 정의 되지 않은 act를 신규 생성해야 할 경우 act의 값을 를 (disp|proc){module name}DriverInterface로 정의 하고 dact값으로 interface act를 정의 할 수 있다 . 이때 interface dact의 값들은 는 interface에 미리 정의 되어있어야 한다.</li> 
+<li>getMemberVo($memberSrl): memberSrl에 해당하는 회원 정보를 MemberVo{driver nane}인스턴스로 리턴한다.</li>
+<li>insertMember($memberInfo, $passwordIsHashed): 회원 가입 프로세스를 구현한다.</li>
+<li>deleteMember($memberSrl): 회원 탈퇴 프로세스를 구현한다.</li>
+<li>updateMember($memberInfo): 회원 정보 수정 프로세스를 구현한다.</li>
+<li>doSignin($memberSrl): $memberSrl에 해당하는 회원의 로그인 가능 여부를 반환한다. </li> 
+<li>validateLoginInfo($loginInfo): 로그인 시도때 전달한 value들($loginInfo)의 유효성을 검사한 후 loginInfo에 해당하는 회원 정보를 Vo타입으로 반환한다.</li>
+<li>getSignupFormInfo():회원 가입을 지원하는 드라이버의 경우 구현한다. 회원 정보입력폼(form구조는 아래에서 자세하게 설명한다 .)을 반환한다.</li>
+<li>getModifyFormInfo(): 회원 정보 수정에서 사용할 회원 정보입력폼을 반환한다. </li>
+<li>createSignupRuleset(): 회원 가입을 지원하는 드라이버의 경우 구현한다. 회원 정보입력폼에서 사용할 ruleset파일을 생성한다.</li>
+<li>createSigninRuleset(): 회원 로그인시 사용할 ruleset파일을 생성한다.</li>
+<li>createAdminInsertRuleset(): 관리자가 신규 회원을 추가할때 사용할 ruleset파일을 생성한다.</li></ul></li>
+<li>선택적 구현 함수<ul>
+<li>get{template name}Tpl(): 관리자 설정에 필요한 템플릿을 해석하여 반환한다. 반드시 각 함수에 해당하는 템플릿 파일을 ./drivers/{driver name}/tpl 에 생성하고, 추가로 설정할 변수가 있을 경우에만 부모의 함수를 상속받아 재 구현한다.</li></ul></li>
+</ul>
