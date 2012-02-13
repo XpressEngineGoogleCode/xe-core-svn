@@ -1,0 +1,86 @@
+#summary XE driver specification
+#labels Phase-Requirements,Phase-Deploy
+
+<wiki:toc />
+
+= 소개 =
+
+XE driver는 XE 모듈을 다양한 방법으로 동작할 수 있게 지원하는 모듈 플러그인이다. 예를 들어, oAuth 인증을 통해 XE 기반 웹사이트에 로그인할 때 oAuth 제공자별로 driver를 생성하여 회원 모듈의 주요 프로세스인 "가입, 정보보기, 수정, 탈퇴"를 구현하면 XE 모듈을 수정하지 않고도 다양한 로그인 방식을 지원할 수 있다.
+
+= XE driver 구조 =
+XE driver의 폴더 구조는 다음과 같다. : 
+
+{module name}
+
+└ drivers ┬ {module name}Driver.php
+
+	       └ {driver name}
+                       ├ {module name}Driver{driver name}.php
+                      ├ conf
+                             └ info.xml
+                      ├ lang
+                             └ lang.xml
+                      ├ queries
+                     ├ ruleset
+                    ├ schemas
+                       └ tpl
+아래 설명의 패스는 ./modules/{module name}/drivers 을 기준으로 한다.
+
+== 1. {module name}Driver.php (interface class) ==
+드라이버가 동작하기 위한 기본적인 함수들을 선언 한다.
+=== 주의사항: ===
+<ul>
+<li>반드시 ./classes/driver/Driver.php 를 상속해야 한다 .</li>
+</ul>
+
+
+== 2. {driver name}/{module name}Driver{driver name}.php ==
+드라이버의 핵심 파일이며, 해당 드라이버의 공유 기능을 동작하는 함수들을 정의 한다. 
+=== 주의사항: ===
+<ul>
+<li>반드시 {module name}Driver.php 를 상속해야 한다.</li>
+</ul>
+=== Main functions: ===
+<ul>
+<li>installDriver() : 드라이버 설치 시 호출된다.</li>
+<li>checkUpdate() : 드라이버 업데이트 사항을 반환한다.</li>
+<li>updateDriver() : 드라이버 업데이트 시 호출된다.</li>
+</ul>
+
+== 3. conf/info.xml ==
+드라이버 정보 파일이며 아래의 구조로 xml파일을 작성한다. 
+{{{
+<driver>
+		<title xml:lang=”ko”>드라이버 제목</title>
+		<display_name xml:lang=”ko”>드라이버 이름(드라이버 정보 출력 시 사용)</display_name>
+		<description xml:lang=”ko”>드라이버 설명</description>
+		<license link=”라이선스 정보”>라이선스 설명</license>
+		<version>1.0</version>
+		<date>제작일</date>
+		<author email_address=”이메일 주소”  link=”제작자 홈페이지”>
+			<name xml:lang=”ko”>제작자 이름</name>
+		</author>
+
+		<options>
+			<option name=”옵션 명” value=”값” />
+		</options>
+</driver>
+}}}
+
+
+== 4. lang/lang.xml ==
+드라이버에서 사용하는 언어 파일이다. (구조는 기존 모듈의 lang.xml파일과 동일)
+== 5. queries/{query id}.xml ==
+드라이버에서 사용하는 쿼리 파일이다. (구조는 기존 모듈의 {query id}.xml파일과 동일)
+== 6. ruleset/{ruleset id}.xml ==
+드라이버에서 사용하는 룰셋 파일이다. (구조는 기존 모듈의 {ruleset id}.xml파일과 동일)
+== 7. schemas/{table name}.xml ==
+드라이버에서 사용하는 table 스키마 파일이다. (구조는 기존 모듈의 {table name}.xml파일과 동일)
+== 8. tpl/{template name}.html ==
+드라이버에서 사용하는 스킨 파일이다. (생성 방법 및 사용언어는 기존 모듈의 스킨 파일들과 동일)
+
+= Utility functions of XE driver =
+== 1. getDriver($moduleName, $driverName) ==
+{moudleName}Driver{$driverName}.php의 클래스 인스턴스를 반환한다.
+== 2. executeQuery[|Array]($queryId) ==
+$queryId의 값을 {moduleName}.driver.{driverName}.{query ID}으로 하여 driver의 query를 실행시킬 수 있다.
