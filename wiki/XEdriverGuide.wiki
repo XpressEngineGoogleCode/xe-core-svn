@@ -1,0 +1,85 @@
+#summary XE driver specification
+#labels Phase-Requirements,Phase-Deploy
+
+<wiki:toc />
+
+= Introduction =
+
+XE driver is a module plugin which is used to implement various features without modifying the module. For instance, if you use oAuth for the login process of XE based website, you can create XE drivers for each oAuth provider to implement the member module's main processes such as signing up, and viewing, modifying and deleting member information. Then, the module can support multiple login processes depending on the drivers.
+
+= Structure of XE driver =
+The file structure of XE driver is shown below:
+{module name}
+
+└ drivers ┬ {module name}Driver.php
+
+	       └ {driver name}
+                       ├ {module name}Driver{driver name}.php
+                      ├ conf
+                             └ info.xml
+                      ├ lang
+                             └ lang.xml
+                      ├ queries
+                     ├ ruleset
+                    ├ schemas
+                       └ tpl
+The files described below are under ./modules/{module name}/drivers
+
+== 1. {module name}Driver.php (interface class) ==
+This file declares basic functions for a driver. 
+=== Caution: ===
+<ul>
+<li>It should inherit from./classes/driver/Driver.php.</li>
+</ul>
+
+
+== 2. {driver name}/{module name}Driver{driver name}.php ==
+As a core file of driver, it defines functions for sharing of the driver.
+=== Caution: ===
+<ul>
+<li>It should inherit from {module name}Driver.php.</li>
+</ul>
+=== Main functions: ===
+<ul>
+<li>installDriver(): This function is invoked when a driver is installed.</li>
+<li>checkUpdate(): This function returns driver update information.</li>
+<li>updateDriver(): This function is invoked when a driver is updated.</li>
+</ul>
+
+== 3. conf/info.xml ==
+This file contains the driver information. The structure of this XML file is shown below: 
+{{{
+<driver>
+		<title xml:lang=”ko”>드라이버 제목</title>
+		<display_name xml:lang=”ko”>드라이버 이름(드라이버 정보 출력 시 사용)</display_name>
+		<description xml:lang=”ko”>드라이버 설명</description>
+		<license link=”라이선스 정보”>라이선스 설명</license>
+		<version>1.0</version>
+		<date>제작일</date>
+		<author email_address=”이메일 주소”  link=”제작자 홈페이지”>
+			<name xml:lang=”ko”>제작자 이름</name>
+		</author>
+
+		<options>
+			<option name=”옵션 명” value=”값” />
+		</options>
+</driver>
+}}}
+
+
+== 4. lang/lang.xml ==
+This file defines languages for a driver (the structure of this file is the same as that of the existing module's lang.xml).
+== 5. queries/{query id}.xml ==
+This file defines queries for a driver (the structure of this file is the same as that of the existing module's {query id}.xml).
+== 6. ruleset/{ruleset id}.xml ==
+This file defines rulesets for a driver (the structure of this file is the same as that of the existing module's {ruleset id}.xml).
+== 7. schemas/{table name}.xml ==
+This file defines table schemas for a driver (the structure of this file is the same as that of the existing module's {table name}.xml).
+== 8. tpl/{template name}.html ==
+This file defines skins for a driver (you can create this file in the same way using the same language as the existing module's skin files).
+
+= Utility functions of XE driver =
+== 1. getDriver($moduleName, $driverName) ==
+This function returns a class instance of {moudleName}Driver{$driverName}.php.
+== 2. executeQuery[|Array]($queryId) ==
+This function executes a driver query using {moduleName}.driver.{driverName}.{query ID} as $queryId. 
