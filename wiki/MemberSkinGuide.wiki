@@ -1,0 +1,229 @@
+#summary about member skin.
+
+= Overview =
+
+ 1.5 core버전에 맞는 XE회원 스킨을 제작하기 위한 가이드 문서입니다. 기존에 사용하시는 회원 스킨으로 XE가 이용이 어려운 경우 아래에 내용을 참고하여 스킨을 수정하여 사용하시길 권장합니다.
+
+= XE회원 스킨 제작하기 =
+
+== 1. error log 영역 추가 ==
+1.5 core부터는 서버에서 오류 발생시 오류 코드를 출력할 부분입니다. 서버에서 오류 발생시 해당 영역에 오류 내용이 표시됩니다.
+{{{
+<div cond="$XE_VALIDATOR_MESSAGE" class="message {$XE_VALIDATOR_MESSAGE_TYPE}">
+	<p>{$XE_VALIDATOR_MESSAGE}</p>
+</div>
+}}}
+
+== 2. 로그인 화면 ==
+아래 코드는 디자인요소를 고려 하지않은 필수 태그들입니다. 디자인 요소는 사이트에 맞도록 수정하여 사용하시길 권장합니다.
+{{{
+<form ruleset="@login" action="./" method="post">
+	<input type="hidden" name="success_return_url" value="{getUrl('act', '')}" />
+	<input type="hidden" name="act" value="procMemberLogin" />
+	<label for="uid">{$lang->user_id}</label>
+	<input type="text" name="user_id" id="uid" value="" />
+	<label for="upw">{$lang->password}</label>
+	<input type="password" name="password" id="upw" value="" />
+	
+	<input type="checkbox" name="keep_signed" id="keepid_opt" value="Y" />
+	<label for="keepid_opt">{$lang->keep_signed}</label>
+	
+	<div class="message info">
+		<p>{$lang->about_keep_warning}</p>
+	</div>
+
+	<input type="submit" value="{$lang->cmd_login}" />
+	<span class="etc">
+		<a href="{getUrl('act','dispMemberFindAccount')}"><span>{$lang->cmd_find_member_account}</span></a> |
+		<a href="{getUrl('act','dispMemberSignUpForm')}"><span>{$lang->cmd_signup}</span></a>
+	</span>
+</form>
+}}}
+
+=== 2.1 필수 요소 ===
+{{{
+	<form ruleset="@login" action="./" method="post">
+}}}
+로그인유효성 체크를 위한 ruleset파일을 지정합니다. 1.5 core부터는 로그인 계정을 관리자가 user_id or email address 로 설정할 수 있어 auto ruleset을 사용합니다.
+----
+{{{
+	<input type="hidden" name="act" value="procMemberLogin" />
+}}}
+로그인을 처리할 act입니다.
+----
+{{{
+	<input type="text" name="user_id" id="uid" value="" />
+}}}
+사용자 id를 입력받는 textfield입니다. (관리자 설정에서 로그인 계정을 email address로 변경하였어도 속성 명은 반드시 user_id로 입력해야 합니다.)
+----
+{{{
+	<input type="password" name="password" id="upw" value="" />
+}}}
+사용자 비밀번호를 입력받는 textfield입니다.
+----
+{{{
+	<input type="submit" value="{$lang->cmd_login}" />
+}}}
+로그인 데이터를 서버에 전달하기 위한 submit버튼입니다.
+----
+
+=== 2.2 선택 요소 ===
+{{{
+	<input type="hidden" name="success_return_url" value="{getUrl('act', '')}" />
+}}}
+로그인 완료 후 이동할 화면 URL을 전달합니다. 관리자에서 로그인 후 이동 URL을 설정했다면 해당 태그는 생략가능합니다.
+----
+{{{
+	<input type="checkbox" name="keep_signed" id="keepid_opt" value="Y" />
+	<label for="keepid_opt">{$lang->keep_signed}</label>
+}}}
+로그인 유지 기능을 사용하고자 할 경우 입력합니다.
+----
+{{{
+	<div class="message info">
+		<p>{$lang->about_keep_warning}</p>
+	</div>
+}}}
+로그인 유지 기능을 사용할 경우 로그인 유지 기능에 대한 설명 문입니다.
+----
+{{{
+	<span class="etc">
+		<a href="{getUrl('act','dispMemberFindAccount')}"><span>{$lang->cmd_find_member_account}</span></a> |
+		<a href="{getUrl('act','dispMemberSignUpForm')}"><span>{$lang->cmd_signup}</span></a>
+	</span>
+}}}
+비밀번호 찾기, 회원가입 링크를 보여주고자 할 경우 추가 합니다.
+
+== 3. 회원 가입 화면==
+아래 코드는 디자인요소를 고려 하지않은 필수 태그들입니다. 디자인 요소는 사이트에 맞도록 수정하여 사용하시길 권장합니다.
+{{{
+<form ruleset="@insertMember" action="./" method="post" enctype="multipart/form-data">
+	<input type="hidden" name="act" value="procMemberInsert" />
+	<div cond="$member_config->agreement">
+		<div>
+			{$member_config->agreement}
+		</div>
+		<div>
+			<input type="checkbox" name="accept_agreement" value="Y" id="accept_agree" />
+			<label for="accept_agree">{$lang->about_accept_agreement}</label>
+		</div>
+	</div>
+	<ul>
+		<li>
+			{$identifierForm->title} <em>*</em>
+			<input type="text" name="{$identifierForm->name}" value="{$identifierForm->value}" />
+		</li>
+		<li>
+			{$lang->password} <em>*</em>
+			<input type="password" name="password" value=""/>
+		</li>
+		<li>
+			{$lang->password2} <em>*</em>
+			<input type="password" name="password2" value=""/>
+		</li>
+		<li loop="$formTags=>$formTag" cond="$formTag->name != 'signature'">
+			{$formTag->title}
+			<div>{$formTag->inputTag}</div>
+		</li>
+		<li>
+			{$lang->allow_mailing}
+			<input type="radio" name="allow_mailing" id="mailingYes" value="Y" checked="checked"|cond="$member_info->allow_mailing == 'Y'"> <label for="mailingYes">{$lang->cmd_yes}</label>
+			<input type="radio" name="allow_mailing" id="mailingNo" value="N" checked="checked"|cond="$member_info->allow_mailing != 'Y'" > <label for="mailingNo">{$lang->cmd_no}</label>
+		</li>
+		<li>
+			{$lang->allow_message}
+			<block loop="$lang->allow_message_type=>$key,$val">
+				<input type="radio" name="allow_message" value="{$key}" checked="checked"|cond="$member_info->allow_message == $key || (!$member_info && $key == 'Y')" id="allow_{$key}" /> <label for="allow_{$key}">{$val}</label>
+			</block>
+		</li>
+		<li cond="class_exists('AddonCaptcha') && $oCaptcha && $oCaptcha->addon_info->apply_signup=='apply'">
+			{$lang->captcha}
+			{$oCaptcha->inlineDisplay()}
+		</li>
+	</ul>
+	<div>
+		<input type="submit" value="{$lang->cmd_registration}" />
+		<a href="{getUrl('act','','member_srl','')}">{$lang->cmd_cancel}</a>
+	</div>
+</form>
+}}}
+위는 회원가입에 필요한 모든 필수 요소 입니다.
+----
+{{{ 
+	<form ruleset="@insertMember" action="./" method="post" enctype="multipart/form-data">
+}}}
+회원 가입 유효성 체크를 위한 ruleset파일을 지정합니다. 관리자가 가입폼을 자유자재로 수정할 수 있으므로 auto rulset을 이용합니다.
+----
+{{{
+	<input type="hidden" name="act" value="procMemberInsert" />
+}}}
+회원 가입을 처리할 act입니다.
+----
+{{{
+	<div cond="$member_config->agreement">
+		<div>
+			{$member_config->agreement}
+		</div>
+		<div>
+			<input type="checkbox" name="accept_agreement" value="Y" id="accept_agree" />
+			<label for="accept_agree">{$lang->about_accept_agreement}</label>
+		</div>
+	</div>
+}}}
+회원가입 약관이 존재하는 경우 필요한 태그입니다. 회원 약관이 없는 경우 화면에 노출되지 않습니다.
+----
+{{{
+	<li>
+		{$identifierForm->title} <em>*</em>
+		<input type="text" name="{$identifierForm->name}" value="{$identifierForm->value}" />
+	</li>
+}}}
+로그인 계정으로 사용되는 데이터 입력 폼입니다. 
+----
+{{{
+	<li>
+		{$lang->password} <em>*</em>
+		<input type="password" name="password" value=""/>
+	</li>
+	<li>
+		{$lang->password2} <em>*</em>
+		<input type="password" name="password2" value=""/>
+	</li>
+}}}
+비밀번호 입력, 입력 확인을 위한 필드입니다.
+----
+{{{
+	<li loop="$formTags=>$formTag" cond="$formTag->name != 'signature'">
+		{$formTag->title}
+		<div>{$formTag->inputTag}</div>
+	</li>
+}}}
+관리자가 설정한 회원 가입 양식을 출력하기 위한 필드입니다.
+----
+{{{
+	<li>
+		{$lang->allow_mailing}
+		<input type="radio" name="allow_mailing" id="mailingYes" value="Y" checked="checked"|cond="$member_info->allow_mailing == 'Y'"> <label for="mailingYes">{$lang->cmd_yes}</label>
+		<input type="radio" name="allow_mailing" id="mailingNo" value="N" checked="checked"|cond="$member_info->allow_mailing != 'Y'" > <label for="mailingNo">{$lang->cmd_no}</label>
+	</li>
+}}}
+메일 수신여부 설정을 위한 입력 폼입니다.
+----
+{{{
+	<li>
+		{$lang->allow_message}
+		<block loop="$lang->allow_message_type=>$key,$val">
+			<input type="radio" name="allow_message" value="{$key}" checked="checked"|cond="$member_info->allow_message == $key || (!$member_info && $key == 'Y')" id="allow_{$key}" /> <label for="allow_{$key}">{$val}</label>
+		</block>
+	</li>
+}}}
+쪽지 수신여부 설정을 위한 입력 폼입니다.
+----
+{{{
+	<li cond="class_exists('AddonCaptcha') && $oCaptcha && $oCaptcha->addon_info->apply_signup=='apply'">
+		{$lang->captcha}
+		{$oCaptcha->inlineDisplay()}
+	</li>
+}}}	
+회원 가입 Captcha를 위한 입력 폼입니다.
+----
