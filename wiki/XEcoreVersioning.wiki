@@ -1,5 +1,4 @@
 #summary Description of XE core versioning. It will be apply to XE 1.6.
-#labels Phase-Design
 
 = XE core versioning =
 
