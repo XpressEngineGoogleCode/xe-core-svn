@@ -1,0 +1,13 @@
+<query id="getMemberInfoByMemberSrl" action="select">
+	<tables>
+		<table name="member_googleplus" />
+		<table name="member_common" />
+	</tables>
+	<columns>
+		<column name="*" />
+	</columns>
+	<conditions>
+		<condition operation="equal" column="member_common.member_srl" default="member_googleplus.member_srl" />
+		<condition operation="equal" column="member_googleplus.member_srl" var="member_srl" notnull="notnull" pipe="and" />
+	</conditions>
+</query>

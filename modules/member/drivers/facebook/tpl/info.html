@@ -1,0 +1,32 @@
+<div class="table even">
+	<table width="100%" border="1" cellspacing="0">
+		<tr loop="$signUpForm => $formInfo">
+			<th scope="row" >{$formInfo->title} <em cond="$formInfo->required">*</em></th>
+			<td class="text">{$formInfo->value}</td>
+		</tr>
+		<tr>
+			<th scope="row">{$lang->allow_message}</th>
+			<td class="text">{$lang->allow_message_type[$memberInfo->allow_message]}</td>
+		</tr>
+		<tr>
+			<th scope="row">{$lang->denied}</th>
+			<td class="text"><!--@if($memberInfo->denied == 'N')-->{$lang->cmd_no}<!--@else-->{$lang->cmd_yes}<!--@end--></td>
+		</tr>
+		<tr cond="$memberInfo->limit_date">
+			<th scope="row">{$lang->limit_date}</th>
+			<td class="text">{zdate($memberInfo->limit_date, "Y-m-d H:i")}</td>
+		</tr>
+		<tr cond="$memberInfo->is_admin == 'Y'">
+			<th scope="row">{$lang->is_admin}</th>
+			<td class="text">{$lang->cmd_yes}</td>
+		</tr>
+		<tr>
+			<th scope="row">{$lang->member_group}</th>
+			<td class="text">{implode(', ', $memberInfo->group_list)}</td>
+		</tr>
+		<tr cond="$memberInfo->description">
+			<th scope="row"><div>{$lang->description}</div></th>
+			<td>{$memberInfo->description}</td>
+		</tr>
+	</table>
+</div>

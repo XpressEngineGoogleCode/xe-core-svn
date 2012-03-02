@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<driver>
+	<title xml:lang="en">twitter member driver</title>
+	<display_name xml:lang="en">twitter</display_name>
+	<description xml:lang="en">This is the twitter driver for the member module</description>
+	<version>1.0</version>
+	<date>2012-02-14</date>
+
+	<author email_address="xe_dev@arnia.ro" link="http://www.xpressengine.org">
+		<name xml:lang="en">Arnia</name>
+	</author>
+
+	<options>
+		<option name="signup" value="N" />
+		<option name="form" value="N" />
+		<option name="button" value="Y" />
+		<option name="buttontext" value="Y" />
+		<option name="banner" value="Y" />
+	</options>
+</driver>

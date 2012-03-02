@@ -1,0 +1,145 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<lang>
+	<item name="googleplus_application_key">
+		<value xml:lang="ko">애플리케이션 키</value>
+		<value xml:lang="en">Application Key</value>
+	</item>
+	<item name="googleplus_client_id">
+		<value xml:lang="en">Client Id</value>
+	</item>
+	<item name="googleplus_about_client_id">
+		<value xml:lang="en">Please input googleplus Client Id</value>
+	</item>
+	<item name="googleplus_client_secret">
+		<value xml:lang="en">Client Secret</value>
+	</item>
+	<item name="googleplus_about_client_secret">
+		<value xml:lang="en">Please input googleplus Client Secret</value>
+	</item>
+	<item name="googleplus_developer_key">
+		<value xml:lang="en">Developer(Api) Key</value>
+	</item>
+	<item name="googleplus_developer_key">
+		<value xml:lang="en">Please input googleplus Developer(Api) Key</value>
+	</item>
+	<item name="googleplus_basic_config">
+		<value xml:lang="en"><![CDATA[Default settings]]></value>
+	</item>
+	<item name="googleplus_msg_not_enough_api_info">
+		<value xml:lang="en"><![CDATA[Not enough API information]]></value>
+	</item>
+	<item name="googleplus_about_application_key">
+		<value xml:lang="ko"><![CDATA[미투데이에서 발급 받은 애플리케이션 키를 입력하세요.<br />콜백 주소는 아래 주소를 이용하세요.]]></value>
+		<value xml:lang="en"><![CDATA[Please, input issued application key from googleplus.<br />You can use below url on callback url.]]></value>
+	</item>
+	<item name="googleplus_msg_signup_extend_form">
+		<value xml:lang="ko"><![CDATA[아래 필수 항목을 입력하셔야 사이트 이용이 가능합니다.]]></value>
+	</item>
+	<item name="googleplus_msg_missing_googleplus_id">
+		<value xml:lang="en"><![CDATA[googleplus Id missing]]></value>
+	</item>
+	<item name="googleplus_id">
+		<value xml:lang="en"><![CDATA[googleplus Id]]></value>
+	</item>
+	<item name="googleplus_nick_name">
+		<value xml:lang="en"><![CDATA[googleplus Nickname]]></value>
+	</item>
+	<item name="googleplus_face">
+		<value xml:lang="en"><![CDATA[googleplus Photo]]></value>
+	</item>
+	<item name="googleplus_refresh_info">
+		<value xml:lang="en"><![CDATA[Refresh googleplus info]]></value>
+	</item>
+	<item name="googleplus_about_refresh_info">
+		<value xml:lang="en"><![CDATA[Refresh your googleplus account information below]]></value>
+	</item>
+	<item name="googleplus_about_unregister_confirm">
+		<value xml:lang="en"><![CDATA[Are you sure you want to unregister?]]></value>
+	</item>
+	<item name="googleplus_search_target_list" type="array">
+		<item name="googleplus_id">
+			<value xml:lang="en"><![CDATA[googleplus Id]]></value>
+		</item>
+		<item name="googleplus_nickname">
+			<value xml:lang="en"><![CDATA[googleplus Nickname]]></value>
+		</item>
+		<item name="regdate">
+			<value xml:lang="ko"><![CDATA[가입일시]]></value>
+			<value xml:lang="en"><![CDATA[Sign up Date]]></value>
+			<value xml:lang="jp"><![CDATA[登録日]]></value>
+			<value xml:lang="zh-CN"><![CDATA[注册日期]]></value>
+			<value xml:lang="zh-TW"><![CDATA[註冊日期]]></value>
+			<value xml:lang="fr"><![CDATA[Jour d'Inscription]]></value>
+			<value xml:lang="ru"><![CDATA[Дата регистрации]]></value>
+			<value xml:lang="es"><![CDATA[Fecha del registro]]></value>
+			<value xml:lang="tr"><![CDATA[Kayıt Tarihi]]></value>
+			<value xml:lang="vi"><![CDATA[Ngày đăng kí]]></value>
+		</item>
+		<item name="regdate_more">
+			<value xml:lang="ko"><![CDATA[가입일시(이상)]]></value>
+			<value xml:lang="en"><![CDATA[Sign up Date (more)]]></value>
+			<value xml:lang="jp"><![CDATA[登録日(以上)]]></value>
+			<value xml:lang="zh-CN"><![CDATA[注册日期(以上)]]></value>
+			<value xml:lang="zh-TW"><![CDATA[註冊日期(以上)]]></value>
+			<value xml:lang="ru"><![CDATA[Дата регистрации(more)]]></value>
+			<value xml:lang="tr"><![CDATA[Kayıt Tarihi (detaylı)]]></value>
+			<value xml:lang="vi"><![CDATA[Ngày đăng kí nhiều nhất]]></value>
+		</item>
+		<item name="regdate_less">
+			<value xml:lang="ko"><![CDATA[가입일시(이하)]]></value>
+			<value xml:lang="en"><![CDATA[Sign up Date (less)]]></value>
+			<value xml:lang="jp"><![CDATA[登録日(以下)]]></value>
+			<value xml:lang="zh-CN"><![CDATA[注册日期(以下)]]></value>
+			<value xml:lang="zh-TW"><![CDATA[註冊日期(以下)]]></value>
+			<value xml:lang="ru"><![CDATA[Дата регистрации(less)]]></value>
+			<value xml:lang="tr"><![CDATA[Kayıt Tarihi (basit)]]></value>
+			<value xml:lang="vi"><![CDATA[Ngày đăng kí ít nhất]]></value>
+		</item>
+		<item name="last_login">
+			<value xml:lang="ko"><![CDATA[최근 로그인 일시]]></value>
+			<value xml:lang="en"><![CDATA[Last Sign in Date]]></value>
+			<value xml:lang="jp"><![CDATA[最終ログイン]]></value>
+			<value xml:lang="zh-CN"><![CDATA[最后登录]]></value>
+			<value xml:lang="zh-TW"><![CDATA[最近登入]]></value>
+			<value xml:lang="fr"><![CDATA[Jour de la connexion dernière]]></value>
+			<value xml:lang="ru"><![CDATA[Дата последнего входа]]></value>
+			<value xml:lang="es"><![CDATA[Fecha de su última conección]]></value>
+			<value xml:lang="tr"><![CDATA[Son Giriş Tarihi]]></value>
+			<value xml:lang="vi"><![CDATA[Lần cuối đăng nhập]]></value>
+		</item>
+		<item name="last_login_more">
+			<value xml:lang="ko"><![CDATA[최근 로그인 일시(이상)]]></value>
+			<value xml:lang="en"><![CDATA[Last Sign in Date (more)]]></value>
+			<value xml:lang="jp"><![CDATA[最終ログイン日(以上)]]></value>
+			<value xml:lang="zh-CN"><![CDATA[最后登录(以上)]]></value>
+			<value xml:lang="zh-TW"><![CDATA[最近登入(以上)]]></value>
+			<value xml:lang="fr"><![CDATA[최근로그인일시(이상)]]></value>
+			<value xml:lang="es"><![CDATA[최근로그인일시(이상)]]></value>
+			<value xml:lang="tr"><![CDATA[Son Giriş Tarihi (detaylı)]]></value>
+			<value xml:lang="vi"><![CDATA[Đăng nhập nhiều nhất]]></value>
+		</item>
+		<item name="last_login_less">
+			<value xml:lang="ko"><![CDATA[최근 로그인 일시(이하)]]></value>
+			<value xml:lang="en"><![CDATA[Last Sign in Date (less)]]></value>
+			<value xml:lang="jp"><![CDATA[最終ログイン日(以下)]]></value>
+			<value xml:lang="zh-CN"><![CDATA[最后登录시(以下)]]></value>
+			<value xml:lang="zh-TW"><![CDATA[最近登入(以下)]]></value>
+			<value xml:lang="fr"><![CDATA[최근로그인일시(이하)]]></value>
+			<value xml:lang="es"><![CDATA[최근로그인일시(이하)]]></value>
+			<value xml:lang="tr"><![CDATA[Son Giriş Tarihi (basit)]]></value>
+			<value xml:lang="vi"><![CDATA[Đăng nhập ít nhất]]></value>
+		</item>
+		<item name="extra_vars">
+			<value xml:lang="ko"><![CDATA[확장변수]]></value>
+			<value xml:lang="en"><![CDATA[Extra Vars]]></value>
+			<value xml:lang="jp"><![CDATA[拡張変数]]></value>
+			<value xml:lang="zh-CN"><![CDATA[扩展信息]]></value>
+			<value xml:lang="zh-TW"><![CDATA[延伸變數]]></value>
+			<value xml:lang="fr"><![CDATA[Variables additionnels ]]></value>
+			<value xml:lang="ru"><![CDATA[Экстра перем.]]></value>
+			<value xml:lang="es"><![CDATA[Variables Extra]]></value>
+			<value xml:lang="tr"><![CDATA[Fazladan Çeş.]]></value>
+			<value xml:lang="vi"><![CDATA[Thông tin bổ xung]]></value>
+		</item>
+	</item>
+</lang>

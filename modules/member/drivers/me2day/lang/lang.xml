@@ -6,9 +6,11 @@
 	</item>
 	<item name="me2day_basic_config">
 		<value xml:lang="ko"><![CDATA[기본 설정]]></value>
+		<value xml:lang="en"><![CDATA[Me2day basic configuration]]></value>
 	</item>
 	<item name="me2day_msg_no_application_key">
 		<value xml:lang="ko"><![CDATA[미투데이 애플리케이션 키가 설정되어 있지않습니다. 관리자에게 문의하세요.]]></value>
+		<value xml:lang="en"><![CDATA[No application key entered for me2day driver]]></value>
 	</item>
 	<item name="me2day_about_application_key">
 		<value xml:lang="ko"><![CDATA[미투데이에서 발급 받은 애플리케이션 키를 입력하세요.<br />콜백 주소는 아래 주소를 이용하세요.]]></value>
@@ -16,34 +18,44 @@
 	</item>
 	<item name="me2day_msg_signup_extend_form">
 		<value xml:lang="ko"><![CDATA[아래 필수 항목을 입력하셔야 사이트 이용이 가능합니다.]]></value>
+		<value xml:lang="en"><![CDATA[Me2day signup extend form]]></value>
 	</item>
 	<item name="me2day_msg_missing_me2day_id">
 		<value xml:lang="ko"><![CDATA[미투데이 아이디가 없습니다.]]></value>
+		<value xml:lang="en"><![CDATA[Missing me2day id]]></value>
 	</item>
 	<item name="me2day_id">
 		<value xml:lang="ko"><![CDATA[미투데이 아이디]]></value>
+		<value xml:lang="en"><![CDATA[Me2day id]]></value>
 	</item>
 	<item name="me2day_nick_name">
 		<value xml:lang="ko"><![CDATA[미투데이 닉네임]]></value>
+		<value xml:lang="en"><![CDATA[Me2day nick name]]></value>
 	</item>
 	<item name="me2day_face">
 		<value xml:lang="ko"><![CDATA[미투데이 프로필 사진]]></value>
+		<value xml:lang="en"><![CDATA[Me2day picture]]></value>
 	</item>
 	<item name="me2day_refresh_info">
 		<value xml:lang="ko"><![CDATA[미투데이 정보 갱신]]></value>
+		<value xml:lang="en"><![CDATA[Refresh info from Me2day]]></value>
 	</item>
 	<item name="me2day_about_refresh_info">
 		<value xml:lang="ko"><![CDATA[미투데이의 회원 정보를 지금 바로 반영합니다.]]></value>
+		<value xml:lang="en"><![CDATA[Click to refresh me2day account info]]></value>
 	</item>
 	<item name="me2day_about_unregister_confirm">
 		<value xml:lang="ko"><![CDATA[사이트에서 탈퇴하시면 작성한 모든 글과 댓글에 대한 권한을 상실하게 됩니다. 탈퇴하시겠습니까?<br /> 탈퇴 버튼을 누르시면 정보보호를 위해 다시 한번 미투데이 인증을 거치게 됩니다.]]></value>
+		<value xml:lang="en"><![CDATA[Are you sure you want to unregister?]]></value>
 	</item>
 	<item name="me2day_search_target_list" type="array">
 		<item name="me2day_id">
 			<value xml:lang="ko"><![CDATA[미투데이 아이디]]></value>
+			<value xml:lang="en"><![CDATA[Me2day id]]></value>
 		</item>
 		<item name="me2day_nickname">
 			<value xml:lang="ko"><![CDATA[미투데이 닉네임]]></value>
+			<value xml:lang="en"><![CDATA[Me2day nick name]]></value>
 		</item>
 		<item name="regdate">
 			<value xml:lang="ko"><![CDATA[가입일시]]></value>
