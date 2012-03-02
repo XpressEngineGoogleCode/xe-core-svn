@@ -1,0 +1,5 @@
+<li loop="$signUpForm => $formInfo">
+	<p class="q">{$formInfo->title} <em style="color:red" cond="$formInfo->required">*</em></p>
+	<div class="a">{$formInfo->inputTag}</div>
+	<p class="desc" cond="$formInfo->description">{$formInfo->description}</p>
+</li>
