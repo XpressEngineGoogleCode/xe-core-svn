@@ -1,28 +1,43 @@
 <!--#include("header.html")-->
-	<div id="body">
-<!--#include("progress_menu.html")-->
-	<span class="dummy"></span>
-	<div id="content">
-		<div class="table">
-			<table border="1" cellspacing="0">
-				<tbody>
-					<!--@foreach($checklist as $key => $val)-->
-					<tr>
-						<th scope="row">{$lang->install_checklist_title[$key]}<!--@if($key == 'php_version')--> (Ver. {$phpversion})<!--@end--></th>
-						<td><!--@if($val)-->{$lang->enable}<!--@else--><strong>{$lang->disable}</strong><br />{$lang->install_checklist_desc[$key]}<!--@end--></td>
-					</tr>
-					<!--@end-->
-				</tbody>
-			</table>
-			
-		</div>
-		<div class="ibtnArea">
-			<div class="fLeft">
-				<span class="ibtn icon"><span class="back"></span> <a href="{getUrl('')}">{$lang->cmd_back}</a></span>
-			</div>
-			<div class="fRight">
-				<span class="ibtn icon"><span class="check"></span><!--@if($install_enable)--><a href="{getUrl('','act','dispInstallSelectDB')}">{$lang->cmd_install_next}</a><!--@else--><a href="{getUrl('','act',$act)}">{$lang->cmd_install_fix_checklist}</a><!--@end--></span>
-			</div>
-		</div>
-	</div>
+
+    <!--#include("progress_menu.html")-->
+    <div id="content">
+        <div class="xe-ui-panel">
+            <div class="xe-ui-panel-content">
+                <h2>Setup check</h2>
+                <p>In order for XE to function correctly all the items in the table below must be marked with <b><span class="yes">yes</span></b>. If any of them are marked with <b><span class="no">no</span></b> please take the necesarry actions to correct them. If you do not know how to do this contact your web service provider.</p>
+                <table class="xe-ui-table" cellspacing="0" cellpadding="0">
+                    <!--@foreach($checklist as $key => $val)-->
+                        <tr>
+                            <td>
+                                <div>
+                                    <b>{$lang->install_checklist_title[$key]}<!--@if($key == 'php_version')--> (Ver. {$phpversion})<!--@end--></b>
+                                </div>
+                            </td>
+                            <td class="center">
+                                <div>
+                                    <b><!--@if($val)--><span class="yes">{$lang->cmd_yes}</span><!--@else--><span class="no">{$lang->cmd_no}</span><br />{$lang->install_checklist_desc[$key]}<!--@end--></b>
+                                </div>
+                            </td>
+                        </tr>
+                    <!--@end-->
+                </table>
+            </div>
+            <div class="xe-ui-panel-controller">
+                <hr />
+                <p style="float: left;">
+                    <a href="{getUrl('','act','dispInstallLicence')}" class="xe-ui-button-gray gradient">Go back</a>
+                </p>
+                <p style="float: right;">
+                    <!--@if($install_enable)-->
+                        <a href="{getUrl('','act','dispInstallSelectDB')}" class="xe-ui-button-gray gradient">Proceed</a>
+                    <!--@else-->
+                        <a href="{getUrl('','act',$act)}" class="xe-ui-button-gray gradient">{$lang->cmd_install_fix_checklist}</a>
+                    <!--@end-->
+                </p>
+            </div>
+        </div>
+        <p id="version">{$lang->version} {__ZBXE_VERSION__}</p>
+    </div>
+
 <!--#include("footer.html")-->

@@ -1,35 +1,54 @@
-<!--%import("js/install_admin.js")-->
+<!--%import("js/jquery.tipTip.js")-->
+<!--%import("css/tipTip.css")-->
+
 <!--#include("header.html")-->
-	<div id="body">
-<!--#include("progress_menu.html")-->
-		<span class="dummy"></span>
-		<div id="content">
-			<form method="post" action="./">
-			<input type="hidden" name="module" value="{$module}" />
-			<input type="hidden" name="act" value="dispInstallDBForm" />
-				<ul class="form formDbSelect">
-					<!--@foreach(DB::getEnableList() as $key => $val)-->
-					<li>
-						<input name="db_type" type="radio" value="{$val->db_type}" <!--@if(!$val->enable)-->disabled="disabled"<!--@end--> id="db_type_{$val->db_type}" <!--@if($val->db_type=="mysql")-->checked="checked"<!--@end--> class="iRadio" id="cubrid" /> <label for="db_type_{$val->db_type}">{$val->db_type}</label>
-						<p>{$lang->db_desc[$val->db_type]}</p>
-					</li>
-					<!--@end-->
-					<!--@foreach(DB::getDisableList() as $key => $val)-->
-					<li>
-						<input name="db_type" type="radio" value="{$val->db_type}" <!--@if(!$val->enable)-->disabled="disabled"<!--@end--> id="db_type_{$val->db_type}" <!--@if($val->db_type=="mysql")-->checked="checked"<!--@end--> class="iRadio" id="cubrid" /> <label for="db_type_{$val->db_type}">{$val->db_type}</label>
-						<p>{$lang->db_desc[$val->db_type]}</p>
-					</li>
-					<!--@end-->
-				</ul>
-				<div class="ibtnArea">
-					<div class="fLeft">
-						<span class="ibtn icon"><span class="back"></span> <a href="{getUrl('', 'act', 'dispInstallCheckEnv')}">{$lang->cmd_back}</a></span>
-					</div>
-					<div class="fRight">
-						<span class="ibtn icon"><span class="check"></span> <input name="" type="submit" value="{$lang->cmd_next}" /></span>
-					</div>
-				</div>
-			</form>
-		</div>
-	</div>
+
+<script type="text/javascript">
+    jQuery( function(){
+        jQuery("input:radio").each( function() {
+            offset = jQuery(this).next().width() + 20;
+            jQuery(this).tipTip({defaultPosition: "right", activation: "focus", maxWidth:"300px", delay:"0", edgeOffset:offset});
+        });
+    });
+</script>
+
+    <!--#include("progress_menu.html")-->
+    <div id="content">
+        <div class="xe-ui-panel">
+            <div class="xe-ui-panel-content">
+                <h2>Choose database type</h2>
+                <p>
+                    XE uses a database to store all it’s data.<br />
+                    Choose the database you wish to use from the ones liste below:
+                </p>
+                <form method="post" action="./" id="select_db">
+                <input type="hidden" name="module" value="{$module}" />
+                <input type="hidden" name="act" value="dispInstallDBForm" />
+                    <ul class="dbList">
+                        <!--@foreach(DB::getEnableList() as $key => $val)-->
+                        <li>
+                            <input name="db_type" type="radio" value="{$val->db_type}" <!--@if(!$val->enable)-->disabled="disabled"<!--@end--> id="db_type_{$val->db_type}" <!--@if($val->db_type=="mysql")-->checked="checked"<!--@end--> title="{$lang->db_desc[$val->db_type]}" /> <label for="db_type_{$val->db_type}">{$lang->db_list_title[$val->db_type]}</label>
+                        </li>
+                        <!--@end-->
+                        <!--@foreach(DB::getDisableList() as $key => $val)-->
+                        <li>
+                            <input name="db_type" type="radio" value="{$val->db_type}" <!--@if(!$val->enable)-->disabled="disabled"<!--@end--> id="db_type_{$val->db_type}" <!--@if($val->db_type=="mysql")-->checked="checked"<!--@end--> title="{$lang->db_desc[$val->db_type]}" /> <label for="db_type_{$val->db_type}">{$lang->db_list_title[$val->db_type]}</label>
+                        </li>
+                        <!--@end-->
+                    </ul>
+                </form>
+            </div>
+            <div class="xe-ui-panel-controller">
+                <hr />
+                <p style="float: left;">
+                    <a href="{getUrl('','act','dispInstallCheckEnv')}" class="xe-ui-button-gray gradient">Go back</a>
+                </p>
+                <p style="float: right;">
+                    <a href="#" onclick="jQuery('#select_db').submit();return false;" class="xe-ui-button-gray gradient">Proceed</a>
+                </p>
+            </div>
+        </div>
+        <p id="version">{$lang->version} {__ZBXE_VERSION__}</p>
+    </div>
+
 <!--#include("footer.html")-->

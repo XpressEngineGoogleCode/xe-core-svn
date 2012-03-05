@@ -1,38 +1,54 @@
 <include target="header.html" />
 
-<div class="table even easyList">
-	<table width="100%" border="1" cellspacing="0">
-		<caption>All({$tCount})</caption>
-		<thead>
-			<tr>
-				<th scope="col" class="title">{$lang->widget_name}</th>
-				<th scope="col">{$lang->version}</th>
-				<th scope="col">{$lang->author}</th>
-				<th scope="col">{$lang->path}</th>
-				<th scope="col">{$lang->cmd_generate_code}</th>
-				<th scope="col">{$lang->cmd_delete}</th>
-			</tr>
-		</thead>
-		<tbody>
-			<tr loop="$widget_list => $widget">
-				<td class="title">
-					<p><strong>{$widget->title}</strong></p>
-					<p>{$widget->description}</p>
-					<p cond="$widget->need_update == 'Y'" class="update">
-						{$lang->msg_avail_easy_update} <a href="{$widget->update_url}&amp;return_url={urlencode(getRequestUriByServerEnviroment())}">{$lang->msg_do_you_like_update}</a>
-					</p>
-				</td>
-				<td>{$widget->version}</td>
-				<td>
-					<block loop="$widget->author => $author">
-						<a cond="$author->homepage" href="{$author->homepage}" target="_blank">{$author->name}</a>
-						<block cond="!$author->homepage">{$author->name}</block>
-					</block>
-				</td>
-				<td>{$widget->path}</td>
-				<td><a href="{getUrl('act', 'dispWidgetAdminGenerateCode', 'selected_widget', $widget->widget)}">{$lang->cmd_generate_code}</a></td>
-				<td><a cond="$widget->remove_url" href="{$widget->remove_url}&amp;return_url={urlencode(getRequestUriByServerEnviroment())}">{$lang->cmd_delete}</a></td>
-			</tr>
-		</tbody>
-	</table>
+<div class="xe-ui-title-separator">
+    <hr/>
+</div>
+
+<div id="content" class="cleared">
+    <div cond="$XE_VALIDATOR_MESSAGE" class="xe-ui-message {$XE_VALIDATOR_MESSAGE_TYPE} gradient cleared">
+        <a href="#" style="float: right;" onclick="jQuery(this).parent().remove();return false;" class="xe-ui-button-gray gradient">Dismiss</a>
+        <p>{$XE_VALIDATOR_MESSAGE}</p>
+    </div>
+    <div class="xe-ui-panel">
+        <div class="xe-ui-panel-content cleared">
+            <table cellpadding="0" cellspacing="0" class="xe-ui-table">
+                <caption>
+                    <p class="aLeft">
+                        All ({$tCount})
+                    </p>
+                </caption>
+                <thead>
+                    <tr>
+                        <th scope="col" class="aLeft" width="45%">{$lang->widget_name}</th>
+                        <th scope="col" width="5%">{$lang->version}</th>
+                        <!--th scope="col" width="5%">{$lang->author}</th-->
+                        <th scope="col">{$lang->path}</th>
+                        <th scope="col" width="16%">{$lang->cmd_generate_code}</th>
+                        <th scope="col">{$lang->cmd_delete}</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr loop="$widget_list => $widget">
+                        <td>
+                            <p><strong>{$widget->title}</strong></p>
+                            <p>{$widget->description}</p>
+                            <p cond="$widget->need_update == 'Y'" class="update">
+                                {$lang->msg_avail_easy_update} <a href="{$widget->update_url}&amp;return_url={urlencode(getRequestUriByServerEnviroment())}">{$lang->msg_do_you_like_update}</a>
+                            </p>
+                        </td>
+                        <td class="center"">{$widget->version}</td>
+                        <!--td class="center">
+                        <block loop="$widget->author => $author">
+                            <a cond="$author->homepage" href="{$author->homepage}" target="_blank">{$author->name}</a>
+                            <block cond="!$author->homepage">{$author->name}</block>
+                        </block>
+                        </td-->
+                        <td>{$widget->path}</td>
+                        <td class="center"><a href="{getUrl('act', 'dispWidgetAdminGenerateCode', 'selected_widget', $widget->widget)}" class="xe-ui-button-gray">{$lang->cmd_generate_code}</a></td>
+                        <td class="center"><a cond="$widget->remove_url" href="{$widget->remove_url}&amp;return_url={urlencode(getRequestUriByServerEnviroment())}" class="xe-ui-button-gray">{$lang->cmd_delete}</a></td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
 </div>

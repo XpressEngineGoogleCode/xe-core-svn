@@ -11,25 +11,23 @@
 		<value xml:lang="es"><![CDATA[Instalación de XE ]]></value>
 		<value xml:lang="vi"><![CDATA[Cài đặt XE]]></value>
 	</item>
-	<item name="lgpl_agree">
-		<value xml:lang="ko"><![CDATA[GNU 약소 일반 공중 사용 허가서(LGPL v2) 동의]]></value>
-		<value xml:lang="en"><![CDATA[GNU Lesser General Public License(LGPL v2) Agreement]]></value>
-		<value xml:lang="jp"><![CDATA[GNU LGPL v2への同意]]></value>
-	</item>
-	<item name="enviroment_gather">
-		<value xml:lang="ko"><![CDATA[설치 환경 수집 동의]]></value>
-		<value xml:lang="en"><![CDATA[Agreement on gathering installation environment information]]></value>
-		<value xml:lang="jp"><![CDATA[インストール環境収集に同意する]]></value>
+	<item name="lgpl_label">
+		<value xml:lang="en"><![CDATA[I agree to the terms of use.]]></value>
 	</item>
 	<item name="install_progress_menu" type="array">
-		<item name="agree">
-			<value xml:lang="ko"><![CDATA[라이선스 동의]]></value>
-			<value xml:lang="en"><![CDATA[Acceptance of terms]]></value>
-			<value xml:lang="jp"><![CDATA[ライセンスに同意]]></value>
+		<item name="step1-welcome">
+			<value xml:lang="ko"><![CDATA[]]></value>
+			<value xml:lang="en"><![CDATA[Welcome to XE!]]></value>
+			<value xml:lang="jp"><![CDATA[]]></value>
 		</item>
-		<item name="condition">
+		<item name="step2-licence">
+			<value xml:lang="ko"><![CDATA[]]></value>
+			<value xml:lang="en"><![CDATA[Licence Agreement]]></value>
+			<value xml:lang="jp"><![CDATA[]]></value>
+		</item>
+		<item name="step3-check">
 			<value xml:lang="ko"><![CDATA[설치 조건 확인]]></value>
-			<value xml:lang="en"><![CDATA[Check the installation conditions]]></value>
+			<value xml:lang="en"><![CDATA[Setup check]]></value>
 			<value xml:lang="jp"><![CDATA[インストール条件確認]]></value>
 		</item>
 		<item name="ftp">
@@ -44,18 +42,21 @@
 		</item>
 		<item name="dbInfo">
 			<value xml:lang="ko"><![CDATA[DB 정보 입력]]></value>
-			<value xml:lang="en"><![CDATA[Input Database information]]></value>
+			<value xml:lang="en"><![CDATA[Input database info]]></value>
 			<value xml:lang="jp"><![CDATA[DB情報入力]]></value>
 		</item>
 		<item name="configInfo">
-			<value xml:lang="ko"><![CDATA[환경 설정]]></value>
-			<value xml:lang="en"><![CDATA[Settings]]></value>
-			<value xml:lang="jp"><![CDATA[環境設定]]></value>
+                    <value xml:lang="ko"><![CDATA[환경 설정]]></value>
+                    <value xml:lang="en"><![CDATA[Miscellaneous settings]]></value>
+                    <value xml:lang="jp"><![CDATA[環境設定]]></value>
 		</item>
 		<item name="adminInfo">
-			<value xml:lang="ko"><![CDATA[관리자 정보 입력]]></value>
-			<value xml:lang="en"><![CDATA[Enter Administrator information]]></value>
-			<value xml:lang="jp"><![CDATA[管理者情報入力]]></value>
+                    <value xml:lang="ko"><![CDATA[관리자 정보 입력]]></value>
+                    <value xml:lang="en"><![CDATA[Administrator account]]></value>
+                    <value xml:lang="jp"><![CDATA[管理者情報入力]]></value>
+		</item>
+		<item name="finish">
+                    <value xml:lang="en"><![CDATA[Wrap up and go!]]></value>
 		</item>
 	</item>
 	<item name="install_condition_title">
@@ -145,7 +146,7 @@
 	<item name="install_license_desc" type="array">
 		<item name="lgpl">
 			<value xml:lang="ko"><![CDATA[GNU 약소 일반 공중 사용 허가서(LGPL v2)에 동의해야 합니다.]]></value>
-			<value xml:lang="en"><![CDATA[You have to agree to the GNU Lesser General Public License(LGPL v2).]]></value>
+			<value xml:lang="en"><![CDATA[You have to agree to the GNU Lesser General Public License(LGPL v2.1) in order to install XpressEngine.]]></value>
 			<value xml:lang="jp"><![CDATA[GNU LGPL v2に同意しなければなりません。]]></value>
 		</item>
 	</item>
@@ -309,7 +310,7 @@
 	</item>
 	<item name="install_notandum">
 		<value xml:lang="ko"><![CDATA[모든 항목을 반드시 작성해야 합니다. 모든 항목을 관리자 환경에서 수정할 수 있습니다.]]></value>
-		<value xml:lang="en"><![CDATA[All form must be filled, but you can modify all of settings after finish the installation.]]></value>
+		<value xml:lang="en"><![CDATA[Rest assured, you can change these values later on.]]></value>
 		<value xml:lang="jp"><![CDATA[すべての項目を必ず作成してください。すべての項目を管理者環境にて修正できます。]]></value>
 	</item>
 	<item name="cmd_agree_license">
@@ -357,10 +358,24 @@
 		<value xml:lang="tr"><![CDATA[Önemseme]]></value>
 		<value xml:lang="vi"><![CDATA[Bỏ qua]]></value>
 	</item>
+	<item name="db_list_title" type="array">
+            <item name="mysql">
+                <value xml:lang="en"><![CDATA[<b>MySQL</b> with MyISAM (recommended)]]></value>
+            </item>
+            <item name="mysql_innodb">
+                <value xml:lang="en"><![CDATA[<b>MySQL</b> with INNODB]]></value>
+            </item>
+            <item name="cubrid">
+                <value xml:lang="en"><![CDATA[<b>CUBRID</b>]]></value>
+            </item>
+            <item name="mssql">
+                <value xml:lang="en"><![CDATA[<b>MSSQL</b>]]></value>
+            </item>
+	</item>
 	<item name="db_desc" type="array">
 		<item name="mysql">
 			<value xml:lang="ko"><![CDATA[MySQL DB를 php의 mysql*()함수를 이용하여 사용합니다.<br />DB 파일은 myisam으로 생성되기에 트랜잭션이 이루어지지 않습니다.]]></value>
-			<value xml:lang="en"><![CDATA[Use MySQL as a database with mysql*() functions in php.<br />Transactions will not be processed since DB file is created in myisam.]]></value>
+			<value xml:lang="en"><![CDATA[Use MySQL as a database with mysql*() functions in php. Transactions will not be processed since DB file is created in MyISAM.]]></value>
 			<value xml:lang="jp"><![CDATA[MySQL DBでPHPの「mysql*()」関数を利用してデータの入出力を行います。<br />DBは「myisam」タイプで作成されるため、トランザクション処理はできません。]]></value>
 			<value xml:lang="zh-CN"><![CDATA[利用php的 mysql*()函数使用mysql DB。<br />DB数据是以myisam生成，因此不能实现transaction。]]></value>
 			<value xml:lang="zh-TW"><![CDATA[利用 PHP 的『mysql*()』函數使用 MySQL 資料庫。<br />利用『myisam』建立資料庫檔案，因此不能實現transaction。]]></value>
@@ -420,7 +435,7 @@
 		</item>
 		<item name="cubrid">
 			<value xml:lang="ko"><![CDATA[CUBRID DB를 이용합니다. <a href="http://xe.xpressengine.net/18180659" target="_blank">Manual</a>]]></value>
-			<value xml:lang="en"><![CDATA[Use CUBRID as a database. See <a href="http://www.xpressengine.com/?mid=manual&pageid=2880556" target="_blank">Manual</a> for more info]]></value>
+			<value xml:lang="en"><![CDATA[Use CUBRID as a database. Consult the <a href='http://www.xpressengine.com/?mid=manual&pageid=2880556' target='_blank'>Manual</a> for more info.]]></value>
 			<value xml:lang="jp"><![CDATA[CUBRID DBを利用します。 <a href="http://www.xpressengine.com/?mid=manual&pageid=2880556" target="_blank">Manual</a>]]></value>
 			<value xml:lang="zh-CN"><![CDATA[使用CUBRID DB。 <a href="http://www.xpressengine.com/?mid=manual&pageid=2880556" target="_blank">Manual</a>]]></value>
 			<value xml:lang="zh-TW"><![CDATA[使用 CUBRID DB。 <a href="http://www.xpressengine.com/?mid=manual&pageid=2880556" target="_blank">Manual</a>]]></value>
@@ -432,7 +447,7 @@
 		</item>
 		<item name="mssql">
 			<value xml:lang="ko"><![CDATA[MSSQL DB를 이용합니다.]]></value>
-			<value xml:lang="en"><![CDATA[Use MSSQL as a database]]></value>
+			<value xml:lang="en"><![CDATA[Use MSSQL as a database.]]></value>
 			<value xml:lang="jp"><![CDATA[MSSQL DBを利用します。]]></value>
 			<value xml:lang="zh-CN"><![CDATA[使用MSSQL DB。]]></value>
 			<value xml:lang="zh-TW"><![CDATA[使用 MSSQL DB。]]></value>
@@ -516,7 +531,7 @@
 	</item>
 	<item name="db_hostname">
 		<value xml:lang="ko"><![CDATA[DB 호스트네임]]></value>
-		<value xml:lang="en"><![CDATA[DB Hostname]]></value>
+		<value xml:lang="en"><![CDATA[Database hostname]]></value>
 		<value xml:lang="jp"><![CDATA[ホスト名]]></value>
 		<value xml:lang="zh-CN"><![CDATA[服务器名]]></value>
 		<value xml:lang="zh-TW"><![CDATA[主機名稱]]></value>
@@ -526,9 +541,12 @@
 		<value xml:lang="tr"><![CDATA[Veritabanı Sunucuadı]]></value>
 		<value xml:lang="vi"><![CDATA[Hostname]]></value>
 	</item>
+	<item name="db_hostname_desc">
+		<value xml:lang="en"><![CDATA[99% you won’t have to change this.]]></value>
+	</item>
 	<item name="db_port">
-		<value xml:lang="ko"><![CDATA[DB Port]]></value>
-		<value xml:lang="en"><![CDATA[DB Port]]></value>
+		<value xml:lang="ko"><![CDATA[Database port]]></value>
+		<value xml:lang="en"><![CDATA[Database port]]></value>
 		<value xml:lang="jp"><![CDATA[ポート番号]]></value>
 		<value xml:lang="zh-CN"><![CDATA[数据库端口]]></value>
 		<value xml:lang="zh-TW"><![CDATA[埠口]]></value>
@@ -540,7 +558,7 @@
 	</item>
 	<item name="db_userid">
 		<value xml:lang="ko"><![CDATA[DB 아이디]]></value>
-		<value xml:lang="en"><![CDATA[DB ID]]></value>
+		<value xml:lang="en"><![CDATA[Database user]]></value>
 		<value xml:lang="jp"><![CDATA[ユーザーID]]></value>
 		<value xml:lang="zh-CN"><![CDATA[DB用户名]]></value>
 		<value xml:lang="zh-TW"><![CDATA[使用者名稱]]></value>
@@ -552,7 +570,7 @@
 	</item>
 	<item name="db_password">
 		<value xml:lang="ko"><![CDATA[DB 비밀번호]]></value>
-		<value xml:lang="en"><![CDATA[DB Password]]></value>
+		<value xml:lang="en"><![CDATA[Database Password]]></value>
 		<value xml:lang="jp"><![CDATA[パスワード]]></value>
 		<value xml:lang="zh-CN"><![CDATA[DB密码]]></value>
 		<value xml:lang="zh-TW"><![CDATA[密碼]]></value>
@@ -562,9 +580,12 @@
 		<value xml:lang="tr"><![CDATA[Veritabanı Şifresi]]></value>
 		<value xml:lang="vi"><![CDATA[Mật khẩu]]></value>
 	</item>
+	<item name="db_password_desc">
+            <value xml:lang="en"><![CDATA[Must not be empty.]]></value>
+	</item>
 	<item name="db_database">
 		<value xml:lang="ko"><![CDATA[DB 데이터베이스]]></value>
-		<value xml:lang="en"><![CDATA[DB Database]]></value>
+		<value xml:lang="en"><![CDATA[Database name]]></value>
 		<value xml:lang="jp"><![CDATA[データベース名]]></value>
 		<value xml:lang="zh-CN"><![CDATA[数据库名]]></value>
 		<value xml:lang="zh-TW"><![CDATA[資料庫名稱]]></value>
@@ -597,9 +618,9 @@
 		<value xml:lang="vi"><![CDATA[Tên Table]]></value>
 	</item>
 	<item name="db_info_desc">
-		<value xml:lang="ko"><![CDATA[<p><strong>DB 호스트 네임</strong>, <strong>DB Port</strong>, <strong>DB 아이디</strong>, <strong>DB 비밀번호</strong>, <strong>DB 이름</strong> 정보는 서버 호스팅 관리자로부터 정보를 확인 하세요.</p><p><strong>DB 테이블 머리말</strong> 정보는 사용자 정의 할 수 있습니다. 영문 소문자를 권장 합니다. 숫자를 포함할 수 있습니다. 특수 문자를 사용할 수 없습니다.</p>]]></value>
-		<value xml:lang="en"><![CDATA[<p>Please check <strong>database information</strong> to server master.</p><p>You can modify database <strong>table preface</strong>, and can use small letters(small letter is recommended), and numbers, but you can not use special letters.</p>]]></value>
-	　　<value xml:lang="jp"><![CDATA[<p><strong>DBホスト名</strong>, <strong>DB Port</strong>, <strong>DB ID</strong>, <strong>DB パスワード</strong>, <strong>DB 名稱</strong> 情報は、サーバーホスティング管理者に情報を確認してください。</p><p><strong>DBテーブルプレフィックス</strong> 情報は、ユーザーが定義できます。英文小文字の使用を推奨します。数字を含めることができます。特殊文字は、使用できません。</p>]]></value>
+            <value xml:lang="ko"><![CDATA[<p><strong>DB 호스트 네임</strong>, <strong>DB Port</strong>, <strong>DB 아이디</strong>, <strong>DB 비밀번호</strong>, <strong>DB 이름</strong> 정보는 서버 호스팅 관리자로부터 정보를 확인 하세요.</p><p><strong>DB 테이블 머리말</strong> 정보는 사용자 정의 할 수 있습니다. 영문 소문자를 권장 합니다. 숫자를 포함할 수 있습니다. 특수 문자를 사용할 수 없습니다.</p>]]></value>
+            <value xml:lang="en"><![CDATA[<p>Please check <strong>database information</strong> to server master.</p><p>You can modify database <strong>table preface</strong>, and can use small letters(small letter is recommended), and numbers, but you can not use special letters.</p>]]></value>
+            <value xml:lang="jp"><![CDATA[<p><strong>DBホスト名</strong>, <strong>DB Port</strong>, <strong>DB ID</strong>, <strong>DB パスワード</strong>, <strong>DB 名稱</strong> 情報は、サーバーホスティング管理者に情報を確認してください。</p><p><strong>DBテーブルプレフィックス</strong> 情報は、ユーザーが定義できます。英文小文字の使用を推奨します。数字を含めることができます。特殊文字は、使用できません。</p>]]></value>
 	</item>
 	<item name="admin_title">
 		<value xml:lang="ko"><![CDATA[관리자 정보]]></value>
@@ -674,7 +695,7 @@
 	</item>
 	<item name="about_rewrite">
 		<value xml:lang="ko"><![CDATA[이 기능을 사용하면 <em>http://yourdomain/<strong>?document_srl=123</strong></em> 과 같이 복잡한 주소를 <em>http://yourdomain/<strong>123</strong></em> 과 같이 간단하게 줄일 수 있습니다. 이 기능을 사용하려면 웹 서버에서 rewrite_mod를 지원해야 합니다. 웹 서버에서 rewrite_mod를 지원하는지 여부는 서버 관리자에게 문의하세요.]]></value>
-		<value xml:lang="en"><![CDATA[If web server provides rewrite mod, long URL such as http://blah/?document_srl=123 can be shortened like http://blah/123]]></value>
+		<value xml:lang="en"><![CDATA[Rewrite long URL’s such as <a href="#">http://www.yoursite.com/?document_srl=mypost</a> to <a href="#">http://www.yoursite.com/mypost</a>. Make sure your server supports this or you might have broken links.]]></value>
 		<value xml:lang="jp"><![CDATA[Webサーバで「リライト・モジュール（mod_rewrite）」をサポートしている場合は、「http://アドレス/?document_srl=123」のようなアドレスを、動的だけど「http://アドレス/123」のように静的なページに見せることができます。]]></value>
 		<value xml:lang="zh-CN"><![CDATA[如服务器支持rewrite模块且选择此项，可以简化复杂的网址。<br />例如，http://域名/?document_srl=123简化为http://域名/123。]]></value>
 		<value xml:lang="zh-TW"><![CDATA[如果支援 rewrite 功能，可縮短冗長的網址。<br />例>『http://域名/?document_srl=123』縮短成『http://域名/123』。]]></value>
@@ -698,7 +719,7 @@
 	</item>
 	<item name="about_time_zone">
 		<value xml:lang="ko"><![CDATA[서버의 설정시간과 사용하려는 장소의 시간이 차이가 날 경우 표준 시간대를 지정하면 표시되는 시간을 지정된 곳의 시간으로 사용하실 수 있습니다.]]></value>
-		<value xml:lang="en"><![CDATA[If the server time and the time on your location don't accord each other, you can set the time to be same as your location by using the time zone]]></value>
+		<value xml:lang="en"><![CDATA[Select your local time to set the dates in the site on your local timezone.]]></value>
 		<value xml:lang="jp"><![CDATA[サーバの設定時間とサービスしているローカル時間との差がある場合、タイムゾーンを指定して表示時間を合わせることができます。]]></value>
 		<value xml:lang="zh-CN"><![CDATA[服务器时间和您所处的时间有差异时，可以设置时区来满足你所需要的时间显示。]]></value>
 		<value xml:lang="zh-TW"><![CDATA[主機時間和您所處的時間有差異時，可以設置時區來滿足你所需要的時間顯示。]]></value>
@@ -882,17 +903,37 @@ Xin cảm ơn đã sử dụng XE!]]></value>
 		<value xml:lang="en"><![CDATA[Read Full Text]]></value>
 		<value xml:lang="jp"><![CDATA[フルテキスト読み込み]]></value>
 	</item>
-	<item name="license_agreement_desc">
+	<item name="msg_license_agreement_alert">
+		<value xml:lang="en"><![CDATA[You must agree to the terms of use.]]></value>
+	</item>
+	<!--item name="license_agreement_desc">
 		<value xml:lang="ko"><![CDATA[XE를 사용하려면 <em>이 항목에 반드시 동의해야 합니다</em>.]]></value>
 		<value xml:lang="en"><![CDATA[To use XE, <em>you have to agree to this</em>.]]></value>
 		<value xml:lang="jp"><![CDATA[XEを使用するには、<em>この項目に必ず同意しなければなりません。</em>]]></value>
-	</item>
+	</item-->
 	<item name="license_agreement_alert">
 		<value xml:lang="ko"><![CDATA[XE를 사용하려면 'GNU 약소 일반 공중 사용 허가서(LGPL v2)'에 반드시 동의해야 합니다.]]></value>
 		<value xml:lang="en"><![CDATA[To use XE, <em>you have to agree to the GNU Lesser General Public License(LGPL v2)</em>.]]></value>
 		<value xml:lang="jp"><![CDATA[XEを使用するには、LGPL v2に必ず同意しなければなりません。]]></value>
 	</item>
+        <item name="install_email_address">
+            <value xml:lang="en"><![CDATA[Admin email]]></value>
+        </item>
+        <item name="install_password">
+            <value xml:lang="en"><![CDATA[Admin password]]></value>
+        </item>
+        <item name="install_retype_password">
+            <value xml:lang="en"><![CDATA[Retype password]]></value>
+        </item>
+        <item name="install_username">
+            <value xml:lang="en"><![CDATA[Admin username]]></value>
+        </item>
 	<item name="install_env_agreement">
+		<value xml:lang="ko"><![CDATA[설치 환경 수집 동의]]></value>
+		<value xml:lang="en"><![CDATA[Help us improve XE by contributing anonymously to our server statistics program.]]></value>
+		<value xml:lang="jp"><![CDATA[インストール環境収集に同意する]]></value>
+	</item>
+	<item name="enviroment_gather">
 		<value xml:lang="ko"><![CDATA[설치 환경 수집 동의]]></value>
 		<value xml:lang="en"><![CDATA[Agreement on gathering installation environment information]]></value>
 		<value xml:lang="jp"><![CDATA[インストール環境収集に同意する]]></value>
@@ -902,9 +943,12 @@ Xin cảm ơn đã sử dụng XE!]]></value>
 		<value xml:lang="en"><![CDATA[Information on '<em>web server, DBMS, PHP version and extension, XE modules and addons</em>' is sent to the XE statistics collection server. This information is collected anonymously and used to improve our software only.<em> You don't have to agree to this.</em>]]></value>
 	　　<value xml:lang="jp"><![CDATA['<em>ウェブサーバー、DBMS、PHPバージョンおよびExtension、XEモジュール、およびアドオン</em>'情報が、XE統計収集サーバーへ転送されます。より良いソフトウェアを製作するための目的で活用されます。情報は、匿名で収集され、外部へ公開することはありません。<em>この項目は、同意しなくても構いません。</em>]]></value>
 	</item>
-	<item name="lgpl_license_url">
+	<!--item name="lgpl_license_url">
 		<value xml:lang="ko"><![CDATA[http://korea.gnu.org/people/chsong/copyleft/lgpl.ko.html]]></value>
 		<value xml:lang="en"><![CDATA[http://www.gnu.org/licenses/old-licenses/lgpl-2.1.html]]></value>
 		<value xml:lang="jp"><![CDATA[http://www.gnu.org/licenses/old-licenses/lgpl-2.1.ja.html]]></value>
+	</item-->
+	<item name="version">
+		<value xml:lang="en"><![CDATA[version]]></value>
 	</item>
 </lang>
