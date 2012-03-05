@@ -1,0 +1,9 @@
+<filter name="licence_agreement" module="install" act="procInstallAgreement">
+    <form>
+        <node target="lgpl_agree" required="true" />
+    </form>
+    <response callback_func="completeAgreement">
+        <tag name="error" />
+        <tag name="message" />
+    </response>
+</filter>
