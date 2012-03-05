@@ -11,6 +11,9 @@
 		<value xml:lang="tr"><![CDATA[Puan]]></value>
 		<value xml:lang="vi"><![CDATA[Điểm]]></value>
 	</item>
+        <item name="points">
+            <value xml:lang="en"><![CDATA[Points]]></value>
+        </item>
 	<item name="level">
 		<value xml:lang="ko"><![CDATA[레벨]]></value>
 		<value xml:lang="en"><![CDATA[Level]]></value>
@@ -190,7 +193,7 @@
 	</item>
 	<item name="level_point_calc">
 		<value xml:lang="ko"><![CDATA[레벨별 포인트 계산]]></value>
-		<value xml:lang="en"><![CDATA[Point Calculation per Point]]></value>
+		<value xml:lang="en"><![CDATA[Calculate points]]></value>
 		<value xml:lang="jp"><![CDATA[レベル別ポイント計算]]></value>
 		<value xml:lang="zh-CN"><![CDATA[计算级别积分]]></value>
 		<value xml:lang="zh-TW"><![CDATA[計算等級點數]]></value>
@@ -201,7 +204,7 @@
 	</item>
 	<item name="expression">
 		<value xml:lang="ko"><![CDATA[레벨 변수 <b>i</b>를 사용하여 자바스크립트 수식을 입력하세요. 예: Math.pow(i, 2) * 90]]></value>
-		<value xml:lang="en"><![CDATA[Please input Javascript formula by using level variable <b>i</b>. ex) Math.pow(i, 2) * 90]]></value>
+		<value xml:lang="en"><![CDATA[Please input Javascript formula by using level variable <b>i</b>. <br />ex) Math.pow(i, 2) * 90]]></value>
 		<value xml:lang="jp"><![CDATA[レベル変数<b>i</b>を使用してJavaスクリプト数式を入力してください（例: Math.pow(i, 2) * 90）。]]></value>
 		<value xml:lang="zh-CN"><![CDATA[使用级别变数<b>"i"</b>输入JS数学函数。例: Math.pow(i, 2) * 90]]></value>
 		<value xml:lang="zh-TW"><![CDATA[使用等級變數<b>"i"</b>輸入JS數學函數。例: Math.pow(i,2) * 90]]></value>
@@ -234,7 +237,7 @@
 	</item>
 	<item name="cmd_point_recal">
 		<value xml:lang="ko"><![CDATA[포인트 초기화]]></value>
-		<value xml:lang="en"><![CDATA[Reset Point]]></value>
+		<value xml:lang="en"><![CDATA[Reset Points]]></value>
 		<value xml:lang="jp"><![CDATA[ポイントの初期化]]></value>
 		<value xml:lang="zh-CN"><![CDATA[积分初始化]]></value>
 		<value xml:lang="zh-TW"><![CDATA[重置點數]]></value>

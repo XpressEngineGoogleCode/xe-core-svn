@@ -1,18 +1,11 @@
 @charset "utf-8";
 /* Element Reset */
 header,footer,section,article,aside,nav,hgroup,details,menu,figure,figcaption{display:block}
-.x,
-.x table,
-.x input,
-.x textarea,
-.x select,
-.x button{font-family:Tahoma,Geneva,sans-serif;font-size:12px;color:#333}
 .x button,
 .x input[type=submit],
 .x input[type=reset],
 .x input[type=button]{cursor:pointer;overflow:visible}
 .x img{border:0}
-.x p{line-height:1.5}
 /* Section & Heading */
 .x .section{margin:1em 0;padding:0;border:0}
 .x .h1, 
@@ -169,7 +162,6 @@ header,footer,section,article,aside,nav,hgroup,details,menu,figure,figcaption{di
 .x .bmk li{position:relative;top:-1px;border-top:1px dotted #ccc}
 }
 /* Local Navigation */
-.x .lnb{position:relative;float:left;width:210px;margin:1em 0 1em -240px;line-height:normal;zoom:1;display:inline}
 .x .lnb .h2{margin-top:0;border-left:0;padding-left:0}
 .x .lnb ul{margin:0 !important;padding:0;list-style:none}
 .x .lnb li{position:relative;margin:0 0 -1px 0;vertical-align:top;zoom:1}
@@ -197,21 +189,6 @@ header,footer,section,article,aside,nav,hgroup,details,menu,figure,figcaption{di
 .x .cnb .active,
 .x .cnb .active a{font-weight:bold;color:#333;text-decoration:none}
 .x .cnb .side{float:right}
-/* Pagination */
-.x .pagination{margin:1em 0;text-align:center;line-height:normal}
-.x .pagination *{vertical-align:middle}
-.x .pagination a,
-.x .pagination strong{position:relative;display:inline-block;padding:2px 4px;font-weight:bold;text-decoration:none;line-height:normal;color:#333 !important;vertical-align:middle}
-.x .pagination a:hover,
-.x .pagination a:active,
-.x .pagination a:focus{border:1px solid #ddd;margin:0 -1px}
-.x .pagination strong{color:#e00 !important;font-size:20px}
-.x .pagination .direction{font-weight:normal;white-space:nowrap}
-.x .pagination .direction:hover,
-.x .pagination .direction:active,
-.x .pagination .direction:focus{border:0;margin:0;text-decoration:underline}
-.x .pagination input{width:30px;text-align:center}
-.x .pagination button{overflow:visible}
 /* Star Rating */
 .x .starRating, 
 .x .starRating span{display:inline-block;height:14px;background:transparent url(../img/iconStarRating.gif) no-repeat;overflow:hidden}
@@ -307,8 +284,6 @@ body.modalContainer{_height:100%;_width:100%} /* IE6 only */
 .x .body{position:relative;z-index:1;padding:1em 20px 1em 260px;zoom:1}
 .x .body:after{content:"";display:block;clear:both}
 /* Content */
-.x .content{float:right;width:100%;margin-left:-230px;zoom:1}
-.x .content:after{content:"";display:block;clear:both}
 .x .content a{color:#33a}
 .x .content a:hover,
 .x .content a:active,
@@ -318,7 +293,10 @@ body.modalContainer{_height:100%;_width:100%} /* IE6 only */
 .x .content .portlet a:active,
 .x .content .portlet a:focus{text-decoration:underline}
 /* Dashboard */
-.x .dashboard{position:relative;float:none;width:auto;margin-left:-230px}
+.x .dashboard{
+    position:relative;
+    width:auto;
+}
 .x .dashboard .portlet{float:left;width:48%;margin-right:1em}
 .x .dashboard .portlet:nth-of-type(odd){float:left;width:49%;margin-right:0}
 .x .dashboard .portlet:nth-of-type(even){float:right;width:49%;margin-right:0}
@@ -580,7 +558,6 @@ body.modalContainer{_height:100%;_width:100%} /* IE6 only */
 .x .header .account ul{padding-right:10px}
 .x .body{padding:0}
 .x .content{float:none;margin-left:0}
-.x .lnb{float:none;width:auto;margin:1em 0}
 .x .dashboard .portlet{float:none !important;width:auto !important;margin-right:0}
 .modal .fg,
 .wfsr .fg{width:auto}

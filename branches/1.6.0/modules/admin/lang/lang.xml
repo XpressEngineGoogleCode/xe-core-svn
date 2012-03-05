@@ -1032,7 +1032,7 @@ Lütfen son sürümü için indirme linkine tıklayınız.]]></value>
 	</item>
 	<item name="bug_report">
 		<value xml:lang="ko"><![CDATA[버그 리포트]]></value>
-		<value xml:lang="en"><![CDATA[Bug Report]]></value>
+		<value xml:lang="en"><![CDATA[Report a bug]]></value>
 		<value xml:lang="jp"><![CDATA[バグレポート]]></value>
 	</item>
 	<item name="theme_setting">
@@ -1277,5 +1277,11 @@ Lütfen son sürümü için indirme linkine tıklayınız.]]></value>
 	<item name="admin_setup">
 		<value xml:lang="ko"><![CDATA[관리자 설정]]></value>
 		<value xml:lang="en"><![CDATA[Admin Setup]]></value>
+	</item>
+	<item name="accept_env_gather">
+		<value xml:lang="en"><![CDATA[Sure, why not]]></value>
+	</item>
+	<item name="decline_env_gather">
+		<value xml:lang="en"><![CDATA[No, thanks!]]></value>
 	</item>
 </lang>

@@ -13,21 +13,34 @@
          * @brief Initialization
          **/
         function init() {
-			// Set browser title
-			Context::setBrowserTitle(Context::getLang('introduce_title'));
+
+            // Set browser title
+            Context::setBrowserTitle(Context::getLang('introduce_title'));
+
             // Specify the template path
             $this->setTemplatePath($this->module_path.'tpl');
+
             // Error occurs if already installed
+            $steps_to_skip = array('dispInstallFinal');
+
+            //If final screen jump to display directly
+            if(in_array($this->act, $steps_to_skip)) return;
             if(Context::isInstalled()) return $this->stop('msg_already_installed');
+
             // Install a controller
             $oInstallController = getController('install');
             $this->install_enable = $oInstallController->checkInstallEnv();
+
             // If the environment is installable, execute installController::makeDefaultDirectory()
             if($this->install_enable) $oInstallController->makeDefaultDirectory();
+
+            // Show ftp step in template
+            $ftp = true;
+            if(ini_get('safe_mode') && !Context::isFTPRegisted()) Context::set('ftp',$ftp);
         }
 
         /**
-         * @brief Display license messages
+         * @brief Display welcome message
          **/
         function dispInstallIntroduce() {
 			$install_config_file = FileHandler::getRealPath('./config/install.config.php');
@@ -48,6 +61,13 @@
 
 			$this->setTemplateFile('introduce');
         }
+		
+        /**
+         * @brief Display licence agreement
+         **/
+		function dispInstallLicence() {
+			$this->setTemplateFile('licence_agreement');
+		}
 
         /**
          * @brief Display messages about installation environment
@@ -55,7 +75,6 @@
         function dispInstallCheckEnv() {
             $this->setTemplateFile('check_env');
         }
-
 
         /**
          * @brief Choose a DB
@@ -65,10 +84,10 @@
             if(!$this->install_enable) return $this->dispInstallCheckEnv();
             // Enter ftp information
             if(ini_get('safe_mode') && !Context::isFTPRegisted()) {
-				Context::set('progressMenu', '3');
+                Context::set('progressMenu', '3');
                 $this->setTemplateFile('ftp');
             } else {
-				Context::set('progressMenu', '4');
+                Context::set('progressMenu', '4');
                 $this->setTemplateFile('select_db');
             }
         }
@@ -111,6 +130,13 @@
 			}
 
             $this->setTemplateFile('admin_form');
+        }
+
+        /**
+         * @brief Display the final instalation screen
+         **/
+        function dispInstallFinal() {
+            $this->setTemplateFile('final_message');
         }
     }
 ?>

@@ -128,7 +128,7 @@ jQuery(function($){
 		);
 	});
 
-	$('button._addDeniedID').click(function(){
+	$('._addDeniedID').click(function(){
 		var ids = $('#prohibited_id').val();
 		if(ids == ''){ 
 			alert(xe.lang.msg_null_prohibited_id);

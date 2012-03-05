@@ -1,49 +1,55 @@
 <load target="js/fileConfig.js" type="body" usecdn="true" />
-<div cond="$XE_VALIDATOR_MESSAGE" class="message {$XE_VALIDATOR_MESSAGE_TYPE}">
-	<p>{$XE_VALIDATOR_MESSAGE}</p>
+
+<h1>File Upload</h1>
+<div class="xe-ui-title-separator">
+    <hr/>
 </div>
-<form ruleset="insertConfig" action="./" method="post" class="form">
-	<input type="hidden" name="module" value="file" />
-	<input type="hidden" name="act" value="procFileAdminInsertConfig" />
-	<h1 class="h1">File Upload</h1>
-	<ul>
-		<li>
-			<p class="q">{$lang->allow_outlink}</p>
-			<p class="a">
-				<input type="radio" name="allow_outlink" value="Y" id="allow_outlink_y" checked="checked"|cond="$config->allow_outlink == 'Y'" /> <label for="allow_outlink_y">{$lang->cmd_yes}</label>
-				<input type="radio" name="allow_outlink" value="N" id="allow_outlink_n" checked="checked"|cond="$config->allow_outlink == 'N'" /> <label for="allow_outlink_n">{$lang->cmd_no}</label>
-			</p>
-		</li>
-		<li style="display:none"|cond="$config->allow_outlink == 'N'" class="_outLink">
-			<p class="q">{$lang->allow_outlink_format}</p>
-			<p class="a">
-				<input type="text" name="allow_outlink_format" value="{$config->allow_outlink_format}" />
-				<p>{$lang->about_allow_outlink_format}</p>
-			</p>
-		</li>
-		<li style="display:none"|cond="$config->allow_outlink == 'N'" class="_outLink">
-			<p class="q">{$lang->allow_outlink_site}</p>
-			<p class="a">
-				<textarea type="text" name="allow_outlink_site">{$config->allow_outlink_site}</textarea>
-				<p>{$lang->about_allow_outlink_site}</p>
-			</p>
-		</li>
-		<li>
-			<p class="q"><label for="filesize">{$lang->about_allowed_filesize}</label></p>
-			<p class="a"><input id="filesize" type="text" name="allowed_filesize" value="{$config->allowed_filesize}" style="width:40px" /> MB</p>
-		</li>
-		<li>
-			<p class="q"><label for="attachSize">{$lang->about_allowed_attach_size}</label></p>
-			<p class="a"><input id="attachSize" type="text" name="allowed_attach_size" value="{$config->allowed_attach_size}" style="width:40px" /> MB</p>
-		</li>
-		<li>
-			<p class="q"><label for="allowedFiletypes">{$lang->allowed_filetypes}</label></p>
-			<p class="a"><input id="allowedFiletypes" type="text" name="allowed_filetypes" value="{$config->allowed_filetypes}" />
-				<p>{$lang->about_allowed_filetypes}</p>
-			</p>
-		</li>
-	</ul>
-	<div class="btnArea">
-		<span class="btn medium"><input type="submit" value="{$lang->cmd_save}" /></span>
-	</div>
-</form>
+
+<div id="content" class="cleared">
+    <div cond="$XE_VALIDATOR_MESSAGE" class="xe-ui-message {$XE_VALIDATOR_MESSAGE_TYPE} gradient cleared">
+        <a href="#" style="float: right;" onclick="jQuery(this).parent().remove();return false;" class="xe-ui-button-gray gradient">Dismiss</a>
+        <p>{$XE_VALIDATOR_MESSAGE}</p>
+    </div>
+    <div class="xe-ui-panel">
+        <div class="xe-ui-panel-content cleared">
+            <form ruleset="insertConfig" action="./" method="post" class="form">
+                <input type="hidden" name="module" value="file" />
+                <input type="hidden" name="act" value="procFileAdminInsertConfig" />
+                <p class="form-list">
+                    <span class="desc">{$lang->allow_outlink}</span>
+                    <input type="radio" name="allow_outlink" value="Y" id="allow_outlink_y" checked="checked"|cond="$config->allow_outlink == 'Y'" /> <label for="allow_outlink_y">{$lang->cmd_yes}</label>
+                    <input type="radio" name="allow_outlink" value="N" id="allow_outlink_n" checked="checked"|cond="$config->allow_outlink == 'N'" /> <label for="allow_outlink_n">{$lang->cmd_no}</label>
+                </p>
+                <p style="display:none"|cond="$config->allow_outlink == 'N'" class="_outLink form-list">
+                    <span class="desc">{$lang->allow_outlink_format}</span>
+                    <input type="text" name="allow_outlink_format" value="{$config->allow_outlink_format}" />
+                    {$lang->about_allow_outlink_format}
+                </p>
+                <p style="display:none"|cond="$config->allow_outlink == 'N'" class="_outLink form-list">
+                    <span class="desc">{$lang->allow_outlink_site}</span>
+                    <textarea type="text" name="allow_outlink_site">{$config->allow_outlink_site}</textarea>
+                    {$lang->about_allow_outlink_site}
+                </p>
+                <p class="form-list">
+                    <label for="filesize" class="desc">{$lang->about_allowed_filesize}</label>
+                    <input id="filesize" type="text" name="allowed_filesize" value="{$config->allowed_filesize}" style="width:40px" class="xe-ui-panel-text"/> MB
+                </p>
+                <p class="form-list">
+                    <label for="attachSize" class="desc">{$lang->about_allowed_attach_size}</label>
+                    <input id="attachSize" type="text" name="allowed_attach_size" value="{$config->allowed_attach_size}" style="width:40px" class="xe-ui-panel-text"/> MB
+                </p>
+                <p class="form-list">
+                    <label for="allowedFiletypes" class="desc">{$lang->allowed_filetypes}</label>
+                    <input id="allowedFiletypes" type="text" name="allowed_filetypes" value="{$config->allowed_filetypes}" class="xe-ui-panel-text"/>
+                    {$lang->about_allowed_filetypes}
+                </p>
+            </form>
+        </div>
+        <div class="xe-ui-panel-controller">
+            <hr />
+            <p class="center">
+                <a href="#" onclick="jQuery('.form').submit();return false;" class="xe-ui-button-gray">{$lang->cmd_save}</a>
+            </p>
+        </div>
+    </div>
+</div>

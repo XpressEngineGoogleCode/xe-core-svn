@@ -1,13 +1,17 @@
-	</div>
-	<div class="footer">
-		<p class="power">Powered by <strong><a href="{_XE_LOCATION_SITE_}" target="_blank">XE</a></strong> (ver. {__XE_VERSION__}).</p>
-		<p class="cache">
-			<button type="button" class="text" onclick="doResetAdminMenu();">{$lang->cmd_admin_menu_reset}</button>
-			<button type="button" class="text" onclick="doRecompileCacheFile();">{$lang->cmd_remake_cache}</button>
-			<button type="button" class="text" onclick="doClearSession();">{$lang->cmd_clear_session}</button>
-			<a href="http://code.google.com/p/xe-core/issues/entry" target="_blank">{$lang->bug_report}</a>
-		</p>
-	</div>
+<div class="xe-ui-footer">
+    <div class="xe-ui-footer-texture">
+        <div class="xe-ui-footer-center cleared">
+            <p class="f-left" style="line-height: 2.1em;">Powered by <b><a href="http://www.xpressengine.org">XE</a></b> (ver. {__ZBXE_VERSION__})</p>
+            <p class="f-right">
+                <select class="xe-ui-panel-select" style="margin-right: 10px;">
+                    <option loop="$lang_supported=>$key,$val" data-langcode="{$key}" onclick="doChangeLangType('{$key}'); window.location = '{getFullUrl('l',$key)}';" selected="selected"|cond="$key==$lang_type">
+                        {$val}
+                    </option>
+                </select>
+                <a href="http://code.google.com/p/xe-core/issues/entry" class="xe-ui-button-gray" target="_blank">{$lang->bug_report}</a>
+            </p>
+        </div>
+    </div>
 </div>
 <script type="text/javascript">
 xe.current_lang = '{$lang_type}';

@@ -24,7 +24,7 @@
             $args = Context::getRequestVars();
             // Check the point name
             $config->point_name = $args->point_name;
-            if(!$config->point_name) $config->point_name = 'point';
+            if(!$config->point_name) $config->point_name = 'points';
             // Specify the default points
             $config->signup_point = (int)$args->signup_point;
             $config->login_point = (int)$args->login_point;

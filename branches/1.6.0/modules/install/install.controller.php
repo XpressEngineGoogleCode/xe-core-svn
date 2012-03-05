@@ -28,15 +28,12 @@
 		function procInstallAgreement()
 		{
 			global $lang;
-			$requestVars = Context::gets('lgpl_agree', 'enviroment_gather');
+			$requestVars = Context::gets('lgpl_agree');
 			if($requestVars->lgpl_agree != 'Y') {
-				return new Object('-1', $lang->msg_license_agreement_alert);
+                            return new Object('-1', $lang->msg_license_agreement_alert);
 			}
 
 			$_SESSION['lgpl_agree'] = $requestVars->lgpl_agree;
-			if($requestVars->enviroment_gather=='Y') {
-				FileHandler::writeFile('./files/env/install','1');
-			}
 
 			$url = getNotEncodedUrl('', 'act', 'dispInstallCheckEnv');
 			header('location:'.$url);
@@ -195,14 +192,9 @@
 				}
 			}
 
-            // Display a message that installation is completed
-            $this->setMessage('msg_install_completed');
+            $url = getNotEncodedUrl('', 'module', 'install', 'act', 'dispInstallFinal');
+            $this->setRedirectUrl($url);
 
-			if(!in_array(Context::getRequestMethod(),array('XMLRPC','JSON'))) {
-				$returnUrl = Context::get('success_return_url') ? Context::get('success_return_url') : getNotEncodedUrl('');
-				header('location:'.$returnUrl);
-				return;
-			}
         }
 
 		/**

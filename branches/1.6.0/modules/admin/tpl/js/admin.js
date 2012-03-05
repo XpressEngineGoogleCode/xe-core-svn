@@ -24,7 +24,7 @@ jQuery(function($){
 				.css('position', 'relative');
 
 	// Make selected checkbox elements bold
-	var $rc_label = $('input:radio+label,input:checkbox+label'), $input_rc = $rc_label.prev('input');
+	/*var $rc_label = $('input:radio+label,input:checkbox+label'), $input_rc = $rc_label.prev('input');
 	$input_rc
 		.change(function(){
 			var name = $(this).attr('name');
@@ -35,6 +35,7 @@ jQuery(function($){
 					.next('label').css('font-weight', 'bold').end();
 		})
 		.change();
+        */
 
 	// Toogle checkbox all
 	$('.form th>input:checkbox')
@@ -566,7 +567,7 @@ $.fn.xeSortableTable = function(){
 	this
 		.not('.xe-sortable-table')
 		.addClass('xe-sortable-table')
-		.delegate('button.dragBtn', 'mousedown.st', function(event){
+		.delegate('.dragBtn', 'mousedown.st', function(event){
 			var $this, $tr, $table, $th, height, width, offset, position, offsets, i, dropzone, cols, ofspar;
 
 			if(event.which != 1) return;

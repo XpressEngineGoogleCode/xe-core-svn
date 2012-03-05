@@ -208,9 +208,9 @@ $('div.adminMenu')
 		}
 	})
 	.find('li')
-		.prepend('<button type="button" class="moveTo">Move to</button>')
+		.prepend('<a href="#" class="xe-ui-button-gray img moveTo"><img src="common/img/icon_move.png" /></a>')
 		.filter('.parent')
-			.find('>button.moveTo').css({'visibility':'hidden','margin-left':'-12px'}).end()
+			.find('>a.moveTo').css({'visibility':'hidden','margin-left':'-12px'}).end()
 		.end()
 	.end()
 
