@@ -222,7 +222,7 @@
 							$functionName = 'doDeleteImageMark';
 						}
 						if($target->src){
-							$inputTag = sprintf('<p class="a"><input type="hidden" name="__%s_exist" value="true" /><span id="%s"><img src="%s" alt="%s" /> <button type="button" class="text" onclick="%s(%d);return false;">%s</button></span></p>'
+							$inputTag = sprintf('<input type="hidden" name="__%s_exist" value="true" /><span id="%s"><img src="%s" alt="%s" /> <button type="button" class="text" onclick="%s(%d);return false;">%s</button></span>'
 												,$formInfo->name
 												,$formInfo->name.'tag'
 												,$target->src
@@ -233,7 +233,7 @@
 						}else{
 							$inputTag = sprintf('<input type="hidden" name="__%s_exist" value="false" />', $formInfo->name);
 						}
-						$inputTag .= sprintf('<p class="a"><input type="file" name="%s" id="%s" value="" /> <span class="desc">%s : %dpx, %s : %dpx</span></p>'
+						$inputTag .= sprintf('<input type="file" name="%s" id="%s" value="" /> <span class="desc">%s : %dpx, %s : %dpx</span>'
 											 ,$formInfo->name
 											 ,$formInfo->name
 											 ,$lang->{$formInfo->name.'_max_width'}
@@ -242,12 +242,12 @@
 											 ,$member_config->{$formInfo->name.'_max_height'});
 					}//end imageType
 					elseif($formInfo->name == 'birthday'){
-						$inputTag = sprintf('<input type="hidden" name="birthday" id="date_birthday" value="%s" /><input type="text" class="inputDate" id="birthday" value="%s" /> <input type="button" value="%s" class="dateRemover" />'
+						$inputTag = sprintf('<input type="hidden" name="birthday" id="date_birthday" value="%s" /><input type="text" class="inputDate xe-ui-panel-text" id="birthday" value="%s" /> <input type="button" value="%s" class="dateRemover" />'
 								,$memberInfo['birthday']
 								,zdate($memberInfo['birthday'], 'Y-m-d', false)
 								,$lang->cmd_delete);
 					}elseif($formInfo->name == 'find_account_question'){
-						$inputTag = '<select name="find_account_question" style="width:290px">%s</select><br />';
+						$inputTag = '<select name="find_account_question" style="width:350px;" class="xe-ui-panel-select">%s</select><br />';
 						$optionTag = array();
 						foreach($lang->find_account_question_items as $key=>$val){
 							if($key == $memberInfo['find_account_question']) $selected = 'selected="selected"';
@@ -258,9 +258,9 @@
 													,$val);
 						}
 						$inputTag = sprintf($inputTag, implode('', $optionTag));
-						$inputTag .= '<input type="text" name="find_account_answer" value="'.$memberInfo['find_account_answer'].'" />';
+						$inputTag .= '<input type="text" name="find_account_answer" value="'.$memberInfo['find_account_answer'].'" class="xe-ui-panel-text"/>';
 					}else{
-						$inputTag = sprintf('<input type="text" name="%s" value="%s" />'
+						$inputTag = sprintf('<input type="text" name="%s" value="%s" class="xe-ui-panel-text"/>'
 									,$formInfo->name
 									,$memberInfo[$formInfo->name]);
 					}
@@ -272,14 +272,14 @@
 					$extentionReplace = array();
 
 					if($extendForm->column_type == 'text' || $extendForm->column_type == 'homepage' || $extendForm->column_type == 'email_address'){
-						$template = '<input type="text" name="%column_name%" value="%value%" />';
+						$template = '<input type="text" name="%column_name%" value="%value%" class="xe-ui-panel-text"/>';
 					}elseif($extendForm->column_type == 'tel'){
 						$extentionReplace = array('tel_0' => $extendForm->value[0],
 												  'tel_1' => $extendForm->value[1],
 												  'tel_2' => $extendForm->value[2]);
-						$template = '<input type="text" name="%column_name%[]" value="%tel_0%" size="4" />-<input type="text" name="%column_name%[]" value="%tel_1%" size="4" />-<input type="text" name="%column_name%[]" value="%tel_2%" size="4" />';
+						$template = '<input type="text" name="%column_name%[]" value="%tel_0%" size="4" class="xe-ui-panel-text"/>-<input type="text" name="%column_name%[]" value="%tel_1%" size="4" class="xe-ui-panel-text"/>-<input type="text" name="%column_name%[]" value="%tel_2%" size="4" class="xe-ui-panel-text"/>';
 					}elseif($extendForm->column_type == 'textarea'){
-						$template = '<textarea name="%column_name%">%value%</textarea>';
+						$template = '<textarea name="%column_name%" class="xe-ui-panel-textarea">%value%</textarea>';
 					}elseif($extendForm->column_type == 'checkbox'){
 						$template = '';
 						if($extendForm->default_value){
@@ -304,7 +304,7 @@
 							$template = sprintf($template, implode('', $optionTag));
 						}
 					}elseif($extendForm->column_type == 'select'){
-						$template = '<select name="'.$formInfo->name.'">%s</select>';
+						$template = '<select name="'.$formInfo->name.'" class="xe-ui-panel-select">%s</select>';
 						$optionTag = array();
 						if($extendForm->default_value){
 							foreach($extendForm->default_value as $v){
@@ -346,11 +346,11 @@
 						<script type="text/javascript">jQuery(function($){ $.krzip('%column_name%') });</script>
 EOD;
 					}elseif($extendForm->column_type == 'jp_zip'){
-						$template = '<input type="text" name="%column_name%" value="%value%" />';
+						$template = '<input type="text" name="%column_name%" value="%value%" class="xe-ui-panel-text" />';
 					}elseif($extendForm->column_type == 'date'){
 						$extentionReplace = array('date' => zdate($extendForm->value, 'Y-m-d'),
 												  'cmd_delete' => $lang->cmd_delete);
-						$template = '<input type="hidden" name="%column_name%" id="date_%column_name%" value="%value%" /><input type="text" class="inputDate" value="%date%" readonly="readonly" /> <input type="button" value="%cmd_delete%" class="dateRemover" />';
+						$template = '<input type="hidden" name="%column_name%" id="date_%column_name%" value="%value%" /><input type="text" class="inputDate xe-ui-panel-text" value="%date%" readonly="readonly" /> <input type="button" value="%cmd_delete%" class="dateRemover" />';
 					}
 
 					$replace = array_merge($extentionReplace, $replace);
