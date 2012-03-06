@@ -64,7 +64,7 @@
      * 2: output execute time, Request/Response info
      * 4: output DB query history
      **/
-    if(!defined('__DEBUG__')) define('__DEBUG__', 0);
+    if(!defined('__DEBUG__')) define('__DEBUG__', 1);
 
     /**
      * @brief output location of debug message

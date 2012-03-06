@@ -50,10 +50,24 @@ jQuery(document).ready(function($) {
     });
 
     /*
-     * Disable default image drag in firefox
+     * Disable default image drag in Mozilla Firefox
      */
     $(document).bind("dragstart", function() {
-         return false;
+        return false;
+    });
+
+    /*
+     * Enable tooltip on all form elements
+     */
+    $("input:checkbox, textarea, input:text").each( function() {
+        if ($(this).attr('title') != undefined ) {
+            $(this).tipTip({
+                defaultPosition: "right",
+                activation: "focus",
+                maxWidth:"300px",
+                delay:"0"
+            });
+        }
     });
 
 });

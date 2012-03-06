@@ -465,9 +465,18 @@ h1 {
     line-height: 1.5em;
 }
 
+.xe-ui-table th a {
+    color: #000;
+    text-decoration: none;
+}
+
 .xe-ui-table td {
-    padding: 5px 10px;
+    padding: 5px 6px;
     line-height: 1.5em;
+}
+
+.xe-ui-table td.button {
+    width: 1%;
 }
 
 .xe-ui-table td * {
@@ -476,6 +485,11 @@ h1 {
 
 .xe-ui-table td.center {
     text-align: center;
+}
+
+.xe-ui-table td.no-data {
+    text-align: center;
+    padding: 40px 5px;
 }
 
 .xe-ui-table tr:nth-child(odd) td {
@@ -541,6 +555,7 @@ h1 {
     -moz-border-radius: 1px;
     -webkit-border-radius: 1px;
     border-radius: 1px;
+    min-width: 150px;
 }
 
 .xe-ui-panel-select option {
@@ -555,7 +570,8 @@ h1 {
     color: #000;
 }
 
-.xe-ui-panel-select:focus {
+.xe-ui-panel-select:focus, .xe-ui-panel-select option:focus {
+    -moz-user-focus: none;
     -moz-outline-style: none;
     outline: none;
 }
@@ -628,6 +644,10 @@ h1 {
     box-shadow: 0 4px 3px -3px rgba(13,13,14,.6), inset 0 1px 0 rgba(255,255,255,.15);
     border: 1px solid #000;
     position: relative;
+ }
+
+ .xe-ui-menu a {
+     outline: none;
  }
 
 .xe-ui-menu-texture {
@@ -721,6 +741,7 @@ h1 {
     z-index: 9999;
     /*left: -1px;*/
     padding: 4px 0 !important;
+    min-width: 130px;
 }
 
 .xe-ui-menu-item span {

@@ -1054,7 +1054,7 @@ function initLayer($layer) {
 
 			return false;
 		});
-	status_texts = $submit.val().split('|');
+	if ($submit) status_texts = $submit.val().split('|');
 	$submit.val(status_texts[USE]);
 };
 

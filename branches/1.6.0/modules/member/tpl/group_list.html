@@ -40,21 +40,21 @@
                     </caption>
                     <thead>
                         <tr>
-                            <th scope="col"><div>{$lang->group_title}</div></th>
-                            <th scope="col"><div>{$lang->description}</div></th>
+                            <th scope="col">{$lang->group_title}</th>
+                            <th scope="col">{$lang->description}</th>
                             <th scope="col">
                                 <div>
                                     {$lang->is_default}
                                 </div>
                             </th>
-                            <th scope="col" class="_imageMarkButton"><div>{$lang->group_image_mark}</div></th>
-                            <th scope="col"><div>Delete</div></th>
+                            <th scope="col" class="_imageMarkButton">{$lang->group_image_mark}</th>
+                            <th scope="col">Delete</th>
                         </tr>
                     </thead>
                     <tbody class="uDrag _groupList">
                         <tr loop="$group_list=>$group_srl,$group_info">
                             <td class="multiLangEdit">
-                                <div class="wrap" style="height:22px">
+                                <div class="wrap">
                                     <a href="#" class="xe-ui-button-gray img dragBtn">
                                         <img src="{getFullURL('')}common/img/icon_move.png" title="Move this item"/>
                                     </a>
@@ -64,35 +64,32 @@
                                     <span class="desc"><a href="#langEdit" class="tgAnchor editUserLang" data-effect="slide">{$lang->cmd_set_multilingual}</a></span>
                                 </div>
                             </td>
-                            <td class="center"><div><input type="text" name="descriptions[]" value="{$group_info->description}" style="width:240px" class="xe-ui-panel-text" /></div></td>
-                            <td class="center"><div><input type="radio" name="defaultGroup" value="{$group_info->group_srl}" title="Default" checked="checked"|cond="$group_info->is_default=='Y'" /></div></td>
-                            <td class="_imageMarkButton">
-                                <div>
-                                    <input type="hidden" name="image_marks[]" value="{$group_info->image_mark}" class="_imgMarkHidden" />
-                                    <img src="{$group_info->image_mark}" alt="{$group_info->title}" cond="$config->group_image_mark == 'Y' && $group_info->image_mark" />
-                                    <a href="#imageMark" class="modalAnchor _imageMark filebox">{$lang->cmd_modify}</a>
-                                </div>
+                            <td class="center"><input type="text" name="descriptions[]" value="{$group_info->description}" style="width:240px" class="xe-ui-panel-text" /></td>
+                            <td class="center"><input type="radio" name="defaultGroup" value="{$group_info->group_srl}" title="Default" checked="checked"|cond="$group_info->is_default=='Y'" /></td>
+                            <td class="_imageMarkButton center">
+                                <input type="hidden" name="image_marks[]" value="{$group_info->image_mark}" class="_imgMarkHidden" />
+                                <img src="{$group_info->image_mark}" alt="{$group_info->title}" cond="$config->group_image_mark == 'Y' && $group_info->image_mark" />
+                                <a href="#imageMark" class="modalAnchor _imageMark filebox">{$lang->cmd_modify}</a>
                             </td>
-                            <td class="center"><div><div class="_deleteTD" style="display:none"|cond="$group_info->is_default == 'Y'"><a href="#{$group_srl}" class="_deleteGroup xe-ui-button-gray">{$lang->cmd_delete}</a></div></div></td>
+                            <td class="center button"><a href="#{$group_srl}" class="_deleteTD _deleteGroup xe-ui-button-gray" style="display:none"|cond="$group_info->is_default == 'Y'">{$lang->cmd_delete}</a></td>
                         </tr>
                         <tr style="display:none" class="_template">
                             <td class="multiLangEdit">
-                                <div class="wrap" style="height:22px"><button type="button" class="dragBtn">Move to</button>
+                                <div class="wrap">
+                                    <button type="button" class="dragBtn">Move to</button>
                                     <input type="hidden" name="group_srls[]" value="new" disabled="disabled"/>
                                     <input type="hidden" name="group_titles[]" value=""  disabled="disabled" class="vLang" />
                                     <input type="text" value="" class="vLang" />
                                     <span class="desc"><a href="#langEdit" class="tgAnchor editUserLang">{$lang->cmd_set_multilingual}</a></span>
                                 </div>
                             </td>
-                            <td><div><input type="text" name="descriptions[]" value="" style="width:240px" disabled="disabled" /></div></td>
-                            <td><div><input type="radio" name="defaultGroup" value="" title="Default" disabled="disabled" /></div></td>
-                            <td class="_imageMarkButton">
-                                <div>
-                                    <input type="hidden" name="image_marks[]" value="" class="_imgMarkHidden" disabled="disabled" />
-                                    <a href="#imageMark" class="modalAnchor _imageMark">{$lang->cmd_modify}</a>
-                                </div>
+                            <td><input type="text" name="descriptions[]" value="" style="width:240px" disabled="disabled" /></td>
+                            <td><input type="radio" name="defaultGroup" value="" title="Default" disabled="disabled" /></td>
+                            <td class="_imageMarkButton center">
+                                <input type="hidden" name="image_marks[]" value="" class="_imgMarkHidden" disabled="disabled" />
+                                <a href="#imageMark" class="modalAnchor _imageMark">{$lang->cmd_modify}</a>
                             </td>
-                            <td><div><div class="_deleteTD"><a href="#new" class="_deleteGroup xe-ui-button-gray">{$lang->cmd_delete}</a></div></div></td>
+                            <td><div class="_deleteTD"><a href="#new" class="_deleteGroup xe-ui-button-gray">{$lang->cmd_delete}</a></div></td>
                         </tr>
                     </tbody>
                 </table>
@@ -112,13 +109,17 @@
                             unset($lang_supported[$lang_type]);
                             $lang_supported = array_merge($a, $lang_supported);
                             }
-                            <li loop="$lang_supported=>$code,$name" class="{$code}"><label for="{$code}_var1">{$name}</label> <input type="text" value="" id="{$code}_var1" class="xe-ui-panel-text" /></li>
+                            <li loop="$lang_supported=>$code,$name" class="{$code}">
+                                <label for="{$code}_var1">{$name}</label>
+                                <input type="text" value="" id="{$code}_var1" class="xe-ui-panel-text" />
+                            </li>
                         </ul>
                         <div class="action">
+                            <a href="#" onclick="jQuery('.form').submit();" class="xe-ui-button-gray">{$lang->use}</a>
                             <div class="btnArea">
                                 <span class="btn small"><input type="submit" value="{$lang->use}|{$lang->use_after_save}" /></span>
                             </div>
-                            <p><a href="{getUrl('act','dispModuleAdminLangcode')}">{$lang->multilingual_manager}</a></p>
+                            <p><a href="{getUrl('act','dispModuleAdminLangcode')}" class="xe-ui-button-gray">{$lang->multilingual_manager}</a></p>
                         </div>
                     </div>
                 </div>
