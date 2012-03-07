@@ -212,7 +212,7 @@
 	</item>
 	<item name="member_group">
 		<value xml:lang="ko"><![CDATA[회원 그룹]]></value>
-		<value xml:lang="en"><![CDATA[Member Group]]></value>
+		<value xml:lang="en"><![CDATA[Manage user groups]]></value>
 		<value xml:lang="jp"><![CDATA[所属グループ]]></value>
 		<value xml:lang="zh-CN"><![CDATA[用户组]]></value>
 		<value xml:lang="zh-TW"><![CDATA[群組]]></value>
@@ -701,7 +701,7 @@
 	</item>
 	<item name="about_webmaster_name">
 		<value xml:lang="ko"><![CDATA[인증 메일이나 기타 사이트 관리 시 사용될 웹마스터의 이름을 입력해주세요. (기본 : webmaster)]]></value>
-		<value xml:lang="en"><![CDATA[Please enter webmaster's name which will be used for verification mails or other site administration. (default : webmaster).]]></value>
+		<value xml:lang="en"><![CDATA[Webmaster's name will be used in verification mails and other site texts. (default : webmaster).]]></value>
 		<value xml:lang="jp"><![CDATA[確認メール、またはサイト管理時に使用されるウェブマスターの名前を入力してください（デフォルト : webmaster）。]]></value>
 		<value xml:lang="zh-CN"><![CDATA[请输入认证所需的电子邮件地址或管理其他网站时要使用的网站管理员名称。(默认 : webmaster)]]></value>
 		<value xml:lang="zh-TW"><![CDATA[請輸入認證所需的電子郵件地址或管理其他網站時要使用的網站管理員名稱。(預設 : webmaster)]]></value>
@@ -710,18 +710,6 @@
 		<value xml:lang="es"><![CDATA[Por favor, webmaster de entrada el nombre que se utilizará para la autenticación de los correos u otros sitio de la administración. (Por defecto: webmaster)]]></value>
 		<value xml:lang="tr"><![CDATA[Lütfen onay maillerinde veya site yönetiminde kullanılacak webmaster ismini giriniz. (varsayılan : webmaster)]]></value>
 		<value xml:lang="vi"><![CDATA[Xin hãy nhập tên của Webmaster để nhận Email và quản lý. (Mặc định: webmaster)]]></value>
-	</item>
-	<item name="about_webmaster_email">
-		<value xml:lang="ko"><![CDATA[웹마스터의 메일 주소를 입력해주세요.]]></value>
-		<value xml:lang="en"><![CDATA[Please enter webmaster's email address.]]></value>
-		<value xml:lang="jp"><![CDATA[ウェブマスターのメールアドレスを入力してください。]]></value>
-		<value xml:lang="zh-CN"><![CDATA[请输入网站管理员的电子邮件地址。]]></value>
-		<value xml:lang="zh-TW"><![CDATA[請輸入網站管理員的電子郵件地址。]]></value>
-		<value xml:lang="fr"><![CDATA[Entrez l'adresse du mél de webmestre, S.V.P.]]></value>
-		<value xml:lang="ru"><![CDATA[Пожалуйста, введите email адрес вебмастера.]]></value>
-		<value xml:lang="es"><![CDATA[Introduzca la dirección de correo electrónico webmaster.]]></value>
-		<value xml:lang="tr"><![CDATA[Lütfen webmaster e-posta adresini giriniz.]]></value>
-		<value xml:lang="vi"><![CDATA[Xin hãy nhập Email của Webmaster.]]></value>
 	</item>
 	<item name="search_target_list" type="array">
 		<item name="email_address">
@@ -950,7 +938,7 @@
 	</item>
 	<item name="cmd_module_config">
 		<value xml:lang="ko"><![CDATA[기본 설정]]></value>
-		<value xml:lang="en"><![CDATA[Default Setting]]></value>
+		<value xml:lang="en"><![CDATA[Default settings]]></value>
 		<value xml:lang="jp"><![CDATA[基本設定]]></value>
 		<value xml:lang="zh-CN"><![CDATA[常规选项]]></value>
 		<value xml:lang="zh-TW"><![CDATA[基本設置]]></value>
@@ -1858,7 +1846,7 @@
 	</item>
 	<item name="about_after_login_url">
 		<value xml:lang="ko"><![CDATA[로그인 후 이동할 URL을 정하실 수 있습니다. 비어 있으면 해당 페이지가 유지됩니다.]]></value>
-		<value xml:lang="en"><![CDATA[You can set a URL after login. Blank means the current page.]]></value>
+		<value xml:lang="en"><![CDATA[Leave this field empty to set the previous page as the redirect URL]]></value>
 		<value xml:lang="jp"><![CDATA[ログイン後表示されるページのURLを指定できます。指定のない場合、現在のページが維持されます。]]></value>
 		<value xml:lang="zh-CN"><![CDATA[可以指定登录后的页面转向url(留空为当前页面)。]]></value>
 		<value xml:lang="zh-TW"><![CDATA[可以指定登入後的頁面轉向網址(留空為目前頁面)。]]></value>
@@ -1869,7 +1857,7 @@
 	</item>
 	<item name="about_after_logout_url">
 		<value xml:lang="ko"><![CDATA[로그아웃 후 이동할 URL을 정하실 수 있습니다. 비어 있으면 해당 페이지가 유지됩니다.]]></value>
-		<value xml:lang="en"><![CDATA[You can set a URL after logout. Blank means the current page.]]></value>
+		<value xml:lang="en"><![CDATA[Leave this field empty to set the redirect URL as the current page.]]></value>
 		<value xml:lang="jp"><![CDATA[ログアウト後表示されるページのURLを指定できます。指定のない場合、現在のページが維持されます。]]></value>
 		<value xml:lang="zh-CN"><![CDATA[可以指定退出登录后的页面转向url(留空为当前页面)。]]></value>
 		<value xml:lang="zh-TW"><![CDATA[可以指定登出後的頁面轉向網址(留空為目前頁面)。]]></value>
@@ -1880,7 +1868,7 @@
 	</item>
 	<item name="about_redirect_url">
 		<value xml:lang="ko"><![CDATA[회원 가입 후 이동할 url을 입력해 주세요. 비어 있으면 가입 이전 페이지로 돌아갑니다.]]></value>
-		<value xml:lang="en"><![CDATA[Please enter a URL where users will go after sign up. When this is empty, it will be set as the previous page of the sign up page.]]></value>
+		<value xml:lang="en"><![CDATA[Leave this field empty to set the previous page as the redirect URL.]]></value>
 		<value xml:lang="jp"><![CDATA[会員登録後、表示されるページのURLを指定できます。指定のない場合は会員登録する前のページに戻ります。]]></value>
 		<value xml:lang="zh-CN"><![CDATA[请输入注册会员后的页面转向 url。(留空为返回前页)]]></value>
 		<value xml:lang="zh-TW"><![CDATA[請輸入會員註冊後的頁面轉向網址。(留空為返回前頁)]]></value>
@@ -2306,7 +2294,7 @@ Bạn có thể quản lý thành viên bằng cách tạo những nhóm mới, 
 	</item>
 	<item name="user_list">
 		<value xml:lang="ko"><![CDATA[회원 목록]]></value>
-		<value xml:lang="en"><![CDATA[User list]]></value>
+		<value xml:lang="en"><![CDATA[Add/Edit users]]></value>
 		<value xml:lang="jp"><![CDATA[会員リスト]]></value>
 	</item>
 	<item name="cmd_show_all_member">
@@ -2376,7 +2364,7 @@ Bạn có thể quản lý thành viên bằng cách tạo những nhóm mới, 
 	</item>
 	<item name="multi_line_input">
 		<value xml:lang="ko"><![CDATA[여러 항목은 줄을 바꾸어 입력하세요.]]></value>
-		<value xml:lang="en"><![CDATA[To enter multiple entries, please change the line input.]]></value>
+		<value xml:lang="en"><![CDATA[Enter multiple values on separate lines.]]></value>
 		<value xml:lang="jp"><![CDATA[複数の項目は、改行して入力してください。]]></value>
 	</item>
 	<item name="add_extend_form">
@@ -2409,11 +2397,11 @@ Bạn có thể quản lý thành viên bằng cách tạo những nhóm mới, 
 	</item>
 	<item name="msg_groups_exist">
 		<value xml:lang="ko"><![CDATA[개 그룹이 존재합니다.]]></value>
-		<value xml:lang="en"><![CDATA[groups are exist.]]></value>
+		<value xml:lang="en"><![CDATA[Group list]]></value>
 	</item>
 	<item name="cmd_member_config">
 		<value xml:lang="ko"><![CDATA[회원 설정]]></value>
-		<value xml:lang="en"><![CDATA[Member Configuration]]></value>
+		<value xml:lang="en"><![CDATA[User settings]]></value>
 	</item>
 	<item name="msg_success_modify_email_address">
 		<value xml:lang="ko"><![CDATA[이메일 주소가 정상적으로 변경되었습니다. 변경된 이메일 주소로 로그인 가능합니다.]]></value>

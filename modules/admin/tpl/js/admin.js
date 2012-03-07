@@ -569,6 +569,7 @@ $.fn.xeSortableTable = function(){
 		.addClass('xe-sortable-table')
 		.delegate('.dragBtn', 'mousedown.st', function(event){
 			var $this, $tr, $table, $th, height, width, offset, position, offsets, i, dropzone, cols, ofspar;
+                        var childWidths = new Array();
 
 			if(event.which != 1) return;
 
@@ -609,13 +610,24 @@ $.fn.xeSortableTable = function(){
 				.addClass('draggable')
 				.css({
 					position: 'absolute',
-					opacity : .6,
+					opacity : 1,
 					width   : width,
 					height  : height,
 					left    : offset.left,
 					top     : offset.top,
 					zIndex  : 100
 				});
+                                
+                        $tr.children().each( function() {
+                            childWidths.push($(this).width());
+                        });
+
+                        i = 0;
+                        $clone.children().each( function() {
+                            $(this).width(childWidths[i]);
+                            i++;
+                        });
+
 
 			// Set a place holder
 			$holder

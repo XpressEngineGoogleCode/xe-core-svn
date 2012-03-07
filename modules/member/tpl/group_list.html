@@ -6,7 +6,7 @@
     xe.lang.deleteMSG = '{$lang->cmd_delete}';
 </script>
 <style type="text/css">
-    ._imageMarkButton img { max-height:16px }
+    ._imageMarkButton img { max-width:50px; max-height: 64px; }
     .filebox_item { border: 1px solid #ccc!important; padding: 2px; max-height: 16px; }
     .x .multiLangEdit input.vLang { width:120px }
     .x .multiLangEdit input.vLang.loading { padding-right:24px;width:100px;background:transparent url(../../admin/tpl/img/preLoader16.gif) no-repeat 96px center }
@@ -30,12 +30,13 @@
                 <table cellpadding="0" cellspacing="0" class="sortable xe-ui-table">
                     <caption>
                         <p class="f-left">
-                            <strong>{count($group_list)}</strong> {$lang->msg_groups_exist}
+                            {$lang->msg_groups_exist} ({count($group_list)})
                         </p>
                         <p class="f-right">
                             {$lang->use_group_image_mark}:
                             <input type="radio" name="group_image_mark" id="yes" value="Y" checked="checked"|cond="$config->group_image_mark == 'Y'" /> <label for="yes">{$lang->cmd_yes}</label>
-                            <input type="radio" name="group_image_mark" id="no" value="N" checked="checked"|cond="$config->group_image_mark != 'Y'" /> <label for="no">{$lang->cmd_no}</label>
+                            <input type="radio" name="group_image_mark" id="no" value="N" checked="checked"|cond="$config->group_image_mark != 'Y'" /> <label for="no" style="margin-right: 10px;">{$lang->cmd_no}</label>
+                            <a href="#" class="_addGroup xe-ui-button-gray">{$lang->cmd_add_group}</a>
                         </p>
                     </caption>
                     <thead>
@@ -54,22 +55,20 @@
                     <tbody class="uDrag _groupList">
                         <tr loop="$group_list=>$group_srl,$group_info">
                             <td class="multiLangEdit">
-                                <div class="wrap">
-                                    <a href="#" class="xe-ui-button-gray img dragBtn">
-                                        <img src="{getFullURL('')}common/img/icon_move.png" title="Move this item"/>
-                                    </a>
-                                    <input type="hidden" name="group_srls[]" value="{$group_info->group_srl}" />
-                                    <input type="hidden" name="group_titles[]" value="{htmlspecialchars($group_info->title)}" class="vLang"/>
-                                    <input type="text" value="{$group_info->title}" class="vLang xe-ui-panel-text" />
-                                    <span class="desc"><a href="#langEdit" class="tgAnchor editUserLang" data-effect="slide">{$lang->cmd_set_multilingual}</a></span>
-                                </div>
+                                <a href="#" class="xe-ui-button-gray img dragBtn">
+                                    <img src="{getFullURL('')}common/img/icon_move.png" title="Move this item"/>
+                                </a>
+                                <input type="hidden" name="group_srls[]" value="{$group_info->group_srl}" />
+                                <input type="hidden" name="group_titles[]" value="{htmlspecialchars($group_info->title)}" class="vLang"/>
+                                <input type="text" value="{$group_info->title}" class="vLang xe-ui-panel-text" />
+                                <span class="desc"><a href="#langEdit" class="tgAnchor editUserLang" data-effect="slide">{$lang->cmd_set_multilingual}</a></span>
                             </td>
                             <td class="center"><input type="text" name="descriptions[]" value="{$group_info->description}" style="width:240px" class="xe-ui-panel-text" /></td>
-                            <td class="center"><input type="radio" name="defaultGroup" value="{$group_info->group_srl}" title="Default" checked="checked"|cond="$group_info->is_default=='Y'" /></td>
+                            <td class="center button"><input type="radio" name="defaultGroup" value="{$group_info->group_srl}" title="Default" checked="checked"|cond="$group_info->is_default=='Y'" /></td>
                             <td class="_imageMarkButton center">
                                 <input type="hidden" name="image_marks[]" value="{$group_info->image_mark}" class="_imgMarkHidden" />
-                                <img src="{$group_info->image_mark}" alt="{$group_info->title}" cond="$config->group_image_mark == 'Y' && $group_info->image_mark" />
-                                <a href="#imageMark" class="modalAnchor _imageMark filebox">{$lang->cmd_modify}</a>
+                                <img class="xe-ui-panel-img" src="{$group_info->image_mark}" alt="{$group_info->title}" cond="$config->group_image_mark == 'Y' && $group_info->image_mark" />
+                                <a href="#imageMark" class="modalAnchor _imageMark filebox xe-ui-button-gray">{$lang->cmd_modify}</a>
                             </td>
                             <td class="center button"><a href="#{$group_srl}" class="_deleteTD _deleteGroup xe-ui-button-gray" style="display:none"|cond="$group_info->is_default == 'Y'">{$lang->cmd_delete}</a></td>
                         </tr>
@@ -87,16 +86,12 @@
                             <td><input type="radio" name="defaultGroup" value="" title="Default" disabled="disabled" /></td>
                             <td class="_imageMarkButton center">
                                 <input type="hidden" name="image_marks[]" value="" class="_imgMarkHidden" disabled="disabled" />
-                                <a href="#imageMark" class="modalAnchor _imageMark">{$lang->cmd_modify}</a>
+                                <a href="#imageMark" class="modalAnchor _imageMark xe-ui-button-gray">{$lang->cmd_modify}</a>
                             </td>
                             <td><div class="_deleteTD"><a href="#new" class="_deleteGroup xe-ui-button-gray">{$lang->cmd_delete}</a></div></td>
                         </tr>
                     </tbody>
                 </table>
-                <p class="f-right">
-                    <a href="#" class="_addGroup xe-ui-button-gray">{$lang->cmd_add_group}</a>
-                </p>
-
                 <!-- Multilingual -->
                 <div id="langEdit" class="langEdit tgContent">
                     <ul class="langList"></ul>
