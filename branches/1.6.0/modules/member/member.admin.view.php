@@ -247,7 +247,7 @@
 								,zdate($memberInfo['birthday'], 'Y-m-d', false)
 								,$lang->cmd_delete);
 					}elseif($formInfo->name == 'find_account_question'){
-						$inputTag = '<select name="find_account_question" style="width:350px;" class="xe-ui-panel-select">%s</select><br />';
+						$inputTag = '<select name="find_account_question" style="width:350px;" class="xe-ui-panel-select">%s</select>';
 						$optionTag = array();
 						foreach($lang->find_account_question_items as $key=>$val){
 							if($key == $memberInfo['find_account_question']) $selected = 'selected="selected"';
@@ -258,7 +258,7 @@
 													,$val);
 						}
 						$inputTag = sprintf($inputTag, implode('', $optionTag));
-						$inputTag .= '<input type="text" name="find_account_answer" value="'.$memberInfo['find_account_answer'].'" class="xe-ui-panel-text"/>';
+						$inputTag .= '<input type="text" name="find_account_answer" value="'.$memberInfo['find_account_answer'].'" class="xe-ui-panel-text" />';
 					}else{
 						$inputTag = sprintf('<input type="text" name="%s" value="%s" class="xe-ui-panel-text"/>'
 									,$formInfo->name

@@ -10,74 +10,74 @@
     </div>
     <div class="xe-ui-panel">
         <div class="xe-ui-panel-content cleared">            
-                <!--@foreach($member_config->signupForm as $no=>$formInfo)-->
-                <!--@if($formInfo->isDefaultForm)-->
-                {@$title = $formInfo->title}
-                {@$value = $memberInfo[$formInfo->name]}
-                <!--@if($formInfo->name == 'find_account_question')-->
-                {@$value = $lang->find_account_question_items[$value].' : '.$memberInfo['find_account_answer']}
-                <!--@elseif($formInfo->name == 'profile_image' && $memberInfo['profile_image'])-->
-                {@$target = $memberInfo['profile_image']}
-                {@$value = '<img src="'.$target->src.'" />'}
-                <!--@elseif($formInfo->name == 'image_name' && $memberInfo['image_name'])-->
-                {@$target = $memberInfo['image_name']}
-                {@$value = '<img src="'.$target->src.'" />'}
-                <!--@elseif($formInfo->name == 'image_mark' && $memberInfo['image_mark'])-->
-                {@$target = $memberInfo['image_mark']}
-                {@$value = '<img src="'.$target->src.'" />'}
-                <!--@end-->
-                <!--@else-->
-                {@$title = $extend_form_list[$formInfo->member_join_form_srl]->column_title}
-                {@$orgValue = $extend_form_list[$formInfo->member_join_form_srl]->value}
-                <!--@if($formInfo->type=='tel')-->
+            <!--@foreach($member_config->signupForm as $no=>$formInfo)-->
+            <!--@if($formInfo->isDefaultForm)-->
+            {@$title = $formInfo->title}
+            {@$value = $memberInfo[$formInfo->name]}
+            <!--@if($formInfo->name == 'find_account_question')-->
+            {@$value = $lang->find_account_question_items[$value].' : '.$memberInfo['find_account_answer']}
+            <!--@elseif($formInfo->name == 'profile_image' && $memberInfo['profile_image'])-->
+            {@$target = $memberInfo['profile_image']}
+            {@$value = '<img src="'.$target->src.'" />'}
+            <!--@elseif($formInfo->name == 'image_name' && $memberInfo['image_name'])-->
+            {@$target = $memberInfo['image_name']}
+            {@$value = '<img src="'.$target->src.'" />'}
+            <!--@elseif($formInfo->name == 'image_mark' && $memberInfo['image_mark'])-->
+            {@$target = $memberInfo['image_mark']}
+            {@$value = '<img src="'.$target->src.'" />'}
+            <!--@end-->
+            <!--@else-->
+            {@$title = $extend_form_list[$formInfo->member_join_form_srl]->column_title}
+            {@$orgValue = $extend_form_list[$formInfo->member_join_form_srl]->value}
+            <!--@if($formInfo->type=='tel')-->
 				{@$value = $orgValue[0]}
-                <!--@if($orgValue[1])-->-<!--@end-->
+            <!--@if($orgValue[1])-->-<!--@end-->
 				{@$value .= $orgValue[1]}
-                <!--@if($orgValue[2])-->-<!--@end-->
+            <!--@if($orgValue[2])-->-<!--@end-->
 				{@$value .= $orgValue[2]}
-                <!--@elseif($formInfo->type=='kr_zip')-->
+            <!--@elseif($formInfo->type=='kr_zip')-->
 				{@$value = $orgValue[0]}<!--@if($orgValue[1]&&$orgValue[0])--><br /><!--@end-->{@$value .= $orgValue[1]}
-                <!--@elseif($formInfo->type=='checkbox' && is_array($orgValue))-->
+            <!--@elseif($formInfo->type=='checkbox' && is_array($orgValue))-->
 				{@$value = implode(", ",$orgValue)}
-                <!--@elseif($formInfo->type=='date')-->
+            <!--@elseif($formInfo->type=='date')-->
 				{@$value = zdate($orgValue, "Y-m-d")}
-                <!--@else-->
+            <!--@else-->
 				{@$value = nl2br($orgValue)}
-                <!--@end-->
-                <!--@end-->
-                    <p class="form-list" cond="$formInfo->isUse && $formInfo->name != 'password'">
-                        <span class="desc">{$title}:</span>
-                        {$value}
-                    </p>
-                <!--@end-->
-                <p class="form-list">
-                    <span class="desc">{$lang->allow_mailing}:</span>
-                    <!--@if($memberInfo['allow_mailing'] == 'Y')-->{$lang->cmd_yes}<!--@else-->{$lang->cmd_no}<!--@end-->
-                </p>
-                <p class="form-list">
-                    <span class="desc">{$lang->allow_message}:</span>
-                    {$lang->allow_message_type[$memberInfo['allow_message']]}
-                </p>
-                <p class="form-list">
-                    <span class="desc">{$lang->denied}:</span>
-                    <!--@if($memberInfo['denied'] == 'N')-->{$lang->cmd_no}<!--@else-->{$lang->cmd_yes}<!--@end-->
-                </p>
-                <p class="form-list" cond="$memberInfo['limit_date']">
-                    <span class="desc">{$lang->limit_date}:</span>
-                    {zdate($memberInfo['limit_date'],"Y-m-d H:i")}
-                </p>
-                <p class="form-list" cond="$memberInfo['is_admin'] == 'Y'">
-                    <span class="desc">{$lang->is_admin}:</span>
-                    {$lang->cmd_yes}
-                </p>
-                <p class="form-list">
-                    <span class="desc">{$lang->member_group}:</span>
-                    {implode(', ', $memberInfo['group_list'])}
-                </p>
-                <p class="form-list" cond="$memberInfo['description']">
-                    <span class="desc">{$lang->description}:</span>
-                    {$memberInfo['description']}
-                </p>
+            <!--@end-->
+            <!--@end-->
+            <p class="form-list" cond="$formInfo->isUse && $formInfo->name != 'password'">
+                <span class="desc">{$title}:</span>
+                {$value}
+            </p>
+            <!--@end-->
+            <p class="form-list">
+                <span class="desc">{$lang->allow_mailing}:</span>
+                <!--@if($memberInfo['allow_mailing'] == 'Y')-->{$lang->cmd_yes}<!--@else-->{$lang->cmd_no}<!--@end-->
+            </p>
+            <p class="form-list">
+                <span class="desc">{$lang->allow_message}:</span>
+                {$lang->allow_message_type[$memberInfo['allow_message']]}
+            </p>
+            <p class="form-list">
+                <span class="desc">{$lang->denied}:</span>
+                <!--@if($memberInfo['denied'] == 'N')-->{$lang->cmd_no}<!--@else-->{$lang->cmd_yes}<!--@end-->
+            </p>
+            <p class="form-list" cond="$memberInfo['limit_date']">
+                <span class="desc">{$lang->limit_date}:</span>
+                {zdate($memberInfo['limit_date'],"Y-m-d H:i")}
+            </p>
+            <p class="form-list" cond="$memberInfo['is_admin'] == 'Y'">
+                <span class="desc">{$lang->is_admin}:</span>
+                {$lang->cmd_yes}
+            </p>
+            <p class="form-list">
+                <span class="desc">{$lang->member_group}:</span>
+                {implode(', ', $memberInfo['group_list'])}
+            </p>
+            <p class="form-list" cond="$memberInfo['description']">
+                <span class="desc">{$lang->description}:</span>
+                {$memberInfo['description']}
+            </p>
         </div>
         <div class="xe-ui-panel-controller">
             <hr />
