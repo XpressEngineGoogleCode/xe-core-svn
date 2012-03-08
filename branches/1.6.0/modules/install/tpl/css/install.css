@@ -7,6 +7,12 @@
     position: relative;
 }
 
+#xe-installer h1 {
+    width: 100%;
+    margin: 40px 0;
+    text-align: center;
+}
+
 #xe-installer  p {
     line-height: 1.4em;
 }
@@ -28,7 +34,7 @@
     padding: 10px 12px;
     border-bottom: 1px dashed #bbb;
     color: #49494a;
-    z-index: 9999;
+    z-index: 999;
 }
 
 #menu li.active {
@@ -52,16 +58,16 @@
     background: #fff;
 }
 
-#content {
+#installContent {
     float:right;
     width: 620px;
 }
 
-#content .xe-ui-panel {
+#installContent .xe-ui-panel {
     min-height: 500px;
 }
 
-#content p label {
+#installContent p label {
     width: 150px;
     display: inline-block;
 }
@@ -103,6 +109,11 @@
     color: #c34848;
 }
 
+.xe-ui-tolltip {
+    padding-right: 10px;
+    display: inline;
+}
+
 /* ----- OLD CODE ----- */
 img, fieldset {border:0}
 form, fieldset {margin:0;padding:0}
@@ -127,7 +138,7 @@ a:hover, a:active, a:focus {text-decoration:underline}
 #xei #progress li{position:relative;margin:0 0 1px 0;vertical-align:top;line-height:40px;color:#999;text-indent:30px;background-color:#555;background-image:url(../img/icoStatus.gif);background-repeat:no-repeat;background-position:10px 0;*zoom:1}
 #xei #progress li.done{background-position:10px -40px}
 #xei #progress li.active{background-color:#666;background-position:10px -80px;font-weight:bold;color:#fff;margin-right:-1px}
-#xei #content{position:relative;width:580px;min-height:328px;_height:328px;padding:20px 0 60px 0;background:#666}
+#xei #installContent{position:relative;width:580px;min-height:328px;_height:328px;padding:20px 0 60px 0;background:#666}
 /* Button */
 .ibtn,
 .ibtn *{position:relative;margin:0;padding:0;display:inline-block;height:30px;line-height:30px;text-decoration:none !important;border:0;font-size:12px;font-family:Tahoma, Sans-serif;white-space:nowrap;background:url(../img/btnPack.gif) no-repeat;vertical-align:top;overflow:visible;color:#eee}

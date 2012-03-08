@@ -15,8 +15,8 @@ jQuery(document).ready(function($) {
     /*
      * simulate 'min-height':100%; for <body>
      */
-    if( $(window).height() > $('body').height() ) {
-        var target = $('.xe-ui-footer');
+    var target = $('.xe-ui-footer');
+    if (($(window).height()>$('body').height())&&(target.size()!= 0)) {
         var val = $(window).height() - (target.position().top + target.height() - parseInt(target.prev().css('margin-bottom'))) - 1; // -1 for borderd top
         target.css('margin-top',val);
     }
@@ -38,15 +38,18 @@ jQuery(document).ready(function($) {
     /*
      * Enable tooltip on all form elements
      */
-    $("input:checkbox, textarea, input:text").each( function() {
-        if ($(this).attr('title') != undefined ) {
-            $(this).tipTip({
-                defaultPosition: "right",
-                activation: "focus",
-                maxWidth:"300px",
-                delay:"0"
-            });
-        }
+    $("input:checkbox, textarea, input:text, input:password, .xe-ui-tolltip").each( function() {
+        $(this).tipTip({
+            defaultPosition: "right",
+            activation: "hover",
+            maxWidth:"300px",
+            delay:"0"
+        });
     });
+
+    /*
+     * Set custom checkbox and radio buttons
+     */
+    $('input[type=checkbox],input[type=radio]').prettyCheckboxes();
 
 });
