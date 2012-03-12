@@ -462,7 +462,7 @@
 			
 			// get all shortcuts corresponding to logged member_srl
 			$output = executeQueryArray('admin.getShortcuts', $args);
-			if($output->toBool())
+			if($output->toBool() && count($output->data) > 0)
 			{
 				$shortcutsList = $output->data;
 			}

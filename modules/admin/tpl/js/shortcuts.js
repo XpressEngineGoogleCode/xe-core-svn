@@ -30,7 +30,7 @@ function reorderTableElements()
 
 jQuery(document).ready(function()
 {
-	jQuery('table.sortable').bind('mouseup.st', function() {
+	jQuery('table.sortable').live('after-drag.st',function() {
 		reorderTableElements();
 	});
 })

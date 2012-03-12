@@ -323,8 +323,8 @@
 			{
 				if (trim($names[$shortcut_srl]) != "" && trim($links[$shortcut_srl]) != "")
 				{
-					$args->link = "$links[$shortcut_srl]";
-					$args->display_name = "$names[$shortcut_srl]";
+					$args->link = $links[$shortcut_srl];
+					$args->display_name = $names[$shortcut_srl];
 					$args->order_number = $order[$shortcut_srl];
 					if ($value == "-1")
 					{
@@ -370,7 +370,7 @@
 					}
 					else
 					{
-						$args->shortcut_srl = intval($value);
+						$args->shortcut_srl = $value;
 						$output = executeQuery('admin.updateShortcut', $args);
 						if ($icons["error"][$shortcut_srl]==0)
 						{
