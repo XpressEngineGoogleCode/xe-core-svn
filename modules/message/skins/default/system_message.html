@@ -5,6 +5,7 @@
 
 <!--%import("../../../../common/js/xe-ui.js")-->
 <!--%import("../../../../common/js/jQuery.tipTip.js")-->
+<!--%import("../../../../common/js/prettyCheckboxes.js")-->
 <!--%import("../../../../common/css/xe-ui.css")-->
 <!--%import("../../../../common/css/tipTip.css")-->
 <!--[if gte IE 9]>
@@ -23,7 +24,7 @@
         });
     });
 </script>
-<h1>
+<h1 style="margin-top: 50px;">
     <img src="{getUrl()}common/img/logo.png" width="315" height="52" alt="XpressEngine logo" title="XpressEngine" />
 </h1>
 <div class="xe-ui-panel cleared" style="width: 400px; margin: 50px auto;">
@@ -39,16 +40,16 @@
             <input type="hidden" name="success_return_url" value="{getRequestUriByServerEnviroment()}" />
             <p>
                 <label for="user_id">{$lang->user_id}:</label>
-                <input type="text" name="user_id" id="uid" value="" class="xe-ui-panel-text" title="{$lang->user_id}" />
+                <input type="text" name="user_id" id="uid" value="" class="xe-ui-panel-text" />
             </p>
             <p>
                 <label for="password">{$lang->password}:</label>
-                <input type="password" name="password" id="upw" value="" class="xe-ui-panel-text" title="{$lang->password}" />
+                <input type="password" name="password" id="upw" value="" class="xe-ui-panel-text" />
             </p>
             <p>
                 <label></label>
                 <input type="checkbox" name="keep_signed" id="keepid" class="inputCheck" value="Y" title="{$lang->about_keep_warning}"/>
-                <label for="keepid" style="width: 125px;">{$lang->keep_signed}</label>
+                <label for="keepid" style="width: 150px;">{$lang->keep_signed}</label>
             </p>
             <!--div id="loginAccess" class="gLogin">
                 <div class="mLogin" id="gLogin" cond="!$is_logged && $module == 'admin'">

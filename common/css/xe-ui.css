@@ -91,7 +91,7 @@ h1 {
 }
 
 .xe-ui-panel-content {
-    padding: 12px 12px 77px;
+    padding: 12px 12px 70px;
 }
 
 .xe-ui-panel-content h3 {
@@ -141,7 +141,7 @@ h1 {
 }
 
 .xe-ui-panel-controller p {
-    margin: 20px;
+    margin: 15px 0 18px;
 }
 
 .xe-ui-panel-img {
@@ -889,31 +889,57 @@ label.disabled.checkbox:hover span.holder, label.disabled.radio:hover span.holde
     top: -51px !important; /* Background position on mouseover */
 }
 
-
-label.list {
-    float: left; clear: left;
-    margin: 0 0 5px 0;
+.prettyCheckbox {
+    line-height: 1.4em;
+    display: inline-block;
 }
 
-label.inline {
-    float: left; margin: 0 10px 0 0;
-}
-
-input.hiddenCheckbox {
-    position: absolute; left: -10000px; /* Hide the input */
+.prettyCheckbox * {
+    vertical-align: middle;
 }
 
 label.prettyCheckbox span.holderWrap {
-    display: block; float: left;
+    display: inline-block;
     position: relative;
     margin-right: 5px;
     overflow: hidden;
 }
 
 label.prettyCheckbox span.holder {
-    display: block;
+    display: inline-block;
     position: absolute;
-    top: 0; left: 0;
+    top: 0;
+    left: 0;
+}
+
+label.list {
+    margin: 0 5px 0 0;
+}
+
+label.inline {
+    margin: 0 10px 0 0;
+}
+
+input.hiddenCheckbox {
+    display: none;
+}
+
+.xe-ui-form-table {
+    width: 100%;
+    border: 0;
+}
+
+.xe-ui-form-table td.v-mid * {
+    vertical-align: middle;
+}
+
+.xe-ui-form-table tr>td {
+    padding-right: 12px;
+}
+
+.xe-ui-form-table .desc {
+    color: #ad0a0a;
+    font-size: .93em;
 }
 
 #content {

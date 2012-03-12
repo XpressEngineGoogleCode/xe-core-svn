@@ -69,25 +69,14 @@ header,footer,section,article,aside,nav,hgroup,details,menu,figure,figcaption{di
 .x .form fieldset{margin:0 0 2em 0;padding:0;border:0}
 .x .form.search fieldset{border:1px solid #ccc;padding:5px 15px;border-radius:3px}
 .x .form em{font-style:normal;color:#e00}
-.x .form label{line-height:1;vertical-align:middle}
 .x .form input[type=radio]+label,
 .x .form input[type=checkbox]+label{margin-right:1em}
-.x .form input[type=checkbox]+label,
-.x .form input[type=radio]+label,
-.x .form input[type=file]{cursor:pointer}
 .x .form ul{position:relative;margin:1em 0;padding:0;list-style:none;border-top:2px solid #ccc;border-bottom:1px solid #ccc;zoom:1}
 .x .form li{list-style:none;border:1px solid #ddd;border-left:0;border-right:0;margin:-1px 0;padding:8px 0;vertical-align:top;zoom:1}
 .x .form li:first-child{border-top:0}
 .x .form li>label:first-child{display:block;font-weight:bold}
 .x .form li label em{font-weight:normal}
 .x .form label.overlap{position:absolute;color:#aaa}
-.x .form input[type=text],
-.x .form input[type=password],
-.x .form input[type=file],
-.x .form textarea{position:relative;width:280px;margin:2px 0;border:1px solid #b7b7b7;border-right-color:#e1e1e1;border-bottom-color:#e1e1e1;background:transparent}
-.x .form input[type=text],
-.x .form input[type=password],
-.x .form input[type=file]{height:22px;line-height:22px;vertical-align:middle;padding:0 4px}
 .x .form input[type=text].loading,
 .x .form input.loading[type=password]{padding-right:24px;width:260px;background:transparent url(../img/preLoader16.gif) no-repeat 265px center}
 .x .form input[type=checkbox],
@@ -100,7 +89,7 @@ header,footer,section,article,aside,nav,hgroup,details,menu,figure,figcaption{di
 .x .form textarea[disabled=disabled]{background:#ddd;text-shadow:1px 1px 0 #fff}
 .x .form textarea{padding:3px 4px;vertical-align:top}
 .x .form span.desc, 
-.x .form em.desc{line-height:22px;vertical-align:middle;margin:0 10px}
+.x .form em.desc{line-height:22px;vertical-align:middle;}
 .x .form p.desc{margin:.25em 0;line-height:1.4}
 .x .form .q{font-weight:bold;margin:0 0 5px 0}
 .x .form .a{margin:0 0 5px 0}
@@ -522,17 +511,14 @@ body.modalContainer{_height:100%;_width:100%} /* IE6 only */
 /* Up-Down Dragable */
 .x .uDrag .wrap{position:relative;padding-left:20px}
 .x .uDrag li>.wrap{margin:0 0 0 8px}
-.x .uDrag .dragActive{background:#FFD}
-.x .uDrag .dragActive th,
-.x .uDrag .dragActive td{background:none !important}
-.x .uDrag .dragBtn{position:absolute;width:8px;height:100%;padding:0;overflow:hidden;background:url(../img/bgDragable.gif);top:1px;left:0;text-indent:12px;border:0;cursor:n-resize;white-space:nowrap}
+
 /* Favicon Preview */
-.x .faviconPreview{position:relative;padding:60px 0 0 200px;background:url(../img/bgFavicon.gif) no-repeat}
+.x .faviconPreview{position:relative;padding:60px 0 0 200px;background:url(../img/bgFavicon.gif) no-repeat; display: inline-block;}
 .x .faviconPreview img{position:absolute}
 .x .faviconPreview .fn1{top:30px;left:12px}
 .x .faviconPreview .fn2{top:55px;left:68px}
 /* Mobile Icon Preview */
-.x .mobiconPreview{position:relative;padding:252px 0 0 200px;background:url(../img/bgMobileTop.png) no-repeat}
+.x .mobiconPreview{position:relative;padding:252px 0 0 200px;background:url(../img/bgMobileTop.png) no-repeat; display: inline-block;}
 .x .mobiconPreview img{position:absolute;top:20px;left:10px}
 .x .mobiconPreview span{position:absolute;width:32px;text-align:center;top:52px;left:10px;color:#fff;font-size:9px}
 /* Text List */
@@ -645,7 +631,7 @@ body.modalContainer{_height:100%;_width:100%} /* IE6 only */
 .x .crossTable input[type=file],
 .x .rowTable textarea,
 .x .colTable textarea,
-.x .crossTable textarea{position:relative;width:280px;margin:2px 0;border:1px solid #b7b7b7;border-right-color:#e1e1e1;border-bottom-color:#e1e1e1;background:transparent}
+.x .crossTable textarea{position:relative;width:280px;margin:2px 0;border:1px solid #b7b7b7;border-right-color:#e1e1e1;border-bottom-color:#e1e1e1;background:transparent;background: #fff;}
 .x .rowTable input[type=text],
 .x .colTable input[type=text],
 .x .crossTable input[type=text],
@@ -654,5 +640,5 @@ body.modalContainer{_height:100%;_width:100%} /* IE6 only */
 .x .crossTable input[type=password],
 .x .rowTable input[type=file],
 .x .colTable input[type=file],
-.x .crossTable input[type=file]{height:22px;line-height:22px;vertical-align:middle;padding:0 4px}
+.x .crossTable input[type=file]{height:22px;line-height:22px;vertical-align:middle;padding:0 4px; background: #fff;}
 .x .clear:after{content:"";display:block;clear:both}
