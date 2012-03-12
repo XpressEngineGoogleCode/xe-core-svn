@@ -448,4 +448,49 @@
 			}
 			return $icon_url;
 		}
+		
+		/**
+		 * @brief Get Dashboard shortcuts
+		 * @return array 
+		 */
+		function getAdminDashboardShortcuts()
+		{
+			// get admin member_srl
+			$args->member_srl = Context::get("logged_info")->member_srl;
+			
+			$default_icon_name = "./modules/admin/tpl/img/no_icon.png";
+			
+			// get all shortcuts corresponding to logged member_srl
+			$output = executeQueryArray('admin.getShortcuts', $args);
+			if($output->toBool())
+			{
+				$shortcutsList = $output->data;
+			}
+			else
+			{
+				return array();
+			}
+			$allowed_ext = array(".png",".jpg",".gif");
+			$path = 'files/icons/shortcuts/';
+			foreach($shortcutsList as $shortcut)
+			{
+				$file_exist = false;
+				foreach($allowed_ext as $ext)
+				{
+					$file_exist = FileHandler::readFile($path.$shortcut->shortcut_srl.$ext);
+					if($file_exist)
+					{
+						$used_ext = $ext;
+						break;
+					}
+				}
+				if(!$file_exist)
+				{
+					$shortcut->icon_path = $default_icon_name;
+				} else {
+					$shortcut->icon_path = $path.$shortcut->shortcut_srl.$used_ext;
+				}
+			}
+			return $shortcutsList;
+		}
 	}

@@ -1284,4 +1284,10 @@ Lütfen son sürümü için indirme linkine tıklayınız.]]></value>
 	<item name="decline_env_gather">
 		<value xml:lang="en"><![CDATA[No, thanks!]]></value>
 	</item>
+	<item name="ask_delete_shortcut">
+		<value xml:lang="en"><![CDATA[Are you sure you want to delete this shortcut ?]]></value>
+	</item>
+	<item name="msg_not_uploaded_shortcut_icon_image">
+		<value xml:lang="en"><![CDATA[Shortcut icon file could not be uploaded !]]></value>
+	</item>
 </lang>

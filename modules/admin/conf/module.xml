@@ -8,6 +8,7 @@
         <action name="dispAdminConfigFtp" type="view" standalone="true" menu_name="adminConfigurationFtp" menu_index="true" />
         <action name="dispAdminTheme" type="view" standalone="true" menu_name="theme" menu_index="true" />
         <action name="dispAdminSetup" type="view" standalone="true" menu_name="adminMenuSetup" menu_index="true" />
+        <action name="dispAdminDashboardShortcuts" type="view" standalone="true" />
 
         <action name="procAdminRemoveIcons" type="controller" standalone="true" />
 		<action name="procAdminRecompileCacheFile" type="controller" standalone="true" />
@@ -18,6 +19,8 @@
 		<action name="procAdminUpdateConfig" type="controller" standalone="true" />
 		<action name="procAdminDeleteLogo" type="controller" standalone="true" />
 		<action name="procAdminMenuReset" type="controller" />
+		<action name="procAdminSaveShortcuts" type="controller" />
+		<action name="procAdminDeleteShortcut" type="controller" />
 
         <action name="getAdminFTPList" type="model" standalone="true" />
         <action name="getSiteAllList" type="model" standalone="true" />

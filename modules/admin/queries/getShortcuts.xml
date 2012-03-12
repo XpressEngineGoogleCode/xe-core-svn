@@ -1,0 +1,14 @@
+<query id="getShortcuts" action="select">
+	<tables>
+		<table name="admin_shortcuts" />
+	</tables>
+	<columns>
+		<column name="*" />
+	</columns>
+	<conditions>
+		<condition operation="equal" column="member_srl" var="member_srl" filter="number" notnull="notnull" />
+	</conditions>
+	<navigation>
+		<index var="sort_index" default="order_number" order="asc" />
+	</navigation>
+</query>

@@ -142,6 +142,14 @@
                             <li cond="!is_array($favorite_list) || count($favorite_list) < 1">{$lang->no_data}</li>
                     </UL>
             </div>
+	   <div class="portlet">
+                    <h2 class="h2">Shortcuts<a href=""></a></h2>
+                    <ul class="lined">
+                            <!--@foreach($shortcuts_list AS $value)-->
+                            <li><a href="{$value->link}" target="_blank" title="{$value->display_name}"><img alt="" src="{$value->icon_path}" />{$value->display_name}</a></li>
+                            <!--@end-->
+                    </ul>
+            </div>
         </div>
     </div>
     <div class="footer">

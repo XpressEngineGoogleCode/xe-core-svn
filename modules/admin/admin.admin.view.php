@@ -142,7 +142,10 @@
 			// Get list of favorite
 			$oAdminAdminModel = getAdminModel('admin');
 			$output = $oAdminAdminModel->getFavoriteList(0, true);
-            Context::set('favorite_list', $output->get('favoriteList'));
+			Context::set('favorite_list', $output->get('favoriteList'));
+			// Get list of shortcuts
+			$shortcuts = $oAdminAdminModel->getAdminDashboardShortcuts();
+			Context::set('shortcuts_list', $shortcuts);
 
 			Context::set('subMenuTitle', $subMenuTitle);
 			Context::set('gnbUrlList',   $menu->list);
@@ -499,4 +502,20 @@
 
 			$this->setTemplateFile('theme');
 		}
+	/**
+	* @brief Display Dashboard shortcuts configuration page
+	* @return none
+	**/
+	function dispAdminDashboardShortcuts()
+	{
+		// get shortcuts list for current logged admin
+		$oAdminModel = &getAdminModel("admin");
+		$shortcutsList = $oAdminModel->getAdminDashboardShortcuts();
+		
+		// add Context variable shortcut_list for using in template file
+		Context::set('shortcuts_list', $shortcutsList);
+		
+		// setting template file
+		$this->setTemplateFile('admin_dashboard_shortcuts');
+	}
     }
