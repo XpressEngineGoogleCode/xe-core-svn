@@ -6,7 +6,8 @@
      **/
 
     class adminAdminController extends admin {
-        /**
+	  var $icon_config = array("width"=>24,"height"=>24);
+		/**
          * @brief initialization
          * @return none
          **/
@@ -305,7 +306,146 @@
 			$output = executeQuery('admin.deleteAllFavorite', $args);
 			return $output;
 		}
+		
+		/**
+		 * @brief Save shortcuts for Admin Dashboard
+		 **/
+		function procAdminSaveShortcuts()
+		{
+			$shortcut_srls = Context::get("shortcutId");
+			$icons = $_FILES["shortcutIcon"];
+			$links = Context::get("link");
+			$names = Context::get("name");
+			$order = Context::get("order");
+			$path = 'files/icons/shortcuts/';
+			$args->member_srl = Context::get("logged_info")->member_srl;
+			foreach($shortcut_srls as $shortcut_srl=>$value)
+			{
+				if (trim($names[$shortcut_srl]) != "" && trim($links[$shortcut_srl]) != "")
+				{
+					$args->link = "$links[$shortcut_srl]";
+					$args->display_name = "$names[$shortcut_srl]";
+					$args->order_number = $order[$shortcut_srl];
+					if ($value == "-1")
+					{
+						$args->shortcut_srl = getNextSequence();
 
+						$output = executeQuery('admin.insertShortcut', $args);
+						if ($icons["error"][$shortcut_srl]==0)
+						{
+							$file = $icons['tmp_name'][$shortcut_srl];
+							if(!is_uploaded_file($file)) return $this->stop('msg_not_uploaded_shortcut_icon_image');
+							$max_width = $this->icon_config["width"];
+							if(!$max_width)
+							{
+								$max_width = "24";
+							}
+							$max_height = $this->icon_config["height"];
+							if(!$max_height)
+							{
+								$max_height = "24";
+							}
+							// Get a target path to save
+							if (!file_exists($path))
+							{
+								FileHandler::makeDir($path);
+							}
+							// Get file information
+							list($width, $height, $type, $attrs) = @getimagesize($file);
+							if($type == 3) $ext = 'png';
+							elseif($type == 2) $ext = 'jpg';
+							else $ext = 'gif';
+
+							$target_filename = sprintf('%s%d.%s', $path, $args->shortcut_srl, $ext);
+							// Convert if the image size is larger than a given size or if the format is not a gif
+							if($width > $max_width || $height > $max_height || $type!=1)
+							{
+								FileHandler::createImageFile($file, $target_filename, $max_width, $max_height, $ext);
+							}
+							else
+							{
+								@copy($file, $target_filename);
+							}
+						}
+					}
+					else
+					{
+						$args->shortcut_srl = intval($value);
+						$output = executeQuery('admin.updateShortcut', $args);
+						if ($icons["error"][$shortcut_srl]==0)
+						{
+							$file = $icons['tmp_name'][$shortcut_srl];
+							if(!is_uploaded_file($file)) return $this->stop('msg_not_uploaded_shortcut_icon_image');
+							$max_width = $this->icon_config["width"];
+							if(!$max_width)
+							{
+								$max_width = "24";
+							}
+							$max_height = $this->icon_config["height"];
+							if(!$max_height)
+							{
+								$max_height = "24";
+							}
+							// Get a target path to save
+							if (!file_exists($path))
+							{
+								FileHandler::makeDir($path);
+							}
+							// Get file information
+							list($width, $height, $type, $attrs) = @getimagesize($file);
+							if($type == 3) $ext = 'png';
+							elseif($type == 2) $ext = 'jpg';
+							else $ext = 'gif';
+
+							$target_filename = sprintf('%s%d.%s', $path, $shortcut_srl, $ext);
+							$allowed_ext = array(".png",".jpg",".gif");
+							foreach($allowed_ext as $extension)
+							{
+								if(file_exists(_XE_PATH_.$path, $shortcut_srl, $extension))
+								{
+									@FileHandler::removeFile(_XE_PATH_.$path, $shortcut_srl, $extension);
+								}
+							}
+							// Convert if the image size is larger than a given size or if the format is not a gif
+							if($width > $max_width || $height > $max_height || $type!=1)
+							{
+								FileHandler::createImageFile($file, $target_filename, $max_width, $max_height, $ext);
+							}
+							else
+							{
+								@copy($file, $target_filename);
+							}
+						}
+					}
+				}
+			}
+			//$output = executeQuery('admin.deleteAllFavorite', $args);
+			//return $output;
+			$returnUrl = Context::get('success_return_url') ? Context::get('success_return_url') : getNotEncodedUrl('', 'module', 'admin', 'act', 'dispAdminDashboardShortcuts');
+			$this->setRedirectUrl($returnUrl);
+		}
+
+		/**
+		 * @brief Delete shortcut from Admin Dashboard 
+		 */
+		function procAdminDeleteShortcut(){
+			$shortcut_srl = Context::get('idWillBeDelete');
+			$path =  'files/icons/shortcuts/';
+			$allowed_ext = array(".png",".jpg",".gif");
+			foreach($allowed_ext as $extension)
+			{
+				if(file_exists(_XE_PATH_.$path, $shortcut_srl, $extension))
+				{
+					@FileHandler::removeFile(_XE_PATH_.$path, $shortcut_srl, $extension);
+				}
+			}
+			$args->shortcut_srl = $shortcut_srl;
+			@executeQuery('admin.deleteShortcut', $args);
+			$this->setMessage('success_deleted');
+			$returnUrl = Context::get('success_return_url') ? Context::get('success_return_url') : getNotEncodedUrl('', 'module', 'admin', 'act', 'dispAdminDashboardShortcuts');
+			$this->setRedirectUrl($returnUrl);
+		}
+		
 		function procAdminRemoveIcons(){
 			$iconname = Context::get('iconname');
 			$file_exist = FileHandler::readFile(_XE_PATH_.'files/attach/xeicon/'.$iconname);

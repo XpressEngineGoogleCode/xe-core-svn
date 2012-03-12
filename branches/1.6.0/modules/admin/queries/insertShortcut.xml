@@ -1,0 +1,12 @@
+<query id="insertShortcut" action="insert">
+	<tables>
+		<table name="admin_shortcuts" />
+	</tables>
+	<columns>
+		<column name="shortcut_srl" var="shortcut_srl" />
+		<column name="member_srl" var="member_srl" />
+		<column name="link" var="link" />
+		<column name="display_name" var="display_name" />
+		<column name="order_number" var="order_number" />
+	</columns>
+</query>
