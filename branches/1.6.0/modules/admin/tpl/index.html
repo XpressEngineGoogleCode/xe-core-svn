@@ -12,33 +12,33 @@
 
     <div class="dashboard cleared">
         <!--@if(!$isEnviromentGatheringAgreement)-->
-            <div class="xe-ui-message info gradient cleared">
-                <form action="./" method="post" id="env_gather">
-                    <input type="hidden" name="module" value="admin" />
-                    <input type="hidden" name="act" value="procAdminEnviromentGatheringAgreement" />
-                    <input type="hidden" id="is_agree" name="is_agree" value="false" />
-                    <div style="float:right; height: 30px; width: 260px; text-align: center; margin-top: 30px;">
-                        <p>
-                            <a href="#" onclick="jQuery('#is_agree').val('true'); jQuery('#env_gather').submit(); return false;" class="xe-ui-button-green gradient" style="margin-right: 10px;">{$lang->accept_env_gather}</a>
-                            <a href="#" onclick="jQuery('#env_gather').submit();return false;" class="xe-ui-button-red gradient">{$lang->decline_env_gather}</a>
-                        </p>
-                    </div>
-                    <h2>{$lang->install_env_agreement}</h2>
-                    <p>{$lang->install_env_agreement_desc}</p>
-                </form>
-            </div>
+        <div class="xe-ui-message info gradient cleared">
+            <form action="./" method="post" id="env_gather">
+                <input type="hidden" name="module" value="admin" />
+                <input type="hidden" name="act" value="procAdminEnviromentGatheringAgreement" />
+                <input type="hidden" id="is_agree" name="is_agree" value="false" />
+                <div style="float:right; height: 30px; width: 260px; text-align: center; margin-top: 30px;">
+                    <p>
+                        <a href="#" onclick="jQuery('#is_agree').val('true'); jQuery('#env_gather').submit(); return false;" class="xe-ui-button-green gradient" style="margin-right: 10px;">{$lang->accept_env_gather}</a>
+                        <a href="#" onclick="jQuery('#env_gather').submit();return false;" class="xe-ui-button-red gradient">{$lang->decline_env_gather}</a>
+                    </p>
+                </div>
+                <h2>{$lang->install_env_agreement}</h2>
+                <p>{$lang->install_env_agreement_desc}</p>
+            </form>
+        </div>
         <!--@end-->
         <!--@if($isUpdated)-->
         <div class="message update">
             <h2>{$lang->update_available}</h2>
             <ul>
-            <!--@foreach($module_list AS $key => $value)-->
-                    <!--@if($value->need_install)-->
-                    <li><a href="{getUrl('','module','admin','act',$val->admin_index_act)}">{$value->module}</a> - <a href="#" onclick="doInstallModule('{$value->module}');return false;">{$lang->cmd_install}</a></li>
-                    <!--@else if($value->need_update)-->
-                    <li><a href="{getUrl('','module','admin','act',$val->admin_index_act)}">{$value->module}</a> - <a href="#" onclick="doUpdateModule('{$value->module}')">{$lang->cmd_update}</a></li>
-                    <!--@end-->
-            <!--@end-->
+                <!--@foreach($module_list AS $key => $value)-->
+                <!--@if($value->need_install)-->
+                <li><a href="{getUrl('','module','admin','act',$val->admin_index_act)}">{$value->module}</a> - <a href="#" onclick="doInstallModule('{$value->module}');return false;">{$lang->cmd_install}</a></li>
+                <!--@else if($value->need_update)-->
+                <li><a href="{getUrl('','module','admin','act',$val->admin_index_act)}">{$value->module}</a> - <a href="#" onclick="doUpdateModule('{$value->module}')">{$lang->cmd_update}</a></li>
+                <!--@end-->
+                <!--@end-->
             </ul>
         </div>
         <!--@end-->
@@ -62,12 +62,12 @@
                         <a href="{getUrl('', 'document_srl', $document['document_srl'])}" target="_blank"><!--@if(trim($value->getTitle()))-->{$value->getTitle()}<!--@else--><strong>{$lang->no_title_document}</strong><!--@end--></a> <span class="side">{$document['nick_name']}</span>
                         <span class="action">
                             <form>
-                            <input type="hidden" name="module" value="admin" />
-                            <input type="hidden" name="act" value="procDocumentManageCheckedDocument" />
-                            <input type="hidden" name="cart[]" value="{$document['document_srl']}" />
-                            <input type="hidden" name="success_return_url" value="{getUrl('', 'module', 'admin')}" />
-                            <button type="submit" name="type" value="trash" class="text">{$lang->cmd_trash}</button>
-                            <button type="submit" name="type" value="delete" class="text">{$lang->cmd_delete}</button>
+                                <input type="hidden" name="module" value="admin" />
+                                <input type="hidden" name="act" value="procDocumentManageCheckedDocument" />
+                                <input type="hidden" name="cart[]" value="{$document['document_srl']}" />
+                                <input type="hidden" name="success_return_url" value="{getUrl('', 'module', 'admin')}" />
+                                <button type="submit" name="type" value="trash" class="text">{$lang->cmd_trash}</button>
+                                <button type="submit" name="type" value="delete" class="text">{$lang->cmd_delete}</button>
                             </form>
                         </span>
                     </li>
@@ -83,12 +83,12 @@
                         <a href="{getUrl('', 'document_srl', $value->document_srl)}#comment_{$value->comment_srl}" target="_blank"><!--@if(trim($value->content))-->{$value->getSummary()}<!--@else--><strong>{$lang->no_text_comment}</strong><!--@end--></a> <span class="side">{$value->nick_name}</span>
                         <span class="action">
                             <form>
-                            <input type="hidden" name="module" value="admin" />
-                            <input type="hidden" name="act" value="procCommentAdminDeleteChecked" />
-                            <input type="hidden" name="cart[]" value="{$value->comment_srl}" />
-                            <input type="hidden" name="success_return_url" value="{getUrl('', 'module', 'admin')}" />
-                            <button type="submit" name="is_trash" value="true" class="text">{$lang->cmd_trash}</button>
-                            <button type="submit" name="is_trash" value="false" class="text">{$lang->cmd_delete}</button>
+                                <input type="hidden" name="module" value="admin" />
+                                <input type="hidden" name="act" value="procCommentAdminDeleteChecked" />
+                                <input type="hidden" name="cart[]" value="{$value->comment_srl}" />
+                                <input type="hidden" name="success_return_url" value="{getUrl('', 'module', 'admin')}" />
+                                <button type="submit" name="is_trash" value="true" class="text">{$lang->cmd_trash}</button>
+                                <button type="submit" name="is_trash" value="false" class="text">{$lang->cmd_delete}</button>
                             </form>
                         </span>
                     </li>
@@ -97,58 +97,59 @@
                 </ul>
             </div>
             <div class="portlet">
-                    <h2 class="h2">{$lang->latest_trackback}</h2>
-                    <ul class="lined">
-                            <!--@foreach($latestTrackbackList AS $key=>$value)-->
-                            <li>
-                                    <a href="{$value->url}" target="_blank">{$value->title}</a> <span class="side">{$value->blog_name}</span>
-                                    <span class="action">
-                                            <form>
-                                            <input type="hidden" name="module" value="admin" />
-                                            <input type="hidden" name="act" value="procTrackbackAdminDeleteChecked" />
-                                            <input type="hidden" name="cart[]" value="{$value->trackback_srl}" />
-                                            <input type="hidden" name="success_return_url" value="{getUrl('', 'module', 'admin')}" />
-                                            <button type="submit" class="text">{$lang->cmd_delete}</button>
-                                            </form>
-                                    </span>
-                            </li>
-                            <!--@end-->
-                            <li cond="!is_array($latestTrackbackList) || count($latestTrackbackList) < 1">{$lang->no_data}</li>
-                    </ul>
+                <h2 class="h2">{$lang->latest_trackback}</h2>
+                <ul class="lined">
+                    <!--@foreach($latestTrackbackList AS $key=>$value)-->
+                    <li>
+                        <a href="{$value->url}" target="_blank">{$value->title}</a> <span class="side">{$value->blog_name}</span>
+                        <span class="action">
+                            <form>
+                                <input type="hidden" name="module" value="admin" />
+                                <input type="hidden" name="act" value="procTrackbackAdminDeleteChecked" />
+                                <input type="hidden" name="cart[]" value="{$value->trackback_srl}" />
+                                <input type="hidden" name="success_return_url" value="{getUrl('', 'module', 'admin')}" />
+                                <button type="submit" class="text">{$lang->cmd_delete}</button>
+                            </form>
+                        </span>
+                    </li>
+                    <!--@end-->
+                    <li cond="!is_array($latestTrackbackList) || count($latestTrackbackList) < 1">{$lang->no_data}</li>
+                </ul>
             </div>
             <div class="portlet">
-                    <h2 class="h2">{$lang->notice}</h2>
-                    <ul class="lined">
-                            <!--@foreach($news AS $key=>$value)-->
-                            <li><a href="{$value->url}" target="_blank">{$value->title}</a> <span class="side">{zdate($value->date, 'Y-m-d')}</span></li>
-                            <!--@end-->
-                            <li cond="!is_array($news) || count($news) < 1">{$lang->no_data}</li>
-                    </ul>
+                <h2 class="h2">{$lang->notice}</h2>
+                <ul class="lined">
+                    <!--@foreach($news AS $key=>$value)-->
+                    <li><a href="{$value->url}" target="_blank">{$value->title}</a> <span class="side">{zdate($value->date, 'Y-m-d')}</span></li>
+                    <!--@end-->
+                    <li cond="!is_array($news) || count($news) < 1">{$lang->no_data}</li>
+                </ul>
             </div>
             <div class="portlet">
-                    <h2 class="h2">{$lang->favorite}</h2>
-                    <ul class="lined">
-                            <li loop="$favorite_list => $favorite">
-                                    <a href="{getUrl('act', $favorite->admin_index_act)}">{$favorite->title}</a>
-                                    <form class="action" action="">
-                                            <input type="hidden" name="module" value="admin" />
-                                            <input type="hidden" name="act" value="procAdminToggleFavorite" />
-                                            <input type="hidden" name="site_srl" value="0" />
-                                            <input type="hidden" name="module_name" value="{$favorite->module}" />
-                                            <input type="hidden" name="success_return_url" value="{getUrl('', 'module', 'admin')}" />
-                                            <button type="submit" class="text">{$lang->cmd_delete}</button>
-                                    </form>
-                            </li>
-                            <li cond="!is_array($favorite_list) || count($favorite_list) < 1">{$lang->no_data}</li>
-                    </UL>
+                <h2 class="h2">{$lang->favorite}</h2>
+                <ul class="lined">
+                    <li loop="$favorite_list => $favorite">
+                        <a href="{getUrl('act', $favorite->admin_index_act)}">{$favorite->title}</a>
+                        <form class="action" action="">
+                            <input type="hidden" name="module" value="admin" />
+                            <input type="hidden" name="act" value="procAdminToggleFavorite" />
+                            <input type="hidden" name="site_srl" value="0" />
+                            <input type="hidden" name="module_name" value="{$favorite->module}" />
+                            <input type="hidden" name="success_return_url" value="{getUrl('', 'module', 'admin')}" />
+                            <button type="submit" class="text">{$lang->cmd_delete}</button>
+                        </form>
+                    </li>
+                    <li cond="!is_array($favorite_list) || count($favorite_list) < 1">{$lang->no_data}</li>
+                </UL>
             </div>
-	   <div class="portlet">
-                    <h2 class="h2">Shortcuts<a href=""></a></h2>
-                    <ul class="lined">
-                            <!--@foreach($shortcuts_list AS $value)-->
-                            <li><a href="{$value->link}" target="_blank" title="{$value->display_name}"><img alt="" src="{$value->icon_path}" />{$value->display_name}</a></li>
-                            <!--@end-->
-                    </ul>
+            <div class="portlet">
+                <h2 class="h2">Shortcuts</h2>
+                <ul class="lined">
+                    <!--@foreach($shortcuts_list AS $value)-->
+                    <li><a href="{$value->link}" target="_blank" title="{$value->display_name}"><img alt="" src="{$value->icon_path}" />{$value->display_name}</a></li>
+                    <!--@end-->
+                </ul>
+                <a href="{getURL('','module','admin','act','dispAdminDashboardShortcuts')}">Edit shortcuts</a>
             </div>
         </div>
     </div>

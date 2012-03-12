@@ -84,7 +84,7 @@
 	</item>
 	<item name="about_start_module">
 		<value xml:lang="ko"><![CDATA[사이트 접속 시 기본으로 호출될 모듈을 지정할 수 있습니다.]]></value>
-		<value xml:lang="en"><![CDATA[You can specify the default module for the site.]]></value>
+		<value xml:lang="en"><![CDATA[Default module]]></value>
 		<value xml:lang="jp"><![CDATA[サイトへ接続した際にデフォルトで起動するモジュールを指定することができます。]]></value>
 		<value xml:lang="zh-CN"><![CDATA[可指定用户访问网站时的默认首页模块。]]></value>
 		<value xml:lang="zh-TW"><![CDATA[可將所選擇的模組作為預設首頁。]]></value>
@@ -570,12 +570,12 @@ Lütfen son sürümü için indirme linkine tıklayınız.]]></value>
 	</item>
 	<item name="about_lang_select">
 		<value xml:lang="ko"><![CDATA[지원할 언어를 설정하세요.]]></value>
-		<value xml:lang="en"><![CDATA[Select a language.]]></value>
+		<value xml:lang="en"><![CDATA[Enable/Disable languages]]></value>
 		<value xml:lang="jp"><![CDATA[サポート言語を選択してください。]]></value>
 	</item>
 	<item name="about_default_lang">
 		<value xml:lang="ko"><![CDATA[기본 언어를 선택하세요.]]></value>
-		<value xml:lang="en"><![CDATA[Select default language.]]></value>
+		<value xml:lang="en"><![CDATA[Default language]]></value>
 	</item>
 	<item name="about_recompile_cache">
 		<value xml:lang="ko"><![CDATA[쓸모 없어졌거나 잘못된 캐시파일들을 지우시겠습니까?]]></value>
@@ -588,7 +588,7 @@ Lütfen son sürümü için indirme linkine tıklayınız.]]></value>
 	</item>
 	<item name="use_ssl">
 		<value xml:lang="ko"><![CDATA[SSL(Secure Sockets Layer)을 사용하시겠습니까?]]></value>
-		<value xml:lang="en"><![CDATA[Do you want to use Secure Sockets Layer (SSL)?]]></value>
+		<value xml:lang="en"><![CDATA[Use SSL]]></value>
 		<value xml:lang="jp"><![CDATA[SSL(Secure Sockets Layer)を使用しますか?]]></value>
 	</item>
 	<item name="ssl_options" type="array">
@@ -815,7 +815,7 @@ Lütfen son sürümü için indirme linkine tıklayınız.]]></value>
 	</item>
 	<item name="about_timezone">
 		<value xml:lang="ko"><![CDATA[현지 표준시를 설정하세요.]]></value>
-		<value xml:lang="en"><![CDATA[Set the local standard time.]]></value>
+		<value xml:lang="en"><![CDATA[Local standard time]]></value>
 		<value xml:lang="jp"><![CDATA[現地の標準時間を設定してください。]]></value>
 	</item>
 	<item name="about_html_dtd">
@@ -838,17 +838,17 @@ Lütfen son sürümü için indirme linkine tıklayınız.]]></value>
 	</item>
 	<item name="about_question_mobile_view">
 		<value xml:lang="ko"><![CDATA[모바일 기기에서 접속할 때 모바일 페이지를 보여줄까요?]]></value>
-		<value xml:lang="en"><![CDATA[Do you want to show the mobile page when users access the website with their mobile phone?]]></value>
+		<value xml:lang="en"><![CDATA[Enable mobile template]]></value>
 		<value xml:lang="jp"><![CDATA[モバイル機器で接続した際にモバイルページを表示しますか？]]></value>
 	</item>
 	<item name="about_thumbnail_type">
 		<value xml:lang="ko"><![CDATA[썸네일 생성 방식을 선택하세요.]]></value>
-		<value xml:lang="en"><![CDATA[Select thumbnail type.]]></value>
+		<value xml:lang="en"><![CDATA[Thumbnail type:]]></value>
 		<value xml:lang="jp"><![CDATA[サムネイルの生成方式を選択してください。]]></value>
 	</item>
 	<item name="input_footer_script">
 		<value xml:lang="ko"><![CDATA[풋터 스크립트 삽입]]></value>
-		<value xml:lang="en"><![CDATA[Input footer script]]></value>
+		<value xml:lang="en"><![CDATA[Footer script]]></value>
 	</item>
 	<item name="detail_input_footer_script">
 		<value xml:lang="ko"><![CDATA[최하단에 코드를 삽입합니다. <br />관리자 페이지에서는 수행되지 않습니다.]]></value>
@@ -871,7 +871,7 @@ Lütfen son sürümü için indirme linkine tıklayınız.]]></value>
 	</item>
 	<item name="about_admin_ip_limit">
 		<value xml:lang="ko"><![CDATA[관리자 페이지로 접근가능한 IP대역을 지정합니다.]]></value>
-		<value xml:lang="en"><![CDATA[Sepcify IP address band that can access the admin page.]]></value>
+		<value xml:lang="en"><![CDATA[Limit admin access by IP]]></value>
 		<value xml:lang="jp"><![CDATA[管理者ページへアクセス可能なIP帯域を指定します。]]></value>
 	</item>
 	<item name="local_ip_address">
@@ -897,17 +897,17 @@ Lütfen son sürümü için indirme linkine tıklayınız.]]></value>
 	</item>
 	<item name="allow_use_favicon">
 		<value xml:lang="ko"><![CDATA[파비콘을 사용할까요?]]></value>
-		<value xml:lang="en"><![CDATA[Do you want to use favicon?]]></value>
+		<value xml:lang="en"><![CDATA[Favicon]]></value>
 		<value xml:lang="jp"><![CDATA[ファビコンを使用しますか?]]></value>
 	</item>
 	<item name="about_use_favicon">
 		<value xml:lang="ko"><![CDATA[16 x 16 크기의 <em>*.ico</em> 파일만 업로드 가능.]]></value>
-		<value xml:lang="en"><![CDATA[You can upload 16x16 size <em>*.ico</em> file only.]]></value>
+		<value xml:lang="en"><![CDATA[Image must be <b>16x16px</b> in size and must be in <b>*.ICO format</b>.]]></value>
 		<value xml:lang="jp"><![CDATA[16 x 16 サイズの<em>*.ico</em> ファイルのみ登録できます。]]></value>
 	</item>
 	<item name="allow_use_mobile_icon">
 		<value xml:lang="ko"><![CDATA[모바일 홈 화면 아이콘을 사용할까요?]]></value>
-		<value xml:lang="en"><![CDATA[Do you want to use the mobile home screen icon?]]></value>
+		<value xml:lang="en"><![CDATA[Mobile screen icon?]]></value>
 		<value xml:lang="jp"><![CDATA[モバイル待ち受け画面のアイコンを使用しますか?]]></value>
 	</item>
 	<item name="detail_use_mobile_icon">
@@ -917,7 +917,7 @@ Lütfen son sürümü için indirme linkine tıklayınız.]]></value>
 	</item>
 	<item name="about_use_sso">
 		<value xml:lang="ko"><![CDATA[SSO(Single Sign On)를 사용하시겠습니까?]]></value>
-		<value xml:lang="en"><![CDATA[Do you want to use Single Sign On (SSO)?]]></value>
+		<value xml:lang="en"><![CDATA[Enable SSO (Single Sign On)]]></value>
 		<value xml:lang="jp"><![CDATA[SSO(Single Sign On)を使用しますか?]]></value>
 	</item>
 	<item name="about_cdn">
