@@ -17,46 +17,113 @@
             <form ruleset="installFtpInfo" action="./" method="post" id="ftp_form" class="form" enctype="multipart/form-data">
                 <input type="hidden" name="module" value="install" />
                 <input type="hidden" name="act" value="procInstallAdminSaveFTPInfo" />
-                <p class="form-list">
-                    <label for="ftp_host" class="desc">{$lang->ftp_host} [<a href="#helpFTP" class="tgAnchor">?</a>]</label>
-                    <input type="text" name="ftp_host" id="ftp_host" value="{$ftp_info->ftp_host}" class="xe-ui-panel-text"/> <span>Default : 127.0.0.1</span>
-                    <div class="tgContent layer" id="helpFTP">
-                        <p>{$lang->detail_about_ftp_info}</p>
-                    </div>
-                </p>
-                <p class="form-list">
-                    <label for="ftp_user" class="desc">{$lang->user_id}</label>
-                    <input type="text" name="ftp_user" id="ftp_user" value="{$ftp_info->ftp_user}" class="xe-ui-panel-text"/>
-                </p>
-                <p class="form-list">
-                    <label for="ftp_password" class="desc">{$lang->password}</label>
-                    <input type="password" name="ftp_password" id="ftp_password" value="" class="xe-ui-panel-text" /> <span>{$lang->about_ftp_password}</span>
-                </p>
-                <p class="form-list">
-                    <label for="ftp_port" class="desc">{$lang->ftp_port}</label>
-                    <input type="text" name="ftp_port" id="ftp_port" value="{$ftp_info->ftp_port}" class="xe-ui-panel-text"/> <span>Default : 21</span>
-                </p>
-                <p class="form-list">
-                    <label for="ftp_passive" class="desc">{$lang->about_use_ftp_passive_mode}</label>
-                    <input type="radio" name="ftp_pasv" id="ftp_passive_y" value="Y" <!--@if($ftp_info->ftp_pasv == 'Y')-->checked="checked" <!--@end-->/> <label for="ftp_passive_y">{$lang->cmd_yes}</label>
-                    <input type="radio" name="ftp_pasv" id="ftp_passive_n" value="N" <!--@if($ftp_info->ftp_pasv != 'Y')-->checked="checked" <!--@end-->/> <label for="ftp_passive_n">{$lang->cmd_no}</label>
-                </p>
-                <p class="form-list">
-                    <label for="sftp" class="desc">{$lang->about_use_sftp_support} <span cond="!$sftp_support">({$lang->disable_sftp_support})</span></label>
-                    <input type="radio" name="sftp" id="sftp_y" value="Y" <!--@if($ftp_info->sftp == 'Y')-->checked="checked" <!--@end--> <!--@if(!$sftp_support)-->disabled<!--@end-->/> <label for="sftp_y">{$lang->cmd_yes}</label>
-                    <input type="radio" name="sftp" id="sftp_n" value="N" <!--@if($ftp_info->sftp != 'Y')-->checked="checked" <!--@end-->/> <label for="sftp_n">{$lang->cmd_no}</label>
-                </p>
-                <p class="form-list">
-                    <label for="ftp_path" class="desc">{$lang->msg_ftp_installed_ftp_realpath}</label>
-                    <input type="text" name="ftp_root_path" id="ftp_root_path" value="{$ftp_info->ftp_root_path}" class="xe-ui-panel-text"/>
-                    <a href="#ftpSuggestion" onclick="getFTPList(); return false;" class="tgAnchor xe-ui-button-gray">{$lang->ftp_get_list}</a>
-                </p>
-                <p class="form-list">
-                    <span class="desc"></span>
-                    <span>{$lang->msg_ftp_installed_realpath} : {_XE_PATH_} </span>
-                </p>
-                <div id="ftpSuggestion">
-                </div>                
+                <table class="xe-ui-form-table" cellpadding="0" cellspacing="0">
+                    <tbody>
+                        <tr>
+                            <td width="25%" class="v-top">
+                                <p>
+                                    <label for="ftp_host">{$lang->ftp_host} [<a href="#helpFTP" class="tgAnchor">?</a>]:</label>
+                                </p>
+                            </td>
+                            <td>
+                                <p>
+                                    <input type="text" name="ftp_host" id="ftp_host" value="{$ftp_info->ftp_host}" class="xe-ui-panel-text" title="{$lang->detail_about_ftp_info}"/> <span></span>
+                                </p>
+                                <p class="desc">Default : 127.0.0.1</p>
+                                <div class="tgContent layer" id="helpFTP">
+                                </div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <p>
+                                    <label for="ftp_user">{$lang->user_id}:</label>
+                                </p>
+                            </td>
+                            <td>
+                                <p>
+                                    <input type="text" name="ftp_user" id="ftp_user" value="{$ftp_info->ftp_user}" class="xe-ui-panel-text"/>
+                                </p>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <p>
+                                    <label for="ftp_password">{$lang->password}:</label>
+                                </p>
+                            </td>
+                            <td>
+                                <p>
+                                    <input type="password" name="ftp_password" id="ftp_password" value="" class="xe-ui-panel-text" title="{$lang->about_ftp_password}" />
+                                </p>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <p>
+                                    <label for="ftp_port">{$lang->ftp_port}:</label>
+                                </p>
+                            </td>
+                            <td>
+                                <p>
+                                    <input type="text" name="ftp_port" id="ftp_port" value="{$ftp_info->ftp_port}" class="xe-ui-panel-text"/>
+                                </p>
+                                <p class="desc">Default : 21</p>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <p>
+                                    <label for="ftp_passive">{$lang->about_use_ftp_passive_mode}:</label>
+                                </p>
+                            </td>
+                            <td>
+                                <p>
+                                    <input type="radio" name="ftp_pasv" id="ftp_passive_y" value="Y" <!--@if($ftp_info->ftp_pasv == 'Y')-->checked="checked" <!--@end-->/> <label for="ftp_passive_y">{$lang->cmd_yes}</label>
+                                    <input type="radio" name="ftp_pasv" id="ftp_passive_n" value="N" <!--@if($ftp_info->ftp_pasv != 'Y')-->checked="checked" <!--@end-->/> <label for="ftp_passive_n">{$lang->cmd_no}</label>
+                                </p>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <p>
+                                    <label for="sftp">{$lang->about_use_sftp_support} <span cond="!$sftp_support">({$lang->disable_sftp_support})</span></label>
+                                </p>
+                            </td>
+                            <td>
+                                <p>
+                                    <input type="radio" name="sftp" id="sftp_y" value="Y" <!--@if($ftp_info->sftp == 'Y')-->checked="checked" <!--@end--> <!--@if(!$sftp_support)-->disabled<!--@end-->/> <label for="sftp_y">{$lang->cmd_yes}</label>
+                                    <input type="radio" name="sftp" id="sftp_n" value="N" <!--@if($ftp_info->sftp != 'Y')-->checked="checked" <!--@end-->/> <label for="sftp_n">{$lang->cmd_no}</label>
+                                </p>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <p>
+                                    <label for="ftp_path">{$lang->msg_ftp_installed_ftp_realpath}:</label>
+                                </p>
+                            </td>
+                            <td>
+                                <p>
+                                    <input type="text" name="ftp_root_path" id="ftp_root_path" value="{$ftp_info->ftp_root_path}" class="xe-ui-panel-text"/>
+                                    <a href="#ftpSuggestion" onclick="getFTPList(); return false;" class="tgAnchor xe-ui-button-gray">{$lang->ftp_get_list}</a>
+                                </p>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <p>
+                                </p>
+                            </td>
+                            <td>
+                                <p class="desc">
+                                    {$lang->msg_ftp_installed_realpath} : <b>{_XE_PATH_}</b>
+                                    <div id="ftpSuggestion"></div>
+                                </p>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
             </form>
         </div>
         <div class="xe-ui-panel-controller">

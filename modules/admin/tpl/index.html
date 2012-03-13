@@ -42,6 +42,41 @@
             </ul>
         </div>
         <!--@end-->
+        <div class="xe-ui-panel" style="width: 220px; float: left; height: 295px;">
+            <div class="xe-ui-panel-content cleared" style="padding-bottom: 12px;">
+                <h2>
+                    Shortcuts
+                    <span style="float: right;">
+                        <a href="{getURL('','module','admin','act','dispAdminDashboardShortcuts')}" class="xe-ui-button-gray img">
+                            <img src="{getFullURL()}common/img/icon_settings.png" title="Edit shortcuts" />
+                        </a>
+                    </span>
+                </h2>
+                <ul id="dashboard-shortcuts" class="cleared">
+                    <!--@foreach($shortcuts_list AS $value)-->
+                    <li>
+                        <a href="{$value->link}" target="_blank" title="{$value->display_name}">
+                            <img alt="" src="{$value->icon_path}" />{$value->display_name}
+                        </a>
+                    </li>
+                    <!--@end-->
+                </ul>
+            </div>
+        </div>
+        <div class="xe-ui-panel" style="float: right; width: 746px; height: 295px;">
+            <div class="xe-ui-panel-content cleared" style="padding-bottom: 12px;">
+                <h2>
+                    Visitors
+                    <span style="float: right;">
+                        <a href="{getURL('','module','admin','act','dispAdminDashboardShortcuts')}" class="xe-ui-button-gray img">
+                            <img src="{getFullURL()}common/img/icon_settings.png" title="Edit shortcuts" />
+                        </a>
+                    </span>
+                </h2>
+            </div>
+        </div>
+        <div class="cleared"></div>
+
         <div class="section">
             <div class="portlet">
                 <h2 class="h2">{$lang->current_state}</h2>
@@ -141,15 +176,6 @@
                     </li>
                     <li cond="!is_array($favorite_list) || count($favorite_list) < 1">{$lang->no_data}</li>
                 </UL>
-            </div>
-            <div class="portlet">
-                <h2 class="h2">Shortcuts</h2>
-                <ul class="lined">
-                    <!--@foreach($shortcuts_list AS $value)-->
-                    <li><a href="{$value->link}" target="_blank" title="{$value->display_name}"><img alt="" src="{$value->icon_path}" />{$value->display_name}</a></li>
-                    <!--@end-->
-                </ul>
-                <a href="{getURL('','module','admin','act','dispAdminDashboardShortcuts')}">Edit shortcuts</a>
             </div>
         </div>
     </div>
