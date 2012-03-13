@@ -87,7 +87,7 @@
 	</item>
 	<item name="status_update">
 		<value xml:lang="ko"><![CDATA[상태 업데이트]]></value>
-		<value xml:lang="en"><![CDATA[update button]]></value>
+		<value xml:lang="en"><![CDATA[Update]]></value>
 		<value xml:lang="jp"><![CDATA[アップデート]]></value>
 	</item>
 	<item name="install">
@@ -112,7 +112,7 @@
 	</item>
 	<item name="current_version">
 		<value xml:lang="ko"><![CDATA[설치 버전]]></value>
-		<value xml:lang="en"><![CDATA[Version]]></value>
+		<value xml:lang="en"><![CDATA[Your version]]></value>
 		<value xml:lang="jp"><![CDATA[現インストールバージョン]]></value>
 		<value xml:lang="zh-CN"><![CDATA[现用版本]]></value>
 		<value xml:lang="zh-TW"><![CDATA[版本]]></value>
@@ -191,7 +191,7 @@
 	</item>
 	<item name="distribute_version">
 		<value xml:lang="ko"><![CDATA[배포 버전]]></value>
-		<value xml:lang="en"><![CDATA[Distribute version]]></value>
+		<value xml:lang="en"><![CDATA[Latest version]]></value>
 		<value xml:lang="jp"><![CDATA[配布バージョン]]></value>
 	</item>
 	<item name="run">
