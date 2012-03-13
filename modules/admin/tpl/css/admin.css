@@ -5,7 +5,6 @@ header,footer,section,article,aside,nav,hgroup,details,menu,figure,figcaption{di
 .x input[type=submit],
 .x input[type=reset],
 .x input[type=button]{cursor:pointer;overflow:visible}
-.x img{border:0}
 /* Section & Heading */
 .x .section{margin:1em 0;padding:0;border:0}
 .x .h1, 
