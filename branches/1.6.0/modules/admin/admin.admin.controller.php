@@ -6,7 +6,7 @@
      **/
 
     class adminAdminController extends admin {
-	  var $icon_config = array("width"=>24,"height"=>24);
+	  var $icon_config = array("width"=>32,"height"=>32);
 		/**
          * @brief initialization
          * @return none
@@ -338,12 +338,12 @@
 							$max_width = $this->icon_config["width"];
 							if(!$max_width)
 							{
-								$max_width = "24";
+								$max_width = "32";
 							}
 							$max_height = $this->icon_config["height"];
 							if(!$max_height)
 							{
-								$max_height = "24";
+								$max_height = "32";
 							}
 							// Get a target path to save
 							if (!file_exists($path))
@@ -379,12 +379,12 @@
 							$max_width = $this->icon_config["width"];
 							if(!$max_width)
 							{
-								$max_width = "24";
+								$max_width = "32";
 							}
 							$max_height = $this->icon_config["height"];
 							if(!$max_height)
 							{
-								$max_height = "24";
+								$max_height = "32";
 							}
 							// Get a target path to save
 							if (!file_exists($path))
@@ -401,9 +401,9 @@
 							$allowed_ext = array(".png",".jpg",".gif");
 							foreach($allowed_ext as $extension)
 							{
-								if(file_exists(_XE_PATH_.$path, $shortcut_srl, $extension))
+								if(file_exists(_XE_PATH_.$path.$shortcut_srl.$extension))
 								{
-									@FileHandler::removeFile(_XE_PATH_.$path, $shortcut_srl, $extension);
+									@FileHandler::removeFile(_XE_PATH_.$path.$shortcut_srl.$extension);
 								}
 							}
 							// Convert if the image size is larger than a given size or if the format is not a gif

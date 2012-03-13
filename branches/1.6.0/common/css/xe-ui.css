@@ -587,7 +587,7 @@ h1 {
     margin: 0 0 12px 0;
 }
 
-.xe-ui-message.info {
+.xe-ui-message.info, .xe-ui-message.update {
     -moz-box-shadow: 0 1px 3px rgba(25,109,180,.4), inset 0 1px 0 rgba(255,255,255,.8);
     -webkit-box-shadow: 0 1px 3px rgba(25,109,180,.4), inset 0 1px 0 rgba(255,255,255,.8);
     box-shadow: 0 1px 3px rgba(25,109,180,.4), inset 0 1px 0 rgba(255,255,255,.8);
@@ -727,7 +727,7 @@ h1 {
 }
 
 .xe-ui-menu-item.icon img {
-    margin: 0 9px 0 0;
+    margin: 0 8px 0 0;
 }
 
 .xe-ui-menu-submenu {

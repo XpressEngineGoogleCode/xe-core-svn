@@ -41,7 +41,12 @@
             <li loop="$gnbUrlList=>$key,$value" class="xe-ui-menu-item icon but">
                 {@ $i++;}
                 <a href="{$value['href']}" class="xe-ui-menu-item-but">
-                    {$value['text']}
+                    <!--@if($i==1)--><img src="{getUrl('')}common/img/menu_icon_dashboard.png" />{$value['text']}<!--@end-->
+                    <!--@if($i==2)--><img src="{getUrl('')}common/img/menu_icon_content.png" />{$value['text']}<!--@end-->
+                    <!--@if($i==3)--><img src="{getUrl('')}common/img/menu_icon_design.png" />{$value['text']}<!--@end-->
+                    <!--@if($i==4)--><img src="{getUrl('')}common/img/menu_icon_users.png" />{$value['text']}<!--@end-->
+                    <!--@if($i==5)--><img src="{getUrl('')}common/img/menu_icon_extensions.png" />{$value['text']}<!--@end-->
+                    <!--@if($i==6)--><img src="{getUrl('')}common/img/menu_icon_settings.png" />{$value['text']}<!--@end-->
                 </a>
                 <ul class="xe-ui-menu-submenu" cond="count($value['list'])">
                     <li loop="$value['list']=>$key2,$value2">
@@ -51,27 +56,22 @@
             </li>
             <li class="xe-ui-menu-item icon but">
                 <a href="#bmk" class="xe-ui-menu-item-but" data-effect="fade" data-duration="200">
-                    {$lang->favorite}
+                    <img src="{getUrl('')}common/img/menu_icon_favorites.png" />{$lang->favorite}
                 </a>
                 <ul class="xe-ui-menu-submenu">
                     <li loop="$favorite_list => $favorite">
-                        <a href="{getUrl('act', $favorite->admin_index_act)}">{$favorite->title}</a>
                         <form class="action" action="">
                             <input type="hidden" name="module" value="admin" />
                             <input type="hidden" name="act" value="procAdminToggleFavorite" />
                             <input type="hidden" name="site_srl" value="0" />
                             <input type="hidden" name="module_name" value="{$favorite->module}" />
                             <input type="hidden" name="success_return_url" value="{getUrl('', 'module', 'admin')}" />
-                            <button type="submit" class="text" title="{$lang->cmd_delete}">x</button>
+                            <button type="submit" class="text" title="{$lang->cmd_delete}" style="float: right; color: #fff;text-decoration: none; margin: 3px;">(x)</button>
                         </form>
+                        <a href="{getUrl('act', $favorite->admin_index_act)}">{$favorite->title}</a>
                     </li>
                     <li cond="!is_array($favorite_list) || count($favorite_list) < 1">{$lang->no_data}</li>
                 </ul>
-            </li>
-            <li class="xe-ui-menu-item icon but">
-                <a href="" class="xe-ui-menu-item-but">
-                    <img width="12" height="13" src="{getUrl('')}common/img/menu_icon_dashboard.png" />Dashboard
-                </a>
             </li>
         </ul>
         <ul class="f-right">
