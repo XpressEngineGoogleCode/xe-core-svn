@@ -396,7 +396,7 @@
 	</item>
 	<item name="point_download_file">
 		<value xml:lang="ko"><![CDATA[파일 다운로드(이미지 제외)]]></value>
-		<value xml:lang="en"><![CDATA[On Downloading Files(Exclude images)]]></value>
+		<value xml:lang="en"><![CDATA[On downloading files (excluding images)]]></value>
 		<value xml:lang="jp"><![CDATA[ダウンロード]]></value>
 		<value xml:lang="zh-CN"><![CDATA[下载文件(图片除外)]]></value>
 		<value xml:lang="zh-TW"><![CDATA[下載檔案(圖片除外)]]></value>

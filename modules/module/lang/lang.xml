@@ -152,6 +152,9 @@
 		<value xml:lang="tr"><![CDATA[Kategori Başlığı]]></value>
 		<value xml:lang="vi"><![CDATA[Tiêu đề phân loại]]></value>
 	</item>
+        <item name="add_category">
+                <value xml:lang="en"><![CDATA[Add category]]></value>
+        </item>
 	<item name="header_text">
 		<value xml:lang="ko"><![CDATA[상단 내용]]></value>
 		<value xml:lang="en"><![CDATA[Header Text]]></value>
@@ -1005,4 +1008,10 @@ Le module [Administration des Modules] montera tous les modules installés et vo
 		<value xml:lang="ko"><![CDATA[추가]]></value>
 		<value xml:lang="en"><![CDATA[Add]]></value>
 	</item>
+        <item name="fav">
+            <value xml:lang="en"><![CDATA[Fav.]]></value>
+        </item>
+        <item name="ver">
+            <value xml:lang="en"><![CDATA[Ver.]]></value>
+        </item>
 </lang>
