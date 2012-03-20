@@ -197,31 +197,33 @@
         /**
          * @brief Return member information with member_srl
          **/
-        function getMemberInfoByMemberSrl($member_srl, $site_srl = 0, $columnList = array()) {
-            if(!$member_srl) return;
+		function getMemberInfoByMemberSrl($member_srl, $site_srl = 0, $columnList = array()) {
+			if(!$member_srl) return;
 
 			//columnList size zero... get full member info
-            if(!$GLOBALS['__member_info__'][$member_srl] || count($columnList) == 0) {
-            //if(true) {
-	            $oCacheHandler = &CacheHandler::getInstance('object');
-				if($oCacheHandler->isSupport()){
+			if(!$GLOBALS['__member_info__'][$member_srl] || count($columnList) == 0)
+			{
+				$oCacheHandler = &CacheHandler::getInstance('object');
+				if($oCacheHandler->isSupport())
+				{
 					$cache_key = 'object:'.$member_srl;
-					$output = $oCacheHandler->get($cache_key);
+					$GLOBALS['__member_info__'][$member_srl] = $oCacheHandler->get($cache_key);
 				}
-				if(!$output){
-					$args->member_srl = $member_srl;
-	                $output = executeQuery('member.getMemberInfoByMemberSrl', $args, $columnList);
-	                if(!$output->data) return;
-	                //insert in cache
-	                if($oCacheHandler->isSupport()) $oCacheHandler->put($cache_key,$output);
-				}
-				
-				$this->arrangeMemberInfo($output->data, $site_srl);
-                
-            }
 
-            return $GLOBALS['__member_info__'][$member_srl];
-        }
+				if(!$GLOBALS['__member_info__'][$member_srl])
+				{
+					$args->member_srl = $member_srl;
+					$output = executeQuery('member.getMemberInfoByMemberSrl', $args, $columnList);
+					if(!$output->data) return;
+					$this->arrangeMemberInfo($output->data, $site_srl);
+
+					//insert in cache
+					if($oCacheHandler->isSupport()) $oCacheHandler->put($cache_key, $GLOBALS['__member_info__'][$member_srl]);
+				}
+			}
+
+			return $GLOBALS['__member_info__'][$member_srl];
+		}
 
         /**
          * @brief Add member info from extra_vars and other information
@@ -249,6 +251,25 @@
                         if(!$info->{$key}) $info->{$key} = $val;
                     }
                 }
+
+				// XSS defence
+				$oSecurity = new Security($info);
+				$oSecurity->encodeHTML('user_name', 'nick_name', 'find_account_answer', 'description', 'address.', 'group_list..');
+
+                if($extra_vars)
+				{
+                    foreach($extra_vars as $key => $val)
+					{
+						$oSecurity->encodeHTML($key);
+                    }
+                }
+
+				// Check format.
+				$oValidator = new Validator();
+				if(!$oValidator->applyRule('url', $info->homepage))
+				{
+					$info->homepage = '';
+				}
 
                 $GLOBALS['__member_info__'][$info->member_srl] = $info;
             }

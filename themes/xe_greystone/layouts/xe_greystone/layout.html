@@ -8,7 +8,7 @@
 
 <!--@if($layout_info->background_image)-->
 <style type="text/css">
-    body {  background:#FFFFFF url({$layout_info->background_image}) repeat-x left top; }
+    html {  background:#FFFFFF url({$layout_info->background_image}) repeat-x left top; }
 </style>
 <!--@end-->
 
@@ -51,7 +51,7 @@
             <input type="hidden" name="mid" value="{$mid}" />
             <input type="hidden" name="act" value="IS" />
             <input type="hidden" name="search_target" value="title_content" />
-            <input name="is_keyword" type="text" class="inputText" title="keyword" />
+            <input name="is_keyword" type="text" class="iText" title="keyword" />
             </form>
 			</div>
 

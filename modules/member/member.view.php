@@ -65,6 +65,13 @@
             unset($member_info->email_id);
             unset($member_info->email_host);
 
+			if($logged_info->is_admin != 'Y' && ($member_info->member_srl != $logged_info->member_srl))
+			{
+				$start = strpos($member_info->email_address, '@')+1;
+				$replaceStr = str_repeat('*', (strlen($member_info->email_address) - $start));
+				$member_info->email_address = substr_replace($member_info->email_address, $replaceStr, $start);
+			}
+
             if(!$member_info->member_srl) return $this->dispMemberSignUpForm();
 			
 			Context::set('memberInfo', get_object_vars($member_info));
@@ -82,11 +89,11 @@
         /**
          * @brief Display member join form
          **/
-        function dispMemberSignUpForm() {
-        	//setcookie for redirect url in case of going to member sign up
-            if (!isset($_COOKIE["XE_REDIRECT_URL"]))
+        function dispMemberSignUpForm() 
+		{
+			//setcookie for redirect url in case of going to member sign up
 			setcookie("XE_REDIRECT_URL", $_SERVER['HTTP_REFERER']);
-			
+
             $oMemberModel = &getModel('member');
             // Get the member information if logged-in
             if($oMemberModel->isLogged()) return $this->stop('msg_already_logged');
@@ -108,6 +115,7 @@
 			$identifierForm->name = $member_config->identifier;
 			$identifierForm->value = $member_info->{$member_config->identifier};
 			Context::set('identifierForm', $identifierForm);
+
             // Set a template file
             $this->setTemplateFile('signup_form');
         }
@@ -256,10 +264,13 @@
         /**
          * @brief Change the user password
          **/
-        function dispMemberModifyPassword() {
+        function dispMemberModifyPassword() 
+		{
             $oMemberModel = &getModel('member');
             // A message appears if the user is not logged-in
             if(!$oMemberModel->isLogged()) return $this->stop('msg_not_logged');
+
+			$memberConfig = $oMemberModel->getMemberConfig();
 
             $logged_info = Context::get('logged_info');
             $member_srl = $logged_info->member_srl;
@@ -267,6 +278,17 @@
 			$columnList = array('member_srl', 'user_id');
             $member_info = $oMemberModel->getMemberInfoByMemberSrl($member_srl, 0, $columnList);
             Context::set('member_info',$member_info);
+
+			if($memberConfig->identifier == 'user_id')
+			{
+				Context::set('identifier', 'user_id');
+				Context::set('formValue', $member_info->user_id);
+			}
+			else
+			{
+				Context::set('identifier', 'email_address');
+				Context::set('formValue', $member_info->email_address);
+			}
             // Set a template file
             $this->setTemplateFile('modify_password');
         }
@@ -279,11 +301,24 @@
             // A message appears if the user is not logged-in
             if(!$oMemberModel->isLogged()) return $this->stop('msg_not_logged');
 
+			$memberConfig = $oMemberModel->getMemberConfig();
+
             $logged_info = Context::get('logged_info');
             $member_srl = $logged_info->member_srl;
 
             $member_info = $oMemberModel->getMemberInfoByMemberSrl($member_srl);
             Context::set('member_info',$member_info);
+
+			if($memberConfig->identifier == 'user_id')
+			{
+				Context::set('identifier', 'user_id');
+				Context::set('formValue', $member_info->user_id);
+			}
+			else
+			{
+				Context::set('identifier', 'email_address');
+				Context::set('formValue', $member_info->email_address);
+			}
             // Set a template file
             $this->setTemplateFile('leave_form');
         }
