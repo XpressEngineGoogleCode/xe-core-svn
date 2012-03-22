@@ -1,0 +1,18 @@
+<query id="getDocumentsFromLastLogin" action="select">
+    <tables>
+        <table name="documents" />
+    </tables>
+    <columns>
+	<column name="module_srl" />
+        <column name="count(document_srl)" alias="count" />
+    </columns>
+    <conditions>
+        <condition operation="more" column="regdate" var="date" notnull="notnull" />
+    </conditions>
+    <navigation>
+        <index var="sort_index" default="regdate" order="asc" />
+    </navigation>
+    <groups>
+        <group column="module_srl" />
+    </groups>
+</query>

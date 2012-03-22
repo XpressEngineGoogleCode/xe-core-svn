@@ -219,6 +219,7 @@
 	**/
 	function dispAdminIndex() 
 	{
+		/*
 		// Get statistics
 		$args->date = date("Ymd000000", time()-60*60*24);
 		$today = date("Ymd");
@@ -283,7 +284,8 @@
 		$output =$oTrackbackModel->getNewestTrackbackList($args);
 		Context::set('latestTrackbackList', $output->data);
 		unset($args, $output, $columnList);
-
+		*/
+		
 		//Retrieve recent news and set them into context
 		$newest_news_url = sprintf("http://news.xpressengine.com/%s/news.php?version=%s&package=%s", _XE_LOCATION_, __ZBXE_VERSION__, _XE_PACKAGE_);
 		$cache_file = sprintf("%sfiles/cache/newest_news.%s.cache.php", _XE_PATH_, _XE_LOCATION_);
@@ -338,7 +340,7 @@
 		Context::set('isEnviromentGatheringAgreement', $isEnviromentGatheringAgreement);
 		Context::set('layout','none');
 
-		//getting data for GA dashboard
+		//getting data for Admin Dashboard - Analytics zone - START 
 		$oAdminModel = &getAdminModel("admin");
 		
 		// get type of analytics that you want to be used on Admin Dashboard
@@ -365,7 +367,13 @@
 					}
 					break;
 		}
-
+		//getting data for Admin Dashboard - Analytics zone - STOP
+		
+		//getting data for Admin Dashboard - Site Activity zone - START
+		$activity_data = $oAdminModel->getInfoFromLastAdminLogin();
+		Context::set('activity_data',$activity_data);
+		//getting data for Admin Dashboard - Site Activity zone - STOP
+		
 		$this->setTemplateFile('index');
 	}
 

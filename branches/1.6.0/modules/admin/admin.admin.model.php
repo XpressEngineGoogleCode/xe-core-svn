@@ -579,4 +579,95 @@ class adminAdminModel extends admin
 		$detail_status = $oCounterModel->getHourlyStatus($type, $selected_date, $site_module_info->site_srl);
 		return $detail_status;
 	}
+	
+	/**
+	 * @brief Get Information about modules activities from last admin login
+	 * @return array 
+	 */
+	function getInfoFromLastAdminLogin()
+	{
+		$oMemberModel = &getModel('member');
+		$logged_info = Context::get("logged_info");
+		$last_login = $oMemberModel->getMemberInfoByMemberSrl($logged_info->member_srl)->last_login;
+		$args->date = $last_login;
+		$documents = executeQuery("admin.getDocumentsFromLastLogin", $args)->data;
+		$comments = executeQuery("admin.getCommentsFromLastLogin", $args)->data;
+		$trackbacks = executeQuery("admin.getTrackbacksFromLastLogin", $args)->data;
+		$members = executeQuery("admin.getMembersFromLastLogin", $args)->data;
+		$activity_data = array();
+		$modules = array();
+		//arrange information about new documents
+		if(is_array($documents))
+		{
+			foreach ($documents as $value)
+			{
+				$modules[] = $value->module_srl;
+				$activity_data[$value->module_srl]["documents"] = $value->count;
+			}
+		}
+		else
+		{
+			if (isset($documents->module_srl))
+			{
+				$modules[] = $value->module_srl;
+				$activity_data[$documents->module_srl]["documents"] = $documents->count;
+			}
+		}
+		//arrange information about new comments
+		if(is_array($comments))
+		{
+			foreach ($comments as $value)
+			{
+				$modules[] = $value->module_srl;
+				$activity_data[$value->module_srl]["comments"] = $value->count;
+			}
+		}
+		else
+		{
+			if (isset($comments->module_srl))
+			{
+				$modules[] = $value->module_srl;
+				$activity_data[$comments->module_srl]["comments"] = $comments->count;
+			}
+		}
+		// arrange information about new trackbacks 
+		if(is_array($trackbacks))
+		{
+			foreach ($trackbacks as $value)
+			{
+				$modules[] = $value->module_srl;
+				$activity_data[$value->module_srl]["trackbacks"] = $value->count;
+			}
+		}
+		else
+		{
+			if (isset($trackbacks->module_srl))
+			{
+				$modules[] = $value->module_srl;
+				$activity_data[$trackbacks->module_srl]["trackbacks"] = $trackbacks->count;
+			}
+		}
+		
+		//getting information about modules
+		$unique_modules = array_unique($modules);
+		$oModuleModel = &getModel("module");
+		foreach ($unique_modules as $module)
+		{
+			if (!is_null($module))
+			{
+				$module_info = $oModuleModel->getModuleInfoByModuleSrl($module,array('module','mid'));
+				$module_admin_page = $oModuleModel->getModuleActionXml($module_info->module);
+				$activity_data[$module]["admin_page"] = $module_admin_page->admin_index_act;
+				$activity_data[$module]["module"] = $module_info->module;
+				$activity_data[$module]["mid"] = $module_info->mid;
+			}
+		}
+		
+		//arrange information about new members
+		if(!is_null($members))
+		{
+			$activity_data["members"] = $members->count;
+		}	
+		return $activity_data;
+	}
 }
