@@ -1286,4 +1286,34 @@ Lütfen son sürümü için indirme linkine tıklayınız.]]></value>
     <item name="msg_not_uploaded_shortcut_icon_image">
         <value xml:lang="en"><![CDATA[Shortcut icon file could not be uploaded !]]></value>
     </item>
+    <item name="cmd_manage">
+        <value xml:lang="en"><![CDATA[Manage]]></value>
+    </item>
+    <item name="visitors">
+        <value xml:lang="en"><![CDATA[Visitors]]></value>
+    </item>
+    <item name="choose_analytics_api">
+        <value xml:lang="en"><![CDATA[Choose your Analytics Type for Admin Dashboard:]]></value>
+    </item>
+    <item name="accept_ga_api">
+        <value xml:lang="en"><![CDATA[Accept GA API]]></value>
+    </item>
+    <item name="ga_client_id">
+        <value xml:lang="en"><![CDATA[GA Client Id]]></value>
+    </item>
+    <item name="ga_client_secret">
+        <value xml:lang="en"><![CDATA[GA Client Secret]]></value>
+    </item>
+    <item name="ga_developer_key">
+        <value xml:lang="en"><![CDATA[GA Developer Key]]></value>
+    </item>
+    <item name="ga_redirect_uri">
+        <value xml:lang="en"><![CDATA[GA Redirect Uri]]></value>
+    </item>
+    <item name="dashboard_analytics_initial_text">
+        <value xml:lang="en"><![CDATA[If you want to use analytics please go to ]]></value>
+    </item>
+    <item name="dashboard_analytics_link_text">
+        <value xml:lang="en"><![CDATA[Dashboard analytics configuration page]]></value>
+    </item>
 </lang>
