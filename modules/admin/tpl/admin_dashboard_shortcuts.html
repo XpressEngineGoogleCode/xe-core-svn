@@ -38,7 +38,7 @@
 								<td>
 									<input type="hidden" name="order[{$shortcut->shortcut_srl}]" value={$k} />
 									<input type="hidden" name='shortcutId[{$shortcut->shortcut_srl}]' value={$shortcut->shortcut_srl} />
-									<img alt="" id="currentIcon[]" src="{$shortcut->icon_path}" />
+									<img alt="" id="currentIcon[]" src="{$shortcut->icon_path}" width="32" height="32" />
 									<input type="file" name='shortcutIcon[{$shortcut->shortcut_srl}]' />
 								</td>
 								<td><input type="text" name="link[{$shortcut->shortcut_srl}]" value='{$shortcut->link}' /></td>

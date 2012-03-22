@@ -66,17 +66,59 @@
         <div class="xe-ui-panel" style="float: right; width: 746px; height: 295px;">
             <div class="xe-ui-panel-content cleared" style="padding-bottom: 12px;">
                 <h2>
-                    Visitors
+                    {$lang->visitors}
                     <span style="float: right;">
-                        <a href="{getURL('','module','admin','act','dispAdminDashboardShortcuts')}" class="xe-ui-button-gray img">
-                            <img src="{getFullURL()}common/img/icon_settings.png" title="Edit shortcuts" />
+                        <a href="{getURL('','module','admin','act','dispAdminDashboardGA')}" class="xe-ui-button-gray img">
+                            <img src="{getFullURL()}common/img/icon_settings.png" title="Edit Google Analytics Account" />
                         </a>
                     </span>
                 </h2>
+		<!--@if(isset($analytics_type))-->
+		<div id="ga_chart_div">
+			
+		</div>
+		<!-- Google Chart script for google analytics data for past month START -->
+		<script type='text/javascript' src='http://www.google.com/jsapi' ></script>
+		<script type="text/javascript">
+			google.load("visualization", "1", {packages:["corechart"]});
+			google.setOnLoadCallback(drawChart);
+			function drawChart() {
+				var data = new google.visualization.DataTable();
+				data.addColumn('string', 'Date');
+				data.addColumn('number', 'Visits');
+				data.addColumn('number', 'Visitors');
+				data.addRows([
+					<!--@if($type_data == 'ga')-->
+						<!--@foreach($script_data as $key=>$value)-->
+						['{substr($value[0],4,2).".".substr($value[0],6,2)}', {$value[1]}, {$value[2]}],
+						<!--@end-->
+					<!--@end-->
+					<!--@if($type_data == 'xe')-->
+						<!--@foreach($script_data as $key=>$value)-->
+						['{$key}', 0, {$value}],
+						<!--@end-->
+					<!--@end-->
+				]);
+
+				var options = {
+					title: 'Google Analytics information',
+					colors: ['#098ac1', '#b7dbe9'],
+					lineWidth: 4,
+					pointSize: 8
+				};
+
+				var chart = new google.visualization.LineChart(document.getElementById('ga_chart_div'));
+				chart.draw(data, options);
+			}
+		</script>
+		<!-- google chart END -->
+		<!--@else-->
+			{$lang->dashboard_analytics_initial_text}<a href="{getURL('','module','admin','act','dispAdminDashboardGA')}">{$lang->dashboard_analytics_link_text}</a>. 
+		<!--@end-->
             </div>
         </div>
         <div class="cleared"></div>
-
+	<!--
         <div class="section">
             <div class="portlet">
                 <h2 class="h2">{$lang->current_state}</h2>
@@ -178,6 +220,32 @@
                 </UL>
             </div>
         </div>
+	-->
+	<div class="xe-ui-panel" style="float: right; width: 980px; height: 250px;">
+		<div class="xe-ui-panel-content cleared" style="padding-bottom: 12px;">
+			<h2>
+				Site activity
+			</h2>
+			<table class="sortable xe-ui-table" id="dashboard_shortcuts">
+				<thead>
+					<tr>
+						<th scope="col" style="text-align: left; width: 150px;">Module</th>
+						<th scope="col" class="center" style="width: 150px;">Module name</th>
+						<th colspan="3" scope="col" class="left" style="text-align: left;">Module Activity (since your last login)</th>
+					</tr>
+				</thead>
+				<tbody>
+					<tr>
+						<td>Textyle</td>
+						<td class="center"><strong>blog</strong></td>
+						<td style="width: 550px;"></td>
+						<td><a href="#" onclick="javascript: void;" class="xe-ui-button-gray">{$lang->cmd_view}</a></td>
+						<td><a href="#" onclick="javascript: void;" class="xe-ui-button-gray">Manage</a></td>
+					</tr>
+				</tbody>
+			</table>
+		</div>
+	</div>
     </div>
     <div class="footer">
         <p class="power">Powered by <strong><a href="{_XE_LOCATION_SITE_}" target="_blank">XE</a></strong> (ver. {__XE_VERSION__}).</p>
@@ -187,12 +255,5 @@
             <button type="button" class="text" onclick="doClearSession();">{$lang->cmd_clear_session}</button>
 
         </p>
-        <div class="account">
-            <ul>
-                <li>
-                </li>
-            </ul>
-        </div>
-    </div>
 </div>
 <!--#include("./_spFooter.html")-->

@@ -1,0 +1,67 @@
+<h1 class="h1">{$lang->dashboard_analytics_link_text}</h1>
+<div class="xe-ui-title-separator">
+    <hr/>
+</div>
+
+<div id="content" class="cleared">
+	<div class="xe-ui-panel">
+		<div class="xe-ui-panel-content cleared">
+			<div cond="$XE_VALIDATOR_MESSAGE" class="xe-ui-message {$XE_VALIDATOR_MESSAGE_TYPE} gradient cleared">
+				<a href="#" style="float: right;" onclick="jQuery(this).parent().remove();return false;" class="xe-ui-button-gray gradient">Dismiss</a>
+				<p>{$XE_VALIDATOR_MESSAGE}</p>
+			</div>
+			
+			
+			<form id="form_analytics" action="./" method="post">
+				<label for="analytics_type">{$lang->choose_analytics_api} 
+					<select id="analytics_type" name="analytics_type" onchange="jQuery('#form_analytics div[id*=form]').hide(100);jQuery('#form_'+jQuery(this).val()).show(300);">
+						<option value="">-- Please choose an option --</option>
+						<option value="xe">XE Analytics</option>
+						<option value="ga">Google Analytics</option>
+						<!--<option value="naver">Naver Analytics</option>-->
+					</select>
+				</label>
+				<input type="hidden" name="module" value="admin" />
+				<input type="hidden" name="act" id="act" value="procAdminSaveGAInfo" />
+				<div id="form_ga" style="display:none;">
+					<p class="form-list">
+						<label for="ga_client_id" class="desc">{$lang->ga_client_id}</label><input class="xe-ui-panel-text" type="text" name="ga_client_id" id="ga_client_id"  value='{$client_id}' />
+					</p>
+					<p class="form-list">
+						<label for="ga_client_secret" class="desc">{$lang->ga_client_secret}</label><input class="xe-ui-panel-text" type="text" name="ga_client_secret" id="ga_client_secret" value='{$client_secret}' />
+					</p>
+					<p class="form-list">
+						<label for="ga_developer_key" class="desc">{$lang->ga_developer_key}</label><input class="xe-ui-panel-text" type="text" name="ga_developer_key" id="ga_developer_key" value='{$developer_key}' />
+					</p>
+					<p class="form-list">
+						<label for="ga_redirect_uri" class="desc">{$lang->ga_redirect_uri}</label><input class="xe-ui-panel-text" type="text" name="ga_redirect_uri" id="ga_redirect_uri" value="{getFullUrl('','module','admin','act','procAdminSaveGAAuthToken')}" readonly="readonly" />
+					</p>
+					<div class="xe-ui-panel-controller">
+						<hr>
+						<p class="center">
+							<a href="#" onclick="javascript: document.getElementById('form_analytics').submit();" class="xe-ui-button-gray">{$lang->cmd_save}</a>
+							<!--@if(isset($analytics_type) && $analytics_type == 'ga')-->
+								<a href="#" onclick="javascript: window.location.href = '{getUrl('','module','admin','act','procAdminSaveGAAuthToken')}';" class="xe-ui-button-gray">{$lang->accept_ga_api}</a>
+							<!--@end-->
+						</p>
+					</div>
+				</div>
+				<div id="form_xe" style="display:none;">
+					<p class="form-list">You have nothing to set up for this option. Just save your option for Dashboard analytics.</p>
+					<div class="xe-ui-panel-controller">
+						<hr>
+						<p class="center">
+							<a href="#" onclick="javascript: document.getElementById('form_analytics').submit();" class="xe-ui-button-gray">{$lang->cmd_save}</a>
+						</p>
+					</div>
+				</div>
+			</form>
+			<!--@if(isset($analytics_type))-->
+			<script>
+				jQuery("#analytics_type option[value='{$analytics_type}']").attr("selected","selected");
+				jQuery("#form_{$analytics_type}").show(300);
+			</script>
+			<!--@end-->
+		</div>
+	</div>
+</div>
