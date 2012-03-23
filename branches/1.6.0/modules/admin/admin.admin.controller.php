@@ -449,7 +449,7 @@ class adminAdminController extends admin {
 	 */
 	function procAdminSaveGAInfo()
 	{
-		$oModuleModel = getModel('module');
+		$oModuleModel = &getModel('module');
 		$module_info = $oModuleModel->getModuleConfig($this->module);
 		$analytics_type = Context::get("analytics_type");
 		if($analytics_type == 'ga')
@@ -469,6 +469,7 @@ class adminAdminController extends admin {
 				unset($module_info->redirect_uri);
 				unset($module_info->auth_token);
 				unset($module_info->access_token);
+				unset($module_info->ga_id);
 			}
 		}
 		$module_info->analytics_type = $analytics_type;
@@ -488,7 +489,7 @@ class adminAdminController extends admin {
 		
 	function procAdminSaveGAAuthToken()
 	{
-		$oModuleModel = getModel('module');
+		$oModuleModel = &getModel('module');
 		$module_info = $oModuleModel->getModuleConfig($this->module);
 		
 		$oAdminModel = &getAdminModel("admin");
@@ -496,7 +497,9 @@ class adminAdminController extends admin {
 		if (isset($_GET["code"])) 
 		{
 			$oAdminModel->client->authenticate();
-			$my_token =$oAdminModel->client->getAccessToken();
+			$my_token = $oAdminModel->client->getAccessToken();
+			$my_ga_id = $oAdminModel->getGAAccountsInfo();
+			$module_info->ga_id = $my_ga_id;
 			$module_info->auth_token = $my_token;
 		}
 		else

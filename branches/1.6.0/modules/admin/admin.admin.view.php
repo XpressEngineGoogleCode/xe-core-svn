@@ -569,7 +569,7 @@
 	**/
 	function dispAdminDashboardGA()
 	{
-		$oModuleModel = getModel('module');
+		$oModuleModel = &getModel('module');
 		$module_info = $oModuleModel->getModuleConfig($this->module);
 		Context::set('analytics_type',$module_info->analytics_type);
 		switch($module_info->analytics_type)
@@ -588,6 +588,7 @@
 					break;
 			case "xe" : break; 
 		}
+		
 		$this->setTemplateFile('admin_dashboard_analytics');
 	}
 
