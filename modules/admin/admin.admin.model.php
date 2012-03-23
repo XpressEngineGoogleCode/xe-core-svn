@@ -609,7 +609,7 @@ class adminAdminModel extends admin
 		{
 			if (isset($documents->module_srl))
 			{
-				$modules[] = $value->module_srl;
+				$modules[] = $documents->module_srl;
 				$activity_data[$documents->module_srl]["documents"] = $documents->count;
 			}
 		}
@@ -626,7 +626,7 @@ class adminAdminModel extends admin
 		{
 			if (isset($comments->module_srl))
 			{
-				$modules[] = $value->module_srl;
+				$modules[] = $comments->module_srl;
 				$activity_data[$comments->module_srl]["comments"] = $comments->count;
 			}
 		}
@@ -643,7 +643,7 @@ class adminAdminModel extends admin
 		{
 			if (isset($trackbacks->module_srl))
 			{
-				$modules[] = $value->module_srl;
+				$modules[] = $trackbacks->module_srl;
 				$activity_data[$trackbacks->module_srl]["trackbacks"] = $trackbacks->count;
 			}
 		}
