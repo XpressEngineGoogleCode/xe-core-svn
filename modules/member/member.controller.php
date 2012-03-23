@@ -497,7 +497,7 @@
 			$getVars = array();
 			if ($config->signupForm){
 				foreach($config->signupForm as $formInfo){
-					if($formInfo->isDefaultForm && $formInfo->isUse && ($formInfo->required || $formInfo->mustRequired)){
+					if($formInfo->isDefaultForm && ($formInfo->isUse || $formInfo->required || $formInfo->mustRequired)){
 						$getVars[] = $formInfo->name;
 					}
 				}
@@ -565,10 +565,18 @@
 
             }
             // Log-in
-            if ($config->enable_confirm != 'Y') $this->doLogin($args->user_id);
-            //get redirect url from cookie and invalidate cookie
-            $config->redirect_url = $_COOKIE["XE_REDIRECT_URL"];
-            setcookie("XE_REDIRECT_URL", '', 1);
+            if ($config->enable_confirm != 'Y')
+			{
+				if($config->identifier == 'email_address')
+				{
+					$this->doLogin($args->email_address);
+				}
+				else
+				{
+					$this->doLogin($args->user_id);
+				}
+			}
+
             // Results
             $this->add('member_srl', $args->member_srl);
             if($config->redirect_url) $this->add('redirect_url', $config->redirect_url);
@@ -581,9 +589,26 @@
             $trigger_output = ModuleHandler::triggerCall('member.procMemberInsert', 'after', $config);
             if(!$trigger_output->toBool()) return $trigger_output;
 
-			if(!in_array(Context::getRequestMethod(),array('XMLRPC','JSON'))) {
-				$returnUrl = Context::get('success_return_url') ? Context::get('success_return_url') : getNotEncodedUrl('', 'mid', Context::get('mid'), 'act', '');
-				header('location:'.$returnUrl);
+			if(!in_array(Context::getRequestMethod(),array('XMLRPC','JSON')))
+			{
+				if($config->redirect_url)
+				{
+					$returnUrl = $config->redirect_url;
+				}
+				else
+				{
+					if(Context::get('success_return_url'))
+					{
+						$returnUrl = Context::get('success_return_url');
+					}
+					else if($_COOKIE['XE_REDIRECT_URL'])
+					{
+						$returnUrl = $_COOKIE['XE_REDIRECT_URL'];
+						setcookie("XE_REDIRECT_URL", '', 1);
+					}
+				}
+
+				header('location:' . $returnUrl);
 				return;
 			}
         }
@@ -1584,10 +1609,6 @@
             }
             */
 
-			// XSS defence
-			$oSecurity = new Security($this->memberInfo);
-			$oSecurity->encodeHTML('user_name', 'nick_name', 'address.');
-
             // Information stored in the session login user
             Context::set('is_logged', true);
             Context::set('logged_info', $this->memberInfo);
@@ -1688,11 +1709,6 @@
 
 			if (!$args->user_id) $args->user_id = 't'.$args->member_srl;
 			if (!$args->user_name) $args->user_name = $args->member_srl;
-
-			if(trim($args->find_account_answer))
-			{
-				$args->find_account_answer = md5($args->find_account_answer);
-			}
 
             $output = executeQuery('member.insertMember', $args);
             if(!$output->toBool()) {
