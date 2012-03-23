@@ -369,7 +369,7 @@ class adminAdminModel extends admin
 
 		if($isGetModuleInfo && is_array($output->data))
 		{
-			$oModuleModel = getModel('module');
+			$oModuleModel = &getModel('module');
 			foreach($output->data AS $key=>$value)
 			{
 				$moduleInfo = $oModuleModel->getModuleInfoXml($value->module);
@@ -508,7 +508,7 @@ class adminAdminModel extends admin
 	 */
 	function setGAAccount()
 	{
-		$oModuleModel = getModel('module');
+		$oModuleModel = &getModel('module');
 		$module_info = $oModuleModel->getModuleConfig($this->module);
 		//set google api client
 		$this->client = new apiClient();
@@ -517,7 +517,7 @@ class adminAdminModel extends admin
 		$this->client->setClientSecret($module_info->client_secret);
 		$this->client->setRedirectUri($module_info->redirect_uri);
 		$this->client->setDeveloperKey($module_info->developer_key);
-		$this->client->setScopes(array("https://www.googleapis.com/auth/analytics.readonly"));
+		$this->client->setScopes(array("https://www.google.com/analytics/feeds/accounts/default"));
 		if(isset($module_info->auth_token))
 		{
 			$this->client->setAccessToken($module_info->auth_token);
@@ -526,7 +526,7 @@ class adminAdminModel extends admin
 
 	/**
 	 * @brief Get Information from Google Analytics API Account
-	 * @return Object 
+	 * @return array 
 	 */
 	function getGAData()
 	{
@@ -543,17 +543,18 @@ class adminAdminModel extends admin
 			);
 
 			$client::$auth->sign(new apiHttpRequest($client->OAUTH2_TOKEN_URI, 'POST', array(), $params));
-
+			$this->service = new apiAnalyticsService($client);
+			$oModuleModel = &getModel('module');
+			$module_info = $oModuleModel->getModuleConfig($this->module);
 			try
 			{
 				$dimensions = 'ga:date';
 				$metrics = 'ga:visits,ga:visitors';
 				$segment = 'gaid::-1';
-				$ids = 'ga:44995332';
+				$ids = 'ga:'.$module_info->ga_id;
 				$timestamp = strtotime('-1 month');
 				$start_date = date('Y-m-d', $timestamp);
 				$end_date = date("Y-m-d",time());
-				$this->service = new apiAnalyticsService($client);
 				$data = $this->service->data_ga->get($ids,$start_date,$end_date,$metrics,array('segment'=>$segment,'dimensions'=>$dimensions));
 			}
 			catch(Exception $e)
@@ -563,7 +564,44 @@ class adminAdminModel extends admin
 		}
 		return $data;
 	}
+	
+	function getGAAccountsInfo()
+	{
+		$this->setGAAccount();
+		$client = $this->client;
+		$params = array(
+			'client_id' => $client->clientId,
+			'client_secret' => $client->clientSecret,
+			'refresh_token' => $client::$auth->accessToken["refresh_token"],
+			'grant_type' => 'refresh_token'
+		);
 
+		$client::$auth->sign(new apiHttpRequest($client->OAUTH2_TOKEN_URI, 'POST', array(), $params));
+		$service = new apiAnalyticsService($client);
+
+		// get GA account id
+		$accounts = $service->management_webproperties->listManagementWebproperties("~all");
+		$myUrl = getFullUrl('');
+		$my_account_id = null;
+		foreach($accounts["items"] as $account)
+		{
+			if($account["websiteUrl"] == $myUrl )
+			{
+				$my_account_id = $account["accountId"];
+			}
+		}
+		if (!is_null($my_account_id))
+		{
+			$profiles = $service->management_profiles->listManagementProfiles($my_account_id,"~all");
+		}
+		$ga_account_id = null;
+		if(is_array($profiles) && $profiles["items"][0]["accountId"] == $my_account_id)
+		{
+			$ga_account_id = $profiles["items"][0]["id"];
+		}
+		return $ga_account_id;
+	}
+	
 	/**
 	 * @brief Get Information from XE Analytics (XE Counter module)
 	 * @return Object 
@@ -572,7 +610,7 @@ class adminAdminModel extends admin
 	{
 		$selected_date = date("Ymd");
 		// create the counter model object
-		$oCounterModel = getModel('counter');
+		$oCounterModel = &getModel('counter');
 		// get a total count and daily count
 		$site_module_info = Context::get('site_module_info');
 		$type = 'day';
