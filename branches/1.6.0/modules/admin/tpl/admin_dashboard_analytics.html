@@ -25,6 +25,12 @@
 				<input type="hidden" name="act" id="act" value="procAdminSaveGAInfo" />
 				<div id="form_ga" style="display:none;">
 					<p class="form-list">
+						<label for="ga_script" class="desc">{$lang->ga_script}</label>
+						<textarea class="xe-ui-panel-text" name="ga_script" id="ga_script" style="width: 600px; height: 300px;">
+							{$script}
+						</textarea>
+					</p>
+					<p class="form-list">
 						<label for="ga_client_id" class="desc">{$lang->ga_client_id}</label><input class="xe-ui-panel-text" type="text" name="ga_client_id" id="ga_client_id"  value='{$client_id}' />
 					</p>
 					<p class="form-list">

@@ -458,6 +458,7 @@ class adminAdminController extends admin {
 			$module_info->client_secret = Context::get("ga_client_secret");
 			$module_info->developer_key = Context::get("ga_developer_key");
 			$module_info->redirect_uri = Context::get("ga_redirect_uri");
+			$module_info->script = Context::get("ga_script");
 		}
 		if($analytics_type == 'xe')
 		{
@@ -467,6 +468,7 @@ class adminAdminController extends admin {
 				unset($module_info->client_secret);
 				unset($module_info->developer_key);
 				unset($module_info->redirect_uri);
+				unset($module_info->script);
 				unset($module_info->auth_token);
 				unset($module_info->access_token);
 				unset($module_info->ga_id);
@@ -498,8 +500,8 @@ class adminAdminController extends admin {
 		{
 			$oAdminModel->client->authenticate();
 			$my_token = $oAdminModel->client->getAccessToken();
-			$my_ga_id = $oAdminModel->getGAAccountsInfo();
-			$module_info->ga_id = $my_ga_id;
+			//$my_ga_id = $oAdminModel->getGAAccountsInfo();
+			//$module_info->ga_id = $my_ga_id;
 			$module_info->auth_token = $my_token;
 		}
 		else

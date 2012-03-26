@@ -360,9 +360,9 @@
 					break;
 			case "xe" :
 					$xe_data = $oAdminModel->getXEAnalyticsData();
-					if(is_array($xe_data->list))
+					if(is_array($xe_data))
 					{
-						Context::set("script_data", $xe_data->list);
+						Context::set("script_data", $xe_data);
 						Context::set("type_data", "xe");
 					}
 					break;
@@ -579,6 +579,7 @@
 					Context::set('client_secret',$module_info->client_secret);
 					Context::set('redirect_uri',$module_info->redirect_uri);
 					Context::set('developer_key',$module_info->developer_key);
+					Context::set('script',$module_info->script);
 					break;
 			case "naver" :
 					Context::set('client_id',$module_info->client_id);

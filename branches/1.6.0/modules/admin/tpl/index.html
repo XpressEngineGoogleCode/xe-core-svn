@@ -85,23 +85,31 @@
 			function drawChart() {
 				var data = new google.visualization.DataTable();
 				data.addColumn('string', 'Date');
-				data.addColumn('number', 'Visits');
-				data.addColumn('number', 'Visitors');
+				<!--@if($analytics_type == 'ga')-->
+					data.addColumn('number', 'Visits');
+					data.addColumn('number', 'Visitors');
+					{@$analytics_title = 'Google Analytics information'}
+				<!--@end-->
+				<!--@if($analytics_type == 'xe')-->
+					data.addColumn('number', 'Page Views');
+					data.addColumn('number', 'Unique Visitors');
+					{@$analytics_title = 'XE Analytics information'}
+				<!--@end-->
 				data.addRows([
-					<!--@if($type_data == 'ga')-->
+					<!--@if($analytics_type == 'ga')-->
 						<!--@foreach($script_data as $key=>$value)-->
 						['{substr($value[0],4,2).".".substr($value[0],6,2)}', {$value[1]}, {$value[2]}],
 						<!--@end-->
 					<!--@end-->
-					<!--@if($type_data == 'xe')-->
+					<!--@if($analytics_type == 'xe')-->
 						<!--@foreach($script_data as $key=>$value)-->
-						['{$key}', 0, {$value}],
+						['{substr($value->regdate,4,2).".".substr($value->regdate,6,2)}', {$value->pageview}, {$value->unique_visitor}],
 						<!--@end-->
 					<!--@end-->
 				]);
 
 				var options = {
-					title: 'Google Analytics information',
+					title: '{$analytics_title}',
 					colors: ['#098ac1', '#b7dbe9'],
 					lineWidth: 4,
 					pointSize: 8

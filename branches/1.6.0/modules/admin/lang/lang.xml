@@ -1298,6 +1298,9 @@ Lütfen son sürümü için indirme linkine tıklayınız.]]></value>
     <item name="accept_ga_api">
         <value xml:lang="en"><![CDATA[Accept GA API]]></value>
     </item>
+    <item name="ga_script">
+        <value xml:lang="en"><![CDATA[GA js script]]></value>
+    </item>
     <item name="ga_client_id">
         <value xml:lang="en"><![CDATA[GA Client Id]]></value>
     </item>
