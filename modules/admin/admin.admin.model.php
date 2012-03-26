@@ -1,6 +1,4 @@
 <?php
-require_once _XE_PATH_ . "libs/google_api/apiClient.php";
-require_once _XE_PATH_ . "libs/google_api/contrib/apiAnalyticsService.php";	
 
 class adminAdminModel extends admin
 {
@@ -508,6 +506,8 @@ class adminAdminModel extends admin
 	 */
 	function setGAAccount()
 	{
+		require_once _XE_PATH_ . "libs/google_api/apiClient.php";
+		require_once _XE_PATH_ . "libs/google_api/contrib/apiAnalyticsService.php";
 		$oModuleModel = &getModel('module');
 		$module_info = $oModuleModel->getModuleConfig($this->module);
 		//set google api client
@@ -517,7 +517,7 @@ class adminAdminModel extends admin
 		$this->client->setClientSecret($module_info->client_secret);
 		$this->client->setRedirectUri($module_info->redirect_uri);
 		$this->client->setDeveloperKey($module_info->developer_key);
-		$this->client->setScopes(array("https://www.google.com/analytics/feeds/accounts/default"));
+		$this->client->setScopes(array("https://www.googleapis.com/auth/analytics.readonly","https://www.google.com/analytics/feeds/accounts/default"));
 		if(isset($module_info->auth_token))
 		{
 			$this->client->setAccessToken($module_info->auth_token);
@@ -544,14 +544,16 @@ class adminAdminModel extends admin
 
 			$client::$auth->sign(new apiHttpRequest($client->OAUTH2_TOKEN_URI, 'POST', array(), $params));
 			$this->service = new apiAnalyticsService($client);
-			$oModuleModel = &getModel('module');
-			$module_info = $oModuleModel->getModuleConfig($this->module);
 			try
 			{
 				$dimensions = 'ga:date';
 				$metrics = 'ga:visits,ga:visitors';
 				$segment = 'gaid::-1';
-				$ids = 'ga:'.$module_info->ga_id;
+				
+				// getting ga id from google analytics api
+				$my_ga_id = $this->getGAAccountsInfo();
+				
+				$ids = 'ga:'.$my_ga_id;
 				$timestamp = strtotime('-1 month');
 				$start_date = date('Y-m-d', $timestamp);
 				$end_date = date("Y-m-d",time());
@@ -608,13 +610,20 @@ class adminAdminModel extends admin
 	 */
 	function getXEAnalyticsData()
 	{
-		$selected_date = date("Ymd");
+		//$selected_date = date("Ymd");
+		$arr_dates = array();
+		//$timestamp = time();
+		for($i=0;$i<=30;$i++)
+		{
+			$arr_dates[$i] = date("Ymd",  strtotime("-".$i." days"));
+		}
 		// create the counter model object
 		$oCounterModel = &getModel('counter');
 		// get a total count and daily count
 		$site_module_info = Context::get('site_module_info');
-		$type = 'day';
-		$detail_status = $oCounterModel->getHourlyStatus($type, $selected_date, $site_module_info->site_srl);
+		//$type = 'day';
+		//$detail_status = $oCounterModel->getHourlyStatus($type, $selected_date, $site_module_info->site_srl);
+		$detail_status = $oCounterModel->getStatus($arr_dates, $site_module_info->site_srl);
 		return $detail_status;
 	}
 	
