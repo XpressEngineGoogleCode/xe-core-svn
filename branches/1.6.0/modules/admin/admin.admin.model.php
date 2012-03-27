@@ -454,6 +454,66 @@ class adminAdminModel extends admin
 		return $icon_url;
 	}
 
+	function insertDefaultShortcuts()
+	{
+		$path = _XE_PATH_ .'files/icons/shortcuts/';
+		$member_srl = Context::get("logged_info")->member_srl;
+		$shortcuts = array();
+		$shortcutObj = new Object();
+		$shortcutObj->link = getFullUrl('',"module","admin","act","dispPageAdminInsert");
+		$shortcutObj->member_srl = $member_srl;
+		$shortcutObj->display_name = "Add new page";
+		$shortcutObj->order_number = 1;
+		$shortcutObj->file = _XE_PATH_."common/img/shortcut_icon_add_page.png";
+		$shortcutObj->shortcut_srl = getNextSequence();
+		$shortcuts[0] = $shortcutObj;
+		unset($shortcutObj);
+		$shortcutObj->link = getFullUrl('',"module","admin","act","dispFileAdminList");
+		$shortcutObj->member_srl = $member_srl;
+		$shortcutObj->display_name = "File manager";
+		$shortcutObj->order_number = 2;
+		$shortcutObj->file = _XE_PATH_."common/img/shortcut_icon_file_manager.png";
+		$shortcutObj->shortcut_srl = getNextSequence();
+		$shortcuts[1] = $shortcutObj;
+		unset($shortcutObj);
+		$shortcutObj->link = getFullUrl('',"module","admin","act","dispPageAdminContent");
+		$shortcutObj->member_srl = $member_srl;
+		$shortcutObj->display_name = "Page manager";
+		$shortcutObj->order_number = 3;
+		$shortcutObj->file = _XE_PATH_."common/img/shortcut_icon_page_manager.png";
+		$shortcutObj->shortcut_srl = getNextSequence();
+		$shortcuts[2] = $shortcutObj;
+		unset($shortcutObj);
+		$shortcutObj->link = getFullUrl('',"module","admin","act","dispMenuAdminSiteMap");
+		$shortcutObj->member_srl = $member_srl;
+		$shortcutObj->display_name = "Menu manager";
+		$shortcutObj->order_number = 4;
+		$shortcutObj->file = _XE_PATH_."common/img/shortcut_icon_menu_manager.png";
+		$shortcutObj->shortcut_srl = getNextSequence();
+		$shortcuts[3] = $shortcutObj;
+		unset($shortcutObj);
+		$shortcutObj->link = getFullUrl('',"module","admin","act","dispMemberAdminList");
+		$shortcutObj->member_srl = $member_srl;
+		$shortcutObj->display_name = "User manager";
+		$shortcutObj->order_number = 5;
+		$shortcutObj->file = _XE_PATH_."common/img/shortcut_icon_user_manager.png";
+		$shortcutObj->shortcut_srl = getNextSequence();
+		$shortcuts[4] = $shortcutObj;
+		unset($shortcutObj);
+		
+		foreach ($shortcuts as $args) 
+		{
+			$output = executeQuery('admin.insertShortcut', $args);
+			if(!$output->toBool())
+			{
+				return $output->message;
+			}
+			$target_filename = sprintf('%s%s', $path, $args->shortcut_srl.".png");
+			@copy($args->file, $target_filename);
+		}
+		return true;
+	}
+	
 	/**
 	* @brief Get Dashboard shortcuts
 	* @return array 
