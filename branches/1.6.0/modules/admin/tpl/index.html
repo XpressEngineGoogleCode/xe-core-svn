@@ -1,5 +1,5 @@
 <!--#include("./_spHeader.html")-->
-<h1>{$lang->cmd_declared_list}</h1>
+<h1>{$lang->menu_gnb['dashboard']}</h1>
 <div class="xe-ui-title-separator">
     <hr/>
 </div>
@@ -73,129 +73,131 @@
                         </a>
                     </span>
                 </h2>
-		<!--@if(isset($analytics_type))-->
-		<div id="ga_chart_div">
-			
-		</div>
-		<!-- Google Chart script for google analytics data for past month START -->
-		<script type='text/javascript' src='http://www.google.com/jsapi' ></script>
-		<script type="text/javascript">
-			google.load("visualization", "1", {packages:["corechart"]});
-			google.setOnLoadCallback(drawChart);
-			function drawChart() {
-				var data = new google.visualization.DataTable();
-				data.addColumn('string', 'Date');
-				<!--@if($analytics_type == 'ga')-->
-					data.addColumn('number', 'Visits');
-					data.addColumn('number', 'Visitors');
-					{@$analytics_title = 'Google Analytics information'}
-				<!--@end-->
-				<!--@if($analytics_type == 'xe')-->
-					data.addColumn('number', 'Page Views');
-					data.addColumn('number', 'Unique Visitors');
-					{@$analytics_title = 'XE Analytics information'}
-				<!--@end-->
-				data.addRows([
-					<!--@if($analytics_type == 'ga')-->
-						<!--@foreach($script_data as $key=>$value)-->
-						['{substr($value[0],4,2).".".substr($value[0],6,2)}', {$value[1]}, {$value[2]}],
-						<!--@end-->
-					<!--@end-->
-					<!--@if($analytics_type == 'xe')-->
-						<!--@foreach($script_data as $key=>$value)-->
-						['{substr($value->regdate,4,2).".".substr($value->regdate,6,2)}', {$value->pageview}, {$value->unique_visitor}],
-						<!--@end-->
-					<!--@end-->
-				]);
+                <!--@if(isset($analytics_type))-->
+                <div id="ga_chart_div">
 
-				var options = {
-					title: '{$analytics_title}',
-					colors: ['#098ac1', '#b7dbe9'],
-					lineWidth: 4,
-					pointSize: 8
-				};
+                </div>
+                <!-- Google Chart script for google analytics data for past month START -->
+                <script type='text/javascript' src='http://www.google.com/jsapi' ></script>
+                <script type="text/javascript">
+                    google.load("visualization", "1", {packages:["corechart"]});
+                    google.setOnLoadCallback(drawChart);
+                    function drawChart() {
+                        var data = new google.visualization.DataTable();
+                        data.addColumn('string', 'Date');
+                        <!--@if($analytics_type == 'ga')-->
+                        data.addColumn('number', 'Visits');
+                        data.addColumn('number', 'Visitors');
+                        {@$analytics_title = 'Google Analytics information'}
+                        <!--@end-->
+                        <!--@if($analytics_type == 'xe')-->
+                        data.addColumn('number', 'Page Views');
+                        data.addColumn('number', 'Unique Visitors');
+                        {@$analytics_title = 'XE Analytics information'}
+                        <!--@end-->
+                        data.addRows([
+                            <!--@if($analytics_type == 'ga')-->
+                            <!--@foreach($script_data as $key=>$value)-->
+                            ['{substr($value[0],4,2).".".substr($value[0],6,2)}', {$value[1]}, {$value[2]}],
+                            <!--@end-->
+                            <!--@end-->
+                            <!--@if($analytics_type == 'xe')-->
+                            <!--@foreach($script_data as $key=>$value)-->
+                            ['{substr($value->regdate,4,2).".".substr($value->regdate,6,2)}', {$value->pageview}, {$value->unique_visitor}],
+                            <!--@end-->
+                            <!--@end-->
+                        ]);
 
-				var chart = new google.visualization.LineChart(document.getElementById('ga_chart_div'));
-				chart.draw(data, options);
-			}
-		</script>
-		<!-- google chart END -->
-		<!--@else-->
+                        var options = {
+                            title: '{$analytics_title}',
+                            colors: ['#098ac1', '#b7dbe9'],
+                            lineWidth: 4,
+                            pointSize: 8
+                        };
+
+                        var chart = new google.visualization.LineChart(document.getElementById('ga_chart_div'));
+                        chart.draw(data, options);
+                    }
+                </script>
+                <!-- google chart END -->
+                <!--@else-->
 			{$lang->dashboard_analytics_initial_text}<a href="{getURL('','module','admin','act','dispAdminDashboardGA')}">{$lang->dashboard_analytics_link_text}</a>. 
-		<!--@end-->
+                <!--@end-->
             </div>
         </div>
         <div class="cleared"></div>
-	<div class="xe-ui-panel" style="float: right; width: 980px; ">
-		<div class="xe-ui-panel-content cleared" style="padding-bottom: 12px;">
-			<h2>
+        <div class="xe-ui-panel">
+            <div class="xe-ui-panel-content cleared" style="padding-bottom: 12px;">
+                <h2>
 				Site activity
-			</h2>
-			<table class="sortable xe-ui-table" id="dashboard_shortcuts">
-				<thead>
-					<tr>
-						<th scope="col" style="text-align: left; width: 150px;">Module</th>
-						<th scope="col" class="center" style="width: 150px;">Module name</th>
-						<th colspan="3" scope="col" class="left" style="text-align: left;">Module Activity (since your last login)</th>
-					</tr>
-				</thead>
-				<tbody>
-					<!--@if(isset($activity_data) && count($activity_data)>0)-->
-						{@$oModuleModel = &getModel('module')}
-						{@$document_admin_page = $oModuleModel->getModuleActionXml('document')}
-						{@$comment_admin_page = $oModuleModel->getModuleActionXml('comment')}
-						{@$trackback_admin_page = $oModuleModel->getModuleActionXml('trackback')}
-						<!--@foreach($activity_data as $key=>$value)-->
-							<!--@if($key!="members")-->
-								<tr>
-									<td>{ucfirst($value["module"])}</td>
-									<td class="center"><strong>{$value["mid"]}</strong></td>
-									<td style="width: 550px;">
-										<!--@if(isset($value["documents"]))-->
-										<img border="0" src="img/icon_trackback.png" alt="" />&nbsp;{$value["documents"]} new <a href="{getFullUrl('','module','admin','act',$document_admin_page->admin_index_act)}" target="_blank">document(s)</a>&nbsp;&nbsp;
-										<!--@end-->
-										<!--@if(isset($value["comments"]))-->
-											<img border="0" src="img/icon_comment.png" alt="" />&nbsp;{$value["comments"]} new <a href="{getFullUrl('','module','admin','act',$comment_admin_page->admin_index_act)}" target="_blank">comment(s)</a>&nbsp;&nbsp;
-										<!--@end-->
-										<!--@if(isset($value["tracbacks"]))-->
-											<img border="0" src="img/icon_trackback.png" alt="" />&nbsp;{$value["trackbacks"]} new <a href="{getFullUrl('','module','admin','act',$trackback_admin_page->admin_index_act)}" target="_blank">trackback(s)</a>
-										<!--@end-->
-									</td>
-									<td><a target="_blank" href="{getFullUrl('','mid',$value['mid'])}" class="xe-ui-button-gray">{$lang->cmd_view}</a></td>
-									<td><a target="_blank" href="{getFullUrl('','module','admin','act',$value['admin_page'])}" class="xe-ui-button-gray">{$lang->cmd_manage}</a></td>
-								</tr>
-							<!--@else-->
-								<tr>
-									<td>Users</td>
-									<td class="center"><strong></strong></td>
-									<td style="width: 550px;"><img border="0" src="img/icon_user.png" alt="" />&nbsp;{$value} new user(s) have registered sience your last login</td>
-									<td></td>
-									<td><a target="_blank" href="{getFullUrl('','module','admin','act','dispMemberAdminList')}" class="xe-ui-button-gray">{$lang->cmd_manage}</a></td>
-								</tr>
-							<!--@end-->
-						<!--@end-->
-					<!--@end-->
-					<!--
-					<tr>
-						<td>Textyle</td>
-						<td class="center"><strong>blog</strong></td>
-						<td style="width: 550px;"></td>
-						<td><a href="#" onclick="javascript: void;" class="xe-ui-button-gray">{$lang->cmd_view}</a></td>
-						<td><a href="#" onclick="javascript: void;" class="xe-ui-button-gray">{$lang->cmd_manage}</a></td>
-					</tr>
-					-->
-				</tbody>
-			</table>
-		</div>
-	</div>
+                </h2>
+                <table class="sortable xe-ui-table" id="dashboard_shortcuts">
+                    <thead>
+                        <tr>
+                            <th scope="col" style="text-align: left; width: 150px;">Module</th>
+                            <th scope="col" class="center" style="width: 150px;">Module name</th>
+                            <th colspan="3" scope="col" class="left" style="text-align: left;">Module Activity (since your last login)</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <!--@if(isset($activity_data) && count($activity_data)>0)-->
+                            {@$oModuleModel = &getModel('module')}
+                            {@$document_admin_page = $oModuleModel->getModuleActionXml('document')}
+                            {@$comment_admin_page = $oModuleModel->getModuleActionXml('comment')}
+                            {@$trackback_admin_page = $oModuleModel->getModuleActionXml('trackback')}
+                        <!--@foreach($activity_data as $key=>$value)-->
+                        <!--@if($key!="members")-->
+                        <tr>
+                            <td>{ucfirst($value["module"])}</td>
+                            <td class="center"><strong>{$value["mid"]}</strong></td>
+                            <td style="width: 550px;">
+                                <!--@if(isset($value["documents"]))-->
+                                <img border="0" src="img/icon_trackback.png" alt="" />&nbsp;{$value["documents"]} new <a href="{getFullUrl('','module','admin','act',$document_admin_page->admin_index_act)}" target="_blank">document(s)</a>&nbsp;&nbsp;
+                                <!--@end-->
+                                <!--@if(isset($value["comments"]))-->
+                                <img border="0" src="img/icon_comment.png" alt="" />&nbsp;{$value["comments"]} new <a href="{getFullUrl('','module','admin','act',$comment_admin_page->admin_index_act)}" target="_blank">comment(s)</a>&nbsp;&nbsp;
+                                <!--@end-->
+                                <!--@if(isset($value["tracbacks"]))-->
+                                <img border="0" src="img/icon_trackback.png" alt="" />&nbsp;{$value["trackbacks"]} new <a href="{getFullUrl('','module','admin','act',$trackback_admin_page->admin_index_act)}" target="_blank">trackback(s)</a>
+                                <!--@end-->
+                            </td>
+                            <td><a target="_blank" href="{getFullUrl('','mid',$value['mid'])}" class="xe-ui-button-gray">{$lang->cmd_view}</a></td>
+                            <td><a target="_blank" href="{getFullUrl('','module','admin','act',$value['admin_page'])}" class="xe-ui-button-gray">{$lang->cmd_manage}</a></td>
+                        </tr>
+                        <!--@else-->
+                        <tr>
+                            <td>Users</td>
+                            <td class="center"><strong></strong></td>
+                            <td style="width: 550px;"><img border="0" src="img/icon_user.png" alt="" />&nbsp;{$value} new user(s) have registered sience your last login</td>
+                            <td></td>
+                            <td><a target="_blank" href="{getFullUrl('','module','admin','act','dispMemberAdminList')}" class="xe-ui-button-gray">{$lang->cmd_manage}</a></td>
+                        </tr>
+                        <!--@end-->
+                        <!--@end-->
+                        <!--@end-->
+                    </tbody>
+                </table>
+            </div>
+        </div>
+        <div class="xe-ui-panel">
+            <div class="xe-ui-panel-content cleared" style="padding-bottom: 12px;">
+                <h2>Maintenance</h2>
+                <table width="100%" cellpadding="0" cellspacing="0">
+                    <tr>
+                        <td><p><a href="" onclick="doResetAdminMenu();return false;" class="xe-ui-button-gray" style="width: 130px;">{$lang->cmd_admin_menu_reset}</a></p></td>
+                        <td width="82%"><p>{$lang->about_admin_menu_reset}</p></td>
+                    </tr>
+                    <tr>
+                        <td><p><a href="" onclick="doRecompileCacheFile();return false;" class="xe-ui-button-gray" style="width: 130px;">{$lang->cmd_remake_cache}</a></p></td>
+                        <td><p>{$lang->about_remake_cache}</p></td>                        
+                    </tr>
+                    <tr>
+                        <td><p><a href="" onclick="doClearSession();return false;" class="xe-ui-button-gray" style="width: 130px;">{$lang->cmd_clear_session}</a></p></td>
+                        <td><p>{$lang->about_clear_session}</p></td>
+                    </tr>
+                </table>
+            </div>
+        </div>
     </div>
-    <div class="footer">
-        <p class="power">Powered by <strong><a href="{_XE_LOCATION_SITE_}" target="_blank">XE</a></strong> (ver. {__XE_VERSION__}).</p>
-        <p class="cache">
-            <button type="button" class="text" onclick="doResetAdminMenu();">{$lang->cmd_admin_menu_reset}</button>
-            <button type="button" class="text" onclick="doRecompileCacheFile();">{$lang->cmd_remake_cache}</button>
-            <button type="button" class="text" onclick="doClearSession();">{$lang->cmd_clear_session}</button>
 
-        </p>
-</div>
 <!--#include("./_spFooter.html")-->

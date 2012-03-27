@@ -30,7 +30,7 @@
             };
 
             // If the checkbox is disabled, display it as disabled
-            if($(this).attr('disabled')=='disabled') {
+            if($(this).is(':disabled')) {
                 $label.addClass('disabled');
             };
 
@@ -42,35 +42,37 @@
             $label.find('span.holder').width(settings.checkboxWidth);
 
             // Hide the checkbox
-            $(this).addClass('hiddenCheckbox');
+           $(this).addClass('hiddenCheckbox');
 
             // Associate the click event
-            $label.not('.disabled').bind('click',function(){
-                $('input#' + $(this).attr('for')).triggerHandler('click');
+            $label.bind('click',function(){
+                if (!$(this).hasClass('disabled')) {
+                    $('input#' + $(this).attr('for')).triggerHandler('click');
 				
-                if($('input#' + $(this).attr('for')).is(':checkbox')){
-                    $(this).toggleClass('checked');
-                    $('input#' + $(this).attr('for')).checked = true;
+                    if($('input#' + $(this).attr('for')).is(':checkbox')){
+                        $(this).toggleClass('checked');
+                        $('input#' + $(this).attr('for')).checked = true;
 					
-                    $(this).find('span.holder').css('top',0);
-                }else{
-                    $toCheck = $('input#' + $(this).attr('for'));
+                        $(this).find('span.holder').css('top',0);
+                    }else{
+                        $toCheck = $('input#' + $(this).attr('for'));
 
-                    // Uncheck all radio
-                    $('input[name="'+$toCheck.attr('name')+'"]').each(function(){
-                        $('label[for="' + $(this).attr('id')+'"]').removeClass('checked');
-                    });
+                        // Uncheck all radio
+                        $('input[name="'+$toCheck.attr('name')+'"]').each(function(){
+                            $('label[for="' + $(this).attr('id')+'"]').removeClass('checked');
+                        });
 
-                    $(this).addClass('checked');
-                    $toCheck.checked = true;
-                };
+                        $(this).addClass('checked');
+                        $toCheck.checked = true;
+                    };
+                }
             });
-			
+
             $('input#' + $label.attr('for')).not('.disabled').bind('keypress',function(e){
                 if(e.keyCode == 32){
                     if($.browser.msie){
                         $('label[for="'+$(this).attr('id')+'"]').toggleClass("checked");
-                    }else{
+                    } else {
                         $(this).trigger('click');
                     }
                     return false;
