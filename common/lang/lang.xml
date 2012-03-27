@@ -3701,4 +3701,13 @@ Xin vui lòng kiểm tra lại thông tin Database.]]></value>
         <item name="cmd_show">
             <value xml:lang="en"><![CDATA[Show]]></value>
         </item>
+        <item name="edit">
+            <value xml:lang="en"><![CDATA[Edit]]></value>
+        </item>
+        <item name="table_empty">
+            <value xml:lang="en"><![CDATA[There are no entries in this table.]]></value>
+        </item>
+        <item name="cmd_go">
+            <value xml:lang="en"><![CDATA[Go]]></value>
+        </item>
 </lang>

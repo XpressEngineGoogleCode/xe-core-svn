@@ -207,24 +207,19 @@
             <value xml:lang="en"><![CDATA[Dashboard]]></value>
             <value xml:lang="jp"><![CDATA[ダッシュボード]]></value>
         </item>
-        <item name="site">
-            <value xml:lang="ko"><![CDATA[사이트]]></value>
-            <value xml:lang="en"><![CDATA[Site]]></value>
-            <value xml:lang="jp"><![CDATA[サイト]]></value>
-        </item>
-        <item name="user">
-            <value xml:lang="ko"><![CDATA[회원]]></value>
-            <value xml:lang="en"><![CDATA[Member]]></value>
-            <value xml:lang="jp"><![CDATA[会員]]></value>
-        </item>
         <item name="content">
             <value xml:lang="ko"><![CDATA[콘텐츠]]></value>
             <value xml:lang="en"><![CDATA[Content]]></value>
             <value xml:lang="jp"><![CDATA[コンテンツ]]></value>
         </item>
-        <item name="theme">
+        <item name="users">
+            <value xml:lang="ko"><![CDATA[회원]]></value>
+            <value xml:lang="en"><![CDATA[Users]]></value>
+            <value xml:lang="jp"><![CDATA[会員]]></value>
+        </item>
+        <item name="design">
             <value xml:lang="ko"><![CDATA[테마]]></value>
-            <value xml:lang="en"><![CDATA[Theme]]></value>
+            <value xml:lang="en"><![CDATA[Design]]></value>
             <value xml:lang="jp"><![CDATA[テーマ]]></value>
         </item>
         <item name="extensions">
@@ -232,7 +227,7 @@
             <value xml:lang="en"><![CDATA[Extensions]]></value>
             <value xml:lang="jp"><![CDATA[拡張機能]]></value>
         </item>
-        <item name="configuration">
+        <item name="settings">
             <value xml:lang="ko"><![CDATA[설정]]></value>
             <value xml:lang="en"><![CDATA[Settings]]></value>
             <value xml:lang="jp"><![CDATA[設定]]></value>
@@ -968,7 +963,7 @@ Lütfen son sürümü için indirme linkine tıklayınız.]]></value>
     </item>
     <item name="theme_desc">
         <value xml:lang="ko"><![CDATA[테마는 레이아웃을 포함하여 현재 설치된 모듈의 스킨을 묶은 개념입니다. 테마를 선택하면 'Skin Setting' 항목을 알아서 선택합니다. 테마 일부가 마음에 들지 않으면 'Skin Setting'에서 테마 일부를 다시 설정 할 수 있습니다.]]></value>
-        <value xml:lang="en"><![CDATA[Theme is a set of skins for modules currently installed including layouts. When you select Theme, 'Skin Setting' is automatically selected. If you don't like some of the theme, you can edit it on 'Skin Setting'.]]></value>
+        <value xml:lang="en"><![CDATA[Themes are a set of skins for the modules currently installed. This includes layouts. When you select Theme, 'Skin Setting' is automatically selected. If you don't like some of the theme, you can edit it on 'Skin Setting'.]]></value>
         <value xml:lang="jp"><![CDATA[テーマは、レイアウトを含み現在インストールされているモジュールのスキンをまとめたものです。テーマを選択すると、「スキン設定」項目が自動的に選択されます。テーマの一部が気に入らない場合は、「スキン設定」でテーマの一部を再設定できます。]]></value>
     </item>
     <item name="selected_theme">
@@ -1318,5 +1313,14 @@ Lütfen son sürümü için indirme linkine tıklayınız.]]></value>
     </item>
     <item name="dashboard_analytics_link_text">
         <value xml:lang="en"><![CDATA[Dashboard analytics configuration page]]></value>
+    </item>
+    <item name="about_admin_menu_reset">
+        <value xml:lang="en"><![CDATA[This option recreates the cache of the administrator menu.]]></value>
+    </item>
+    <item name="about_remake_cache">
+        <value xml:lang="en"><![CDATA[This recreates the cache of the entire site.]]></value>
+    </item>
+    <item name="about_clear_session">
+        <value xml:lang="en"><![CDATA[This option deletes expired sessions from the session table in the database.]]></value>
     </item>
 </lang>

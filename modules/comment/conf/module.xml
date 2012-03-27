@@ -2,8 +2,8 @@
 <module>
     <grants />
     <permissions>
-		<permission action="procCommentAdminAddCart" target="manager" />
-		<permission action="procCommentGetList" target="manager" />
+        <permission action="procCommentAdminAddCart" target="manager" />
+        <permission action="procCommentGetList" target="manager" />
     </permissions>
     <actions>
         <action name="getCommentMenu" type="model" standalone="true" />
@@ -19,19 +19,19 @@
         <action name="procCommentAdminAddCart" type="controller" standalone="true" />
         <action name="procCommentGetList" type="controller" standalone="true" />
     </actions>
-	<menus>
-		<menu name="comment">
-			<title xml:lang="en">Comment</title>
-			<title xml:lang="ko">댓글</title>
-			<title xml:lang="zh-CN">Comment</title>
-			<title xml:lang="jp">Comment</title>
-			<title xml:lang="es">Comment</title>
-			<title xml:lang="ru">Comment</title>
-			<title xml:lang="fr">Comment</title>
-			<title xml:lang="zh-TW">Comment</title>
-			<title xml:lang="vi">Comment</title>
-			<title xml:lang="mn">Comment</title>
-			<title xml:lang="tr">Comment</title>
-		</menu>
-	</menus>
+    <menus>
+        <menu name="comment">
+            <title xml:lang="en">Manage comments</title>
+            <title xml:lang="ko">댓글</title>
+            <title xml:lang="zh-CN">Manage comments</title>
+            <title xml:lang="jp">Manage comments</title>
+            <title xml:lang="es">Manage comments</title>
+            <title xml:lang="ru">Manage comments</title>
+            <title xml:lang="fr">Manage comments</title>
+            <title xml:lang="zh-TW">Manage comments</title>
+            <title xml:lang="vi">Manage comments</title>
+            <title xml:lang="mn">Manage comments</title>
+            <title xml:lang="tr">Manage comments</title>
+        </menu>
+    </menus>
 </module>

@@ -87,7 +87,7 @@
      * 0: No output
      * 1: files/_debug_db_query.php connected to the output
      **/
-    if(!defined('__DEBUG_DB_OUTPUT__')) define('__DEBUG_DB_OUTPUT__', 0);
+    if(!defined('__DEBUG_DB_OUTPUT__')) define('__DEBUG_DB_OUTPUT__', 1);
 
     /**
      * @brief Query log for only timeout query among DB queries
@@ -95,14 +95,14 @@
      * = 0: leave a log when the slow query takes over specified seconds
      * Log file is saved as ./files/_db_slow_query.php file
      **/
-    if(!defined('__LOG_SLOW_QUERY__')) define('__LOG_SLOW_QUERY__', 0);
+    if(!defined('__LOG_SLOW_QUERY__')) define('__LOG_SLOW_QUERY__', 1);
 
     /**
      * @brief Leave DB query information
      * 0: Do not add information to the query
      * 1: Comment the XML Query ID
      **/
-    if(!defined('__DEBUG_QUERY__')) define('__DEBUG_QUERY__', 0);
+    if(!defined('__DEBUG_QUERY__')) define('__DEBUG_QUERY__', 1);
 
     /**
      * @brief option to enable/disable a compression feature using ob_gzhandler
