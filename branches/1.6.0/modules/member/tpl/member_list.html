@@ -85,9 +85,9 @@
                             {@ $lang_denied = ($member_info['denied'] == 'N')?$lang->approval:$lang->denied}
                             <td class="center">{$lang_denied}</td>
                             <td class="center">
-                                <a href="{getUrl('', 'module', 'admin', 'act', 'dispMemberAdminInfo', 'member_srl', $member_info['member_srl'])}">{$lang->cmd_view}</a>
+                                <a href="{getUrl('', 'module', 'admin', 'act', 'dispMemberAdminInfo', 'member_srl', $member_info['member_srl'])}" class="xe-ui-button-gray">{$lang->cmd_view}</a>
                             </td>
-                            <td class="center"><a href="{getUrl('', 'module', 'admin', 'act', 'dispMemberAdminInsert', 'member_srl', $member_info['member_srl'])}">{$lang->cmd_modify}</a></td>
+                            <td class="center"><a href="{getUrl('', 'module', 'admin', 'act', 'dispMemberAdminInsert', 'member_srl', $member_info['member_srl'])}" class="xe-ui-button-gray">{$lang->cmd_modify}</a></td>
                             {@$used_values = ''}
                             <!--@foreach($usedIdentifiers as $name=>$title)-->
                             {@$used_values .= "\t".$member_info[$name]}

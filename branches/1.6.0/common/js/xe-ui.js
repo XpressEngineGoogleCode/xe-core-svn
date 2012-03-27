@@ -52,4 +52,21 @@ jQuery(document).ready(function($) {
      */
     $('input[type=checkbox],input[type=radio]').prettyCheckboxes();
 
+    /*
+     * Enable vertical scroller for the dashboard shortcuts
+     */
+    $("#dashboard-shortcuts").simplyScroll({
+        customClass: 'vert',
+        orientation: 'vertical',
+        auto: false,
+        frameRate: 40,
+        speed: 5
+    });
+
+    /*
+     * Remove focus from clicked buttons with class xe-ui-button-gray
+     */
+     $('.xe-ui-button-gray').click(function(){
+        $(this).blur();
+     });
 });

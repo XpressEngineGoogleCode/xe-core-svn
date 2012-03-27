@@ -42,7 +42,7 @@
             </ul>
         </div>
         <!--@end-->
-        <div class="xe-ui-panel" style="width: 220px; float: left; height: 295px;">
+        <div class="xe-ui-panel" style="width: 220px; float: left; height: 330px;">
             <div class="xe-ui-panel-content cleared" style="padding-bottom: 12px;">
                 <h2>
                     Shortcuts
@@ -52,18 +52,18 @@
                         </a>
                     </span>
                 </h2>
-                <ul id="dashboard-shortcuts" class="cleared">
+                <ul id="dashboard-shortcuts" class="cleared simply-scroll-list">
                     <!--@foreach($shortcuts_list AS $value)-->
                     <li>
-                        <a href="{$value->link}" target="_blank" title="{$value->display_name}">
-                            <img alt="" src="{$value->icon_path}" />{$value->display_name}
+                        <a href="{$value->link}" title="{$value->display_name}">
+                            <img alt="" src="{$value->icon_path}" />{substr($value->display_name, 0, 16);}
                         </a>
                     </li>
                     <!--@end-->
                 </ul>
             </div>
         </div>
-        <div class="xe-ui-panel" style="float: right; width: 746px; height: 295px;">
+        <div class="xe-ui-panel" style="float: right; width: 746px; height: 330px;">
             <div class="xe-ui-panel-content cleared" style="padding-bottom: 12px;">
                 <h2>
                     {$lang->visitors}
@@ -121,16 +121,14 @@
                 </script>
                 <!-- google chart END -->
                 <!--@else-->
-			{$lang->dashboard_analytics_initial_text}<a href="{getURL('','module','admin','act','dispAdminDashboardGA')}">{$lang->dashboard_analytics_link_text}</a>. 
+                    {$lang->dashboard_analytics_initial_text}<a href="{getURL('','module','admin','act','dispAdminDashboardGA')}">{$lang->dashboard_analytics_link_text}</a>.
                 <!--@end-->
             </div>
         </div>
         <div class="cleared"></div>
         <div class="xe-ui-panel">
             <div class="xe-ui-panel-content cleared" style="padding-bottom: 12px;">
-                <h2>
-				Site activity
-                </h2>
+                <h2>Site activity</h2>
                 <table class="sortable xe-ui-table" id="dashboard_shortcuts">
                     <thead>
                         <tr>
@@ -141,10 +139,10 @@
                     </thead>
                     <tbody>
                         <!--@if(isset($activity_data) && count($activity_data)>0)-->
-                            {@$oModuleModel = &getModel('module')}
-                            {@$document_admin_page = $oModuleModel->getModuleActionXml('document')}
-                            {@$comment_admin_page = $oModuleModel->getModuleActionXml('comment')}
-                            {@$trackback_admin_page = $oModuleModel->getModuleActionXml('trackback')}
+                        {@$oModuleModel = &getModel('module')}
+                        {@$document_admin_page = $oModuleModel->getModuleActionXml('document')}
+                        {@$comment_admin_page = $oModuleModel->getModuleActionXml('comment')}
+                        {@$trackback_admin_page = $oModuleModel->getModuleActionXml('trackback')}
                         <!--@foreach($activity_data as $key=>$value)-->
                         <!--@if($key!="members")-->
                         <tr>
@@ -200,4 +198,4 @@
         </div>
     </div>
 
-<!--#include("./_spFooter.html")-->
+    <!--#include("./_spFooter.html")-->

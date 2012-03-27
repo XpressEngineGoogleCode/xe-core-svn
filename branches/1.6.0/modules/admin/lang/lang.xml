@@ -1323,4 +1323,7 @@ Lütfen son sürümü için indirme linkine tıklayınız.]]></value>
     <item name="about_clear_session">
         <value xml:lang="en"><![CDATA[This option deletes expired sessions from the session table in the database.]]></value>
     </item>
+    <item name="dash_shortcuts">
+        <value xml:lang="en"><![CDATA[Dashboard shortcuts]]></value>
+    </item>
 </lang>
