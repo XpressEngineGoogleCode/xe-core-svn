@@ -2314,12 +2314,12 @@ Bạn có thể quản lý thành viên bằng cách tạo những nhóm mới, 
 	</item>
 	<item name="approval">
 		<value xml:lang="ko"><![CDATA[승인]]></value>
-		<value xml:lang="en"><![CDATA[Approved users]]></value>
+		<value xml:lang="en"><![CDATA[Approved]]></value>
 		<value xml:lang="jp"><![CDATA[承認]]></value>
 	</item>
 	<item name="denied">
 		<value xml:lang="ko"><![CDATA[거부]]></value>
-		<value xml:lang="en"><![CDATA[Blocked users]]></value>
+		<value xml:lang="en"><![CDATA[Blocked]]></value>
 		<value xml:lang="jp"><![CDATA[拒否]]></value>
 	</item>
 	<item name="use_group_image_mark">
