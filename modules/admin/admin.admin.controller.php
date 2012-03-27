@@ -390,9 +390,9 @@ class adminAdminController extends admin {
 						$allowed_ext = array(".png",".jpg",".gif");
 						foreach($allowed_ext as $extension)
 						{
-							if(file_exists(_XE_PATH_.$path. $shortcut_srl. $extension))
+							if(file_exists(_XE_PATH_ . $path . $shortcut_srl . $extension))
 							{
-								@FileHandler::removeFile(_XE_PATH_.$path. $shortcut_srl. $extension);
+								@FileHandler::removeFile(_XE_PATH_ . $path . $shortcut_srl . $extension);
 							}
 						}
 						// Convert if the image size is larger than a given size or if the format is not a gif
@@ -421,9 +421,9 @@ class adminAdminController extends admin {
 		$allowed_ext = array(".png",".jpg",".gif");
 		foreach($allowed_ext as $extension)
 		{
-			if(file_exists(_XE_PATH_.$path, $shortcut_srl, $extension))
+			if(file_exists(_XE_PATH_ . $path . $shortcut_srl . $extension))
 			{
-				@FileHandler::removeFile(_XE_PATH_.$path, $shortcut_srl, $extension);
+				@FileHandler::removeFile(_XE_PATH_ . $path . $shortcut_srl . $extension);
 			}
 		}
 		$args->shortcut_srl = $shortcut_srl;

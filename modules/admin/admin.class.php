@@ -11,8 +11,18 @@ class admin extends ModuleObject {
      * @brief install admin module
      * @return new Object
      * */
-    function moduleInstall() {
-        return new Object();
+    function moduleInstall() {	
+	if(!file_exists('./files/icons/shortcuts')) FileHandler::makeDir('./files/icons/shortcuts');
+	$oAdminModel = @getAdminModel("admin");
+	$output = $oAdminModel->insertDefaultShortcuts();
+	if(is_bool($output) && $output)
+	{
+		return new Object();
+	}
+	else
+	{
+		$this->setMessage($output, "error");
+	}
     }
 
     /**
@@ -22,7 +32,13 @@ class admin extends ModuleObject {
         $oDB = DB::getInstance();
         if (!$oDB->isColumnExists("admin_favorite", "type"))
             return true;
-        FileHandler::makeDir('./files/icons/shortcuts');
+	$oAdminModel = @getAdminModel("admin");
+	$shortcuts = $oAdminModel->getAdminDashboardShortcuts();
+	if(count($shortcuts) == 0)
+	{
+		return true;
+	}
+        if(!file_exists('./files/icons/shortcuts')) return true;
         return false;
     }
 
@@ -48,7 +64,17 @@ class admin extends ModuleObject {
                 }
             }
         }
-        FileHandler::makeDir('./files/icons/shortcuts');
+	$oAdminModel = @getAdminModel("admin");
+	$shortcuts = $oAdminModel->getAdminDashboardShortcuts();
+	if(count($shortcuts) == 0)
+	{
+		$output = $oAdminModel->insertDefaultShortcuts();
+		if(!is_bool($output))
+		{
+			$this->setMessage($output, "error");
+		}
+	}
+	if(!file_exists('./files/icons/shortcuts')) FileHandler::makeDir('./files/icons/shortcuts');
         return new Object();
     }
 
