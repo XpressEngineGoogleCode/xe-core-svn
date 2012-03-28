@@ -41,20 +41,18 @@
                         <td width="25%" class="v-mid">
                             <p>{$lang->about_start_module}:</p>
                         </td>
-                        <td class="v-mid">
+                        <td class="v-mid modulefinder">
                             <p>
                                 <input type="hidden" name="index_module_srl" id="index_module_srl" value="{$start_module->index_module_srl}" />
                                 <input type="text" name="_target_module" id="_target_module" value="{$start_module->browser_title} ({$start_module->mid})" readonly class="xe-ui-panel-text" style="width: 250px;"/>
                                 <a href="#modalWindow" class="modalAnchor xe-ui-button-gray" onClick="viewSiteSearch()">Select module</a>
                             </p>
                             <p class="site_keyword_search" style="display:none">
-                                <input type="text" name="site_keyword" class="xe-ui-panel-text"/>
-                                <a href="#suggestion3" class="tgAnchor findsite xe-ui-button-gray">{$lang->cmd_confirm}</a>
-                            <div id="suggestion3" class="tgContent suggestion" >
-                                <ul>
-                                    <li>asda</li>
-                                </ul>
-                            </div>
+				<input type="text" name="site_keyword" class="xe-ui-panel-text"/>
+				<a href="#suggestion3" class="tgAnchor findsite xe-ui-button-gray">{$lang->cmd_confirm}</a>
+				<div id="suggestion3" class="tgContent suggestion" >
+					<ul></ul>
+				</div>
                             </p>
                             <div class="modulefinder">
                                 <select class="moduleList" style="width:290px"></select>
