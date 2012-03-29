@@ -43,6 +43,7 @@
             <title xml:lang="mn">General settings</title>
             <title xml:lang="tr">General settings</title>
         </menu>
+	<!--
         <menu name="adminMenuSetup" type="all">
             <title xml:lang="en">Admin Setup</title>
             <title xml:lang="ko">관리자 설정</title>
@@ -56,6 +57,7 @@
             <title xml:lang="mn">Admin Setup</title>
             <title xml:lang="tr">Admin Setup</title>
         </menu>
+	-->
         <menu name="adminConfigurationFtp" type="all">
             <title xml:lang="en">FTP configuration</title>
             <title xml:lang="ko">FTP 설정</title>
