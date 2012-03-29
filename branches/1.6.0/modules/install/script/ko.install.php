@@ -105,5 +105,17 @@
 	$site_args->site_srl = 0;
 	$site_args->index_module_srl = $module_srl;
 	$oModuleController->updateSite($site_args);
-
+	
+	// insert default shortcuts for admin dashboard
+	$oAdminModel = @getAdminModel("admin");
+	$output = $oAdminModel->insertDefaultShortcuts();
+	if(is_bool($output) && $output)
+	{
+		return new Object();
+	}
+	else
+	{
+		$this->setMessage($output, "error");
+	}
+	
 ?>
