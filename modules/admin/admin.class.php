@@ -13,16 +13,7 @@ class admin extends ModuleObject {
      * */
     function moduleInstall() {	
 	if(!file_exists('./files/icons/shortcuts')) FileHandler::makeDir('./files/icons/shortcuts');
-	$oAdminModel = @getAdminModel("admin");
-	$output = $oAdminModel->insertDefaultShortcuts();
-	if(is_bool($output) && $output)
-	{
-		return new Object();
-	}
-	else
-	{
-		$this->setMessage($output, "error");
-	}
+	return new Object();
     }
 
     /**
