@@ -1,3 +1,17 @@
+function reposition() {
+    var target = jQuery('.xe-ui-footer');
+    if ((jQuery(window).height()>jQuery('body').height())&&(target.size()!= 0)) {
+        var val = jQuery(window).height()
+        - target.position().top
+        - target.height()
+        - parseInt(target.prev().css('margin-bottom'))
+        - 1; // -1 for borderd top
+        target.css('margin-top',val);
+    } else {
+        target.css('margin-top',0);
+    }
+}
+
 jQuery(document).ready(function($) {
     
     /*
@@ -15,11 +29,10 @@ jQuery(document).ready(function($) {
     /*
      * simulate 'min-height':100%; for <body>
      */
-    var target = $('.xe-ui-footer');
-    if (($(window).height()>$('body').height())&&(target.size()!= 0)) {
-        var val = $(window).height() - (target.position().top + target.height() - parseInt(target.prev().css('margin-bottom'))) - 1; // -1 for borderd top
-        target.css('margin-top',val);
-    }
+    reposition();
+    $('body').bind('resize', function(e){
+       reposition();
+    });
 
     /*
      * Simulate 'min-width':100px for submenus of the main admin menu
@@ -66,7 +79,7 @@ jQuery(document).ready(function($) {
     /*
      * Remove focus from clicked buttons with class xe-ui-button-gray
      */
-     $('.xe-ui-button-gray').click(function(){
+    $('.xe-ui-button-gray').click(function(){
         $(this).blur();
-     });
+    });
 });

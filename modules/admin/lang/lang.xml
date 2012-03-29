@@ -1312,7 +1312,7 @@ Lütfen son sürümü için indirme linkine tıklayınız.]]></value>
         <value xml:lang="en"><![CDATA[If you want to use analytics please go to ]]></value>
     </item>
     <item name="dashboard_analytics_link_text">
-        <value xml:lang="en"><![CDATA[Dashboard analytics configuration page]]></value>
+        <value xml:lang="en"><![CDATA[Setp up dashboard analytics]]></value>
     </item>
     <item name="about_admin_menu_reset">
         <value xml:lang="en"><![CDATA[This option recreates the cache of the administrator menu.]]></value>
