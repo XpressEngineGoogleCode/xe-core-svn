@@ -269,7 +269,7 @@
     </item>
     <item name="about_default_url">
         <value xml:lang="ko"><![CDATA[여러 사이트를 운영할 때 기본 URL이 필요합니다. XE 설치 경로를 포함한 URL을 입력하세요. (예: http://도메인/설치경로)]]></value>
-        <value xml:lang="en"><![CDATA[Enter a default URL to be used to control multiple websites, including XE installation path. E.g.) http://domain//installation path)]]></value>
+        <value xml:lang="en"><![CDATA[Enter a default URL to be used to control multiple websites, including XE installation path.<br />(E.g. http://domain//installation path)]]></value>
         <value xml:lang="jp"><![CDATA[複数のサイトを運営する際の基本URLが必要です。XEインストールパスを含むURLを入力してください。(例：http://ドメイン/インストールパス)]]></value>
     </item>
     <item name="env_information">
@@ -1328,5 +1328,23 @@ Lütfen son sürümü için indirme linkine tıklayınız.]]></value>
     </item>
     <item name="dash_shortcuts">
         <value xml:lang="en"><![CDATA[Dashboard shortcuts]]></value>
+    </item>
+    <item name="cmd_show_all">
+        <value xml:lang="en"><![CDATA[Show all]]></value>
+    </item>
+    <item name="current_default_module">
+        <value xml:lang="en"><![CDATA[Current default module:]]></value>
+    </item>
+    <item name="sel_other_module">
+        <value xml:lang="en"><![CDATA[Select other module]]></value>
+    </item>
+    <item name="search_sites">
+        <value xml:lang="en"><![CDATA[Search through your existing virtual sites:]]></value>
+    </item>
+    <item name="module_type">
+        <value xml:lang="en"><![CDATA[Module type:]]></value>
+    </item>
+    <item name="module_instance">
+        <value xml:lang="en"><![CDATA[Module instance:]]></value>
     </item>
 </lang>

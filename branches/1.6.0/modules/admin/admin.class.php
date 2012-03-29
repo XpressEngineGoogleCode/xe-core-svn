@@ -286,7 +286,7 @@ class admin extends ModuleObject {
                 break;
             case 'adminConfigurationGeneral':
             case 'adminConfigurationFtp':
-            case 'adminMenuSetup':
+            //case 'adminMenuSetup':
             case 'fileUpload':
             case 'filebox':
             case 'spamFilter':
