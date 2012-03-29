@@ -464,7 +464,7 @@ $('a.tgAnchor').xeContentToggler();
 // Module finder
 jQuery(function($){
 
-$.fn.xeModuleFinder = function(){
+$.fn.xeModuleFinder = function(caller){
 	this
 		.not('.xe-module-finder')
 		.addClass('xe-module-finder')
@@ -474,8 +474,14 @@ $.fn.xeModuleFinder = function(){
 
 				$this = $(this);
 				$ul   = $($this.attr('href')).find('>ul');
-				val   = $this.prev('input:text').val();
-
+				if($this.hasClass('all'))
+				{
+					val   = "";
+				}
+				else
+				{
+					val   = $this.prev('input:text').val();
+				}	
 				function on_complete(data) {
 					var $li, list = data.site_list, i, c;
 
@@ -489,7 +495,7 @@ $.fn.xeModuleFinder = function(){
 
 					for(i=0,c=list.length; i < c; i++) {
 						$li = $('<li />').appendTo($ul);
-						$('<button type="button" />').text(list[i].domain).data('site_srl', list[i].site_srl).appendTo($li);
+						$('<button type="button" style="width: 236px;" />').text(list[i].domain).data('site_srl', list[i].site_srl).appendTo($li);
 					}
 				};
 
@@ -498,7 +504,7 @@ $.fn.xeModuleFinder = function(){
 		.end()
 		.find('.tgContent.suggestion')
 			.delegate('button','click',function(){
-				var $this, $finder;
+				var $this, $finder, button_value;
 
 				$this    = $(this);
 				$finder  = $this.closest('.modulefinder');
@@ -516,16 +522,18 @@ $.fn.xeModuleFinder = function(){
 					$mod_select.prop('selectedIndex', 0).change().focus();
 
 					if(!$mod_select.is(':visible')) {
+						$mod_select.siblings("label").css("display","inline-block");
 						$mod_select
 							.slideDown(100, function(){
+								$finder.find('.moduleIdList').siblings("label").css("display","inline-block");
 								$finder.find('.moduleIdList:not(:visible)').slideDown(100).trigger('show');
 							})
 							.trigger('show');
 					}
 				};
-
+				button_value = $(this).html();
 				$finder.find('a.tgAnchor.findsite').trigger('close.tc');
-
+				$finder.find('input[name="site_keyword"]').val(button_value);
 				$.exec_json('module.procModuleAdminGetList', {site_srl:$this.data('site_srl')}, on_complete);
 			})
 		.end()

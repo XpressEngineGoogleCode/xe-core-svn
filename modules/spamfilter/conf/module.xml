@@ -4,17 +4,17 @@
     <permissions />
     <menus>
         <menu name="spamFilter" tyle="super">
-            <title xml:lang="en">Data migration</title>
+            <title xml:lang="en">Manage spam filter</title>
             <title xml:lang="ko">스팸필터</title>
-            <title xml:lang="zh-CN">Data migration</title>
-            <title xml:lang="jp">Data migration</title>
-            <title xml:lang="es">Data migration</title>
-            <title xml:lang="ru">Data migration</title>
-            <title xml:lang="fr">Data migration</title>
-            <title xml:lang="zh-TW">Data migration</title>
-            <title xml:lang="vi">Data migration</title>
-            <title xml:lang="mn">Data migration</title>
-            <title xml:lang="tr">Data migration</title>
+            <title xml:lang="zh-CN">Manage spam filter</title>
+            <title xml:lang="jp">Manage spam filter</title>
+            <title xml:lang="es">Manage spam filter</title>
+            <title xml:lang="ru">Manage spam filter</title>
+            <title xml:lang="fr">Manage spam filter</title>
+            <title xml:lang="zh-TW">Manage spam filter</title>
+            <title xml:lang="vi">Manage spam filter</title>
+            <title xml:lang="mn">Manage spam filter</title>
+            <title xml:lang="tr">Manage spam filter</title>
         </menu>
     </menus>
     <actions>
