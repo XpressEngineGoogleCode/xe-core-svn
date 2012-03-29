@@ -572,6 +572,14 @@
 		$oModuleModel = &getModel('module');
 		$module_info = $oModuleModel->getModuleConfig($this->module);
 		Context::set('analytics_type',$module_info->analytics_type);
+		if  (function_exists('curl_init') )
+		{
+			Context::set('have_curl',true);
+		}
+		else
+		{
+			Context::set('have_curl',false);
+		}
 		switch($module_info->analytics_type)
 		{
 			case "ga" :
@@ -582,11 +590,6 @@
 					Context::set('script',$module_info->script);
 					break;
 			case "naver" :
-					Context::set('client_id',$module_info->client_id);
-					Context::set('client_secret',$module_info->client_secret);
-					Context::set('redirect_uri',$module_info->redirect_uri);
-					Context::set('developer_key',$module_info->developer_key);
-					break;
 			case "xe" : break; 
 		}
 		

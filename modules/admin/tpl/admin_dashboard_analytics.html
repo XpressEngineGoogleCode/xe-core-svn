@@ -24,6 +24,11 @@
                 <input type="hidden" name="module" value="admin" />
                 <input type="hidden" name="act" id="act" value="procAdminSaveGAInfo" />
                 <div id="form_ga" <!--@if($type!='ga')-->style="display:none;"<!--@end-->>
+			<!--@if(!$have_curl)-->
+			<div class="xe-ui-message error gradient cleared">
+				<p>{$lang->curl_extension_not_exist}</p>
+			</div>
+			<!--@end-->
                      <table class="xe-ui-form-table" cellspacing="0" cellpadding="0">
                         <tr>
                             <td class="v-top">
@@ -103,9 +108,9 @@
         <div class="xe-ui-panel-controller">
             <hr>
             <p class="center">
-                <a href="#" onclick="javascript: document.getElementById('form_analytics').submit();" class="xe-ui-button-gray">{$lang->cmd_save}</a>
+                <a href="#" onclick="javascript: document.getElementById('form_analytics').submit();" class="xe-ui-button-gray<!--@if(!$have_curl)--> disabled<!--@end-->">{$lang->cmd_save}</a>
                 <!--@if(isset($analytics_type) && $analytics_type == 'ga')-->
-                <a href="#" onclick="javascript: window.location.href = '{getUrl('','module','admin','act','procAdminSaveGAAuthToken')}';" class="xe-ui-button-gray">{$lang->accept_ga_api}</a>
+                <a href="#" onclick="javascript: window.location.href = '{getUrl('','module','admin','act','procAdminSaveGAAuthToken')}';" class="xe-ui-button-gray<!--@if(!$have_curl)--> disabled<!--@end-->">{$lang->accept_ga_api}</a>
                 <!--@end-->
             </p>
         </div>
