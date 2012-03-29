@@ -17,7 +17,7 @@ class GoogleplusApi
 	 */
 	
 	private function getScopeURL() { return 'https://www.googleapis.com/auth/plus.me'; }
-	private function getRedirectURL() { return 'http://www.dan.com/member16/index.php?module=member&act=dispMemberDriverInterface&driver=googleplus&dact=dispCallback'; }
+	private function getRedirectURL() { return Context::getDefaultUrl().'index.php?module=member&act=dispMemberDriverInterface&driver=googleplus&dact=dispCallback'; }
 	
 	/**
 	 * Set private vars
