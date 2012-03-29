@@ -14,7 +14,7 @@ class FacebookApi
 	 * Set API URLS
 	 */
 	
-	private function getRedirectURL() { return 'http://www.dan.com/member16/index.php?module=member&act=dispMemberDriverInterface&driver=facebook&dact=dispCallback'; }
+	private function getRedirectURL() { return Context::getDefaultUrl().'index.php?module=member&act=dispMemberDriverInterface&driver=facebook&dact=dispCallback'; }
 	private function oauthRequestURL() { return 'http://www.facebook.com/dialog/oauth'; }
 	private function accessTokenURL()  { return 'https://graph.facebook.com/oauth/access_token'; }
 	private function getMeURL()  { return 'https://graph.facebook.com/me'; }
