@@ -732,7 +732,7 @@ Lütfen son sürümü için indirme linkine tıklayınız.]]></value>
     </item>
     <item name="disable_sftp_support">
         <value xml:lang="ko"><![CDATA[SFTP를 사용할 수 있는 환경이 아닙니다.]]></value>
-        <value xml:lang="en"><![CDATA[Does Not Use SFTP]]></value>
+        <value xml:lang="en"><![CDATA[Does not use SFTP]]></value>
     </item>
     <item name="msg_self_restart_cache_engine">
         <value xml:lang="ko"><![CDATA[Memcached 또는 캐쉬데몬을 재시작 해주세요.]]></value>
@@ -1118,6 +1118,12 @@ Lütfen son sürümü için indirme linkine tıklayınız.]]></value>
         <value xml:lang="de"><![CDATA[FTP Port]]></value>
         <value xml:lang="tr"><![CDATA[FTP portu]]></value>
         <value xml:lang="vi"><![CDATA[Cổng kết nối]]></value>
+    </item>
+    <item name="ftp_username">
+        <value xml:lang="en"><![CDATA[FTP username]]></value>
+    </item>
+    <item name="ftp_password">
+        <value xml:lang="en"><![CDATA[FTP password]]></value>
     </item>
     <item name="about_ftp_password">
         <value xml:lang="ko"><![CDATA[FTP Password는 저장되지 않습니다.]]></value>
