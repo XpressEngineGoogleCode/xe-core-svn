@@ -22,7 +22,7 @@
                         <tr>
                             <td width="25%" class="v-top">
                                 <p>
-                                    <label for="ftp_host">{$lang->ftp_host} [<a href="#helpFTP" class="tgAnchor">?</a>]:</label>
+                                    <label for="ftp_host">{$lang->ftp_host}:</label>
                                 </p>
                             </td>
                             <td>
@@ -30,14 +30,12 @@
                                     <input type="text" name="ftp_host" id="ftp_host" value="{$ftp_info->ftp_host}" class="xe-ui-panel-text" title="{$lang->detail_about_ftp_info}"/> <span></span>
                                 </p>
                                 <p class="desc">Default : 127.0.0.1</p>
-                                <div class="tgContent layer" id="helpFTP">
-                                </div>
                             </td>
                         </tr>
                         <tr>
                             <td>
                                 <p>
-                                    <label for="ftp_user">{$lang->user_id}:</label>
+                                    <label for="ftp_user">{$lang->ftp_username}:</label>
                                 </p>
                             </td>
                             <td>
@@ -49,7 +47,7 @@
                         <tr>
                             <td>
                                 <p>
-                                    <label for="ftp_password">{$lang->password}:</label>
+                                    <label for="ftp_password">{$lang->ftp_password}:</label>
                                 </p>
                             </td>
                             <td>
@@ -58,8 +56,7 @@
                                 </p>
                             </td>
                         </tr>
-                        <tr>
-                            <td>
+                        <td class="v-top">
                                 <p>
                                     <label for="ftp_port">{$lang->ftp_port}:</label>
                                 </p>
@@ -74,7 +71,7 @@
                         <tr>
                             <td>
                                 <p>
-                                    <label for="ftp_passive">{$lang->about_use_ftp_passive_mode}:</label>
+                                    <label>{$lang->about_use_ftp_passive_mode}:</label>
                                 </p>
                             </td>
                             <td>
@@ -87,7 +84,7 @@
                         <tr>
                             <td>
                                 <p>
-                                    <label for="sftp">{$lang->about_use_sftp_support} <span cond="!$sftp_support">({$lang->disable_sftp_support})</span></label>
+                                    <label>{$lang->about_use_sftp_support} <span cond="!$sftp_support">({$lang->disable_sftp_support})</span></label>
                                 </p>
                             </td>
                             <td>
