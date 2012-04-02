@@ -18,7 +18,7 @@
  * 관리자 페이지의 회원 목록에 회원 그룹 검색을 추가 `[`issue 1727 똥똥, 패치제공 sejin7940`]`
  * 새 모바일 레이아웃 - Color Code 추가 `[`r10488 ryin005`]`
 
-===For Developers===
+==For Developers==
 
  * Install Config를 이용한 자동 설치 시 문제 해결 `[`r10473 똥똥`]`
  * 카테고리를 설정하지 않았을 때 insertDocument()에 예외 처리 `[`issue 1019 ddan`]`
