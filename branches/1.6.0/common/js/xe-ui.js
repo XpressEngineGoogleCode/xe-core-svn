@@ -82,4 +82,11 @@ jQuery(document).ready(function($) {
     $('.xe-ui-button-gray').click(function(){
         $(this).blur();
     });
+
+    /*
+     * Skin all input[type=file]
+     */
+    $('input[type=file]').each(function(){
+        $(this).customFileInput();
+    })
 });
