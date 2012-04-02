@@ -1,6 +1,6 @@
-<wiki:toc />
-
 =XE 1.5.2.2 Release Note=
+
+<wiki:toc />
 
 ==For Users==
 
