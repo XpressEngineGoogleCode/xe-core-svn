@@ -5,7 +5,7 @@ function reposition() {
         - target.position().top
         - target.height()
         - parseInt(target.prev().css('margin-bottom'))
-        - 1; // -1 for borderd top
+        - 1;
         target.css('margin-top',val);
     } else {
         target.css('margin-top',0);
@@ -31,7 +31,9 @@ jQuery(document).ready(function($) {
      */
     reposition();
     $('body').bind('resize', function(e){
-       reposition();
+       if ($(window).height()>$('body').height()) {
+           reposition();
+       }
     });
 
     /*
