@@ -1,6 +1,6 @@
 <load target="js/fileConfig.js" type="body" usecdn="true" />
 
-<h1>File Upload</h1>
+<h1>File Upload Settings</h1>
 <div class="xe-ui-title-separator">
     <hr/>
 </div>
@@ -15,34 +15,62 @@
             <form ruleset="insertConfig" action="./" method="post" class="form">
                 <input type="hidden" name="module" value="file" />
                 <input type="hidden" name="act" value="procFileAdminInsertConfig" />
-                <p class="form-list">
-                    <span class="desc">{$lang->allow_outlink}</span>
-                    <input type="radio" name="allow_outlink" value="Y" id="allow_outlink_y" checked="checked"|cond="$config->allow_outlink == 'Y'" /> <label for="allow_outlink_y">{$lang->cmd_yes}</label>
-                    <input type="radio" name="allow_outlink" value="N" id="allow_outlink_n" checked="checked"|cond="$config->allow_outlink == 'N'" /> <label for="allow_outlink_n">{$lang->cmd_no}</label>
-                </p>
-                <p style="display:none"|cond="$config->allow_outlink == 'N'" class="_outLink form-list">
-                    <span class="desc">{$lang->allow_outlink_format}</span>
-                    <input type="text" name="allow_outlink_format" value="{$config->allow_outlink_format}" />
-                    {$lang->about_allow_outlink_format}
-                </p>
-                <p style="display:none"|cond="$config->allow_outlink == 'N'" class="_outLink form-list">
-                    <span class="desc">{$lang->allow_outlink_site}</span>
-                    <textarea type="text" name="allow_outlink_site">{$config->allow_outlink_site}</textarea>
-                    {$lang->about_allow_outlink_site}
-                </p>
-                <p class="form-list">
-                    <label for="filesize" class="desc">{$lang->about_allowed_filesize}</label>
-                    <input id="filesize" type="text" name="allowed_filesize" value="{$config->allowed_filesize}" style="width:40px" class="xe-ui-panel-text"/> MB
-                </p>
-                <p class="form-list">
-                    <label for="attachSize" class="desc">{$lang->about_allowed_attach_size}</label>
-                    <input id="attachSize" type="text" name="allowed_attach_size" value="{$config->allowed_attach_size}" style="width:40px" class="xe-ui-panel-text"/> MB
-                </p>
-                <p class="form-list">
-                    <label for="allowedFiletypes" class="desc">{$lang->allowed_filetypes}</label>
-                    <input id="allowedFiletypes" type="text" name="allowed_filetypes" value="{$config->allowed_filetypes}" class="xe-ui-panel-text"/>
-                    {$lang->about_allowed_filetypes}
-                </p>
+		<table class="xe-ui-form-table" cellpadding="0" cellspacing="0">
+			<tbody>
+				<tr>
+					<td colspan="2" >
+						<p class="right">
+							{$lang->allow_outlink}
+							<input type="radio" name="allow_outlink" value="Y" id="allow_outlink_y" checked="checked"|cond="$config->allow_outlink == 'Y'" /> <label for="allow_outlink_y">{$lang->cmd_yes}</label>
+							<input type="radio" name="allow_outlink" value="N" id="allow_outlink_n" checked="checked"|cond="$config->allow_outlink == 'N'" /> <label for="allow_outlink_n">{$lang->cmd_no}</label>
+						</p>
+					</td>
+				</tr>
+				<tr style="display:none"|cond="$config->allow_outlink == 'N'" class="_outLink form-list">
+					<td class="v-top">
+						{$lang->allow_outlink_format}
+					</td>
+					<td>
+						<input type="text" name="allow_outlink_format" value="{$config->allow_outlink_format}" class="xe-ui-panel-text" />
+						<p class="desc">{$lang->about_allow_outlink_format}</p>
+					</td>
+				</tr>
+				<tr style="display:none"|cond="$config->allow_outlink == 'N'" class="_outLink form-list">
+					<td class="v-top">
+						{$lang->allow_outlink_site}
+					</td>
+					<td>
+						<textarea type="text" name="allow_outlink_site" class="xe-ui-panel-textarea" rows="3" cols="40">{$config->allow_outlink_site}</textarea>
+						<p class="desc">{$lang->about_allow_outlink_site}</p>
+					</td>
+				</tr>
+				<tr>
+					<td>
+						{$lang->about_allowed_filesize}
+					</td>
+					<td>
+						<input id="filesize" type="text" name="allowed_filesize" value="{$config->allowed_filesize}" style="width:40px" class="xe-ui-panel-text"/> MB
+					</td>
+				</tr>
+				<tr>
+					<td>
+						<p>{$lang->about_allowed_attach_size}</p>
+					</td>
+					<td>
+						<input id="attachSize" type="text" name="allowed_attach_size" value="{$config->allowed_attach_size}" style="width:40px" class="xe-ui-panel-text"/> MB
+					</td>
+				</tr>
+				<tr>
+					<td class="v-top">
+						{$lang->allowed_filetypes}
+					</td>
+					<td>
+						<input id="allowedFiletypes" type="text" name="allowed_filetypes" value="{$config->allowed_filetypes}" class="xe-ui-panel-text"/>
+						<p class="desc">{$lang->about_allowed_filetypes}</p>
+					</td>
+				</tr>
+			</tbody>
+		</table>
             </form>
         </div>
         <div class="xe-ui-panel-controller">
