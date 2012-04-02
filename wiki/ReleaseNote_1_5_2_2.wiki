@@ -1,0 +1,26 @@
+<wiki:toc />
+
+=XE 1.5.2.2 Release Note=
+
+==For Users==
+
+===Defect===
+
+ * XSS 패치
+ * 짧은 주소를 사용할 때 주소가 잘못될 수 있는 문제 해결 `[`issue 568 행복한고니`]`
+   * JS setQuery() 함수 개선
+ * 페이지 등 모듈 인스턴스를 삭제할 수 없는 문제 해결 `[`issue 1793 corina, 체리필터`]`
+ * APC 캐시를 사용할 때 모듈 설정을 저장해도 업데이트되지 않는 문제 해결 `[`issue 1814 corina`]`
+
+===Enhancement===
+
+ * 관리자 페이지의 회원 목록 기본 정렬 순서를 최근 가입한 회원 순으로 변경 `[`issue 1704 똥똥, 패치제공 webmaster@comcorea.com`]`
+ * 관리자 페이지의 회원 목록에 회원 그룹 검색을 추가 `[`issue 1727 똥똥, 패치제공 sejin7940`]`
+ * 새 모바일 레이아웃 - Color Code 추가 `[`r10488 ryin005`]`
+
+===For Developers===
+
+ * Install Config를 이용한 자동 설치 시 문제 해결 `[`r10473 똥똥`]`
+ * 카테고리를 설정하지 않았을 때 insertDocument()에 예외 처리 `[`issue 1019 ddan`]`
+ * HTML/CSS 정리
+   * 모듈 목록의 즐겨찾기를 시멘틱하게 변경 `[`r10483 정찬명`]`
