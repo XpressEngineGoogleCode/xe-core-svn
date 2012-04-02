@@ -30,10 +30,8 @@ jQuery(document).ready(function($) {
      * simulate 'min-height':100%; for <body>
      */
     reposition();
-    $('body').bind('resize', function(e){
-       if ($(window).height()>$('body').height()) {
-           reposition();
-       }
+    $('.x').bind('resize', function(e){
+        reposition();
     });
 
     /*
