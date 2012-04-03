@@ -217,7 +217,12 @@ class ModuleHandler extends Handler
 		$ruleset = $xml_info->action->{$this->act}->ruleset;
 		$kind = strpos(strtolower($this->act),'admin')!==false?'admin':'';
 		if(!$kind && $this->module == 'admin') $kind = 'admin';
-		if($this->module_info->use_mobile != "Y") Mobile::setMobile(false);
+
+		$dbInfo = Context::getDBInfo();
+		if($this->module_info->use_mobile != 'Y' && $dbInfo->use_mobile_view != 'Y')
+		{
+			Mobile::setMobile(false);
+		}
 
 		// admin menu check
 		if(Context::isInstalled())
@@ -259,6 +264,10 @@ class ModuleHandler extends Handler
 				$type = $orig_type;
 				Mobile::setMobile(false);
 				$oModule = &$this->getModuleInstance($this->module, $type, $kind);
+			}
+			else
+			{
+				Mobile::setMobile(true);
 			}
 		}
 		else
@@ -318,6 +327,10 @@ class ModuleHandler extends Handler
 						$type = $orig_type;
 						Mobile::setMobile(false);
 						$oModule = &$this->getModuleInstance($forward->module, $type, $kind);
+					}
+					else
+					{
+						Mobile::setMobile(true);
 					}
 				}
 				else
