@@ -181,6 +181,7 @@ h1 {
     text-decoration: none;
     line-height: 1.4em;
     text-align: center;
+    text-indent: 0;
 }
 
 .xe-ui-button-gray:hover {
