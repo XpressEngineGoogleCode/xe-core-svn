@@ -1,6 +1,6 @@
 <load target="js/fileConfig.js" type="body" usecdn="true" />
 
-<h1>File Upload Settings</h1>
+<h1>Upload Settings</h1>
 <div class="xe-ui-title-separator">
     <hr/>
 </div>
@@ -18,9 +18,11 @@
 		<table class="xe-ui-form-table" cellpadding="0" cellspacing="0">
 			<tbody>
 				<tr>
-					<td colspan="2" >
-						<p class="right">
-							{$lang->allow_outlink}
+					<td>
+						<p>{$lang->allow_outlink}<p>							
+					</td>
+					<td>
+						<p>
 							<input type="radio" name="allow_outlink" value="Y" id="allow_outlink_y" checked="checked"|cond="$config->allow_outlink == 'Y'" /> <label for="allow_outlink_y">{$lang->cmd_yes}</label>
 							<input type="radio" name="allow_outlink" value="N" id="allow_outlink_n" checked="checked"|cond="$config->allow_outlink == 'N'" /> <label for="allow_outlink_n">{$lang->cmd_no}</label>
 						</p>
