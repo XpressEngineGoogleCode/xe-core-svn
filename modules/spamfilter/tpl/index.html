@@ -6,132 +6,136 @@
 </div>
 
 <div id="content" class="cleared">
-    <div cond="$XE_VALIDATOR_MESSAGE" class="xe-ui-message {$XE_VALIDATOR_MESSAGE_TYPE} gradient cleared">
-        <a href="#" style="float: right;" onclick="jQuery(this).parent().remove();return false;" class="xe-ui-button-gray gradient">Dismiss</a>
-        <p>{$XE_VALIDATOR_MESSAGE}</p>
-    </div>
-    <div class="xe-ui-panel">
-        <div class="xe-ui-panel-content cleared">
-            <table cellpadding="0" cellspacing="0" class="xe-ui-form-table">
-                <tbody>
-                    <tr>
-                        <td width="50%" class="v-top">{$lang->cmd_interval}</td>
-                        <td>
-                            <form action="" id="spamfilterConfig" class="form" ruleset="@insertConfig">
-                                <input type="hidden" name="act" value="procSpamfilterAdminInsertConfig" />
-                                <input type="hidden" name="module" value="spamfilter" />
-                                <input type="hidden" name="ruleset" value="insertConfig" />
-                                <input type="radio" name="limits" id="spamCond1_yes" value="Y" <!--@if($config->limits=='Y' || $config->limits =='')-->checked="checked"<!--@end--> />
-                                       <label for="spamCond1_yes">{$lang->cmd_yes}</label>
-                                <input type="radio" name="limits" id="spamCond1_no" value="N" <!--@if($config->limits!='Y' && $config->limits !='')--> checked="checked"<!--@end--> /> <label for="spamCond1_no">{$lang->cmd_no}</label>
-                                <p class="desc">
+	<div cond="$XE_VALIDATOR_MESSAGE" class="xe-ui-message {$XE_VALIDATOR_MESSAGE_TYPE} gradient cleared">
+		<a href="#" style="float: right;" onclick="jQuery(this).parent().remove();return false;" class="xe-ui-button-gray gradient">Dismiss</a>
+		<p>{$XE_VALIDATOR_MESSAGE}</p>
+	</div>
+	<div class="xe-ui-panel">
+		<div class="xe-ui-panel-content cleared">
+			<form action="" id="spamfilterDelete" method="post">
+				<input type="hidden" name="module" value="spamfilter" />
+				<input type="hidden" name="act" value="" />
+				<input type="hidden" name="ipaddress" value="" />
+				<input type="hidden" name="word" value="" />
+				<input type="hidden" name="ruleset" value="" />
+			</form>
+			<table cellpadding="0" cellspacing="0" class="xe-ui-form-table">
+				<tbody>
+					<tr>
+						<td width="50%" class="v-top">{$lang->cmd_interval}</td>
+						<td rowspan="2">
+							<form action="" id="spamfilterConfig" class="form" ruleset="@insertConfig">
+								<input type="hidden" name="act" value="procSpamfilterAdminInsertConfig" />
+								<input type="hidden" name="module" value="spamfilter" />
+								<input type="hidden" name="ruleset" value="insertConfig" />
+								<input type="radio" name="limits" id="spamCond1_yes" value="Y" <!--@if($config->limits=='Y' || $config->limits =='')-->checked="checked"<!--@end--> />
+								<label for="spamCond1_yes">{$lang->cmd_yes}</label>
+								<input type="radio" name="limits" id="spamCond1_no" value="N" <!--@if($config->limits!='Y' && $config->limits !='')--> checked="checked"<!--@end--> /> <label for="spamCond1_no">{$lang->cmd_no}</label>
+								<p class="desc">
 									{$lang->about_interval}
-                                </p>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td class="v-top">{$lang->cmd_check_trackback}</td>
-                        <td>
-                            <input type="radio" name="check_trackback" id="spamCond2_yes" value="Y" <!--@if($config->check_trackback=='Y' || $config->check_trackback=='')--> checked="checked"<!--@end--> />
-                                   <label for="spamCond2_yes">{$lang->cmd_yes}</label>
-                            <input type="radio" name="check_trackback" id="spamCond2_no" value="N" <!--@if($config->check_trackback!='Y' &&  $config->check_trackback!='')--> checked="checked"<!--@end--> / > <label for="spamCond2_no">{$lang->cmd_no}</label>
-                            <p class="desc">
+								</p>
+								<input type="radio" name="check_trackback" id="spamCond2_yes" value="Y" <!--@if($config->check_trackback=='Y' || $config->check_trackback=='')--> checked="checked"<!--@end--> />
+								<label for="spamCond2_yes">{$lang->cmd_yes}</label>
+								<input type="radio" name="check_trackback" id="spamCond2_no" value="N" <!--@if($config->check_trackback!='Y' &&  $config->check_trackback!='')--> checked="checked"<!--@end--> / > <label for="spamCond2_no">{$lang->cmd_no}</label>
+								<p class="desc">
 									{$lang->about_check_trackback}
-                            </p>
-                            </form>
-                        </td>
-                    </tr>
-                    <tr <!--@if(!count($ip_list))-->style="display: none;"<!--@end-->>
-                        <td class="v-top">{$lang->cmd_denied_ip}:</td>
-                        <td>
-                            <form id="spamfilterDelete" method="post">
-                                <input type="hidden" name="module" value="spamfilter" />
-                                <input type="hidden" name="act" value="" />
-                                <input type="hidden" name="ipaddress" value="" />
-                                <input type="hidden" name="word" value="" />
-                                <input type="hidden" name="ruleset" value="">
-                            </form>
-                            <table class="xe-ui-table">
-                                <thead>
-                                    <tr>
-                                        <th style="width: 50%">IP</th>
-                                        <th>Operation</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    <!--@foreach($ip_list as $ipListKey)-->
-                                    <tr>
-                                        <td class="center">
-												{$ipListKey->ipaddress} <!--@if($ipListKey->description)--> {$ipListKey->description} <!--@end-->
-                                        </td>
-                                        <td class="center">
-                                            <a href="#" onclick="doDeleteDeniedIP('{$ipListKey->ipaddress}')" class="xe-ui-button-gray">{$lang->cmd_delete}</a>
-                                        </td>
-                                    </tr>
-                                    <!--@endforeach-->
-                                </tbody>
-                            </table>
-
-                        </td>
-                    </tr>
-                    <tr <!--@if(!count($word_list))-->style="display: none;"<!--@end-->>
-                        <td class="v-top">{$lang->cmd_denied_word}:</td>
-                        <td>
-                            <table class="xe-ui-table">
-                                <thead>
-                                    <tr>
-                                        <th style="width: 50%">Word</th>
-                                        <th>Operation</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    <!--@foreach($word_list as $wordListKey)-->
-                                    <tr>
-                                        <td class="center">{$wordListKey->word}</td>
-                                        <td class="center">
-                                            <a href="#" onclick="doDeleteDeniedWord('{$wordListKey->word}')" class="xe-ui-button-gray">{$lang->cmd_delete}</a>
-                                        </td>
-                                    </tr>
-                                    <!--@end-->
-                                </tbody>
-                            </table>
-                        </td>
-                    </tr>
-                    <form action="" id="spamfilterInsert" ruleset="">
-                    <tr>
-                        <td class="v-top">{$lang->add_denied_ip}</td>
-                        <td class="v-top">
-
-                                <input type="hidden" name="act" value="" />
-                                <input type="hidden" name="module" value="spamfilter" />
-                                <input type="hidden" name="ruleset" value="" />
-                                <p class="form-list v-top">
-                                    <textarea rows="4" cols="42" name="ipaddressList" title="{$lang->add_denied_ip}" class="xe-ui-panel-textarea"></textarea>
-                                    <a href="" onclick="doInsertDeniedIP('{$lang->msg_invalid_format}')" class="xe-ui-button-gray">{$lang->cmd_insert}</a>
-                                </p>
-                                <p class="desc">{$lang->about_denied_ip}</p>
-
-                        </td>
-                    </tr>
-                    <tr>
-                        <td class="v-top">{$lang->add_denied_word}</td>
-                        <td class="v-top">
-                            <p class="form-list v-top">
-                                <textarea rows="4" cols="42" name="wordList" title="{$lang->add_denied_word}" class="xe-ui-panel-textarea"></textarea>
-                                <a href="" onclick="doInsertDeniedWord('{$lang->msg_invalid_format}')" class="xe-ui-button-gray">{$lang->add}</a>
-                            </p>
-                            <p class="desc">{$lang->about_denied_word}</p>
-                        </td>
-                    </tr>
-                    </form>
-                </tbody>
-            </table>
-        </div>
-        <div class="xe-ui-panel-controller">
-            <hr />
-            <p class="center">
-                <a href="#" onclick="jQuery('#spamfilterConfig').submit();return false;" class="xe-ui-button-gray">{$lang->cmd_save}</a>
-            </p>
-        </div>
-    </div>
+								</p>
+							</form>
+						</td>
+					</tr>
+					<tr>
+						<td class="v-top"><p>{$lang->cmd_check_trackback}</p></td>
+					</tr>
+					<!--@if(count($ip_list))-->
+					<tr>
+						<td class="v-top">{$lang->cmd_denied_ip}:</td>
+						<td>
+							<table class="xe-ui-table">
+								<thead>
+									<tr>
+										<th style="width: 50%">IP</th>
+										<th>Operation</th>
+									</tr>
+								</thead>
+								<tbody>
+									<!--@foreach($ip_list as $ipListKey)-->
+									<tr>
+										<td class="center">
+											{$ipListKey->ipaddress} <!--@if($ipListKey->description)--> {$ipListKey->description} <!--@end-->
+										</td>
+										<td class="center">
+											<a href="#" onclick="doDeleteDeniedIP('{$ipListKey->ipaddress}')" class="xe-ui-button-gray">{$lang->cmd_delete}</a>
+										</td>
+									</tr>
+									<!--@endforeach-->
+								</tbody>
+							</table>
+						</td>
+					</tr>
+					<!--@end-->
+					<!--@if(count($word_list))-->
+					<tr>
+						<td class="v-top">{$lang->cmd_denied_word}:</td>
+						<td>
+							<table class="xe-ui-table">
+								<thead>
+									<tr>
+										<th style="width: 50%">Word</th>
+										<th>Operation</th>
+									</tr>
+								</thead>
+								<tbody>
+								<!--@foreach($word_list as $wordListKey)-->
+								<tr>
+									<td class="center">{$wordListKey->word}</td>
+									<td class="center">
+										<a href="#" onclick="doDeleteDeniedWord('{$wordListKey->word}')" class="xe-ui-button-gray">{$lang->cmd_delete}</a>
+									</td>
+								</tr>
+								<!--@end-->
+								</tbody>
+							</table>
+						</td>
+					</tr>
+					<!--@end-->
+					<tr>
+						<td class="v-top">{$lang->add_denied_ip}</td>
+						<td class="v-top">
+							<form id="spamfilterInsertIp">
+								<input type="hidden" name="act" value="procSpamfilterAdminInsertDeniedIP" />
+								<input type="hidden" name="module" value="spamfilter" />
+								<input type="hidden" name="ruleset" value="insertDeniedIp" />
+								<p class="form-list v-top">
+									<textarea rows="4" cols="42" name="ipaddressList" title="{$lang->add_denied_ip}" class="xe-ui-panel-textarea"></textarea>
+									<a href="#" onclick="jQuery('#spamfilterInsertIp').submit();" class="xe-ui-button-gray">{$lang->cmd_insert}</a>
+								</p>
+								<p class="desc">{$lang->about_denied_ip}</p>
+							</form>
+						</td>
+					</tr>
+					<tr>
+						<td class="v-top">{$lang->add_denied_word}</td>
+						<td>
+							<form id="spamfilterInsertWord">
+								<input type="hidden" name="act" value="procSpamfilterAdminInsertDeniedWord" />
+								<input type="hidden" name="module" value="spamfilter" />
+								<input type="hidden" name="ruleset" value="insertDeniedWord" />
+								<p class="form-list v-top">
+									<textarea rows="4" cols="42" name="wordList" title="{$lang->add_denied_word}" class="xe-ui-panel-textarea"></textarea>
+									<a href="#" onclick="jQuery('#spamfilterInsertWord').submit();" class="xe-ui-button-gray">{$lang->add}</a>
+								</p>
+								<p class="desc">{$lang->about_denied_word}</p>
+							</form>
+						</td>
+					</tr>
+				</tbody>
+			</table>
+		</div>
+		<div class="xe-ui-panel-controller">
+			<hr />
+			<p class="center">
+				<a href="#" onclick="jQuery('#spamfilterConfig').submit();return false;" class="xe-ui-button-gray">{$lang->cmd_save}</a>
+			</p>
+		</div>
+	</div>
 </div>

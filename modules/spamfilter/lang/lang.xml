@@ -26,7 +26,7 @@
 	</item>
 	<item name="spamfilter">
 		<value xml:lang="ko"><![CDATA[스팸필터]]></value>
-		<value xml:lang="en"><![CDATA[Spam filter]]></value>
+		<value xml:lang="en"><![CDATA[Manage spam filter]]></value>
 		<value xml:lang="jp"><![CDATA[スパムフィルター]]></value>
 		<value xml:lang="zh-CN"><![CDATA[垃圾过滤]]></value>
 		<value xml:lang="zh-TW"><![CDATA[垃圾過濾]]></value>
