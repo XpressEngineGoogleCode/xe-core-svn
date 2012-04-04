@@ -495,7 +495,7 @@ $.fn.xeModuleFinder = function(caller){
 
 					for(i=0,c=list.length; i < c; i++) {
 						$li = $('<li />').appendTo($ul);
-						$('<button type="button" style="width: 236px;" />').text(list[i].domain).data('site_srl', list[i].site_srl).appendTo($li);
+						$('<button type="button" style="width: 234px;" />').text(list[i].domain).data('site_srl', list[i].site_srl).appendTo($li);
 					}
 				};
 
