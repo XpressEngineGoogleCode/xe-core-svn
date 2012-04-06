@@ -12,8 +12,7 @@
             </caption>
             <thead>
                 <tr>
-                    <th scope="col">{$lang->user_id}</th>
-                    <th scope="col">{$lang->email_address}</th>
+                    <th scope="col">{Context::getLang($identifier)}</th>
                     <th scope="col">{$lang->nick_name}</th>
                     <th scope="col">{$lang->point}</th>
                     <th scope="col">{$lang->level}</th>
@@ -23,8 +22,8 @@
                 <!--@if(count($member_list)!=0)-->
                 <!--@foreach($member_list as $no => $val)-->
                 <tr>
-                    <td class="center">{$val->user_name}</td>
-                    <td class="center">{$val->email_address}</td>
+                    <td class="center" cond="$identifier == 'user_id'">{$val->user_id}</td>
+                    <td class="center" cond="$identifier != 'user_id'">{$val->email_address}</td>
                     <td class="center"><a href="#popup_menu_area" class="member_{$val->member_srl}">{$val->nick_name}</a></td>
                     <td class="center">
                         <form action="./" method="get">

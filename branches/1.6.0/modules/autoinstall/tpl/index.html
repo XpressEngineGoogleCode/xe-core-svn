@@ -6,7 +6,7 @@
     <div class="xe-ui-message info gradient cleared">
         <a cond="$show_ftp_note" href="#" style="float: right;" onclick="jQuery(this).parent().remove();return false;" class="xe-ui-button-gray gradient">Dismiss</a>
         <p>
-            {@$ftp_link = sprintf('<a href="%s#ftpSetup">%s</a>', getUrl('', 'module', 'admin', 'act', 'dispAdminConfig'), $lang->ftp_setup)}
+            {@$ftp_link = sprintf('<a href="%s">%s</a>', getUrl('', 'module', 'admin', 'act', 'dispAdminConfigFtp'), $lang->ftp_setup)}
             {sprintf($lang->description_ftp_note, $ftp_link)}
         </p>
     </div>

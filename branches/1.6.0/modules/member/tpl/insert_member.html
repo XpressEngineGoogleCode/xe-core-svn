@@ -39,7 +39,7 @@
                 <p class="form-list" cond="$member_srl">
                     <span class="desc">{$lang->password} <em style="color:red">*</em></span>
                     <input type="hidden" name="password" value="{$member_info->password}" />
-                    <input type="password" name="reset_password" value="" class="xe-ui-panel-text"/>
+                    <input type="text" name="reset_password" value="" class="xe-ui-panel-text"/>
                 </p>
                 <p class="form-list" cond="!$member_srl">
                     <span class="desc">{$lang->password} <em style="color:red">*</em></span>
@@ -58,7 +58,7 @@
                 <p class="form-list">
                     <span class="desc">{$lang->allow_message}</span>
                     <block loop="$lang->allow_message_type=>$key,$val">
-                        <input type="radio" name="allow_message" value="{$key}" checked="checked"|cond="$member_info->allow_message == $key" id="allow_{$key}" /> <label for="allow_{$key}">{$val}</label>
+                        <input type="radio" name="allow_message" value="{$key}" checked="checked"|cond="$member_info->allow_message == $key || (!$member_info->member_srl && $key == 'Y')" id="allow_{$key}" /> <label for="allow_{$key}">{$val}</label>
                     </block>
                 </p>
                 <p class="form-list">

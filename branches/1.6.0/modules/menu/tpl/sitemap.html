@@ -24,13 +24,13 @@ xe.lang.confirm_delete = "{$lang->confirm_delete}";
 				<tr>
 					<td>
 						{@$menuSrl = $value->menuSrl}
-						<form class="portlet siteMap" id="menu_{$menuSrl}" method="post">
+						<form class="portlet siteMap" id="menu_{$menuSrl}" method="post" action="#menu_{$menuSrl}">
 							<input type="hidden" name="module" value="{$module}" />
 							<input type="hidden" name="act" value="procMenuAdminArrangeItem" />
 							<input type="hidden" name="menu_srl" value="{$menuSrl}" />
 							<input type="hidden" name="menu_item_srl" value="" />
-							<input type="hidden" name="success_return_url" value="{getUrl('', 'module', 'admin', 'act', 'dispMenuAdminSiteMap')}" />
-							<p>
+							<input type="hidden" name="success_return_url" value="{getUrl('', 'module', 'admin', 'act', 'dispMenuAdminSiteMap')}#menuTop_{$menuSrl}" />
+							<p id="menuTop_{$menuSrl}">
 								<label>{$lang->menu_name} ({$lang->browser_title}): </label><input type="text" name="title" value="{$value->title}" class="xe-ui-panel-text" />
 								<a class="tgMenuList xe-ui-button-gray" style="float: right" href="#nav_{$key}" alt="{$lang->collapsing}/{$lang->expanding}">{$lang->collapsing}</a>
 							</p>
@@ -69,6 +69,7 @@ xe.lang.confirm_delete = "{$lang->confirm_delete}";
                     <input type="hidden" name="menu_srl" value="" />
                     <input type="hidden" name="menu_item_srl" value="{$menu_info->menu_srl}" />
                     <input type="hidden" name="parent_srl" value="{$menu_info->menu_srl}" />
+					<input type="hidden" name="success_return_url" value="{getUrl('', 'module', 'admin', 'act', 'dispMenuAdminSiteMap')}#menuTop_" />
                     <h2 class="h2"><span>{$lang->add_menu}</span><span>{$lang->edit_menu}</span></h2>
                     <table class="xe-ui-form-table">
                         <tr>
@@ -81,7 +82,7 @@ xe.lang.confirm_delete = "{$lang->confirm_delete}";
                                     <div id="langEdit" class="langEdit tgContent">
                                         <ul class="langList"></ul>
                                         <div class="langInput">
-                                            <h2>{$lang->multilingual} <strong>{$lang->cmd_modify}</strong> | <a href="#langEdit">{$lang->cmd_insert}</a></h2>
+                                            <h2>{$lang->multilingual} <strong>{$lang->cmd_modify}...</strong> | <a href="#langEdit">{$lang->cmd_insert}</a></h2>
                                             <ul>
                                                 {@
                                                     /* move current language to the top */
@@ -182,6 +183,14 @@ xe.lang.confirm_delete = "{$lang->confirm_delete}";
                                 </p>
                             </td>
                         </tr>
+						<tr>
+                            <td>{$lang->expand}</td>
+                            <td id="groupList">
+                            	<p>
+                                <input type="checkbox" name="menu_expand" value="Y" /> {$lang->about_expand}
+                                </p>
+                            </td>
+                        </tr>
                     </table>
 					<hr />
 	                <p class="center">
@@ -222,7 +231,7 @@ xe.lang.confirm_delete = "{$lang->confirm_delete}";
     <div class="xe-ui-panel-controller">
 		<hr />
 		<p class="center">
-			<a class="xe-ui-button-gray" href="#" onclick="document.getElementById('addNewSitemapForm').submit();">{$lang->add_new_sitemap}</a>
+			<a class="xe-ui-button-gray" href="#" onclick="document.getElementById('addNewSitemapForm').submit();">{$lang->add_new_sitemap}...</a>
 		</p>
     </div>
     </div>

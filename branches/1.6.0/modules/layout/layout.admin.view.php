@@ -21,7 +21,11 @@
 			// Set a layout list
 			$oLayoutModel = getModel('layout');
 			$layout_list = $oLayoutModel->getDownloadedLayoutList('P', true);
-
+			if(!is_array($layout_list))
+			{
+				$layout_list = array();
+			}
+			
 			// get Theme layout
 			$oAdminModel = getAdminModel('admin');
 			$themeList = $oAdminModel->getThemeList();
