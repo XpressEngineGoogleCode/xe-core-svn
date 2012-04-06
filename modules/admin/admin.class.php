@@ -99,7 +99,7 @@ class admin extends ModuleObject {
             $args->name = '{$lang->menu_gnb[\'' . $value . '\']}';
             switch($value) {
                 case 'dashboard':
-                    $args->url = getUrl('', 'module', 'admin');
+                    $args->url = 'index.php?module=admin';
                     break;
                 case 'design':
                     $args->url = getNotEncodedUrl('','module','admin','act','dispAdminTheme');

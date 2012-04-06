@@ -14,17 +14,18 @@
             <table cellpadding="0" cellspacing="0" class="xe-ui-table">
                 <caption>
                     <p class="aLeft">
-                        All ({$tCount})
+                        All({$tCount})
+						<span class="side"><button type="button" class="text"><span class="hide">{$lang->simple_view}</span><span class="show">{$lang->detail_view}</span></button></span>
                     </p>
                 </caption>
                 <thead>
                     <tr>
                         <th scope="col" class="aLeft" width="45%">{$lang->widget_name}</th>
-                        <th scope="col" width="5%">{$lang->version}</th>
-                        <!--th scope="col" width="5%">{$lang->author}</th-->
-                        <th scope="col">{$lang->path}</th>
-                        <th scope="col" width="16%">{$lang->cmd_generate_code}</th>
-                        <th scope="col">{$lang->cmd_delete}</th>
+                        <th scope="col" width="5%"class="nowr">{$lang->version}</th>
+                        <!--th scope="col" width="5%"class="nowr">{$lang->author}</th-->
+                        <th scope="col"class="nowr">{$lang->path}</th>
+                        <th scope="col" width="16%"class="nowr">{$lang->cmd_generate_code}</th>
+                        <th scope="col"class="nowr">{$lang->cmd_delete}</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -36,16 +37,16 @@
                                 {$lang->msg_avail_easy_update} <a href="{$widget->update_url}&amp;return_url={urlencode(getRequestUriByServerEnviroment())}">{$lang->msg_do_you_like_update}</a>
                             </p>
                         </td>
-                        <td class="center"">{$widget->version}</td>
-                        <!--td class="center">
+                        <td class="center" class="nowr">{$widget->version}</td>
+                        <!--td class="center" class="nowr">
                         <block loop="$widget->author => $author">
                             <a cond="$author->homepage" href="{$author->homepage}" target="_blank">{$author->name}</a>
                             <block cond="!$author->homepage">{$author->name}</block>
                         </block>
                         </td-->
-                        <td>{$widget->path}</td>
-                        <td class="center"><a href="{getUrl('act', 'dispWidgetAdminGenerateCode', 'selected_widget', $widget->widget)}" class="xe-ui-button-gray">{$lang->cmd_generate_code}</a></td>
-                        <td class="center"><a cond="$widget->remove_url" href="{$widget->remove_url}&amp;return_url={urlencode(getRequestUriByServerEnviroment())}" class="xe-ui-button-gray">{$lang->cmd_delete}</a></td>
+                        <td class="nowr">{$widget->path}</td>
+                        <td class="center" class="nowr"><a href="{getUrl('act', 'dispWidgetAdminGenerateCode', 'selected_widget', $widget->widget)}" class="xe-ui-button-gray">{$lang->cmd_generate_code}</a></td>
+                        <td class="center" class="nowr"><a cond="$widget->remove_url" href="{$widget->remove_url}&amp;return_url={urlencode(getRequestUriByServerEnviroment())}" class="xe-ui-button-gray">{$lang->cmd_delete}</a></td>
                     </tr>
                 </tbody>
             </table>

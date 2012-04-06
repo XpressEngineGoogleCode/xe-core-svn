@@ -16,6 +16,7 @@
                     <p class="f-right">
                         <a cond="$act != 'dispModuleAdminCategory'" href="{getUrl('', 'module', 'admin', 'act', 'dispModuleAdminCategory')}" class="xe-ui-button-gray">{$lang->module_category}</a>
                         <block cond="$act == 'dispModuleAdminCategory'">{$lang->module_category}</block>
+						<span class="side"><button type="button" class="text"><span class="hide">{$lang->simple_view}</span><span class="show">{$lang->detail_view}</span></button></span>
                     </p>
                 </caption>
                 <thead>
@@ -33,9 +34,9 @@
                     <tr>
                         <td class="center">
                             <!--@if(in_array($val->module,$favoriteModuleList))-->
-                            <a href="#" class="fvOn" onclick="doToggleFavoriteModule(this, '{$val->module}'); return false;">{$lang->favorite}({$lang->on})</a>
+                            <button type="button" class="fvOn" onclick="doToggleFavoriteModule(this, '{$val->module}'); return false;">{$lang->favorite}({$lang->on})</button>
                             <!--@else-->
-                            <a href="#" class="fvOff" onclick="doToggleFavoriteModule(this, '{$val->module}'); return false;">{$lang->favorite}({$lang->off})</a>
+                            <button type="button" class="fvOff" onclick="doToggleFavoriteModule(this, '{$val->module}'); return false;">{$lang->favorite}({$lang->off})</button>
                             <!--@end-->
                         </td>
                         <td>
@@ -47,8 +48,8 @@
                                 <!--@end-->
                             </p>
                             <p>{$val->description}</p>
-                            <p cond="$val->need_install" class="update">{$lang->msg_avail_install} <a href="#" onclick="doInstallModule('{$val->module}');return false;">{$lang->msg_do_you_like_install}</a></p>
-                            <p cond="$val->need_update" class="update">{$lang->msg_avail_update} <a href=="#" onclick="doUpdateModule('{$val->module}'); return false;">{$lang->msg_do_you_like_update}</a></p>
+                            <p cond="$val->need_install" class="update">{$lang->msg_avail_install} <button class="text" type="button" onclick="doInstallModule('{$val->module}')">{$lang->msg_do_you_like_install}</button></p>
+                            <p cond="$val->need_update" class="update">{$lang->msg_avail_update} <button class="text" type="button" onclick="doUpdateModule('{$val->module}')">{$lang->msg_do_you_like_update}</button></p>
                             <p cond="$val->need_autoinstall_update == 'Y'" class="update">{$lang->msg_avail_easy_update}<a href="{$val->update_url}&amp;return_url={urlencode(getRequestUriByServerEnviroment())}">{$lang->msg_do_you_like_update}</a></p>
                         </td>
                         <td class="center">{$val->version}</td>

@@ -37,8 +37,8 @@
                         <tr>
                             <th scope="col" class="aLeft">{$lang->email}</th>
                             <th scope="col" loop="$usedIdentifiers=>$name,$title">{$title}</th>
-                            <th scope="col"><a href="{getUrl('', 'module', 'admin', 'act', 'dispMemberAdminList')}">{$lang->signup_date}</a></th>
-                            <th scope="col"><a href="{getUrl('', 'module', 'admin', 'act', 'dispMemberAdminList', 'sort_index', 'last_login', 'sort_order', 'asc')}">{$lang->last_login}</a></th>
+                            <th scope="col"><a href="{getUrl('', 'module', 'admin', 'act', 'dispMemberAdminList', 'sort_index', 'regdate', 'sort_order', ($sort_order == 'asc') ? 'desc' : 'asc')}">{$lang->signup_date}<block cond="$sort_index == 'regdate'"> <em cond="$sort_order=='asc'">▲</em><em cond="$sort_order != 'asc'">▼</em></block></a></th>
+                            <th scope="col"><a href="{getUrl('', 'module', 'admin', 'act', 'dispMemberAdminList', 'sort_index', 'last_login', 'sort_order', ($sort_order == 'asc') ? 'desc' : 'asc')}">{$lang->last_login}<block cond="$sort_index == 'last_login'"> <em cond="$sort_order=='asc'">▲</em><em cond="$sort_order != 'asc'">▼</em></block></a></th>
                             <th scope="col">{$lang->member_group}</th>
                             <th scope="col">{$lang->status}</th>
                             <th scope="col">{$lang->cmd_view}</th>
@@ -52,8 +52,8 @@
                         <tr>
                             <th scope="col" class="aLeft">{$lang->email}</th>
                             <th scope="col" loop="$usedIdentifiers=>$name,$title">{$title}</th>
-                            <th scope="col"><a href="{getUrl('', 'module', 'admin', 'act', 'dispMemberAdminList')}">{$lang->signup_date}</a></th>
-                            <th scope="col"><a href="{getUrl('', 'module', 'admin', 'act', 'dispMemberAdminList', 'sort_index', 'last_login', 'sort_order', 'asc')}">{$lang->last_login}</a></th>
+                            <th scope="col"><a href="{getUrl('', 'module', 'admin', 'act', 'dispMemberAdminList', 'sort_index', 'regdate', 'sort_order', ($sort_order == 'asc') ? 'desc' : 'asc')}">{$lang->signup_date}<block cond="$sort_index == 'regdate'"> <em cond="$sort_order=='asc'">▲</em><em cond="$sort_order != 'asc'">▼</em></block></a></th>
+                            <th scope="col"><a href="{getUrl('', 'module', 'admin', 'act', 'dispMemberAdminList', 'sort_index', 'last_login', 'sort_order', ($sort_order == 'asc') ? 'desc' : 'asc')}">{$lang->last_login}<block cond="$sort_index == 'last_login'"> <em cond="$sort_order=='asc'">▲</em><em cond="$sort_order != 'asc'">▼</em></block></a></th>
                             <th scope="col">{$lang->member_group}</th>
                             <th scope="col">{$lang->status}</th>
                             <th scope="col">{$lang->cmd_view}</th>
@@ -87,7 +87,7 @@
                             <td class="center">
                                 <a href="{getUrl('', 'module', 'admin', 'act', 'dispMemberAdminInfo', 'member_srl', $member_info['member_srl'])}" class="xe-ui-button-gray">{$lang->cmd_view}</a>
                             </td>
-                            <td class="center"><a href="{getUrl('', 'module', 'admin', 'act', 'dispMemberAdminInsert', 'member_srl', $member_info['member_srl'])}" class="xe-ui-button-gray">{$lang->cmd_modify}</a></td>
+                            <td class="center"><a href="{getUrl('', 'module', 'admin', 'act', 'dispMemberAdminInsert', 'member_srl', $member_info['member_srl'])}" class="xe-ui-button-gray">{$lang->cmd_modify}...</a></td>
                             {@$used_values = ''}
                             <!--@foreach($usedIdentifiers as $name=>$title)-->
                             {@$used_values .= "\t".$member_info[$name]}
@@ -104,6 +104,12 @@
                 <input type="hidden" name="module" value="{$module}" />
                 <p class="inline-list center">
                     <label>Search in:</label>
+					<select name="selected_group_srl">
+						<option value="0">그룹 전체</option>
+						<!--@foreach($group_list as $key => $val)-->
+						<option value="{$val->group_srl}" <!--@if($selected_group_srl==$val->group_srl)-->selected="selected"<!--@end-->>{$val->title}</option>
+						<!--@end-->
+					</select>
                     <select name="search_target" class="xe-ui-panel-select">
                         <option value="">{$lang->search_target}</option>
                         {@$lang->search_target_list = array_merge($lang->search_target_list, $usedIdentifiers)}
@@ -151,7 +157,7 @@
                     <textarea cols="42" rows="3" id="message" style="width:98%" name="message" ></textarea>
                 </p>
                 <div class="btnArea">
-                    <span class="btn"><button type="submit" name="type" value="modify">{$lang->cmd_modify}</button></span>
+                    <span class="btn"><button type="submit" name="type" value="modify">{$lang->cmd_modify}...</button></span>
                     <span class="btn"><button type="submit" name="type" value="delete">{$lang->cmd_delete}</button></span>
                 </div>
             </form>

@@ -84,20 +84,22 @@ class ModuleHandler extends Handler
 		if($this->document_srl && !$this->module) {
 			$module_info = $oModuleModel->getModuleInfoByDocumentSrl($this->document_srl);
 
-			// If the document does not exist, remove document_srl
-			if(!$module_info) {
-				unset($this->document_srl);
-			} else {
-				// If it exists, compare mid based on the module information
-				// if mids are not matching, set it as the document's mid
-				if($this->mid != $module_info->mid) {
-					$this->mid = $module_info->mid;
-					Context::set('mid', $module_info->mid, true);
-				}
-			}
-			// if requested module is different from one of the document, remove the module information retrieved based on the document number
-			if($this->module && $module_info->module != $this->module) unset($module_info);
-		}
+                // If the document does not exist, remove document_srl
+                if(!$module_info) {
+                    unset($this->document_srl);
+                } else {
+                    // If it exists, compare mid based on the module information
+                    // if mids are not matching, set it as the document's mid
+                    if($this->mid != $module_info->mid) {
+                        $this->mid = $module_info->mid;
+                        Context::set('mid', $module_info->mid, true);
+						header('location:' . getNotEncodedSiteUrl($site_info->domain, 'mid', $this->mid, 'document_srl', $this->document_srl));
+						return false;
+                    }
+                }
+                // if requested module is different from one of the document, remove the module information retrieved based on the document number
+                if($this->module && $module_info->module != $this->module) unset($module_info);
+            }
 
 		// If module_info is not set yet, and there exists mid information, get module information based on the mid
 		if(!$module_info && $this->mid) {

@@ -251,6 +251,30 @@
                     }
                 }
 
+				if(strlen($info->find_account_answer) == 32 && preg_match('/[a-zA-Z0-9]+/', $info->find_account_answer))
+				{
+					$info->find_account_answer = null;
+				}
+
+				// XSS defence
+				$oSecurity = new Security($info);
+				$oSecurity->encodeHTML('user_name', 'nick_name', 'find_account_answer', 'description', 'address.', 'group_list..');
+
+                if($extra_vars)
+				{
+                    foreach($extra_vars as $key => $val)
+					{
+						$oSecurity->encodeHTML($key);
+                    }
+                }
+
+				// Check format.
+				$oValidator = new Validator();
+				if(!$oValidator->applyRule('url', $info->homepage))
+				{
+					$info->homepage = '';
+				}
+
                 $GLOBALS['__member_info__'][$info->member_srl] = $info;
             }
 
@@ -630,8 +654,10 @@
         /**
          * @brief Get the image mark of the group
          **/
-        function getGroupImageMark($member_srl,$site_srl=0) {
-            if(!isset($GLOBALS['__member_info__']['group_image_mark'][$member_srl])) {
+        function getGroupImageMark($member_srl,$site_srl=0) 
+		{
+            if(!isset($GLOBALS['__member_info__']['group_image_mark'][$member_srl])) 
+			{
 				$oModuleModel = getModel('module');
 				$config = $oModuleModel->getModuleConfig('member');
 				if($config->group_image_mark!='Y'){
@@ -639,20 +665,23 @@
 				}
 				$member_group = $this->getMemberGroups($member_srl,$site_srl);
 				$groups_info = $this->getGroups($site_srl);
-				$image_mark_info = null;
-				if(count($member_group) > 0 && is_array($member_group)){
-					$group_srl = array_keys($member_group);
-				}
+				if(count($member_group) > 0 && is_array($member_group))
+				{
+					$memberGroups = array_keys($member_group);
 
-				$i = 0;
-				while($i < count($group_srl)){
-					$target = $groups_info[$group_srl[$i++]];
-					if ($target->image_mark)
+					foreach($groups_info as $group_srl=>$group_info)
 					{
-						$info->title = $target->title;
-						$info->description = $target->description;
-						$info->src = $target->image_mark;
-						$GLOBALS['__member_info__']['group_image_mark'][$member_srl] = $info;
+						if(in_array($group_srl, $memberGroups))
+						{
+							if($group_info->image_mark)
+							{
+								$info->title = $group_info->title;
+								$info->description = $group_info->description;
+								$info->src = $group_info->image_mark;
+								$GLOBALS['__member_info__']['group_image_mark'][$member_srl] = $info;
+								break;
+							}
+						}		
 					}
 				}
 				if (!$info) $GLOBALS['__member_info__']['group_image_mark'][$member_srl] == 'N';

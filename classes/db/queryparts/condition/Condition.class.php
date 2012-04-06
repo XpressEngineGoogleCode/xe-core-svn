@@ -24,13 +24,21 @@
 		}
 
 		function toString($withValue = true){
-                    if(!isset($this->_value_to_string)){
-                        if(!$this->show()) { $this->_value_to_string = ''; }
-			else if($withValue)
-				$this->_value_to_string = $this->toStringWithValue();
-			else $this->_value_to_string = $this->toStringWithoutValue();
-                    }
-                    return $this->_value_to_string;
+			if (!isset($this->_value_to_string)) {
+				if (!$this->show()) 
+				{
+					$this->_value_to_string = '';
+				}
+				else if ($withValue)
+				{
+					$this->_value_to_string = $this->toStringWithValue();
+				}
+				else
+				{
+					$this->_value_to_string = $this->toStringWithoutValue();
+				}
+			}
+			return $this->_value_to_string;
 		}
 
 		function toStringWithoutValue(){
@@ -108,7 +116,11 @@
                             case 'like_tail' :
                             case 'like_prefix' :
                             case 'like' :
-                                    return $name.' like '.$value;
+									if(defined('__CUBRID_VERSION__') 
+											&& __CUBRID_VERSION__ >= '8.4.1') 
+										return $name.' rlike '.$value;
+                                    else
+										return $name.' like '.$value;
                                 break;
                             case 'notlike_tail' :
                             case 'notlike_prefix' :

@@ -285,7 +285,7 @@ class TemplateHandler {
 			$generatedHidden = '';
 			foreach($resultArray AS $key=>$value)
 			{
-				$generatedHidden .= '<input type="hidden" name="'.$value.'" value="<?php echo $__Context->'.$value.' ?>">';
+				$generatedHidden .= '<input type="hidden" name="'.$value.'" value="<?php echo $__Context->'.$value.' ?>" />';
 			}
 			$matches[2] = $generatedHidden.$matches[2];
 		}
@@ -439,7 +439,7 @@ class TemplateHandler {
 			}
 
 			if(strpos($node, '|cond="') !== false) {
-				$node = preg_replace('@(\s[-\w:]+="[^"]+?")\|cond="(.+?)"@s', '<?php if($2){ ?>$1<?php } ?>', $node);
+				$node = preg_replace('@(\s[\w:\-]+="[^"]+?")\|cond="(.+?)"@s', '<?php if($2){ ?>$1<?php } ?>', $node);
 				$node = $this->_replaceVar($node);
 			}
 

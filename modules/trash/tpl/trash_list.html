@@ -35,9 +35,9 @@ var no_text_comment = '{$lang->no_text_comment}';
                     <thead>
                         <tr>
                             <th scope="col"><div>{$lang->document}({$lang->origin_module_type})</div></th>
-                            <th scope="col"><div>{$lang->trash_nick_name}</div></th>
-                            <th scope="col"><div>{$lang->trash_date}</div></th>
-                            <th scope="col"><div>{$lang->ipaddress}</div></th>
+                            <th scope="col" class="nowr"><div>{$lang->trash_nick_name}</div></th>
+                            <th scope="col" class="nowr"><div>{$lang->trash_date}</div></th>
+                            <th scope="col" class="nowr"><div>{$lang->ipaddress}</div></th>
                             <th scope="col"><div>{$lang->trash_description}</div></th>
                             <th scope="col"><div><input type="checkbox" title="Check All" data-name="cart" /></div></th>
                         </tr>
@@ -45,9 +45,9 @@ var no_text_comment = '{$lang->no_text_comment}';
                     <tfoot>
                         <tr>
                             <th scope="col"><div>{$lang->document}({$lang->origin_module_type})</div></th>
-                            <th scope="col"><div>{$lang->trash_nick_name}</div></th>
-                            <th scope="col"><div>{$lang->trash_date}</div></th>
-                            <th scope="col"><div>{$lang->ipaddress}</div></th>
+                            <th scope="col" class="nowr"><div>{$lang->trash_nick_name}</div></th>
+                            <th scope="col" class="nowr"><div>{$lang->trash_date}</div></th>
+                            <th scope="col" class="nowr"><div>{$lang->ipaddress}</div></th>
                             <th scope="col"><div>{$lang->trash_description}</div></th>
                             <th scope="col"><div><input type="checkbox" title="Check All" data-name="cart" /></div></th>
                         </tr>
@@ -56,9 +56,9 @@ var no_text_comment = '{$lang->no_text_comment}';
                     <!--@foreach($trash_list as $no => $oTrashVO)-->
                         <tr>
                             <td><div><!--@if(!trim($oTrashVO->getTitle()) && $oTrashVO->getOriginModule() == 'comment')--><strong>{$lang->no_text_comment}</strong><!--@else-->{$oTrashVO->getTitle()}<!--@end--> (<!--@if($oTrashVO->getOriginModule() == 'document')-->{$lang->document}<!--@else-->{$lang->comment}<!--@end-->)</div></td>
-                            <td><div><span class="member_{$oTrashVO->getRemoverSrl()}">{htmlspecialchars($oTrashVO->getNickName())}</span></div></td>
-                            <td><div>{zdate($oTrashVO->getRegdate(), "Y-m-d H:i:s")}</div></td>
-                            <td><div>{$oTrashVO->getIpaddress()}</div></td>
+                            <td class="nowr"><div><span class="member_{$oTrashVO->getRemoverSrl()}">{htmlspecialchars($oTrashVO->getNickName())}</span></div></td>
+                            <td class="nowr"><div>{zdate($oTrashVO->getRegdate(), "Y-m-d H:i:s")}</div></td>
+                            <td class="nowr"><div>{$oTrashVO->getIpaddress()}</div></td>
                             <td><div>{$oTrashVO->getDescription()}</div></td>
                             <td><div><input type="checkbox" name="cart" value="{$oTrashVO->getTrashSrl()}" /></div></td>
                         </tr>
@@ -85,8 +85,8 @@ var no_text_comment = '{$lang->no_text_comment}';
                       <thead>
                             <tr>
                                 <th scope="col">{$lang->document}</th>
-                                <th scope="col">{$lang->trash_nick_name}</th>
-                                <th scope="col">{$lang->ipaddress}</th>
+                                <th scope="col" class="nowr">{$lang->trash_nick_name}</th>
+                                <th scope="col" class="nowr">{$lang->ipaddress}</th>
                             </tr>
                         </thead>
                         <tbody>

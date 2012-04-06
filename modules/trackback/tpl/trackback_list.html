@@ -24,19 +24,19 @@ xe.lang.msg_empty_search_keyword = '{$lang->msg_empty_search_keyword}';
                     <thead>
                         <tr>
                             <th scope="col"><div>{$lang->title}</div></th>
-                            <th scope="col"><div>{$lang->site}</div></th>
-                            <th scope="col"><div>{$lang->date}</div></th>
-                            <th scope="col"><div>{$lang->ipaddress}</div></th>
-                            <th scope="col"><div><input type="checkbox" data-name="cart" title="Check All" /></div></th>
+                            <th scope="col" class="nowr"><div>{$lang->site}</div></th>
+                            <th scope="col" class="nowr"><div>{$lang->date}</div></th>
+                            <th scope="col" class="nowr"><div>{$lang->ipaddress}</div></th>
+                            <th scope="col" class="nowr"><div><input type="checkbox" data-name="cart" title="Check All" /></div></th>
                         </tr>
                     </thead>
                     <tfoot>
                         <tr>
                             <th scope="col"><div>{$lang->title}</div></th>
-                            <th scope="col"><div>{$lang->site}</div></th>
-                            <th scope="col"><div>{$lang->date}</div></th>
-                            <th scope="col"><div>{$lang->ipaddress}</div></th>
-                            <th scope="col"><div><input type="checkbox" data-name="cart" title="Check All" /></div></th>
+                            <th scope="col" class="nowr"><div>{$lang->site}</div></th>
+                            <th scope="col" class="nowr"><div>{$lang->date}</div></th>
+                            <th scope="col" class="nowr"><div>{$lang->ipaddress}</div></th>
+                            <th scope="col" class="nowr"><div><input type="checkbox" data-name="cart" title="Check All" /></div></th>
                         </tr>
                     </tfoot>
                     <tbody>
@@ -48,9 +48,9 @@ xe.lang.msg_empty_search_keyword = '{$lang->msg_empty_search_keyword}';
                                     <p>{$val->excerpt}</p>
                                 </div>
                             </td>
-                            <td><div><a href="{$val->url}" target="_blank">{htmlspecialchars($val->blog_name)}</a></div></td>
-                            <td><div>{zdate($val->regdate,"Y-m-d")}</div></td>
-                            <td><div><a href="{getUrl('search_target','ipaddress','search_keyword',$val->ipaddress)}">{$val->ipaddress}</a></div></td>
+                            <td class="nowr"><div><a href="{$val->url}" target="_blank">{htmlspecialchars($val->blog_name)}</a></div></td>
+                            <td class="nowr"><div>{zdate($val->regdate,"Y-m-d")}</div></td>
+                            <td class="nowr"><div><a href="{getUrl('search_target','ipaddress','search_keyword',$val->ipaddress)}">{$val->ipaddress}</a></div></td>
                             <td><div><input type="checkbox" name="cart" value="{$val->trackback_srl}" /></div></td>
                         </tr>
                         <!--@end-->

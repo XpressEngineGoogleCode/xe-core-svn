@@ -30,31 +30,34 @@ xe.lang.msg_empty_search_keyword = '{$lang->msg_empty_search_keyword}';
                     <thead>
                         <tr>
                             <th scope="col"><div>{$lang->title}</div></th>
-                            <th scope="col"><div>{$lang->poll_checkcount}</div></th>
-                            <th scope="col"><div>{$lang->poll_join_count}</div></th>
-                            <th scope="col"><div>{$lang->author}</div></th>
-                            <th scope="col"><div>{$lang->regdate}</div></th>
+                            <th scope="col" class="nowr"><div>{$lang->poll_checkcount}</div></th>
+                            <th scope="col" class="nowr"><div>{$lang->poll_join_count}</div></th>
+                            <th scope="col" class="nowr"><div>{$lang->author}</div></th>
+                            <th scope="col" class="nowr"><div>{$lang->regdate}</div></th>
+							<th scope="col" class="nowr"><div>{$lang->poll_stop_date}</div></th>
                             <th scope="col"><div><input type="checkbox" data-name="cart"title="Check All" /></div></th>
                         </tr>
                     </thead>
                     <tfoot>
                         <tr>
                             <th scope="col"><div>{$lang->title}</div></th>
-                            <th scope="col"><div>{$lang->poll_checkcount}</div></th>
-                            <th scope="col"><div>{$lang->poll_join_count}</div></th>
-                            <th scope="col"><div>{$lang->author}</div></th>
-                            <th scope="col"><div>{$lang->regdate}</div></th>
+                            <th scope="col" class="nowr"><div>{$lang->poll_checkcount}</div></th>
+                            <th scope="col" class="nowr"><div>{$lang->poll_join_count}</div></th>
+                            <th scope="col" class="nowr"><div>{$lang->author}</div></th>
+                            <th scope="col" class="nowr"><div>{$lang->regdate}</div></th>
+							<th scope="col" class="nowr"><div>{$lang->poll_stop_date}</div></th>
                             <th scope="col"><div><input type="checkbox" data-name="cart" title="Check All" /></div></th>
                         </tr>
                     </tfoot>
                     <tbody>
                         <!--@foreach($poll_list as $no => $val)-->
                         <tr>
-                            <td><div><a href="<!--@if($val->document_srl)-->{getUrl('')}?document_srl={$val->document_srl}<!--@end--><!--@if($val->comment_srl)-->#comment_{$val->comment_srl}<!--@end-->" target="_blank">{$val->title}</a></div></td>
-                            <td><div><!--@if($val->checkcount == 1)-->{$lang->single_check}<!--@else-->{$lang->multi_check}<!--@end--></div></td>
-                            <td><div>{$val->poll_count}</div></td>
-                            <td><div><a href="#popup_menu_area" class="member_{$val->member_srl}">{$val->nick_name}</a></div></td>
-                            <td><div>{zdate($val->regdate,"Y-m-d H:i")}</div></td>
+                            <td class="nowr"><div><a href="<!--@if($val->document_srl)-->{getUrl('')}?document_srl={$val->document_srl}<!--@end--><!--@if($val->comment_srl)-->#comment_{$val->comment_srl}<!--@end-->" target="_blank">{$val->title}</a></div></td>
+                            <td class="nowr"><div><!--@if($val->checkcount == 1)-->{$lang->single_check}<!--@else-->{$lang->multi_check}<!--@end--></div></td>
+                            <td class="nowr"><div>{$val->poll_count}</div></td>
+                            <td class="nowr"><div><a href="#popup_menu_area" class="member_{$val->member_srl}">{$val->nick_name}</a></div></td>
+                            <td class="nowr"><div>{zdate($val->regdate,"Y-m-d H:i")}</div></td>
+							<td class="nowr"><div>{zdate($val->poll_stop_date,"Y-m-d")}</div></td>
                             <td>
                                 <div><input type="checkbox" name="cart" value="{$val->poll_index_srl}" /></div>
                             </td>
