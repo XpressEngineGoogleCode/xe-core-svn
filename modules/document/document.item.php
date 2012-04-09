@@ -873,22 +873,5 @@
 			return false;
 		}
 		
-		function getTranslationLangCodes()
-        {
-            $obj->document_srl = $this->document_srl;
-            // -2 is an index for content. We are interested if content has other translations.
-            $obj->var_idx = -2;
-            $output = executeQueryArray('document.getDocumentTranslationLangCodes', $obj);
-
-            if (!$output->data)
-            {
-                $output->data = array();
-            }
-            // add original page's lang code as well
-            $origLangCode->lang_code = $this->getLangCode();
-            $output->data[] = $origLangCode;
-
-            return $output->data;
-        }
     }
 ?>

@@ -85,7 +85,8 @@ class adminAdminModel extends admin
 		}
 		$list = array();
 
-		if($_list){
+		if($_list)
+		{
 			foreach($_list as $k => $v){
 				$src = null;
 				$src->data = $v;
@@ -94,24 +95,12 @@ class adminAdminModel extends admin
 				if(strpos($v,'d') === 0 || strpos($v, '<DIR>')) $list[] = substr(strrchr($v,' '),1) . '/';
 			}
 		}
+		else
+		{
+			return new Object(-1,'msg_ftp_no_directory');
+		}
 		$this->add('list', $list);
 	}
-
-			if($_list){
-                foreach($_list as $k => $v){
-					$src = null;
-					$src->data = $v;
-					$res = Context::convertEncoding($src);
-					$v = $res->data;
-                    if(strpos($v,'d') === 0 || strpos($v, '<DIR>')) $list[] = substr(strrchr($v,' '),1) . '/';
-                }
-            }
-			else
-			{
-				return new Object(-1,'msg_ftp_no_directory');
-			}
-            $this->add('list', $list);
-        }
 	function getEnv($type='WORKING') {
 
 			$skip = array(
