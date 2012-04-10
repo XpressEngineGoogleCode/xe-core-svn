@@ -357,6 +357,12 @@ class installController extends install {
             $checklist['db'] = true;
         else
             $checklist['db'] = false;
+        
+        // 7. Check CURL
+        if (function_exists('curl_init'))
+            $checklist['curl'] = true;
+        else
+            $checklist['curl'] = false;
 
         if (!$checklist['php_version'] || !$checklist['permission'] || !$checklist['xml'] || !$checklist['session'] || !$checklist['db'])
             $install_enable = false;
