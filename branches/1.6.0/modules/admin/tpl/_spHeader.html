@@ -5,6 +5,9 @@
 <!--%import("../../../common/js/jquery.simplyscroll.js")-->
 <!--%import("../../../common/js/jquery.ba-resize.js")-->
 <!--%import("../../../common/js/jquery.fileinput.js")-->
+<!--
+<!--%import("../../../common/js/jquery.sparkbox-select.js")-->
+-->
 <!--%import("../../../common/css/xe-ui.css")-->
 <!--%import("../../../common/css/tipTip.css")-->
 <!--%import("../../../common/css/jquery.simplyscroll.css")-->
@@ -73,7 +76,9 @@
                         </form>
                         <a href="{getUrl('act', $favorite->admin_index_act)}">{$favorite->title}</a>
                     </li>
-                    <li cond="!is_array($favorite_list) || count($favorite_list) < 1">{$lang->no_data}</li>
+                    <li cond="!is_array($favorite_list) || count($favorite_list) < 1">
+                        <a>{$lang->no_data}</a>
+                    </li>
                 </ul>
             </li>
         </ul>

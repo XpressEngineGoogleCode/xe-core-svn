@@ -1080,7 +1080,7 @@ Lütfen son sürümü için indirme linkine tıklayınız.]]></value>
     </item>
     <item name="no_data">
         <value xml:lang="ko"><![CDATA[등록된 데이터가 없습니다.]]></value>
-        <value xml:lang="en"><![CDATA[There is no data.]]></value>
+        <value xml:lang="en"><![CDATA[No favorites added.]]></value>
     </item>
     <item name="cmd_admin_menu_reset">
         <value xml:lang="ko"><![CDATA[관리자 메뉴 초기화]]></value>

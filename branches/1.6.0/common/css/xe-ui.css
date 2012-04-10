@@ -1057,3 +1057,90 @@ input.hiddenCheckbox {
 .customfile-focus .customfile-button { 
     outline: 1px dotted #ccc;
 }
+
+/* Custom select box
+.sb-custom {
+    cursor: pointer;
+    display: inline;
+    position: relative;
+    border: 0;
+    border-top: 1px solid #fff;
+    background: rgb(244,244,245);
+    background: url(data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiA/Pgo8c3ZnIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyIgd2lkdGg9IjEwMCUiIGhlaWdodD0iMTAwJSIgdmlld0JveD0iMCAwIDEgMSIgcHJlc2VydmVBc3BlY3RSYXRpbz0ibm9uZSI+CiAgPGxpbmVhckdyYWRpZW50IGlkPSJncmFkLXVjZ2ctZ2VuZXJhdGVkIiBncmFkaWVudFVuaXRzPSJ1c2VyU3BhY2VPblVzZSIgeDE9IjAlIiB5MT0iMCUiIHgyPSIwJSIgeTI9IjEwMCUiPgogICAgPHN0b3Agb2Zmc2V0PSIwJSIgc3RvcC1jb2xvcj0iI2Y0ZjRmNSIgc3RvcC1vcGFjaXR5PSIxIi8+CiAgICA8c3RvcCBvZmZzZXQ9Ijk1JSIgc3RvcC1jb2xvcj0iI2RmZTFlMyIgc3RvcC1vcGFjaXR5PSIxIi8+CiAgICA8c3RvcCBvZmZzZXQ9IjEwMCUiIHN0b3AtY29sb3I9IiNjZGQwZDUiIHN0b3Atb3BhY2l0eT0iMSIvPgogIDwvbGluZWFyR3JhZGllbnQ+CiAgPHJlY3QgeD0iMCIgeT0iMCIgd2lkdGg9IjEiIGhlaWdodD0iMSIgZmlsbD0idXJsKCNncmFkLXVjZ2ctZ2VuZXJhdGVkKSIgLz4KPC9zdmc+);
+    background: -moz-linear-gradient(top,  rgba(244,244,245,1) 0%, rgba(223,225,227,1) 95%, rgba(205,208,213,1) 100%);
+    background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,rgba(244,244,245,1)), color-stop(95%,rgba(223,225,227,1)), color-stop(100%,rgba(205,208,213,1)));
+    background: -webkit-linear-gradient(top,  rgba(244,244,245,1) 0%,rgba(223,225,227,1) 95%,rgba(205,208,213,1) 100%);
+    background: -o-linear-gradient(top,  rgba(244,244,245,1) 0%,rgba(223,225,227,1) 95%,rgba(205,208,213,1) 100%);
+    background: -ms-linear-gradient(top,  rgba(244,244,245,1) 0%,rgba(223,225,227,1) 95%,rgba(205,208,213,1) 100%);
+    background: linear-gradient(top,  rgba(244,244,245,1) 0%,rgba(223,225,227,1) 95%,rgba(205,208,213,1) 100%);
+    filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#f4f4f5', endColorstr='#cdd0d5',GradientType=0 );
+    -moz-box-shadow: 0px 1px 2px rgba(59,60,62,.6), 0 0 0 1px rgba(59,60,62,.2);
+    -webkit-box-shadow: 0px 1px 2px rgba(59,60,62,.6), 0 0 0 1px rgba(59,60,62,.2);
+    box-shadow: 0px 1px 2px rgba(59,60,62,.6), 0 0 0 1px rgba(59,60,62,.2);
+    padding: 7px;
+    -moz-border-radius: 1px;
+    -webkit-border-radius: 1px;
+    border-radius: 1px;
+    min-width: 150px;
+}
+
+.xe-ui-panel-select {
+    display: none !important;
+}
+
+.no-js .xe-ui-panel-select {
+    display: block;
+}
+
+.sb-select:focus {
+    outline: none;
+}
+
+.sb-select {
+    border: 0;
+    background: transparent url('../img/scroll_bottom.png') right center no-repeat;
+    left: 0;
+    position: relative;
+    top: 0;
+    z-index: 1;
+    cursor: pointer;
+    font-size: .95em;
+    font-weight: bold;
+    color: #3b3c3e !important;
+    -moz-text-shadow: 0px 1px 0px #fff;
+    -webkit-text-shadow: 0px 1px 0px #fff;
+    text-shadow: 0px 1px 0px #fff;
+    padding: 0 20px 0 0;
+}
+
+.sb-dropdown {
+    background: white;
+    display: none;
+    list-style: none;
+    margin: 0;
+    padding: 5px;
+    position: absolute;
+    min-width: 150px;
+    z-index: 2;
+    font-weight: bold;
+    font-size: .95em;
+    color: #3b3c3e !important;
+    -moz-text-shadow: 0px 1px 0px #fff;
+    -webkit-text-shadow: 0px 1px 0px #fff;
+    text-shadow: 0px 1px 0px #fff;
+    border: 1px solid #ccc;
+    border-top: none;
+}
+
+.sb-dropdown a {
+    color: #444;
+    display: block;
+    padding: 3px;
+    text-decoration: none;
+}
+
+.sb-dropdown a:hover,
+.sb-dropdown .selected {
+    background: #ddd;
+}
+*/
