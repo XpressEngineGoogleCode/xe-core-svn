@@ -142,6 +142,10 @@
 			<value xml:lang="ko"><![CDATA[DB]]></value>
 			<value xml:lang="en"><![CDATA[DB]]></value>
 		</item>
+		<item name="curl">
+			<value xml:lang="ko"><![CDATA[cURL Library]]></value>
+			<value xml:lang="en"><![CDATA[cURL Library]]></value>
+		</item>
 	</item>
 	<item name="install_license_desc" type="array">
 		<item name="lgpl">
