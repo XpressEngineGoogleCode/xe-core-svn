@@ -84,9 +84,18 @@ jQuery(document).ready(function($) {
     });
 
     /*
-     * Skin all input[type=file]
+     * Set custom input[type=file]
      */
     $('input[type=file]').each(function(){
         $(this).customFileInput();
     })
+
+    /*
+     * Set custom select boxes
+     
+    $('.xe-ui-panel-select').sbCustomSelect({
+        appendTo: 'body'
+    });
+    */
+
 });

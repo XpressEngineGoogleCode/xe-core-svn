@@ -369,6 +369,9 @@
             <item name="mysql_innodb">
                 <value xml:lang="en"><![CDATA[<b>MySQL</b> with INNODB]]></value>
             </item>
+            <item name="mysqli">
+                <value xml:lang="en"><![CDATA[<b>MySQL</b> with the mysqli php driver.]]></value>
+            </item>
             <item name="cubrid">
                 <value xml:lang="en"><![CDATA[<b>CUBRID</b>]]></value>
             </item>
@@ -391,7 +394,7 @@
 		</item>
 		<item name="mysqli">
 			<value xml:lang="ko"><![CDATA[MySQL DB를 php의 mysqli*()함수를 이용하여 사용합니다.<br />DB 파일은 myisam으로 생성되기에 트랜잭션이 이루어지지 않습니다.]]></value>
-			<value xml:lang="en"><![CDATA[Use MySQL as a database with mysqli*() functions in php.<br />Transactions will not be processed since DB file is created in myisam]]></value>
+			<value xml:lang="en"><![CDATA[Use MySQL as a database with mysqli*() functions in php.<br />Does not support transactions since the DB uses the myisam storage engine.]]></value>
 			<value xml:lang="jp"><![CDATA[MySQL DBでPHPの「mysqli*()」関数を利用してデータの入出力を行います。<br />DBは「myisam」タイプで作成されるため、トランザクション処理はできせん。]]></value>
 			<value xml:lang="zh-CN"><![CDATA[利用php的 mysqli*()函数使用mysql DB。<br />DB数据是以myisam生成，因此不能实现transaction。]]></value>
 			<value xml:lang="zh-TW"><![CDATA[利用 PHP 的『mysqli*()』函數使用 MySQL 資料庫。<br />利用『myisam』建立資料庫檔案，因此不能實現transaction。]]></value>
