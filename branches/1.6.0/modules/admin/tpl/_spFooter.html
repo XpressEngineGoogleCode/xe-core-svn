@@ -5,24 +5,32 @@
         <div class="xe-ui-footer-center cleared">
             <p class="f-left" style="line-height: 2.1em;">
 			Powered by <b><a href="http://www.xpressengine.org">XE</a></b> (ver. {__ZBXE_VERSION__})
-			<!--@if(isset($latestVersion))--> <span class="vr">|</span> <strong>Latest version</strong>: <a href="{$latestVersion->url}" target="_blank" title="{zdate($latestVersion->date, 'Y-m-d')}">{$latestVersion->title}</a><!--@end-->
-			</p>
+                <!--@if(isset($latestVersion))--> <span class="vr">|</span> <strong>Latest version</strong>: <a href="{$latestVersion->url}" target="_blank" title="{zdate($latestVersion->date, 'Y-m-d')}">{$latestVersion->title}</a><!--@end-->
+            </p>
             <p class="f-right">
-                <select class="xe-ui-panel-select" style="margin-right: 10px;">
-                    <option loop="$lang_supported=>$key,$val" data-langcode="{$key}" onclick="doChangeLangType('{$key}'); window.location = '{getFullUrl('l',$key)}';" selected="selected"|cond="$key==$lang_type">
-                        {$val}
+                <label>Change language:</label>
+                <select id="change_lang" class="xe-ui-panel-select" onchange="changeLang();">
+                    <option loop="$lang_supported=>$key,$val" data-langcode="{$key}" selected="selected"|cond="$key==$lang_type">
+                        <a href="{getFullUrl('l',$key)}">{$val}</a>
                     </option>
                 </select>
                 <a href="http://code.google.com/p/xe-core/issues/entry" class="xe-ui-button-gray" target="_blank">{$lang->bug_report}</a>
-            </p>
-        </div>
+                <a href="#" class="xe-ui-button-gray" onclick="topOfPage();">{$lang->go_to_top}<img src="img/arrow_up.png" alt="" title="{$lang->go_to_top}" class="xe-ui-button-icon"/></a>
+        </p>
     </div>
 </div>
+</div>
 <script type="text/javascript">
-xe.current_lang = '{$lang_type}';
-xe.lang.confirm_run = '{$lang->confirm_run}';
-xe.lang.confirm_reset_admin_menu = '{$lang->confirm_reset_admin_menu}';
-admin_menu_srl = '{$admin_menu_srl}';
+    xe.current_lang = '{$lang_type}';
+    xe.lang.confirm_run = '{$lang->confirm_run}';
+    xe.lang.confirm_reset_admin_menu = '{$lang->confirm_reset_admin_menu}';
+    admin_menu_srl = '{$admin_menu_srl}';
+    
+    function changeLang() {
+        var key = jQuery('#change_lang option:selected').attr('data-langcode');
+        doChangeLangType(key);
+        window.location = current_url.setQuery('l',key);
+    }
 </script>
 
 <load target="./js/config.js" usecdn="true" />

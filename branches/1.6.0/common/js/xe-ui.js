@@ -12,6 +12,10 @@ function reposition() {
     }
 }
 
+function topOfPage() {
+    jQuery('html, body').animate({ scrollTop: 0 }, 'fast');
+}
+
 jQuery(document).ready(function($) {
     
     /*
