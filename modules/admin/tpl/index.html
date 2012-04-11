@@ -145,12 +145,14 @@
         <div class="xe-ui-panel">
             <div class="xe-ui-panel-content cleared" style="padding-bottom: 12px;">
                 <h2>Site activity</h2>
-                <table class="sortable xe-ui-table" id="dashboard_shortcuts">
+                <table class="sortable xe-ui-table" id="dashboard_shortcuts" cellpadding="0" cellspacing="0" width="100%">
                     <thead>
                         <tr>
                             <th scope="col" style="text-align: left; width: 150px;">Module</th>
                             <th scope="col" class="center" style="width: 150px;">Module name</th>
-                            <th colspan="3" scope="col" class="left" style="text-align: left;">Module Activity (since your last login)</th>
+                            <th scope="col" class="left" style="text-align: left;">Module Activity (since your last login)</th>
+                            <th scope="col">{$lang->cmd_view}</th>
+                            <th scope="col">{$lang->cmd_manage}</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -164,7 +166,7 @@
                         <tr>
                             <td>{ucfirst($value["module"])}</td>
                             <td class="center"><strong>{$value["mid"]}</strong></td>
-                            <td style="width: 550px;">
+                            <td>
                                 <!--@if(isset($value["documents"]))-->
                                 <img border="0" src="img/icon_trackback.png" alt="" />&nbsp;{$value["documents"]} new <a href="{getFullUrl('','module','admin','act',$document_admin_page->admin_index_act)}" target="_blank">document(s)</a>&nbsp;&nbsp;
                                 <!--@end-->
@@ -175,14 +177,18 @@
                                 <img border="0" src="img/icon_trackback.png" alt="" />&nbsp;{$value["trackbacks"]} new <a href="{getFullUrl('','module','admin','act',$trackback_admin_page->admin_index_act)}" target="_blank">trackback(s)</a>
                                 <!--@end-->
                             </td>
-                            <td><a target="_blank" href="{getFullUrl('','mid',$value['mid'])}" class="xe-ui-button-gray">{$lang->cmd_view}</a></td>
-                            <td><a target="_blank" href="{getFullUrl('','module','admin','act',$value['admin_page'])}" class="xe-ui-button-gray">{$lang->cmd_manage}</a></td>
+                            <td class="button">
+                                <a target="_blank" href="{getFullUrl('','mid',$value['mid'])}" class="xe-ui-button-gray">{$lang->cmd_view}</a>
+                            </td>
+                            <td class="button">
+                                <a target="_blank" href="{getFullUrl('','module','admin','act',$value['admin_page'])}" class="xe-ui-button-gray">{$lang->cmd_manage}</a>
+                            </td>
                         </tr>
                         <!--@else-->
                         <tr>
                             <td>Users</td>
                             <td class="center"><strong></strong></td>
-                            <td style="width: 550px;"><img border="0" src="img/icon_user.png" alt="" />&nbsp;{$value} new user(s) have registered sience your last login</td>
+                            <td><img border="0" src="img/icon_user.png" alt="" />&nbsp;{$value} new user(s) have registered sience your last login</td>
                             <td></td>
                             <td><a target="_blank" href="{getFullUrl('','module','admin','act','dispMemberAdminList')}" class="xe-ui-button-gray">{$lang->cmd_manage}</a></td>
                         </tr>

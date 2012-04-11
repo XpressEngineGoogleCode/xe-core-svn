@@ -488,6 +488,7 @@ h1 {
 
 .xe-ui-table td.button, .xe-ui-table th.button {
     width: 1%;
+    white-space: nowrap;
 }
 
 .xe-ui-table td * {

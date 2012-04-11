@@ -1363,4 +1363,10 @@ Lütfen son sürümü için indirme linkine tıklayınız.]]></value>
     <item name="go_to_top">
         <value xml:lang="en"><![CDATA[Top of page]]></value>
     </item>
+    <item name="cmd_view">
+        <value xml:lang="en"><![CDATA[View]]></value>
+    </item>
+    <item name="cmd_manage">
+        <value xml:lang="en"><![CDATA[Manage]]></value>
+    </item>
 </lang>
