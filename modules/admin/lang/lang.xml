@@ -1360,4 +1360,7 @@ Lütfen son sürümü için indirme linkine tıklayınız.]]></value>
     <item name="analytics_title">
         <value xml:lang="en"><![CDATA[Configure visitor tracking]]></value>
     </item>
+    <item name="go_to_top">
+        <value xml:lang="en"><![CDATA[Top of page]]></value>
+    </item>
 </lang>
