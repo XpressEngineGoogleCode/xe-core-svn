@@ -4,8 +4,9 @@
 
         var $queryTag;
 
-        function QueryParser($query, $isSubQuery = false) {
-            $this->queryTag = new QueryTag($query, $isSubQuery);
+        function QueryParser($query = NULL, $isSubQuery = false) {
+	    if ($query)
+		$this->queryTag = new QueryTag($query, $isSubQuery);
         }
 
         function getTableInfo($query_id, $table_name) {
