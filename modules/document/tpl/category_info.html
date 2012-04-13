@@ -1,65 +1,69 @@
 
 <input type="hidden" name="category_srl" value="{$category_info->category_srl}" />
 <input type="hidden" name="parent_srl" value="{$category_info->parent_srl}" />
-<div class="layer" boxModelController" style="display:block">
-	<button type="button" class="xButton layerClose" title="Close this layer." onclick="jQuery(this).closest('#category_info').hide();">X</button>
-	<h4 class="xeAdmin h3">{$lang->category}</h4>
-	<div class="layerBody table">
-		<table cellspacing="0" class="rowTable">
-			<!--@if($category_info->parent_category_title)-->
-			<tr>
-				<th scope="row">{$lang->parent_category_title}</th>
-				<td class="wide">{$category_info->parent_category_title}</td>
-			</tr>
-			<!--@end-->
-			<tr>
-				<th scope="row">{$lang->category_title}</th>
-				<td>
-					<input type="text" name="category_title" id="category_name" value="{$category_info->title}"  />
-					<a href="{getUrl('','module','module','act','dispModuleAdminLangcode','target','category_name')}" onclick="popopen(this.href);return false;" class="buttonSet buttonSetting"><span>{$lang->cmd_find_langcode}</span></a>
-				</td>
-			</tr>
-			<tr>
-				<th scope="row">{$lang->category_color}</th>
-				<td>
-					<input type="text" name="category_color" value="{htmlspecialchars($category_info->color)}" class="color-indicator" />
-					<p>{$lang->about_category_color}</p>
-				</td>
-			</tr>
-			
-			<tr>
-				<th scope="row">{$lang->category_description}</th>
-				<td >
-					<textarea name="category_description" id="category_description" rows="8" cols="42">{htmlspecialchars($category_info->description)}</textarea>
-					<a href="{getUrl('','module','module','act','dispModuleAdminLangcode','target','category_description')}" onclick="popopen(this.href);return false;" class="buttonSet buttonSetting"><span>{$lang->cmd_find_langcode}</span></a>
-					<p>{$lang->about_category_description}</p>				
-				</td>
-			</tr>
-			
-			<tr >
-				<th scope="row2">{$lang->category_group_srls}</th>
-				<td>
-					<!--@foreach($group_list as $key=>$val)-->
-					<div><input type="checkbox" name="group_srls[]" value="{$key}" id="group_{$key}" <!--@if(is_array($category_info->group_srls)&&in_array($key, $category_info->group_srls))-->checked="checked"<!--@end--> class="checkbox" /> <label for="group_{$key}">{$val->title}</label></div>
+<div class="layer boxModelController" style="display:block;">
+	<button type="button" class="xButton layerClose" title="Close this layer." onclick="jQuery(this).closest('#category_info').html('');">X</button>
+		<div class="xe-ui-panel-content cleared">
+			<h3>{$lang->category}</h3>
+			<table cellspacing="0" cellpadding="0" class="xe-ui-form-table">
+				<tbody>
+					<!--@if($category_info->parent_category_title)-->
+					<tr>
+						<td>{$lang->parent_category_title}</td>
+						<td>{$category_info->parent_category_title}</td>
+					</tr>
 					<!--@end-->
-					<p>{$lang->about_category_group_srls}</p>
-				</td>
-			</tr>
+					<tr>
+						<td>{$lang->category_title}</td>
+						<td class="v-top">
+							<input class="xe-ui-panel-text" type="text" name="category_title" id="category_name" value="{$category_info->title}"  />
+							<a href="{getUrl('','module','module','act','dispModuleAdminLangcode','target','category_name')}" onclick="popopen(this.href);return false;" class="xe-ui-button-gray buttonSetting"><span>{$lang->cmd_find_langcode}</span></a>
+						</td>
+					</tr>
+					<tr>
+						<td class="v-top nowrap">{$lang->category_color}</td>
+						<td>
+							<input type="text" name="category_color" value="{htmlspecialchars($category_info->color)}" class="color-indicator xe-ui-panel-text" />
+							<p>{$lang->about_category_color}</p>
+						</td>
+					</tr>
+					
+					<tr>
+						<td class="v-top nowrap">{$lang->category_description}</td>
+						<td class="v-top">
+							<textarea class="xe-ui-panel-textarea" rows="4" cols="40" name="category_description" id="category_description" >{htmlspecialchars($category_info->description)}</textarea>
+							<a href="{getUrl('','module','module','act','dispModuleAdminLangcode','target','category_description')}" onclick="popopen(this.href);return false;" class="xe-ui-button-gray buttonSetting"><span>{$lang->cmd_find_langcode}</span></a>
+							<p>{$lang->about_category_description}</p>				
+						</td>
+					</tr>
+					
+					<tr >
+						<td class="v-top">{$lang->category_group_srls}</td>
+						<td>
+							<!--@foreach($group_list as $key=>$val)-->
+							<div><input type="checkbox" name="group_srls[]" value="{$key}" id="group_{$key}" <!--@if(is_array($category_info->group_srls)&&in_array($key, $category_info->group_srls))-->checked="checked"<!--@end--> class="checkbox" /> <label for="group_{$key}">{$val->title}</label></div>
+							<!--@end-->
+							<p class="desc">{$lang->about_category_group_srls}</p>
+						</td>
+					</tr>
+					
+					<tr>
+						<td class="v-top">{$lang->expand}</td>
+						<td>
+							<input type="checkbox" name="expand" value="Y" <!--@if($category_info->expand=="Y")-->checked="checked"<!--@end--> class="checkbox" />
+							<label>{$lang->about_expand}</label>
+						</td>
+					</tr>
+				</tbody>
+			</table>
+			<div class="cleared">
+				<hr />
+				<p class="center">
+					<a href="#" class="xe-ui-button-gray" onclick="jQuery(this).closest('form').submit();" >{$lang->cmd_save}</a>
+				</p>
+			</div>
+		<div>
 			
-			<tr>
-				<th scope="row">{$lang->expand}</th>
-				<td>
-					<input type="checkbox" name="expand" value="Y" <!--@if($category_info->expand=="Y")-->checked="checked"<!--@end--> class="checkbox" />
-					<p>{$lang->about_expand}</p>
-				</td>
-			</tr>
-			<tr>
-	            <th scope="row" colspan="2" class="button">
-						<span class="buttonAction actionBlue"><input type="submit" value="{$lang->cmd_save}" /></span>
-				</th>
-	        </tr>
-		</table>
-	</div>
 </div>
 <script type="text/javascript">
 jQuery(function(){

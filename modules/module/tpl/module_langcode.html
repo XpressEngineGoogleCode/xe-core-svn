@@ -1,3 +1,4 @@
+<!--%import("../../../common/css/xe-ui.css")-->
 <load target="js/multilingual.js" usecdn="true" />
 
 <h1>{$lang->menu_gnb_sub['multilingual']}</h1>
@@ -40,7 +41,7 @@
                         }
                         <li class="{$key2}" loop="$lang_supported=>$key2,$value2">
                             <label for="{$langName}_{$key2}">{$value2}</label>
-                            <textarea rows="1" cols="42" name="{$key2}" id="{$langName}_{$key2}"></textarea>
+                            <textarea class="xe-ui-panel-textarea" rows="2" cols="42" name="{$key2}" id="{$langName}_{$key2}"></textarea>
                         </li>
                     </ul>
                     <div class="btnArea">
@@ -72,7 +73,7 @@
                 <input type="hidden" name="target" value="{$target}" />
                 <h2 class="h2">{$lang->add_word}</h2>
                 <ul>
-                    <li class="{$key2}" loop="$lang_supported=>$key2,$value2"><label for="{$langName}_{$key2}">{$value2}</label> <textarea rows="1" cols="42" name="{$key2}" id="{$langName}_{$key2}"></textarea></li>
+                    <li class="{$key2}" loop="$lang_supported=>$key2,$value2"><label for="{$langName}_{$key2}">{$value2}</label> <textarea class="xe-ui-panel-textarea" rows="1" cols="42" name="{$key2}" id="{$langName}_{$key2}"></textarea></li>
                 </ul>
                 <p class="center">
                     <a href="#" class="xe-ui-button-gray" onclick="jQuery('#langForm_new').submit();return false;">{$lang->cmd_save}</a>

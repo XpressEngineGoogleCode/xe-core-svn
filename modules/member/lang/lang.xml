@@ -714,6 +714,9 @@
 		<value xml:lang="tr"><![CDATA[Lütfen onay maillerinde veya site yönetiminde kullanılacak webmaster ismini giriniz. (varsayılan : webmaster)]]></value>
 		<value xml:lang="vi"><![CDATA[Xin hãy nhập tên của Webmaster để nhận Email và quản lý. (Mặc định: webmaster)]]></value>
 	</item>
+	<item name="users_group">
+		<value xml:lang="en"><![CDATA[Group of users]]></value>
+	</item>
 	<item name="search_target_list" type="array">
 		<item name="email_address">
 			<value xml:lang="ko"><![CDATA[이메일]]></value>
