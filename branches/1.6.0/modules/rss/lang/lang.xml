@@ -148,7 +148,7 @@
 	</item>
 	<item name="about_open_rss">
 		<value xml:lang="ko"><![CDATA[현재 모듈에 대한 피드(Feed) 공개를 선택하실 수 있습니다. 글 열람 권한과 상관없이 옵션에 따라 RSS가 공개됩니다.]]></value>
-		<value xml:lang="en"><![CDATA[You can select RSS on the current module to be open to the public.\nIf it is enabled, the article will be open to the public despite its view permissions.]]></value>
+		<value xml:lang="en"><![CDATA[You can select RSS on the current module to be open to the public. If it is enabled, the article will be open to the public despite its view permissions.]]></value>
 		<value xml:lang="jp"><![CDATA[現在のモジュールに対して「RSS配信」を選択することができます。書き込みの内容が読める権限とは関係なくオプションによってRSSが配信されます。]]></value>
 		<value xml:lang="zh-CN"><![CDATA[可以指定RSS公开程度,RSS公开不受查看内容权限的限制。]]></value>
 		<value xml:lang="zh-TW"><![CDATA[選擇該模組 RSS Feed 的公開程度。公開 RSS Feed 將不受檢視內容權限的限制，隨公開 RSS Feed 的選項公開 RSS Feed。]]></value>

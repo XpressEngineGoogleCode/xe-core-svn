@@ -61,6 +61,9 @@
 		<value xml:lang="tr"><![CDATA[Modül Listesi]]></value>
 		<value xml:lang="vi"><![CDATA[Danh sách Module]]></value>
 	</item>
+	<item name="module_categories">
+		<value xml:lang="en"><![CDATA[Categories of module]]></value>
+	</item>
 	<item name="module_category">
 		<value xml:lang="ko"><![CDATA[모듈 분류]]></value>
 		<value xml:lang="en"><![CDATA[Module Category]]></value>
@@ -534,6 +537,15 @@
 		<value xml:lang="tr"><![CDATA[Güncelleştir]]></value>
 		<value xml:lang="vi"><![CDATA[Cập nhật]]></value>
 	</item>
+	<item name="cmd_categories">
+		<value xml:lang="ko"><![CDATA[Categories]]></value>
+		<value xml:lang="en"><![CDATA[Categories]]></value>
+		<value xml:lang="fr"><![CDATA[Catégories]]></value>
+		<value xml:lang="ru"><![CDATA[Categories]]></value>
+		<value xml:lang="es"><![CDATA[Categorías]]></value>
+		<value xml:lang="tr"><![CDATA[Kategorileri]]></value>
+		<value xml:lang="vi"><![CDATA[Categories]]></value>
+	</item>
 	<item name="cmd_manage_category">
 		<value xml:lang="ko"><![CDATA[분류 관리]]></value>
 		<value xml:lang="en"><![CDATA[Manage Categories]]></value>
@@ -548,7 +560,7 @@
 	</item>
 	<item name="cmd_manage_grant">
 		<value xml:lang="ko"><![CDATA[권한 관리]]></value>
-		<value xml:lang="en"><![CDATA[Manage Permission]]></value>
+		<value xml:lang="en"><![CDATA[Permissions]]></value>
 		<value xml:lang="jp"><![CDATA[権限管理]]></value>
 		<value xml:lang="zh-CN"><![CDATA[权限管理]]></value>
 		<value xml:lang="zh-TW"><![CDATA[權限管理]]></value>
@@ -560,7 +572,7 @@
 	</item>
 	<item name="cmd_manage_skin">
 		<value xml:lang="ko"><![CDATA[스킨 관리]]></value>
-		<value xml:lang="en"><![CDATA[Manage Skins]]></value>
+		<value xml:lang="en"><![CDATA[Skins]]></value>
 		<value xml:lang="jp"><![CDATA[スキン管理]]></value>
 		<value xml:lang="zh-CN"><![CDATA[皮肤管理]]></value>
 		<value xml:lang="zh-TW"><![CDATA[面板管理]]></value>
@@ -1042,10 +1054,20 @@ Le module [Administration des Modules] montera tous les modules installés et vo
 		<value xml:lang="en"><![CDATA[Add]]></value>
 		<value xml:lang="zh-TW"><![CDATA[新增]]></value>
 	</item>
-        <item name="fav">
-            <value xml:lang="en"><![CDATA[Fav.]]></value>
-        </item>
-        <item name="ver">
-            <value xml:lang="en"><![CDATA[Ver.]]></value>
-        </item>
+    <item name="fav">
+        <value xml:lang="en"><![CDATA[Fav.]]></value>
+    </item>
+    <item name="ver">
+        <value xml:lang="en"><![CDATA[Ver.]]></value>
+    </item>
+    <item name="skin_fix">
+		<value xml:lang="ko"><![CDATA[스킨 고정]]></value>
+		<value xml:lang="en"><![CDATA[Fix skin]]></value>
+		<value xml:lang="jp"><![CDATA[スキン固定]]></value>
+	</item>
+	<item name="about_skin_fix">
+		<value xml:lang="ko"><![CDATA[테마 설정과 상관없이 스킨을 고정시킵니다. 사용하면 테마의 일괄 스킨 설정 대상에서 제외됩니다.]]></value>
+		<value xml:lang="en"><![CDATA[Check this to fix the skin regardless of theme setting.]]></value>
+		<value xml:lang="jp"><![CDATA[テーマ設定に関係なくスキンを固定させます。使用すると、テーマの一括スキン設定対象から外されます。]]></value>
+	</item>
 </lang>

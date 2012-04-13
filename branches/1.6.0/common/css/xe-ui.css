@@ -1066,6 +1066,12 @@ input.hiddenCheckbox {
     outline: 1px dotted #ccc;
 }
 
+.nowrap
+{
+	white-space: nowrap;
+}
+}
+
 /* Custom select box
 .sb-custom {
     cursor: pointer;

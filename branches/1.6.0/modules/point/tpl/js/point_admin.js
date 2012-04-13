@@ -93,6 +93,7 @@ function doPointReset(module_srls) {
         },
         function(ret_obj){
             alert(ret_obj['message']);
+            location.reload(true);
         },
         ['error','message']
         );

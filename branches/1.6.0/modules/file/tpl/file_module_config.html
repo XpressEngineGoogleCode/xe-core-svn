@@ -3,44 +3,51 @@
 	<input type="hidden" name="act" value="procFileAdminInsertModuleConfig" />
 	<input type="hidden" name="success_return_url" value="{getRequestUriByServerEnviroment()}" />
 	<input type="hidden" name="target_module_srl" value="{$module_info->module_srl?$module_info->module_srl:$module_srls}" />
-    <h3 class="h3">{$lang->file}</h3>
-    <div class="table">
-		<table width="100%" border="1" cellspacing="0">
-			<tr>
-			<th scope="row"><label for="allowed_filesize">{$lang->allowed_filesize}</label></th>
-			<td class="text">
-				<input type="text" name="allowed_filesize" id="allowed_filesize" value="{$file_config->allowed_filesize}"  size="3" style="width:30px" /> MB
-				<p class="desc">{$lang->about_allowed_filesize}</p>
-			</td>
-		</tr>
-		<tr>
-			<th scope="row"><label for="allowed_attach_size">{$lang->allowed_attach_size}</label></th>
-			<td class="text">
-				<input type="text" name="allowed_attach_size" id="allowed_attach_size" value="{$file_config->allowed_attach_size}" size="3" style="width:30px" /> MB
-				/ {ini_get('upload_max_filesize')}
-				<p class="desc">{$lang->about_allowed_attach_size}</p>
-			</td>
-		</tr>
-		<tr>
-			<th scope="row"><label for="allowed_filetypes">{$lang->allowed_filetypes}</label></th>
-			<td class="text">
-				<input type="text" name="allowed_filetypes" id="allowed_filetypes" value="{$file_config->allowed_filetypes}" />
-				<p class="desc">{$lang->about_allowed_filetypes}</p>
-			</td>
-		</tr>
-		<tr>
-			<th scope="row">{$lang->enable_download_group}</th>
-			<td class="text">
-				<!--@foreach($group_list as $k => $v)-->
-				<input type="checkbox" class="checkbox" name="download_grant[]" value="{$v->group_srl}" id="grant_{$key}_{$v->group_srl}" <!--@if(in_array($v->group_srl, $file_config->download_grant))-->checked="checked"<!--@end-->/> 
-				<label for="grant_{$key}_{$v->group_srl}">{$v->title}</label>
-				&nbsp;
-				<!--@end-->
-			</td>
-		</tr>
+<div class="xe-ui-panel">
+	<div class="xe-ui-panel-content cleared"> 
+	    <h2>{$lang->file}</h2>
+		<table class="xe-ui-form-table" cellpadding="0" cellspacing="0">
+			<tbody>
+				<tr>
+					<td class="v-top">{$lang->allowed_filesize}</td>
+					<td>
+						<input class="xe-ui-panel-text" type="text" name="allowed_filesize" id="allowed_filesize" value="{$file_config->allowed_filesize}"  size="3" style="width:30px" /> MB
+						<p class="desc">{$lang->about_allowed_filesize}</p>
+					</td>
+				</tr>
+				<tr>
+					<td class="v-top">{$lang->allowed_attach_size}</td>
+					<td>
+						<input class="xe-ui-panel-text" type="text" name="allowed_attach_size" id="allowed_attach_size" value="{$file_config->allowed_attach_size}" size="3" style="width:30px" /> MB
+						/ {ini_get('upload_max_filesize')}
+						<p class="desc">{$lang->about_allowed_attach_size}</p>
+					</td>
+				</tr>
+				<tr>
+					<td class="v-top">{$lang->allowed_filetypes}</td>
+					<td>
+						<input class="xe-ui-panel-text" type="text" name="allowed_filetypes" id="allowed_filetypes" value="{$file_config->allowed_filetypes}" />
+						<p class="desc">{$lang->about_allowed_filetypes}</p>
+					</td>
+				</tr>
+				<tr>
+					<td>{$lang->enable_download_group}</td>
+					<td>
+						<!--@foreach($group_list as $k => $v)-->
+						<input type="checkbox" class="checkbox" name="download_grant[]" value="{$v->group_srl}" id="grant_{$key}_{$v->group_srl}" <!--@if(in_array($v->group_srl, $file_config->download_grant))-->checked="checked"<!--@end-->/> 
+						<label for="grant_{$key}_{$v->group_srl}">{$v->title}</label>
+						&nbsp;
+						<!--@end-->
+					</td>
+				</tr>
+			</tbody>
 		</table>
 	</div>
-    <div class="btnArea">
-		<span class="btn"><input type="submit" value="{$lang->cmd_save}" /></span>
+	<div class="xe-ui-panel-controller">
+		<hr />
+		<p class="center">
+			<a href="#" onclick="jQuery('.form').submit()" class="xe-ui-button-gray">{$lang->cmd_save}</a>
+		</p>
 	</div>
+</div>
 </form>
