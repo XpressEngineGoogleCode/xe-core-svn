@@ -17,7 +17,10 @@ function topOfPage() {
 }
 
 jQuery(document).ready(function($) {
+
     
+    $.event.props = $.event.props.join('|').replace('layerX|layerY|', '').split('|');
+
     /*
      * disable all links with class 'disabled'
      * NOTE: removes existing onclick and href from elements

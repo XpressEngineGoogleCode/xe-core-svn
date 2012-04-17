@@ -53,42 +53,61 @@
             $label.find('span.holder').width(settings.checkboxWidth);
 
             // Hide the checkbox
-            $(this).addClass('hiddenCheckbox');
+            //$(this).addClass('hiddenCheckbox');
 
-            // Associate the click event
+            $label.click(function(e) {
+                e.stopPropagation();
+            });
+
+            $label.dblclick(function(e) {
+                e.stopPropagation();
+            });
+
             $label.bind('click',function(e) {
+
+                $this = $(this);
 
                 // we check to call the event only once because it is fired twice if user clicks label
                 if (e.target.tagName.toLowerCase() != 'input') {
-                    $input = $(this).children('input');
+                    $input = $this.children('input');
                     if($input.length < 1) {
-                        $input = $('input#' + $(this).attr('for'));
+                        $input = $('input#' + $this.attr('for'));
                     }
 
-                    if (!$(this).hasClass('disabled')) {
+                    if (!$this.hasClass('disabled')) {
 
                         $input.triggerHandler('click');
 
                         if ($input.is(':checkbox')) {
 
-                            $(this).toggleClass('checked');
+                            $this.toggleClass('checked');
                             $input.checked = true;
 
-                            $(this).find('span.holder').css('top',0);
+                            $this.find('span.holder').css('top',0);
                         } else {
                             $toCheck = $input;
 
                             // Uncheck all radio
                             $('input[name="'+$toCheck.attr('name')+'"]').each(function() {
-                                $('label[for="' + $(this).attr('id')+'"]').removeClass('checked');
+                                $('label[for="' + $this.attr('id')+'"]').removeClass('checked');
                             });
 
-                            $(this).addClass('checked');
+                            $this.addClass('checked');
                             $toCheck.checked = true;
                         };
+
                     }
                 }
+
             });
+
+            $label.bind('dblclick',function(e) {
+
+                e.preventDefault();
+                $(this).triggerHandler('click');
+
+            });
+
 
             $('input#' + $label.attr('for')).not('.disabled').bind('keypress',function(e) {
                 if(e.keyCode == 32){

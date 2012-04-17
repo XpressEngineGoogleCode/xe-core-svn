@@ -1,6 +1,6 @@
 <script type="text/javascript">
-xe.lang.msg_empty_search_target = '{$lang->msg_empty_search_target}';
-xe.lang.msg_empty_search_keyword = '{$lang->msg_empty_search_keyword}';
+    xe.lang.msg_empty_search_target = '{$lang->msg_empty_search_target}';
+    xe.lang.msg_empty_search_keyword = '{$lang->msg_empty_search_keyword}';
 </script>
 <load target="js/file_admin.js" usecdn="true" />
 
@@ -13,22 +13,15 @@ xe.lang.msg_empty_search_keyword = '{$lang->msg_empty_search_keyword}';
         <div class="xe-ui-panel-content cleared">
             <form id="fo_list" action="./" method="post" class="form">
                 <input type="hidden" name="module" value="file" />
-                <div class="cnb">
-                    <a href="{getUrl('', 'module', 'admin', 'act', 'dispFileAdminList')}" <!--@if($search_keyword == '')-->class="active"<!--@end-->>All</a>
-                    | <a href="{getUrl('search_target','isvalid','search_keyword','Y')}" <!--@if($search_target == 'isvalid' && $search_keyword == 'Y')-->class="active"<!--@end-->>{$lang->is_valid}</a>
-                    | <a href="{getUrl('search_target','isvalid','search_keyword','N')}" <!--@if($search_target == 'isvalid' && $search_keyword == 'N')-->class="active"<!--@end-->>{$lang->is_stand_by}</a>
-                </div>
                 <table cellpadding="0" cellspacing="0" id="fileListTable" class="xe-ui-table">
                     <caption>
                         <p class="f-left">
-                            <!--@if($search_keyword == '')-->
-                            All
-                            <!--@elseif($search_target == 'isvalid' && $search_keyword == 'Y')-->
-                            {$lang->is_valid}
-                            <!--@elseif($search_target == 'isvalid' && $search_keyword == 'N')-->
-                            {$lang->is_stand_by}
-                            <!--@end-->
-                            ({number_format($total_count)})
+                            <label>{$lang->cmd_show}:</label>
+                            <select onchange="window.location = this.options[this.selectedIndex].value;" class="xe-ui-panel-select" style="width: 180px;">
+                                <option value="{getUrl('', 'module', 'admin', 'act', 'dispFileAdminList')}" selected="selected"|cond="$filter_type==''">All</option>
+                                <option value="{getUrl('search_target','isvalid','search_keyword','Y')}" selected="selected"|cond="$search_target == 'isvalid' && $search_keyword == 'Y'">{$lang->is_valid}</option>
+                                <option value="{getUrl('search_target','isvalid','search_keyword','N')}" selected="selected"|cond="$search_target == 'isvalid' && $search_keyword == 'N'">{$lang->is_stand_by}</option>
+                            </select>
                         </p>
                         <p class="f-right">
                             <a href="#listManager" class="xe-ui-button-gray" onclick="getFileList();">{$lang->file_manager}</a>
@@ -36,28 +29,18 @@ xe.lang.msg_empty_search_keyword = '{$lang->msg_empty_search_keyword}';
                     </caption>
                     <thead>
                         <tr>
-                            <th scope="col"><div>{$lang->file}</div></th>
-                            <th scope="col"><div>{$lang->file_size}</div></th>
-                            <th scope="col"><div>{$lang->cmd_download}</div></th>
-                            <th scope="col"><div>{$lang->author}</div></th>
-                            <th scope="col"><div>{$lang->date}</div></th>
-                            <th scope="col"><div>{$lang->ipaddress}</div></th>
-                            <th scope="col"><div>{$lang->status}</div></th>
-                            <th scope="col"><div><input type="checkbox" data-name="cart" title="Check All" /></div></th>
+                            <th scope="col" class="aLeft">{$lang->file}</th>
+                            <th scope="col">{$lang->file_size}</th>
+                            <th scope="col">{$lang->cmd_download}</th>
+                            <th scope="col">{$lang->author}</th>
+                            <th scope="col">{$lang->date}</th>
+                            <th scope="col">{$lang->ipaddress}</th>
+                            <th scope="col">{$lang->status}</th>
+                            <th scope="col" class="button">
+                                <input type="checkbox" title="Check All" onclick="checkAllPrettyCheckboxes(jQuery(this), jQuery(this).closest('table'));" id="cart_head"/>
+                            </th>
                         </tr>
                     </thead>
-                    <tfoot>
-                        <tr>
-                            <th scope="col"><div>{$lang->file}</div></th>
-                            <th scope="col"><div>{$lang->file_size}</div></th>
-                            <th scope="col"><div>{$lang->cmd_download}</div></th>
-                            <th scope="col"><div>{$lang->author}</div></th>
-                            <th scope="col"><div>{$lang->date}</div></th>
-                            <th scope="col"><div>{$lang->ipaddress}</div></th>
-                            <th scope="col"><div>{$lang->status}</div></th>
-                            <th scope="col"><div><input type="checkbox" data-name="cart" title="Check All" /></div></th>
-                        </tr>
-                    </tfoot>
                     <tbody>
                         <!--@foreach($file_list as $no => $val)-->
                             <!-- one document start -->
@@ -72,7 +55,6 @@ xe.lang.msg_empty_search_keyword = '{$lang->msg_empty_search_keyword}';
                                 {@ $cur_upload_target_srl = $val->upload_target_srl}
                         <tr>
                             <th colspan="8" scope="col">
-                                <div>
                                 <!--@if(!$val->upload_target_type)-->
                                     <!--@if($val->isvalid=='Y')-->
                                         {$lang->is_valid}
@@ -90,38 +72,43 @@ xe.lang.msg_empty_search_keyword = '{$lang->msg_empty_search_keyword}';
                                      - <!--@if($document_list[$document_srl]->get('module_srl') != $document_list[$document_srl]->get('member_srl'))--><a href="{$move_uri}" target="_blank">{$document_list[$document_srl]->getTitle()}</a><!--@else-->{$document_list[$document_srl]->getTitle()}<!--@end-->
                                     <!--@end-->
                                 <!--@end-->
-                                </div>
                             </th>
                         </tr>
                         <!--@endif-->
                         <!-- one document end -->
                         <tr>
-                            <td><div><a href="{$val->download_url}">{htmlspecialchars($val->source_filename)}</a></div></td>
-                            <td><div>{FileHandler::filesize($val->file_size)}</div></td>
-                            <td><div>{$val->download_count}</div></td>
-                            <td>
-                                <div>
+                            <td class="aLeft">
+                                <a href="{$val->download_url}">{htmlspecialchars($val->source_filename)}</a>
+                            </td>
+                            <td class="center">
+                                {FileHandler::filesize($val->file_size)}
+                            </td>
+                            <td class="center">
+                                {$val->download_count}
+                            </td>
+                            <td class="center">
                                 <!--@if($val->upload_target_type == 'doc' && $document_list[$document_srl])-->
                                 <a href="#popup_menu_area" class="member_{$document_list[$document_srl]->get('member_srl')}">{$document_list[$document_srl]->getNickName()}</a>
                                 <!--@elseif($val->upload_target_type == 'com' && $comment_list[$val->upload_target_srl])-->
                                 <a href="#popup_menu_area" class="member_{$comment_list[$val->upload_target_srl]->get('member_srl')}">{$comment_list[$val->upload_target_srl]->getNickName()}</a>
                                 <!--@end-->
-                                </div>
                             </td>
-                            <td><div>{zdate($val->regdate,"Y-m-d H:i")}</div></td>
-                            <td><div><a href="{getUrl('search_target','ipaddress','search_keyword',$val->ipaddress)}">{$val->ipaddress}</a></div></td>
-                            <td><div><!--@if($val->isvalid=='Y')-->{$lang->is_valid}<!--@else-->{$lang->is_stand_by}<!--@end--></div></td>
-                            <td>
-                                <div>
-                                    <input type="checkbox" name="cart" value="{$val->file_srl}" />
-                                </div>
+                            <td class="center">{zdate($val->regdate,"Y-m-d H:i")}</td>
+                            <td class="center">
+                                <a href="{getUrl('search_target','ipaddress','search_keyword',$val->ipaddress)}">{$val->ipaddress}</a>
+                            </td>
+                            <td class="center">
+                                <!--@if($val->isvalid=='Y')-->{$lang->is_valid}<!--@else-->{$lang->is_stand_by}<!--@end-->
+                            </td>
+                            <td class="center button">
+                                <input type="checkbox" name="cart" value="{$val->file_srl}" id="cart_{$val->file_srl}" />
                             </td>
                         </tr>
                         <!--@endforeach-->
                     </tbody>
                 </table>
                 <p class="f-right">
-                    <a href="#listManager" class="xe-ui-button-gray" onclick="getFileList();">{$lang->file_manager}</a>
+                    <a href="#listManager" class="xe-ui-button-gray modalAnchor" onclick="getFileList();">{$lang->file_manager}</a>
                 </p>
             </form>
             <div class="cleared"></div>
