@@ -1,61 +1,91 @@
 <!--#include("header.html")-->
 
-<div cond="$XE_VALIDATOR_MESSAGE" class="message {$XE_VALIDATOR_MESSAGE_TYPE}">
-	<p>{$XE_VALIDATOR_MESSAGE}</p>
-</div>
-<form ruleset="deleteChecked" id="fo_list" action="./" method="post">
-	<input type="hidden" name="module" value="comment" />
-	<input type="hidden" name="act" value="procCommentAdminDeleteChecked" />
-	<input type="hidden" value="{getUrl('', 'module', $module, 'act', $act)}" name="success_return_url">
-	<input type="hidden" name="page" value="{$page}" />
-	<input type="hidden" name="is_trash" value="false" />
-	
-	<!-- 목록 -->
-	<div class="table">
-		<table width="100%" border="1" cellspacing="0">
-		<caption>Total {number_format($total_count)}, Page {number_format($page)}/{number_format($total_page)}</caption>
-		<thead>
-			<tr>
-				<th scope="col"><input type="checkbox" onclick="XE.checkboxToggleAll(); return false;" /></th>
-				<th scope="col">{$lang->comment}</th>
-				<th scope="col">{$lang->user_name}</th>
-				<th scope="col">{$lang->date}</th>
-				<th scope="col">{$lang->cmd_declare}</th>
-				<th scope="col">{$lang->ipaddress}</th>
-			</tr>
-		</thead>
-		<tbody>
-			<!--@foreach($comment_list as $no => $oComment)-->
-			<tr>
-				<td>{$no}</td>
-				<td><input type="checkbox" name="cart" value="{$oComment->get('comment_srl')}" /> <a href="{getUrl('','document_srl',$oComment->get('document_srl'))}#comment_{$oComment->get('comment_srl')}" onclick="window.open(this.href);return false;">{$oComment->getSummary(100)}</a></td>
-				<td><span class="member_{$oComment->getMemberSrl()}">{$oComment->getNickName()}</span></td>
-				<td>{$oComment->getRegdate("Y-m-d")}</td>
-				<td><strong>{$oComment->get('declared_count')}</strong></td>
-				<td>{$oComment->get('ipaddress')}</td>
-			</tr>
-			<!--@end-->
-		</tbody>
-		</table>
-	</div>
-	<div class="btnArea">
-		<span class="btn"><button type="button" onclick="doCancelDeclare();">{$lang->cmd_cancel_declare}</button></span>
-		<span class="btn"><a href="javascript:XE.checkboxToggleAll({ checked:true })">{$lang->cmd_select_all}</a></span>
-		<span class="btn"><a href="javascript:XE.checkboxToggleAll()">{$lang->cmd_reverse_all}</a></span>
-		<span class="btn"><input type="submit" value="{$lang->cmd_delete_checked_comment}" onclick="this.form.is_trash.value=false" /></span>
-		<span class="btn"><input type="submit" name="trash" value="{$lang->cmd_trash}" onclick="this.form.is_trash.value=true" /></span>
-	</div>
-</form>
+<div id="content" class="cleared">
+    <div cond="$XE_VALIDATOR_MESSAGE" class="xe-ui-message {$XE_VALIDATOR_MESSAGE_TYPE} gradient cleared">
+        <a href="#" style="float: right;" onclick="jQuery(this).parent().remove();return false;" class="xe-ui-button-gray gradient">Dismiss</a>
+        <p>{$XE_VALIDATOR_MESSAGE}</p>
+    </div>
+    <div class="xe-ui-panel">
+        <div class="xe-ui-panel-content cleared">
+            <form ruleset="deleteChecked" id="fo_list" action="./" method="post">
+                <input type="hidden" name="module" value="comment" />
+                <input type="hidden" name="act" value="procCommentAdminDeleteChecked" />
+                <input type="hidden" value="{getUrl('', 'module', $module, 'act', $act)}" name="success_return_url">
+                <input type="hidden" name="page" value="{$page}" />
+                <input type="hidden" name="is_trash" value="false" />
 
-<!-- 페이지 네비게이션 -->
-<div class="pagination">
-    <a href="{getUrl('page','','module_srl','')}" class="direction">&lsaquo; {$lang->first_page}</a> 
-    <!--@while($page_no = $page_navigation->getNextPage())-->
-        <!--@if($page == $page_no)-->
-            <strong>{$page_no}</strong> 
-        <!--@else-->
-            <a href="{getUrl('page',$page_no,'module_srl','')}">{$page_no}</a> 
-        <!--@end-->
-    <!--@end-->
-    <a href="{getUrl('page',$page_navigation->last_page,'module_srl','')}" class="direction">{$lang->last_page} &rsaquo;</a>
+                <table class="xe-ui-table" width="100%" cellspacing="0" cellspacing="0">
+                    <caption>
+                        <p class="f-left">Total {number_format($total_count)}, Page {number_format($page)}/{number_format($total_page)}</p>
+                    </caption>
+                    <thead>
+                        <tr>
+                            <th scope="col" class="aLeft">{$lang->comment}</th>
+                            <th scope="col">{$lang->user_name}</th>
+                            <th scope="col">{$lang->date}</th>
+                            <th scope="col">{$lang->cmd_declare}</th>
+                            <th scope="col">{$lang->ipaddress}</th>
+                            <th scope="col" class="button"><input type="checkbox" onclick="XE.checkboxToggleAll(); return false;" /></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <!--@foreach($comment_list as $no => $oComment)-->
+                        <tr>
+                            <td class="aLeft">{$no}</td>
+                            <td class="center"><span class="member_{$oComment->getMemberSrl()}">{$oComment->getNickName()}</span></td>
+                            <td class="center">{$oComment->getRegdate("Y-m-d")}</td>
+                            <td class="center"><strong>{$oComment->get('declared_count')}</strong></td>
+                            <td class="center">{$oComment->get('ipaddress')}</td>
+                            <td class="button center">
+                                <input type="checkbox" name="cart" value="{$oComment->get('comment_srl')}" />
+                                <a href="{getUrl('','document_srl',$oComment->get('document_srl'))}#comment_{$oComment->get('comment_srl')}" onclick="window.open(this.href);return false;">{$oComment->getSummary(100)}</a>
+                            </td>
+                        </tr>
+                        <!--@end-->
+                    </tbody>
+                </table>
+                <p class="aRight">
+                    <a href="" class="xe-ui-button-gray" onclick="doCancelDeclare();">{$lang->cmd_cancel_declare}</a>
+                    <a href="" class="xe-ui-button-gray" onclick="XE.checkboxToggleAll({ checked:true });">{$lang->cmd_select_all}</a>
+                    <a href="" class="xe-ui-button-gray" onclick="XE.checkboxToggleAll();">{$lang->cmd_reverse_all}</a>
+                    <a href="" class="xe-ui-button-gray" onclick="this.form.is_trash.value=false">{$lang->cmd_delete_checked_comment}</a>
+                    <a href="" class="xe-ui-button-gray" onclick="this.form.is_trash.value=true">{$lang->cmd_trash}</a>
+                </p>
+            </form>
+        </div>
+        <div class="xe-ui-panel-controller">
+            <hr />
+            <form action="">
+                <input type="hidden" name="error_return_url" value="" />
+                <input type="hidden" name="module" value="{$module}" />
+                <input type="hidden" name="act" value="{$act}" />
+                <input cond="$search_keyword" type="hidden" name="search_keyword" value="{$search_keyword}" />
+                <input cond="$search_target" type="hidden" name="search_target" value="{$search_target}" />
+
+                <p style="text-align: center;">
+                    <a href="{getUrl('page', '')}" class="xe-ui-button-gray pagination first"><img src="{getFullUrl()}common/img/pagination_left.png"/></a>
+                <block cond="$page_navigation->first_page + $page_navigation->page_count > $page_navigation->last_page && $page_navigation->page_count != $page_navigation->total_page">
+                    {@$isGoTo = true}
+                    <a href="{getUrl('page', '')}" class="xe-ui-button-gray pagination">1</a>
+                    <a href="#goTo" class="tgAnchor" title="{$lang->cmd_go_to_page}">...</a>
+                </block>
+                <!--@while($page_no = $page_navigation->getNextPage())-->
+                {@$last_page = $page_no}
+                <a href="#" cond="$page_no == $page" class="xe-ui-button-gray pagination disabled">{$page_no}</a>
+                <a cond="$page_no != $page" href="{getUrl('page', $page_no)}" class="xe-ui-button-gray pagination">{$page_no}</a>
+                <!--@end-->
+                <block cond="$last_page != $page_navigation->last_page">
+                    {@$isGoTo = true}
+                    <a href="#goTo" class="tgAnchor" title="{$lang->cmd_go_to_page}">...</a>
+                    <a href="{getUrl('page', $page_navigation->last_page)}" class="xe-ui-button-gray pagination">{$page_navigation->last_page}</a>
+                </block>
+                <a href="{getUrl('page', $page_navigation->last_page)}" class="xe-ui-button-gray pagination last"><img src="{getFullUrl()}common/img/pagination_right.png"/></a>
+                <span cond="$isGoTo" id="goTo" class="tgContent">
+                    <input name="page" title="{$lang->cmd_go_to_page}" />
+                    <button type="submit">Go</button>
+                </span>
+                </p>
+            </form>
+        </div>
+    </div>
 </div>

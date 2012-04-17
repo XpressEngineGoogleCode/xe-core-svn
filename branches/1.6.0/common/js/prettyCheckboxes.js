@@ -126,7 +126,7 @@
         if($(caller).is(':checked')){
             // Find the label corresponding to each checkbox and click it
             $(container).find('input[type=checkbox]:not(:checked)').each(function() {
-                $('label[for="'+$(this).attr('id')+'"]').trigger('click');
+                $(this).parent().trigger('click');
                 if($.browser.msie){
                     $(this).attr('checked','checked');
                 }else{
@@ -135,7 +135,7 @@
             });
         } else {
             $(container).find('input[type=checkbox]:checked').each(function() {
-                $('label[for="'+$(this).attr('id')+'"]').trigger('click');
+                $(this).parent().trigger('click');
                 if($.browser.msie){
                     $(this).attr('checked','');
                 }else{

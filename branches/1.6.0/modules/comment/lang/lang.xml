@@ -256,6 +256,9 @@
 			<value xml:lang="en"><![CDATA[Unpublished]]></value>
 		</item>
 	</item>
+        <item name="manage_comments">
+            <value xml:lang="en"><![CDATA[Manage comments]]></value>
+        </item>
 	<item name="comment_manager">
 		<value xml:lang="ko"><![CDATA[선택한 댓글 관리]]></value>
 		<value xml:lang="en"><![CDATA[Manage Selected Comments]]></value>
