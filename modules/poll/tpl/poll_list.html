@@ -34,7 +34,7 @@ xe.lang.msg_empty_search_keyword = '{$lang->msg_empty_search_keyword}';
                             <th scope="col" class="nowr"><div>{$lang->poll_join_count}</div></th>
                             <th scope="col" class="nowr"><div>{$lang->author}</div></th>
                             <th scope="col" class="nowr"><div>{$lang->regdate}</div></th>
-							<th scope="col" class="nowr"><div>{$lang->poll_stop_date}</div></th>
+                            <th scope="col" class="nowr"><div>{$lang->poll_stop_date}</div></th>
                             <th scope="col"><div><input type="checkbox" data-name="cart"title="Check All" /></div></th>
                         </tr>
                     </thead>
@@ -45,7 +45,7 @@ xe.lang.msg_empty_search_keyword = '{$lang->msg_empty_search_keyword}';
                             <th scope="col" class="nowr"><div>{$lang->poll_join_count}</div></th>
                             <th scope="col" class="nowr"><div>{$lang->author}</div></th>
                             <th scope="col" class="nowr"><div>{$lang->regdate}</div></th>
-							<th scope="col" class="nowr"><div>{$lang->poll_stop_date}</div></th>
+                            <th scope="col" class="nowr"><div>{$lang->poll_stop_date}</div></th>
                             <th scope="col"><div><input type="checkbox" data-name="cart" title="Check All" /></div></th>
                         </tr>
                     </tfoot>
@@ -57,7 +57,7 @@ xe.lang.msg_empty_search_keyword = '{$lang->msg_empty_search_keyword}';
                             <td class="nowr"><div>{$val->poll_count}</div></td>
                             <td class="nowr"><div><a href="#popup_menu_area" class="member_{$val->member_srl}">{$val->nick_name}</a></div></td>
                             <td class="nowr"><div>{zdate($val->regdate,"Y-m-d H:i")}</div></td>
-							<td class="nowr"><div>{zdate($val->poll_stop_date,"Y-m-d")}</div></td>
+                            <td class="nowr"><div>{zdate($val->poll_stop_date,"Y-m-d")}</div></td>
                             <td>
                                 <div><input type="checkbox" name="cart" value="{$val->poll_index_srl}" /></div>
                             </td>
@@ -76,7 +76,7 @@ xe.lang.msg_empty_search_keyword = '{$lang->msg_empty_search_keyword}';
                 <input type="hidden" name="error_return_url" value="" />
                 <p class="inline-list center">
                     <label>Search in:</label>
-                    <select name="search_target" class="xe-ui-panel-select">
+                    <select name="search_target" class="xe-ui-panel-select" style="width: 170px;">
                         <option value="">{$lang->search_target}</option>
                         <!--@foreach($lang->search_target_list as $key => $val)-->
                         <option value="{$key}" <!--@if($search_target==$key)-->selected="selected"<!--@end-->>{$val}</option>

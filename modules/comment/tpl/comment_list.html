@@ -5,11 +5,6 @@ xe.lang.msg_empty_search_keyword = '{$lang->msg_empty_search_keyword}';
 </script>
 <load target="js/comment_admin.js" usecdn="true" />
 
-<h1>{$lang->comment}</h1>
-<div class="xe-ui-title-separator">
-    <hr/>
-</div>
-
 <div id="content" class="cleared">
     <div cond="$XE_VALIDATOR_MESSAGE" class="xe-ui-message {$XE_VALIDATOR_MESSAGE_TYPE} gradient cleared">
         <a href="#" style="float: right;" onclick="jQuery(this).parent().remove();return false;" class="xe-ui-button-gray gradient">Dismiss</a>
@@ -19,84 +14,80 @@ xe.lang.msg_empty_search_keyword = '{$lang->msg_empty_search_keyword}';
         <div class="xe-ui-panel-content cleared">
             <form id="fo_list" action="./" method="post" class="form">
                 <div class="cnb">
-                    <a href="{getUrl('act','dispCommentAdminList', 'search_target','', 'search_keyword', '')}" <!--@if($search_keyword == '')-->class="active"<!--@end-->>{$lang->all}</a>
-                    | <a href="{getUrl('search_target','is_secret','search_keyword', 'N')}" <!--@if($search_target == 'is_secret' && $search_keyword == 'N')-->class="active"<!--@end-->>{$secret_name_list['N']}</a>
-                    | <a href="{getUrl('search_target','is_secret','search_keyword', 'Y')}" <!--@if($search_target == 'is_secret' && $search_keyword == 'Y')-->class="active"<!--@end-->>{$secret_name_list['Y']}</a>
-					| <a href="{getUrl('search_target','is_published','search_keyword', 'N')}" <!--@if($search_target == 'is_published' && $search_keyword == 'N')-->class="active"<!--@end-->>{$lang->published_name_list['N']}</a>
-					| <a href="{getUrl('search_target','is_published','search_keyword', 'Y')}" <!--@if($search_target == 'is_published' && $search_keyword == 'Y')-->class="active"<!--@end-->>{$lang->published_name_list['Y']}</a>
-
-					<block cond="$modules_list">
-					| <label for="comment_modules" <!--@if($search_target == 'module')-->class="active"<!--@end-->>Select Module:
-					<select id="comment_modules" name="comment_modules" onchange="location.href='{getUrl('search_target','module','search_keyword','')}&search_keyword='+this.value">
-						<option></option>
-						<!--@foreach($modules_list as $key => $node)-->
-						<option value="{$key}"<!--@if($key==$search_keyword)-->selected<!--@end-->>{$node}</option>
-						<!--@end-->
-					</select></label>
-					</block>
                 </div>
                 <table cellpadding="0" cellspacing="0" id="commentListTable" class="xe-ui-table">
                     <caption>
                         <p class="f-left">
-                            <!--@if($search_keyword == '')-->
-                            {$lang->all}
-                            <!--@elseif($search_target == 'is_secret' && $search_keyword == 'N')-->
-                            {$secret_name_list['N']}
-                            <!--@elseif($search_target == 'is_secret' && $search_keyword == 'Y')-->
-                            {$secret_name_list['Y']}
-							<!--@elseif($search_target == 'is_published' && $search_keyword == 'N')-->
-							{$published_name_list['N']}
-							<!--@elseif($search_target == 'is_published' && $search_keyword == 'Y')-->
-							{$published_name_list['Y']}
-                            <!--@end-->
-                            ({number_format($total_count)})
+                            <label>{$lang->cmd_show}:</label>
+                            <select onchange="window.location = this.options[this.selectedIndex].value;" class="xe-ui-panel-select" style="width: 180px;">
+                                <option value="{getUrl('search_keyword','')}" selected="selected"|cond="$search_keyword == ''">{$lang->all}</option>
+                                <option value="{getUrl('search_target','is_secret','search_keyword','N')}" selected="selected"|cond="$search_target == 'is_secret' && $search_keyword == 'N'">{$secret_name_list['N']}</option>
+                                <option value="{getUrl('search_target','is_secret','search_keyword','Y')}" selected="selected"|cond="$search_target == 'is_secret' && $search_keyword == 'Y'">{$secret_name_list['Y']}</option>
+                                <option value="{getUrl('search_target','is_published','search_keyword','N')}" selected="selected"|cond="$search_target == 'is_published' && $search_keyword == 'N'">{$lang->published_name_list['N']}</option>
+                                <option value="{getUrl('search_target','is_published','search_keyword','Y')}" selected="selected"|cond="$search_target == 'is_published' && $search_keyword == 'Y'">{$lang->published_name_list['Y']}</option>
+                            </select>
+                            <label for="comment_modules" <!--@if($search_target == 'module')-->class="active"<!--@end-->>Select Module:</label>
+                            <select id="comment_modules" name="comment_modules" onchange="location.href='{getUrl('search_target','module','search_keyword','')}&search_keyword='+this.value" class="xe-ui-panel-select" disabled="disabled"|cond="$modules_list[0]==null">
+                                <option>&nbsp;</option>
+                                <!--@foreach($modules_list as $key => $node)-->
+                                <option value="{$key}"<!--@if($key==$search_keyword)-->selected<!--@end-->>{$node}</option>
+                                <!--@end-->
+                            </select>
                         </p>
                         <p class="f-right">
-                            <a href="#listManager" class="xe-ui-button-gray" onclick="getCommentList();">{$lang->comment_manager}</a>
+                            <a href="#listManager" class="xe-ui-button-gray modalAnchor" onclick="getCommentList();">{$lang->comment_manager}</a>
                         </p>
                     </caption>
                     <thead>
                         <tr>
-                            <th scope="col" class="text"><div>{$lang->comment}</div></th>
-                            <th scope="col"><div>{$lang->writer}</div></th>
-                            <th scope="col"><div>{$lang->cmd_vote}(+/-)</div></th>
-                            <th scope="col"><div>{$lang->date}</div></th>
-                            <th scope="col"><div>{$lang->ipaddress}</div></th>
-                            <th scope="col"><div>{$lang->status}</div></th>
-							<th scope="col"><div>{$lang->published}</div></th>
-                            <th scope="col"><div><input type="checkbox" data-name="cart" title="Check All" /></div></th>
+                            <th scope="col" class="aLeft">{$lang->comment}</th>
+                            <th scope="col">{$lang->writer}</th>
+                            <th scope="col">{$lang->cmd_vote}(+/-)</th>
+                            <th scope="col">{$lang->date}</th>
+                            <th scope="col">{$lang->ipaddress}</th>
+                            <th scope="col">{$lang->status}</th>
+                            <th scope="col">{$lang->published}</th>
+                            <th scope="col" class="button">
+                                <input type="checkbox" title="Check All" onclick="checkAllPrettyCheckboxes(jQuery(this), jQuery(this).closest('table'));" id="cart_head"/>
+                            </th>
                         </tr>
                     </thead>
-                    <tfoot>
-                        <tr>
-                            <th scope="col" class="text"><div>{$lang->comment}</div></th>
-                            <th scope="col"><div>{$lang->writer}</div></th>
-                            <th scope="col"><div>{$lang->cmd_vote}(+/-)</div></th>
-                            <th scope="col"><div>{$lang->date}</div></th>
-                            <th scope="col"><div>{$lang->ipaddress}</div></th>
-                            <th scope="col"><div>{$lang->status}</div></th>
-							<th scope="col"><div>{$lang->published}</div></th>
-                            <th scope="col"><div><input type="checkbox" data-name="cart" title="Check All" /></div></th>
-                        </tr>
-                    </tfoot>
                     <tbody>
                         <!--@foreach($comment_list as $no => $val)-->
                         {@ $comment = cut_str(trim(strip_tags($val->content)), 200, '...')}
                         <tr>
-                            <td><div><a href="{getUrl('','document_srl',$val->document_srl)}#comment_{$val->comment_srl}" target="_blank"><!--@if(strlen($comment))-->{$comment}<!--@else--><em>{$lang->no_text_comment}</em><!--@end--></a></div></td>
-                            <td><div><a href="#popup_menu_area" class="member_{$val->member_srl}">{$val->nick_name}</a></div></td>
-                            <td><div>0/0</div></td>
-                            <td><div>{(zdate($val->regdate,"Y-m-d\nH:i:s"))}</div></td>
-                            <td><div><a href="{getUrl('search_target','ipaddress','search_keyword',$val->ipaddress)}">{$val->ipaddress}</a></div></td>
-                            <td><div><!--@if($val->isSecret())-->{$secret_name_list['Y']}<!--@else-->{$secret_name_list['N']}<!--@end--></div></td>
-							<td><div><!--@if($val->status)-->{$lang->published_name_list['Y']}<!--@else-->{$lang->published_name_list['N']}<!--@end--></div></td>
-                            <td><div><input type="checkbox" name="cart" value="{$val->comment_srl}" /></div></td>
+                            <td>
+                                <a href="{getUrl('','document_srl',$val->document_srl)}#comment_{$val->comment_srl}" target="_blank">
+                                    <!--@if(strlen($comment))-->{$comment}<!--@else--><em>{$lang->no_text_comment}</em><!--@end-->
+                                </a>
+                            </td>
+                            <td class="center">
+                                <a href="#popup_menu_area" class="member_{$val->member_srl}">{$val->nick_name}</a>
+                            </td>
+                            <td class="center">0/0</td>
+                            <td class="center">{(zdate($val->regdate,"Y-m-d\nH:i:s"))}</td>
+                            <td class="center"><a href="{getUrl('search_target','ipaddress','search_keyword',$val->ipaddress)}">{$val->ipaddress}</a></td>
+                            <td class="center">
+                                <!--@if($val->isSecret())-->
+                                    {$secret_name_list['Y']}
+                                <!--@else-->
+                                    {$secret_name_list['N']}
+                                <!--@end-->
+                            </td>
+                            <td class="center">
+                                <!--@if($val->status)-->
+                                    {$lang->published_name_list['Y']}
+                                <!--@else-->
+                                    {$lang->published_name_list['N']}
+                                <!--@end-->
+                            </td>
+                            <td class="button center"><input type="checkbox" name="cart" value="{$val->comment_srl}" /></td>
                         </tr>
                         <!--@end-->
                     </tbody>
                 </table>
-                <p class="f-right">
-                    <a href="#listManager" class="xe-ui-button-gray" onclick="getCommentList();">{$lang->comment_manager}</a>
+                <p class="aRight">
+                    <a href="#listManager" class="xe-ui-button-gray modalAnchor" onclick="getCommentList();">{$lang->comment_manager}</a>
                 </p>
             </form>
         </div>
@@ -141,7 +132,7 @@ xe.lang.msg_empty_search_keyword = '{$lang->msg_empty_search_keyword}';
             <input type="hidden" name="act" value="procCommentAdminDeleteChecked" />
             <input type="hidden" name="page" value="{$page}" />
             <input type="hidden" name="is_trash" value="false" />
-			<input type="hidden" name="will_publish" value="0" />
+            <input type="hidden" name="will_publish" value="0" />
             <input type="hidden" name="search_target" value="{$search_target}" />
             <input type="hidden" name="search_keyword" value="{$search_keyword}" />
                     <h2 class="h2">{$lang->comment_manager}</h2>
