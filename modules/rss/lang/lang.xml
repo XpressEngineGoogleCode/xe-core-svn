@@ -199,4 +199,7 @@
 		<value xml:lang="zh-TW"><![CDATA[錯誤的檔案格式，無法上傳。\n只允許上傳 JPEG, GIF, PNG 等檔案格式。]]></value>
 		<value xml:lang="ru"><![CDATA[Неправильный тип картинки\nПоддерживаются только JPEG, GIF, PNG файлы]]></value>
 	</item>
+        <item name="manage_rss_feeds">
+            <value xml:lang="en"><![CDATA[Manage RSS feeds]]></value>
+        </item>
 </lang>
