@@ -516,16 +516,26 @@ function completeMessage(ret_obj) {
 function doChangeLangType(obj) {
     if(typeof(obj) == "string") {
         setLangType(obj);
+        location.href = location.href.setQuery('l', obj);
     } else {
         var val = obj.options[obj.selectedIndex].value;
         setLangType(val);
+        location.href = location.href.setQuery('l', val);
     }
-    location.href = location.href.setQuery('l', '');
 }
 function setLangType(lang_type) {
     var expire = new Date();
     expire.setTime(expire.getTime()+ (7000 * 24 * 3600000));
     setCookie('lang_type', lang_type, expire, '/');
+}
+function getLangType() {
+    var nameEQ = 'lang_type' + "=";
+    var ca = document.cookie.split(';');
+    for(var i=0;i < ca.length;i++) {
+            var c = ca[i];
+            while (c.charAt(0)==' ') c = c.substring(1,c.length);
+            if (c.indexOf(nameEQ) == 0) return c.substring(nameEQ.length,c.length);
+    }
 }
 
 /* 미리보기 */

@@ -324,7 +324,7 @@
 	</item>
 	<item name="cmd_back">
 		<value xml:lang="ko"><![CDATA[돌아가기]]></value>
-		<value xml:lang="en"><![CDATA[Go Back]]></value>
+		<value xml:lang="en"><![CDATA[Go back]]></value>
 		<value xml:lang="jp"><![CDATA[戻る]]></value>
 		<value xml:lang="zh-CN"><![CDATA[返回]]></value>
 		<value xml:lang="zh-TW"><![CDATA[返回]]></value>
@@ -336,19 +336,22 @@
 		<value xml:lang="vi"><![CDATA[Về trang trước]]></value>
 		<value xml:lang="mn"><![CDATA[Буцах]]></value>
 	</item>
-	<item name="cmd_vote">
-		<value xml:lang="ko"><![CDATA[추천]]></value>
-		<value xml:lang="en"><![CDATA[Recommend]]></value>
-		<value xml:lang="jp"><![CDATA[推薦]]></value>
-		<value xml:lang="zh-CN"><![CDATA[推荐]]></value>
-		<value xml:lang="zh-TW"><![CDATA[推薦]]></value>
-		<value xml:lang="fr"><![CDATA[Recommander]]></value>
-		<value xml:lang="de"><![CDATA[zustimmen]]></value>
-		<value xml:lang="ru"><![CDATA[Рекомендовать]]></value>
-		<value xml:lang="es"><![CDATA[a Favor]]></value>
-		<value xml:lang="tr"><![CDATA[Tavsiye et]]></value>
-		<value xml:lang="vi"><![CDATA[Bình chọn]]></value>
-		<value xml:lang="mn"><![CDATA[Санал болгох]]></value>
+	<item name="cmd_back">
+		<value xml:lang="ko"><![CDATA[돌아가기]]></value>
+		<value xml:lang="en"><![CDATA[Go back]]></value>
+		<value xml:lang="jp"><![CDATA[戻る]]></value>
+		<value xml:lang="zh-CN"><![CDATA[返回]]></value>
+		<value xml:lang="zh-TW"><![CDATA[返回]]></value>
+		<value xml:lang="fr"><![CDATA[Retourner]]></value>
+		<value xml:lang="de"><![CDATA[Zurück]]></value>
+		<value xml:lang="ru"><![CDATA[Вернуться]]></value>
+		<value xml:lang="es"><![CDATA[Atrás]]></value>
+		<value xml:lang="tr"><![CDATA[Önceki Sayfa]]></value>
+		<value xml:lang="vi"><![CDATA[Về trang trước]]></value>
+		<value xml:lang="mn"><![CDATA[Буцах]]></value>
+	</item>
+	<item name="cmd_proceed">
+		<value xml:lang="en"><![CDATA[Proceed]]></value>
 	</item>
 	<item name="cmd_vote_down">
 		<value xml:lang="ko"><![CDATA[비추천]]></value>
