@@ -98,6 +98,17 @@ jQuery(document).ready(function($) {
     })
 
     /*
+     * Load custom css for webkit browsers
+     */
+    if ($.browser.webkit == true) {
+        $("<link/>", {
+            rel: "stylesheet",
+            type: "text/css",
+            href: "common/css/xe-ui.webkit.css"
+        }).appendTo("head");
+    }
+
+    /*
      * Set custom select boxes
      
     $('.xe-ui-panel-select').sbCustomSelect({
