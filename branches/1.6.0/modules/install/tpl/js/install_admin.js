@@ -7,9 +7,9 @@ function completeAgreement(ret_obj)
         alert(ret_obj['message']);
         return;
     } else {
-		var url = current_url.setQuery('act', 'dispInstallCheckEnv');
-		location.href = url;
-	}
+        var url = current_url.setQuery('act', 'dispInstallCheckEnv');
+        location.href = url;
+    }
 }
 
 function completeDBSetting(ret_obj) {
@@ -18,7 +18,7 @@ function completeDBSetting(ret_obj) {
         return;
     } else {
     	location.href = "./index.php?act=dispInstallConfigForm";
-	}
+    }
 }
 
 /**
@@ -30,7 +30,7 @@ function completeConfigSetting(ret_obj) {
         return;
     } else {
     	location.href = "./index.php?act=dispInstallManagerForm";
-	}
+    }
 }
 
 /**
@@ -69,7 +69,7 @@ function completeInstallCheckFtpInfo(ret_obj) {
 }
 
 function completeFtpPath(ret_obj){
-   location.reload(); 
+    location.reload();
 }
 
 function getFTPList(pwd)
@@ -143,3 +143,19 @@ function completeGetFtpInfo(ret_obj)
     //list = "<td><ul>"+list+"</ul></td>";
     e.append(jQuery(list));
 }
+
+jQuery(document).ready(function($) {
+
+    $(document).keypress(function(event) {
+        var keycode = (event.keyCode ? event.keyCode : event.which);
+        if(keycode == '13') {
+            var but = $('#goNext');
+            if ( but.attr('onclick') != null ) {
+                $('#goNext').click();
+            } else {
+                window.location = $('#goNext').attr('href');
+            }
+        }
+    });
+
+});
