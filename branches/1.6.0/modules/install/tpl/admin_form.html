@@ -4,7 +4,7 @@
     <div id="installContent">
         <div class="xe-ui-panel cleared">
             <div class="xe-ui-panel-content">
-                <h2>Administrator account</h2>
+                <h2>{$lang->admin_title}</h2>
                 <div cond="$XE_VALIDATOR_MESSAGE" class="xe-ui-message {$XE_VALIDATOR_MESSAGE_TYPE} gradient cleared">
                     <a href="#" style="float: right;" onclick="jQuery(this).parent().remove();return false;" class="xe-ui-button-gray gradient">Dismiss</a>
                     <p>{$XE_VALIDATOR_MESSAGE}</p>
@@ -32,13 +32,13 @@
             <div class="xe-ui-panel-controller cleared">
                 <hr />
                 <p style="float: left; margin-left: 16px;">
-                    <a href="{getUrl('', 'act', 'dispInstallConfigForm')}" class="xe-ui-button-gray gradient">Go back</a>
+                    <a href="{getUrl('', 'act', 'dispInstallConfigForm')}" class="xe-ui-button-gray gradient">{$lang->cmd_back}</a>
                 </p>
                 <p style="float: right; margin-right: 16px;">
-                    <a href="#" onclick="jQuery('#admin_form').submit();return false;" class="xe-ui-button-gray gradient">Proceed</a>
+                    <a href="#" id="goNext" onclick="jQuery('#admin_form').submit();return false;" class="xe-ui-button-gray gradient">{$lang->cmd_proceed}</a>
                 </p>
             </div>
         </div>
-        <p id="version">{$lang->version} {__ZBXE_VERSION__}</p>
+        <p id="version">{$lang->version} {__XE_VERSION__}</p>
     </div>
 <!--#include("footer.html")-->

@@ -8,11 +8,8 @@
 <div id="installContent">
     <div class="xe-ui-panel">
         <div class="xe-ui-panel-content">
-            <h2>Choose database type</h2>
-            <p>
-                XE uses a database to store all it’s data.<br />
-                Choose the database you wish to use from the ones liste below:
-            </p>
+            <h2>{$lang->select_db_title}</h2>
+            <p>{$lang->select_db_description}</p>
             <form method="post" action="./" id="select_db">
                 <input type="hidden" name="module" value="{$module}" />
                 <input type="hidden" name="act" value="dispInstallDBForm" />
@@ -39,14 +36,14 @@
         <div class="xe-ui-panel-controller">
             <hr />
             <p style="float: left; margin-left: 16px;">
-                <a href="{getUrl('','act','dispInstallCheckEnv')}" class="xe-ui-button-gray gradient">Go back</a>
+                <a href="{getUrl('','act','dispInstallCheckEnv')}" class="xe-ui-button-gray gradient">{$lang->cmd_back}</a>
             </p>
             <p style="float: right; margin-right: 16px;">
-                <a href="#" id="goNext" onclick="jQuery('#select_db').submit();return false;" class="xe-ui-button-gray gradient">Proceed</a>
+                <a href="#" id="goNext" onclick="jQuery('#select_db').submit();return false;" class="xe-ui-button-gray gradient">{$lang->cmd_proceed}</a>
             </p>
         </div>
     </div>
-    <p id="version">{$lang->version} {__ZBXE_VERSION__}</p>
+    <p id="version">{$lang->version} {__XE_VERSION__}</p>
 </div>
 
 <!--#include("footer.html")-->
