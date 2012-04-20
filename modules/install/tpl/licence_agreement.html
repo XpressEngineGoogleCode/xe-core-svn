@@ -1,15 +1,13 @@
 <!--#include("header.html")-->
-
-	<!--#include("progress_menu.html")-->
-	<span class="dummy"></span>
-	<div id="installContent">
-		<div class="xe-ui-panel">
-			<div class="xe-ui-panel-content">
-                            <h2>Licence Agreement</h2>
-                            <p>XE is released unde the LGPLv2 licence. You can read more about this licence <a href="http://www.gnu.org/licenses/lgpl-2.1.html">here</a>.</p>
-                            <textarea style="width: 570px; height: 240px; font-size: .9em;" class="xe-ui-panel-textarea">
-                                            GNU LESSER GENERAL PUBLIC LICENSE
-                                                Version 2.1, February 1999
+<!--#include("progress_menu.html")-->
+<div id="installContent">
+    <div class="xe-ui-panel">
+        <div class="xe-ui-panel-content">
+            <h2>{$lang->licence_title}</h2>
+            <p>{$lang->licence_desc}</p>
+            <textarea style="width: 570px; height: 240px; font-size: .9em;" class="xe-ui-panel-textarea">
+                    GNU LESSER GENERAL PUBLIC LICENSE
+                        Version 2.1, February 1999
 
 Copyright (C) 1991, 1999 Free Software Foundation, Inc. 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301  USA. Everyone is permitted to copy and distribute verbatim copies of this license document, but changing it is not allowed.
 
@@ -27,7 +25,7 @@ To protect your rights, we need to make restrictions that forbid distributors to
 
 For example, if you distribute copies of the library, whether gratis or for a fee, you must give the recipients all the rights that we gave you.  You must make sure that they, too, receive or can get the source code. If you link other code with the library, you must provide complete object files to the recipients, so that they can relink them with the library after making changes to the library and recompiling it.  And you must show them these terms so they know their rights.
 
-We protect your rights with a two-step method: (1) we copyright the library, and (2) we offer you this license, which gives you legal permission to copy, distribute and/or modify the library. 
+We protect your rights with a two-step method: (1) we copyright the library, and (2) we offer you this license, which gives you legal permission to copy, distribute and/or modify the library.
 
 To protect each distributor, we want to make it very clear that there is no warranty for the free library.  Also, if the library is modified by someone else and passed on, the recipients should know that what they have is not the original version, so that the original author's reputation will not be affected by problems that might be introduced by others.
 
@@ -47,8 +45,8 @@ Although the Lesser General Public License is Less protective of the users' free
 
 The precise terms and conditions for copying, distribution and modification follow.  Pay close attention to the difference between a "work based on the library" and a "work that uses the library".  The former contains code derived from the library, whereas the latter must be combined with the library in order to run.
 
-                                    GNU LESSER GENERAL PUBLIC LICENSE
-            TERMS AND CONDITIONS FOR COPYING, DISTRIBUTION AND MODIFICATION
+                GNU LESSER GENERAL PUBLIC LICENSE
+    TERMS AND CONDITIONS FOR COPYING, DISTRIBUTION AND MODIFICATION
 
 0. This License Agreement applies to any software library or other program which contains a notice placed by the copyright holder or other authorized party saying it may be distributed under the terms of this Lesser General Public License (also called "this License"). Each licensee is addressed as "you".
 
@@ -67,11 +65,8 @@ You may charge a fee for the physical act of transferring a copy, and you may at
 2. You may modify your copy or copies of the Library or any portion of it, thus forming a work based on the Library, and copy and distribute such modifications or work under the terms of Section 1 above, provided that you also meet all of these conditions:
 
 a) The modified work must itself be a software library.
-
 b) You must cause the files modified to carry prominent notices stating that you changed the files and the date of any change.
-
 c) You must cause the whole of the work to be licensed at no charge to all third parties under the terms of this License.
-
 d) If a facility in the modified Library refers to a function or a table of data to be supplied by an application program that uses the facility, other than as an argument passed when the facility is invoked, then you must make a good faith effort to ensure that, in the event an application does not supply such function or table, the facility still operates, and performs whatever part of its purpose remains meaningful.
 
 (For example, a function in a library to compute square roots has a purpose that is entirely well-defined independent of the application.  Therefore, Subsection 2d requires that any application-supplied function or table used by this function must be optional: if the application does not supply it, the square root function must still compute square roots.)
@@ -120,7 +115,7 @@ e) Verify that the user has already received a copy of these materials or that y
 
 For an executable, the required form of the "work that uses the Library" must include any data and utility programs needed for reproducing the executable from it.  However, as a special exception, the materials to be distributed need not include anything that is normally distributed (in either source or binary form) with the major components (compiler, kernel, and so on) of the operating system on which the executable runs, unless that component itself accompanies the executable.
 
-It may happen that this requirement contradicts the license restrictions of other proprietary libraries that do not normally accompany the operating system.  Such a contradiction means you cannot use both them and the Library together in an executable that you distribute. 
+It may happen that this requirement contradicts the license restrictions of other proprietary libraries that do not normally accompany the operating system.  Such a contradiction means you cannot use both them and the Library together in an executable that you distribute.
 
 7. You may place library facilities that are a work based on the Library side-by-side in a single library together with other library facilities not covered by this License, and distribute such a combined library, provided that the separate distribution of the work based on the Library and of the other library facilities is otherwise permitted, and provided that you do these two things:
 
@@ -177,36 +172,30 @@ You should have received a copy of the GNU Lesser General Public License along w
 
 Also add information on how to contact you by electronic and paper mail.
 
-You should also get your employer (if you work as a programmer) or your school, if any, to sign a "copyright disclaimer" for the library, if necessary.  Here is a sample; alter the names:
-
-Yoyodyne, Inc., hereby disclaims all copyright interest in the library `Frob' (a library for tweaking knobs) written by James Random Hacker.
-
-<signature of Ty Coon>, 1 April 1990
-Ty Coon, President of Vice
+You should also get your employer (if you work as a programmer) or your school, if any, to sign a "copyright disclaimer" for the library, if necessary.
 
 That's all there is to it!
-                            </textarea>
-                            <form action="./" method="post" id="agreement">
-                                <input type="hidden" name="module" value="install" />
-                                <input type="hidden" name="act" value="procInstallAgreement" />
-                                <input type="hidden" id="agree_license_text" value="{$lang->install_license_desc['lgpl']}" />
-                                <p>
-                                    <input type="checkbox" name="lgpl_agree" value="Y" id="lgpl_agree" />
-                                    <label for="lgpl_agree" style="width: 200px;">{$lang->lgpl_label}</label>
-                                </p>
-                            </form>
-			</div>
-                    <div class="xe-ui-panel-controller">
-                        <hr />
-                        <p style="float: left; margin-left: 16px;">
-                            <a href="{getUrl('','act','')}" class="xe-ui-button-gray gradient">Go back</a>
-                        </p>
-                        <p style="float: right; margin-right: 16px;">
-                            <a href="#" id="goNext" onclick="jQuery('#agreement').submit();return false;" class="xe-ui-button-gray gradient">Proceed</a>
-                        </p>
-                    </div>
-		</div>
-		<p id="version">{$lang->version} {__ZBXE_VERSION__}</p>
-	</div>
-
+        </textarea>
+        <form action="./" method="post" id="agreement">
+            <input type="hidden" name="module" value="install" />
+            <input type="hidden" name="act" value="procInstallAgreement" />
+            <input type="hidden" id="agree_license_text" value="{$lang->install_license_desc['lgpl']}" />
+            <p>
+                <input type="checkbox" name="lgpl_agree" value="Y" id="lgpl_agree" />
+                <label for="lgpl_agree" style="width: 200px;">{$lang->lgpl_label}</label>
+            </p>
+        </form>
+        </div>
+        <div class="xe-ui-panel-controller">
+            <hr />
+            <p style="float: left; margin-left: 16px;">
+                <a href="{getUrl('','act','')}" class="xe-ui-button-gray gradient">{$lang->cmd_back}</a>
+            </p>
+            <p style="float: right; margin-right: 16px;">
+                <a href="#" id="goNext" onclick="jQuery('#agreement').submit();return false;" class="xe-ui-button-gray gradient">{$lang->cmd_proceed}</a>
+            </p>
+        </div>
+    </div>
+    <p id="version">{$lang->version} {__XE_VERSION__}</p>
+</div>
 <!--#include("footer.html")-->
