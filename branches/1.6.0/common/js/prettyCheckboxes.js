@@ -53,7 +53,7 @@
             $label.find('span.holder').width(settings.checkboxWidth);
 
             // Hide the checkbox
-            //$(this).addClass('hiddenCheckbox');
+            $(this).addClass('hiddenCheckbox');
 
             $label.click(function(e) {
                 e.stopPropagation();
@@ -71,7 +71,7 @@
                 if (e.target.tagName.toLowerCase() != 'input') {
                     $input = $this.children('input');
                     if($input.length < 1) {
-                        $input = $('input#' + $this.attr('for'));
+                        $input = $('input#' + $this.attr('for'));   
                     }
 
                     if (!$this.hasClass('disabled')) {
@@ -89,7 +89,7 @@
 
                             // Uncheck all radio
                             $('input[name="'+$toCheck.attr('name')+'"]').each(function() {
-                                $('label[for="' + $this.attr('id')+'"]').removeClass('checked');
+                                $('label[for="' + $(this).attr('id')+'"]').removeClass('checked');
                             });
 
                             $this.addClass('checked');
