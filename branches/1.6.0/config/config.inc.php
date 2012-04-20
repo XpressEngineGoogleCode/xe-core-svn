@@ -13,7 +13,7 @@
      * @brief display XE's full version
      * Even The file should be revised when releasing altough no change is made
      **/
-	define('__XE_VERSION__', '1.5.2.2');
+	define('__XE_VERSION__', '1.6.0.0');
     define('__ZBXE_VERSION__', __XE_VERSION__); // deprecated : __ZBXE_VERSION__ will be removed. Use __XE_VERSION__ instead.
 
     /**
@@ -64,7 +64,7 @@
      * 2: output execute time, Request/Response info
      * 4: output DB query history
      **/
-    if(!defined('__DEBUG__')) define('__DEBUG__', 1);
+    if(!defined('__DEBUG__')) define('__DEBUG__', 0);
 
     /**
      * @brief output location of debug message
@@ -87,7 +87,7 @@
      * 0: No output
      * 1: files/_debug_db_query.php connected to the output
      **/
-    if(!defined('__DEBUG_DB_OUTPUT__')) define('__DEBUG_DB_OUTPUT__', 1);
+    if(!defined('__DEBUG_DB_OUTPUT__')) define('__DEBUG_DB_OUTPUT__', 0);
 
     /**
      * @brief Query log for only timeout query among DB queries
@@ -95,14 +95,14 @@
      * = 0: leave a log when the slow query takes over specified seconds
      * Log file is saved as ./files/_db_slow_query.php file
      **/
-    if(!defined('__LOG_SLOW_QUERY__')) define('__LOG_SLOW_QUERY__', 1);
+    if(!defined('__LOG_SLOW_QUERY__')) define('__LOG_SLOW_QUERY__', 0);
 
     /**
      * @brief Leave DB query information
      * 0: Do not add information to the query
      * 1: Comment the XML Query ID
      **/
-    if(!defined('__DEBUG_QUERY__')) define('__DEBUG_QUERY__', 1);
+    if(!defined('__DEBUG_QUERY__')) define('__DEBUG_QUERY__', 0);
 
     /**
      * @brief option to enable/disable a compression feature using ob_gzhandler
