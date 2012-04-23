@@ -44,7 +44,7 @@
             {@ $i = 0;}
             <li loop="$gnbUrlList=>$key,$value" class="xe-ui-menu-item icon but">
                 {@ $i++;}
-                <a href="{getFullUrl('')}{$value['href']}" class="xe-ui-menu-item-but">
+                <a href="<!--@if($value['href'])-->{$value['href']}<!--@end-->" class="xe-ui-menu-item-but">
                     <!--@if($i==1)--><img src="{getUrl('')}common/img/menu_icon_dashboard.png" />{$value['text']}<!--@end-->
                     <!--@if($i==2)--><img src="{getUrl('')}common/img/menu_icon_content.png" />{$value['text']}<!--@end-->
                     <!--@if($i==3)--><img src="{getUrl('')}common/img/menu_icon_design.png" />{$value['text']}<!--@end-->

@@ -101,8 +101,20 @@ class admin extends ModuleObject {
                 case 'dashboard':
                     $args->url = 'index.php?module=admin';
                     break;
+                case 'content':
+                    $args->url = getNotEncodedUrl('','module','admin','act','dispMenuAdminSiteMap');
+                    break;
                 case 'design':
                     $args->url = getNotEncodedUrl('','module','admin','act','dispAdminTheme');
+                    break;
+                case 'users':
+                    $args->url = getNotEncodedUrl('','module','admin','act','dispMemberAdminList');
+                    break;
+                case 'extensions':
+                    $args->url = getNotEncodedUrl('','module','admin','act','dispAutoinstallAdminIndex');
+                    break;
+                case 'settings':
+                    $args->url = getNotEncodedUrl('','module','admin','act','dispAdminConfigGeneral');
                     break;
                 default:
                     $args->url='';
