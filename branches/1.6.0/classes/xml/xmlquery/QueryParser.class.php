@@ -11,6 +11,7 @@
 
         function getTableInfo($query_id, $table_name) {
             $column_type = array();
+	    $module = '';
 
             $id_args = explode('.', $query_id);
             if (count($id_args) == 2) {
