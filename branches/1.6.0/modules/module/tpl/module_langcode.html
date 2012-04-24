@@ -21,35 +21,50 @@
             <p cond="!is_array($lang_code_list) || count($lang_code_list) < 1">
                 {$lang->no_multi_lang}
             </p>
-            <div loop="$lang_code_list=>$key,$value">
-                {@$langName = $value->name}
-                <strong>{$value->value}</strong>
-                <span class="side">
-                    <button type="button" class="text" cond="$module != 'admin'" onclick="doInsertLangCode('{$value->name}', '{$target}')">{$lang->cmd_apply}</button>
-                    <button type="button" class="text _edit">{$lang->cmd_edit}</button>
-                </span>
-                <form action="./" method="post" id="langForm_{$langName}" class="form" >
-                    <input type="hidden" name="module" value="{$module}" />
-                    <input type="hidden" name="act" value="procModuleAdminInsertLang" />
-                    <input type="hidden" name="lang_name" value="{$langName}" />
-                    <ul>
-                        {@
-                            /* move current language to the top */
-                            $a = array($lang_type=>$lang_supported[$lang_type]);
-                            unset($lang_supported[$lang_type]);
-                            $lang_supported = array_merge($a, $lang_supported);
-                        }
-                        <li class="{$key2}" loop="$lang_supported=>$key2,$value2">
-                            <label for="{$langName}_{$key2}">{$value2}</label>
-                            <textarea class="xe-ui-panel-textarea" rows="2" cols="42" name="{$key2}" id="{$langName}_{$key2}"></textarea>
-                        </li>
-                    </ul>
-                    <div class="btnArea">
-                        <button type="submit" name="act" value="procModuleAdminInsertLang">{$lang->cmd_save}</button>
-                        <button type="submit" name="act" value="procModuleAdminDeleteLang">{$lang->cmd_delete}</button>
-                    </div>
-                </form>
-            </div>
+            <table class="xe-ui-table" width="100%" cellpadding="0" cellspacing="0">
+                <thead>
+                    <tr>
+                        <th class="aLeft">{$lang->word_sentence}</th>
+                        <th class="center button">{$lang->cmd_edit}</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr loop="$lang_code_list=>$key,$value">
+                        <td>
+                            {@$langName = $value->name}
+                            <strong>{$value->value}</strong>
+                        </td>
+                        <td>
+                            <button type="button" class="text" cond="$module != 'admin'" onclick="doInsertLangCode('{$value->name}', '{$target}')">{$lang->cmd_apply}</button>
+                            <a href="#langCont_{$langName}" class="xe-ui-button-gray _edit modalAnchor">{$lang->cmd_edit}</a>
+                            <div class="modal" id="langCont_{$langName}">
+                                <form action="./" method="post" id="langForm_{$langName}" class="form mLangEdit fg">
+                                    <input type="hidden" name="module" value="{$module}" />
+                                    <input type="hidden" name="act" value="procModuleAdminInsertLang" />
+                                    <input type="hidden" name="lang_name" value="{$langName}" />
+                                    <h2 class="h2">{$lang->edit_word}</h2>
+                                    <ul>
+                                        {@
+                                            /* move current language to the top */
+                                            $a = array($lang_type=>$lang_supported[$lang_type]);
+                                            unset($lang_supported[$lang_type]);
+                                            $lang_supported = array_merge($a, $lang_supported);
+                                        }
+                                        <li class="{$key2}" loop="$lang_supported=>$key2,$value2">
+                                            <label for="{$langName}_{$key2}">{$value2}</label>
+                                            <textarea class="xe-ui-panel-textarea" rows="2" cols="42" name="{$key2}" id="{$langName}_{$key2}"></textarea>
+                                        </li>
+                                    </ul>
+                                    <div class="btnArea">
+                                        <button type="submit" name="act" value="procModuleAdminInsertLang">{$lang->cmd_save}</button>
+                                        <button type="submit" name="act" value="procModuleAdminDeleteLang">{$lang->cmd_delete}</button>
+                                    </div>
+                                </form>
+                            </div>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
             <p class="f-right">
                 <a href="#addWord" class="xe-ui-button-gray modalAnchor">{$lang->add_word}</a>
             </p>
