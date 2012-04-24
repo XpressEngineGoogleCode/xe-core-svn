@@ -47,7 +47,7 @@
         <div class="xe-ui-panel" style="width: 220px; float: left; height: 330px;">
             <div class="xe-ui-panel-content cleared" style="padding-bottom: 12px;">
                 <h2>
-                    Shortcuts
+                    {$lang->shortcuts}
                     <span style="float: right;">
                         <a href="{getURL('','module','admin','act','dispAdminDashboardShortcuts')}" class="xe-ui-button-gray img">
                             <img src="{getFullURL()}common/img/icon_settings.png" title="Edit shortcuts" />
@@ -123,7 +123,7 @@
                 </script>
                 <!-- google chart END -->
                 <!--@else-->
-                <p class="center">{$lang->dashboard_analytics_initial_text}</p>
+                <p class="center">{$lang->dashboard_analytics_initial_text} <a href="http://www.google.com/analytics/" target="_blank">{$lang->google_analytics}</a>, <a href="https://code.google.com/apis/console/" target="_blank">{$lang->google_api}</a>.</p>
                 <table width="100%" cellpadding="0" cellpadding="0" style="height: 180px;">
                     <tr>
                         <td class="center middle">
@@ -144,13 +144,13 @@
         <div class="cleared"></div>
         <div class="xe-ui-panel">
             <div class="xe-ui-panel-content cleared" style="padding-bottom: 12px;">
-                <h2>Site activity</h2>
+                <h2>{$lang->site_activity}</h2>
                 <table class="sortable xe-ui-table" id="dashboard_shortcuts" cellpadding="0" cellspacing="0" width="100%">
                     <thead>
                         <tr>
-                            <th scope="col" style="text-align: left; width: 150px;">Module</th>
-                            <th scope="col" class="center" style="width: 150px;">Module name</th>
-                            <th scope="col" class="left" style="text-align: left;">Module Activity (since your last login)</th>
+                            <th scope="col" style="text-align: left; width: 150px;">{$lang->module_type}</th>
+                            <th scope="col" class="center" style="width: 150px;">{$lang->module_instance}</th>
+                            <th scope="col" class="left" style="text-align: left;">{$lang->module_activity}({$lang->since_last_login})</th>
                             <th scope="col" class="button">{$lang->cmd_view}</th>
                             <th scope="col" class="button">{$lang->cmd_manage}</th>
                         </tr>
@@ -201,7 +201,7 @@
         </div>
         <div class="xe-ui-panel">
             <div class="xe-ui-panel-content cleared" style="padding-bottom: 12px;">
-                <h2>Maintenance</h2>
+                <h2>{$lang->maintenance}</h2>
                 <table width="100%" cellpadding="0" cellspacing="0">
                     <tr>
                         <td><p><a href="" onclick="doResetAdminMenu();return false;" class="xe-ui-button-gray" style="width: 130px;">{$lang->cmd_admin_menu_reset}</a></p></td>
