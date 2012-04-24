@@ -351,6 +351,9 @@ jQuery(function($){
 
             $modal.fadeOut(duration, after);
             $this.focus();
+
+            // remove selected state for buttons calling the modal window
+            $this.blur();
         });
     };
     $('a.modalAnchor').xeModalWindow();
