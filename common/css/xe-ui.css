@@ -16,6 +16,10 @@ a {
     color: #064A87;
 }
 
+a img {
+    border: 0;
+}
+
 h1 {
     margin: 16px auto 12px;
     width: 980px;
@@ -100,8 +104,8 @@ h1 {
     font-weight: normal;
 }
 
-.xe-ui-panel-content p {
-    line-height: 1.4em;
+.xe-ui-panel-content p, .xe-ui-message p {
+    line-height: 1.6em;
 }
 
 .xe-ui-panel-content p.inline-list * {
@@ -692,6 +696,10 @@ h1 {
     float: left;
 }
 
+.xe-ui-menu-item a img {
+    border: 0;
+}
+
 .f-left {
     float: left;
 }
@@ -969,7 +977,7 @@ input.hiddenCheckbox {
 }
 
 .xe-ui-form-table .desc {
-    color: #ad0a0a;
+    color: #0e4a71;
     font-size: .93em;
 }
 
