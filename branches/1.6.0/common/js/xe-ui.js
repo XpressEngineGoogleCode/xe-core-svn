@@ -108,12 +108,4 @@ jQuery(document).ready(function($) {
         }).appendTo("head");
     }
 
-    /*
-     * Set custom select boxes
-     
-    $('.xe-ui-panel-select').sbCustomSelect({
-        appendTo: 'body'
-    });
-    */
-
 });
