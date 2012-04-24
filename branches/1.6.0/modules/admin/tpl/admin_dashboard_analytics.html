@@ -30,7 +30,7 @@
                 <p>
                     <label for="analytics_type">{$lang->choose_analytics_api}</label>
                     <select id="analytics_type" name="analytics_type" onchange="rel();" class="xe-ui-panel-select">
-                        <option value="">-- Please choose an option --</option>
+                        <option disabled="disabled">{$lang->choose_an_option}</option>
                         <option value="xe" <!--@if($type=='xe')-->selected="selected"<!--@end-->>XE Analytics</option>
                         <option value="ga" <!--@if($type=='ga')-->selected="selected"<!--@end-->>Google Analytics</option>
                         <!--<option value="naver">Naver Analytics</option>-->

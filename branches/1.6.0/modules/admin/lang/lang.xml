@@ -1284,89 +1284,146 @@ Lütfen son sürümü için indirme linkine tıklayınız.]]></value>
     </item>
     <item name="accept_env_gather">
         <value xml:lang="en"><![CDATA[Sure, why not]]></value>
+        <value xml:lang="ko"><![CDATA[네, 동의합니다]]></value>
     </item>
     <item name="decline_env_gather">
         <value xml:lang="en"><![CDATA[No, thanks!]]></value>
+        <value xml:lang="ko"><![CDATA[아니오]]></value>
     </item>
     <item name="ask_delete_shortcut">
-        <value xml:lang="en"><![CDATA[Are you sure you want to delete this shortcut ?]]></value>
+        <value xml:lang="en"><![CDATA[Are you sure you want to delete this shortcut?]]></value>
+        <value xml:lang="ko"><![CDATA[이 바로가기 링크를 정말 삭제 하시겠습니까?]]></value>
     </item>
     <item name="msg_not_uploaded_shortcut_icon_image">
-        <value xml:lang="en"><![CDATA[Shortcut icon file could not be uploaded !]]></value>
+        <value xml:lang="en"><![CDATA[Shortcut icon file could not be uploaded!]]></value>
+        <value xml:lang="ko"><![CDATA[바로가기 아이콘 파일을 등록할 수 없습니다.]]></value>
     </item>
     <item name="cmd_manage">
         <value xml:lang="en"><![CDATA[Manage]]></value>
+        <value xml:lang="ko"><![CDATA[관리]]></value>
     </item>
     <item name="visitors">
         <value xml:lang="en"><![CDATA[Visitors]]></value>
+        <value xml:lang="ko"><![CDATA[방문자]]></value>
     </item>
     <item name="choose_analytics_api">
         <value xml:lang="en"><![CDATA[Choose your Analytics Type for Admin Dashboard:]]></value>
+        <value xml:lang="ko"><![CDATA[관리자 대시보드 통계도구 선택:]]></value>
     </item>
     <item name="accept_ga_api">
         <value xml:lang="en"><![CDATA[Accept GA API]]></value>
+        <value xml:lang="ko"><![CDATA[GA API 승인]]></value>
     </item>
     <item name="ga_script">
         <value xml:lang="en"><![CDATA[GA js script]]></value>
+        <value xml:lang="ko"><![CDATA[GA js 스크립트]]></value>
     </item>
     <item name="ga_client_id">
-        <value xml:lang="en"><![CDATA[GA Client Id]]></value>
+        <value xml:lang="en"><![CDATA[GA Client ID]]></value>
+        <value xml:lang="en"><![CDATA[GA 클라이언트 ID]]></value>
     </item>
     <item name="ga_client_secret">
         <value xml:lang="en"><![CDATA[GA Client Secret]]></value>
+        <value xml:lang="en"><![CDATA[GA 클라이언트 보안]]></value>
     </item>
     <item name="ga_developer_key">
         <value xml:lang="en"><![CDATA[GA Developer Key]]></value>
+        <value xml:lang="ko"><![CDATA[GA API 키]]></value>
     </item>
     <item name="ga_redirect_uri">
-        <value xml:lang="en"><![CDATA[GA Redirect Uri]]></value>
+        <value xml:lang="en"><![CDATA[GA Redirect URI]]></value>
+        <value xml:lang="ko"><![CDATA[GA 재전송 URI]]></value>
     </item>
     <item name="dashboard_analytics_initial_text">
-        <value xml:lang="en"><![CDATA[Please choose from one of the options below. If you choose to use Google Analytics for this you will have to grant access to it in your Google API account.]]></value>
+        <value xml:lang="en"><![CDATA[Please choose from one of the options below. If you choose to use Google Analytics for this you will have to grant access to it in your Google Analytics and Google API account.]]></value>
+        <value xml:lang="ko"><![CDATA[방문자 통계정보를 대시보드에서 보려면 아래 항목에서 하나를 선택하세요. 구글 애널리틱스를 사용하려면 구글 애널리틱스와 구글 API 계정이 필요합니다.]]></value>
+    </item>
+    <item name="google_analytics">
+        <value xml:lang="en"><![CDATA[Google Analytics]]></value>
+        <value xml:lang="ko"><![CDATA[구글 애널리틱스]]></value>
+    </item>
+    <item name="google_api">
+        <value xml:lang="en"><![CDATA[Google API]]></value>
+        <value xml:lang="ko"><![CDATA[구글 API]]></value>
     </item>
     <item name="curl_extension_not_exist">
-        <value xml:lang="en"><![CDATA[You don't have php cURL extension installed. For using GA you should install/activate the cURL php extension.]]></value>
+        <value xml:lang="en"><![CDATA[You don't have PHP cURL extension installed. For using GA you should install/activate the cURL PHP extension.]]></value>
+        <value xml:lang="ko"><![CDATA[PHP cURL 익스텐션이 설치되지 않았습니다. GA를 사용하려면 PHP cURL 익스텐션을 설치하고 활성화 해야 합니다.]]></value>
     </item>
     <item name="about_admin_menu_reset">
         <value xml:lang="en"><![CDATA[This option recreates the cache of the administrator menu.]]></value>
+        <value xml:lang="ko"><![CDATA[관리자 메뉴 캐시를 다시 생성합니다.]]></value>
     </item>
     <item name="about_remake_cache">
         <value xml:lang="en"><![CDATA[This recreates the cache of the entire site.]]></value>
+        <value xml:lang="ko"><![CDATA[사이트 전체 캐시를 다시 생성합니다.]]></value>
     </item>
     <item name="about_clear_session">
         <value xml:lang="en"><![CDATA[This option deletes expired sessions from the session table in the database.]]></value>
+        <value xml:lang="ko"><![CDATA[데이터베이스 세션 테이블에서 만료된 세션을 지웁니다.]]></value>
     </item>
     <item name="dash_shortcuts">
         <value xml:lang="en"><![CDATA[Dashboard shortcuts]]></value>
+        <value xml:lang="ko"><![CDATA[대시보드 바로가기]]></value>
     </item>
     <item name="cmd_show_all">
         <value xml:lang="en"><![CDATA[Show all]]></value>
+        <value xml:lang="ko"><![CDATA[모두 보기]]></value>
     </item>
     <item name="current_default_module">
         <value xml:lang="en"><![CDATA[Current default module:]]></value>
+        <value xml:lang="ko"><![CDATA[현재 기본 모듈:]]></value>
     </item>
     <item name="sel_other_module">
         <value xml:lang="en"><![CDATA[Select other module]]></value>
+        <value xml:lang="ko"><![CDATA[다른 모듈 선택]]></value>
     </item>
     <item name="search_sites">
         <value xml:lang="en"><![CDATA[Search through your existing virtual sites:]]></value>
+        <value xml:lang="ko"><![CDATA[가상 사이트에서 검색:]]></value>
     </item>
     <item name="module_type">
-        <value xml:lang="en"><![CDATA[Module type:]]></value>
+        <value xml:lang="en"><![CDATA[Module type]]></value>
+        <value xml:lang="ko"><![CDATA[모듈 유형]]></value>
     </item>
     <item name="module_instance">
-        <value xml:lang="en"><![CDATA[Module instance:]]></value>
+        <value xml:lang="en"><![CDATA[Module instance]]></value>
+        <value xml:lang="ko"><![CDATA[모듈 인스턴스]]></value>
+    </item>
+    <item name="module_activity">
+        <value xml:lang="en"><![CDATA[Module activity]]></value>
+        <value xml:lang="ko"><![CDATA[모듈 활동]]></value>
+    </item>
+    <item name="since_last_login">
+        <value xml:lang="en"><![CDATA[Since your last login]]></value>
+        <value xml:lang="ko"><![CDATA[마지막 로그인 이후]]></value>
     </item>
     <item name="analytics_title">
         <value xml:lang="en"><![CDATA[Configure visitor tracking]]></value>
+        <value xml:lang="ko"><![CDATA[방문자 통계 환경설정]]></value>
     </item>
     <item name="go_to_top">
         <value xml:lang="en"><![CDATA[Top of page]]></value>
+        <value xml:lang="ko"><![CDATA[맨위로]]></value>
     </item>
     <item name="cmd_view">
         <value xml:lang="en"><![CDATA[View]]></value>
+        <value xml:lang="ko"><![CDATA[보기]]></value>
     </item>
-    <item name="cmd_manage">
-        <value xml:lang="en"><![CDATA[Manage]]></value>
+    <item name="shortcuts">
+        <value xml:lang="en"><![CDATA[Shortcuts]]></value>
+        <value xml:lang="ko"><![CDATA[바로가기]]></value>
+    </item>
+    <item name="site_activity">
+        <value xml:lang="en"><![CDATA[Site Activity]]></value>
+        <value xml:lang="ko"><![CDATA[사이트 활동]]></value>
+    </item>
+    <item name="maintenance">
+        <value xml:lang="en"><![CDATA[Maintenance]]></value>
+        <value xml:lang="ko"><![CDATA[유지보수]]></value>
+    </item>
+    <item name="choose_an_option">
+        <value xml:lang="en"><![CDATA[Please choose an option]]></value>
+        <value xml:lang="ko"><![CDATA[하나를 선택해 주세요]]></value>
     </item>
 </lang>
