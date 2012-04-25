@@ -25,7 +25,8 @@
 			, $conditions = null
 			, $groups = null
 			, $orderby = null
-			, $limit = null){
+			, $limit = null
+			, $priority = null){
 			$this->queryID = $queryID;
 			$this->action = $action;
 			$this->priority = $priority;
@@ -241,34 +242,36 @@
 
 		function getWhereString($with_values = true, $with_optimization = true){
 			$where = '';
-                        $condition_count = 0;
-			
-                        foreach($this->conditions as $conditionGroup){
-                                if($condition_count === 0){
-                                    $conditionGroup->setPipe("");
-                                }
-                                $condition_string = $conditionGroup->toString($with_values);
-                                $where .= $condition_string;
-                                $condition_count++;
-                        }
-			
-			if($with_optimization && 
-				(strstr($this->getOrderByString(), 'list_order') || strstr($this->getOrderByString(), 'update_order'))){
-			    
-			    if($condition_count !== 0) $where = '(' . $where .') ';
-			    
-			    foreach($this->orderby as $order){
-				$colName = $order->getColumnName();
-				if(strstr($colName, 'list_order') || strstr($colName, 'update_order')){
-				    $opt_condition = new ConditionWithoutArgument($colName, 2100000000, 'less', 'and');
-				    if ($condition_count === 0) $opt_condition->setPipe("");
-				    $where .= $opt_condition->toString($with_values).' ';
-				    $condition_count++;
+			$condition_count = 0;
+
+			foreach ($this->conditions as $conditionGroup) {
+				if ($condition_count === 0) {
+					$conditionGroup->setPipe("");
 				}
-			    }
+				$condition_string = $conditionGroup->toString($with_values);
+				$where .= $condition_string;
+				$condition_count++;
 			}
-			
-                    return trim($where);
+
+			if ($with_optimization &&
+					(strstr($this->getOrderByString(), 'list_order') || strstr($this->getOrderByString(), 'update_order'))) {
+
+				if ($condition_count !== 0)
+					$where = '(' . $where . ') ';
+
+				foreach ($this->orderby as $order) {
+					$colName = $order->getColumnName();
+					if (strstr($colName, 'list_order') || strstr($colName, 'update_order')) {
+						$opt_condition = new ConditionWithoutArgument($colName, 2100000000, 'less', 'and');
+						if ($condition_count === 0)
+							$opt_condition->setPipe("");
+						$where .= $opt_condition->toString($with_values) . ' ';
+						$condition_count++;
+					}
+				}
+			}
+
+			return trim($where);
 		}
 
 		function getGroupByString(){
@@ -312,12 +315,25 @@
 			if(!isset($this->arguments)){
 				$this->arguments = array();
 
+				// Join table arguments
+				if(count($this->tables) > 0)
+				{
+					foreach($this->tables as $table)
+					{
+						if($table->isJoinTable())
+						{
+							$args = $table->getArguments();
+							if($args) $this->arguments = array_merge($this->arguments, $args);
+						}
+					}
+				}
+				
 				// Column arguments
 				if(count($this->columns) > 0){ // The if is for delete statements, all others must have columns
 					foreach($this->columns as $column){
 						if($column->show()){
-							$arg = $column->getArgument();
-							if($arg) $this->arguments[] = $arg;
+							$args = $column->getArguments();
+							if($args) $this->arguments = array_merge($this->arguments, $args);
 						}
 					}
 				}

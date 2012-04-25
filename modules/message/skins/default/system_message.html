@@ -2,42 +2,75 @@
 <load target="./filter/openid_login.xml" />
 <load target="./message.css" />
 <load target="./message.js" />
-<div cond="$XE_VALIDATOR_MESSAGE" class="message {$XE_VALIDATOR_MESSAGE_TYPE}">
-	<p>{$XE_VALIDATOR_MESSAGE}</p>
-</div>
-<div id="loginAccess" class="gLogin">
-	<h1>{$system_message}</h1>
-	<div class="mLogin" id="gLogin" cond="!$is_logged && $module == 'admin'">
-		<form ruleset="@login" action="./" method="post" id="gForm">
-		<input type="hidden" name="module" value="member" />
-		<input type="hidden" name="act" value="procMemberLogin" />
-		<input type="hidden" name="success_return_url" value="{getRequestUriByServerEnviroment()}" />
-			<fieldset>
-				<ul class="idpw">
-					<li><input type="text" name="user_id" id="uid" value="" class="inputText" title="{$lang->user_id}" /></li>
-					<li><input type="password" name="password" id="upw" value="" class="inputText" title="{$lang->password}" /></li>
-				</ul>
-				<div class="buttonArea">
-					<p class="keeping">
-						<input type="checkbox" name="keep_signed" id="keepid" class="inputCheck" value="Y" onclick="jQuery('#warning')[(jQuery('#keepid:checked').size()>0?'addClass':'removeClass')]('open');" />						
-						<label for="keepid">{$lang->keep_signed}</label>
-					</p>
-					<div id="warning" class="">
-						<p>{$lang->about_keep_warning}</p>
-					</div>
-					<span class="buttonAccount"><input type="submit" value="{$lang->cmd_login}" /></span>
-				</div>
-			</fieldset>
-		</form>
-		<ul class="help">
-			<li class="first"><a href="{getUrl('','act','dispMemberFindAccount')}"><span>{$lang->cmd_find_member_account}</span></a></li>
-			<li><a href="{getUrl('','act','dispMemberSignUpForm')}"><span>{$lang->cmd_signup}</span></a></li>
-		</ul>
-	</div>
-	<div class="logOut" cond="$is_logged && $module == 'admin'">
-		<span class="buttonAccount"><a href="{getUrl('act','dispMemberLogout','module','')}">{$lang->cmd_logout}</a></span>
-	</div>
-	<div class="logOut" cond="!$is_logged && $module != 'admin'">
-		<span class="buttonAccount"><a href="{getUrl('act','dispMemberLoginForm','module','', 'mid', '')}">{$lang->cmd_login}</a></span>
-	</div>
+
+<!--%import("../../../../common/js/xe-ui.js")-->
+<!--%import("../../../../common/js/jQuery.tipTip.js")-->
+<!--%import("../../../../common/js/prettyCheckboxes.js")-->
+<!--%import("../../../../common/css/xe-ui.css")-->
+<!--%import("../../../../common/css/tipTip.css")-->
+<!--[if gte IE 9]>
+	<style type="text/css">
+		.gradient {
+                    filter: none;
+		}
+	</style>
+<![endif]-->
+
+<script type="text/javascript">
+    jQuery( function(){
+        jQuery("input:checkbox").each( function() {
+            offset = jQuery(this).next().width() + 20;
+            jQuery(this).tipTip({defaultPosition: "right", activation: "focus", maxWidth:"300px", delay:"0", edgeOffset:offset});
+        });
+    });
+</script>
+<h1 style="margin-top: 50px;">
+    <img src="{getUrl()}common/img/logo.png" width="315" height="52" alt="XpressEngine logo" title="XpressEngine" />
+</h1>
+<div class="xe-ui-panel cleared" style="width: 400px; margin: 50px auto;">
+    <div class="xe-ui-panel-content">
+        <h2>{$system_message}</h2>
+        <div cond="$XE_VALIDATOR_MESSAGE" class="xe-ui-message {$XE_VALIDATOR_MESSAGE_TYPE} gradient cleared">
+            <a href="#" style="float: right;" onclick="jQuery(this).parent().remove();return false;" class="xe-ui-button-gray gradient">Dismiss</a>
+            <p>{$XE_VALIDATOR_MESSAGE}</p>
+        </div>
+        <form ruleset="@login" action="./" method="post" id="gForm">
+            <input type="hidden" name="module" value="member" />
+            <input type="hidden" name="act" value="procMemberLogin" />
+            <input type="hidden" name="success_return_url" value="{getRequestUriByServerEnviroment()}" />
+            <p>
+                <label for="user_id">{$lang->user_id}:</label>
+                <input type="text" name="user_id" id="uid" value="" class="xe-ui-panel-text" />
+            </p>
+            <p>
+                <label for="password">{$lang->password}:</label>
+                <input type="password" name="password" id="upw" value="" class="xe-ui-panel-text" />
+            </p>
+            <p>
+                <label></label>
+                <input type="checkbox" name="keep_signed" id="keepid" class="inputCheck" value="Y" title="{$lang->about_keep_warning}"/>
+                <label for="keepid" style="width: 150px;">{$lang->keep_signed}</label>
+            </p>
+            <!--div id="loginAccess" class="gLogin">
+                <div class="mLogin" id="gLogin" cond="!$is_logged && $module == 'admin'">
+                    <ul class="help">
+                        <li class="first"><a href="{getUrl('','act','dispMemberFindAccount')}"><span>{$lang->cmd_find_member_account}</span></a></li>
+                        <li><a href="{getUrl('','act','dispMemberSignUpForm')}"><span>{$lang->cmd_signup}</span></a></li>
+                    </ul>
+                </div>
+                <div class="logOut" cond="$is_logged && $module == 'admin'">
+                    <span class="buttonAccount"><a href="{getUrl('act','dispMemberLogout','module','')}">{$lang->cmd_logout}</a></span>
+                </div>
+                <div class="logOut" cond="!$is_logged && $module != 'admin'">
+                    <span class="buttonAccount"><a href="{getUrl('act','dispMemberLoginForm','module','', 'mid', '')}">{$lang->cmd_login}</a></span>
+                </div>
+            </div-->
+        </form>
+    </div>
+    <div class="xe-ui-panel-controller cleared">
+        <hr />
+        <p style="text-align: center;">
+            <a href="#" onclick="jQuery('#gForm').submit();return false;" class="xe-ui-button-gray gradient">{$lang->cmd_login}</a>
+        </p>
+    </div>
 </div>

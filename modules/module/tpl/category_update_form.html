@@ -1,22 +1,32 @@
 <!--#include("./header.html")-->
-<!-- 카테고리 수정 -->
+
 <!--@if($selected_category)-->
-<div cond="$XE_VALIDATOR_MESSAGE" class="message {$XE_VALIDATOR_MESSAGE_TYPE}">
-	<p>{$XE_VALIDATOR_MESSAGE}</p>
+<div class="xe-ui-panel">
+    <div class="xe-ui-panel-content cleared">
+        <form ruleset="updateCategory" action="./" method="post" enctype="multipart/form-data" class="form">
+            <input type="hidden" name="module" value="module" />
+            <input type="hidden" name="act" value="procModuleAdminUpdateCategory" />
+            <input type="hidden" name="module_category_srl" value="{$selected_category->module_category_srl}" />
+            <input type="hidden" name="mode" value="update" />
+            <table class="xe-ui-form-table" cellpadding="0" cellspacing="0">
+                <tbody>
+                    <tr>
+                        <td width="25%">
+                            <label for="category_title">{$lang->category_title}:</label>
+                        </td>
+                        <td>
+                            <input type="text" name="title" id="category_title" value="{$selected_category->title}" class="xe-ui-panel-text" />
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </form>
+    </div>
+    <div class="xe-ui-panel-controller">
+        <hr />
+        <p class="center">
+            <a href="#" onclick="jQuery('.form').submit();return false;" class="xe-ui-button-gray">{$lang->cmd_save}</a>
+        </p>
+    </div>
 </div>
-<form ruleset="updateCategory" action="./" method="post" enctype="multipart/form-data" class="form">
-	<input type="hidden" name="module" value="module" />
-	<input type="hidden" name="act" value="procModuleAdminUpdateCategory" />
-	<input type="hidden" name="module_category_srl" value="{$selected_category->module_category_srl}" />
-	<input type="hidden" name="mode" value="update" />
-	<ul>
-		<li>
-			<p class="q"><label for="category_title">{$lang->category_title}</label></p>
-			<p class="a"><input type="text" name="title" id="category_title" value="{$selected_category->title}" /></p>
-		</li>
-	</ul>
-	<div class="btnArea">
-		<span class="btn"><input type="submit" value="{$lang->cmd_registration}" accesskey="s" /></span>
-	</div>
-</form>
 <!--@end-->

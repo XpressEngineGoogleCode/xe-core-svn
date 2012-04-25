@@ -1,12 +1,12 @@
 jQuery(function($){
 	// Agreement
-	var agree = $('.agreement');
+	var agree = $('#agreement');
 	agree.submit(function(){
-		if($('#lgpl:checked').length==0){
-			alert($('#agree_license_text').val());
-			$('#lgpl').focus();
-			return false;
-		}
+            if($('#lgpl_agree:checked').length==0) {
+                alert($('#agree_license_text').val());
+                $('#lgpl_agree').focus();
+                return false;
+            }
 	});
 	
 	// Input Clear

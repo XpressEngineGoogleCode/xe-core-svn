@@ -38,7 +38,7 @@
 	</item>
 	<item name="importer">
 		<value xml:lang="ko"><![CDATA[데이터 들여오기]]></value>
-		<value xml:lang="en"><![CDATA[XE Data Importer]]></value>
+		<value xml:lang="en"><![CDATA[Data Migration]]></value>
 		<value xml:lang="jp"><![CDATA[XEデータ変換]]></value>
 		<value xml:lang="zh-CN"><![CDATA[数据导入]]></value>
 		<value xml:lang="zh-TW"><![CDATA[匯入]]></value>
@@ -47,6 +47,9 @@
 		<value xml:lang="es"><![CDATA[Transferir los datos de XE]]></value>
 		<value xml:lang="tr"><![CDATA[XE Veri Alıcısı]]></value>
 		<value xml:lang="vi"><![CDATA[Chuyển XE Data]]></value>
+	</item>
+	<item name="import_button">
+		<value xml:lang="en"><![CDATA[Import data from XML file]]></value>
 	</item>
 	<item name="source_type">
 		<value xml:lang="ko"><![CDATA[이전 대상]]></value>

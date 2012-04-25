@@ -69,14 +69,14 @@
 			$extentionReplace = array();
 
 			if($extendForm->column_type == 'text' || $extendForm->column_type == 'homepage' || $extendForm->column_type == 'email_address'){
-				$template = '<input type="text" name="%column_name%" value="%value%" />';
+				$template = '<input type="text" name="%column_name%" value="%value%" class="xe-ui-panel-text" />';
 			}elseif($extendForm->column_type == 'tel'){
 				$extentionReplace = array('tel_0' => $extendForm->value[0],
 										  'tel_1' => $extendForm->value[1],
 										  'tel_2' => $extendForm->value[2]);
-				$template = '<input type="text" name="%column_name%[]" value="%tel_0%" size="4" />-<input type="text" name="%column_name%[]" value="%tel_1%" size="4" />-<input type="text" name="%column_name%[]" value="%tel_2%" size="4" />';
+				$template = '<input type="text" name="%column_name%[]" value="%tel_0%" size="4" class="xe-ui-panel-text" />-<input type="text" name="%column_name%[]" value="%tel_1%" size="4" class="xe-ui-panel-text" />-<input type="text" name="%column_name%[]" value="%tel_2%" size="4" class="xe-ui-panel-text" />';
 			}elseif($extendForm->column_type == 'textarea'){
-				$template = '<textarea name="%column_name%">%value%</textarea>';
+				$template = '<textarea name="%column_name%" class="xe-ui-panel-textarea">%value%</textarea>';
 			}elseif($extendForm->column_type == 'checkbox'){
 				$template = '';
 				if($extendForm->default_value){
@@ -101,7 +101,7 @@
 					$template = sprintf($template, implode('', $optionTag));
 				}
 			}elseif($extendForm->column_type == 'select'){
-				$template = '<select name="'.$extendForm->column_name.'">%s</select>';
+				$template = '<select name="'.$extendForm->column_name.'" class="xe-ui-panel-select">%s</select>';
 				$optionTag = array();
 				if($extendForm->default_value){
 					foreach($extendForm->default_value as $v){
@@ -143,11 +143,11 @@
 				<script type="text/javascript">jQuery(function($){ $.krzip('%column_name%') });</script>
 EOD;
 			}elseif($extendForm->column_type == 'jp_zip'){
-				$template = '<input type="text" name="%column_name%" value="%value%" />';
+				$template = '<input type="text" name="%column_name%" value="%value%" class="xe-ui-panel-text" />';
 			}elseif($extendForm->column_type == 'date'){
 				$extentionReplace = array('date' => zdate($extendForm->value, 'Y-m-d'),
 										  'cmd_delete' => $lang->cmd_delete);
-				$template = '<input type="hidden" name="%column_name%" id="date_%column_name%" value="%value%" /><input type="text" class="inputDate" value="%date%" readonly="readonly" /> <input type="button" value="%cmd_delete%" class="dateRemover" />';
+				$template = '<input type="hidden" name="%column_name%" id="date_%column_name%" value="%value%" /><input type="text" class="inputDate xe-ui-panel-text" value="%date%" readonly="readonly" /> <input type="button" value="%cmd_delete%" class="dateRemover" />';
 			}
 
 			$replace = array_merge($extentionReplace, $replace);
@@ -392,6 +392,30 @@ EOD;
                         if(!$info->{$key}) $info->{$key} = $val;
                     }
                 }
+
+				if(strlen($info->find_account_answer) == 32 && preg_match('/[a-zA-Z0-9]+/', $info->find_account_answer))
+				{
+					$info->find_account_answer = null;
+				}
+
+				// XSS defence
+				$oSecurity = new Security($info);
+				$oSecurity->encodeHTML('user_name', 'nick_name', 'find_account_answer', 'description', 'address.', 'group_list..');
+
+                if($extra_vars)
+				{
+                    foreach($extra_vars as $key => $val)
+					{
+						$oSecurity->encodeHTML($key);
+                    }
+                }
+
+				// Check format.
+				$oValidator = new Validator();
+				if(!$oValidator->applyRule('url', $info->homepage))
+				{
+					$info->homepage = '';
+				}
 
                 $GLOBALS['__member_info__'][$info->member_srl] = $info;
             }
@@ -827,8 +851,10 @@ EOD;
         /**
          * @brief Get the image mark of the group
          **/
-        function getGroupImageMark($member_srl,$site_srl=0) {
-            if(!isset($GLOBALS['__member_info__']['group_image_mark'][$member_srl])) {
+        function getGroupImageMark($member_srl,$site_srl=0) 
+		{
+            if(!isset($GLOBALS['__member_info__']['group_image_mark'][$member_srl])) 
+			{
 				$oModuleModel = getModel('module');
 				$config = $oModuleModel->getModuleConfig('member');
 				if($config->group_image_mark!='Y'){
@@ -836,20 +862,23 @@ EOD;
 				}
 				$member_group = $this->getMemberGroups($member_srl,$site_srl);
 				$groups_info = $this->getGroups($site_srl);
-				$image_mark_info = null;
-				if(count($member_group) > 0 && is_array($member_group)){
-					$group_srl = array_keys($member_group);
-				}
+				if(count($member_group) > 0 && is_array($member_group))
+				{
+					$memberGroups = array_keys($member_group);
 
-				$i = 0;
-				while($i < count($group_srl)){
-					$target = $groups_info[$group_srl[$i++]];
-					if ($target->image_mark)
+					foreach($groups_info as $group_srl=>$group_info)
 					{
-						$info->title = $target->title;
-						$info->description = $target->description;
-						$info->src = $target->image_mark;
-						$GLOBALS['__member_info__']['group_image_mark'][$member_srl] = $info;
+						if(in_array($group_srl, $memberGroups))
+						{
+							if($group_info->image_mark)
+							{
+								$info->title = $group_info->title;
+								$info->description = $group_info->description;
+								$info->src = $group_info->image_mark;
+								$GLOBALS['__member_info__']['group_image_mark'][$member_srl] = $info;
+								break;
+							}
+						}		
 					}
 				}
 				if (!$info) $GLOBALS['__member_info__']['group_image_mark'][$member_srl] == 'N';

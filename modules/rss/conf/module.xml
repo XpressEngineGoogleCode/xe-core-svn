@@ -10,19 +10,19 @@
         <action name="procRssAdminInsertConfig" type="controller" standalone="true" ruleset="insertRssConfig" />
         <action name="procRssAdminInsertModuleConfig" type="controller" standalone="true" ruleset="insertRssModuleConfig" />
     </actions>
-	<menus>
-		<menu name="rss">
-			<title xml:lang="en">RSS</title>
-			<title xml:lang="ko">RSS</title>
-			<title xml:lang="zh-CN">RSS</title>
-			<title xml:lang="jp">RSS</title>
-			<title xml:lang="es">RSS</title>
-			<title xml:lang="ru">RSS</title>
-			<title xml:lang="fr">RSS</title>
-			<title xml:lang="zh-TW">RSS</title>
-			<title xml:lang="vi">RSS</title>
-			<title xml:lang="mn">RSS</title>
-			<title xml:lang="tr">RSS</title>
-		</menu>
-	</menus>
+    <menus>
+        <menu name="rss">
+            <title xml:lang="en">Manage RSS feeds</title>
+            <title xml:lang="ko">Manage RSS feeds</title>
+            <title xml:lang="zh-CN">Manage RSS feeds</title>
+            <title xml:lang="jp">Manage RSS feeds</title>
+            <title xml:lang="es">Manage RSS feeds</title>
+            <title xml:lang="ru">Manage RSS feeds</title>
+            <title xml:lang="fr">Manage RSS feeds</title>
+            <title xml:lang="zh-TW">Manage RSS feeds</title>
+            <title xml:lang="vi">Manage RSS feeds</title>
+            <title xml:lang="mn">Manage RSS feeds</title>
+            <title xml:lang="tr">Manage RSS feeds</title>
+        </menu>
+    </menus>
 </module>

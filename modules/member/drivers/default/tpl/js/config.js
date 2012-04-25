@@ -6,7 +6,12 @@ function doUpdateDeniedID(user_id, mode, message) {
     exec_xml(
 		'member',
 		'procMemberAdminDriverInterface',
-		{driver: 'default', dact: 'procUpdateDeniedId', user_id: user_id, mode: mode},
+		{
+			driver: 'default',
+			dact: 'procUpdateDeniedId',
+			user_id: user_id,
+			mode: mode
+		},
 		function(){
 			if (mode == 'delete'){
 				jQuery('#denied_'+user_id).remove();
@@ -19,7 +24,7 @@ function doUpdateDeniedID(user_id, mode, message) {
 
 jQuery(function($){
 	// hide form if enable_join is setted "No" 
-	var suForm = $('fieldset.suForm'); // 회원가입 양식
+	var suForm = $('table.sortable'); // 회원가입 양식
 	suForm.find(':checkbox').each(function(){
 		var $i = $(this);
 		$i.change(function(){
@@ -57,7 +62,9 @@ jQuery(function($){
 		exec_xml(
 			'member',
 			'getMemberAdminInsertJoinForm',
-			{member_join_form_srl:memberFormSrl},
+			{
+				member_join_form_srl:memberFormSrl
+			},
 			function(ret){
 				var tpl = ret.tpl.replace(/<enter>/g, '\n');
 				$('#extendForm').html(tpl).find('#radio_'+checked).attr('checked', 'checked').end()
@@ -164,7 +171,10 @@ jQuery(function($){
 			exec_xml(
 				'member',
 				'procMemberAdminDeleteJoinForm',
-				{member_join_form_srl:memberFormSrl, driver:"default"},
+				{
+					member_join_form_srl:memberFormSrl,
+					driver:"default"
+				},
 				function(ret){
 					targetTR.remove();
 				},
@@ -175,7 +185,7 @@ jQuery(function($){
 
 	$('a._extendFormDelete').makeDelete();
 
-	$('button._addDeniedID').click(function(){
+	$('._addDeniedID').click(function(){
 		var ids = $('#prohibited_id').val();
 		if(ids == ''){ 
 			alert(xe.lang.msg_null_prohibited_id);
@@ -202,7 +212,11 @@ jQuery(function($){
 			$('._deniedIDCount').html($('#deniedList li').length);
 		}
 
-		jQuery.exec_json('member.procMemberAdminDriverInterface', {driver: 'default', dact: 'procInsertDeniedId', user_id: ids}, on_complete);
+		jQuery.exec_json('member.procMemberAdminDriverInterface', {
+			driver: 'default',
+			dact: 'procInsertDeniedId',
+			user_id: ids
+		}, on_complete);
 
 	});
 
@@ -211,13 +225,25 @@ jQuery(function($){
 		var $notCheckedTR = $('input[name=identifier]:not(:checked)').closest('tr');
 		var name, notName;
 		if (!$checkedTR.hasClass('sticky')){
-			name = $checkedTR.find('input[name="list_order[]"]').val();
-			if (!$checkedTR.find('input[type=hidden][name="usable_list[]"]').length) $('<input type="hidden" name="usable_list[]" value="'+name+'" />').insertBefore($checkedTR);
-			if (!$checkedTR.find('input[type=hidden][name='+name+']').length) $('<input type="hidden" name="'+name+'" value="required" />').insertBefore($checkedTR);
-			$checkedTR.find('th').html('<span class="_title" style="padding-left:20px" >'+$checkedTR.find('th ._title').html()+'</span>');
-			$checkedTR.find('input[type=checkbox][name="usable_list[]"]').attr('checked', 'checked').attr('disabled', 'disabled');
-			$checkedTR.find('input[type=radio][name='+name+'][value=required]').attr('checked', 'checked').attr('disabled', 'disabled');
-			$checkedTR.find('input[type=radio][name='+name+'][value=option]').removeAttr('checked').attr('disabled', 'disabled');
+
+			input = $checkedTR.find('input[name="list_order[]"]');
+			value = input.attr('value');
+			name = input.val();
+
+			if (name != 'email_address'){
+				if (!$checkedTR.find('input[type=hidden][name="usable_list[]"]').length) $('<input type="hidden" name="usable_list[]" value="'+name+'" />').insertBefore($checkedTR);
+				if (!$checkedTR.find('input[type=hidden][name='+name+']').length) $('<input type="hidden" name="'+name+'" value="required" />').insertBefore($checkedTR);
+				//$checkedTR.find('th').html('<span class="_title" style="padding-left:20px" >'+$checkedTR.find('th ._title').html()+'</span>');
+				$checkedTR.find('input[type=checkbox][name="usable_list[]"]').attr('checked', 'checked').attr('disabled', 'disabled');
+				$checkedTR.find('input[type=radio][name='+name+'][value=required]').attr('checked', 'checked').attr('disabled', 'disabled');
+
+                $checkedTR.find('input[name="'+value+'"]').each(function(){
+                    label = $checkedTR.find('label[for='+$(this).attr('id')+']');
+                    label.removeClass('disabled');
+                    if ($(this).is(':checked')) label.addClass('checked');
+                });
+            //$checkedTR.find('input[type=radio][name='+name+'][value=option]').removeAttr('checked').attr('disabled', 'disabled');
+            }
 			$checkedTR.addClass('sticky');
 			$checkedTR.parent().prepend($checkedTR);
 
@@ -228,7 +254,6 @@ jQuery(function($){
 				$notCheckedTR.find('input[type=checkbox][name="usable_list[]"]').removeAttr('disabled');
 				$notCheckedTR.find('input[type=radio][name='+notName+']').removeAttr('disabled');
 			}
-			$notCheckedTR.find('th').html('<div class="wrap"><button type="button" class="dragBtn">Move to</button><span class="_title" >'+$notCheckedTR.find('th ._title').html()+'</span></div>');
 			$notCheckedTR.removeClass('sticky');
 
 			// add sticky class 

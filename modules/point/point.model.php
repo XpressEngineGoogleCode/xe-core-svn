@@ -114,49 +114,23 @@
          **/
         function getMemberList($args = null, $columnList = array()) {
             // Arrange the search options
-            $args->is_admin = Context::get('is_admin')=='Y'?'Y':'';
-            $args->is_denied = Context::get('is_denied')=='Y'?'Y':'';
             $args->selected_group_srl = Context::get('selected_group_srl');
 
             $search_target = trim(Context::get('search_target'));
             $search_keyword = trim(Context::get('search_keyword'));
 
-            if($search_target && $search_keyword) {
-                switch($search_target) {
-                    case 'user_id' :
-                            if($search_keyword) $search_keyword = str_replace(' ','%',$search_keyword);
-                            $args->s_user_id = $search_keyword;
-                        break;
-                    case 'user_name' :
-                            if($search_keyword) $search_keyword = str_replace(' ','%',$search_keyword);
-                            $args->s_user_name = $search_keyword;
-                        break;
-                    case 'nick_name' :
-                            if($search_keyword) $search_keyword = str_replace(' ','%',$search_keyword);
-                            $args->s_nick_name = $search_keyword;
-                        break;
-                    case 'email_address' :
-                            if($search_keyword) $search_keyword = str_replace(' ','%',$search_keyword);
-                            $args->s_email_address = $search_keyword;
-                        break;
-                    case 'regdate' :
-                            $args->s_regdate = $search_keyword;
-                        break;
-                    case 'last_login' :
-                            $args->s_last_login = $search_keyword;
-                        break;
-                    case 'extra_vars' :
-                            $args->s_extra_vars = $search_keyword;
-                        break;
-                }
-            }
-            // If there is a selected_group_srl, change the "query id" (for table join)
-            if($args->selected_group_srl) {
-                $query_id = 'point.getMemberListWithinGroup';
-            } else {
-                $query_id = 'point.getMemberList';
+            if($search_keyword) {
+                $args->s_regdate = $search_keyword;
+                $args->s_last_login = $search_keyword;
+                $args->s_extra_vars = $search_keyword;
+                if($search_keyword) $search_keyword = str_replace(' ','%',$search_keyword);
+                $args->s_email_address = $search_keyword;
+                $args->s_user_id = $search_keyword;
+                $args->s_user_name = $search_keyword;
+                $args->s_nick_name = $search_keyword;
             }
 
+            $query_id = 'point.getMemberList';
             $output = executeQuery($query_id, $args, $columnList);
 
             if($output->total_count) {

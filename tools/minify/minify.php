@@ -194,4 +194,4 @@ function closure_compile($content) {
 
 // run main function
 error_reporting(E_ALL & ~E_NOTICE);
-main();
+main('../../modules/admin/tpl/css/');

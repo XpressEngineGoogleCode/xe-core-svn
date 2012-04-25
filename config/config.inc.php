@@ -13,7 +13,7 @@
      * @brief display XE's full version
      * Even The file should be revised when releasing altough no change is made
      **/
-	define('__XE_VERSION__', '1.5.1.3');
+	define('__XE_VERSION__', '1.6.0.0');
     define('__ZBXE_VERSION__', __XE_VERSION__); // deprecated : __ZBXE_VERSION__ will be removed. Use __XE_VERSION__ instead.
 
     /**
@@ -51,7 +51,7 @@
      * define('__ENABLE_PHPUNIT_TEST__', 0);
      * define('__PROXY_SERVER__', 'http://domain:port/path');
 	 * define('__XE_CDN_PREFIX__', 'http://yourCdnDomain.com/path/');
-	 * define('__XE_CDN_VERSION__', 'yourCndVersion');
+	 * define('__XE_CDN_VERSION__', 'yourCdnVersion');
      */
     if(file_exists(_XE_PATH_.'config/config.user.inc.php')) {
         require _XE_PATH_.'config/config.user.inc.php';
@@ -110,7 +110,7 @@
      * 1: Enabled
      * Only particular servers may have a problem in IE browser when sending a compression
      **/
-    if(!defined('__OB_GZHANDLER_ENABLE__')) define('__OB_GZHANDLER_ENABLE__', 1);
+    if(!defined('__OB_GZHANDLER_ENABLE__')) define('__OB_GZHANDLER_ENABLE__', 0);
 
     /**
      * @brief decide to use/not use the php unit test (Path/tests/index.php)

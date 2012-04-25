@@ -19,6 +19,8 @@
                         // Sort order - asc / desc
 			$this->sort_order = $index->attrs->order;
 			if(!in_array($this->sort_order, array("asc", "desc"))){
+				$arg = new Xml_Node_();
+				$arg->attrs = new Xml_Node_();
 				$arg->attrs->var = $this->sort_order;
 				$arg->attrs->default = 'asc';
 				$this->sort_order_argument = new SortQueryArgument($arg);
@@ -28,7 +30,7 @@
 		}
 
 		function toString(){
-			return sprintf("new OrderByColumn(\$%s_argument, %s)", $this->argument->getArgumentName(), $this->sort_order);
+			return sprintf('new OrderByColumn(${\'%s_argument\'}, %s)', $this->argument->getArgumentName(), $this->sort_order);
 		}
 
 		function getArguments(){

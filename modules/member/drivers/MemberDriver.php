@@ -680,7 +680,7 @@ abstract class MemberDriver extends Driver
 		$xmlFile = sprintf('./files/ruleset/%s.xml', $name);
 		$buff = $this->getCommonRulesetFormat();
 
-		$buff = sprintf($buff, implode('', $customrules), implode('', $fields));
+		$buff = sprintf($buff, implode(PHP_EOL, $customrules), implode(PHP_EOL, $fields));
 		Filehandler::writeFile($xmlFile, $buff);
 
 		$validator   = new Validator($xmlFile);
@@ -696,10 +696,10 @@ abstract class MemberDriver extends Driver
 	 */
 	private function getCommonRulesetFormat()
 	{
-		$buff = '<?xml version="1.0" encoding="utf-8"?>'
-				. '<ruleset version="1.5.0">'
-				. '<customrules>%s</customrules>'
-				. '<fields>%s</fields>'
+		$buff = '<?xml version="1.0" encoding="utf-8"?>' . PHP_EOL
+				. '<ruleset version="1.5.0">' . PHP_EOL
+				. '<customrules>' . PHP_EOL . %s  . PHP_EOL . '</customrules>' . PHP_EOL
+				. '<fields>'  . PHP_EOL . %s  . PHP_EOL . '</fields>' . PHP_EOL
 				. '</ruleset>';
 
 		return $buff;

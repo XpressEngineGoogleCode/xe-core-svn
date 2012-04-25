@@ -1,35 +1,58 @@
-<!--%import("js/install_admin.js")-->
+<!--%import("../../../common/js/jquery.tipTip.js")-->
+<!--%import("../../../common/css/tipTip.css")-->
+
 <!--#include("header.html")-->
-	<div id="body">
-<!--#include("progress_menu.html")-->
-		<span class="dummy"></span>
-		<div id="content">
-			<div cond="$XE_VALIDATOR_MESSAGE" class="message {$XE_VALIDATOR_MESSAGE_TYPE}">
-				<p>{$XE_VALIDATOR_MESSAGE}</p>
-			</div>
-			<form rule="mysql" action="./" method="post">
-			<input type="hidden" value="{getUrl('', 'act', $act, 'db_type', $db_type)}" name="error_return_url">
-			<input type="hidden" name="act" value="procMysqlDBSetting" />
-			<input type="hidden" name="db_type" value="{$db_type}" />
-				<h2 class="h2">{$db_type}</h2>
-				<ul class="form formDbInfo">
-					<li><label for="dbHostName">{$lang->db_hostname}</label><input name="db_hostname" value="localhost" type="text" class="iText" id="dbHostName" /></li>
-					<li><label for="dbPort">{$lang->db_port}</label><input name="db_port" value="3306" type="text" class="iText" id="dbPort" /></li>
-					<li><label for="dbId">{$lang->db_userid}</label><input name="db_userid" type="text" class="iText" id="dbId" /></li>
-					<li><label for="dbPw">{$lang->db_password}</label><input name="db_password" type="password" class="iText" id="dbPw" /></li>
-					<li><label for="dbName">{$lang->db_database}</label><input name="db_database" type="text" class="iText" id="dbName" /></li>
-					<li><label for="dbPrefix">{$lang->db_table_prefix}</label><input name="db_table_prefix" type="text" class="iText" id="dbPrefix" value="xe" /></li>
-				</ul>
-				<div class="desc">{$lang->db_info_desc}</div>
-				<div class="ibtnArea">
-					<div class="fLeft">
-						<span class="ibtn icon"><span class="back"></span> <a href="{getUrl('', 'act', 'dispInstallSelectDB')}">{$lang->cmd_back}</a></span>
-					</div>
-					<div class="fRight">
-							<span class="ibtn icon"><span class="check"></span> <input name="" type="submit" value="{$lang->cmd_next}" /></span>
-					</div>
-				</div>
-			</form>
-		</div>
-	</div>
-<!--#include("footer.html")-->
+
+    <!--#include("progress_menu.html")-->
+    <div id="installContent">
+        <div class="xe-ui-panel cleared">
+            <div class="xe-ui-panel-content">
+                <p>{$lang->db_title}</p>
+                <p>{$lang->db_description}</p>
+                <div cond="$XE_VALIDATOR_MESSAGE" class="xe-ui-message {$XE_VALIDATOR_MESSAGE_TYPE} gradient cleared">
+                    <a href="#" style="float: right;" onclick="jQuery(this).parent().remove();return false;" class="xe-ui-button-gray gradient">Dismiss</a>
+                    <p>{$XE_VALIDATOR_MESSAGE}</p>
+                </div>
+                <form rule="mysql" action="./" method="post" id="db_data">
+                <input type="hidden" value="{getUrl('', 'act', $act, 'db_type', $db_type)}" name="error_return_url">
+                <input type="hidden" name="act" value="procMysqlDBSetting" />
+                <input type="hidden" name="db_type" value="{$db_type}" />
+                    <p>
+                        <label for="dbHostName">{$lang->db_hostname}: <span class="required">*</span></label>
+                        <input name="db_hostname" value="localhost" type="text" class="xe-ui-panel-text" id="dbHostName" title="{$lang->db_hostname_desc}"/>
+                    </p>
+                    <p>
+                        <label for="dbPort">{$lang->db_port}: <span class="required">*</span></label>
+                        <input name="db_port" value="3306" type="text" class="xe-ui-panel-text" id="dbPort" title=""/>
+                    </p>
+                    <p>
+                        <label for="dbId">{$lang->db_userid}: <span class="required">*</span></label>
+                        <input name="db_userid" type="text" class="xe-ui-panel-text" id="dbId" title=""/>
+                    </p>
+                    <p>
+                        <label for="dbPw">{$lang->db_password}:</label>
+                        <input name="db_password" type="password" class="xe-ui-panel-text" id="dbPw" title="{$lang->db_password_desc}"/>
+                    </p>
+                    <p>
+                        <label for="dbName">{$lang->db_database}: <span class="required">*</span></label>
+                        <input name="db_database" type="text" class="xe-ui-panel-text" id="dbName" title=""/>
+                    </p>
+                    <p>
+                        <label for="dbPrefix">{$lang->db_table_prefix}: <span class="required">*</span></label>
+                        <input name="db_table_prefix" type="text" class="xe-ui-panel-text" id="dbPrefix" value="xe" title="{$lang->db_hostname_desc}"/>
+                    </p>
+                </form>
+            </div>
+            <div class="xe-ui-panel-controller cleared">
+                <hr />
+                <p style="float: left; margin-left: 16px;">
+                    <a href="{getUrl('','act','dispInstallSelectDB')}" class="xe-ui-button-gray gradient">{$lang->cmd_back}</a>
+                </p>
+                <p style="float: right; margin-right: 16px;">
+                    <a href="#" onclick="jQuery('#db_data').submit();return false;" class="xe-ui-button-gray gradient">{$lang->cmd_proceed}</a>
+                </p>
+            </div>
+        </div>
+        <p id="version">{$lang->version} {__XE_VERSION__}</p>
+    </div>
+<!--#include("footer.html")-->   

@@ -2,7 +2,7 @@
 	#faceoff_migration_info img { border: 1px solid #ccc; padding: 5px; }
 </style>
 
-<h1 class="h1">{$lang->installed_layout}</h1>
+<h1>{$lang->installed_layout}</h1>
 
 <div cond="$layout == 'faceoff'" class="message error">
 	<p>{$lang->faceoff_migration[0]}</p>
@@ -12,8 +12,4 @@
 	<div class="fg">
 	<include target="faceoff_deprecated.html"/>
 	</div>
-</div>
-
-<div cond="$XE_VALIDATOR_MESSAGE" class="message {$XE_VALIDATOR_MESSAGE_TYPE}">
-	<p>{$XE_VALIDATOR_MESSAGE}</p>
 </div>

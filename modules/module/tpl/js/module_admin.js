@@ -6,10 +6,12 @@
 /* 모듈 즐겨찾기 */
 function doToggleFavoriteModule(obj, module_name) {
 	function on_complete(data){
-		if (data.result == 'on')
-			jQuery(obj).removeClass('fvOff').addClass('fvOn').html(xe.lang.favorite_on);
-		else
-			jQuery(obj).removeClass('fvOn').addClass('fvOff').html(xe.lang.favorite_off);
+		if (data.result == 'on') {
+                    jQuery(obj).removeClass('fvOff').addClass('fvOn').html(xe.lang.favorite_on);
+                } else {
+                    jQuery(obj).removeClass('fvOn').addClass('fvOff').html(xe.lang.favorite_off);
+                }
+                location.reload();
 	}
 
 	jQuery.exec_json('admin.procAdminToggleFavorite', {'module_name': module_name, 'site_srl': 0}, on_complete);

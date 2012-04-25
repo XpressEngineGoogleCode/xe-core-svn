@@ -127,7 +127,7 @@
 		<value xml:lang="en"><![CDATA[If checked, RSS will be disabled.]]></value>
 		<value xml:lang="jp"><![CDATA[チェックを入れるとRSSの出力を行いません。]]></value>
 		<value xml:lang="zh-CN"><![CDATA[选此项不显示RSS。]]></value>
-		<value xml:lang="zh-TW"><![CDATA[隱藏 RSS Feed。]]></value>
+		<value xml:lang="zh-TW"><![CDATA[隱藏 RSS Feed]]></value>
 		<value xml:lang="fr"><![CDATA[Si vous cochez, RSS sera invalidé.]]></value>
 		<value xml:lang="ru"><![CDATA[Если выбрано, RSS будет отключен.]]></value>
 		<value xml:lang="es"><![CDATA[Si selecciona esta opción, RSS será desactivado.]]></value>
@@ -148,7 +148,7 @@
 	</item>
 	<item name="about_open_rss">
 		<value xml:lang="ko"><![CDATA[현재 모듈에 대한 피드(Feed) 공개를 선택하실 수 있습니다. 글 열람 권한과 상관없이 옵션에 따라 RSS가 공개됩니다.]]></value>
-		<value xml:lang="en"><![CDATA[You can select RSS on the current module to be open to the public.\nIf it is enabled, the article will be open to the public despite its view permissions.]]></value>
+		<value xml:lang="en"><![CDATA[You can select RSS on the current module to be open to the public. If it is enabled, the article will be open to the public despite its view permissions.]]></value>
 		<value xml:lang="jp"><![CDATA[現在のモジュールに対して「RSS配信」を選択することができます。書き込みの内容が読める権限とは関係なくオプションによってRSSが配信されます。]]></value>
 		<value xml:lang="zh-CN"><![CDATA[可以指定RSS公开程度,RSS公开不受查看内容权限的限制。]]></value>
 		<value xml:lang="zh-TW"><![CDATA[選擇該模組 RSS Feed 的公開程度。公開 RSS Feed 將不受檢視內容權限的限制，隨公開 RSS Feed 的選項公開 RSS Feed。]]></value>
@@ -199,4 +199,7 @@
 		<value xml:lang="zh-TW"><![CDATA[錯誤的檔案格式，無法上傳。\n只允許上傳 JPEG, GIF, PNG 等檔案格式。]]></value>
 		<value xml:lang="ru"><![CDATA[Неправильный тип картинки\nПоддерживаются только JPEG, GIF, PNG файлы]]></value>
 	</item>
+        <item name="manage_rss_feeds">
+            <value xml:lang="en"><![CDATA[Manage RSS feeds]]></value>
+        </item>
 </lang>

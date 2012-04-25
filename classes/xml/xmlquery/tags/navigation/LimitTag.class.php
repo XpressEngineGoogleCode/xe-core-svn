@@ -7,7 +7,7 @@
 		var $list_count;
 
 		function LimitTag($index){
-			if($index->page->attrs && $index->page_count->attrs){
+			if($index->page && $index->page->attrs && $index->page_count && $index->page_count->attrs){
 				$this->page = new QueryArgument($index->page);
 				$this->page_count = new QueryArgument($index->page_count);
 				$this->arguments[] = $this->page;
@@ -19,8 +19,8 @@
 		}
 
 		function toString(){
-			if ($this->page)return sprintf("new Limit(\$%s_argument, \$%s_argument, \$%s_argument)", $this->list_count->getArgumentName(), $this->page->getArgumentName(),  $this->page_count->getArgumentName());
-			else return sprintf("new Limit(\$%s_argument)", $this->list_count->getArgumentName());
+			if ($this->page)return sprintf('new Limit(${\'%s_argument\'}, ${\'%s_argument\'}, ${\'%s_argument\'})', $this->list_count->getArgumentName(), $this->page->getArgumentName(),  $this->page_count->getArgumentName());
+			else return sprintf('new Limit(${\'%s_argument\'})', $this->list_count->getArgumentName());
 		}
 
 		function getArguments(){

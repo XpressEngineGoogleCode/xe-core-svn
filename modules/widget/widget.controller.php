@@ -68,7 +68,6 @@
             $attribute = $this->arrangeWidgetVars($widget, Context::getRequestVars(), $vars);
             // Wanted results
             $widget_code = $this->execute($widget, $vars, true, false);
-
             $this->add('widget_code', $widget_code);
         }
 
@@ -231,10 +230,10 @@
         /**
          * @breif By converting the specific content of the widget tag return
          **/
-        function transWidgetCode($content, $javascript_mode = false) {
+        function transWidgetCode($content, $javascript_mode = false, $isReplaceLangCode = true) {
             // Changing user-defined language
             $oModuleController = getController('module');
-            $oModuleController->replaceDefinedLangCode($content);
+            $oModuleController->replaceDefinedLangCode($content, $isReplaceLangCode);
             // Check whether to include information about editing
             $this->javascript_mode = $javascript_mode;
             // Widget code box change
@@ -334,7 +333,11 @@
             if(!$ignore_cache && (!$widget_cache || !$widget_sequence)) {
                 $oWidget = $this->getWidgetObject($widget);
                 if(!$oWidget || !method_exists($oWidget, 'proc')) return;
-                return $oWidget->proc($args);
+
+				$widget_content = $oWidget->proc($args);
+				$oModuleController = &getController('module');
+				$oModuleController->replaceDefinedLangCode($widget_content);
+                return $widget_content;
             }
 
             /**
@@ -361,6 +364,8 @@
             if(!$oWidget || !method_exists($oWidget,'proc')) return;
 
             $widget_content = $oWidget->proc($args);
+			$oModuleController = &getController('module');
+			$oModuleController->replaceDefinedLangCode($widget_content);
             FileHandler::writeFile($cache_file, $widget_content);
 
             return $widget_content;

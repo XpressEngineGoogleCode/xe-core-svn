@@ -3,6 +3,6 @@
     <customrules>
     </customrules>
     <fields>
-		<field name="cart" required="true" />
+        <field name="cart" required="true" />
     </fields>
 </ruleset>

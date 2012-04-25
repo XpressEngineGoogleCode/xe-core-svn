@@ -1,1 +1,12 @@
-<h1 class="h1">{$lang->autoinstall}</h1>
+<h1>{$lang->autoinstall}</h1>
+<div class="xe-ui-title-separator">
+    <hr/>
+</div>
+
+<div id="content" class="cleared">
+    <div cond="$XE_VALIDATOR_MESSAGE" class="xe-ui-message {$XE_VALIDATOR_MESSAGE_TYPE} gradient cleared">
+        <a href="#" style="float: right;" onclick="jQuery(this).parent().remove();return false;" class="xe-ui-button-gray gradient">Dismiss</a>
+        <p>{$XE_VALIDATOR_MESSAGE}</p>
+    </div>
+    <div class="xe-ui-panel">
+        <div class="xe-ui-panel-content cleared">

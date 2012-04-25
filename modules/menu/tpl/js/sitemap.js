@@ -46,12 +46,14 @@ $('form.siteMap')
 	{
 		var menuItem = obj.menu_item;
 		menuUrl = menuItem.url;
+		var successReturnUrl = editForm.find('input[name=success_return_url]').val() + menuItem.menu_srl;
 		editForm.find('.h2').text(xe.lang.edit_menu);
 		editForm.find('input[name=menu_srl]').val(menuItem.menu_srl);
 		editForm.find('input[name=menu_item_srl]').val(menuItem.menu_item_srl);
 		editForm.find('input[name=parent_srl]').val(menuItem.parent_srl);
 		editForm.find('input[name=menu_name_key]').val(menuItem.name_key);
 		editForm.find('input[name=menu_name]').val(menuItem.name);
+		editForm.find('input[name=success_return_url]').val(successReturnUrl);
 
 		var moduleType = menuItem.moduleType;
 		if(menuItem.pageType) moduleType = menuItem.pageType;
@@ -60,11 +62,15 @@ $('form.siteMap')
 		if(moduleType == 'url')
 		{
 			inputCType[2].checked = true;
+            elemId = inputCType[2].id;
+        	jQuery('label[for='+elemId+']').addClass("checked");
 			editForm.find('input[name=menu_url]').val(menuItem.url);
 		}
 		else
 		{
 			inputCType[1].checked = true;
+        	elemId = inputCType[1].id;
+        	jQuery('label[for='+elemId+']').addClass("checked");
 			editForm.find('select[name=module_type]').val(moduleType);
 			editForm.find('select[name=select_menu_url]').val(menuItem.url);
 		}
@@ -73,8 +79,22 @@ $('form.siteMap')
 
 		var openWindow = menuItem.open_window;
 		var openWindowForm = editForm.find('input=[name=menu_open_window]');
-		if(openWindow == 'Y') openWindowForm[1].checked = true;
-		else openWindowForm[0].checked = true;
+		if(openWindow == 'Y') 
+		{
+			openWindowForm[1].checked = true;
+			elemId = openWindowForm[1].id;
+        	jQuery('label[for='+elemId+']').addClass("checked");
+		}
+		else
+		{
+			elemId = openWindowForm[0].id;
+        	jQuery('label[for='+elemId+']').addClass("checked");
+		}
+
+		var expand = menuItem.expand;
+		var expandForm = editForm.find('input=[name=menu_expand]');
+		if(expand == 'Y') expandForm[0].checked = true;
+		else expandForm[0].checked = false;
 
 		// button image
 		if(menuItem.normal_btn) $('#normal_btn_preview').html('<img src="'+menuItem.normal_btn+'" /><input type="checkbox" name="isNormalDelete" value="Y"> Delete');
@@ -217,16 +237,30 @@ $('form.siteMap')
 
 		selectModuleLayer.find('select').html(htmlBuffer);
 	}
-
-	$('a.tgMap').click(function() {
+	
+	function tgMapBtn(){
+		$('.x .siteMap>ul:visible').next('.btnArea').slideDown(50);
+		$('.x .siteMap>ul:hidden').next('.btnArea').slideUp(50);
+	}
+	tgMapBtn();
+	$('a.tgMenuList').click(function() {
 		var $this = $(this);
 		var curToggleStatus = getCookie('sitemap_toggle_'+$this.attr('href'));
 		var toggleStatus = curToggleStatus == 1 ? '0' : 1;
-
+		var arr_status = $this.attr("alt").split("/");
+		if(curToggleStatus == 1)
+		{
+			$this.html(arr_status[0]);
+		}
+		else
+		{
+			$this.html(arr_status[1]);
+		}
 		$($this.attr('href')).slideToggle('fast');
 		$this.closest('.siteMap').toggleClass('fold');
 		setCookie('sitemap_toggle_'+$this.attr('href'), toggleStatus);
-
+		setTimeout(function(){ tgMapBtn(); }, 250);
+		
 		return false;
 	});
 });

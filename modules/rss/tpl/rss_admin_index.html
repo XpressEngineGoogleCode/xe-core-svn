@@ -1,92 +1,119 @@
 <load target="js/rss.js" usecdn="true" />
-<div cond="$XE_VALIDATOR_MESSAGE" class="message {$XE_VALIDATOR_MESSAGE_TYPE}">
-	<p>{$XE_VALIDATOR_MESSAGE}</p>
+
+<h1>{$lang->manage_rss_feeds}</h1>
+<div class="xe-ui-title-separator">
+    <hr/>
 </div>
-<h1 class="h1">RSS</h1>
-<form ruleset="insertRssConfig" id="fo_layout" action="./" method="post" enctype="multipart/form-data" class="form">
-	<input type="hidden" name="module" value="rss" />
-	<input type="hidden" name="act" value="procRssAdminInsertConfig" />
-	<h2 class="h2">{$lang->total_feed} {$lang->cmd_management}</h2>
-	<ul>
-		<li>
-			<p class="q">{$lang->total_feed}</p>
-			<p class="a">
-				<input type="radio" name="use_total_feed" value="Y" id="use_total_feed_yes"  <!--@if(!$total_config->use_total_feed || $total_config->use_total_feed == 'Y')-->checked="checked"<!--@end--> /> <label for="use_total_feed_yes">{$lang->use}(<a href="{getFullSiteUrl()}rss">{getFullSiteUrl()}rss</a>)</label>
-				<input type="radio" name="use_total_feed" value="N" id="use_total_feed_no" <!--@if($total_config->use_total_feed == 'N')-->checked="checked"<!--@end--> /> <label for="use_total_feed_no">{$lang->notuse}</label>
-			</p>
-		</li>
-		<li>
-			<p class="q"><label for="feed_title">{$lang->title}</label></p>
-			<p class="a"><input type="text" name="feed_title" value="{htmlspecialchars($total_config->feed_title)}" id="feed_title" /></p>
-		</li>
-		<li>
-			<p class="q"><label for="feed_description">{$lang->description}</label></p>
-			<p class="a"><textarea name="feed_description" id="feed_description" cols="42" rows="5">{$total_config->feed_description}</textarea></p>
-		</li>
-		<li>
-			<p class="q"><label for="image">{$lang->feed_image}</label></p>
-			<!--@if($total_config->image)-->
-			<p class="a">
-				<img src="../../../{$total_config->image}" alt="image" />
-				<input type="checkbox" name="del_image" value="Y" id="del_image" />
-				<label for="del_image">{$lang->cmd_delete}</label>
-			</p>
-			<!--@end-->
-			<p class="a"><input type="file" name="image" value="" id="image" /></p>
-		</li>
-		<li>
-			<p class="q"><label for="feed_copyright">{$lang->feed_copyright}</label></p>
-			<p class="a"><input type="text" name="feed_copyright" value="{htmlspecialchars($total_config->feed_copyright)}" id="feed_copyright" /></p>
-		</li>
-		<li>
-			<p class="q"><label for="feed_document_count">{$lang->feed_document_count}</label></p>
-			<p class="a"><input type="text" name="feed_document_count" value="{$total_config->feed_document_count}" id="feed_document_count" /></p>
-		</li>
-	</ul>
-	<div class="btnArea">
-		<span class="btn small"><input type="submit" value="{$lang->cmd_save}" /></span>
-	</div>
-</form>
-<form action="" class="form">
-	<h2 class="h2">{$lang->feed} {$lang->cmd_management}</h2>
-	<div class="table">
-		<table width="100%" border="1" cellspacing="0">
-			<thead>
-				<tr>
-					<th scope="col">{$lang->mid}</th>
-					<th scope="col" class="title">{$lang->description}</th>
-					<th scope="col">{$lang->open_rss}</th>
-					<th scope="col">
-						<label for="feed_integration">{$lang->open_feed_to_total}</label>
-					</th>
-					<th scope="col">{$lang->cmd_save}</th>
-				</tr>
-			</thead>
-			<tbody>
-				<!--@foreach($feed_config AS $key=>$value)-->
-				<form ruleset="insertRssModuleConfig" action="./" method="post">
-				<input type="hidden" name="act" value="procRssAdminInsertModuleConfig" />
-				<input type="hidden" name="success_return_url" value="{getUrl('', 'module', $module, 'act', 'dispRssAdminIndex')}" />
-				<input type="hidden" name="target_module_srl" value="{$key}" />
-				<tr>
-					<th scope="row"><!--@if($value['url'])--><a href="{$value['url']}" target="_blank"><!--@endif-->{$value['mid']}<!--@if($value['url'])--></a><!--@endif--></th>
-					<td class="title">{$value['feed_description']}</td>
-					<td>
-						<!--@foreach($lang->open_rss_types as $key2=>$value2)-->
-						<input type="radio" name="open_rss" value="{$key2}" id="feed_open_{$key2}" <!--@if($key2 == $value['open_feed'])-->checked="checked"<!--@end--> /><label for="feed_open_{$key2}">{$value2}</label>
-						<!--@end-->
-					</td>
-					<td>
-						<input type="radio" name="open_total_feed" value="N" id="open_total_feed_N" <!--@if($value['open_total_feed'] == 'N')-->checked="checked"<!--@end--> />
-						<label for="open_total_feed_N">{$lang->use}</label>
-						<input type="radio" name="open_total_feed" value="T_N" id="open_total_feed_T_N" <!--@if($value['open_total_feed'] == 'T_N')-->checked="checked"<!--@end--> />
-						<label for="open_total_feed_T_N">{$lang->notuse}</label>
-					</td>
-					<td><input type="submit" value="{$lang->cmd_save}" class="text" /></td>
-				</tr>
-				</form>
-				<!--@end-->
-			</tbody>
-		</table>
-	</div>
-</form>
+
+<div id="content" class="cleared">
+    <div cond="$XE_VALIDATOR_MESSAGE" class="xe-ui-message {$XE_VALIDATOR_MESSAGE_TYPE} gradient cleared">
+        <a href="#" style="float: right;" onclick="jQuery(this).parent().remove();return false;" class="xe-ui-button-gray gradient">Dismiss</a>
+        <p>{$XE_VALIDATOR_MESSAGE}</p>
+    </div>
+    <div class="xe-ui-panel">
+        <div class="xe-ui-panel-content cleared">
+            <form ruleset="insertRssConfig" id="fo_layout" action="./" method="post" enctype="multipart/form-data" class="form">
+                <input type="hidden" name="module" value="rss" />
+                <input type="hidden" name="act" value="procRssAdminInsertConfig" />
+                <h2>{$lang->total_feed} {$lang->cmd_management}</h2>
+                <p class="form-list">
+                    <span class="desc">{$lang->total_feed}:</span>
+                    <input type="radio" name="use_total_feed" value="Y" id="use_total_feed_yes"  <!--@if(!$total_config->use_total_feed || $total_config->use_total_feed == 'Y')-->checked="checked"<!--@end--> /> <label for="use_total_feed_yes">{$lang->use}(<a href="{getFullSiteUrl()}rss">{getFullSiteUrl()}rss</a>)</label>
+                    <input type="radio" name="use_total_feed" value="N" id="use_total_feed_no" <!--@if($total_config->use_total_feed == 'N')-->checked="checked"<!--@end--> /> <label for="use_total_feed_no">{$lang->notuse}</label>
+                </p>
+                <p class="form-list">
+                    <label for="feed_title" class="desc">{$lang->title}:</label>
+                    <input type="text" name="feed_title" value="{htmlspecialchars($total_config->feed_title)}" id="feed_title" class="xe-ui-panel-text"/>
+                </p>
+                <p class="form-list">
+                    <label for="feed_description" class="desc v-top">{$lang->description}:</label>
+                    <textarea name="feed_description" id="feed_description" cols="42" rows="5" class="xe-ui-panel-textarea">
+                        {$total_config->feed_description}
+                    </textarea>
+                </p>
+                <p class="form-list">
+                    <label for="image" class="desc">{$lang->feed_image}:</label>
+                    <input type="file" name="image" value="" id="image" />
+                </p>
+                <p class="form-list">
+                    <span class="desc"></span>
+                    <!--@if($total_config->image)-->
+                        <img src="../../../{$total_config->image}" alt="image" class="xe-ui-panel-img"/>
+                        <input type="checkbox" name="del_image" value="Y" id="del_image" />
+                        <label for="del_image">{$lang->cmd_delete}</label>
+                    <!--@end-->
+                </p>
+                <p class="form-list">
+                    <label for="feed_copyright" class="desc">{$lang->feed_copyright}:</label>
+                    <input type="text" name="feed_copyright" value="{htmlspecialchars($total_config->feed_copyright)}" id="feed_copyright" class="xe-ui-panel-text"/>
+                </p>
+                <p class="form-list">
+                    <label for="feed_document_count" class="desc">{$lang->feed_document_count}:</label>
+                    <input type="text" name="feed_document_count" value="{$total_config->feed_document_count}" id="feed_document_count" class="xe-ui-panel-text"/>
+                </p>
+            </form>
+        </div>
+        <div class="xe-ui-panel-controller">
+            <hr />
+            <p class="center">
+                <a href="#" onclick="jQuery('#fo_layout').submit();return false;" class="xe-ui-button-gray">{$lang->cmd_save}</a>
+            </p>
+        </div>
+    </div>
+    <div class="xe-ui-panel cleared" style="margin-top: 15px;">
+        <div class="xe-ui-panel-content cleared">
+            <form action="" class="form">
+                <h2>{$lang->feed} {$lang->cmd_management}</h2>
+                <table width="100%" cellspacing="0" cellpadding="0" class="xe-ui-table">
+                    <thead>
+                        <tr>
+                            <th scope="col" class="center">{$lang->mid}</th>
+                            <th scope="col">{$lang->description}</th>
+                            <th scope="col">{$lang->open_rss}</th>
+                            <th scope="col">
+                                <label for="feed_integration">{$lang->open_feed_to_total}</label>
+                            </th>
+                            <th scope="col" class="button">{$lang->cmd_save}</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <!--@foreach($feed_config AS $key=>$value)-->
+                        <tr>
+                            <form ruleset="insertRssModuleConfig" action="./" method="post" id="module_rss_option_{$key}">
+                            <input type="hidden" name="act" value="procRssAdminInsertModuleConfig" />
+                            <input type="hidden" name="success_return_url" value="{getUrl('', 'module', $module, 'act', 'dispRssAdminIndex')}" />
+                            <input type="hidden" name="target_module_srl" value="{$key}" />
+                            <td class="center">
+                                <!--@if($value['url'])-->
+                                    <a href="{$value['url']}" target="_blank" class="xe-ui-button-gray">
+                                <!--@endif-->
+                                        {$value['mid']}
+                                <!--@if($value['url'])-->
+                                    </a>
+                                <!--@endif-->
+                            </td>
+                            <td class="center">{$value['feed_description']}</td>
+                            <td class="center">
+                                <!--@foreach($lang->open_rss_types as $key2=>$value2)-->
+                                    <input type="radio" name="open_rss" value="{$key2}" id="feed_open_{$key2}" <!--@if($key2 == $value['open_feed'])-->checked="checked"<!--@end--> /><label for="feed_open_{$key2}">{$value2}</label>
+                                <!--@end-->
+                            </td>
+                            <td class="center">
+                                <input type="radio" name="open_total_feed" value="N" id="open_total_feed_N" <!--@if($value['open_total_feed'] == 'N')-->checked="checked"<!--@end--> />
+                                <label for="open_total_feed_N">{$lang->use}</label>
+                                <input type="radio" name="open_total_feed" value="T_N" id="open_total_feed_T_N" <!--@if($value['open_total_feed'] == 'T_N')-->checked="checked"<!--@end--> />
+                                <label for="open_total_feed_T_N">{$lang->notuse}</label>
+                            </td>
+                            <td class="button">
+                                <a href="" onclick="jQuery(this).next().trigger('click');return false;" class="xe-ui-button-gray">{$lang->cmd_save}</a>
+                                <input type="submit" value="{$lang->cmd_save}" class="xe-ui-button-gray" style="display: none;"/>
+                            </td>
+                            </form>
+                        </tr>
+                        <!--@end-->
+                    </tbody>
+                </table>
+             </form>
+        </div>
+    </div>
+</div>

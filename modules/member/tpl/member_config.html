@@ -1,80 +1,81 @@
 <load target="js/member_admin_config.js" usecdn="true" />
 <include target="member_config_gnb.html" />
-<div cond="$XE_VALIDATOR_MESSAGE" class="message {$XE_VALIDATOR_MESSAGE_TYPE}">
-	<p>{$XE_VALIDATOR_MESSAGE}</p>
+
+<h1>{$lang->cmd_member_config}</h1>
+<div class="xe-ui-title-separator">
+    <hr/>
 </div>
-<form action="./" class="form" ruleset="insertConfig" method="post">
-<input type="hidden" name="module" value="member" />
-<input type="hidden" name="act" value="procMemberAdminInsertConfig" />
-<input type="hidden" name="success_return_url" value="{getUrl('act', $act)}" />
-	<fieldset class="section suSetting">
-		<h2 class="h2">{$lang->cmd_module_config}</h2>
-		<ul>
-			<li>
-				<p class="q">{$lang->enable_join}</p>
-				<p class="a">
-					<input type="radio" name="enable_join" id="enable_join_yes" value="Y" checked="checked"|cond="$config->enable_join == 'Y'" /> <label for="enable_join_yes">{$lang->cmd_yes}</label>
-					<input type="radio" name="enable_join" id="enable_join_no" value="N" checked="checked"|cond="$config->enable_join != 'Y'" /> <label for="enable_join_no">{$lang->cmd_no}</label>
-				</p>
-			</li>
-			<li>
-				<p class="q"><label for="webmaster_name">{$lang->webmaster_name}</label></p>
-				<p class="a">
-					<input type="text" id="webmaster_name" name="webmaster_name" value="{$config->webmaster_name}" size="20" /></p>
-				<p class="desc">{$lang->about_webmaster_name}</p>
-			</li>
-			<li>
-				<p class="q"><label for="webmaster_email">{$lang->webmaster_email}</label></p>
-				<p class="a">
-					<input type="text" id="webmaster_email" name="webmaster_email" value="{$config->webmaster_email}" size="40" /></p>
-				<p class="desc">{$lang->about_webmaster_email}</p>
-			</li>
-			<li>
-				<p class="q"><label for="limit_day">{$lang->limit_day}</label></p>
-				<p class="a"><input type="text" id="limit_day" name="limit_day" value="{$config->limit_day}" style="width:30px" /><span class="desc">{$lang->unit_day}({$lang->about_limit_day})</span></p>
-			</li>
-			<li>
-				<p class="q"><label for="after_login_url">{$lang->after_login_url}</label></p>
-				<p class="a">
-					<input type="text" id="after_login_url" name="after_login_url" value="{$config->after_login_url}" /></p>
-				<p class="desc">{$lang->about_after_login_url}</p>
-			</li>
-			<li>
-				<p class="q"><label for="after_logout_url">{$lang->after_logout_url}</label></p>
-				<p class="a">
-					<input type="text" id="after_logout_url" name="after_logout_url" value="{$config->after_logout_url}" /></p>
-				<p class="desc">{$lang->about_after_logout_url}</p>
-			</li>
-			<li>
-				<p class="q"><label for="redirect_url">{$lang->redirect_url}</label></p>
-				<p class="a">
-					<input type="text" id="redirect_url" name="redirect_url" value="{$config->redirect_url}" /></p>
-				<p class="desc">{$lang->about_redirect_url}</p>
-			</li>
-			<li>
-				<p class="q"><label for="skin">{$lang->skin}</label></p>
-				<p class="a">
-					<select id="skin" name="skin" onchange="doGetSkinColorset(this.options[this.selectedIndex].value)">
-						<option loop="$skin_list=>$key,$val" value="{$key}" selected="selected"|cond="$config->skin==$key">{$val->title} ({$key})</option>
-					</select>
-				</p>
-			</li>
-			<li id="colorset" style="display:none"|cond="!$config->colorset">
-				<p class="q"><label for="member_colorset">{$lang->colorset}</label></p>
-				<p class="a"><div id="member_colorset"></div></p>
-			</li>
-		</ul>
-	</fieldset>
-	<div class="btnArea">
-		<span class="btn medium"><input type="submit" value="{$lang->cmd_save}" /></span>
+
+<div id="content" class="cleared">
+    <div cond="$XE_VALIDATOR_MESSAGE" class="xe-ui-message {$XE_VALIDATOR_MESSAGE_TYPE} gradient cleared">
+        <a href="#" style="float: right;" onclick="jQuery(this).parent().remove();return false;" class="xe-ui-button-gray gradient">Dismiss</a>
+        <p>{$XE_VALIDATOR_MESSAGE}</p>
+    </div>
+    <div class="xe-ui-panel">
+        <div class="xe-ui-panel-content cleared">
+            <form action="./" class="form" ruleset="insertConfig" method="post" id="in_co">
+                <input type="hidden" name="module" value="member" />
+                <input type="hidden" name="act" value="procMemberAdminInsertConfig" />
+                <input type="hidden" name="success_return_url" value="{getUrl('act', $act)}" />
+                <h2>{$lang->cmd_module_config}</h2>
+                <p class="form-list">
+                    <span class="desc">{$lang->enable_join}:</span>
+                    <input type="radio" name="enable_join" id="enable_join_yes" value="Y" checked="checked"|cond="$config->enable_join == 'Y'" /> <label for="enable_join_yes">{$lang->cmd_yes}</label>
+                    <input type="radio" name="enable_join" id="enable_join_no" value="N" checked="checked"|cond="$config->enable_join != 'Y'" /> <label for="enable_join_no">{$lang->cmd_no}</label>
+                </p>
+                <p class="form-list">
+                    <label for="webmaster_name" class="desc">{$lang->webmaster_name}:</label>
+                    <input type="text" id="webmaster_name" name="webmaster_name" value="{$config->webmaster_name}" class="xe-ui-panel-text" title="{$lang->about_webmaster_name}"/>
+                </p>
+                <p class="form-list">
+                    <label for="webmaster_email" class="desc">{$lang->webmaster_email}:</label>
+                    <input type="text" id="webmaster_email" name="webmaster_email" value="{$config->webmaster_email}" class="xe-ui-panel-text" />
+                </p>
+                <p class="form-list">
+                    <label for="limit_day" class="desc">{$lang->limit_day}:</label>
+                    <input type="text" id="limit_day" name="limit_day" value="{$config->limit_day}" style="width:30px" title="{$lang->about_limit_day}" class="xe-ui-panel-text" /> <span>{$lang->unit_day}</span>
+                </p>
+                <p class="form-list">
+                    <label for="after_login_url" class="desc">{$lang->after_login_url}:</label>
+                    <input type="text" id="after_login_url" name="after_login_url" value="{$config->after_login_url}" class="xe-ui-panel-text" title="{$lang->about_after_login_url}"/>
+                </p>
+                <p class="form-list">
+                    <label for="after_logout_url" class="desc">{$lang->after_logout_url}:</label>
+                    <input type="text" id="after_logout_url" name="after_logout_url" value="{$config->after_logout_url}" title="{$lang->about_after_logout_url}" class="xe-ui-panel-text"/>
+                </p>
+                <p class="form-list">
+                    <label for="redirect_url" class="desc">{$lang->redirect_url}:</label>
+                    <input type="text" id="redirect_url" name="redirect_url" value="{$config->redirect_url}" class="xe-ui-panel-text" title="{$lang->about_redirect_url}"/>
+                </p>
+                <p class="form-list">
+                    <label for="skin" class="desc">{$lang->skin}:</label>
+                    <select id="skin" name="skin" onchange="doGetSkinColorset(this.options[this.selectedIndex].value)" class="xe-ui-panel-select" style="width: 250px;">
+                        <option loop="$skin_list=>$key,$val" value="{$key}" selected="selected"|cond="$config->skin==$key">{$val->title} ({$key})</option>
+                    </select>
+                </p>
+                <p id="colorset" class="form-list" style="display:none"|cond="!$config->colorset">
+                   <label for="member_colorset" class="desc">{$lang->colorset}:</label>
+                    <span id="member_colorset"></span>
+                </p>
+
+                <div class="cleared"></div>
+
+			</form>
+		</div>
+		<div class="xe-ui-panel-controller">
+			<hr />
+			<p class="center">
+				<a href="#" onclick="jQuery('#in_co').submit(); return false;" class="xe-ui-button-gray">{$lang->cmd_save}</a>
+			</p>
+		</div>
 	</div>
-</form>
-<block cond="count($drivers) > 1">
-<h2 class="h2">{$lang->driver_information}</h2>
-<ul>
-	<li loop="$drivers => $name, $driver">{$driver->title}
-		<div class="driverConfig"><a href="{getUrl('act', 'dispMemberAdminDriverConfig', 'driver', $name)}">{$lang->cmd_setup}</a></div>
-	</li>
-</ul>
-</block>
-<!-- TODO : ë“œë¼ì´ë²„ê°€ í•˜ë‚˜ ì¼ë•Œ ì„¤ì • í™”ë©´ ë¶™ì—¬ì„œ ë‚˜ì˜¤ê¸°.. -->
+	<block cond="count($drivers) > 1">
+	<h2 class="h2">{$lang->driver_information}</h2>
+	<ul>
+		<li loop="$drivers => $name, $driver">{$driver->title}
+			<div class="driverConfig"><a href="{getUrl('act', 'dispMemberAdminDriverConfig', 'driver', $name)}">{$lang->cmd_setup}</a></div>
+		</li>
+	</ul>
+	</block>
+	<!-- TODO : µå¶óÀÌ¹ö°¡ ÇÏ³ª ÀÏ¶§ ¼³Á¤ È­¸é ºÙ¿©¼­ ³ª¿À±â.. -->
+</div>
