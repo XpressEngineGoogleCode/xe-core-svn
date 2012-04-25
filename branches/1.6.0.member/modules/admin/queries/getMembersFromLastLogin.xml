@@ -1,0 +1,17 @@
+<query id="getMembersFromLastLogin" action="select">
+    <tables>
+        <table name="member" />
+    </tables>
+    <columns>
+        <column name="count(member_srl)" alias="count" />
+    </columns>
+    <conditions>
+        <condition operation="more" column="regdate" var="date" notnull="notnull" />
+    </conditions>
+    <navigation>
+        <index var="sort_index" default="regdate" order="asc" />
+    </navigation>
+    <groups>
+        <group column="regdate" />
+    </groups>
+</query>

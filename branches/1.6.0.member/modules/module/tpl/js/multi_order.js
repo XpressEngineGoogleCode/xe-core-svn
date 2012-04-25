@@ -12,7 +12,7 @@ xe.MultiOrderManager = xe.createApp("MultiOrderManager", {
 		this.$selectedObj 	= $keyObj.parent().find('.multiorder_selected');
 
 		this.$showObj
-			.nextAll('button')
+			.nextAll('a, input')
 				.filter('.multiorder_add').bind('click', function(){ self.cast('MULTIORDER_ADD'); return false; }).end()
 				.filter('.multiorder_del').bind('click', function(){ self.cast('MULTIORDER_DEL'); return false; }).end()
 				.filter('.multiorder_up').bind('click', function(){ self.cast('MULTIORDER_UP'); return false; }).end()

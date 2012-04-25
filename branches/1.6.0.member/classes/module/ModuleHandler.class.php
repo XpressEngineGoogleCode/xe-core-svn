@@ -84,20 +84,22 @@ class ModuleHandler extends Handler
 		if($this->document_srl && !$this->module) {
 			$module_info = $oModuleModel->getModuleInfoByDocumentSrl($this->document_srl);
 
-			// If the document does not exist, remove document_srl
-			if(!$module_info) {
-				unset($this->document_srl);
-			} else {
-				// If it exists, compare mid based on the module information
-				// if mids are not matching, set it as the document's mid
-				if($this->mid != $module_info->mid) {
-					$this->mid = $module_info->mid;
-					Context::set('mid', $module_info->mid, true);
-				}
-			}
-			// if requested module is different from one of the document, remove the module information retrieved based on the document number
-			if($this->module && $module_info->module != $this->module) unset($module_info);
-		}
+                // If the document does not exist, remove document_srl
+                if(!$module_info) {
+                    unset($this->document_srl);
+                } else {
+                    // If it exists, compare mid based on the module information
+                    // if mids are not matching, set it as the document's mid
+                    if($this->mid != $module_info->mid) {
+                        $this->mid = $module_info->mid;
+                        Context::set('mid', $module_info->mid, true);
+						header('location:' . getNotEncodedSiteUrl($site_info->domain, 'mid', $this->mid, 'document_srl', $this->document_srl));
+						return false;
+                    }
+                }
+                // if requested module is different from one of the document, remove the module information retrieved based on the document number
+                if($this->module && $module_info->module != $this->module) unset($module_info);
+            }
 
 		// If module_info is not set yet, and there exists mid information, get module information based on the mid
 		if(!$module_info && $this->mid) {
@@ -217,7 +219,12 @@ class ModuleHandler extends Handler
 		$ruleset = $xml_info->action->{$this->act}->ruleset;
 		$kind = strpos(strtolower($this->act),'admin')!==false?'admin':'';
 		if(!$kind && $this->module == 'admin') $kind = 'admin';
-		if($this->module_info->use_mobile != "Y") Mobile::setMobile(false);
+
+		$dbInfo = Context::getDBInfo();
+		if($this->module_info->use_mobile != 'Y' && $dbInfo->use_mobile_view != 'Y')
+		{
+			Mobile::setMobile(false);
+		}
 
 		// admin menu check
 		if(Context::isInstalled())
@@ -259,6 +266,10 @@ class ModuleHandler extends Handler
 				$type = $orig_type;
 				Mobile::setMobile(false);
 				$oModule = &$this->getModuleInstance($this->module, $type, $kind);
+			}
+			else
+			{
+				Mobile::setMobile(true);
 			}
 		}
 		else
@@ -318,6 +329,10 @@ class ModuleHandler extends Handler
 						$type = $orig_type;
 						Mobile::setMobile(false);
 						$oModule = &$this->getModuleInstance($forward->module, $type, $kind);
+					}
+					else
+					{
+						Mobile::setMobile(true);
 					}
 				}
 				else
@@ -627,14 +642,14 @@ class ModuleHandler extends Handler
 
 		$key = $module.'.'.($kind!='admin'?'':'admin').'.'.$type;
 
-		if(is_array($GLOBALS['__MODULE_EXTEND__']) && array_key_exists($key, $GLOBALS['__MODULE_EXTEND__'])) {
+		if(is_array($GLOBALS['__MODULE_EXTEND__']) && array_key_exists($key, $GLOBALS['__MODULE_EXTEND__']))
+		{
 			$module = $extend_module = $GLOBALS['__MODULE_EXTEND__'][$key];
-		}else{
-			unset($parent_module);
 		}
 
 		// if there is no instance of the module in global variable, create a new one
-		if(!$GLOBALS['_loaded_module'][$module][$type][$kind]) {
+		if(!isset($GLOBALS['_loaded_module'][$module][$type][$kind]))
+		{
 			$parent_module = $module;
 
 			$class_path = ModuleHandler::getModulePath($module);

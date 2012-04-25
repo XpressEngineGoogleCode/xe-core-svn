@@ -1000,7 +1000,6 @@ class MemberDriverDefault extends MemberDriver
 
 		$security = new Security();
 		$security->encodeHTML('member_config..');
-		$security->encodeHTML('memberInfo.user_name', 'memberInfo.nick_name', 'memberInfo.description','memberInfo.group_list..');
 		$security->encodeHTML('extend_form_list...');
 		return parent::getInfoTpl();
 	}
@@ -1142,7 +1141,7 @@ class MemberDriverDefault extends MemberDriver
 	public function getAdminFormInfo($memberSrl)
 	{
 		$memberInfo = $this->getMemberInfoByMemberSrl($memberSrl);
-		$formTags = $this->getFormInfo($memberInfo);
+		$formTags = $this->getFormInfo($memberInfo, TRUE);
 
 		$memberInfo = get_object_vars($memberInfo);
 
@@ -1171,7 +1170,7 @@ class MemberDriverDefault extends MemberDriver
 	 * @return string
 	 * @developer NHN (developers@xpressengine.com)
 	 */
-	public function getFormInfo($memberInfo = NULL)
+	public function getFormInfo($memberInfo = NULL, $isAdmin = FALSE)
 	{
 		$oMemberModel = &getModel('member');
 		$extend_form_list = $oMemberModel->getCombineJoinForm($memberInfo);
@@ -1227,7 +1226,7 @@ class MemberDriverDefault extends MemberDriver
 					// if member info modify mode
 					if($target->src)
 					{
-						$inputTag = sprintf('<p class="a"><input type="hidden" name="__%s_exist" value="true" /><span id="%s"><img src="%s" alt="%s" /> <button type="button" class="text" onclick="%s(%d);return false;">%s</button></span></p>'
+						$inputTag = sprintf('<input type="hidden" name="__%s_exist" value="true" /><span id="%s"><img src="%s" alt="%s" /> <button type="button" class="text" onclick="%s(%d);return false;">%s</button></span>'
 											, $formInfo->name
 											, $formInfo->name . 'tag'
 											, $target->src
@@ -1241,7 +1240,7 @@ class MemberDriverDefault extends MemberDriver
 					{
 						$inputTag = sprintf('<input type="hidden" name="__%s_exist" value="false" />', $formInfo->name);
 					}
-					$inputTag .= sprintf('<p class="a"><input type="file" name="%s" id="%s" value="" /> <span class="desc">%s : %dpx, %s : %dpx</span></p>'
+					$inputTag .= sprintf('<input type="file" name="%s" id="%s" value="" /> <span class="desc">%s : %dpx, %s : %dpx</span>'
 										, $formInfo->name
 										, $formInfo->name
 										, Context::getLang($formInfo->name . '_max_width')
@@ -1251,14 +1250,14 @@ class MemberDriverDefault extends MemberDriver
 				}//end imageType
 				elseif($formInfo->name == 'birthday')
 				{
-					$inputTag = sprintf('<input type="hidden" name="birthday" id="date_birthday" value="%s" /><input type="text" class="inputDate" id="birthday" value="%s" /> <input type="button" value="%s" class="dateRemover" />'
+					$inputTag = sprintf('<input type="hidden" name="birthday" id="date_birthday" value="%s" /><input type="text" class="inputDate xe-ui-panel-text" id="birthday" value="%s" /> <input type="button" value="%s" class="dateRemover" />'
 							, $memberInfo['birthday']
 							, zdate($memberInfo['birthday'], 'Y-m-d', FALSE)
 							, Context::getLang('cmd_delete'));
 				}// end birthday
 				elseif($formInfo->name == 'find_account_question')
 				{
-					$inputTag = '<select name="find_account_question" style="width:290px">%s</select><br />';
+					$inputTag = '<select name="find_account_question" style="width:350px" class="xe-ui-panel-select">%s</select>';
 					$optionTag = array();
 					foreach(Context::getLang('find_account_question_items') as $key => $val)
 					{
@@ -1276,7 +1275,7 @@ class MemberDriverDefault extends MemberDriver
 												, $val);
 					}
 					$inputTag = sprintf($inputTag, implode('', $optionTag));
-					$inputTag .= '<input type="text" name="find_account_answer" value="' . $memberInfo['find_account_answer'] . '" />';
+					$inputTag .= '<input type="text" name="find_account_answer" value="' . $memberInfo['find_account_answer'] . '" class="xe-ui-panel-text" />';
 				}// end find_account_question
 				else if($formInfo->name == 'signature')
 				{
@@ -1301,7 +1300,7 @@ class MemberDriverDefault extends MemberDriver
 				}// end signature
 				else
 				{
-					$inputTag = sprintf('<input type="text" name="%s" value="%s" />'
+					$inputTag = sprintf('<input type="text" name="%s" value="%s" class="xe-ui-panel-text" />'
 								, $formInfo->name
 								, $memberInfo[$formInfo->name]);
 				}
@@ -1313,10 +1312,11 @@ class MemberDriverDefault extends MemberDriver
 				$inputTag = $oMemberModel->getExtendsInputForm($extendForm);
 			}
 
-			if($formInfo->required || $formInfo->mustRequired && $formInfo->name != 'password')
+			if(($isAdmin && $formInfo->mustRequired) || (!$isAdmin && $formInfo->required && $formInfo->name != 'password'))
 			{
 				$formTag->required = TRUE;
 			}
+			
 			$formTag->inputTag = $inputTag;
 			$formTags[] = $formTag;
 		}
@@ -2425,8 +2425,8 @@ class MemberDriverDefault extends MemberDriver
 				}
 				elseif($formInfo->name == 'find_account_question')
 				{
-					$fields[] = '<field name="find_account_question"><if test="$act != \'procMemberAdminInsert\'" attr="required" value="true" /></field>';
-					$fields[] = '<field name="find_account_answer"><if test="$act != \'procMemberAdminInsert\'" attr="required" value="true" /><if test="$act != \'procMemberAdminInsert\'" attr="length" value=":250" /></field>';
+					$fields[] = '<field name="find_account_question" required="true" />';
+					$fields[] = '<field name="find_account_answer" required="true" length=":250" />';
 				}
 				elseif($formInfo->name == 'email_address')
 				{
@@ -2439,6 +2439,10 @@ class MemberDriverDefault extends MemberDriver
 				elseif(strpos($formInfo->name, 'image') !== FALSE)
 				{
 					$fields[] = sprintf('<field name="%s"><if test="$act != \'procMemberAdminInsert\' &amp;&amp; $__%s_exist != \'true\'" attr="required" value="true" /></field>', $formInfo->name, $formInfo->name);
+				}
+				else if($formInfo->name == 'signature')
+				{
+					$fields[] = '<field name="signature"><if test="$member_srl" attr="required" value="true" /></field>';
 				}
 				else
 				{

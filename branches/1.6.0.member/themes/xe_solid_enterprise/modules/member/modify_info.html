@@ -24,9 +24,9 @@
     <table cellspacing="0" class="rowTable">
     <tr><th colspan="2" class="title"><div>{$lang->member_default_info}</div></th></tr>
     <tr>
-        <th><div>{$identifierForm->title} *</div></th>
+        <th><div>{$identifierForm->title} <em style="color:red">*</em></div></th>
         <td class="wide">
-			{$identifierForm->name}
+			{$identifierForm->value}
 			<input type="hidden" name="{$identifierForm->name}" value="{$identifierForm->value}" />
 		</td>
     </tr>
@@ -53,7 +53,7 @@
     </tr>
     <tr>
         <th class="button_col" colspan="2">
-            <span class="grayBtn"><input type="submit" value="{$lang->cmd_registration}" accesskey="s" /></span>
+            <span class="grayBtn"><input type="submit" value="{$lang->cmd_registration}" /></span>
             <a href="{getUrl('act','dispMemberInfo','member_srl','')}" class="whiteBtn"><span>{$lang->cmd_cancel}</span></a>
         </th>
     </tr>

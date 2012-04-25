@@ -13,6 +13,8 @@ class Validator
 	var $_has_mb_func;
 	var $_version = '1.0';
 	var $_xml_path = '';
+	var $_cleanHtml;
+	var $_purifier = null;
 
 	/**
 	 * @constructor
@@ -60,6 +62,15 @@ class Validator
 		$parser = new XmlParser();
 		$xml = $parser->loadXmlFile($xml_path);
 		if(!isset($xml->ruleset) || !isset($xml->ruleset->fields) || !isset($xml->ruleset->fields->field)) return false;
+
+		// purifier setting
+		require_once _XE_PATH_.'classes/security/htmlpurifier/library/HTMLPurifier.auto.php';
+		require_once 'HTMLPurifier.func.php';
+
+		$config = HTMLPurifier_Config::createDefault();
+		$config->set('HTML.TidyLevel', 'light');
+		$config->set('Filter.YouTube', true);
+		$this->_purifier = new HTMLPurifier($config);
 
 		// custom rules
 		if(isset($xml->ruleset->customrules) && isset($xml->ruleset->customrules->rule)) {
@@ -237,6 +248,12 @@ class Validator
 					if(in_array('not', $modifiers)) $result = !$result;
 					if(!$result) return $this->error($key, 'invalid_'.$rule);
 				}
+			}
+
+			// cleanhtml
+			if($filter['cleanhtml'] != 'false')
+			{
+				$value = $this->_purifier->purify($value);
 			}
 		}
 

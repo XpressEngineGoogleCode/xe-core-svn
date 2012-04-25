@@ -1,33 +1,44 @@
-<!--%import("js/install_admin.js")-->
 <!--#include("header.html")-->
-	<div id="body">
-<!--#include("progress_menu.html")-->
-		<span class="dummy"></span>
-		<div id="content">
-			<div cond="$XE_VALIDATOR_MESSAGE" class="message {$XE_VALIDATOR_MESSAGE_TYPE}">
-				<p>{$XE_VALIDATOR_MESSAGE}</p>
-			</div>
-			<form rule="install" action="./" method="post">
-			<input type="hidden" name="act" value="procInstall" />
-				<ul class="form formAdmin">
-					<li><label for="aMail">{$lang->email_address}</label><input name="email_address" type="text" class="iText" id="aMail" /></li>
-					<li><label for="aPw1">{$lang->password1}</label><input name="password" type="password" class="iText" id="aPw1" /></li>
-					<li><label for="aPw2">{$lang->password2}</label><input name="password2" type="password" class="iText" id="aPw2" /></li>
-					<li><label for="aId">{$lang->user_id}</label><input name="user_id" type="text" value="admin" class="iText" id="aId" /></li>
-					<li><label for="aNick">{$lang->nick_name}</label><input name="nick_name" type="text" class="iText" id="aNick" /></li>
-				</ul>
-				<div class="desc">
-					<p>{$lang->install_notandum}</p>
-				</div>
-				<div class="ibtnArea">
-					<div class="fLeft">
-						<span class="ibtn icon"><span class="back"></span> <a href="{getUrl('', 'act', 'dispInstallConfigForm')}">{$lang->cmd_back}</a></span>
-					</div>
-					<div class="fRight">
-						<span class="ibtn icon"><span class="check"></span> <input name="" type="submit" value="{$lang->cmd_complete}" /></span>
-					</div>
-				</div>
-			</form>
-		</div>
-	</div>
+
+    <!--#include("progress_menu.html")-->
+    <div id="installContent">
+        <div class="xe-ui-panel cleared">
+            <div class="xe-ui-panel-content">
+                <h2>{$lang->admin_title}</h2>
+                <div cond="$XE_VALIDATOR_MESSAGE" class="xe-ui-message {$XE_VALIDATOR_MESSAGE_TYPE} gradient cleared">
+                    <a href="#" style="float: right;" onclick="jQuery(this).parent().remove();return false;" class="xe-ui-button-gray gradient">Dismiss</a>
+                    <p>{$XE_VALIDATOR_MESSAGE}</p>
+                </div>
+                <form rule="install" action="./" method="post" id="admin_form">
+                <input type="hidden" name="act" value="procInstall" />
+                    <p>
+                        <label for="aMail">{$lang->install_email_address}: <span class="required">*</span></label><input name="email_address" type="text" class="xe-ui-panel-text" id="aMail" />
+                    </p>
+                    <p>
+                        <label for="aPw1">{$lang->install_password}: <span class="required">*</span></label><input name="password" type="password" class="xe-ui-panel-text" id="aPw1" />
+                    </p>
+                    <p>
+                        <label for="aPw2">{$lang->install_retype_password}: <span class="required">*</span></label><input name="password2" type="password" class="xe-ui-panel-text" id="aPw2" />
+                    </p>
+                    <p>
+                        <label for="aId">{$lang->install_username}: <span class="required">*</span></label><input name="user_id" type="text" value="admin" class="xe-ui-panel-text" id="aId" />
+                    </p>
+                    <!--p>
+                        <label for="aNick">{$lang->install_nick_name}: <span class="required">*</span></label><input name="nick_name" type="text" class="xe-ui-panel-text" id="aNick" />
+                    </p-->
+                    <p>{$lang->install_notandum}</p>
+                </form>
+            </div>
+            <div class="xe-ui-panel-controller cleared">
+                <hr />
+                <p style="float: left; margin-left: 16px;">
+                    <a href="{getUrl('', 'act', 'dispInstallConfigForm')}" class="xe-ui-button-gray gradient">{$lang->cmd_back}</a>
+                </p>
+                <p style="float: right; margin-right: 16px;">
+                    <a href="#" id="goNext" onclick="jQuery('#admin_form').submit();return false;" class="xe-ui-button-gray gradient">{$lang->cmd_proceed}</a>
+                </p>
+            </div>
+        </div>
+        <p id="version">{$lang->version} {__XE_VERSION__}</p>
+    </div>
 <!--#include("footer.html")-->

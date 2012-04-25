@@ -4,12 +4,14 @@
 
         var $queryTag;
 
-        function QueryParser($query, $isSubQuery = false) {
-            $this->queryTag = new QueryTag($query, $isSubQuery);
+        function QueryParser($query = NULL, $isSubQuery = false) {
+	    if ($query)
+		$this->queryTag = new QueryTag($query, $isSubQuery);
         }
 
         function getTableInfo($query_id, $table_name) {
             $column_type = array();
+	    $module = '';
 
             $id_args = explode('.', $query_id);
             if (count($id_args) == 2) {

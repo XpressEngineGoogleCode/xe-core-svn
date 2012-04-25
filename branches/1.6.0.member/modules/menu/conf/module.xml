@@ -30,17 +30,17 @@
     </actions>
 	<menus>
 		<menu name="siteMap">
-			<title xml:lang="en">Site Map</title>
+			<title xml:lang="en">Menu manager</title>
 			<title xml:lang="ko">사이트맵</title>
 			<title xml:lang="jp">サイトマップ</title>
-			<title xml:lang="zh-CN">Site Map</title>
-			<title xml:lang="zh-TW">Site Map</title>
-			<title xml:lang="es">Site Map</title>
-			<title xml:lang="ru">Site Map</title>
-			<title xml:lang="fr">Site Map</title>
-			<title xml:lang="vi">Site Map</title>
-			<title xml:lang="mn">Site Map</title>
-			<title xml:lang="tr">Site Map</title>
+			<title xml:lang="zh-CN">Menu manager</title>
+			<title xml:lang="zh-TW">選單管理</title>
+			<title xml:lang="es">Menu manager</title>
+			<title xml:lang="ru">Menu manager</title>
+			<title xml:lang="fr">Menu manager</title>
+			<title xml:lang="vi">Menu manager</title>
+			<title xml:lang="mn">Menu manager</title>
+			<title xml:lang="tr">Menu manager</title>
 		</menu>
 	</menus>
 </module>

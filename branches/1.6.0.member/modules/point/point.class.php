@@ -28,7 +28,7 @@
             // Login points
             $config->login_point = 5;
             // Point's name
-            $config->point_name = 'point';
+            $config->point_name = 'points';
             // Level icon directory
             $config->level_icon = "default";
             // Prevent downloads if there are no scores

@@ -8,7 +8,7 @@ function setStartModule(){
 	var index_module_srl = jQuery('.moduleIdList').val(); 
 	jQuery('#_target_module').val(target_module);
 	jQuery('#index_module_srl').val(index_module_srl);
-	jQuery('.moduleList,.moduleIdList, .site_keyword_search, #sitefind_addBtn').css('display','none');
+	jQuery('.moduleList, .moduleIdList, .site_keyword_search, #sitefind_addBtn, div.modulefinder label').css('display','none');
 }
 function viewSiteSearch(){
 	jQuery(".site_keyword_search").css("display","");	

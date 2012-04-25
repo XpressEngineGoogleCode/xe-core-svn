@@ -1,298 +1,299 @@
-<?php
-/**
- * @brief  member module's admin view class
- * @developer NHN (developers@xpressengine.com)
- */
-class MemberAdminView extends Member
-{
-	private $groupList = NULL; ///< group list
-	private $memberSrl = NULL; ///< selected member info
+<?php	
+    /**
+     * @class  memberAdminView
+     * @author NHN (developers@xpressengine.com)
+     * @brief  member module's admin view class
+     **/
 
-	/**
-	 * @brief initialization
-	 * @access public
-	 * @return void
-	 * @developer NHN (developers@xpressengine.com)
-	 */
-	function init()
+    class MemberAdminView extends Member
 	{
-		$oMemberModel = getModel('member');
+        private $groupList = NULL; ///< group list        
+		private $memberSrl = NULL; ///< selected member info
 
-		// if member_srl exists, set memberInfo
-		$this->memberSrl = Context::get('member_srl');
-
-		// retrieve group list
-		$this->groupList = $oMemberModel->getGroups();
-		Context::set('group_list', $this->groupList);
-
-		$security = new Security();
-		$security->encodeHTML('group_list..');
-
-		$this->setTemplatePath($this->module_path . 'tpl');
-	}
-
-	/**
-	 * @brief display member list
-	 * @access public
-	 * @return Object
-	 * @developer NHN (developers@xpressengine.com)
-	 */
-	public function dispMemberAdminList()
-	{
-		$driverName = Context::get('driver');
-		if(!$driverName)
+        /**
+         * @brief initialization
+		 * @access public
+		 * @return void
+		* @developer NHN (developers@xpressengine.com)
+		*/
+		function init()
 		{
-			$driverName = 'default';
-		}
-		// get driver list
-		$oMemberModel = getModel('member');
-		$driverList = $oMemberModel->getDrivers();
-		Context::set('driverList', $driverList);
+            $oMemberModel = getModel('member');
 
-		// get driver instance
-		$oDriver = getDriver('member', $driverName);
-		$listTpl = $oDriver->getListTpl();
+            // if member_srl exists, set memberInfo            
+			$this->memberSrl = Context::get('member_srl');
 
-		Context::set('listTpl', $listTpl);
-		$this->setTemplateFile('member_list');
-	}
+            // retrieve group list            
+			$this->groupList = $oMemberModel->getGroups();
+            Context::set('group_list', $this->groupList);
 
-	/**
-	 * @brief default configuration for member management
-	 * @access public
-	 * @return Object
-	 * @developer NHN (developers@xpressengine.com)
-	 */
-	public function dispMemberAdminConfig()
-	{
-		global $lang;            // retrieve configuration via module model instance
-		$oModuleModel = getModel('module');
-		$oMemberModel = getModel('member');
-		$config = $oMemberModel->getMemberConfig();
+			$security = new Security();						
+			$security->encodeHTML('group_list..');
+			
+            $this->setTemplatePath($this->module_path.'tpl');
+        }
 
-		Context::set('config', $config);
-
-		// list of skins for member module
-		$skinList = $oModuleModel->getSkins($this->module_path);
-		Context::set('skin_list', $skinList);
-
-		$oEditorModel = getModel('editor');
-		Context::set('editor_skin_list', $oEditorModel->getEditorSkinList());
-
-		$security = new Security();
-		$security->encodeHTML('config..');
-
-		$drivers = $oMemberModel->getDrivers();
-		Context::set('drivers', $drivers);
-
-		$this->setTemplateFile('member_config');
-	}
-
-	/**
-	 * @brief driver configuration for member management
-	 * @access public
-	 * @return void
-	 * @developer NHN(developers@xpressengine.com)
-	 */
-	public function dispMemberAdminSigninConfig()
-	{
-		$oMemberModel = getModel('member');
-		$drivers = $oMemberModel->getDrivers(TRUE);
-		Context::set('drivers', $drivers);
-
-		// get preivew
-		$previewTpl = $oMemberModel->getPreviewSigninTpl();
-		Context::set('previewTpl', $previewTpl);
-
-		$this->setTemplateFile('signinConfig');
-	}
-
-	/**
-	 * @brief driver configuration for member management
-	 * @access public
-	 * @return void
-	 * @developer NHN(developers@xpressengine.com)
-	 */
-	public function dispMemberAdminDriverConfig()
-	{
-		$oMemberModel = getModel('member');
-
-		$driverName = Context::get('driver');
-		$driver = getDriver('member', $driverName);
-		$oModuleModel = getModel('module');
-		$driverInfo = $oModuleModel->getDriverInfoXml('member', $driverName);
-		Context::set('driverInfo', $driverInfo);
-
-		if(!$driver)
+        /**
+         * @brief display member list         
+		 * @access public
+		 * @return Object
+		 * @developer NHN (developers@xpressengine.com)
+		 */
+		public function dispMemberAdminList()
 		{
-			return $this->stop('msg_invalid_request');
-		}
+			$driverName = Context::get('driver');
+			if(!$driverName)
+			{
+				$driverName = 'default';
+			}
+			// get driver list
+			$oMemberModel = getModel('member');
+			$driverList = $oMemberModel->getDrivers();
+			Context::set('driverList', $driverList);
 
-		Context::set('driverConfig', $driver->getConfigTpl());
+			// get driver instance
+			$oDriver = getDriver('member', $driverName);
+			$listTpl = $oDriver->getListTpl();
 
-		$this->setTemplateFile('driver_config');
-	}
+			Context::set('listTpl', $listTpl);
+			$this->setTemplateFile('member_list');
+        }
 
-	/**
-	 * @brief display member information
-	 * @access public
-	 * @return Object
-	 * @developer NHN (developers@xpressengine.com)
-	 */
-	public function dispMemberAdminInfo()
-	{
-		$driverName = Context::get('driver');
-		if(!$driverName)
+        /**
+         * @brief default configuration for member management
+		 * @access public
+		 * @return Object
+		 * @developer NHN (developers@xpressengine.com)
+		 */
+		public function dispMemberAdminConfig()
 		{
-			$driverName = 'default';
-		}
+			global $lang;            // retrieve configuration via module model instance
+            $oModuleModel = getModel('module');
+            $oMemberModel = getModel('member');
+            $config = $oMemberModel->getMemberConfig(); 
+			
+			Context::set('config',$config);
 
-		// get driver instance
-		$oDriver = getDriver('member', $driverName);
-		$infoTpl = $oDriver->getInfoTpl();
+            // list of skins for member module
+            $skinList = $oModuleModel->getSkins($this->module_path);
+            Context::set('skin_list', $skinList);
 
-		Context::set('infoTpl', $infoTpl);
-		$this->setTemplateFile('member_info');
-		return;
-	}
+            $oEditorModel = getModel('editor');
+            Context::set('editor_skin_list', $oEditorModel->getEditorSkinList());
 
-	/**
-	 * @brief display member insert form
-	 * @access public
-	 * @return Object
-	 * @developer NHN (developers@xpressengine.com)
-	 */
-	public function dispMemberAdminInsert()
-	{
-		$driverName = Context::get('driver');
-		if(!$driverName)
+			$security = new Security();
+			$security->encodeHTML('config..');
+
+			$drivers = $oMemberModel->getDrivers();
+			Context::set('drivers', $drivers);
+
+            $this->setTemplateFile('member_config');
+        }
+
+        /**
+         * @brief driver configuration for member management
+         * @access public
+		 * @return void
+		 * @developer NHN(developers@xpressengine.com)
+		 */
+		public function dispMemberAdminSigninConfig()
 		{
-			$driverName = 'default';
+            $oMemberModel = getModel('member');
+            $drivers = $oMemberModel->getDrivers(TRUE);
+			Context::set('drivers', $drivers);
+			
+			// get preivew
+			$previewTpl = $oMemberModel->getPreviewSigninTpl();
+			Context::set('previewTpl', $previewTpl);
+
+			$this->setTemplateFile('signinConfig');
+        }
+
+        /**
+         * @brief driver configuration for member management
+         * @access public
+		 * @return void
+		 * @developer NHN(developers@xpressengine.com)
+		 */
+		public function dispMemberAdminDriverConfig()
+		{
+            $oMemberModel = getModel('member');
+
+            $driverName = Context::get('driver');
+			$driver = getDriver('member', $driverName);
+			$oModuleModel = getModel('module');
+			$driverInfo = $oModuleModel->getDriverInfoXml('member', $driverName);
+			Context::set('driverInfo', $driverInfo);
+            
+			if(!$driver)
+			{
+				return $this->stop('msg_invalid_request');
+            }
+			
+			Context::set('driverConfig', $driver->getConfigTpl());
+			
+			$this->setTemplateFile('driver_config');
+        }
+
+		/**
+		 * @brief display member information
+		 * @access public
+		 * @return Object
+		 * @developer NHN (developers@xpressengine.com)
+		 */
+		public function dispMemberAdminInfo()
+		{
+			$driverName = Context::get('driver');
+			if(!$driverName)
+			{
+				$driverName = 'default';
+			}
+
+			// get driver instance
+			$oDriver = getDriver('member', $driverName);
+			$infoTpl = $oDriver->getInfoTpl();
+
+			Context::set('infoTpl', $infoTpl);
+			$this->setTemplateFile('member_info');
+			return;
 		}
 
-		// get member's default driver
-		$args->member_srl = Context::get('member_srl');
-		$output = executeQuery('member.getDefaultDriver', $args);
-		if(!$output->toBool())
+		/**
+		 * @brief display member insert form
+		 * @access public
+		 * @return Object
+		 * @developer NHN (developers@xpressengine.com)
+		 */
+		public function dispMemberAdminInsert()
 		{
-			return $output;
+			$driverName = Context::get('driver');
+			if(!$driverName)
+			{
+				$driverName = 'default';
+			}
+
+			// get member's default driver
+			$args->member_srl = Context::get('member_srl');
+			$output = executeQuery('member.getDefaultDriver', $args);
+			if(!$output->toBool())
+			{
+				return $output;
+			}
+
+			$driver = $output->data->driver;
+
+			if($driver != $driverName)
+			{
+				return new Object(-1, 'msg_invalid_request');
+			}
+
+			// get driver instance
+			$oDriver = getDriver('member', $driverName);
+			Context::set('oDriver', $oDriver);
+
+			// get compliled insert template
+			$insertTpl = $oDriver->getInsertTpl();
+			Context::set('insertTpl', $insertTpl);
+
+			$oMemberModel = getModel('member');
+			$memberInfo = $oMemberModel->getMemberInfoByMemberSrl($this->memberSrl);
+			Context::set('member_info', $memberInfo);
+
+			$this->setTemplateFile('insert_member');
 		}
 
-		$driver = $output->data->driver;
-
-		if($driver != $driverName)
+        /**
+         * @brief display member delete form
+		 * @access public
+		 * @return Object
+		 * @developer NHN (developers@xpressengine.com)
+		 */
+		public function dispMemberAdminDeleteForm()
 		{
-			return new Object(-1, 'msg_invalid_request');
+            if(!Context::get('member_srl')) return $this->dispMemberAdminList();
+            $this->setTemplateFile('delete_form');
+        }
+
+        /**
+         * @brief display group list
+		 * @access public
+		 * @return Object
+		 * @developer NHN (developers@xpressengine.com)
+		 */
+		public function dispMemberAdminGroupList()
+		{
+            $oModuleModel = getModel('module');
+
+            $config = $oModuleModel->getModuleConfig('member');
+            Context::set('config', $config);
+
+            $groupSrl = Context::get('group_srl');
+			
+            if($groupSrl && $this->groupList[$groupSrl])
+			{
+				Context::set('selected_group', $this->groupList[$groupSrl]);
+				$this->setTemplateFile('group_update_form');
+            }
+			else
+			{
+                $this->setTemplateFile('group_list');
+            }
+
+			$output = $oModuleModel->getModuleFileBoxList();			
+			Context::set('fileBoxList', $output->data);        
 		}
 
-		// get driver instance
-		$oDriver = getDriver('member', $driverName);
-		Context::set('oDriver', $oDriver);
-
-		// get compliled insert template
-		$insertTpl = $oDriver->getInsertTpl();
-		Context::set('insertTpl', $insertTpl);
-
-		$oMemberModel = getModel('member');
-		$memberInfo = $oMemberModel->getMemberInfoByMemberSrl($this->memberSrl);
-		Context::set('member_info', $memberInfo);
-
-		$this->setTemplateFile('insert_member');
-	}
-
-
-	/**
-	 * @brief display member delete form
-	 * @access public
-	 * @return Object
-	 * @developer NHN (developers@xpressengine.com)
-	 */
-	public function dispMemberAdminDeleteForm()
-	{
-		if(!Context::get('member_srl')) return $this->dispMemberAdminList();
-		$this->setTemplateFile('delete_form');
-	}
-
-	/**
-	 * @brief display group list
-	 * @access public
-	 * @return Object
-	 * @developer NHN (developers@xpressengine.com)
-	 */
-	public function dispMemberAdminGroupList()
-	{
-		$oModuleModel = getModel('module');
-
-		$config = $oModuleModel->getModuleConfig('member');
-		Context::set('config', $config);
-
-		$groupSrl = Context::get('group_srl');
-
-		if($groupSrl && $this->groupList[$groupSrl])
+        /**
+         * @brief Update all the member groups         
+		 * @access public
+		 * @return Object
+		 * @developer NHN (developers@xpressengine.com)
+		 */
+		public function dispMemberAdminManageGroup()
 		{
-			Context::set('selected_group', $this->groupList[$groupSrl]);
-			$this->setTemplateFile('group_update_form');
-		}
-		else
+            // Get a list of the selected member            
+			$args->member_srl = trim(Context::get('member_srls'));
+            $output = executeQueryArray('member.getMembers', $args);
+            Context::set('member_list', $output->data);
+            // Get a list of the selected member            
+			$oMemberModel = getModel('member');
+            Context::set('member_groups', $oMemberModel->getGroups());
+			
+			$security = new Security();
+			$security->encodeHTML('member_list..');	
+			
+            $this->setLayoutFile('popup_layout');
+            $this->setTemplateFile('manage_member_group');
+        }
+
+        /**
+         * @brief Delete all members         
+		 * @access public
+		 * @return Object
+		 * @developer NHN (developers@xpressengine.com)
+		 */
+		public function dispMemberAdminDeleteMembers()
 		{
-			$this->setTemplateFile('group_list');
+            // Get a list of the selected member            
+			$args->member_srl = trim(Context::get('member_srls'));
+            $output = executeQueryArray('member.getMembers', $args);
+            Context::set('member_list', $output->data);
+
+			$this->setLayoutFile('popup_layout');
+            $this->setTemplateFile('delete_members');
+        }
+
+		/**
+		 * @brief Interface of driver view
+		 * @access public
+		 * @return void
+		 * @developer NHN (developers@xpressengine.com)
+		 */
+		public function dispMemberAdminDriverInterface()
+		{
+			return $this->driverInterface();
 		}
-
-		$output = $oModuleModel->getModuleFileBoxList();
-		Context::set('fileBoxList', $output->data);
-	}
-
-	/**
-	 * @brief Update all the member groups
-	 * @access public
-	 * @return Object
-	 * @developer NHN (developers@xpressengine.com)
-	 */
-	public function dispMemberAdminManageGroup()
-	{
-		// Get a list of the selected member
-		$args->member_srl = trim(Context::get('member_srls'));
-		$output = executeQueryArray('member.getMembers', $args);
-		Context::set('member_list', $output->data);
-		// Get a list of the selected member
-		$oMemberModel = getModel('member');
-		Context::set('member_groups', $oMemberModel->getGroups());
-
-		$security = new Security();
-		$security->encodeHTML('member_list..');
-
-		$this->setLayoutFile('popup_layout');
-		$this->setTemplateFile('manage_member_group');
-	}
-
-	/**
-	 * @brief Delete all members
-	 * @access public
-	 * @return Object
-	 * @developer NHN (developers@xpressengine.com)
-	 */
-	public function dispMemberAdminDeleteMembers()
-	{
-		// Get a list of the selected member
-		$args->member_srl = trim(Context::get('member_srls'));
-		$output = executeQueryArray('member.getMembers', $args);
-		Context::set('member_list', $output->data);
-
-		$this->setLayoutFile('popup_layout');
-		$this->setTemplateFile('delete_members');
-	}
-
-	/**
-	 * @brief Interface of driver view
-	 * @access public
-	 * @return void
-	 * @developer NHN (developers@xpressengine.com)
-	 */
-	public function dispMemberAdminDriverInterface()
-	{
-		return $this->driverInterface();
-	}
-}
+    }
 
 /* End of file member.admin.view.php */
 /* Location: ./modules/member/member.admin.view.php */

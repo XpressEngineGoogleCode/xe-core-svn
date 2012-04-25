@@ -12,6 +12,9 @@
 
         var $allow_trackback_status = null;
 		var $columnList = array();
+		var $allowscriptaccessList = array();
+		var $allowscriptaccessKey = 0;
+		var $uploadedFiles = array();
 
         function documentItem($document_srl = 0, $load_extra_vars = true, $columnList = array()) {
             $this->document_srl = $document_srl;
@@ -259,11 +262,56 @@
 			if($result) $_SESSION['accessible'][$this->document_srl] = true;
 
             $content = $this->get('content');
+			$content = preg_replace_callback('/<(object|param|embed)[^>]*/is', array($this, '_checkAllowScriptAccess'), $content);
+			$content = preg_replace_callback('/<object[^>]*>/is', array($this, '_addAllowScriptAccess'), $content);
 
             if($strlen) return cut_str(strip_tags($content),$strlen,'...');
 
             return htmlspecialchars($content);
         }
+
+		function _addAllowScriptAccess($m)
+		{
+			if($this->allowscriptaccessList[$this->allowscriptaccessKey] == 1)
+			{
+				$m[0] = $m[0].'<param name="allowscriptaccess" value="never"></param>';
+			}
+			$this->allowscriptaccessKey++;
+			return $m[0];
+		}
+
+		function _checkAllowScriptAccess($m)
+		{
+			if($m[1] == 'object')
+			{
+				$this->allowscriptaccessList[] = 1;
+			}
+
+			if($m[1] == 'param')
+			{
+				if(strpos(strtolower($m[0]), 'allowscriptaccess'))
+				{
+					$m[0] = '<param name="allowscriptaccess" value="never"';
+					if(substr($m[0], -1) == '/')
+					{
+						$m[0] .= '/';
+					}
+					$this->allowscriptaccessList[count($this->allowscriptaccessList)-1]--;
+				}
+			}
+			else if($m[1] == 'embed')
+			{
+				if(strpos(strtolower($m[0]), 'allowscriptaccess'))
+				{
+					$m[0] = preg_replace('/always|samedomain/i', 'never', $m[0]);
+				}
+				else
+				{
+					$m[0] = preg_replace('/\<embed/i', '<embed allowscriptaccess="never"', $m[0]);
+				}
+			}
+			return $m[0];
+		}
 
         function getContent($add_popup_menu = true, $add_content_info = true, $resource_realpath = false, $add_xe_content_class = true, $stripEmbedTagException = false) {
             if(!$this->document_srl) return;
@@ -291,13 +339,18 @@
             }
             // If additional content information is set
             if($add_content_info) {
+				$memberSrl = $this->get('member_srl');
+				if($memberSrl < 0)
+				{
+					$memberSrl = 0;
+				}
                 $content = sprintf(
                         '<!--BeforeDocument(%d,%d)--><div class="document_%d_%d xe_content">%s</div><!--AfterDocument(%d,%d)-->',
-                        $this->document_srl, $this->get('member_srl'),
-                        $this->document_srl, $this->get('member_srl'),
+                        $this->document_srl, $memberSrl,
+                        $this->document_srl, $memberSrl,
                         $content,
-                        $this->document_srl, $this->get('member_srl'),
-                        $this->document_srl, $this->get('member_srl')
+                        $this->document_srl, $memberSrl,
+                        $this->document_srl, $memberSrl
                 );
             // Add xe_content class although accessing content is not required
             } else {
@@ -427,7 +480,7 @@
 
         function getExtraValueHTML($idx) {
             $extra_vars = $this->getExtraVars();
-            if(array_key_exists($idx,$extra_vars)){
+            if(is_array($extra_vars) && array_key_exists($idx,$extra_vars)){
                 return $extra_vars[$idx]->getValueHTML();
             }else{
                 return '';
@@ -471,7 +524,14 @@
             if(!$this->getCommentCount()) return;
             if(!$this->isGranted() && $this->isSecret()) return;
             // cpage is a number of comment pages
-            $cpage = Context::get('cpage');
+			$cpageStr = sprintf('%d_cpage', $this->document_srl);
+			$cpage = Context::get($cpageStr);
+			
+			if(!$cpage)
+			{
+            	$cpage = Context::get('cpage');
+			}
+
             // Get a list of comments
             $oCommentModel = getModel('comment');
             $output = $oCommentModel->getCommentList($this->document_srl, $cpage, $is_admin);
@@ -479,6 +539,7 @@
             // Create commentItem object from a comment list
             // If admin priviledge is granted on parent posts, you can read its child posts.
             $accessible = array();
+			$comment_list = array();
             foreach($output->data as $key => $val) {
                 $oCommentItem = new commentItem();
                 $oCommentItem->setAttribute($val);
@@ -491,6 +552,7 @@
                 $comment_list[$val->comment_srl] = $oCommentItem;
             }
             // Variable setting to be displayed on the skin
+            Context::set($cpageStr, $output->page_navigation->cur_page);
             Context::set('cpage', $output->page_navigation->cur_page);
             if($output->total_page>1) $this->comment_page_navigation = $output->page_navigation;
 
@@ -678,16 +740,21 @@
             return $this->get('uploaded_count')? true : false;
         }
 
-        function getUploadedFiles() {
-            if(!$this->document_srl) return;
+		function getUploadedFiles($sortIndex = 'file_srl')
+		{
+			if(!$this->document_srl) return;
 
-            if($this->isSecret() && !$this->isGranted()) return;
-            if(!$this->get('uploaded_count')) return;
+			if($this->isSecret() && !$this->isGranted()) return;
+			if(!$this->get('uploaded_count')) return;
 
-            $oFileModel = getModel('file');
-            $file_list = $oFileModel->getFiles($this->document_srl, $is_admin);
-            return $file_list;
-        }
+			if(!$this->uploadedFiles[$sortIndex])
+			{
+				$oFileModel = &getModel('file');
+				$this->uploadedFiles[$sortIndex] = $oFileModel->getFiles($this->document_srl, array(), $sortIndex);
+			}
+
+			return $this->uploadedFiles[$sortIndex];
+		}
 
         /**
          * @brief Return Editor html
@@ -805,5 +872,6 @@
 			}
 			return false;
 		}
+		
     }
 ?>

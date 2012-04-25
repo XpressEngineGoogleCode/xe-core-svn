@@ -82,6 +82,8 @@
 
 		var $db_type; ///< stores database type: 'mysql','cubrid','mssql' etc. or 'db' when database is not yet set
 
+		var $use_prepared_statements; ///< flag to decide if class prepared statements or not (when supported); can be changed from db.config.info
+		
         /**
          * @brief returns instance of certain db type
          * @param[in] $db_type type of db
@@ -218,9 +220,8 @@
          * @param[in] $db_type type of db to check
          * @return true: is supported, false: is not supported
          **/
-        function isSupported($db_type) {
-            $supported_list = DB::getSupportedList();
-            return in_array($db_type, $supported_list);
+        function isSupported() {
+			return FALSE;
         }
 
         /**
@@ -551,11 +552,7 @@
 
             if(function_exists('mysql_connect')) $result[] = 'MySQL';
             if(function_exists('cubrid_connect')) $result[] = 'Cubrid';
-            if(function_exists('ibase_connect')) $result[] = 'FireBird';
-            if(function_exists('pg_connect')) $result[] = 'Postgre';
-            if(function_exists('sqlite_open')) $result[] = 'sqlite2';
             if(function_exists('mssql_connect')) $result[] = 'MSSQL';
-            if(function_exists('PDO')) $result[] = 'sqlite3(PDO)';
 
             return $result;
         }
@@ -648,7 +645,7 @@
         }
 
         function _getConnection($type = 'master', $indx = NULL){
-            if($type == master){
+            if($type == 'master'){
                 if(!$this->master_db['is_connected'])
                         $this->_connect($type);
                 $this->connection = 'Master ' . $this->master_db['db_hostname'];
@@ -778,9 +775,10 @@
             else
                     $this->slave_db = $db_info->slave_db;
             $this->prefix = $db_info->master_db["db_table_prefix"];
+			$this->use_prepared_statements = $db_info->use_prepared_statements;
         }
 
-        function __connect(){
+        function __connect($connection){
 
         }
 

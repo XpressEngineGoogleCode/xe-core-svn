@@ -183,7 +183,7 @@
             $args->module_srl = $module_srl;
         	$oCacheHandler = &CacheHandler::getInstance('object');
 			if($oCacheHandler->isSupport()){
-				$cache_key = 'object:'.$module_srl;
+				$cache_key = 'object_module_info:'.$module_srl;
 				$output = $oCacheHandler->get($cache_key);
 			}
 			if(!$output){
@@ -630,8 +630,10 @@
 								$info->menu->{$action->attrs->menu_name}->index = $name;
                         		$buff .= sprintf('$info->menu->%s->index=\'%s\';', $action->attrs->menu_name, $name);
 							}
-							array_push($info->menu->{$action->attrs->menu_name}->acts, $name);
-							$currentKey = array_search($name, $info->menu->{$action->attrs->menu_name}->acts);
+							if(is_array($info->menu->{$action->attrs->menu_name}->acts)) {
+								array_push($info->menu->{$action->attrs->menu_name}->acts, $name);
+								$currentKey = array_search($name, $info->menu->{$action->attrs->menu_name}->acts);
+							}
 
                         	$buff .= sprintf('$info->menu->%s->acts[%d]=\'%s\';', $action->attrs->menu_name, $currentKey, $name);
 							$i++;
@@ -1767,8 +1769,9 @@
         /**
          * @brief already instance created module list
          **/
-		function getModuleListByInstance($columnList = array())
+		function getModuleListByInstance($site_srl = 0, $columnList = array())
 		{
+			$args->site_srl = $site_srl;
 			$output = executeQueryArray('module.getModuleListByInstance', $args, $columnList);
 			return $output;
 		}

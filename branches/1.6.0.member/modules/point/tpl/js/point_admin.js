@@ -6,27 +6,33 @@
 
 jQuery(function($){
 
-$('button.calc_point').click(function(){
-	var $this, form, elems, reset, el, fn, i=0;
-	
-	$this = $(this);
-	$expr = $('input.level_expression');
-	form  = this.form;
-	elems = form.elements;
-	reset = $this.hasClass('_reset');
+    $('a.calc_point').click(function(e){
+        var $this, form, elems, reset, el, fn, i=0;
 
-	if(reset || !$expr.val()) $expr.val('Math.pow(i,2) * 90');
+        $this = $(this);
+        $expr = $('input.level_expression');
+        elems = $(".point_input:input");
+        reset = $this.hasClass('_reset');
 
-	try {
-		fn = new Function('i', 'return ('+$expr.val()+')');
-	} catch(e){
-		fn = null;
-	}
+        e.preventDefault();
+        $this.blur();
+        
+        if (reset || !$expr.val()) {
+            $expr.val('Math.pow(i,2) * 90');
+        }
 
-	if(!fn) return;
+        try {
+            fn = new Function('i', 'return ('+$expr.val()+')');
+        } catch(e) {
+            fn = null;
+        }
 
-	while(el = elems['level_step_'+(++i)]) el.value = fn(i);
-});
+        if (!fn) return;
+
+        for ( i=0; i<=(elems.length - 1); i++ ) {
+            elems[i].value = fn(i);
+        }
+    });
 
 });
 
@@ -34,53 +40,61 @@ $('button.calc_point').click(function(){
  * @brief 포인트를 전부 체크하여 재계산하는 action 호출
  **/
 function doPointRecal() {
-	var resp, $recal;
+    var resp, $recal;
 
-	function on_complete(ret) {
-		if(!$recal) $recal = jQuery('#pointReCal');
+    function on_complete(ret) {
+        if(!$recal) $recal = jQuery('#pointReCal');
 
-		$recal.html(ret.message);
+        $recal.html(ret.message);
 
-		if(ret.position == ret.total) {
-			alert(message);
-			location.reload();
-		} else {
-			exec_xml(
-				'point',
-				'procPointAdminApplyPoint',
-				{position : ret.position, total : ret.total},
-				on_complete,
-				resp
-			);
-		}
-	}
+        if(ret.position == ret.total) {
+            alert(message);
+            location.reload();
+        } else {
+            exec_xml(
+                'point',
+                'procPointAdminApplyPoint',
+                {
+                    position : ret.position,
+                    total : ret.total
+                },
+                on_complete,
+                resp
+                );
+        }
+    }
 
     exec_xml(
-		'point', // module
-		'procPointAdminReCal', // procedure
-		{}, // parameters
-		on_complete, // callback
-		resp=['error','message','total','position'] // response tags
-	);
+        'point', // module
+        'procPointAdminReCal', // procedure
+        {}, // parameters
+        on_complete, // callback
+        resp=['error','message','total','position'] // response tags
+        );
 }
 
 function updatePoint(member_srl)
 {
-	var $point = jQuery('#point_'+member_srl);
-	get_by_id('update_member_srl').value = member_srl;
-	get_by_id('update_point').value = $point.val();
-
-    var hF = get_by_id('updateForm');
-	hF.submit();
+    var $point = jQuery('#point_'+member_srl);
+    if ($point.attr('value') != undefined) {
+        jQuery('#update_member_srl').attr('value',member_srl);
+        jQuery('#update_point').attr('value',$point.val());
+        jQuery("#updateForm").submit();
+    }
 }
 
 
 function doPointReset(module_srls) {
     exec_xml(
-		'point',
-		'procPointAdminReset',
-		{module_srls : module_srls},
-		function(ret_obj){alert(ret_obj['message']);},
-		['error','message']
-	);
+        'point',
+        'procPointAdminReset',
+        {
+            module_srls : module_srls
+        },
+        function(ret_obj){
+            alert(ret_obj['message']);
+            location.reload(true);
+        },
+        ['error','message']
+        );
 }

@@ -11,25 +11,26 @@ jQuery(function($){
 $('.checkxml')
 	.find('input:text')
 		.change(function(){
-			$(this).closest('.checkxml').find('.desr').hide();
+			$(this).closest('.checkxml').find('.desc').hide();
 		})
 	.end()
-	.find('button')
+	.find('.button')
 		.click(function(){
 			var $this, $container, $input, $messages, $loading, $form, $syncmember, count;
 
-			$this      = $(this).prop('disabled', true);
+			$this      = $(this).addClass("disabled");
 			$form      = $this.closest('form');
 			$container = $this.closest('.checkxml');
+			
 			$input     = $container.find('input').prop('disabled', true).addClass('loading');
 			$message   = $container.find('.desc').hide();
 
 			function on_complete(data) {
 				var $ul, $ttxml, $xml;
 
-				$ul    = $this.closest('ul');
-				$xml   = $ul.find('>.xml');
-				$ttxml = $ul.find('>.ttxml');
+				$ul    = $this.closest('table');
+				$xml   = $ul.find('.xml');
+				$ttxml = $ul.find('.ttxml');
 
 				$message.text(data.result_message);
 					
@@ -40,15 +41,19 @@ $('.checkxml')
 					$ttxml.eq(-1).slideUp(100, function(){
 						$ttxml = $ttxml.slice(0,-1).eq(-1).slideUp(100,arguments.callee);
 					});
-					$form.find(':submit').attr('disabled','disabled');
+					$form.closest("div").next("div").find('a').addClass('disabled');
+					
 					return restore();
 				}
 
-				restore();
 				$message.attr('class', 'desc success').fadeIn(300);
-				$form.find(':submit').removeAttr('disabled');
+				//$form.find(':submit').removeAttr('disabled');
+				$this.closest('form').closest("div").next("div").find('a').removeClass('disabled');
 
 				$syncmember = $form.find('.syncmember:hidden');
+				
+				$input.prop('disabled', false).removeClass('loading');
+				$this.prop('disabled', false);
 				
 				if(data.type == 'XML') {
 					$xml.not(':visible').add($syncmember).slideDown(300);
@@ -60,7 +65,7 @@ $('.checkxml')
 
 			function restore() {
 				$input.prop('disabled', false).removeClass('loading');
-				$this.prop('disabled', false);
+				$this.removeClass("disabled");
 				$form.find('.syncmember:visible').slideUp(100);
 				return false;
 			};
@@ -70,8 +75,8 @@ $('.checkxml')
 		})
 	.end()
 	.find('.desc').hide().end()
-	.closest('ul').find('>li.ttxml').hide().end().end()
-	.closest('form').find(':submit').attr('disabled','disabled');
+	.closest('table').find('tr.ttxml').hide().end().end()
+	.closest('form').closest("div").next("div").find('a').addClass('disabled');
 
 // hide 'sync member' block
 $('.syncmember').hide();
@@ -119,7 +124,7 @@ function doPreProcessing(form, formId) {
 	);
 
 	function on_complete(ret) {
-		var $reload, $cont, fo_proc, elems, i, c, key, to_copy;
+		var $reload, $cont, fo_proc, elems, i, c, key, to_copy, fo_import;
 
 		prepared = true;
 
@@ -162,7 +167,7 @@ function doImport(formId) {
 	}
 
 	function on_complete(ret, response_tags) {
-		var i, c, key;
+		var i, c, key, fo_import;
 		
 		for(i=0,c=resp.length; i < c; i++) {
 			key = resp[i];

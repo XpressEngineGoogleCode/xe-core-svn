@@ -15,19 +15,19 @@
         <action name="procTrackbackAdminInsertModuleConfig" type="controller" standalone="true" />
         <action name="procTrackbackAdminAddCart" type="controller" standalone="true" />
     </actions>
-	<menus>
-		<menu name="trackback">
-			<title xml:lang="en">Trackback</title>
-			<title xml:lang="ko">엮인글</title>
-			<title xml:lang="zh-CN">Trackback</title>
-			<title xml:lang="jp">Trackback</title>
-			<title xml:lang="es">Trackback</title>
-			<title xml:lang="ru">Trackback</title>
-			<title xml:lang="fr">Trackback</title>
-			<title xml:lang="zh-TW">Trackback</title>
-			<title xml:lang="vi">Trackback</title>
-			<title xml:lang="mn">Trackback</title>
-			<title xml:lang="tr">Trackback</title>
-		</menu>
-	</menus>
+    <menus>
+        <menu name="trackback">
+            <title xml:lang="en">Manager trackbacks</title>
+            <title xml:lang="ko">엮인글</title>
+            <title xml:lang="zh-CN">Manager trackbacks</title>
+            <title xml:lang="jp">Manager trackbacks</title>
+            <title xml:lang="es">Manager trackbacks</title>
+            <title xml:lang="ru">Manager trackbacks</title>
+            <title xml:lang="fr">Manager trackbacks</title>
+			<title xml:lang="zh-TW">引用</title>
+            <title xml:lang="vi">Manager trackbacks</title>
+            <title xml:lang="mn">Manager trackbacks</title>
+            <title xml:lang="tr">Manager trackbacks</title>
+        </menu>
+    </menus>
 </module>
