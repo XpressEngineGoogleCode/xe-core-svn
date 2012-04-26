@@ -1,0 +1,38 @@
+=XE 1.5.2.3 Release Note=
+
+<wiki:toc />
+
+==For Users==
+
+===Defect===
+
+ * XSS 패치
+ * DB 클래스의 PHP warning/notice 발생하는 문제 해결 `[`issue 1851 corina`]`
+ * 사이트 추가 쿼리 문제 해결 `[`issue 1862 corina`]`
+ * MSSQL에서 설치 문제 해결 `[`issue 1882 corina`]`
+ * 큐브리드에서 게시판 글번호가 올바르지 않은 문베 해결 `[`issue 1890 corina`]`
+ * 메뉴 추가시 문제 해결 `[`issue 1765 misol 패치제공: daehyeok`]`
+ * RSS 관리 화면의 문제 해결 `[`issue 1855 정찬명`]`
+ * img { max-width: 100% }로 인한 문제 해결 `[`issue 1849 정찬명`]`
+ * word-break:break-all;word-wrap:break-word로 인한 문제 해결 `[`r10604 정찬명`]`
+ * 애드온 모듈의 warning 메시지 해결 `[`issue 1920 misol`]`
+
+===Enhancement===
+
+ * 게시판 내용에 HTML Purifier 라이브러리(XSS 필터) 적용 `[`r10579 r10580 체리필터`]`
+   * PHP 5.3 이상에서 작동합니다. PHP 5.30 이하 버전에 대한 보안 패치도 계속 제공됩니다.
+ * 회원 비밀번호에 sha1 해시 추가 `[`issue 1882 Sol`]`
+ * Wincache 지원 추가 `[`issue 1881 ddan`]`
+ * 파일 캐시 지원 추가 `[`r10561 corina`]` 
+ * 좀더 다양한 모바일 디바이스에 대응하도록 변경 `[`issue 1774 misol`]`
+ * 언어 변수 개선 `[`r10535 issue 1852 misol`]`
+ * html5.js 업데이트 `[`issue 1947 정찬명`]`
+ * ColorCode 모바일 레이아웃 타이틀 스타일 변경 `[`r10618 unryong`]`
+
+==For Developers==
+
+ * XML 쿼리/스키마 검사 툴(Validator) 추가 `[`r10544 r10549 r10550 r10557 adrian`]`
+ * 쿼리 파서에서 캐시 파일을 만들때도 parser object를 반환하도록 변경 `[`r10556 adrian`]`
+ * <!--#include()--> 텟플릿 문법에 작은 따옴표가 적용되지 않던 문제 해결 `[`issue 1883 난다날아`]`
+ * 라디오와 체크박스에 대한 룰셋이 적용되지 않던 문제 해결 `[`issue 1905 Sol`]`
+ * 한 요청에서 값이 변하지 않는 애드온 파일 위치 부분을 캐싱 `[`issue 1858 misol`]`
