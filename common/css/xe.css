@@ -1,8 +1,9 @@
 @charset "utf-8";
 /* NHN (developers@xpressengine.com) */
 /* Element Reset */
+img{border:0}
 .xe_content{word-break:break-all;word-wrap:break-word}
-.xe_content img{border:0;width:auto;height:auto;max-width:100%}
+.xe_content img{width:auto;height:auto;max-width:100%}
 @media \0screen{.xe_content img{max-width:none}}
 /* Button Area */
 .btnArea{margin:1em 0;text-align:right;zoom:1;clear:both}
