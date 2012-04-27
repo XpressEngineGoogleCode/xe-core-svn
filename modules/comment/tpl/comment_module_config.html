@@ -35,6 +35,16 @@
 						</select>
 					</td>
 				</tr>
+                <tr>
+                    <td><p>{$lang->cmd_comment_validation}</p></td>
+                    <td>
+                        <select name="use_comment_validation" id="use_comment_validation" class="xe-ui-panel-select">
+                            <option value="N" selected="selected"|cond="$comment_config->use_comment_validation=='N'">{$lang->notuse}</option>
+                            <option value="Y" selected="selected"|cond="$comment_config->use_comment_validation=='Y'">{$lang->use}</option>
+                        </select>
+                        <p>{$lang->about_comment_validation}</p>
+                    </td>
+                </tr>
 			</tbody>
 		</table>
 		

@@ -286,4 +286,16 @@
 	<item name="cmd_unpublish">
 		<value xml:lang="en"><![CDATA[Unpublish]]></value>
 	</item>
+	<item name="all_without_spam">
+		<value xml:lang="en"><![CDATA[All (without spam)]]></value>
+	</item>
+    <item name="spam">
+		<value xml:lang="en"><![CDATA[Spam]]></value>
+	</item>
+    <item name="cmd_spam">
+		<value xml:lang="en"><![CDATA[Spam]]></value>
+	</item>
+    <item name="cmd_unspam">
+		<value xml:lang="en"><![CDATA[Not spam]]></value>
+	</item>
 </lang>

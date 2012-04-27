@@ -273,4 +273,10 @@ l'article qui comporte le mot ne sera pas affichagé.]]></value>
 	<item name="add_denied_word">
 		<value xml:lang="en"><![CDATA[Add word(s) to Blacklist]]></value>
 	</item>
+    <item name="set_akismet_api_key">
+        <value xml:lang="en"><![CDATA[Akismet API key]]></value>
+    </item>
+    <item name="about_akismet_api_key">
+        <value xml:lang="en"><![CDATA[Sign up to <a href="https://akismet.com/signup" target="_blank">Akismet</a> and get your API key]]></value>
+    </item>
 </lang>

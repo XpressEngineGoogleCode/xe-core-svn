@@ -64,7 +64,7 @@
 											{$ipListKey->ipaddress} <!--@if($ipListKey->description)--> {$ipListKey->description} <!--@end-->
 										</td>
 										<td class="center">
-											<a href="" onclick="doDeleteDeniedIP('{$ipListKey->ipaddress}')" class="xe-ui-button-gray">{$lang->cmd_delete}</a>
+											<a href="#" onclick="doDeleteDeniedIP('{$ipListKey->ipaddress}')" class="xe-ui-button-gray">{$lang->cmd_delete}</a>
 										</td>
 									</tr>
 									<!--@endforeach-->
@@ -89,7 +89,7 @@
 								<tr>
 									<td class="center">{$wordListKey->word}</td>
 									<td class="center">
-										<a href="" onclick="doDeleteDeniedWord('{$wordListKey->word}')" class="xe-ui-button-gray">{$lang->cmd_delete}</a>
+										<a href="#" onclick="doDeleteDeniedWord('{$wordListKey->word}')" class="xe-ui-button-gray">{$lang->cmd_delete}</a>
 									</td>
 								</tr>
 								<!--@end-->
@@ -107,7 +107,7 @@
 								<input type="hidden" name="ruleset" value="insertDeniedIp" />
 								<p class="form-list v-top">
 									<textarea rows="4" cols="42" name="ipaddressList" title="{$lang->add_denied_ip}" class="xe-ui-panel-textarea"></textarea>
-									<a href="" onclick="jQuery('#spamfilterInsertIp').submit();" class="xe-ui-button-gray">{$lang->cmd_insert}</a>
+									<a href="#" onclick="jQuery('#spamfilterInsertIp').submit();" class="xe-ui-button-gray">{$lang->cmd_insert}</a>
 								</p>
 								<p class="desc">{$lang->about_denied_ip}</p>
 							</form>
@@ -122,9 +122,24 @@
 								<input type="hidden" name="ruleset" value="insertDeniedWord" />
 								<p class="form-list v-top">
 									<textarea rows="4" cols="42" name="wordList" title="{$lang->add_denied_word}" class="xe-ui-panel-textarea"></textarea>
-									<a href="" onclick="jQuery('#spamfilterInsertWord').submit();" class="xe-ui-button-gray">{$lang->add}</a>
+									<a href="#" onclick="jQuery('#spamfilterInsertWord').submit();" class="xe-ui-button-gray">{$lang->add}</a>
 								</p>
 								<p class="desc">{$lang->about_denied_word}</p>
+							</form>
+						</td>
+					</tr>
+					<tr>
+						<td class="v-top">{$lang->set_akismet_api_key}</td>
+						<td>
+							<form id="spamfilterAkismetApiKey">
+								<input type="hidden" name="act" value="procSpamfilterAdminUpdateAkismetApiKey" />
+								<input type="hidden" name="module" value="spamfilter" />
+								<input type="hidden" name="ruleset" value="updateAkismetApiKey" />
+								<p class="form-list v-top">
+									<input value="{$config->akismet_api_key}" type="text" name="akismet_api_key" class="xe-ui-panel-text" title="{$lang->set_akismet_api_key}">
+									<a href="#" onclick="jQuery('#spamfilterAkismetApiKey').submit();" class="xe-ui-button-gray">{$lang->cmd_save}</a>
+								</p>
+								<p class="desc">{$lang->about_akismet_api_key}</p>
 							</form>
 						</td>
 					</tr>

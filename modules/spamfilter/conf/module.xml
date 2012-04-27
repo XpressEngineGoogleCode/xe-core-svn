@@ -27,5 +27,7 @@
         <action name="procSpamfilterAdminDeleteDeniedWord" type="controller" standalone="true" ruleset="deleteDeniedWord" />
         <action name="procSpamfilterAdminInsertConfig" type="controller" standalone="true" ruleset="insertSetting" />
 
+        <action name="procSpamfilterAdminUpdateAkismetApiKey" type="controller" standalone="true" ruleset="updateAkismetApiKey" />
+
     </actions>
 </module>
