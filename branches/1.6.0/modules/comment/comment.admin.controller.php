@@ -14,7 +14,7 @@
         }
 		
 	/**
-	* @brief Modify comment(s) status to publish/unpublish if calling module is using Comment Approval System
+	* @brief Modify comment(s) status to publish(1)/unpublish(0)/spam(2)/unspam(0) if calling module is using Comment Approval System
 	* @return Object 
 	*/
 	function procCommentAdminChangePublishedStatusChecked()
@@ -40,7 +40,7 @@
 	
 	function procCommentAdminChangeStatus()
 	{
-		$will_publish = Context::get('will_publish');
+        $will_publish = Context::get('will_publish');
 
 		// Error display if none is selected
 		$cart = Context::get('cart');
@@ -64,7 +64,7 @@
 		{
 			return $output;
 		}
-		else 
+		else
 		{
 			//update comment count for document
 			$updated_documents_arr = array();
@@ -79,10 +79,30 @@
 			//$oMemberModule = &getModel("member");
 			//$logged_info = $oMemberModule->getMemberInfoByMemberSrl($logged_member_srl);
 			$new_status = ($will_publish) ? "published" : "unpublished";
-			foreach($comment_srl_list as $comment_srl)
+			if ($will_publish == 2) $new_status = 'spam';
+
+            $was_spam = Context::get('was_spam') ? true : false;
+            require_once(_XE_PATH_ . 'libs/Akismet.class.php');
+
+            foreach($comment_srl_list as $comment_srl)
 			{
 				// check if comment already exists
 				$comment = $oCommentModel->getComment($comment_srl);
+
+                //send spam or ham to akismet (http://www.achingbrain.net/akismet)
+                $oModuleModel = getModel('module');
+                $spamConfig = $oModuleModel->getModuleConfig('spamfilter');
+                if ($key = $spamConfig->akismet_api_key) //akismet reporting enabled
+                {
+                    $ak = new Akismet(getSiteUrl(), $key);
+                    $ak->setCommentAuthorEmail($comment->email_address);
+                    $ak->setCommentAuthorURL($comment->homepage);
+                    $ak->setCommentContent($comment->content);
+                    $ak->setPermalink(getSiteUrl().$comment->document_srl);
+                    if ($will_publish == 2) $ak->submitSpam();
+                    elseif ($was_spam) $ak->submitHam();
+                }
+
 				if($comment->comment_srl != $comment_srl) return new Object(-1, 'msg_invalid_request');
 				$document_srl = $comment->document_srl;
 				if (!in_array($document_srl,$updated_documents_arr))

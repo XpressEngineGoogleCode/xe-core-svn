@@ -20,11 +20,12 @@ xe.lang.msg_empty_search_keyword = '{$lang->msg_empty_search_keyword}';
                         <p class="f-left">
                             <label>{$lang->cmd_show}:</label>
                             <select onchange="window.location = this.options[this.selectedIndex].value;" class="xe-ui-panel-select" style="width: 180px;">
-                                <option value="{getUrl('search_keyword','')}" selected="selected"|cond="$search_keyword == ''">{$lang->all}</option>
+                                <option value="{getUrl('search_target','','search_keyword','')}" selected="selected"|cond="$search_keyword == ''">{$lang->all_without_spam}</option>
                                 <option value="{getUrl('search_target','is_secret','search_keyword','N')}" selected="selected"|cond="$search_target == 'is_secret' && $search_keyword == 'N'">{$secret_name_list['N']}</option>
                                 <option value="{getUrl('search_target','is_secret','search_keyword','Y')}" selected="selected"|cond="$search_target == 'is_secret' && $search_keyword == 'Y'">{$secret_name_list['Y']}</option>
                                 <option value="{getUrl('search_target','is_published','search_keyword','N')}" selected="selected"|cond="$search_target == 'is_published' && $search_keyword == 'N'">{$lang->published_name_list['N']}</option>
                                 <option value="{getUrl('search_target','is_published','search_keyword','Y')}" selected="selected"|cond="$search_target == 'is_published' && $search_keyword == 'Y'">{$lang->published_name_list['Y']}</option>
+                                <option value="{getUrl('search_target','is_spam','search_keyword','Y')}" selected="selected"|cond="$search_target == 'is_spam' && $search_keyword == 'Y'">{$lang->spam}</option>
                             </select>
                             <label for="comment_modules" <!--@if($search_target == 'module')-->class="active"<!--@end-->>Select Module:</label>
                             <select id="comment_modules" name="comment_modules" onchange="location.href='{getUrl('search_target','module','search_keyword','')}&search_keyword='+this.value" class="xe-ui-panel-select" disabled="disabled"|cond="$modules_list[0]==null">
@@ -75,10 +76,12 @@ xe.lang.msg_empty_search_keyword = '{$lang->msg_empty_search_keyword}';
                                 <!--@end-->
                             </td>
                             <td class="center">
-                                <!--@if($val->status)-->
+                                <!--@if($val->status == 1)-->
                                     {$lang->published_name_list['Y']}
-                                <!--@else-->
+                                <!--@elseif($val->status == 0)-->
                                     {$lang->published_name_list['N']}
+                                <!--@elseif($val->status == 2)-->
+                                    {$lang->spam}
                                 <!--@end-->
                             </td>
                             <td class="button center"><input type="checkbox" name="cart" value="{$val->comment_srl}" /></td>
@@ -133,6 +136,7 @@ xe.lang.msg_empty_search_keyword = '{$lang->msg_empty_search_keyword}';
             <input type="hidden" name="page" value="{$page}" />
             <input type="hidden" name="is_trash" value="false" />
             <input type="hidden" name="will_publish" value="0" />
+            <input type="hidden" name="was_spam" value="{$search_target == 'is_spam' && $search_keyword == 'Y' ? 1 : 0}" />
             <input type="hidden" name="search_target" value="{$search_target}" />
             <input type="hidden" name="search_keyword" value="{$search_keyword}" />
                     <h2 class="h2">{$lang->comment_manager}</h2>
@@ -160,12 +164,17 @@ xe.lang.msg_empty_search_keyword = '{$lang->msg_empty_search_keyword}';
                     <div class="btnArea">
 						<!--@if ($search_target=='is_published' && $search_keyword=="N")-->
 							<span class="btn"><button type="submit" name="will_publish" value="1" onclick="doChangePublishedStatus(this.value);">{$lang->cmd_publish}</button></span>
-						<!--@elseif ($search_target=='is_published' && $search_keyword=="Y")-->
+                            <span class="btn"><button type="submit" name="will_publish" value="2" onclick="doChangePublishedStatus(this.value);">{$lang->cmd_spam}</button></span>
+                        <!--@elseif ($search_target=='is_published' && $search_keyword=="Y")-->
 							<span class="btn"><button type="submit" name="will_publish" value="0" onclick="doChangePublishedStatus(this.value);">{$lang->cmd_unpublish}</button></span>
-						<!--@else-->
+                            <span class="btn"><button type="submit" name="will_publish" value="2" onclick="doChangePublishedStatus(this.value);">{$lang->cmd_spam}</button></span>
+                        <!--@elseif ($search_target=='is_spam' && $search_keyword=="Y")-->
+							<span class="btn"><button type="submit" name="will_publish" value="0" onclick="doChangePublishedStatus(this.value);">{$lang->cmd_unspam}</button></span>
+                        <!--@else-->
 							<span class="btn"><button type="submit" name="will_publish" value="1" onclick="doChangePublishedStatus(this.value);">{$lang->cmd_publish}</button></span>
 							<span class="btn"><button type="submit" name="will_publish" value="0" onclick="doChangePublishedStatus(this.value);">{$lang->cmd_unpublish}</button></span>
-						<!--@end-->
+							<span class="btn"><button type="submit" name="will_publish" value="2" onclick="doChangePublishedStatus(this.value);">{$lang->cmd_spam}</button></span>
+                        <!--@end-->
                         <span class="btn"><button type="submit" name="is_trash" value="true">{$lang->cmd_trash}</button></span>
                         <span class="btn"><button type="submit" name="is_trash" value="false">{$lang->cmd_delete}</button></span>
                     </div>

@@ -103,7 +103,7 @@
 	* @param number $document_srl
 	* @return boolean
 	*/
-	function isModuleUsingPublishValidation($document_srl=null, $module_srl=null)
+	function isModuleUsingPublishValidation($module_srl=null)
 	{
 		$oModuleModel = &getModel('module');
 		$module_info = $oModuleModel->getModuleInfoByModuleSrl($module_srl);
@@ -136,6 +136,9 @@
 				$is_admin = false;
 			}
 		}
+        // call a trigger (before)
+        $output = ModuleHandler::triggerCall('comment.insertComment', 'before', $obj);
+        if(!$output->toBool()) return $output;
 
 		if (!$using_validation)
 		{
@@ -149,14 +152,15 @@
 			}
 			else
 			{
-				$obj->status = 0;
+                if ($obj->status != 2)
+                {
+                    $obj->status = 0;
+                }
 			}
 		}
 
 		$obj->__isupdate = false;
-            // call a trigger (before)
-            $output = ModuleHandler::triggerCall('comment.insertComment', 'before', $obj);
-            if(!$output->toBool()) return $output;
+
             // check if a posting of the corresponding document_srl exists
             $document_srl = $obj->document_srl;
             if(!$document_srl) return new Object(-1,'msg_invalid_document');
@@ -262,7 +266,7 @@
             // create the controller object of the document
             $oDocumentController = getController('document');
             // Update the number of comments in the post
-			if (!$using_validation)
+			if (!$using_validation && $obj->status != 2)
 			{
 				$output = $oDocumentController->updateCommentCount($document_srl, $comment_count, $obj->nick_name, true);
 			}
@@ -349,11 +353,13 @@
 			$oMail->setSender($obj->email_address, $obj->email_address);
 			$mail_title = "[XE - ".Context::get('mid')."] A new comment was posted on document: \"".$oDocument->getTitleText()."\"";
 			$oMail->setTitle($mail_title);
-			if ($using_validation)
-			{
-				$url_approve = getFullUrl('','module','comment','act','procCommentAdminChangePublishedStatusChecked','cart[]',$obj->comment_srl,'will_publish','1','search_target','is_published','search_keyword','N');
-				$url_trash = getFullUrl('','module','comment','act','procCommentAdminDeleteChecked','cart[]',$obj->comment_srl,'search_target','is_trash','search_keyword','true');
-				$mail_content = "
+			if ($obj->status != 2)
+            {
+                if ($using_validation)
+                {
+                    $url_approve = getFullUrl('','module','comment','act','procCommentAdminChangePublishedStatusChecked','cart[]',$obj->comment_srl,'will_publish','1','search_target','is_published','search_keyword','N');
+                    $url_trash = getFullUrl('','module','comment','act','procCommentAdminDeleteChecked','cart[]',$obj->comment_srl,'search_target','is_trash','search_keyword','true');
+                    $mail_content = "
 					A new comment on the document \"".$oDocument->getTitleText()."\" is waiting for your approval.
 					<br />
 					<br />
@@ -368,29 +374,30 @@
 					<br />Currently ".$nr_comments_not_approved." comments on \"".Context::get('mid')."\" module are waiting for approval. Please visit the moderation panel:
 					<br /><a href=\"".getFullUrl('','module','admin','act','dispCommentAdminList','search_target','module','search_keyword',$obj->module_srl)."\">".getFullUrl('','module','admin','act','dispCommentAdminList','search_target','module','search_keyword',$obj->module_srl)."</a>
 				";
-				$oMail->setContent($mail_content);
-			}
-			else
-			{
-				$mail_content = "
+                    $oMail->setContent($mail_content);
+                }
+                else
+                {
+                    $mail_content = "
 					Author: ".$member_info->nick_name."
 					<br />Author e-mail: ".$member_info->email_address."
 					<br />Comment:
 					<br />\"".$obj->content."\"
 				";
-				$oMail->setContent($mail_content);
-				// get email of thread's author
-				$document_author_email = $oDocument->variables['email_address'];
-				//get admin info
-				$logged_info = Context::get('logged_info');
-				
-				//mail to author of thread - START
-				if($document_author_email != $obj->email_address && $logged_info->email_address != $document_author_email) {
-						$oMail->setReceiptor($document_author_email, $document_author_email);
-						$oMail->send();
-				}
-				// mail to author of thread - STOP
-			}
+                    $oMail->setContent($mail_content);
+                    // get email of thread's author
+                    $document_author_email = $oDocument->variables['email_address'];
+                    //get admin info
+                    $logged_info = Context::get('logged_info');
+
+                    //mail to author of thread - START
+                    if($document_author_email != $obj->email_address && $logged_info->email_address != $document_author_email) {
+                        $oMail->setReceiptor($document_author_email, $document_author_email);
+                        $oMail->send();
+                    }
+                    // mail to author of thread - STOP
+                }
+            }
 			
 			// get all admins emails
 			$admins_emails = $module_info->admin_mail;

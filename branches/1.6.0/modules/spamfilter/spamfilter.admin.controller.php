@@ -72,6 +72,23 @@ class spamfilterAdminController extends spamfilter {
     }
 
     /**
+     * @brief Updates akismet key
+     */
+    function procSpamfilterAdminUpdateAkismetApiKey() {
+        if ($key = Context::get('akismet_api_key')) {
+            $out = $this->saveAkismetKey($key);
+            if (!$out->toBool()) return $out;
+        }
+
+        if (!in_array(Context::getRequestMethod(), array('XMLRPC', 'JSON'))) {
+            $returnUrl = Context::get('success_return_url') ? Context::get('success_return_url') : getNotEncodedUrl('', 'module', 'admin', 'act', 'dispSpamfilterAdminSetting');
+            header('location:' . $returnUrl);
+            return;
+        }
+        return false;
+    }
+
+    /**
      * @brief Delete the banned IP
      * */
     function procSpamfilterAdminDeleteDeniedIP() {
@@ -128,6 +145,16 @@ class spamfilterAdminController extends spamfilter {
                 return $output;
         }
         return $output;
+    }
+
+    /**
+     * @brief Saves the Akismet user API key
+     * @param $key The Akismet API key to be saved
+     */
+    function saveAkismetKey($key='') {
+        $config = array('akismet_api_key' => $key);
+        $oModuleController = getController('module');
+        return $oModuleController->updateModuleConfig('spamfilter', $config);
     }
 
     /**

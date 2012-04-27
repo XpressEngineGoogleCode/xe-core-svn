@@ -433,7 +433,7 @@
         /**
          * @brief get all the comments in time decending order(for administrators)
          **/
-        function getTotalCommentList($obj, $columnList = array()) {
+        function getTotalCommentList($obj, $columnList = array(), $noSpam=true) {
             $query_id = 'comment.getTotalCommentList';
             // Variables
             $args->sort_index = 'list_order';
@@ -494,6 +494,11 @@
                     case 'is_secret' :
                             $args->s_is_secret= $search_keyword;
 						break;
+                    case 'is_spam' :
+                            if ($search_keyword == 'Y') $args->s_is_published = 2; //spam
+                            if ($search_keyword == 'N') $args->s_is_published = 0;
+                            $noSpam = false;
+						break;
                     case 'is_published' :
 							if($search_keyword == 'Y')
 							{
@@ -520,8 +525,12 @@
                 unset($_oComment);
                 $_oComment = new CommentItem(0);
                 $_oComment->setAttribute($val);
-                $output->data[$key] = $_oComment;
+                if ($noSpam && $_oComment->variables['status'] == 2) {
+                    unset($output->data[$key]);
+                }
+                else $output->data[$key] = $_oComment;
             }
+
 
             return $output;
         }
