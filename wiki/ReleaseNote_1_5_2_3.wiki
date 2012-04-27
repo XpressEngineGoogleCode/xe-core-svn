@@ -6,7 +6,7 @@
 
 ===Defect===
 
- * XSS 패치
+ * XSS 패치 `[`제보: 국제정보보안센터 하동민, 퍼니엑스이 `]`
  * DB 클래스의 PHP warning/notice 발생하는 문제 해결 `[`issue 1851 corina`]`
  * 사이트 추가 쿼리 문제 해결 `[`issue 1862 corina`]`
  * MSSQL에서 설치 문제 해결 `[`issue 1882 corina`]`
