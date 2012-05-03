@@ -1,0 +1,25 @@
+=XE 1.5.2.4 Release Note=
+
+<wiki:toc />
+
+==For Users==
+
+===Defect===
+
+ * 링크된 이미지의 테두리가 생기는 문제 해결 `[`issue 1950 정찬명`]`
+ * 회원 그룹이미지, 포인트 이미지 애드온에서 정규식 실행이 실패하면 백지가 나오는 문제 해결 `[`r10643 misol`]`
+ * 회원 팝업 메뉴에서 아이콘이 겹쳐 나오는 문제 해결 `[`issue 1735 misol`]`
+ * IE8에서 img{ max-width:100% } 때문에 발생하는 문제 해결 `[`issue 1849 정찬명`]`
+
+===Enhancement===
+
+ * HTML purifier 라이브러리 제거 `[`issue 1860`]`
+  * 에디터 컴포넌트 등에 호환성 문제
+ * 모바일 보기 링크의 텍스트 사이즈 조정 `[`issue 1958 misol`]`
+ * 모바일 장치 검사 개선 `[`r10647 misol`]`
+
+==For Developers==
+
+ * jQuery 1.7.2, jQuery UI 1.8.19로 업데이트 `[`issue 1951 난다날아`]`
+ * CUBRID에서 인덱스 생성시 인덱스 이름에 prefix를 붙이지 않도록 변경 `[`issue 1965 corina`]`
+ * 쿼리문에 group by를 사용할 때 문제 해결 `[`issue 1891 corina`]`
