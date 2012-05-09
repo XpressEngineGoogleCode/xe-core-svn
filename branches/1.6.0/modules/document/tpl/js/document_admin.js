@@ -158,6 +158,7 @@ function getModuleList()
     var formObj = jQuery("#manageForm").get(0);
 
     params['site_keyword'] = formObj.site_keyword.value;
+    params['from'] = 'document';
 
     exec_xml('module','procModuleAdminGetList',params, completeGetModuleList, response_tags);
 }

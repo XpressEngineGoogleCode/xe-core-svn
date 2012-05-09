@@ -1079,4 +1079,8 @@ Le module [Administration des Modules] montera tous les modules installés et vo
 		<value xml:lang="en"><![CDATA[Check this to fix the skin regardless of theme setting.]]></value>
 		<value xml:lang="jp"><![CDATA[テーマ設定に関係なくスキンを固定させます。使用すると、テーマの一括スキン設定対象から外されます。]]></value>
 	</item>
+	<item name="msg_cannot_find_target_module">
+		<value xml:lang="ko"><![CDATA[대상 모듈을 찾을 수 없습니다.]]></value>
+		<value xml:lang="en"><![CDATA[Cannot find a target module.]]></value>
+	</item>
 </lang>

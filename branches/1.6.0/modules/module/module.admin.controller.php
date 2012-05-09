@@ -526,6 +526,7 @@
 		function procModuleAdminGetList()
 		{
             if(!Context::get('is_logged')) return new Object(-1, 'msg_not_permitted');
+			$from = Context::get('from');
 
 			$oModuleController = getController('module');
             $oModuleModel = getModel('module');
@@ -534,6 +535,18 @@
             $site_srl = Context::get('site_srl');
             // If there is no site keyword, use as information of the current virtual site
             $args = null;
+
+            // Get a list of modules at the site
+			$args->module = array();
+			if($from == 'document')
+			{
+				array_push($args->module, 'bodex');
+				array_push($args->module, 'beluxe');
+			}
+            // before trigger
+            $output = ModuleHandler::triggerCall('module.procModuleAdminGetList', 'before', $args->module);
+            if(!$output->toBool()) return $output;
+
             $logged_info = Context::get('logged_info');
 			$site_module_info = Context::get('site_module_info');
 			if($site_keyword) $args->site_keyword = $site_keyword;
@@ -577,6 +590,10 @@
 
 			$security = new Security($mid_list);
 			$security->encodeHTML('....browser_title');
+			if(count($mid_list) == 0)
+			{
+				return new Object(-1, 'msg_cannot_find_target_module');
+			}
 
 			$this->add('module_list', $mid_list);
 		}
