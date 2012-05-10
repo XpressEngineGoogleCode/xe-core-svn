@@ -346,7 +346,7 @@
          * @brief Create a table by using xml file
          **/
         function createTableByXmlFile($file_name) {
-            if(!file_exists($file_name)) return;
+            if(!file_exists($file_name)) return FALSE;
             // read xml file
             $buff = FileHandler::readFile($file_name);
             return $this->_createTable($buff);
@@ -365,7 +365,7 @@
             $xml_obj = $oXml->parse($xml_doc);
             // Create a table schema
             $table_name = $xml_obj->table->attrs->name;
-            if($this->isTableExists($table_name)) return;
+            if($this->isTableExists($table_name)) return FALSE;
 
             if($table_name == 'sequence') {
                 $table_name = $this->prefix.$table_name;
