@@ -11,7 +11,7 @@
          * @brief Initialization
          **/
         function init() {
-            $oCommunicationModel = &getModel('communication');
+            $oCommunicationModel = getModel('communication');
 
             $this->communication_config = $oCommunicationModel->getConfig();
             $skin = $this->communication_config->skin;
@@ -47,7 +47,7 @@
                 Context::set('message_type', $message_type);
             }
 
-            $oCommunicationModel = &getModel('communication');
+            $oCommunicationModel = getModel('communication');
             // extract contents if message_srl exists
             if($message_srl) {
 				$columnList = array('message_srl', 'sender_srl', 'receiver_srl', 'message_type', 'title', 'content', 'readed', 'regdate');
@@ -83,7 +83,7 @@
             if(!Context::get('is_logged')) return $this->stop('msg_not_logged');
             $logged_info = Context::get('logged_info');
 
-            $oCommunicationModel = &getModel('communication');
+            $oCommunicationModel = getModel('communication');
             // get a new message
 			$columnList = array('message_srl', 'member_srl', 'nick_name', 'title', 'content', 'sender_srl');
             $message = $oCommunicationModel->getNewMessage($columnList);
@@ -105,8 +105,8 @@
          **/
         function dispCommunicationSendMessage() {
             $this->setLayoutFile("popup_layout");
-            $oCommunicationModel = &getModel('communication');
-            $oMemberModel = &getModel('member');
+            $oCommunicationModel = getModel('communication');
+            $oMemberModel = getModel('member');
             // Error appears if not logged-in
             if(!Context::get('is_logged')) return $this->stop('msg_not_logged');
             $logged_info = Context::get('logged_info');
@@ -137,7 +137,7 @@
 
             Context::set('receiver_info', $receiver_info);
             // set a signiture by calling getEditor of the editor module
-            $oEditorModel = &getModel('editor');
+            $oEditorModel = getModel('editor');
             $option->primary_key_name = 'receiver_srl';
             $option->content_key_name = 'content';
             $option->allow_fileupload = false;
@@ -162,7 +162,7 @@
             // Error appears if not logged-in
             if(!Context::get('is_logged')) return $this->stop('msg_not_logged');
 
-            $oCommunicationModel = &getModel('communication');
+            $oCommunicationModel = getModel('communication');
             // get a group list
             $tmp_group_list = $oCommunicationModel->getFriendGroups();
             $group_count = count($tmp_group_list);
@@ -203,8 +203,8 @@
             $target_srl = Context::get('target_srl');
             if(!$target_srl) return $this->stop('msg_invalid_request');
             // get information of the member
-            $oMemberModel = &getModel('member');
-            $oCommunicationModel = &getModel('communication');
+            $oMemberModel = getModel('member');
+            $oCommunicationModel = getModel('communication');
             $communication_info = $oMemberModel->getMemberInfoByMemberSrl($target_srl);
             if($communication_info->member_srl != $target_srl) return $this->stop('msg_invalid_request');
             Context::set('target_info', $communication_info);
@@ -226,7 +226,7 @@
             // change to edit mode when getting the group_srl
             $friend_group_srl = Context::get('friend_group_srl');
             if($friend_group_srl) {
-                $oCommunicationModel = &getModel('communication');
+                $oCommunicationModel = getModel('communication');
                 $friend_group = $oCommunicationModel->getFriendGroupInfo($friend_group_srl);
                 if($friend_group->friend_group_srl == $friend_group_srl) Context::set('friend_group', $friend_group);
             }

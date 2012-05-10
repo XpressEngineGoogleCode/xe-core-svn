@@ -79,9 +79,10 @@ jQuery(function ($){
 		if ($targetImage.length){
 			$targetImage.attr('src', src);
 		}else{
-			$targetImage = $('<img src="'+src+'" alt="" />').insertBefore(this);
+			$targetImage = $('<img src="'+src+'" alt="" class="xe-ui-panel-img"/>').insertBefore(this);
 		}
 		$imageMarkHidden.val(src);
+                
 	});
 	//add plugin
 	var CheckTitle = xe.createPlugin('checkTitle', {

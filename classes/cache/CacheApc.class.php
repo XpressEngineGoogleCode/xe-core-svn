@@ -60,8 +60,7 @@ class CacheApc extends CacheBase {
 	}
 
 	function delete($key) {
-		$_key = md5(_XE_PATH_.$key);
-		$this->_delete($_key);
+		$this->_delete($key);
 	}
 
 	function truncate() {

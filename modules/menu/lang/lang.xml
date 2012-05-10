@@ -62,7 +62,7 @@
 	</item>
 	<item name="add_menu">
 		<value xml:lang="ko"><![CDATA[메뉴 추가]]></value>
-		<value xml:lang="en"><![CDATA[Add Menu Item]]></value>
+		<value xml:lang="en"><![CDATA[Add new menu item]]></value>
 		<value xml:lang="jp"><![CDATA[メニュー追加]]></value>
 		<value xml:lang="zh-TW"><![CDATA[追加選單]]></value>
 	</item>
@@ -74,7 +74,7 @@
 	</item>
 	<item name="add_new_sitemap">
 		<value xml:lang="ko"><![CDATA[새 사이트맵 추가]]></value>
-		<value xml:lang="en"><![CDATA[Add New Menu]]></value>
+		<value xml:lang="en"><![CDATA[Add new menu]]></value>
 		<value xml:lang="jp"><![CDATA[新しいサイトマップ追加]]></value>
 		<value xml:lang="zh-TW"><![CDATA[新增選單]]></value>
 	</item>

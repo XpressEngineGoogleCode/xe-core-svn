@@ -464,48 +464,6 @@
 			return true;
 		}
 
-        function deleteDuplicateIndexes()
-        {
-            $query = sprintf("
-                        select \"class_name\"
-                                , case
-                                when substr(\"index_name\", 0, %d) = '%s'
-                                    then substr(\"index_name\", %d)
-                                else \"index_name\" end as unprefixed_index_name
-                                , \"is_unique\"
-                          from \"db_index\"
-                          where \"class_name\" like %s
-                          group by \"class_name\"
-                                  , case
-                                      when substr(\"index_name\", 0, %d) = '%s'
-                                         then substr(\"index_name\", %d)
-                                      else \"index_name\"
-                                    end
-                          having count(*) > 1
-                        ", strlen($this->prefix)
-                        , $this->prefix
-                        , strlen($this->prefix) + 1
-                        , "'" . $this->prefix . '%' . "'"
-                        , strlen($this->prefix)
-                        , $this->prefix
-                        , strlen($this->prefix) + 1
-                        );
-            $result = $this->_query ($query);
-
-            if ($this->isError ()) return false;
-
-            $output = $this->_fetch ($result);
-            if (!$output) return false;
-
-            $indexes_to_be_deleted = $output->data;
-            foreach($indexes_to_be_deleted as $index)
-            {
-                $this->dropIndex($index->class_name, $index->unprefixed_index_name, $index->is_unique == 'YES' ? true : false);
-            }
-
-            return true;
-        }
-
 		/**
 		 * @brief creates a table by using xml file
 		 **/
@@ -657,7 +615,7 @@
 			$query = $this->getInsertSql($queryObject, $with_values);
 			if(is_a($query, 'Object')) return;
 
-			$query .= (__DEBUG_QUERY__&1 && $queryObject->queryID)?sprintf (' '.$this->comment_syntax, $queryObject->queryID):'';
+			$query .= (__DEBUG_QUERY__&1 && $output->query_id)?sprintf (' '.$this->comment_syntax, $this->query_id):'';
 
 			$result = $this->_query ($query);
 			if ($result && !$this->transaction_started) {
@@ -722,15 +680,13 @@
 			}
 			$limit = $queryObject->getLimit();
 			if ($limit && $limit->isPageHandler())
-			{
 				return $this->queryPageLimit($queryObject, $connection, $with_values);
-			}
 			else {
 				$query = $this->getSelectSql($queryObject, $with_values);
 				if (is_a($query, 'Object'))
 					return;
 
-				$query .= (__DEBUG_QUERY__ & 1 && $queryObject->queryID) ? sprintf(' ' . $this->comment_syntax, $queryObject->queryID) : '';
+				$query .= (__DEBUG_QUERY__ & 1 && $queryObject->query_id) ? sprintf(' ' . $this->comment_syntax, $this->query_id) : '';
 				$result = $this->_query($query, $connection);
 
 				if ($this->isError())
@@ -764,24 +720,11 @@
 		 	// Total count
 			$temp_where = $queryObject->getWhereString($with_values, false);
 		 	$count_query = sprintf('select count(*) as "count" %s %s', 'FROM ' . $queryObject->getFromString($with_values), ($temp_where === '' ? '' : ' WHERE '. $temp_where));
+			if ($queryObject->getGroupByString() != '') {
+				$count_query = sprintf('select count(*) as "count" from (%s) xet', $count_query);
+			}
 
-            // Check for distinct query and if found update count query structure
-            $temp_select = $queryObject->getSelectString($with_values);
-            $uses_distinct = strpos(strtolower($temp_select), "distinct") !== false;
-            $uses_groupby = $queryObject->getGroupByString() != '';
-            if($uses_distinct || $uses_groupby) {
-                $count_query = sprintf('select %s %s %s %s'
-                    , $temp_select
-                    , 'FROM ' . $queryObject->getFromString($with_values)
-                    , ($temp_where === '' ? '' : ' WHERE '. $temp_where)
-                    , ($uses_groupby ? ' GROUP BY ' . $queryObject->getGroupByString() : '')
-                );
-
-                // If query uses grouping or distinct, count from original select
-                $count_query = sprintf('select count(*) as "count" from (%s) xet', $count_query);
-            }
-
-			$count_query .= (__DEBUG_QUERY__&1 && $queryObject->queryID)?sprintf (' '.$this->comment_syntax, $queryObject->queryID):'';
+			$count_query .= (__DEBUG_QUERY__&1 && $queryObject->query_id)?sprintf (' '.$this->comment_syntax, $this->query_id):'';
 			$result = $this->_query($count_query, $connection);
 			$count_output = $this->_fetch($result);
 			$total_count = (int)(isset($count_output->count) ? $count_output->count : NULL);
@@ -834,9 +777,8 @@
 			return $buff;
 		}
 
-		function &getParser($force = FALSE){
-			$dbParser = new DBParser('"', '"', $this->prefix);
-			return $dbParser;
+		function getParser($force = FALSE){
+			return new DBParser('"', '"', $this->prefix);
 		}
 
                 function getSelectPageSql($query, $with_values = true, $start_count = 0, $list_count = 0) {

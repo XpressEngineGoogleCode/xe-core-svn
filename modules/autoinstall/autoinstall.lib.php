@@ -18,7 +18,7 @@
 
 		function uninstall()
 		{
-			$oModel =& getModel('autoinstall');
+			$oModel = getModel('autoinstall');
 			$type = $oModel->getTypeFromPath($this->package->path);
 			if($type == "module") {
 				$output = $this->uninstallModule();
@@ -77,7 +77,7 @@
 
             $schema_dir = sprintf('%s/schemas/', $this->package->path);
             $schema_files = FileHandler::readDir($schema_dir);
-			$oDB =& DB::getInstance();
+			$oDB = DB::getInstance();
 			foreach($schema_files as $file)
 			{
 				$filename_arr = explode(".", $file);
@@ -98,8 +98,8 @@
 
             if($type == "module")
             {
-                $oModuleModel = &getModel('module');
-                $oInstallController = &getController('install');
+                $oModuleModel = getModel('module');
+                $oInstallController = getController('install');
                 $module_path = ModuleHandler::getModulePath($target_name);
                 if($oModuleModel->checkNeedInstall($target_name))
                 {

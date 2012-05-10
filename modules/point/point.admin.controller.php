@@ -18,13 +18,13 @@
          **/
         function procPointAdminInsertConfig() {
             // Get the configuration information
-            $oModuleModel = &getModel('module');
+            $oModuleModel = getModel('module');
             $config = $oModuleModel->getModuleConfig('point');
             // Arrange variables
             $args = Context::getRequestVars();
             // Check the point name
             $config->point_name = $args->point_name;
-            if(!$config->point_name) $config->point_name = 'point';
+            if(!$config->point_name) $config->point_name = 'points';
             // Specify the default points
             $config->signup_point = (int)$args->signup_point;
             $config->login_point = (int)$args->login_point;
@@ -48,16 +48,9 @@
             if($args->disable_read_document == 'Y') $config->disable_read_document = 'Y';
             else $config->disable_read_document = 'N';
 
-			$oMemberModel = &getModel('member');
-			$group_list = $oMemberModel->getGroups();
-
             // Per-level group configurations
-			foreach($group_list as $group)
+			foreach($config->point_group as $group_srl=>$level)
 			{
-				// Admin group should not be connected to point.
-				if($group->is_admin == 'Y' || $group->is_default == 'Y') continue;
-
-				$group_srl = $group->group_srl;
 				if($args->{'point_group_'.$group_srl})
 				{
 					$config->point_group[$group_srl] = $args->{'point_group_'.$group_srl};
@@ -78,7 +71,7 @@
             // A function to calculate per-level points
             $config->expression = $args->expression;
             // Save
-            $oModuleController = &getController('module');
+            $oModuleController = getController('module');
             $oModuleController->insertModuleConfig('point', $config);
 
             $this->setMessage('success_updated');
@@ -103,7 +96,7 @@
                 if(strlen($val)>0) $module_config[$module_srl][$name] = (int)$val;
             }
 
-            $oModuleController = &getController('module');
+            $oModuleController = getController('module');
             if(count($module_config)) {
                 foreach($module_config as $module_srl => $config) {
                     $oModuleController->insertModulePartConfig('point',$module_srl,$config);
@@ -128,7 +121,7 @@
             if(preg_match('/^([0-9,]+)$/',$module_srl)) $module_srl = explode(',',$module_srl);
             else $module_srl = array($module_srl);
             // Save configurations
-            $oModuleController = &getController('module');
+            $oModuleController = getController('module');
             for($i=0;$i<count($module_srl);$i++) {
                 $srl = trim($module_srl[$i]);
                 if(!$srl) continue;
@@ -178,7 +171,7 @@
 			}
 			$point = $m[2];
 
-            $oPointController = &getController('point');
+            $oPointController = getController('point');
             $output = $oPointController->setPoint($member_srl, (int)$point, $action);
 
             $this->setError(-1);
@@ -197,7 +190,7 @@
         function procPointAdminReCal() {
             set_time_limit(0);
             // Get per-module points information
-            $oModuleModel = &getModel('module');
+            $oModuleModel = getModel('module');
             $config = $oModuleModel->getModuleConfig('point');
 
             $module_config = $oModuleModel->getModulePartConfigs('point');
@@ -328,7 +321,7 @@
             if(preg_match('/^([0-9,]+)$/',$module_srl)) $module_srl = explode(',',$module_srl);
             else $module_srl = array($module_srl);
             // Save configurations
-            $oModuleController = &getController('module');
+            $oModuleController = getController('module');
             for($i=0;$i<count($module_srl);$i++) {
                 $srl = trim($module_srl[$i]);
                 if(!$srl) continue;

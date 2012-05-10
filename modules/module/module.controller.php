@@ -142,7 +142,7 @@
 			$args->module = $module;
 			$args->site_srl = $site_srl;
 
-			$oModuleModel = &getModel('module');
+			$oModuleModel = getModel('module');
 			$origin_config = $oModuleModel->getModuleConfig($module, $site_srl);
 
 			foreach($config as $key => $val){
@@ -216,7 +216,7 @@
          **/
         function insertSite($domain, $index_module_srl) {
             if(isSiteID($domain)) {
-                $oModuleModel = &getModel('module');
+                $oModuleModel = getModel('module');
                 if($oModuleModel->isIDExists($domain, 0)) return new Object(-1,'msg_already_registed_vid');
             }else{
                 $domain = strtolower($domain);
@@ -228,7 +228,7 @@
             $args->default_language = Context::getLangType();
 
 			$columnList = array('modules.site_srl');
-            $oModuleModel = &getModel('module');
+            $oModuleModel = getModel('module');
 			$output = $oModuleModel->getSiteInfoByDomain($args->domain, $columnList);
             if($output) return new Object(-1,'msg_already_registed_vid');
 
@@ -243,7 +243,7 @@
          * @brief modify virtual site
          **/
         function updateSite($args) {
-            $oModuleModel = &getModel('module');
+            $oModuleModel = getModel('module');
 			$columnList = array('sites.site_srl', 'sites.domain');
             $site_info = $oModuleModel->getSiteInfo($args->site_srl, $columnList);
             if($site_info->domain != $args->domain) {
@@ -321,11 +321,11 @@
             if(!$output->toBool()) return $output;
             // Check whether the module name already exists
             if(!$args->site_srl) $args->site_srl = 0;
-            $oModuleModel = &getModel('module');
+            $oModuleModel = getModel('module');
             if($oModuleModel->isIDExists($args->mid, $args->site_srl)) return new Object(-1, 'msg_module_name_exists');
 
             // begin transaction
-            $oDB = &DB::getInstance();
+            $oDB = DB::getInstance();
             $oDB->begin();
             // Get colorset from the skin information
             $module_path = ModuleHandler::getModulePath($args->module);
@@ -361,12 +361,12 @@
             if(!$output->toBool()) return $output;
 
             // begin transaction
-            $oDB = &DB::getInstance();
+            $oDB = DB::getInstance();
             $oDB->begin();
 
 			if(!$args->site_srl || !$args->browser_title)
 			{
-				$oModuleModel = &getModel('module');
+				$oModuleModel = getModel('module');
 				$columnList = array('module_srl', 'site_srl', 'browser_title');
 				$module_info = $oModuleModel->getModuleInfoByModuleSrl($args->module_srl);
 
@@ -427,7 +427,7 @@
             if(!$module_srl) return new Object(-1,'msg_invalid_request');
 
 			// check start module
-            $oModuleModel = &getModel('module');
+            $oModuleModel = getModel('module');
 			$columnList = array('sites.index_module_srl');
 			$start_module = $oModuleModel->getSiteInfo(0, $columnList);
 			if($module_srl == $start_module->index_module_srl) return new Object(-1, 'msg_cannot_delete_startmodule');
@@ -438,7 +438,7 @@
             if(!$output->toBool()) return $output;
 
             // begin transaction
-            $oDB = &DB::getInstance();
+            $oDB = DB::getInstance();
             $oDB->begin();
 
             $args->module_srl = $module_srl;
@@ -546,7 +546,7 @@
             }
             if(!count($admins)) return new Object();
 
-			$oMemberModel = &getModel('member');
+			$oMemberModel = getModel('member');
 			$member_config = $oMemberModel->getMemberConfig();
 			if($member_config->identifier == 'email_address') {	
 				$args->email_address = '\''.implode('\',\'',$admins).'\'';
@@ -570,7 +570,7 @@
          * @brief Specify the admin ID to a module
          **/
         function insertAdminId($module_srl, $admin_id) {
-            $oMemberModel = &getModel('member');
+            $oMemberModel = getModel('member');
 			$member_config = $oMemberModel->getMemberConfig();
 
 			if ($member_config->identifier == 'email_address')
@@ -591,7 +591,7 @@
             $args->module_srl = $module_srl;
 
             if($admin_id) {
-                $oMemberModel = &getModel('member');
+                $oMemberModel = getModel('member');
                 $member_info = $oMemberModel->getMemberInfoByUserID($admin_id);
                 if($member_info->member_srl) $args->member_srl = $member_info->member_srl;
             }
@@ -703,8 +703,11 @@
         /**
          * @brief Change user-defined language
          **/
-        function replaceDefinedLangCode(&$output) {
-            $output = preg_replace_callback('!\$user\_lang\-\>([A-Za-z0-9\_]+)!s', array($this,'_replaceLangCode'), $output);
+        function replaceDefinedLangCode(&$output, $isReplaceLangCode = true) {
+			if($isReplaceLangCode)
+			{
+            	$output = preg_replace_callback('!\$user_lang->([a-z0-9\_]+)!is', array($this,'_replaceLangCode'), $output);
+			}
         }
         function _replaceLangCode($matches) {
             static $lang = null;
@@ -713,13 +716,13 @@
             if(is_null($lang)) {
                 $site_module_info = Context::get('site_module_info');
 				if(!$site_module_info){
-					$oModuleModel = &getModel('module');
+					$oModuleModel = getModel('module');
 					$site_module_info = $oModuleModel->getDefaultMid();
 					Context::set('site_module_info', $site_module_info);
 				}
                 $cache_file = sprintf('%sfiles/cache/lang_defined/%d.%s.php', _XE_PATH_, $site_module_info->site_srl, Context::getLangType());
                 if(!file_exists($cache_file)) {
-                    $oModuleAdminController = &getAdminController('module');
+                    $oModuleAdminController = getAdminController('module');
                     $oModuleAdminController->makeCacheDefinedLangCode($site_module_info->site_srl);
                 }
 
@@ -805,7 +808,7 @@
 
             // have file
             if($vars->addfile['tmp_name'] && is_uploaded_file($vars->addfile['tmp_name'])){
-                $oModuleModel = &getModel('module');
+                $oModuleModel = getModel('module');
                 $output = $oModuleModel->getModuleFileBox($vars->module_filebox_srl);
                 FileHandler::removeFile($output->data->filename);
 
@@ -840,7 +843,7 @@
             $vars->module_filebox_srl = getNextSequence();
 
             // get file path
-            $oModuleModel = &getModel('module');
+            $oModuleModel = getModel('module');
             $path = $oModuleModel->getModuleFileBoxPath($vars->module_filebox_srl);
             FileHandler::makeDir($path);
             $save_filename = sprintf('%s%s.%s',$path, $vars->module_filebox_srl, $vars->ext);
@@ -884,7 +887,7 @@
         function deleteModuleFileBox($vars){
 
             // delete real file
-            $oModuleModel = &getModel('module');
+            $oModuleModel = getModel('module');
             $output = $oModuleModel->getModuleFileBox($vars->module_filebox_srl);
             FileHandler::removeFile($output->data->filename);
 

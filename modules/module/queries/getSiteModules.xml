@@ -15,6 +15,7 @@
         <condition operation="equal" column="sites.site_srl" var="site_srl" />
         <condition operation="equal" column="sites.domain" var="site_keyword" pipe="and" />
         <condition operation="equal" column="sites.site_srl" default="modules.site_srl" pipe="and" />
+        <condition operation="in" column="modules.module" var="module" pipe="and" />
     </conditions>
     <navigation>
         <index  var="sort_index1" default="modules.module" order="asc" />

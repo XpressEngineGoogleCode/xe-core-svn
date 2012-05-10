@@ -14,7 +14,7 @@
         }
 		
 	/**
-	* @brief Modify comment(s) status to publish/unpublish if calling module is using Comment Approval System
+	* @brief Modify comment(s) status to publish(1)/unpublish(0)/spam(2)/unspam(0) if calling module is using Comment Approval System
 	* @return Object 
 	*/
 	function procCommentAdminChangePublishedStatusChecked()
@@ -40,7 +40,7 @@
 	
 	function procCommentAdminChangeStatus()
 	{
-		$will_publish = Context::get('will_publish');
+        $will_publish = Context::get('will_publish');
 
 		// Error display if none is selected
 		$cart = Context::get('cart');
@@ -64,7 +64,7 @@
 		{
 			return $output;
 		}
-		else 
+		else
 		{
 			//update comment count for document
 			$updated_documents_arr = array();
@@ -79,10 +79,30 @@
 			//$oMemberModule = &getModel("member");
 			//$logged_info = $oMemberModule->getMemberInfoByMemberSrl($logged_member_srl);
 			$new_status = ($will_publish) ? "published" : "unpublished";
-			foreach($comment_srl_list as $comment_srl)
+			if ($will_publish == 2) $new_status = 'spam';
+
+            $was_spam = Context::get('was_spam') ? true : false;
+            require_once(_XE_PATH_ . 'libs/Akismet.class.php');
+
+            foreach($comment_srl_list as $comment_srl)
 			{
 				// check if comment already exists
 				$comment = $oCommentModel->getComment($comment_srl);
+
+                //send spam or ham to akismet (http://www.achingbrain.net/akismet)
+                $oModuleModel = getModel('module');
+                $spamConfig = $oModuleModel->getModuleConfig('spamfilter');
+                if ($key = $spamConfig->akismet_api_key) //akismet reporting enabled
+                {
+                    $ak = new Akismet(getSiteUrl(), $key);
+                    $ak->setCommentAuthorEmail($comment->email_address);
+                    $ak->setCommentAuthorURL($comment->homepage);
+                    $ak->setCommentContent($comment->content);
+                    $ak->setPermalink(getSiteUrl().$comment->document_srl);
+                    if ($will_publish == 2) $ak->submitSpam();
+                    elseif ($was_spam) $ak->submitHam();
+                }
+
 				if($comment->comment_srl != $comment_srl) return new Object(-1, 'msg_invalid_request');
 				$document_srl = $comment->document_srl;
 				if (!in_array($document_srl,$updated_documents_arr))
@@ -163,9 +183,9 @@
             $comment_count = count($comment_srl_list);
             if(!$comment_count) return $this->stop('msg_cart_is_null');
 
-			$oCommentController = &getController('comment');
+			$oCommentController = getController('comment');
 			// begin transaction
-			$oDB = &DB::getInstance();
+			$oDB = DB::getInstance();
 			$oDB->begin();
 
 			// for message send - start
@@ -173,8 +193,8 @@
 			if($message_content) $message_content = nl2br($message_content);
 
 			if($message_content) {
-				$oCommunicationController = &getController('communication');
-				$oCommentModel = &getModel('comment');
+				$oCommunicationController = getController('communication');
+				$oCommentModel = getModel('comment');
 
 				$logged_info = Context::get('logged_info');
 
@@ -235,9 +255,9 @@
 			if(is_array($commentSrlList))
 			{
 				$logged_info = Context::get('logged_info');
-				$oCommentModel = &getModel('comment');
+				$oCommentModel = getModel('comment');
 				$commentItemList = $oCommentModel->getComments($commentSrlList);
-				$oTrashAdminController = &getAdminController('trash');
+				$oTrashAdminController = getAdminController('trash');
 
 				foreach($commentItemList AS  $key=>$oComment)
 				{
@@ -273,7 +293,7 @@
 		{
 			$comment_srl = (int)Context::get('comment_srl');
 
-			$oCommentModel = &getModel('comment');
+			$oCommentModel = getModel('comment');
 			$columnList = array('comment_srl');
 			$commentSrlList = array($comment_srl);
 
@@ -330,7 +350,7 @@
 			$obj->notify_message = $originObject->notify_message;
 			$obj->module_srl = $originObject->module_srl;
 
-			$oCommentController = &getController('comment');
+			$oCommentController = getController('comment');
 			$output = $oCommentController->insertComment($obj);
 
 			return $output;
@@ -349,7 +369,7 @@
 			$oComment->setAttribute($originObject);
 
 			//already comment deleted, therefore only comment log delete
-			$oCommentController = &getController('comment');
+			$oCommentController = getController('comment');
 			$output = $oCommentController->deleteCommentLog($oComment->get('comment_srl'));
 			return $output;
 		}

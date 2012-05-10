@@ -104,10 +104,11 @@
         function getDocument($document_srl=0, $is_admin = false, $load_extra_vars=true, $columnList = array()) {
             if(!$document_srl) return new documentItem();
 
-            if(!isset($GLOBALS['XE_DOCUMENT_LIST'][$document_srl])) {
+            if(!isset($GLOBALS['XE_DOCUMENT_LIST'][$document_srl]) || $GLOBALS['XE_DOCUMENT_LIST'][$document_srl]->columnListKey != serialize($columnList)) {
                 $oDocument = new documentItem($document_srl, $load_extra_vars, $columnList);
                 $GLOBALS['XE_DOCUMENT_LIST'][$document_srl] = $oDocument;
                 if($load_extra_vars) $this->setToAllDocumentExtraVars();
+                $GLOBALS['XE_DOCUMENT_LIST'][$document_srl]->columnListKey = serialize($columnList);
             }
             if($is_admin) $GLOBALS['XE_DOCUMENT_LIST'][$document_srl]->setGrant();
 
@@ -184,7 +185,7 @@
 				if(!in_array($obj->order_type, array('desc','asc'))) $obj->order_type = 'asc';
 				// If that came across mid module_srl instead of a direct module_srl guhaejum
 				if($obj->mid) {
-					$oModuleModel = &getModel('module');
+					$oModuleModel = getModel('module');
 					$obj->module_srl = $oModuleModel->getModuleSrlByMid($obj->mid);
 					unset($obj->mid);
 				}
@@ -513,18 +514,18 @@
             // call trigger
             ModuleHandler::triggerCall('document.getDocumentMenu', 'before', $menu_list);
 
-            $oDocumentController = &getController('document');
+            $oDocumentController = getController('document');
             // Members must be a possible feature
             if($logged_info->member_srl) {
 
-				$oDocumentModel = &getModel('document');
+				$oDocumentModel = getModel('document');
 				$columnList = array('document_srl', 'module_srl', 'member_srl', 'ipaddress');
 				$oDocument = $oDocumentModel->getDocument($document_srl, false, false, $columnList);
 				$module_srl = $oDocument->get('module_srl');
 				$member_srl = $oDocument->get('member_srl');
 				if(!$module_srl) return new Object(-1, 'msg_invalid_request');
 
-				$oModuleModel = &getModel('module');
+				$oModuleModel = getModel('module');
 				$document_config = $oModuleModel->getModulePartConfig('document',$module_srl);
 				if($document_config->use_vote_up!='N' && $member_srl!=$logged_info->member_srl){
 					// Add a Referral Button
@@ -553,7 +554,7 @@
             ModuleHandler::triggerCall('document.getDocumentMenu', 'after', $menu_list);
             // If you are managing to find posts by ip
             if($logged_info->is_admin == 'Y') {
-                $oDocumentModel = &getModel('document');
+                $oDocumentModel = getModel('document');
                 $oDocument = $oDocumentModel->getDocument($document_srl);	//before setting document recycle
 
                 if($oDocument->isExists()) {
@@ -719,7 +720,7 @@
             $filename = sprintf("./files/cache/document_category/%s.php", $module_srl);
             // If the target file to the cache file regeneration category
             if(!file_exists($filename)) {
-                $oDocumentController = &getController('document');
+                $oDocumentController = getController('document');
                 if(!$oDocumentController->makeCategoryFile($module_srl)) return array();
             }
 
@@ -801,7 +802,7 @@
         function getCategoryXmlFile($module_srl) {
             $xml_file = sprintf('files/cache/document_category/%s.xml.php',$module_srl);
             if(!file_exists($xml_file)) {
-                $oDocumentController = &getController('document');
+                $oDocumentController = getController('document');
                 $oDocumentController->makeCategoryFile($module_srl);
             }
             return $xml_file;
@@ -813,7 +814,7 @@
         function getCategoryPhpFile($module_srl) {
             $php_file = sprintf('files/cache/document_category/%s.php',$module_srl);
             if(!file_exists($php_file)) {
-                $oDocumentController = &getController('document');
+                $oDocumentController = getController('document');
                 $oDocumentController->makeCategoryFile($module_srl);
             }
             return $php_file;
@@ -824,7 +825,7 @@
          **/
         function getMonthlyArchivedList($obj) {
             if($obj->mid) {
-                $oModuleModel = &getModel('module');
+                $oModuleModel = getModel('module');
                 $obj->module_srl = $oModuleModel->getModuleSrlByMid($obj->mid);
                 unset($obj->mid);
             }
@@ -845,7 +846,7 @@
          **/
         function getDailyArchivedList($obj) {
             if($obj->mid) {
-                $oModuleModel = &getModel('module');
+                $oModuleModel = getModel('module');
                 $obj->module_srl = $oModuleModel->getModuleSrlByMid($obj->mid);
                 unset($obj->mid);
             }
@@ -885,7 +886,7 @@
          **/
         function getDocumentConfig() {
             if(!$GLOBALS['__document_config__']) {
-                $oModuleModel = &getModel('module');
+                $oModuleModel = getModel('module');
                 $config = $oModuleModel->getModuleConfig('document');
                 if(!$config->thumbnail_type) $config->thumbnail_type = 'crop';
                 $GLOBALS['__document_config__'] = $config;
@@ -928,8 +929,8 @@
          * Manager on the page to add information about a particular menu from the server after compiling tpl compiled a direct return html
          **/
         function getDocumentCategoryTplInfo() {
-            $oModuleModel = &getModel('module');
-            $oMemberModel = &getModel('member');
+            $oModuleModel = getModel('module');
+            $oMemberModel = getModel('member');
             // Get information on the menu for the parameter settings
             $module_srl = Context::get('module_srl');
             $module_info = $oModuleModel->getModuleInfoByModuleSrl($module_srl);
@@ -967,7 +968,7 @@
             $oTemplate = &TemplateHandler::getInstance();
             $tpl = $oTemplate->compile('./modules/document/tpl', 'category_info');
             // Changing user-defined language
-            $oModuleController = &getController('module');
+            $oModuleController = getController('module');
             $oModuleController->replaceDefinedLangCode($tpl);
             // set of variables to return
             $this->add('tpl', $tpl);
@@ -993,7 +994,10 @@
 			$args->title = $title;
             $output = executeQuery('document.getDocumentSrlByTitle', $args);
             if(!$output->data) return null;
-            else return $output->data->document_srl;
+            else {
+				if(is_array($output->data)) return $output->data[0]->document_srl;
+				return $output->data->document_srl;
+			}
         }		
 		
 		function getAlias($document_srl){
@@ -1107,13 +1111,13 @@
 			$point = Context::get('point');
 			if($point != -1) $point = 1;
 
-			$oDocumentModel = &getModel('document');
+			$oDocumentModel = getModel('document');
 			$columnList = array('document_srl', 'module_srl');
             $oDocument = $oDocumentModel->getDocument($document_srl, false, false, $columnList);
 			$module_srl = $oDocument->get('module_srl');
 			if(!$module_srl) return new Object(-1, 'msg_invalid_request');
 
-			$oModuleModel = &getModel('module');
+			$oModuleModel = getModel('module');
             $document_config = $oModuleModel->getModulePartConfig('document',$module_srl);
 			if($point == -1){
 				if($document_config->use_vote_down!='S') return new Object(-1, 'msg_invalid_request');
@@ -1128,7 +1132,7 @@
 			$output = executeQueryArray('document.getVotedMemberList',$args);
 			if(!$output->toBool()) return $output;
 
-			$oMemberModel = &getModel('member');
+			$oMemberModel = getModel('member');
 			if($output->data){
 				foreach($output->data as $k => $d){
 					$profile_image = $oMemberModel->getProfileImage($d->member_srl);

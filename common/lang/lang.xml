@@ -324,7 +324,7 @@
 	</item>
 	<item name="cmd_back">
 		<value xml:lang="ko"><![CDATA[돌아가기]]></value>
-		<value xml:lang="en"><![CDATA[Go Back]]></value>
+		<value xml:lang="en"><![CDATA[Go back]]></value>
 		<value xml:lang="jp"><![CDATA[戻る]]></value>
 		<value xml:lang="zh-CN"><![CDATA[返回]]></value>
 		<value xml:lang="zh-TW"><![CDATA[返回]]></value>
@@ -336,19 +336,22 @@
 		<value xml:lang="vi"><![CDATA[Về trang trước]]></value>
 		<value xml:lang="mn"><![CDATA[Буцах]]></value>
 	</item>
-	<item name="cmd_vote">
-		<value xml:lang="ko"><![CDATA[추천]]></value>
-		<value xml:lang="en"><![CDATA[Recommend]]></value>
-		<value xml:lang="jp"><![CDATA[推薦]]></value>
-		<value xml:lang="zh-CN"><![CDATA[推荐]]></value>
-		<value xml:lang="zh-TW"><![CDATA[推薦]]></value>
-		<value xml:lang="fr"><![CDATA[Recommander]]></value>
-		<value xml:lang="de"><![CDATA[zustimmen]]></value>
-		<value xml:lang="ru"><![CDATA[Рекомендовать]]></value>
-		<value xml:lang="es"><![CDATA[a Favor]]></value>
-		<value xml:lang="tr"><![CDATA[Tavsiye et]]></value>
-		<value xml:lang="vi"><![CDATA[Bình chọn]]></value>
-		<value xml:lang="mn"><![CDATA[Санал болгох]]></value>
+	<item name="cmd_back">
+		<value xml:lang="ko"><![CDATA[돌아가기]]></value>
+		<value xml:lang="en"><![CDATA[Go back]]></value>
+		<value xml:lang="jp"><![CDATA[戻る]]></value>
+		<value xml:lang="zh-CN"><![CDATA[返回]]></value>
+		<value xml:lang="zh-TW"><![CDATA[返回]]></value>
+		<value xml:lang="fr"><![CDATA[Retourner]]></value>
+		<value xml:lang="de"><![CDATA[Zurück]]></value>
+		<value xml:lang="ru"><![CDATA[Вернуться]]></value>
+		<value xml:lang="es"><![CDATA[Atrás]]></value>
+		<value xml:lang="tr"><![CDATA[Önceki Sayfa]]></value>
+		<value xml:lang="vi"><![CDATA[Về trang trước]]></value>
+		<value xml:lang="mn"><![CDATA[Буцах]]></value>
+	</item>
+	<item name="cmd_proceed">
+		<value xml:lang="en"><![CDATA[Proceed]]></value>
 	</item>
 	<item name="cmd_vote_down">
 		<value xml:lang="ko"><![CDATA[비추천]]></value>
@@ -2983,6 +2986,10 @@ Xin vui lòng kiểm tra lại thông tin Database.]]></value>
 		<value xml:lang="zh-TW"><![CDATA[註冊失敗。]]></value>
 		<value xml:lang="de"><![CDATA[Misserfolg der Registrierung]]></value>
 	</item>
+	<item name="fail_to_update">
+		<value xml:lang="ko"><![CDATA[수정하지 못했습니다.]]></value>
+		<value xml:lang="en"><![CDATA[Fail to update.]]></value>
+	</item>
 	<item name="fail_to_delete">
 		<value xml:lang="ko"><![CDATA[삭제 실패했습니다.]]></value>
 		<value xml:lang="en"><![CDATA[Failed to delete.]]></value>
@@ -3710,6 +3717,18 @@ Xin vui lòng kiểm tra lại thông tin Database.]]></value>
 		<value xml:lang="tr"><![CDATA[Hareketli görünümü, mobil cihazlarla giriş yapılırken, mobil cihazlara uygun en iyi yerleşim düzenini göstermek içindir.]]></value>
 		<value xml:lang="vi"><![CDATA[Nếu truy cập bằng thiết bị di động, nội dung sẽ được bố trí theo từng loại thiết bị.]]></value>
 	</item>
+        <item name="cmd_show">
+            <value xml:lang="en"><![CDATA[Show]]></value>
+        </item>
+        <item name="edit">
+            <value xml:lang="en"><![CDATA[Edit]]></value>
+        </item>
+        <item name="table_empty">
+            <value xml:lang="en"><![CDATA[There are no entries in this table.]]></value>
+        </item>
+        <item name="cmd_go">
+            <value xml:lang="en"><![CDATA[Go]]></value>
+        </item>
 	<item name="simple_view">
 		<value xml:lang="ko"><![CDATA[간단보기]]></value>
 		<value xml:lang="en"><![CDATA[Simple View]]></value>

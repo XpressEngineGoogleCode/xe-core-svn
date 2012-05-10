@@ -49,7 +49,7 @@ class Context {
 	 * @return object
 	 * @remarks it's to use Context without declaration of an object
 	 **/
-	function &getInstance() {
+	function getInstance() {
 		static $theInstance = null;
 		if(!$theInstance) $theInstance = new Context();
 
@@ -86,7 +86,7 @@ class Context {
 
 		// If XE is installed, get virtual site information
 		if(Context::isInstalled()) {
-			$oModuleModel = &getModel('module');
+			$oModuleModel = getModel('module');
 			$site_module_info = $oModuleModel->getDefaultMid();
 			// if site_srl of site_module_info is 0 (default site), compare the domain to default_url of db_config
 			if($site_module_info->site_srl == 0 && $site_module_info->domain != $this->db_info->default_url) {
@@ -129,8 +129,8 @@ class Context {
 
 		// set session handler
 		if(Context::isInstalled() && $this->db_info->use_db_session == 'Y') {
-			$oSessionModel = &getModel('session');
-			$oSessionController = &getController('session');
+			$oSessionModel = getModel('session');
+			$oSessionController = getController('session');
 			session_set_save_handler(
 				array(&$oSessionController, 'open'),
 				array(&$oSessionController, 'close'),
@@ -145,11 +145,11 @@ class Context {
 
 		// set authentication information in Context and session
 		if(Context::isInstalled()) {
-			$oModuleModel = &getModel('module');
+			$oModuleModel = getModel('module');
 			$oModuleModel->loadModuleExtends();
 
-			$oMemberModel = &getModel('member');
-			$oMemberController = &getController('member');
+			$oMemberModel = getModel('member');
+			$oMemberController = getController('member');
 
 			// if signed in, validate it.
 			if($oMemberModel->isLogged()) {
@@ -203,7 +203,7 @@ class Context {
 		if(function_exists('session_write_close')) session_write_close();
 
 		// DB close
-		$oDB = &DB::getInstance();
+		$oDB = DB::getInstance();
 		if(is_object($oDB)&&method_exists($oDB, 'close')) $oDB->close();
 	}
 
@@ -233,10 +233,10 @@ class Context {
 
                     $slave_db = $db_info->master_db;
                     $db_info->slave_db = array($slave_db);
-					
+
                     $self->setDBInfo($db_info);
 
-                    $oInstallController = &getController('install');
+                    $oInstallController = getController('install');
                     $oInstallController->makeConfigFile();
                 }
 		
@@ -456,7 +456,7 @@ class Context {
 	function getBrowserTitle() {
 		is_a($this,'Context')?$self=&$this:$self=&Context::getInstance();
 
-		$oModuleController = &getController('module');
+		$oModuleController = getController('module');
 		$oModuleController->replaceDefinedLangCode($self->site_title);
 
 		return htmlspecialchars($self->site_title);
@@ -494,7 +494,7 @@ class Context {
 
 	function _evalxmlLang($path) {
 		global $lang;
-		
+
 		$_path = 'eval://'.$path;
 
 		if(in_array($_path, $this->loaded_lang_files)) return;
@@ -966,7 +966,7 @@ class Context {
 				return htmlspecialchars($query);
 			}
 		}else{
-			return $query;		
+			return $query;
 		}
 	}
 

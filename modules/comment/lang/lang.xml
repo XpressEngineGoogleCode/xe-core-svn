@@ -256,9 +256,12 @@
 			<value xml:lang="en"><![CDATA[Unpublished]]></value>
 		</item>
 	</item>
+        <item name="manage_comments">
+            <value xml:lang="en"><![CDATA[Manage comments]]></value>
+        </item>
 	<item name="comment_manager">
 		<value xml:lang="ko"><![CDATA[선택한 댓글 관리]]></value>
-		<value xml:lang="en"><![CDATA[Manage Selected Comment]]></value>
+		<value xml:lang="en"><![CDATA[Manage Selected Comments]]></value>
 		<value xml:lang="jp"><![CDATA[選択コメントを管理]]></value>
 		<value xml:lang="zh-TW"><![CDATA[管理所選回覆]]></value>
 	</item>
@@ -282,5 +285,17 @@
 	</item>
 	<item name="cmd_unpublish">
 		<value xml:lang="en"><![CDATA[Unpublish]]></value>
+	</item>
+	<item name="all_without_spam">
+		<value xml:lang="en"><![CDATA[All (without spam)]]></value>
+	</item>
+    <item name="spam">
+		<value xml:lang="en"><![CDATA[Spam]]></value>
+	</item>
+    <item name="cmd_spam">
+		<value xml:lang="en"><![CDATA[Spam]]></value>
+	</item>
+    <item name="cmd_unspam">
+		<value xml:lang="en"><![CDATA[Not spam]]></value>
 	</item>
 </lang>

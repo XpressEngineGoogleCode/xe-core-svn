@@ -12,7 +12,7 @@
          **/
         function init() {
             // Get teh configuration information
-            $oModuleModel = &getModel('module');
+            $oModuleModel = getModel('module');
             $config = $oModuleModel->getModuleConfig('point');
             // Set the configuration variable
             Context::set('config', $config);				
@@ -34,15 +34,15 @@
             $level_icon_list = FileHandler::readDir("./modules/point/icons");
             Context::set('level_icon_list', $level_icon_list);
             // Get the list of groups
-            $oMemberModel = &getModel('member');
+            $oMemberModel = getModel('member');
             $group_list = $oMemberModel->getGroups();
             $selected_group_list = array();
             if(count($group_list)) {
                 foreach($group_list as $key => $val) {
-                    if($val->is_admin == 'Y' || $val->is_default == 'Y') continue;
+                    if($val->is_admin == 'Y' || $val->is_default == 'Y') continue;    
                     $selected_group_list[$key] = $val;
                 }
-            }
+            }			
             Context::set('group_list', $selected_group_list);
 			//Security
 			$security = new Security();			
@@ -57,7 +57,7 @@
          **/
         function dispPointAdminModuleConfig() {
             // Get a list of mid
-            $oModuleModel = &getModel('module');
+            $oModuleModel = getModel('module');
 			$columnList = array('module_srl', 'mid', 'browser_title');
             $mid_list = $oModuleModel->getMidList(null, $columnList);
             Context::set('mid_list', $mid_list);
@@ -83,7 +83,7 @@
          * @brief Get a list of member points
          **/
         function dispPointAdminPointList() {
-            $oPointModel = &getModel('point');
+            $oPointModel = getModel('point');
 
             $args->list_count = 20;
             $args->page = Context::get('page');
@@ -102,7 +102,7 @@
             Context::set('member_list', $output->data);
             Context::set('page_navigation', $output->page_navigation);
             // Create a member model object
-            $oMemberModel = &getModel('member');
+            $oMemberModel = getModel('member');
             // Get a list of groups
             $this->group_list = $oMemberModel->getGroups();
             Context::set('group_list', $this->group_list);

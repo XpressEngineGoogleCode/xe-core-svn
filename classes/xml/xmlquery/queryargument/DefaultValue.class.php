@@ -11,7 +11,7 @@
                 var $_is_string_from_function = false; //< Checks if value is string resulted from evaluating a piece of PHP code (see $_SERVER[REMOTE_ADDR])
 
 		function DefaultValue($column_name, $value){
-                        $dbParser = &DB::getParser();
+                        $dbParser = DB::getParser();
 			$this->column_name = $dbParser->parseColumnName($column_name);
 			$this->value = $value;
                         $this->value = $this->_setValue();
@@ -58,7 +58,7 @@
                         //if($str_pos===false) return $this->value;
 
                         $func_name = substr($this->value, 0, $str_pos);
-                        $args = substr($this->value, $str_pos+1, -1);
+                        $args = substr($this->value, $str_pos+1, strlen($value)-1);
 
 			switch($func_name) {
 				case 'ipaddress' :
@@ -106,3 +106,5 @@
                         return $this->value;
 		}
 	}
+
+?>

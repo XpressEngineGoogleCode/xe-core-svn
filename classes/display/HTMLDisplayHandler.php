@@ -35,7 +35,7 @@ class HTMLDisplayHandler {
 		// add .x div for adminitration pages
 		if(Context::getResponseMethod() == 'HTML') {
 			if(Context::get('module')!='admin' && strpos(Context::get('act'),'Admin')>0) $output = '<div class="x">'.$output.'</div>';
-			
+
 			if(Context::get('layout') != 'none') {
 				if(__DEBUG__==3) $start = getMicroTime();
 
@@ -47,7 +47,7 @@ class HTMLDisplayHandler {
 				$edited_layout_file = $oModule->getEditedLayoutFile();
 
 				// get the layout information currently requested
-				$oLayoutModel = &getModel('layout');
+				$oLayoutModel = getModel('layout');
 				$layout_info = Context::get('layout_info');
 				$layout_srl = $layout_info->layout_srl;
 
@@ -127,7 +127,7 @@ class HTMLDisplayHandler {
 		$output = preg_replace('/member\_\-([0-9]+)/s','member_0',$output);
 
 		// set icon
-		$oAdminModel = &getAdminModel('admin');
+		$oAdminModel = getAdminModel('admin');
 		$favicon_url = $oAdminModel->getFaviconUrl();
 		$mobicon_url = $oAdminModel->getMobileIconUrl();
 		Context::set('favicon_url', $favicon_url);
@@ -147,7 +147,7 @@ class HTMLDisplayHandler {
 		}
 
 		// replace the user-defined-language
-		$oModuleController = &getController('module');
+		$oModuleController = getController('module');
 		$oModuleController->replaceDefinedLangCode($output);
 	}
 
@@ -263,7 +263,5 @@ class HTMLDisplayHandler {
 	function _addMetaTag()
 	{
 		$oContext =& Context::getInstance();
-		$oContext->addMetaTag('Content-Type', 'text/html; charset=UTF-8', true);
-		$oContext->addMetaTag('imagetoolbar', 'no');
 	}
 }

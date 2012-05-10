@@ -114,7 +114,7 @@
                     // Update the related informaion if there is no default site info
                     if(!$output->data) {
                         // Create a table if sites table doesn't exist
-                        $oDB = &DB::getInstance();
+                        $oDB = DB::getInstance();
                         if(!$oDB->isTableExists('sites')) $oDB->createTableByXmlFile(_XE_PATH_.'modules/module/schemas/sites.xml');
                         if(!$oDB->isTableExists('sites')) return;
                         // Get mid, language
@@ -630,8 +630,10 @@
 								$info->menu->{$action->attrs->menu_name}->index = $name;
                         		$buff .= sprintf('$info->menu->%s->index=\'%s\';', $action->attrs->menu_name, $name);
 							}
-							array_push($info->menu->{$action->attrs->menu_name}->acts, $name);
-							$currentKey = array_search($name, $info->menu->{$action->attrs->menu_name}->acts);
+							if(is_array($info->menu->{$action->attrs->menu_name}->acts)) {
+								array_push($info->menu->{$action->attrs->menu_name}->acts, $name);
+								$currentKey = array_search($name, $info->menu->{$action->attrs->menu_name}->acts);
+							}
 
                         	$buff .= sprintf('$info->menu->%s->acts[%d]=\'%s\';', $action->attrs->menu_name, $currentKey, $name);
 							$i++;
@@ -1071,7 +1073,7 @@
 
         function checkNeedInstall($module_name)
         {
-            $oDB = &DB::getInstance();
+            $oDB = DB::getInstance();
             $info = null;
 
             $moduledir = ModuleHandler::getModulePath($module_name);
@@ -1107,7 +1109,7 @@
          **/
         function getModuleList() {
             // Create DB Object
-            $oDB = &DB::getInstance();
+            $oDB = DB::getInstance();
             // Get a list of downloaded and installed modules
             $searched_list = FileHandler::readDir('./modules', '/^([a-zA-Z0-9_-]+)$/');
             sort($searched_list);
@@ -1436,7 +1438,7 @@
         }
 
         function getModuleFileBoxList(){
-        	$oModuleModel = &getModel('module');
+        	$oModuleModel = getModel('module');
 			
             $args->page = Context::get('page');
             $args->list_count = 5;
@@ -1479,11 +1481,11 @@
 				$param = explode("=",$param);
 				if($param[0] == 'selected_widget') $selected_widget = $param[1];
 			}
-			$oWidgetModel = &getModel('widget');
+			$oWidgetModel = getModel('widget');
 			if($selected_widget) $widget_info = $oWidgetModel->getWidgetInfo($selected_widget);
 			Context::set('allow_multiple', $widget_info->extra_var->images->allow_multiple);
 
-			$oModuleModel = &getModel('module');
+			$oModuleModel = getModel('module');
 			$output = $oModuleModel->getModuleFileBoxList();
 			Context::set('filebox_list', $output->data);
 
@@ -1578,7 +1580,7 @@
 			$langCode = Context::get('langCode');
 			if (!$langCode) return;
 
-			$oModuleController = &getController('module');
+			$oModuleController = getController('module');
 			$oModuleController->replaceDefinedLangCode($langCode);
 
 			$this->add('lang', $langCode);

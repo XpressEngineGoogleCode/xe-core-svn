@@ -540,9 +540,8 @@
 			else return $this->queryPageLimit($queryObject, $result, $connection);
         }
 
-        function &getParser($force = FALSE){
-		$dbParser = new DBParser("[", "]", $this->prefix);
-        	return $dbParser;
+        function getParser($force = FALSE){
+        	return new DBParser("[", "]", $this->prefix);
         }
 
     	function queryError($queryObject){
@@ -565,24 +564,11 @@
 				// Total count
 				$temp_where = $queryObject->getWhereString(true, false);
 				$count_query = sprintf('select count(*) as "count" %s %s', 'FROM ' . $queryObject->getFromString(), ($temp_where === '' ? '' : ' WHERE ' . $temp_where));
+				if ($queryObject->getGroupByString() != '') {
+					$count_query = sprintf('select count(*) as "count" from (%s) xet', $count_query);
+				}
 
-                // Check for distinct query and if found update count query structure
-                $temp_select = $queryObject->getSelectString(true);
-                $uses_distinct = strpos(strtolower($temp_select), "distinct") !== false;
-                $uses_groupby = $queryObject->getGroupByString() != '';
-                if($uses_distinct || $uses_groupby) {
-                    $count_query = sprintf('select %s %s %s %s'
-                        , $temp_select
-                        , 'FROM ' . $queryObject->getFromString(true)
-                        , ($temp_where === '' ? '' : ' WHERE '. $temp_where)
-                        , ($uses_groupby ? ' GROUP BY ' . $queryObject->getGroupByString() : '')
-                    );
-
-                    // If query uses grouping or distinct, count from original select
-                    $count_query = sprintf('select count(*) as "count" from (%s) xet', $count_query);
-                }
-
-				$count_query .= (__DEBUG_QUERY__ & 1 && $queryObject->queryID) ? sprintf(' ' . $this->comment_syntax, $this->query_id) : '';
+				$count_query .= (__DEBUG_QUERY__ & 1 && $output->query_id) ? sprintf(' ' . $this->comment_syntax, $this->query_id) : '';
 				$this->param = $queryObject->getArguments();
 				$result_count = $this->_query($count_query, $connection);
 				$count_output = $this->_fetch($result_count);
@@ -615,7 +601,7 @@
 					$buff->page_navigation = new PageHandler($total_count, $total_page, $page, $page_count);
 					return $buff;
 				}
-				
+
 				$start_count = ($page - 1) * $list_count;
 				$this->param = $queryObject->getArguments();
 				$virtual_no = $total_count - $start_count;

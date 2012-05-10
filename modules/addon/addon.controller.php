@@ -18,9 +18,6 @@
          * @brief Main/Virtual-specific add-on file, the location of the cache Wanted
          **/
         function getCacheFilePath($type = "pc") {
-			static $addon_file;
-			if(isset($addon_file)) return $addon_file;
-
             $site_module_info = Context::get('site_module_info');
             $site_srl = $site_module_info->site_srl;
 
@@ -42,7 +39,7 @@
          **/
         function _getMidList($selected_addon, $site_srl = 0) {
 
-            $oAddonAdminModel = &getAdminModel('addon');
+            $oAddonAdminModel = getAdminModel('addon');
             $addon_info = $oAddonAdminModel->getAddonInfoXml($selected_addon, $site_srl);
             return $addon_info->mid_list;
         }
@@ -123,7 +120,7 @@
         function makeCacheFile($site_srl = 0, $type = "pc", $gtype = 'site') {
             // Add-on module for use in creating the cache file
             $buff = "";
-            $oAddonModel = &getAdminModel('addon');
+            $oAddonModel = getAdminModel('addon');
             $addon_list = $oAddonModel->getInsertedAddons($site_srl, $gtype);
             foreach($addon_list as $addon => $val) {
                 if($val->addon == "smartphone") continue;

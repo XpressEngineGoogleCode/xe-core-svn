@@ -13,7 +13,7 @@
      * @brief display XE's full version
      * Even The file should be revised when releasing altough no change is made
      **/
-	define('__XE_VERSION__', '1.5.2.4');
+	define('__XE_VERSION__', '1.6.0.0');
     define('__ZBXE_VERSION__', __XE_VERSION__); // deprecated : __ZBXE_VERSION__ will be removed. Use __XE_VERSION__ instead.
 
     /**
@@ -110,7 +110,7 @@
      * 1: Enabled
      * Only particular servers may have a problem in IE browser when sending a compression
      **/
-    if(!defined('__OB_GZHANDLER_ENABLE__')) define('__OB_GZHANDLER_ENABLE__', 1);
+    if(!defined('__OB_GZHANDLER_ENABLE__')) define('__OB_GZHANDLER_ENABLE__', 0);
 
     /**
      * @brief decide to use/not use the php unit test (Path/tests/index.php)

@@ -37,7 +37,7 @@
 			$args->statusList = array('PUBLIC');
             if(!$args->module_srl) unset($args->module_srl);
             // Get a list of documents
-            $oDocumentModel = &getModel('document');
+            $oDocumentModel = getModel('document');
 
             return $oDocumentModel->getDocumentList($args);
         }
@@ -64,7 +64,7 @@
             $args->sort_index = 'list_order'; 
             $args->order_type = 'asc';
             // Get a list of documents
-            $oCommentModel = &getModel('comment');
+            $oCommentModel = getModel('comment');
             $output = $oCommentModel->getTotalCommentList($args);
             if(!$output->toBool()|| !$output->data) return $output;
             return $output;
@@ -86,7 +86,7 @@
             $args->sort_index = 'list_order'; 
             $args->order_type = 'asc';
             // Get a list of documents
-            $oTrackbackModel = &getAdminModel('trackback');
+            $oTrackbackModel = getAdminModel('trackback');
             $output = $oTrackbackModel->getTotalTrackbackList($args);
             if(!$output->toBool()|| !$output->data) return $output;
             return $output;
@@ -110,7 +110,7 @@
             $args->isvalid = 'Y';
             $args->direct_download = $direct_download=='Y'?'Y':'N';
             // Get a list of documents
-            $oFileAdminModel = &getAdminModel('file');
+            $oFileAdminModel = getAdminModel('file');
             $output = $oFileAdminModel->getFileList($args);
             if(!$output->toBool() || !$output->data) return $output;
 
@@ -148,7 +148,7 @@
             }
             $output->data = $list;
 
-            $oDocumentModel = &getModel('document');
+            $oDocumentModel = getModel('document');
             $document_list = $oDocumentModel->getDocuments($target_list);
             if($document_list) foreach($document_list as $key => $val) {
                 foreach($output->data as $k => $v) {
@@ -160,7 +160,7 @@
                 }
             }
 
-            $oCommentModel = &getModel('comment');
+            $oCommentModel = getModel('comment');
             $comment_list = $oCommentModel->getComments($target_list);
             if($comment_list) foreach($comment_list as $key => $val) {
                 foreach($output->data as $k => $v) {

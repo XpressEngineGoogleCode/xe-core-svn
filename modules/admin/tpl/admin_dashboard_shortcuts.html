@@ -1,0 +1,91 @@
+<!--%import("js/shortcuts.js")-->
+<h1>{$lang->dash_shortcuts}</h1>
+<div class="xe-ui-title-separator">
+    <hr/>
+</div>
+
+<div id="content" class="cleared">
+    <div cond="$XE_VALIDATOR_MESSAGE" class="xe-ui-message {$XE_VALIDATOR_MESSAGE_TYPE} gradient cleared">
+        <a href="#" style="float: right;" onclick="jQuery(this).parent().remove();return false;" class="xe-ui-button-gray gradient">Dismiss</a>
+        <p>{$XE_VALIDATOR_MESSAGE}</p>
+    </div>
+    <div class="xe-ui-panel">
+        <div class="xe-ui-panel-content cleared">
+            <form id="form_shortcuts" action="./" method="post" enctype="multipart/form-data">
+                <input type="hidden" name="module" value="admin" />
+                <input type="hidden" name="act" id="act" value="procAdminSaveShortcuts" />
+                <input type="hidden" name="idWillBeDelete" id="idWillBeDelete" value="" />
+                <table class="sortable xe-ui-table" id="dashboard_shortcuts">
+                    <thead>
+                        <tr>
+                            <th scope="col" class="center">Move</th>
+                            <th scope="col" class="center">Icon</th>
+                            <th scope="col" class="center">Link</th>
+                            <th scope="col" class="center">Display name</th>
+                            <th scope="col" class="center">Operations</th>
+                        </tr>
+                    </thead>
+                    <tbody class="uDrag">
+                        {@$k=0;}
+                        <!--@foreach($shortcuts_list as $shortcut)-->
+                        {@$k++;}
+                        <tr>
+                            <td class="center button">
+                                <a href="#" class="xe-ui-button-gray img dragBtn">
+                                    <img src="{getFullURL('')}common/img/icon_move.png" title="Move this item">
+                                </a>
+                            </td>
+                            <td class="center">
+                                <input type="hidden" name="order[{$shortcut->shortcut_srl}]" value={$k} />
+                                <input type="hidden" name='shortcutId[{$shortcut->shortcut_srl}]' value={$shortcut->shortcut_srl} />
+                                <img alt="" id="currentIcon[]" src="{$shortcut->icon_path}" width="32" height="32" />
+                                <input type="file" name='shortcutIcon[{$shortcut->shortcut_srl}]' />
+                            </td>
+                            <td class="center">
+                                <input type="text" name="link[{$shortcut->shortcut_srl}]" value='{$shortcut->link}' class="xe-ui-panel-text"/>
+                            </td>
+                            <td class="center">
+                                <input type="text" name="name[{$shortcut->shortcut_srl}]" value='{$shortcut->display_name}' class="xe-ui-panel-text"/>
+                            </td>
+                            <td class="center button">
+                                <a href="#" onclick="javascript: if (confirm('{$lang->ask_delete_shortcut}')) delCurrentLine({$shortcut->shortcut_srl});" class="xe-ui-button-gray">{$lang->cmd_delete}</a>
+                            </td>
+                        </tr>
+                        <!--@end-->
+                        <!--@if(count($shortcuts_list) < 5)-->
+                        <!--@for($i=0;$i<(5-count($shortcuts_list));$i++)-->
+								{@$k++;}
+                        <tr>
+                            <td class="center button">
+                                <a href="#" class="xe-ui-button-gray img dragBtn">
+                                    <img src="{getFullURL('')}common/img/icon_move.png" title="Move this item">
+                                </a>
+                            </td>
+                            <td class="center">
+                                <input type="hidden" name='order[-{$k}]' value={$k} />
+                                <input type="hidden" name='shortcutId[-{$k}]' value=-1 />
+                                <input type="file" name='shortcutIcon[-{$k}]' />
+                            </td>
+                            <td class="center"><input type="text" name="link[-{$k}]" value='' class="xe-ui-panel-text"/></td>
+                            <td class="center"><input type="text" name="name[-{$k}]" value='' class="xe-ui-panel-text"/></td>
+                            <td class="center">
+                                <a href="#" onclick="removeLine(this);" class="xe-ui-button-gray">{$lang->cmd_delete}</a>
+                            </td>
+                        </tr>
+                        <!--@end-->
+                        <!--@end-->
+                    </tbody>
+                </table>
+                <p class="center">
+                    <a href="#" onclick="javascript: addNewLine();" class="xe-ui-button-gray">{$lang->cmd_add}</a>
+                </p>
+            </form>
+        </div>
+        <div class="xe-ui-panel-controller">
+            <hr>
+            <p class="center">
+                <a href="#" onclick="javascript: document.getElementById('form_shortcuts').submit();" class="xe-ui-button-gray">{$lang->cmd_save}</a>
+            </p>
+        </div>
+    </div>
+</div>

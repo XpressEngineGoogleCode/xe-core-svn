@@ -1,4 +1,7 @@
 <?php
+
+    require_once(_XE_PATH_ . 'libs/Akismet.class.php');
+
     /**
      * @class  spamfilterController
      * @author NHN (developers@xpressengine.com)
@@ -35,7 +38,7 @@
                 if($grant->manager) return new Object();
             }
 
-            $oFilterModel = &getModel('spamfilter');
+            $oFilterModel = getModel('spamfilter');
             // Check if the IP is prohibited
             $output = $oFilterModel->isDeniedIP();
             if(!$output->toBool()) return $output;
@@ -69,7 +72,7 @@
                 if($grant->manager) return new Object();
             }
 
-            $oFilterModel = &getModel('spamfilter');
+            $oFilterModel = getModel('spamfilter');
             // Check if the IP is prohibited
             $output = $oFilterModel->isDeniedIP();
             if(!$output->toBool()) return $output;
@@ -90,12 +93,37 @@
         }
 
         /**
+         * @brief Use Akismet API to check comments
+         */
+        function triggerAkismetCheckComment(&$obj)
+        {
+            $logged_info = Context::get('logged_info');
+            if ($logged_info->is_admin == 'Y') return new Object();
+            $oModuleModel = getModel('module');
+            $spamConfig = $oModuleModel->getModuleConfig('spamfilter');
+            if ($key = $spamConfig->akismet_api_key) //if spam checking enabled
+            {
+                $akismet = new Akismet(getSiteUrl(), $key);
+                $akismet->setCommentAuthorEmail($obj->email_address);
+                $akismet->setCommentAuthorURL($obj->homepage);
+                $akismet->setCommentContent($obj->content);
+                $url = getSiteUrl().$obj->document_srl;
+                $akismet->setPermalink($url);
+                if ($akismet->isCommentSpam())
+                {
+                    $obj->status = 2;
+                }
+            }
+            return new Object();
+        }
+
+        /**
          * @brief Inspect the trackback creation time and IP
          **/
         function triggerInsertTrackback(&$obj) {
             if($_SESSION['avoid_log']) return new Object();
 
-            $oFilterModel = &getModel('spamfilter');
+            $oFilterModel = getModel('spamfilter');
             // Confirm if the trackbacks have been added more than once to your document
             $output = $oFilterModel->isInsertedTrackback($obj->document_srl);
             if(!$output->toBool()) return $output;
@@ -108,8 +136,8 @@
             $output = $oFilterModel->isDeniedWord($text);
             if(!$output->toBool()) return $output;
             // Start Filtering
-            $oTrackbackModel = &getModel('trackback');
-            $oTrackbackController = &getController('trackback');
+            $oTrackbackModel = getModel('trackback');
+            $oTrackbackController = getController('trackback');
 
             list($ipA,$ipB,$ipC,$ipD) = explode('.',$_SERVER['REMOTE_ADDR']);
             $ipaddress = $ipA.'.'.$ipB.'.'.$ipC;

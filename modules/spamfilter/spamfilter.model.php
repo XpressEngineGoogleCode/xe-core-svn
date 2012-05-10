@@ -18,7 +18,7 @@
          **/
         function getConfig() {
             // Get configurations (using the module model object)
-            $oModuleModel = &getModel('module');
+            $oModuleModel = getModel('module');
             return $oModuleModel->getModuleConfig('spamfilter');
         }
 
@@ -89,7 +89,7 @@
         function checkLimited() {
             $config = $this->getConfig();
 			
-			if($config->limits != 'Y') return new Object(); 
+			if($config->limits != 'Y') return new Object();
 			$limit_count = '3';
 			$interval = '10';
 
@@ -98,7 +98,7 @@
             $ipaddress = $_SERVER['REMOTE_ADDR'];
             // Ban the IP address if the interval is exceeded
             if($count>=$limit_count) {
-                $oSpamFilterController = &getController('spamfilter');
+                $oSpamFilterController = getController('spamfilter');
                 $oSpamFilterController->insertIP($ipaddress, 'AUTO-DENIED : Over limit');
                 return new Object(-1, 'msg_alert_registered_denied_ip');
             }
@@ -106,7 +106,7 @@
             if($count) {
                 $message = sprintf(Context::getLang('msg_alert_limited_by_config'), $interval);
 
-                $oSpamFilterController = &getController('spamfilter');
+                $oSpamFilterController = getController('spamfilter');
                 $oSpamFilterController->insertLog();
 
                 return new Object(-1, $message);
@@ -119,7 +119,7 @@
          * @brief Check if the trackbacks have already been registered to a particular article
          **/
         function isInsertedTrackback($document_srl) {
-            $oTrackbackModel = &getModel('trackback');
+            $oTrackbackModel = getModel('trackback');
             $count = $oTrackbackModel->getTrackbackCountByIPAddress($document_srl, $_SERVER['REMOTE_ADDR']);
             if($count>0) return new Object(-1, 'msg_alert_trackback_denied');
 
