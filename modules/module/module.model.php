@@ -1713,12 +1713,18 @@
 		 * @param module, act
          **/
         function getValidatorFilePath($module, $ruleset, $mid=null) {
+			// convert variables
+			$pattern = '/{\$([^}]+)}/';
+			$ruleset = preg_replace_callback($pattern, create_function('$matches', 'debugPrint($matches); return Context::get($matches[1]);'), $ruleset);
+
 			// load dynamic ruleset xml file
 			if (strpos($ruleset, '@') !== false){
 				$rulsetFile = str_replace('@', '', $ruleset);
 				$xml_file = sprintf('./files/ruleset/%s.xml', $rulsetFile);
 				return FileHandler::getRealPath($xml_file);
-			}else if (strpos($ruleset, '#') !== false){
+			}
+			//TODO mid만으로 구별하면 vid는 어떻게 할 것인가?
+			else if (strpos($ruleset, '#') !== false){
 				$rulsetFile = str_replace('#', '', $ruleset).'.'.$mid;
 				$xml_file = sprintf('./files/ruleset/%s.xml', $rulsetFile);
 				if (is_readable($xml_file))
@@ -1726,11 +1732,19 @@
 				else{
 					$ruleset = str_replace('#', '', $ruleset);
 				}
-
 			}
+
             // Get a path of the requested module. Return if not exists.
             $class_path = ModuleHandler::getModulePath($module);
             if(!$class_path) return;
+
+			// Driver Ruleset
+			if(strpos($ruleset, '*') !== FALSE && Context::get('driver'))
+			{
+				$rulesetFile = str_replace('*', '', $ruleset);
+				$xmlFile = sprintf('%sdrivers/%s/ruleset/%s.xml', $class_path, Context::get('driver'), $ruleset);
+				return FileHandler::getRealPath($xmlFile);
+			}
 
             // Check if module.xml exists in the path. Return if not exist
             $xml_file = sprintf("%sruleset/%s.xml", $class_path, $ruleset);
