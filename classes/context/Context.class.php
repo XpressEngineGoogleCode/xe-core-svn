@@ -152,8 +152,18 @@ class Context {
 			$oMemberController = getController('member');
 
 			// if signed in, validate it.
-			if($oMemberModel->isLogged()) {
-				$oMemberController->setSessionInfo();
+			if($oMemberModel->isLogged())
+			{
+				$output = $oMemberController->setSessionInfo();
+
+				if(!$output->toBool())
+				{
+					htmlHeader();
+					$this->loadLang(_XE_PATH_.'common/lang');
+					print_r(Context::getLang($output->getMessage()));
+					htmlFooter();
+					exit;
+				}
 			}
 			elseif($_COOKIE['xeak']) { // check auto sign-in
 				$oMemberController->doAutologin();
@@ -1123,6 +1133,73 @@ class Context {
 		elseif(strpos($file,'../')===0) $file = Context::normalizeFilePath(dirname($_SERVER['SCRIPT_NAME'])."/{$file}");
 
 		return $file;
+	}
+
+	/**
+	 * @brief load ruleset js file
+	 */
+	public function getRulesetKey($key)
+	{
+		is_a($this,'Context')?$self=&$this:$self=&Context::getInstance();
+		if(preg_match('/^(#|\*)(.*)\.(.*)$/', $key, $m))
+		{
+			if($m[1] == '#')
+			{
+				return $m[2];
+			}
+
+			if($m[1] == '*')
+			{
+				return $m[3];
+			}
+		}
+		else
+		{
+			return $key;
+		}
+	}
+
+	/**
+	 * @brief load ruleset js file
+	 */
+	public function loadRulesetFile($key, $modulePath = NULL)
+	{
+		is_a($this,'Context')?$self=&$this:$self=&Context::getInstance();
+
+		// Dynamic ruleset
+		if (strpos($key, '@') !== FALSE)
+		{
+			$path = str_replace('@', '', $key);
+			$path = './files/ruleset/'.$path.'.xml';
+		}
+		// Auto ruleset
+		else if(strpos($key, '#') !== FALSE)
+		{
+			$fileName = str_replace('#', '', $key);
+			$path = './files/ruleset/'.$fileName.'.xml';
+
+			if(!is_readable($path))
+			{
+				list($rulsetFile) = explode('.', $fileName);
+				$path = sprintf($modulePath . '/ruleset/%s.xml', $rulsetFile);
+			}
+		}
+		// Driver ruleset
+		else if(strpos($key, '*') !== FALSE)
+		{
+			preg_match('/^\*(.*)\.(.*)$/', $key, $m);
+			$path = sprintf('%s/drivers/%s/ruleset/%s.xml', $modulePath, $m[1], $m[2]);
+		}
+		// Basic
+		else
+		{
+			$path = sprintf('%s/ruleset/%s.xml', $modulePath, $key);
+		}
+
+		$validator   = new Validator($path);
+		$validator->setCacheDir('files/cache');
+		$file = $validator->getJsPath();
+		$self->oFrontEndFileHandler->loadFile($file);
 	}
 
 	/**
