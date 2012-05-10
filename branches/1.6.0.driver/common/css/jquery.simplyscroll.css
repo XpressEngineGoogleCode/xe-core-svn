@@ -1,0 +1,114 @@
+/*
+ * simplyScroll 2 - a scroll-tastic jQuery plugin
+ *
+ * http://logicbox.net/jquery/simplyscroll
+ * http://plugins.jquery.com/project/simplyScroll
+ *
+ * Copyright (c) 2009-2011 Will Kelly - http://logicbox.net
+ *
+ * Dual licensed under the MIT (MIT-LICENSE.txt)
+ * and GPL (GPL-LICENSE.txt) licenses.
+ *
+ * Last revised: 31/01/2012
+ *
+*/
+
+/* Default/Master classes
+
+Example markup format (for horizontal scroller)
+Note all DIVs are generated and should not be hard-coded
+
+<div class="your-custom-class simply-scroll-container">
+	<div class="simply-scroll-btn simply-scroll-btn-left"></div>
+	<div class="simply-scroll-btn simply-scroll-btn-right"></div>
+	<div class="simply-scroll-clip">
+		<ul class="simply-scroll-list">
+			<li>...</li>
+			...
+		</ul>
+	</div>
+</div>
+
+
+*/
+
+/* Container DIV - automatically generated */
+.simply-scroll-container { 
+    position: relative;
+}
+
+/* Clip DIV - automatically generated */
+.simply-scroll-clip { 
+    position: relative;
+    overflow: hidden;
+}
+
+/* UL/OL/DIV - the element that simplyScroll is inited on */
+.simply-scroll-list { 
+    overflow: hidden;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+}
+
+.simply-scroll-list li {
+    padding: 0;
+    margin: 0;
+    list-style: none;
+}
+
+.simply-scroll-btn {
+    z-index:3;
+    cursor: pointer;
+    display: block;
+}
+
+.simply-scroll-btn-up {
+    margin-bottom: 4px;
+}
+
+.simply-scroll-btn-down {
+    margin-top: 4px;
+}
+
+.simply-scroll-btn-pause {
+    right: 6px;
+    bottom: 6px;
+}
+
+/* Custom class modifications - override classees
+
+.simply-scroll is default
+
+*/
+
+/* Customisable base class for style override DIV */
+.simply-scroll { 
+    width: 576px;
+    height: 200px;
+    margin-bottom: 1em;
+}
+
+.simply-scroll .simply-scroll-clip {
+    width: 576px;
+    height: 200px;
+}
+
+.simply-scroll .simply-scroll-list li {
+    float: left;
+    width: 290px;
+    height: 200px;
+}
+
+/* Vertical scroller example */
+
+.vert { /* wider than clip to position buttons to side */
+    width: 196px;
+}
+
+.vert .simply-scroll-clip {
+    width: 196px;
+    height: 200px;
+}
+
+/* NOTE left-right classes wouldn't be needed on vertical scroller */

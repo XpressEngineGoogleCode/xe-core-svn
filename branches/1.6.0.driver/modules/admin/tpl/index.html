@@ -1,0 +1,223 @@
+<include target="./_spHeader.html" />
+<h1>{$lang->menu_gnb['dashboard']}</h1>
+<div class="xe-ui-title-separator">
+    <hr/>
+</div>
+
+<div id="content" class="x">
+    <div cond="$XE_VALIDATOR_MESSAGE" class="xe-ui-message {$XE_VALIDATOR_MESSAGE_TYPE} gradient cleared">
+        <a href="#" style="float: right;" onclick="jQuery(this).parent().remove();return false;" class="xe-ui-button-gray gradient">Dismiss</a>
+        <p>{$XE_VALIDATOR_MESSAGE}</p>
+    </div>
+
+    <div class="dashboard cleared">
+        <!--@if(!$isEnviromentGatheringAgreement)-->
+        <div class="xe-ui-message info gradient cleared">
+            <form action="./" method="post" id="env_gather">
+                <input type="hidden" name="module" value="admin" />
+                <input type="hidden" name="act" value="procAdminEnviromentGatheringAgreement" />
+                <input type="hidden" id="is_agree" name="is_agree" value="false" />
+                <div style="float:right; height: 30px; width: 260px; text-align: center; margin-top: 30px;">
+                    <p>
+                        <a href="#" onclick="jQuery('#is_agree').val('true'); jQuery('#env_gather').submit(); return false;" class="xe-ui-button-green gradient" style="margin-right: 10px;">{$lang->accept_env_gather}</a>
+                        <a href="#" onclick="jQuery('#env_gather').submit();return false;" class="xe-ui-button-red gradient">{$lang->decline_env_gather}</a>
+                    </p>
+                </div>
+                <h2>{$lang->install_env_agreement}</h2>
+                <p>{$lang->install_env_agreement_desc}</p>
+            </form>
+        </div>
+        <!--@end-->
+        <!--@if($addTables || $needUpdate)-->
+        <div class="message update">
+            <h2 cond="$needUpdate && $addTables">{$lang->need_update_and_table}</h2>
+			<h2 cond="$needUpdate && !$addTables">{$lang->need_update}</h2>
+			<h2 cond="!$needUpdate && $addTables">{$lang->need_table}</h2>
+            <ul>
+                <!--@foreach($module_list AS $key => $value)-->
+                <!--@if($value->need_install)-->
+                <li style="margin:0 0 4px 0;">{$value->module} - <span class="btn"><button type="button" onclick="doInstallModule('{$value->module}')">{$lang->cmd_create_db_table}</button></span></li>
+                <!--@else if($value->need_update)-->
+                <li style="margin:0 0 4px 0;">{$value->module} - <span class="btn"><button type="button" onclick="doUpdateModule('{$value->module}')">{$lang->cmd_module_update}</button></span></li>
+                <!--@end-->
+                <!--@end-->
+            </ul>
+        </div>
+        <!--@end-->
+        <div class="xe-ui-panel" style="width: 220px; float: left; height: 330px;">
+            <div class="xe-ui-panel-content cleared" style="padding-bottom: 12px;">
+                <h2>
+                    {$lang->shortcuts}
+                    <span style="float: right;">
+                        <a href="{getURL('','module','admin','act','dispAdminDashboardShortcuts')}" class="xe-ui-button-gray img">
+                            <img src="{getFullURL()}common/img/icon_settings.png" title="Edit shortcuts" />
+                        </a>
+                    </span>
+                </h2>
+                <ul id="dashboard-shortcuts" class="cleared simply-scroll-list">
+                    <!--@foreach($shortcuts_list AS $value)-->
+                    <li>
+                        <a href="{$value->link}" title="{$value->display_name}">
+                            <img alt="" src="{$value->icon_path}" />{substr($value->display_name, 0, 16);}
+                        </a>
+                    </li>
+                    <!--@end-->
+                </ul>
+            </div>
+        </div>
+        <div class="xe-ui-panel" style="float: right; width: 746px; height: 330px;">
+            <div class="xe-ui-panel-content cleared" style="padding-bottom: 12px;">
+                <h2>
+                    {$lang->visitors}
+                    <span style="float: right;">
+                        <a href="{getURL('','module','admin','act','dispAdminDashboardGA')}" class="xe-ui-button-gray img">
+                            <img src="{getFullURL()}common/img/icon_settings.png" title="Edit Google Analytics Account" />
+                        </a>
+                    </span>
+                </h2>
+                <!--@if(isset($analytics_type))-->
+                <div id="ga_chart_div">
+
+                </div>
+                <!-- Google Chart script for google analytics data for past month START -->
+                <script type='text/javascript' src='http://www.google.com/jsapi' ></script>
+                <script type="text/javascript">
+                    google.load("visualization", "1", {packages:["corechart"]});
+                    google.setOnLoadCallback(drawChart);
+                    function drawChart() {
+                        var data = new google.visualization.DataTable();
+                        data.addColumn('string', 'Date');
+                        <!--@if($analytics_type == 'ga')-->
+                        data.addColumn('number', 'Visits');
+                        data.addColumn('number', 'Visitors');
+                        {@$analytics_title = 'Google Analytics information'}
+                        <!--@end-->
+                        <!--@if($analytics_type == 'xe')-->
+                        data.addColumn('number', 'Page Views');
+                        data.addColumn('number', 'Unique Visitors');
+                        {@$analytics_title = 'XE Analytics information'}
+                        <!--@end-->
+                        data.addRows([
+                            <!--@if($analytics_type == 'ga')-->
+                            <!--@foreach($script_data as $key=>$value)-->
+                            ['{substr($value[0],4,2).".".substr($value[0],6,2)}', {$value[1]}, {$value[2]}],
+                            <!--@end-->
+                            <!--@end-->
+                            <!--@if($analytics_type == 'xe')-->
+                            <!--@foreach($script_data as $key=>$value)-->
+                            ['{substr($value->regdate,4,2).".".substr($value->regdate,6,2)}', {$value->pageview}, {$value->unique_visitor}],
+                            <!--@end-->
+                            <!--@end-->
+                        ]);
+
+                        var options = {
+                            title: '{$analytics_title}',
+                            colors: ['#098ac1', '#b7dbe9'],
+                            lineWidth: 4,
+                            pointSize: 8
+                        };
+
+                        var chart = new google.visualization.LineChart(document.getElementById('ga_chart_div'));
+                        chart.draw(data, options);
+                    }
+                </script>
+                <!-- google chart END -->
+                <!--@else-->
+                <p class="center">{$lang->dashboard_analytics_initial_text} <a href="http://www.google.com/analytics/" target="_blank">{$lang->google_analytics}</a>, <a href="https://code.google.com/apis/console/" target="_blank">{$lang->google_api}</a>.</p>
+                <table width="100%" cellpadding="0" cellpadding="0" style="height: 180px;">
+                    <tr>
+                        <td class="center middle">
+                            <a href="{getURL('','module','admin','act','dispAdminDashboardGA','type','xe')}">
+                                <img src="img/xe_analytics.png" title="{$lang->use_xe_analytics}" />
+                            </a>
+                        </td>
+                        <td class="center middle">
+                            <a href="{getURL('','module','admin','act','dispAdminDashboardGA','type','ga')}">
+                                <img src="img/g_analytics.png" title="{$lang->use_g_analytics}" />
+                            </a>
+                        </td>
+                    </tr>
+                </table>               
+                <!--@end-->
+            </div>
+        </div>
+        <div class="cleared"></div>
+        <div class="xe-ui-panel">
+            <div class="xe-ui-panel-content cleared" style="padding-bottom: 12px;">
+                <h2>{$lang->site_activity}</h2>
+                <table class="sortable xe-ui-table" id="dashboard_shortcuts" cellpadding="0" cellspacing="0" width="100%">
+                    <thead>
+                        <tr>
+                            <th scope="col" style="text-align: left; width: 150px;">{$lang->module_type}</th>
+                            <th scope="col" class="center" style="width: 150px;">{$lang->module_instance}</th>
+                            <th scope="col" class="left" style="text-align: left;">{$lang->module_activity}({$lang->since_last_login})</th>
+                            <th scope="col" class="button">{$lang->cmd_view}</th>
+                            <th scope="col" class="button">{$lang->cmd_manage}</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <!--@if(isset($activity_data) && count($activity_data)>0)-->
+                        {@$oModuleModel = &getModel('module')}
+                        {@$document_admin_page = $oModuleModel->getModuleActionXml('document')}
+                        {@$comment_admin_page = $oModuleModel->getModuleActionXml('comment')}
+                        {@$trackback_admin_page = $oModuleModel->getModuleActionXml('trackback')}
+                        <!--@foreach($activity_data as $key=>$value)-->
+                        <!--@if($key!="members")-->
+                        <tr>
+                            <td>{ucfirst($value["module"])}</td>
+                            <td class="center"><strong>{$value["mid"]}</strong></td>
+                            <td>
+                                <!--@if(isset($value["documents"]))-->
+                                <img border="0" src="img/icon_trackback.png" alt="" />&nbsp;{$value["documents"]} new <a href="{getFullUrl('','module','admin','act',$document_admin_page->admin_index_act)}" target="_blank">document(s)</a>&nbsp;&nbsp;
+                                <!--@end-->
+                                <!--@if(isset($value["comments"]))-->
+                                <img border="0" src="img/icon_comment.png" alt="" />&nbsp;{$value["comments"]} new <a href="{getFullUrl('','module','admin','act',$comment_admin_page->admin_index_act)}" target="_blank">comment(s)</a>&nbsp;&nbsp;
+                                <!--@end-->
+                                <!--@if(isset($value["tracbacks"]))-->
+                                <img border="0" src="img/icon_trackback.png" alt="" />&nbsp;{$value["trackbacks"]} new <a href="{getFullUrl('','module','admin','act',$trackback_admin_page->admin_index_act)}" target="_blank">trackback(s)</a>
+                                <!--@end-->
+                            </td>
+                            <td class="button">
+                                <a target="_blank" href="{getFullUrl('','mid',$value['mid'])}" class="xe-ui-button-gray">{$lang->cmd_view}</a>
+                            </td>
+                            <td class="button">
+                                <a target="_blank" href="{getFullUrl('','module','admin','act',$value['admin_page'])}" class="xe-ui-button-gray">{$lang->cmd_manage}</a>
+                            </td>
+                        </tr>
+                        <!--@else-->
+                        <tr>
+                            <td>Users</td>
+                            <td class="center"><strong></strong></td>
+                            <td><img border="0" src="img/icon_user.png" alt="" />&nbsp;{$value} new user(s) have registered sience your last login</td>
+                            <td></td>
+                            <td><a target="_blank" href="{getFullUrl('','module','admin','act','dispMemberAdminList')}" class="xe-ui-button-gray">{$lang->cmd_manage}</a></td>
+                        </tr>
+                        <!--@end-->
+                        <!--@end-->
+                        <!--@end-->
+                    </tbody>
+                </table>
+            </div>
+        </div>
+        <div class="xe-ui-panel">
+            <div class="xe-ui-panel-content cleared" style="padding-bottom: 12px;">
+                <h2>{$lang->maintenance}</h2>
+                <table width="100%" cellpadding="0" cellspacing="0">
+                    <tr>
+                        <td><p><a href="" onclick="doResetAdminMenu();return false;" class="xe-ui-button-gray" style="width: 130px;">{$lang->cmd_admin_menu_reset}</a></p></td>
+                        <td width="82%"><p>{$lang->about_admin_menu_reset}</p></td>
+                    </tr>
+                    <tr>
+                        <td><p><a href="" onclick="doRecompileCacheFile();return false;" class="xe-ui-button-gray" style="width: 130px;">{$lang->cmd_remake_cache}</a></p></td>
+                        <td><p>{$lang->about_remake_cache}</p></td>                        
+                    </tr>
+                    <tr>
+                        <td><p><a href="" onclick="doClearSession();return false;" class="xe-ui-button-gray" style="width: 130px;">{$lang->cmd_clear_session}</a></p></td>
+                        <td><p>{$lang->about_clear_session}</p></td>
+                    </tr>
+                </table>
+            </div>
+        </div>
+    </div>
+
+    <include target="./_spFooter.html" />

@@ -1,0 +1,65 @@
+	<ul id="menu">
+		<li 
+			<!--@if($act=='')-->class="active gradient xe-ui-panel"<!--@end-->
+			<!--@if($act=='dispInstallLicence')-->style="border: 0;"<!--@end-->
+		>
+			{$lang->install_progress_menu['step1-welcome']}
+			<span></span>
+		</li>
+		<li
+                    <!--@if($act=='dispInstallLicence')-->class="active gradient xe-ui-panel"<!--@end-->
+                    <!--@if($act=='dispInstallCheckEnv')-->style="border: 0;"<!--@end-->
+                >
+			{$lang->install_progress_menu['step2-licence']}
+			<span></span>
+		</li>
+		<li
+                    <!--@if($act=='dispInstallCheckEnv')-->class="active gradient xe-ui-panel"<!--@end-->
+                    <!--@if($act=='dispInstallSelectDB')-->style="border: 0;"<!--@end-->
+                >
+			{$lang->install_progress_menu['step3-check']}
+			<span></span>
+		</li>
+                <!--@if($ftp)-->
+		<li
+                    <!--@if($act=='dispInstallSelectDB' && $progressMenu == '3')-->class="active gradient xe-ui-panel"<!--@end-->
+                >
+			{$lang->install_progress_menu['ftp']}
+			<span></span>
+		</li>
+                <!--@end-->
+		<li
+                    <!--@if($act=='dispInstallSelectDB' && $progressMenu == '4')-->class="active gradient xe-ui-panel"<!--@end-->
+                    <!--@if($act=='dispInstallDBForm')-->style="border: 0;"<!--@end-->
+                >
+			{$lang->install_progress_menu['dbSelect']}
+			<span></span>
+		</li>
+		<li
+                    <!--@if($act=='dispInstallDBForm')-->class="active gradient xe-ui-panel"<!--@end-->
+                    <!--@if($act=='dispInstallConfigForm')-->style="border: 0;"<!--@end-->
+                >
+			{$lang->install_progress_menu['dbInfo']}
+			<span></span>
+		</li>
+		<li
+                    <!--@if($act=='dispInstallConfigForm')-->class="active gradient xe-ui-panel"<!--@end-->
+                    <!--@if($act=='dispInstallManagerForm')-->style="border: 0;"<!--@end-->
+                >
+			{$lang->install_progress_menu['configInfo']}
+			<span></span>
+		</li>
+		<li
+                    <!--@if($act=='dispInstallManagerForm')-->class="active gradient xe-ui-panel"<!--@end-->
+                    <!--@if($act=='dispInstallFinal')-->style="border: 0;"<!--@end-->
+                >
+			{$lang->install_progress_menu['adminInfo']}
+			<span></span>
+		</li>
+		<li
+                    <!--@if($act=='dispInstallFinal')-->class="active gradient xe-ui-panel"<!--@end-->
+                >
+			{$lang->install_progress_menu['finish']}
+			<span></span>
+		</li>
+	</ul>

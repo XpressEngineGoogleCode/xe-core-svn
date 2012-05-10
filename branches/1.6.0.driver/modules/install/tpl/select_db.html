@@ -1,0 +1,49 @@
+<!--%import("../../../common/js/jquery.tipTip.js")-->
+<!--%import("../../../common/js/prettyCheckboxes.js")-->
+<!--%import("../../../common/css/tipTip.css")-->
+
+<!--#include("header.html")-->
+
+<!--#include("progress_menu.html")-->
+<div id="installContent">
+    <div class="xe-ui-panel">
+        <div class="xe-ui-panel-content">
+            <h2>{$lang->select_db_title}</h2>
+            <p>{$lang->select_db_description}</p>
+            <form method="post" action="./" id="select_db">
+                <input type="hidden" name="module" value="{$module}" />
+                <input type="hidden" name="act" value="dispInstallDBForm" />
+                <ul class="dbList">
+                    <!--@foreach(DB::getEnableList() as $key => $val)-->
+                    <li>
+                        <span class="xe-ui-tolltip" title="{$lang->db_desc[$val->db_type]}">
+                        <input name="db_type" type="radio" value="{$val->db_type}" id="db_type_{$val->db_type}" <!--@if($val->db_type=="mysql")-->checked="checked"<!--@end--> title="{$lang->db_desc[$val->db_type]}" />
+                        <label for="db_type_{$val->db_type}">{$lang->db_list_title[$val->db_type]}</label>
+                        </span>
+                    </li>
+                    <!--@end-->
+                    <!--@foreach(DB::getDisableList() as $key => $val)-->
+                    <li>
+                        <span class="xe-ui-tolltip">
+                        <input name="db_type" type="radio" value="{$val->db_type}" disabled="disabled" id="db_type_{$val->db_type}" title="{$lang->db_desc[$val->db_type]}" />
+                        <label for="db_type_{$val->db_type}">{$lang->db_list_title[$val->db_type]}</label>
+                        </span>
+                    </li>
+                    <!--@end-->
+                </ul>
+            </form>
+        </div>
+        <div class="xe-ui-panel-controller">
+            <hr />
+            <p style="float: left; margin-left: 16px;">
+                <a href="{getUrl('','act','dispInstallCheckEnv')}" class="xe-ui-button-gray gradient">{$lang->cmd_back}</a>
+            </p>
+            <p style="float: right; margin-right: 16px;">
+                <a href="#" id="goNext" onclick="jQuery('#select_db').submit();return false;" class="xe-ui-button-gray gradient">{$lang->cmd_proceed}</a>
+            </p>
+        </div>
+    </div>
+    <p id="version">{$lang->version} {__XE_VERSION__}</p>
+</div>
+
+<!--#include("footer.html")-->

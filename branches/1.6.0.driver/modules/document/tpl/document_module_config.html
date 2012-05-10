@@ -1,0 +1,53 @@
+<!--%import("filter/insert_document_module_config.xml")-->
+<form action="./" method="post" class="form">
+	<input type="hidden" name="module" value="document" />
+	<input type="hidden" name="act" value="procDocumentInsertModuleConfig" />
+	<input type="hidden" name="success_return_url" value="{getRequestUriByServerEnviroment()}" />
+	<input type="hidden" name="target_module_srl" value="{$module_info->module_srl?$module_info->module_srl:$module_srls}" />
+<div class="xe-ui-panel">
+	<div class="xe-ui-panel-content cleared">
+    	<h2>{$lang->document}</h2>
+		<table class="xe-ui-form-table" cellpadding="0" cellspacing="0">
+			<tbody>
+				<tr>    
+					<td class="v-top">{$lang->history}</td>
+					<td>
+						<select name="use_history" id="use_history" class="xe-ui-panel-select">
+							<option value="N" selected="selected"|cond="$document_config->use_history=='N'">{$lang->notuse}</option>
+							<option value="Y" selected="selected"|cond="$document_config->use_history=='Y'">{$lang->use}</option>
+							<option value="Trace" selected="selected"|cond="$document_config->use_history=='Trace'">{$lang->trace_only}</option>
+						</select>
+						<p class="desc">{$lang->about_use_history}</p>
+					</td>
+				</tr>
+				<tr>    
+					<td class="v-top"><p>{$lang->cmd_vote}</p></td>
+					<td>
+						<select name="use_vote_up" id="use_vote_up" class="xe-ui-panel-select">
+							<option value="Y" selected="selected"|cond="$document_config->use_vote_up=='Y'">{$lang->use}</option>
+							<option value="S" selected="selected"|cond="$document_config->use_vote_up=='S'">{$lang->use_and_display}</option>
+							<option value="N" selected="selected"|cond="$document_config->use_vote_up=='N'">{$lang->notuse}</option>
+						</select>
+					</td>
+				</tr>
+				<tr>    
+					<td class="v-top"><p>{$lang->cmd_vote_down}</p></td>
+					<td>
+						<select name="use_vote_down" id="use_vote_down" class="xe-ui-panel-select">
+							<option value="Y" selected="selected"|cond="$document_config->use_vote_down=='Y'">{$lang->use}</option>
+							<option value="S" selected="selected"|cond="$document_config->use_vote_down=='S'">{$lang->use_and_display}</option>
+							<option value="N" selected="selected"|cond="$document_config->use_vote_down=='N'">{$lang->notuse}</option>
+						</select>
+					</td>
+				</tr>
+			</tbody>
+		</table>
+	</div>
+    <div class="xe-ui-panel-controller">
+		<hr />
+		<p class="center">
+			<a href="#" onclick="jQuery('.form').submit()" class="xe-ui-button-gray">{$lang->cmd_save}</a>
+		</p>
+	</div>
+</div>
+</form>

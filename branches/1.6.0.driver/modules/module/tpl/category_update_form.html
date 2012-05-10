@@ -1,0 +1,32 @@
+<!--#include("./header.html")-->
+
+<!--@if($selected_category)-->
+<div class="xe-ui-panel">
+    <div class="xe-ui-panel-content cleared">
+        <form ruleset="updateCategory" action="./" method="post" enctype="multipart/form-data" class="form">
+            <input type="hidden" name="module" value="module" />
+            <input type="hidden" name="act" value="procModuleAdminUpdateCategory" />
+            <input type="hidden" name="module_category_srl" value="{$selected_category->module_category_srl}" />
+            <input type="hidden" name="mode" value="update" />
+            <table class="xe-ui-form-table" cellpadding="0" cellspacing="0">
+                <tbody>
+                    <tr>
+                        <td width="25%">
+                            <label for="category_title">{$lang->category_title}:</label>
+                        </td>
+                        <td>
+                            <input type="text" name="title" id="category_title" value="{$selected_category->title}" class="xe-ui-panel-text" />
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </form>
+    </div>
+    <div class="xe-ui-panel-controller">
+        <hr />
+        <p class="center">
+            <a href="#" onclick="jQuery('.form').submit();return false;" class="xe-ui-button-gray">{$lang->cmd_save}</a>
+        </p>
+    </div>
+</div>
+<!--@end-->

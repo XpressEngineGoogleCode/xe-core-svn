@@ -1,0 +1,95 @@
+<!--#include("./header.html")-->
+
+<div class="xe-ui-panel">
+    <div class="xe-ui-panel-content cleared">
+        <p>{$lang->about_module_point}</p>
+        <form action="./" method="post" id="fo_point" class="form">
+            <input type="hidden" name="module" value="point" />
+            <input type="hidden" name="act" value="procPointAdminInsertModuleConfig" />
+            <block loop="$mid_list => $key,$val">
+                <h2>{$val->browser_title} ({$val->mid})</h2>
+                <table class="xe-ui-form-table" cellpadding="0" cellspacing="0">
+                    <tbody>
+                        <tr>
+                            <td width="30%">
+                                <p>{$lang->point_insert_document}:</p>
+                            </td>
+                            <td>
+                                <p>
+                                    <input type="text" style="width:30px;text-align:right" name="insert_document_{$val->module_srl}" value="{$module_config[$val->module_srl]['insert_document']}" class="xe-ui-panel-text"/> {$config->point_name}
+                                </p>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <p>{$lang->point_insert_comment}:</p>
+                            </td>
+                            <td>
+                                <p>
+                                    <input type="text" style="width:30px;text-align:right" name="insert_comment_{$val->module_srl}" value="{$module_config[$val->module_srl]['insert_comment']}" class="xe-ui-panel-text"/> {$config->point_name}
+                                </p>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <p>{$lang->point_upload_file}:</p>
+                            </td>
+                            <td>
+                                <input type="text" style="width:30px;text-align:right" name="upload_file_{$val->module_srl}" value="{$module_config[$val->module_srl]['upload_file']}" class="xe-ui-panel-text"/> {$config->point_name}
+                                </p>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <p>{$lang->point_download_file}:</p>
+                            </td>
+                            <td>
+                                <p>
+                                    <input type="text" style="width:30px;text-align:right" name="download_file_{$val->module_srl}" value="{$module_config[$val->module_srl]['download_file']}" class="xe-ui-panel-text"/> {$config->point_name}
+                                </p>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <p>{$lang->point_read_document}:</p>
+                            </td>
+                            <td>
+                                <p>
+                                    <input type="text" style="width:30px;text-align:right" name="read_document_{$val->module_srl}" value="{$module_config[$val->module_srl]['read_document']}" class="xe-ui-panel-text"/> {$config->point_name}
+                                </p>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <p>{$lang->point_voted}:</p>
+                            </td>
+                            <td>
+                                <p>
+                                    <input type="text" style="width:30px;text-align:right" name="voted_{$val->module_srl}" value="{$module_config[$val->module_srl]['voted']}" class="xe-ui-panel-text"/> {$config->point_name}
+                                </p>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <p>{$lang->point_blamed}:</p>
+                            </td>
+                            <td>
+                                <p>
+                                    <input type="text" style="width:30px;text-align:right" name="blamed_{$val->module_srl}" value="{$module_config[$val->module_srl]['blamed']}" class="xe-ui-panel-text"/> {$config->point_name}
+                                </p>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </block>
+        </form>
+    </div>
+    <div class="xe-ui-panel-controller">
+        <hr />
+        <p class="center">
+            <a href="#" onclick="jQuery('#fo_point').submit();return false;" class="xe-ui-button-gray">{$lang->cmd_registration}</a>
+        </p>
+    </div>
+</div>
+
+<!--#include("./footer.html")-->

@@ -1,0 +1,65 @@
+<!--%import("filter/update_category.xml")-->
+
+<!--#include("header.html")-->
+
+<div class="xe-ui-title-separator">
+    <hr/>
+</div>
+
+<div id="content" class="cleared">
+    <div cond="$XE_VALIDATOR_MESSAGE" class="xe-ui-message {$XE_VALIDATOR_MESSAGE_TYPE} gradient cleared">
+        <a href="#" style="float: right;" onclick="jQuery(this).parent().remove();return false;" class="xe-ui-button-gray gradient">Dismiss</a>
+        <p>{$XE_VALIDATOR_MESSAGE}</p>
+    </div>
+    <div class="xe-ui-panel">
+        <div class="xe-ui-panel-content cleared">
+            <form id="fo_category_info" action="./" method="post">
+                <input type="hidden" name="module" value="module" />
+                <input type="hidden" name="act" value="procModuleAdminDeleteCategory" />
+                <input type="hidden" name="module_category_srl" value="" />
+            </form>
+            <table cellpadding="0" cellspacing="0" class="xe-ui-table">
+                <thead>
+                    <tr>
+                        <th scope="col" class="aLeft">{$lang->category_title}</th>
+                        <th scope="col">{$lang->regdate}</th>
+                        <th scope="col" class="button">{$lang->edit}</th>
+                        <th scope="col" class="button">{$lang->delete}</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <!--@if(!count($category_list))-->
+                    <tr>
+                        <td colspan="4" class="center no-data">{$lang->msg_category_is_null}</td>
+                    </tr>
+                    <!--@end-->
+                    <!--@foreach($category_list as $key => $val)-->
+                    <tr>
+                        <td class="aLeft">{$val->title}</td>
+                        <td>{zdate($val->regdate,"Y-m-d H:i:s")}</td>
+                        <td>
+                            <a href="{getUrl('module_category_srl',$val->module_category_srl)}" class="xe-ui-button-gray">{$lang->edit}</a>
+                        </td>
+                        <td>
+                            <a href="#" class="xe-ui-button-gray" onclick="doUpdateCategory('{$val->module_category_srl}','{$lang->confirm_delete}');return false;">{$lang->cmd_delete}</a>
+                        </td>
+                    </tr>
+                    <!--@end-->
+                </tbody>
+            </table>
+
+            <form ruleset="insertCategory" action="./" method="post" class="form" id="cat_fo">
+                <input type="hidden" name="module" value="module" />
+                <input type="hidden" name="act" value="procModuleAdminInsertCategory" />
+                <input type="hidden" name="page" value="{$page}" />
+                <input type="hidden" name="module_srl" value="{$module_srl}" />
+                <input type="hidden" name="module_category_srl" value="" />
+                <p class="center">
+                    <label for="category_title">{$lang->add_category}:</label>
+                    <input type="text" name="title" id="category_title" class="xe-ui-panel-text"/>
+                    <a href="#" onclick="jQuery('#cat_fo').submit();return false;" class="xe-ui-button-gray">{$lang->cmd_add}</a>
+                </p>
+            </form>
+        </div>
+    </div>
+</div>

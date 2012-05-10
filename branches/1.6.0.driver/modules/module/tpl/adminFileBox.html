@@ -1,0 +1,180 @@
+<!--%import("js/fileboxAdmin.js")-->
+<!--%load_js_plugin("filebox")-->
+
+<h1>{$lang->menu_gnb_sub['filebox']}</h1>
+<div class="xe-ui-title-separator">
+    <hr/>
+</div>
+
+<div id="content" class="cleared">
+    <div cond="$XE_VALIDATOR_MESSAGE" class="xe-ui-message {$XE_VALIDATOR_MESSAGE_TYPE} gradient cleared">
+        <a href="#" style="float: right;" onclick="jQuery(this).parent().remove();return false;" class="xe-ui-button-gray gradient">Dismiss</a>
+        <p>{$XE_VALIDATOR_MESSAGE}</p>
+    </div>
+    <div class="xe-ui-panel">
+        <div class="xe-ui-panel-content cleared">
+            <h2>{$lang->upload_file}</h2>
+            <div class="fileBox">
+                <form action="" class="portlet form" method="post" enctype="multipart/form-data">
+                    <input type="hidden" name="module" value="module" />
+                    <input type="hidden" name="act" value="procModuleFileBoxAdd" />
+                    <input type="hidden" name="vid" value="{$vid}" />
+                    <input type="hidden" name="filter" value="{$filter}" />
+                    <input type="hidden" name="input" value="{$input}" />
+		<table class="xe-ui-table" id="file_attributes">
+			<thead>
+				<tr>
+					<th scope="col" class="center">Attribute name</th>
+					<th scope="col" class="center">Attribute value</th>
+					<th scope="col" class="center">Operations</th>
+				</tr>
+			</thead>
+			<tbody>
+				<tr>
+					<td class="center">
+						<input type="text" class="notmulti xe-ui-panel-text" style="width: 300px;" name="attribute_name1" id="attribute_name1" />
+					</td>
+					<td class="center">
+						<input type="text" class="notmulti xe-ui-panel-text" style="width: 300px;" name="attribute_value1" id="attribute_value1" />
+					</td>
+					<td class="center">
+						<a href="#" onclick="javascript: addNewRow(jQuery(this));" class="xe-ui-button-gray">{$lang->cmd_add}</a>
+						<a href="#" onclick="javascript: removeRow(jQuery(this));" class="xe-ui-button-gray">{$lang->cmd_delete}</a>
+					</td>
+				</tr>
+			</tbody>
+			<tfoot>
+				<tr>
+					<td colspan="3" style="text-align: center;">
+						<label for="file" style="display: inline">{$lang->file}</label> <input type="file" name="addfile" id="file"/>
+					</td>
+				</tr>
+			</tfoot>
+		</table>
+                    <!--<div class="tgContent">
+                        <ul id="fileUp">
+                            <li>
+                                <p class="form-list">
+                                    <label for="attribute_name1" style="display: inline;" class="desc">{$lang->attribute_name} </label>
+                                    <input type="text" class="notmulti xe-ui-panel-text" name="attribute_name1" id="attribute_name1" />
+                                    <br />
+                                    <label for="attribute_value1" style="display: inline; font-weight:bold" class="desc">{$lang->attribute_value} </label>
+                                    <input type="text" class="notmulti xe-ui-panel-text" name="attribute_value1" id="attribute_value1" />
+                                    <a href="#" type="button" class="text __addBtn" onclick="addRow('fileUp');">{$lang->cmd_add}</a>
+                                    <a href="#" type="button" class="text __deleteBtn" onclick="clearRow(this);">{$lang->cmd_delete}</a>
+                                </p>
+                            </li>
+                            <li>
+                                <label for="file" style="display: inline">{$lang->file}</label> <input type="file" name="addfile" id="file"/>
+                            </li>
+                        </ul>
+                  </div>-->
+                </form>
+            </div>
+        </div>
+        <div class="xe-ui-panel-controller">
+            <hr />
+            <p class="center">
+                <a href="#" onclick="jQuery('.portlet.form').submit();return false;" class="xe-ui-button-gray">{$lang->cmd_save}</a>
+            </p>
+        </div>
+    </div>
+    <div class="xe-ui-panel">
+        <div class="xe-ui-panel-content cleared">
+            <h2>Uploaded files</h2>
+            <form action="" class="form">
+                <table class="xe-ui-table">
+			<thead>
+				<tr>
+					<th>File</th>
+					<th>Attribute(s)</th>
+					<th>Operation</th>
+				</tr>
+			</thead>
+			<tbody>
+				<!--@foreach($filebox_list as $key=>$val)-->
+				<tr>
+					<td class="center">
+						<!--@if($val->fileextension=='swf')-->
+						<object height="100" width="100" flashvars="" codebase="http://download.macromedia.com/pub/shockwave/cabs/flash/swflash.cab#version=9,0,28,0" classid="clsid:D27CDB6E-AE6D-11cf-96B8-444553540000" xmlns="http://www.w3.org/1999/xhtml">
+							<param value="{getUrl('')}{$val->filename}" name="movie" xmlns="http://www.w3.org/1999/xhtml" />
+							<param value="transparent" name="wmode" xmlns="http://www.w3.org/1999/xhtml" />
+							<param value="sameDomain" name="allowScriptAccess" xmlns="http://www.w3.org/1999/xhtml" />
+							<param value="high" name="quality" xmlns="http://www.w3.org/1999/xhtml" />
+							<embed height="100" width="100" wmode="transparent" flashvars="" autostart="false" src="{getUrl('')}{$val->filename}" xmlns="http://www.w3.org/1999/xhtml" />
+						</object>
+
+						<!--@elseif(in_array($val->fileextension,array('gif','png','jpg','jpeg')))-->
+						<img src="{getUrl('')}{$val->filename}" style="max-height:100px" />
+						<!--@end-->
+					</td>
+					<td class="center">
+						{@$attrs=explode(";",$val->comment)}
+						<!--@if(count($attrs))-->
+						<table class="xe-ui-table">
+							<thead>
+								<tr>
+									<th>Attribute name</th>
+									<th>Attribute value</th>
+								</tr>
+							</thead>
+							<tbody>
+								<!--@foreach($attrs as $key => $value)-->
+								<tr>
+									{@$attr=explode(":",$value)}
+									<td class="center">{$attr[0]}</td>
+									<td class="center">{$attr[1]}</td>
+								</tr>
+								<!--@end-->
+							</tbody>
+						</table>
+						<!--@end-->
+					</td>
+					<td class="center">
+						<a href="#" onclick="XE.filebox.deleteFile('{$val->module_filebox_srl}');" class="xe-ui-button-gray">{$lang->cmd_delete}</a>
+					</td>
+				</tr>
+				<!--@end-->
+			</tbody>
+                </table>
+            </form>
+        </div>
+        <div class="xe-ui-panel-controller">
+            <hr />
+            <form action="" class="pagination" method="post">
+		<input type="hidden" name="error_return_url" value="" />
+		<input type="hidden" name="module" value="{$module}" />
+		<input type="hidden" name="act" value="{$act}" />
+		<input cond="$order_target" type="hidden" name="order_target" value="{$order_target}" />
+		<input cond="$order_type" type="hidden" name="order_type" value="{$order_type}" />
+		<input cond="$category_srl" type="hidden" name="category_srl" value="{$category_srl}" />
+		<input cond="$childrenList" type="hidden" name="childrenList" value="{$childrenList}" />
+		<input cond="$search_keyword" type="hidden" name="search_keyword" value="{$search_keyword}" />
+
+                <p style="text-align: center;">
+                    <a href="{getUrl('page', '')}" class="xe-ui-button-gray pagination first"><img src="{getFullUrl()}common/img/pagination_left.png"/></a>
+                    <block cond="$page_navigation->first_page + $page_navigation->page_count > $page_navigation->last_page && $page_navigation->page_count != $page_navigation->total_page">
+                        {@$isGoTo = true}
+                        <a href="{getUrl('page', '')}" class="xe-ui-button-gray pagination">1</a>
+                        <a href="#goTo" class="tgAnchor" title="{$lang->cmd_go_to_page}">...</a>
+                    </block>
+                    <!--@while($page_no = $page_navigation->getNextPage())-->
+                        {@$last_page = $page_no}
+                        <a href="#" cond="$page_no == $page" class="xe-ui-button-gray pagination disabled">{$page_no}</a>
+                        <a cond="$page_no != $page" href="{getUrl('page', $page_no)}" class="xe-ui-button-gray pagination">{$page_no}</a>
+                    <!--@end-->
+                    <block cond="$last_page != $page_navigation->last_page">
+                        {@$isGoTo = true}
+                        <a href="#goTo" class="tgAnchor" title="{$lang->cmd_go_to_page}">...</a>
+                        <a href="{getUrl('page', $page_navigation->last_page)}" class="xe-ui-button-gray pagination">{$page_navigation->last_page}</a>
+                    </block>
+                    <a href="{getUrl('page', $page_navigation->last_page)}" class="xe-ui-button-gray pagination last"><img src="{getFullUrl()}common/img/pagination_right.png"/></a>
+                    <span cond="$isGoTo" id="goTo" class="tgContent">
+                        <input name="page" title="{$lang->cmd_go_to_page}" />
+                        <button type="submit">Go</button>
+                    </span>
+                </p>
+            </form>
+        </div>
+    </div>
+</div>

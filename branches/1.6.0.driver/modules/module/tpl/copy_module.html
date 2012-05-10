@@ -1,0 +1,93 @@
+<!--%import("../../../common/css/xe-ui.css")-->
+<load target="js/module_admin.js" usecdn="true" />
+
+<h1>{$lang->module_copy}</h1>
+<div class="xe-ui-title-separator">
+    <hr />
+</div>
+<div cond="$XE_VALIDATOR_MESSAGE" class="message {$XE_VALIDATOR_MESSAGE_TYPE}">
+	<p>{$XE_VALIDATOR_MESSAGE}</p>
+</div>
+<div id="content" class="cleared">
+	<div class="xe-ui-panel">
+        <div class="xe-ui-panel-content cleared">
+			<form rule="copyModule" action="./" method="post" id="form_">
+				<input type="hidden" name="module" value="module" />
+				<input type="hidden" name="act" value="procModuleAdminCopyModule" />
+				<input type="hidden" name="module_srl" value="{$module_info->module_srl}" />
+				<table cellspacing="0" cellpadding="0" class="xe-ui-form-table">
+					<tbody>
+						<tr>
+							<td><p><strong>{$lang->module}</strong></p></td>
+							<td><p>{$module_info->module}</p></td>
+						</tr>
+						<tr>
+							<td><p><strong>{$lang->mid}</strong></p></td>
+							<td><p>{$module_info->mid}</p></td>
+						</tr>
+						<tr>
+							<td><p><strong>{$lang->browser_title}</strong></p></td>
+							<td><p>{$module_info->browser_title}</p></td>
+						</tr>
+					</tbody>
+				</table>
+				<table cellspacing="0" cellpadding="0" class="xe-ui-table">
+					<thead>
+						<tr>
+							<th scope="col">{$lang->mid}</th>
+							<th scope="col">{$lang->browser_title}</th>
+						</tr>
+					</thead>
+					<tbody>
+						<tr>
+							<td class="center"><input class="xe-ui-panel-text" type="text" name="mid_1" /></td>
+							<td class="center"><input class="xe-ui-panel-text" type="text" name="browser_title_1" /></td>
+						</tr>
+						<tr>
+							<td class="center"><input class="xe-ui-panel-text" type="text" name="mid_2" /></td>
+							<td class="center"><input class="xe-ui-panel-text" type="text" name="browser_title_2" /></td>
+						</tr>
+						<tr>
+							<td class="center"><input class="xe-ui-panel-text" type="text" name="mid_3" /></td>
+							<td class="center"><input class="xe-ui-panel-text" type="text" name="browser_title_3" /></td>
+						</tr>
+						<tr>
+							<td class="center"><input class="xe-ui-panel-text" type="text" name="mid_4" /></td>
+							<td class="center"><input class="xe-ui-panel-text" type="text" name="browser_title_4" /></td>
+						</tr>
+						<tr>
+							<td class="center"><input class="xe-ui-panel-text" type="text" name="mid_5" /></td>
+							<td class="center"><input class="xe-ui-panel-text" type="text" name="browser_title_5" /></td>
+						</tr>
+						<tr>
+							<td class="center"><input class="xe-ui-panel-text" type="text" name="mid_6" /></td>
+							<td class="center"><input class="xe-ui-panel-text" type="text" name="browser_title_6" /></td>
+						</tr>
+						<tr>
+							<td class="center"><input class="xe-ui-panel-text" type="text" name="mid_7" /></td>
+							<td class="center"><input class="xe-ui-panel-text" type="text" name="browser_title_7" /></td>
+						</tr>
+						<tr>
+							<td class="center"><input class="xe-ui-panel-text" type="text" name="mid_8" /></td>
+							<td class="center"><input class="xe-ui-panel-text" type="text" name="browser_title_8" /></td>
+						</tr>
+						<tr>
+							<td class="center"><input class="xe-ui-panel-text" type="text" name="mid_9" /></td>
+							<td class="center"><input class="xe-ui-panel-text" type="text" name="browser_title_9" /></td>
+						</tr>
+						<tr>
+							<td class="center"><input class="xe-ui-panel-text" type="text" name="mid_10" /></td>
+							<td class="center"><input class="xe-ui-panel-text" type="text" name="browser_title_10" /></td>
+						</tr>
+					</tbody>
+				</table>
+			</form>
+		</div>
+		<div class="xe-ui-panel-controller">
+			<hr />
+			<p class="center">
+				<a href="#" onclick="jQuery('#form_').submit();" class="xe-ui-button-green">{$lang->cmd_save}</a>
+			</p>
+		</div>
+	</div>
+

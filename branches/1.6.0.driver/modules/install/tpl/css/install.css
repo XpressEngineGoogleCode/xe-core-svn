@@ -1,0 +1,115 @@
+@charset "utf-8";
+/* NHN (developers@xpressengine.com) */
+/* Element Reset */
+#xe-installer {
+    width: 820px;
+    margin: 0 auto;
+    position: relative;
+}
+
+#xe-installer h1 {
+    width: 100%;
+    margin: 40px 0;
+    text-align: center;
+}
+
+#xe-installer  p {
+    line-height: 1.4em;
+}
+
+#menu {
+    width: 200px;
+    margin: 0;
+    padding: 16px 0 0 0;
+    list-style-type: none;
+    -moz-text-shadow: 1px 1px 0px #fff;
+    -webkit-text-shadow: 1px 1px 0px #fff;
+    text-shadow: 1px 1px 0px #fff;
+    position: absolute;
+    left: 0;
+}
+
+#menu li {
+    margin: 0;
+    padding: 10px 12px;
+    border-bottom: 1px dashed #bbb;
+    color: #49494a;
+    z-index: 999;
+}
+
+#menu li.active {
+    color: #064a87;
+    font-weight: bold;
+    font-size: 1em;
+    padding: 12px 10px 10px !important;
+    -moz-border-radius: 6px 0 0 6px !important;
+    -webkit-border-radius: 6px 0 0 6px!important;
+    border-radius: 6px 0 0 6px !important;
+    border: none;
+}
+
+#menu li.active span {
+    position: absolute;
+    top: -1px;
+    right: -3px;
+    display: block;
+    width: 3px;
+    height: 42px;
+    background: #fff;
+}
+
+#installContent {
+    float:right;
+    width: 620px;
+}
+
+#installContent .xe-ui-panel {
+    min-height: 500px;
+}
+
+#installContent p label {
+    width: 150px;
+    display: inline-block;
+}
+
+#version {
+    text-align: center;
+    color: #484849;
+    font-size: .95em;
+    margin: 8px;
+}
+
+.yes {
+    color: #72bd48;
+    text-transform: uppercase;
+    -moz-text-shadow: 1px 1px 0 #fff;
+    -webkit-text-shadow: 1px 1px 0 #fff;
+    text-shadow: 1px 1px 0 #fff;
+}
+
+.no {
+    color: #bb4646;
+    text-transform: uppercase;
+    -moz-text-shadow: 1px 1px 0 #fff;
+    -webkit-text-shadow: 1px 1px 0 #fff;
+    text-shadow: 1px 1px 0 #fff;
+}
+
+.dbList {
+    margin: 10px;
+    padding: 0;
+    list-style-type: none;
+}
+
+.dbList li {
+    margin: 8px 0;
+}
+
+.required {
+    color: #c34848;
+}
+
+.xe-ui-tolltip {
+    padding-right: 10px;
+    display: inline;
+}

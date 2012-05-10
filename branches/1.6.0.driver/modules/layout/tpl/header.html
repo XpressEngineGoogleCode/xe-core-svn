@@ -1,0 +1,15 @@
+<style type="text/css">
+	#faceoff_migration_info img { border: 1px solid #ccc; padding: 5px; }
+</style>
+
+<h1>{$lang->installed_layout}</h1>
+
+<div cond="$layout == 'faceoff'" class="message error">
+	<p>{$lang->faceoff_migration[0]}</p>
+	<p><a href="#faceoff_migration_info" class="modalAnchor">{$lang->faceoff_migration[1]}</a></p>
+</div>
+<div cond="$layout == 'faceoff'" id="faceoff_migration_info" class="modal">
+	<div class="fg">
+	<include target="faceoff_deprecated.html"/>
+	</div>
+</div>

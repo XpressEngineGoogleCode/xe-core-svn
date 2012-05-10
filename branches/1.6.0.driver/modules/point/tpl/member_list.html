@@ -1,0 +1,87 @@
+<!--#include("header.html")-->
+<load target="js/point_admin.js" usecdn="true" />
+
+<div class="xe-ui-panel">
+    <div class="xe-ui-panel-content cleared">
+        <p>{$lang->about_point_module} {$lang->point_update_desc}</p>
+        <table class="xe-ui-table" cellpadding="0" cellspacing="0">
+            <caption>
+                <p class="f-left">
+                    Total {number_format($total_count)}, Page {number_format($page)}/{number_format($total_page)}
+                </p>
+            </caption>
+            <thead>
+                <tr>
+                    <th scope="col">{Context::getLang($identifier)}</th>
+                    <th scope="col">{$lang->nick_name}</th>
+                    <th scope="col">{$lang->point}</th>
+                    <th scope="col">{$lang->level}</th>
+                </tr>
+            </thead>
+            <tbody>
+                <!--@if(count($member_list)!=0)-->
+                <!--@foreach($member_list as $no => $val)-->
+                <tr>
+                    <td class="center" cond="$identifier == 'user_id'">{$val->user_id}</td>
+                    <td class="center" cond="$identifier != 'user_id'">{$val->email_address}</td>
+                    <td class="center"><a href="#popup_menu_area" class="member_{$val->member_srl}">{$val->nick_name}</a></td>
+                    <td class="center">
+                        <form action="./" method="get">
+                            <input type="hidden" name="module" value="point" />
+                            <input type="hidden" name="member_srl" value="{$val->member_srl}" />
+                            <input type="text" name="orgpoint" value="{$val->point}" disabled="disabled" style="width:40px;text-align:right" class="xe-ui-panel-text" />
+                            <input type="text" id="point_{$val->member_srl}" name="point" style="width:40px;text-align:right" class="xe-ui-panel-text" value=""/>
+                            <a href="#" onclick="updatePoint({$val->member_srl})" class="xe-ui-button-gray">{$lang->cmd_update}</a>
+                        </form>
+                    </td>
+                    <td class="center">{$val->level}</td>
+                </tr>
+                <!--@end-->
+                <!--@else-->
+                <tr>
+                    <td colspan="6" class="no-data">
+                        {$lang->table_empty}
+                    </td>
+                </tr>
+                <!--@end-->
+            </tbody>
+        </table>
+
+        <form ruleset="updatePoint" id="updateForm" action="./" method="POST">
+            <input type="hidden" name="module" value="point" />
+            <input type="hidden" name="act" value="procPointAdminUpdatePoint" />
+            <input type="hidden" id="update_member_srl" name="member_srl" value="" />
+            <input type="hidden" id="update_point" name="point" />
+        </form>
+
+        <form action="./" method="get" class="adminSearch">
+            <p class="center inline-list">
+                <label for="search_keyword">{$lang->cmd_search}:</label>
+                <input type="hidden" name="module" value="{$module}" />
+                <input type="hidden" name="act" value="{$act}" />
+                <input type="text" name="search_keyword" value="{htmlspecialchars($search_keyword)}" class="xe-ui-panel-text"/>
+                <a href="#" onclick="jQuery('.adminSearch').submit();return false;" class="xe-ui-button-gray">{$lang->cmd_go}</a>
+            </p>
+        </form>
+
+    </div>
+    <div class="xe-ui-panel-controller">
+        <hr />
+        <p class="center">
+            <a href="{getUrl('page','','module_srl','')}" class="xe-ui-button-gray pagination first">
+                <img src="{getFullUrl()}common/img/pagination_left.png"/>
+            </a>
+            <!--@while($page_no = $page_navigation->getNextPage())-->
+            <!--@if($page == $page_no)-->
+            <a href="#" class="xe-ui-button-gray disabled pagination">{$page_no}</a>
+            <!--@else-->
+            <a href="{getUrl('page',$page_no,'module_srl','')}" class="xe-ui-button-gray pagination" >{$page_no}</a>
+            <!--@end-->
+            <!--@end-->
+            <a href="{getUrl('page',$page_navigation->last_page,'module_srl','')}" class="xe-ui-button-gray pagination last">
+                <img src="{getFullUrl()}common/img/pagination_right.png"/>
+            </a>
+        </p>
+    </div>
+</div>
+<!--#include("footer.html")-->

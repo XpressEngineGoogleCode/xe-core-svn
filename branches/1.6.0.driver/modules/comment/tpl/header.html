@@ -1,0 +1,12 @@
+<load target="js/comment_admin.js" usecdn="true" />
+
+<h1>
+    {$lang->manage_comments}
+    <span class="xe-ui-nav">
+        <a href="{getUrl('act','dispCommentAdminList')}" class="xe-ui-button-gray <!--@if($act=='dispCommentAdminList')-->disabled<!--@end-->">{$lang->comment_list}</a>
+        <a href="{getUrl('act','dispCommentAdminDeclared')}" class="xe-ui-button-gray <!--@if($act=='dispCommentAdminDeclared')-->disabled<!--@end-->">{$lang->cmd_declared_list}</a>
+    </span>
+</h1>
+<div class="xe-ui-title-separator">
+    <hr/>
+</div>

@@ -1,0 +1,199 @@
+<!--#include("./header.html")-->
+
+<form ruleset="insertConfig" action="./" method="post" class="form">
+    <input type="hidden" name="module" value="point" />
+    <input type="hidden" name="act" value="procPointAdminInsertConfig" />
+
+    <div class="xe-ui-panel">
+        <div class="xe-ui-panel-content cleared">
+            <p>{$lang->about_point_module}</p>
+            <h2>{$lang->is_default}</h2>
+            <p class="form-list">
+                <label for="max_level" class="desc">{$lang->max_level}:</label>
+                <input type="text" value="{$config->max_level}" name="max_level" id="max_level" class="xe-ui-panel-text" title="{$lang->about_max_level}" />
+            </p>
+            <p class="form-list">
+                <label for="point_name" class="desc">{$lang->point_name}:</label>
+                <input type="text" value="{$config->point_name}" name="point_name" id="point_name" class="xe-ui-panel-text" title="{$lang->about_point_name}" />
+            </p>
+            <h3>Point allocation</h3>
+            <p class="form-list">
+                <label for="signup_point" class="desc">{$lang->point_signup}:</label>
+                <input type="text" value="{$config->signup_point}" name="signup_point" id="signup_point" class="xe-ui-panel-text"/>
+            </p>
+            <p class="form-list">
+                <label for="login_point" class="desc">{$lang->cmd_login}:</label>
+                <input type="text" value="{$config->login_point}" name="login_point" id="login_point" class="xe-ui-panel-text"/>
+            </p>
+            <p class="form-list">
+                <label for="insert_document" class="desc">{$lang->point_insert_document}:</label>
+                <input type="text" name="insert_document" value="{$config->insert_document}" id="insert_document" class="xe-ui-panel-text"/>
+            </p>
+            <p class="form-list">
+                <label for="insert_comment" class="desc">{$lang->point_insert_comment}:</label>
+                <input type="text" name="insert_comment" value="{$config->insert_comment}" id="insert_comment" class="xe-ui-panel-text"/>
+            </p>
+            <p class="form-list">
+                <label for="upload_file" class="desc">{$lang->point_upload_file}:</label>
+                <input type="text" name="upload_file" value="{$config->upload_file}" id="upload_file" class="xe-ui-panel-text"/>
+            </p>
+            <p class="form-list">
+                <label for="download_file" class="desc">{$lang->point_download_file}:</label>
+                <input type="text" name="download_file" value="{$config->download_file}" id="download_file" style="width:30px" class="xe-ui-panel-text"/>
+            </p>
+            <p class="form-list">
+                <label for="read_document" class="desc">{$lang->point_read_document}:</label>
+                <input type="text" name="read_document" value="{$config->read_document}" id="read_document" style="width:30px" class="xe-ui-panel-text"/>
+            </p>
+            <p class="form-list">
+                <label for="voted" class="desc">{$lang->point_voted}:</label>
+                <input type="text" name="voted" value="{$config->voted}" style="width:30px" id="voted" class="xe-ui-panel-text"/>
+            </p>
+            <p class="form-list">
+                <label for="blamed" class="desc">{$lang->point_blamed}</label>
+                <input type="text" name="blamed" value="{$config->blamed}" id="blamed" style="width:30px" class="xe-ui-panel-text"/>
+            </p>
+            <p class="form-list">
+                <label for="level_icon" class="desc">{$lang->level_icon}</label>
+                <select name="level_icon" id="level_icon" title="{$lang->about_level_icon}" class="xe-ui-panel-select" style="width: 120px;">
+                    <!--@foreach($level_icon_list as $key => $val)-->
+                    <option value="{$val}" selected="selected"|cond="$config->level_icon == $val">{$val}</option>
+                    <!--@end-->
+                </select>
+            </p>
+            <p class="form-list">
+                <label for="disable_download" class="desc">{$lang->disable_download}</label>
+                <input type="checkbox" name="disable_download" id="disable_download" value="Y" checked="checked"|cond="$config->disable_download=='Y'" title="{$lang->about_disable_download}"/>
+            </p>
+            <p class="form-list">
+                <label for="disable_read_document" class="desc">{$lang->disable_read_document}</label>
+                <input type="checkbox" name="disable_read_document" id="disable_read_document" value="Y" checked="checked"|cond="$config->disable_read_document=='Y'" title="{$lang->about_disable_read_document}"/>
+            </p>
+        </div>
+        <div class="xe-ui-panel-controller">
+            <hr />
+            <p class="center">
+                <a href="#" onclick="jQuery('.form').submit(); return false;" class="xe-ui-button-gray">{$lang->cmd_save}</a>
+            </p>
+        </div>
+    </div>
+    <div class="xe-ui-panel">
+        <div class="xe-ui-panel-content cleared">
+            <h2>{$lang->point_link_group}</h2>
+            <table cellpadding="0" cellspacing="0" class="xe-ui-table">
+                <caption>
+                    <p class="f-left aLeft" style="width: 400px;">
+                        {$lang->about_point_link_group}
+                    </p>
+                    <p class="f-right">
+                        <input type="radio" name="group_reset" id="group_reset_y" value="Y" checked="checked"|cond="$config->group_reset != 'N'" />
+                               <label for="group_reset_y">{$lang->point_group_reset_and_add}</label>
+                        <input type="radio" name="group_reset" id="group_reset_n" value="N" checked="checked"|cond="$config->group_reset == 'N'" />
+                               <label for="group_reset_n">{$lang->point_group_add_only}</label>
+                    </p>
+                </caption>
+                <thead>
+                    <tr>
+                        <th>{$lang->member_group}</th>
+                        <th>{$lang->level}</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr loop="$group_list => $key,$val">
+                        <td class="center"><label for="point_group_{$key}">{$val->title}</label></td>
+                        <td class="center"><input type="text" value="{$config->point_group[$key]}" name="point_group_{$key}" id="point_group_{$key}" style="width:30px" class="xe-ui-panel-text"/></td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        <div class="xe-ui-panel-controller">
+            <hr />
+            <p class="center">
+                <a href="#" onclick="jQuery('.form').submit(); return false;" class="xe-ui-button-gray">{$lang->cmd_save}</a>
+            </p>
+        </div>
+    </div>
+    <div class="xe-ui-panel">
+        <div class="xe-ui-panel-content cleared">
+		{@$point_group = @array_flip($config->point_group)}
+            <h2>{$lang->level_point}</h2>
+            <table cellpadding="0" cellspacing="0" class="xe-ui-table">
+                <caption>
+                    <p class="f-left aLeft">
+                        <label for="">{$lang->expression}</label>
+                    </p>
+                    <p class="f-right">
+                        <input name="point_calculator" value="{$config->expression}" size="15" class="level_expression xe-ui-panel-text" />
+                        <a href="#" class="xe-ui-button-gray calc_point v-top">{$lang->level_point_calc}</a>
+                        <a href="#" class="xe-ui-button-gray calc_point _reset v-top">{$lang->cmd_exp_reset}</a>
+                    </p>
+                </caption>
+                <thead>
+                <th scope="col">{$lang->level}</th>
+                <th scope="col">{$lang->level_icon}</th>
+                <th scope="col">{$lang->points}</th>
+				<th scope="col">{$lang->member_group}</th>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td class="center">1</td>
+                        <td class="center"><img src="{getUrl()}/modules/point/icons/{$config->level_icon}/1.gif" alt="" /></td>
+                        <td class="center">
+                            <input type="text" name="level_step_1" value="{$config->level_step[1]}" style="width:60px;text-align:right" class="xe-ui-panel-text point_input"/>
+                            {$config->point_name}
+                        </td>
+						{@$point_group_item = $point_group[1]}
+						{@$title=array()}
+						<!--@if($point_group_item)-->
+							<!--@if($config->group_reset != 'N')-->
+							{@$title[0] = $group_list[$point_group_item.'']->title}
+							<!--@else-->
+							{@$title[] = $group_list[$point_group_item.'']->title}
+							<!--@end-->
+						<!--@end-->
+						<td>{implode(', ', $title)}</td>
+                    </tr>
+                    <!--@for($i=2;$i<=$config->max_level;$i++)-->
+					{@$point_group_item = $point_group[$i]}
+					<!--@if($point_group_item)-->
+						<!--@if($config->group_reset != 'N')-->
+						{@$title[0] = $group_list[$point_group_item.'']->title}
+						<!--@else-->
+						{@$title[] = $group_list[$point_group_item.'']->title}
+						<!--@end-->
+					<!--@end-->
+                    <tr class="row{(($i-1)%2+1)}">
+                        <td class="center">{$i}</td>
+                        <td class="center"><img src="{getUrl()}/modules/point/icons/{$config->level_icon}/{$i}.gif" alt="" /></td>
+                        <td class="center">
+                            <input type="text" id="level_step_{$i}" name="level_step_{$i}" value="{$config->level_step[$i]}" style="width:60px;text-align:right" class="xe-ui-panel-text point_input"/> {$config->point_name}
+                        </td>
+						<td>{implode(', ', $title)}</td>
+                    </tr>
+                    <!--@end-->
+                </tbody>
+            </table>
+        </div>
+        <div class="xe-ui-panel-controller">
+            <hr />
+            <p class="center">
+                <a href="#" onclick="jQuery('.form').submit(); return false;" class="xe-ui-button-gray">{$lang->cmd_save}</a>
+            </p>
+        </div>
+    </div>
+    <div class="xe-ui-panel">
+        <div class="xe-ui-panel-content cleared">
+            <h2>{$lang->cmd_point_recal}</h2>
+            <p>{$lang->about_cmd_point_recal}</p>
+            <p id="pointReCal"></p>
+        </div>
+        <div class="xe-ui-panel-controller">
+            <hr />
+            <p class="center">
+                <a href="#" onclick="doPointRecal(); return false;" class="xe-ui-button-gray">{$lang->cmd_point_recal}</a>
+            </p>
+        </div>
+    </div>
+</form>
+
+<!--#include("./footer.html")-->

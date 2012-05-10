@@ -1,0 +1,98 @@
+<!--%import("filter/insert_grant.xml")-->
+<load target="js/module_admin.js" usecdn="true" />
+
+<script type="text/javascript">
+    jQuery( function() { jQuery('.grant_default').change( function(event) { doShowGrantZone(); } ); doShowGrantZone() } );
+</script>
+	<div class="xe-ui-panel">
+		<div class="xe-ui-panel-content cleared">
+			<form action="./" method="post" onsubmit="return procFilter(this, insert_grant)" id="fo_obj" class="form">
+				<input type="hidden" name="module_srl" value="{$module_srl}" />
+				<input type="hidden" name="admin_member" value="<!--@foreach($admin_member as $key => $val)--><!--@if($member_config->identifier == 'email_address')-->{$val->email_address},<!--@else-->{$val->user_id},<!--@end--><!--@end-->" />
+				
+				<h2>{$lang->module_admin}</h2>
+				<p>{$lang->about_admin_id}</p>
+				
+                <table cellpadding="0" cellspacing="0" class="xe-ui-form-table">
+                	<tbody>
+                		<tr>
+							<td class="v-top" rowspan="2">
+								<p>
+								<!--@if($member_config->identifier == 'email_address')-->
+									{$lang->admin_email_address}:
+								<!--@else-->
+									{$lang->admin_id}:
+								<!--@end-->
+								</p>
+							</td>
+							<td>
+								<p>
+									<select name="_admin_member" multiple="multiple" size="{count($admin_member)?count($admin_member):1}" class="xe-ui-panel-select" style="width:290px">
+										<!--@foreach($admin_member as $key => $val)-->
+										<option value="<!--@if($member_config->identifier=='email_address')-->{$val->email_address}<!--@else-->{$val->user_id}<!--@end-->">{$val->nick_name} (<!--@if($member_config->identifier=='email_address')-->{$val->email_address}<!--@else-->{$val->user_id}<!--@end-->)</option>
+										<!--@end-->
+									</select>
+								</p>
+							</td>
+						</tr>
+						<tr>
+							<td>
+								<input type="text" name="admin_id" class="xe-ui-panel-text" />
+								<a href="#" class="xe-ui-button-gray" onclick="doInsertAdmin()">{$lang->cmd_insert}</a>
+								<a href="#" class="xe-ui-button-gray" onclick="doDeleteAdmin()">{$lang->cmd_delete}</a>
+							</td>
+						</tr>
+					</tbody>
+				</table>
+			</div>
+			<div class="xe-ui-panel-controller">
+				<hr />
+		        <p class="center">
+					<a href="#" onclick="jQuery('#fo_obj').submit();" class="xe-ui-button-gray" >{$lang->cmd_save}</a>
+				</p>
+			</div>
+		</div>
+		<div class="xe-ui-panel">
+			<div class="xe-ui-panel-content cleared">
+				<h2>{$lang->permission_setting}</h2>
+				<p>{$lang->about_grant_deatil}</p>
+				<table cellspacing="0" cellpadding="0" class="xe-ui-table">
+					<thead>
+						<tr>
+							<th scope="col">{$lang->grant}</th>
+							<th scope="col" colspan="3">{$lang->target}</th>
+						</tr>
+					</thead>
+					<tbody>
+						<!--@foreach($grant_list as $grant_name => $grant_item)-->
+						<tr>
+							<td>{ucfirst($grant_item->title)}</td>
+							<td >
+								<select name="{$grant_name}_default" class="grant_default xe-ui-panel-select">
+									<!--@if($grant_item->default == 'guest')--><option value="0" <!--@if($default_grant[$grant_name]=='all')-->selected="selected"<!--@end-->>{$lang->grant_to_all}</option><!--@end-->
+									<!--@if($grant_item->default != 'manager')--><option value="-1" <!--@if($default_grant[$grant_name]=='member')-->selected="selected"<!--@end-->>{$lang->grant_to_login_user}</option><!--@end-->
+									<!--@if($grant_item->default != 'manager')--><option value="-2" <!--@if($default_grant[$grant_name]=='site')-->selected="selected"<!--@end-->>{$lang->grant_to_site_user}</option><!--@end-->
+									<option value="" <!--@if($default_grant[$grant_name]=='group')-->selected="selected"<!--@end-->>{$lang->grant_to_group}</option>
+								</select>
+								<div id="zone_{$grant_name}" style="display:none">
+									<!--@foreach($group_list as $group_srl => $group_item)-->
+									<input type="checkbox" class="checkbox" name="{$grant_name}" value="{$group_item->group_srl}" id="grant_{$grant_name}_{$group_srl}" <!--@if(is_array($selected_group[$grant_name])&&in_array($group_srl,$selected_group[$grant_name]))-->checked="checked"<!--@end-->/>
+									<label for="grant_{$grant_name}_{$group_srl}">{$group_item->title}</label>
+									<!--@end-->
+								</div>
+								
+							</td>
+						</tr>
+					<!--@end-->
+					</tbody>
+				</table>
+			</form>
+		</div>
+		<div class="xe-ui-panel-controller">
+		    <hr />
+		    <p class="center">
+				<a href="#" onclick="jQuery('#fo_obj').submit();" class="xe-ui-button-gray" >{$lang->cmd_save}</a>
+			</p>
+		</div>
+	</div>
+</div>

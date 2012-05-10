@@ -1,0 +1,34 @@
+<load target="js/point_admin.js" usecdn="true" />
+
+<h1 class="cleared">
+    {$lang->point} {$lang->cmd_management}
+    <span class="xe-ui-nav">
+        <!--@if($act=='dispPointAdminConfig')-->
+        <a class="xe-ui-button-gray disabled" href="#">{$lang->cmd_point_config}</a>
+        <!--@else-->
+        <a class="xe-ui-button-gray" href="{getUrl('act','dispPointAdminConfig')}">{$lang->cmd_point_config}</a>
+        <!--@end-->
+
+        <!--@if($act=='dispPointAdminModuleConfig')-->
+        <a class="xe-ui-button-gray disabled" href="#">{$lang->cmd_point_module_config}</a>
+        <!--@else-->
+        <a class="xe-ui-button-gray" href="{getUrl('act','dispPointAdminModuleConfig')}">{$lang->cmd_point_module_config}</a>
+        <!--@end-->
+
+        <!--@if($act=='dispPointAdminPointList')-->
+        <a class="xe-ui-button-gray disabled" href="#">{$lang->cmd_point_member_list}</a>
+        <!--@else-->
+        <a class="xe-ui-button-gray" href="{getUrl('act','dispPointAdminPointList')}">{$lang->cmd_point_member_list}</a>
+        <!--@end-->
+    </span>
+</h1>
+
+<div class="xe-ui-title-separator">
+    <hr/>
+</div>
+
+<div id="content" class="cleared">
+    <div cond="$XE_VALIDATOR_MESSAGE" class="xe-ui-message {$XE_VALIDATOR_MESSAGE_TYPE} gradient cleared">
+        <a href="#" style="float: right;" onclick="jQuery(this).parent().remove();return false;" class="xe-ui-button-gray gradient">Dismiss</a>
+        <p>{$XE_VALIDATOR_MESSAGE}</p>
+    </div>
