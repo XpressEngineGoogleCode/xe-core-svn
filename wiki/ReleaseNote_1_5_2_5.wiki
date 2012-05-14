@@ -1,0 +1,17 @@
+=XE 1.5.2.5 Release Note=
+
+<wiki:toc />
+
+==For Users==
+
+===Defect===
+
+ * Webshell 방어코드 추가 `[`r10672 cherryfilter`]`
+ * Color Code 레이아웃 하단바가 올라오는 문제 해결 `[`issue 1948 unryong`]`
+
+===Enhancement===
+
+ * 중국어 추가 `[`issue 1872, issue 1871, issue 1870, issue 1869, issue 1868, issue 1867, issue 1865, issue 1864`]`
+ * MySQL에서 통합검색 속도 증가 및 myisam DB의 table lock 감소 `[`issue 1980 cherryfilter`]`
+  * SELECT문에서 use index 사용
+  * INSERT, DELETE, UPDATE 문의 low priority 적용.
