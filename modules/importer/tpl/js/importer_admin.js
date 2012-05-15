@@ -5,81 +5,85 @@
  **/
 jQuery(function($){
 
-// Note : Module finder is defined modules/admin/tpl/js/admin.js
+    // Note : Module finder is defined modules/admin/tpl/js/admin.js
 
-// Check whether the xml file exists
-$('.checkxml')
-	.find('input:text')
-		.change(function(){
-			$(this).closest('.checkxml').find('.desc').hide();
-		})
-	.end()
-	.find('.button')
-		.click(function(){
-			var $this, $container, $input, $messages, $loading, $form, $syncmember, count;
+    // Check whether the xml file exists
+    $('.checkxml')
+    .find('input:text')
+    .change(function(){
+        $(this).closest('.checkxml').find('.desc').hide();
+    })
+    .end()
+    .find('.button')
+    .click(function(){
+        var $this, $container, $input, $messages, $loading, $form, $syncmember, count;
 
-			$this      = $(this).addClass("disabled");
-			$form      = $this.closest('form');
-			$container = $this.closest('.checkxml');
+        $this      = $(this).addClass("disabled");
+        $form      = $this.closest('form');
+        $container = $this.closest('.checkxml');
 			
-			$input     = $container.find('input').prop('disabled', true).addClass('loading');
-			$message   = $container.find('.desc').hide();
+        $input     = $container.find('input').prop('disabled', true).addClass('loading');
+        $message   = $container.find('.desc').hide();
 
-			function on_complete(data) {
-				var $ul, $ttxml, $xml;
+        function on_complete(data) {
+            var $ul, $ttxml, $xml;
 
-				$ul    = $this.closest('table');
-				$xml   = $ul.find('.xml');
-				$ttxml = $ul.find('.ttxml');
+            $ul    = $this.closest('table');
+            $xml   = $ul.find('.xml');
+            $ttxml = $ul.find('.ttxml');
 
-				$message.text(data.result_message);
+            $message.text(data.result_message);
 					
-				// when the file doesn't exists or any other error occurs
-				if(data.error || data.exists != 'true') {
-					$message.attr('class', 'desc error').fadeIn(300);
-					$ttxml = $ttxml.filter(':visible');
-					$ttxml.eq(-1).slideUp(100, function(){
-						$ttxml = $ttxml.slice(0,-1).eq(-1).slideUp(100,arguments.callee);
-					});
-					$form.closest("div").next("div").find('a').addClass('disabled');
+            // when the file doesn't exists or any other error occurs
+            if(data.error || data.exists != 'true') {
+                $message.attr('class', 'desc error').fadeIn(300);
+                $ttxml = $ttxml.filter(':visible');
+                $ttxml.eq(-1).slideUp(100, function(){
+                    $ttxml = $ttxml.slice(0,-1).eq(-1).slideUp(100,arguments.callee);
+                });
+                $form.closest("div").next("div").find('a').addClass('disabled');
 					
-					return restore();
-				}
+                return restore();
+            }
 
-				$message.attr('class', 'desc success').fadeIn(300);
-				//$form.find(':submit').removeAttr('disabled');
-				$this.closest('form').closest("div").next("div").find('a').removeClass('disabled');
+            $message.attr('class', 'desc success').fadeIn(300);
+            //$form.find(':submit').removeAttr('disabled');
+            $this.closest('form').closest("div").next("div").find('a').removeClass('disabled').click(function(){
+                $this.closest('form').submit();
+            });
 
-				$syncmember = $form.find('.syncmember:hidden');
+            $syncmember = $form.find('.syncmember:hidden');
 				
-				$input.prop('disabled', false).removeClass('loading');
-				$this.prop('disabled', false);
+            $input.prop('disabled', false).removeClass('loading');
+            $this.prop('disabled', false);
 				
-				if(data.type == 'XML') {
-					$xml.not(':visible').add($syncmember).slideDown(300);
-				} else if(data.type == 'TTXML') {
-					$ttxml.not(':visible').add($syncmember).slideDown(300);
-					$form.find('input[name=type]').val('ttxml');
-				}
-			};
+            if(data.type == 'XML') {
+                $xml.not(':visible').add($syncmember).slideDown(300);
+            } else if(data.type == 'TTXML') {
+                $ttxml.not(':visible').add($syncmember).slideDown(300);
+                $form.find('input[name=type]').val('ttxml');
+            }
+        };
 
-			function restore() {
-				$input.prop('disabled', false).removeClass('loading');
-				$this.removeClass("disabled");
-				$form.find('.syncmember:visible').slideUp(100);
-				return false;
-			};
+        function restore() {
+            $input.prop('disabled', false).removeClass('loading');
+            $this.removeClass("disabled");
+            $form.find('.syncmember:visible').slideUp(100);
+            return false;
+        };
 
-			show_waiting_message = false;
-			$.exec_json('importer.procImporterAdminCheckXmlFile', {filename:$.trim($input.val())}, on_complete);
-		})
-	.end()
-	.find('.desc').hide().end()
-	.closest('table').find('tr.ttxml').hide().end().end()
-	.closest('form').closest("div").next("div").find('a').addClass('disabled');
+        show_waiting_message = false;
+        $.exec_json('importer.procImporterAdminCheckXmlFile', {
+            filename:$.trim($input.val())
+            }, on_complete);
+    })
+    .end()
+    .find('.desc').hide().end()
+    .closest('table').find('tr.ttxml').hide().end().end()
+    .closest('form').closest("div").next("div").find('a').addClass('disabled');
 
-// hide 'sync member' block
-$('.syncmember').hide();
+    // hide 'sync member' block
+    $('.syncmember').hide();
 
 });
 
@@ -88,14 +92,14 @@ $('.syncmember').hide();
  **/
 function doSync(fo_obj) {
     exec_xml(
-		'importer',
-		'procImporterAdminSync', 
-		[],
-		function(ret){
-			alert(ret.message);
-			location.href = location.href;
-		}
-	);
+        'importer',
+        'procImporterAdminSync', 
+        [],
+        function(ret){
+            alert(ret.message);
+            location.href = location.href;
+        }
+        );
     return false;
 }
 
@@ -103,57 +107,60 @@ function doSync(fo_obj) {
  * xml파일을 DB입력전에 extract를 통해 분할 캐싱을 요청하는 함수
  **/
 function doPreProcessing(form, formId) {
-	var xml_file, type, resp, prepared = false, $ = jQuery, $status, $process, $form;
+    var xml_file, type, resp, prepared = false, $ = jQuery, $status, $process, $form;
 
-	xml_file = form.elements['xml_file'].value;
-	type     = form.elements['type'].value;
+    xml_file = form.elements['xml_file'].value;
+    type     = form.elements['type'].value;
 
     if(!xml_file) return false;
 
-	// show modal window
-	$process = $('#process');
-	if(!$process.find('.bg').length) $process.prepend('<span class="bg" />').appendTo('body');
-	$('a[href="#process"].modalAnchor').trigger('open.mw');
+    // show modal window
+    $process = $('#process');
+    if(!$process.find('.bg').length) $process.prepend('<span class="bg" />').appendTo('body');
+    $('a[href="#process"].modalAnchor').trigger('open.mw');
 
     exec_xml(
-		'importer', // module
-		'procImporterAdminPreProcessing', // action
-		{type:type, xml_file:xml_file}, // parameters
-		on_complete, // callback
-		resp=['error','message','type','total','cur','key','status'] // response tags
-	);
+        'importer', // module
+        'procImporterAdminPreProcessing', // action
+        {
+            type:type, 
+            xml_file:xml_file
+        }, // parameters
+        on_complete, // callback
+        resp=['error','message','type','total','cur','key','status'] // response tags
+        );
 
-	function on_complete(ret) {
-		var $reload, $cont, fo_proc, elems, i, c, key, to_copy, fo_import;
+    function on_complete(ret) {
+        var $reload, $cont, fo_proc, elems, i, c, key, to_copy, fo_import;
 
-		prepared = true;
+        prepared = true;
 
-		// when fail prepare
-		if(ret.status == -1) {
-			return alert(ret.message);
-		}
+        // when fail prepare
+        if(ret.status == -1) {
+            return alert(ret.message);
+        }
 
-		fo_proc = get_by_id('fo_process');
-		elems   = fo_proc.elements;
+        fo_proc = get_by_id('fo_process');
+        elems   = fo_proc.elements;
 
-		for(i=0,c=resp.length; i < c; i++) {
-			key = resp[i];
-			elems[key]?elems[key].value=ret[key]:0;
-		}
+        for(i=0,c=resp.length; i < c; i++) {
+            key = resp[i];
+            elems[key]?elems[key].value=ret[key]:0;
+        }
 
-		fo_import = get_by_id(formId);
-		if(fo_import) {
-			to_copy = ['target_module','guestbook_target_module','user_id', 'unit_count'];
-			for(i=0,c=to_copy.length; i < c; i++) {
-				key = to_copy[i];
-				if(fo_import.elements[key]) fo_proc.elements[key].value = fo_import.elements[key].value;
-			}
-		}
+        fo_import = get_by_id(formId);
+        if(fo_import) {
+            to_copy = ['target_module','guestbook_target_module','user_id', 'unit_count'];
+            for(i=0,c=to_copy.length; i < c; i++) {
+                key = to_copy[i];
+                if(fo_import.elements[key]) fo_proc.elements[key].value = fo_import.elements[key].value;
+            }
+        }
 
-		jQuery('#preProgressMsg').hide();
-		jQuery('#progressMsg').show();
-		doImport(formId);
-	}
+        jQuery('#preProgressMsg').hide();
+        jQuery('#progressMsg').show();
+        doImport(formId);
+    }
 
     return false;
 }
@@ -162,71 +169,74 @@ function doPreProcessing(form, formId) {
 function doImport(formId) {
     var form = get_by_id('fo_process'), elems = form.elements, i, c, params={}, resp;
 
-	for(i=0,c=elems.length; i < c; i++) {
-		params[elems[i].name] = elems[i].value;
-	}
+    for(i=0,c=elems.length; i < c; i++) {
+        params[elems[i].name] = elems[i].value;
+    }
 
-	function on_complete(ret, response_tags) {
-		var i, c, key, fo_import;
+    function on_complete(ret, response_tags) {
+        var i, c, key, fo_import;
 		
-		for(i=0,c=resp.length; i < c; i++) {
-			key = resp[i];
-			//elems[key]?elems[key].value=ret_obj[key]:0;
-			elems[key]?elems[key].value=ret[key]:0;
-		}
+        for(i=0,c=resp.length; i < c; i++) {
+            key = resp[i];
+            //elems[key]?elems[key].value=ret_obj[key]:0;
+            elems[key]?elems[key].value=ret[key]:0;
+        }
 
-		ret.total = parseInt(ret.total, 10) || 0;
-		ret.cur   = parseInt(ret.cur, 10) || 0;
-		percent = parseInt((ret.cur/ret.total)*100);
+        ret.total = parseInt(ret.total, 10) || 0;
+        ret.cur   = parseInt(ret.cur, 10) || 0;
+        percent = parseInt((ret.cur/ret.total)*100);
 
-		jQuery('#totalCount').text(ret.total);
-		jQuery('#completeCount').text(ret.cur);
-		jQuery('#progressBar').width(percent+'%');
-		jQuery('#progressPercent').html(percent + "%");
+        jQuery('#totalCount').text(ret.total);
+        jQuery('#completeCount').text(ret.cur);
+        jQuery('#progressBar').width(percent+'%');
+        jQuery('#progressPercent').html(percent + "%");
 
-		if(ret.total > ret.cur) {
-			doImport(formId);
-		} else {
-			function resultAlertMessage()
-			{
-				alert(ret.message);
-				jQuery('a[href="#process"].modalAnchor')
-					.unbind('before-close.mw')
-					.trigger('close.mw')
-					.find('#progressBar').width(1).end()
-					.find('#progressPercent').html('0%').end();
+        if(ret.total > ret.cur) {
+            doImport(formId);
+        } else {
+            function resultAlertMessage()
+            {
+                alert(ret.message);
+                jQuery('a[href="#process"].modalAnchor')
+                .unbind('before-close.mw')
+                .trigger('close.mw')
+                .find('#progressBar').width(1).end()
+                .find('#progressPercent').html('0%').end();
 
-				try {
-					form.reset();
-					get_by_id(formId).reset();
-				} catch(e){ };
+                try {
+                    form.reset();
+                    get_by_id(formId).reset();
+                } catch(e){ };
 
-				jQuery('span.btn > input[type=submit]').attr('disabled','disabled');
-			}
+                jQuery('span.btn > input[type=submit]').attr('disabled','disabled');
+                location.reload();
+            }
 
-			fo_import = get_by_id(formId);
-			if(fo_import != null && fo_import.isSync.checked)
-			{
-				exec_xml(
-					'importer', // module
-					'procImporterAdminSync', // act
-					params,
-					function(ret){if(ret && (!ret.error || ret.error == '0'))resultAlertMessage()}, // callback
-					resp = ['error','message'] // response tags
-				);
-			}
-			else resultAlertMessage();
-		}
-	}
+            fo_import = get_by_id(formId);
+            if(fo_import != null && fo_import.isSync.checked)
+            {
+                exec_xml(
+                    'importer', // module
+                    'procImporterAdminSync', // act
+                    params,
+                    function(ret){
+                        if(ret && (!ret.error || ret.error == '0'))resultAlertMessage()
+                            }, // callback
+                    resp = ['error','message'] // response tags
+                    );
+            }
+            else resultAlertMessage();
+        }
+    }
 
     show_waiting_message = false;
     exec_xml(
-		'importer', // module
-		'procImporterAdminImport', // act
-		params,
-		on_complete, // callback
-		resp = ['error','message','type','total','cur','key'] // response tags
-	);
+        'importer', // module
+        'procImporterAdminImport', // act
+        params,
+        on_complete, // callback
+        resp = ['error','message','type','total','cur','key'] // response tags
+        );
     show_waiting_message = true;
 
     return false;
@@ -234,21 +244,21 @@ function doImport(formId) {
 
 /* display progress */
 function displayProgress(total, cur) {
-	var per, stat, $stat;
+    var per, stat, $stat;
 
-	per = Math.max(total?Math.round(cur/total*100):100, 1);
+    per = Math.max(total?Math.round(cur/total*100):100, 1);
 
-	$stat = jQuery('#status');
-	if(!$stat.find('div.progress1').length) {
-		$stat.html( '<div class="progressBox"><div class="progress1"></div><div class="progress2"></div></div>' );
-	}
+    $stat = jQuery('#status');
+    if(!$stat.find('div.progress1').length) {
+        $stat.html( '<div class="progressBox"><div class="progress1"></div><div class="progress2"></div></div>' );
+    }
 
-	$stat
-		.find('div.progress1')
-			.html(per+'&nbsp;')
-			.css('width', per+'%')
-		.end()
-		.find('div.progress2')
-			.text(cur+'/'+total);
+    $stat
+    .find('div.progress1')
+    .html(per+'&nbsp;')
+    .css('width', per+'%')
+    .end()
+    .find('div.progress2')
+    .text(cur+'/'+total);
 }
 
