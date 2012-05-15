@@ -70,7 +70,7 @@ jQuery(document).ready(function($) {
     /*
      * Set custom checkbox and radio buttons
      */
-    $('input[type=checkbox],input[type=radio]').prettyCheckboxes();
+    //$('input[type=checkbox],input[type=radio]').prettyCheckboxes();
 
     /*
      * Enable vertical scroller for the dashboard shortcuts
