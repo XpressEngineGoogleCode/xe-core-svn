@@ -364,41 +364,18 @@ class DatabaseConnection extends PDO
 
 == Commenting ==
 === Class ===
-주석은 Class, method 상단에 기본적으로 추가하는 부분과 Source의 흐름 상 필요한 곳에 넣는 한줄짜리 주석으로 분류한다.
+주석은 [http://www.phpdoc.org/docs/latest/index.html phpDoc]의 내용을 기본적으로 따라 작성한다.
+다음은 자주 사용되어지는 tags의 목록이다.
 
-Class 상단에 들어가는 주석은 다음과 같은 형태를 따른다.
-*CORRECT*
-{{{
-<?php
-/**
- * @brief Class의 간략한 설명 (필수)
- * @developer 개발자 nick or name (필수)
- * @date 
- */
-class SomeClass 
-{
-}
-}}}
-
-
-=== method & function ===
-method 상단에 들어가는 주석은 다음과 같은 형태를 따른다.
-
-*CORRECT*
-{{{
-/**
- * @brief method의 간략한 설명 (필수)
- * @access public, protected, private 중 선택 (필수)
- * @param $param1 : bla bla  ($param이 있을시 필수)
- * @param $param2 : bla bla
- * @return String, boolean, int, void 등 (필수)
- * @developer 개발자 nick or name (필수)
- * @date 
- */
-function someMethod($param1, $param2)
-{
-}
-}}}
+|| *Tag* || *Description* || *Example* ||
+|| @internal || 간략한 설명을 넣을 경우 || ||
+|| {@internal[긴 설명]} || 긴 설명을 넣을 경우 || ||
+|| @author || 개발자명 || nick or name <my.name@example.com> ||
+|| @package || 패키지명 || modules/document/ ||
+|| @deprecated || 사용 중지된 class or method || @deprecated No longer used by internal code and not recommended. ||
+|| @param || method에 사용되는 parameter를 순서대로 적는다.<br>사용 형태는 "@param <Type> [name] [<description>]"와 같이 적는다. || @param mixed[] $array Array structure to count the elements of. ||
+|| @return || method가 반환하는 값을 적는다. <br>사용형태는 "@return <Type> [description]"와 같이 적는다. || @param mixed[] $array Array structure to count the elements of. ||
+|| @see || 참고해야 할 내용을 적는다. <br>사용형태는 "@see [URI | Type | Type::element] [<description>]"  || @see http://example.com/my/bar Documentation of Foo.<br>@see MyClass::$items           for the property whose items are counted ||
 
 === Common ===
 일반 주석은 ‘//’ 만 사용하는 형태를 따른다. ‘#’ 사용 금지
