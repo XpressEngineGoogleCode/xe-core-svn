@@ -375,6 +375,7 @@ class DatabaseConnection extends PDO
 || @param || method에 사용되는 parameter를 순서대로 적는다.<br>사용 형태는 `"@param <Type> [name] [<description>]"`와 같이 적는다. || @param mixed[] $array Array structure to count the elements of. ||
 || @return || method가 반환하는 값을 적는다. <br>사용형태는 `"@return <Type> [description]"`와 같이 적는다. || @param mixed[] $array Array structure to count the elements of. ||
 || @see || 참고해야 할 내용을 적는다. <br>사용형태는 `"@see [URI | Type | Type::element] [<description>]"`  || @see http://example.com/my/bar Documentation of Foo.<br>@see MyClass::$items           for the property whose items are counted ||
+|| @example || 사용예제를 적는다. || ||
 
 === Common ===
 일반 주석은 ‘//’ 만 사용하는 형태를 따른다. ‘#’ 사용 금지
