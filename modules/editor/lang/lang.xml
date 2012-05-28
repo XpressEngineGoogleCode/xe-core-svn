@@ -42,83 +42,83 @@
 	</item>
 	<item name="editor_option">
 		<value xml:lang="ko"><![CDATA[에디터 옵션]]></value>
-		<value xml:lang="en"><![CDATA[Editor Option]]></value>
+		<value xml:lang="en"><![CDATA[Editor Options]]></value>
 		<value xml:lang="jp"><![CDATA[エディターオプション]]></value>
-		<value xml:lang="zh-CN"><![CDATA[Editor Option]]></value>
-		<value xml:lang="zh-TW"><![CDATA[Editor Option]]></value>
-		<value xml:lang="ru"><![CDATA[Editor Option]]></value>
-		<value xml:lang="tr"><![CDATA[Editor Option]]></value>
-		<value xml:lang="vi"><![CDATA[Editor Option]]></value>
+		<value xml:lang="zh-CN"><![CDATA[Editor Options]]></value>
+		<value xml:lang="zh-TW"><![CDATA[Editor Options]]></value>
+		<value xml:lang="ru"><![CDATA[Editor Options]]></value>
+		<value xml:lang="tr"><![CDATA[Editor Options]]></value>
+		<value xml:lang="vi"><![CDATA[Editor Options]]></value>
 	</item>
 	<item name="guide_choose_main_editor">
 		<value xml:lang="ko"><![CDATA[본문 에디터를 선택하세요.]]></value>
-		<value xml:lang="en"><![CDATA[Choose the main editor.]]></value>
+		<value xml:lang="en"><![CDATA[Choose the main editor]]></value>
 		<value xml:lang="jp"><![CDATA[本文エディターを選択してください。]]></value>
-		<value xml:lang="zh-CN"><![CDATA[Choose the main editor.]]></value>
-		<value xml:lang="zh-TW"><![CDATA[Choose the main editor.]]></value>
-		<value xml:lang="ru"><![CDATA[Choose the main editor.]]></value>
-		<value xml:lang="tr"><![CDATA[Choose the main editor.]]></value>
-		<value xml:lang="vi"><![CDATA[Choose the main editor.]]></value>
+		<value xml:lang="zh-CN"><![CDATA[Choose the main editor]]></value>
+		<value xml:lang="zh-TW"><![CDATA[Choose the main editor]]></value>
+		<value xml:lang="ru"><![CDATA[Choose the main editor]]></value>
+		<value xml:lang="tr"><![CDATA[Choose the main editor]]></value>
+		<value xml:lang="vi"><![CDATA[Choose the main editor]]></value>
 	</item>
 	<item name="guide_set_height_main_editor">
 		<value xml:lang="ko"><![CDATA[본문 에디터의 높이를 설정하세요.]]></value>
-		<value xml:lang="en"><![CDATA[Set height of the main editor.]]></value>
+		<value xml:lang="en"><![CDATA[Set height of the main editor]]></value>
 		<value xml:lang="jp"><![CDATA[本文エディターの高さを設定してください。]]></value>
-		<value xml:lang="zh-CN"><![CDATA[Set height of the main editor.]]></value>
-		<value xml:lang="zh-TW"><![CDATA[Set height of the main editor.]]></value>
-		<value xml:lang="ru"><![CDATA[Set height of the main editor.]]></value>
-		<value xml:lang="tr"><![CDATA[Set height of the main editor.]]></value>
-		<value xml:lang="vi"><![CDATA[Set height of the main editor.]]></value>
+		<value xml:lang="zh-CN"><![CDATA[Set height of the main editor]]></value>
+		<value xml:lang="zh-TW"><![CDATA[Set height of the main editor]]></value>
+		<value xml:lang="ru"><![CDATA[Set height of the main editor]]></value>
+		<value xml:lang="tr"><![CDATA[Set height of the main editor]]></value>
+		<value xml:lang="vi"><![CDATA[Set height of the main editor]]></value>
 	</item>
 	<item name="guide_choose_comment_editor">
 		<value xml:lang="ko"><![CDATA[댓글 에디터를 선택하세요.]]></value>
-		<value xml:lang="en"><![CDATA[Choose the comment editor.]]></value>
+		<value xml:lang="en"><![CDATA[Choose the comment editor]]></value>
 		<value xml:lang="jp"><![CDATA[コメントエディターを選択してください。]]></value>
-		<value xml:lang="zh-CN"><![CDATA[Choose the comment editor.]]></value>
-		<value xml:lang="zh-TW"><![CDATA[Choose the comment editor.]]></value>
-		<value xml:lang="ru"><![CDATA[Choose the comment editor.]]></value>
-		<value xml:lang="tr"><![CDATA[Choose the comment editor.]]></value>
-		<value xml:lang="vi"><![CDATA[Choose the comment editor.]]></value>
+		<value xml:lang="zh-CN"><![CDATA[Choose the comment editor]]></value>
+		<value xml:lang="zh-TW"><![CDATA[Choose the comment editor]]></value>
+		<value xml:lang="ru"><![CDATA[Choose the comment editor]]></value>
+		<value xml:lang="tr"><![CDATA[Choose the comment editor]]></value>
+		<value xml:lang="vi"><![CDATA[Choose the comment editor]]></value>
 	</item>
 	<item name="guide_set_height_comment_editor">
 		<value xml:lang="ko"><![CDATA[댓글 에디터의 높이를 설정하세요.]]></value>
-		<value xml:lang="en"><![CDATA[Set height of the comment editor.]]></value>
+		<value xml:lang="en"><![CDATA[Set height of the comment editor]]></value>
 		<value xml:lang="jp"><![CDATA[コメントエディターの高さを設定してください。]]></value>
-		<value xml:lang="zh-CN"><![CDATA[Set height of the comment editor.]]></value>
-		<value xml:lang="zh-TW"><![CDATA[Set height of the comment editor.]]></value>
-		<value xml:lang="ru"><![CDATA[Set height of the comment editor.]]></value>
-		<value xml:lang="tr"><![CDATA[Set height of the comment editor.]]></value>
-		<value xml:lang="vi"><![CDATA[Set height of the comment editor.]]></value>
+		<value xml:lang="zh-CN"><![CDATA[Set height of the comment editor]]></value>
+		<value xml:lang="zh-TW"><![CDATA[Set height of the comment editor]]></value>
+		<value xml:lang="ru"><![CDATA[Set height of the comment editor]]></value>
+		<value xml:lang="tr"><![CDATA[Set height of the comment editor]]></value>
+		<value xml:lang="vi"><![CDATA[Set height of the comment editor]]></value>
 	</item>
 	<item name="guide_choose_text_formatting">
 		<value xml:lang="ko"><![CDATA[본문 서식을 선택하세요.]]></value>
-		<value xml:lang="en"><![CDATA[Choose the body format.]]></value>
+		<value xml:lang="en"><![CDATA[Choose the body format]]></value>
 		<value xml:lang="jp"><![CDATA[本文のスタイルを選択してください。]]></value>
-		<value xml:lang="zh-CN"><![CDATA[Choose the text formatting.]]></value>
-		<value xml:lang="zh-TW"><![CDATA[Choose the text formatting.]]></value>
-		<value xml:lang="ru"><![CDATA[Choose the text formatting.]]></value>
-		<value xml:lang="tr"><![CDATA[Choose the text formatting.]]></value>
-		<value xml:lang="vi"><![CDATA[Choose the text formatting.]]></value>
+		<value xml:lang="zh-CN"><![CDATA[Choose the text formatting]]></value>
+		<value xml:lang="zh-TW"><![CDATA[Choose the text formatting]]></value>
+		<value xml:lang="ru"><![CDATA[Choose the text formatting]]></value>
+		<value xml:lang="tr"><![CDATA[Choose the text formatting]]></value>
+		<value xml:lang="vi"><![CDATA[Choose the text formatting]]></value>
 	</item>
 	<item name="guide_choose_font_body">
 		<value xml:lang="ko"><![CDATA[본문 글꼴을 선택하세요.]]></value>
-		<value xml:lang="en"><![CDATA[Choose the body font.]]></value>
+		<value xml:lang="en"><![CDATA[Choose the body font]]></value>
 		<value xml:lang="jp"><![CDATA[本文のフォントを選択してください。]]></value>		
-		<value xml:lang="zh-CN"><![CDATA[Choose the font body.]]></value>
-		<value xml:lang="zh-TW"><![CDATA[Choose the font body.]]></value>
-		<value xml:lang="ru"><![CDATA[Choose the font body.]]></value>
-		<value xml:lang="tr"><![CDATA[Choose the font body.]]></value>
-		<value xml:lang="vi"><![CDATA[Choose the font body.]]></value>
+		<value xml:lang="zh-CN"><![CDATA[Choose the font body]]></value>
+		<value xml:lang="zh-TW"><![CDATA[Choose the font body]]></value>
+		<value xml:lang="ru"><![CDATA[Choose the font body]]></value>
+		<value xml:lang="tr"><![CDATA[Choose the font body]]></value>
+		<value xml:lang="vi"><![CDATA[Choose the font body]]></value>
 	</item>
 	<item name="guide_choose_font_size_body">
 		<value xml:lang="ko"><![CDATA[본문 글꼴크기를 선택하세요.]]></value>
-		<value xml:lang="en"><![CDATA[Choose the font size of body.]]></value>
+		<value xml:lang="en"><![CDATA[Choose the font size of body]]></value>
 		<value xml:lang="jp"><![CDATA[本文の文字サイズを選択してください。]]></value>
-		<value xml:lang="zh-CN"><![CDATA[Choose the font size body.]]></value>
-		<value xml:lang="zh-TW"><![CDATA[Choose the font size body.]]></value>
-		<value xml:lang="ru"><![CDATA[Choose the font size body.]]></value>
-		<value xml:lang="tr"><![CDATA[Choose the font size body.]]></value>
-		<value xml:lang="vi"><![CDATA[Choose the font size body.]]></value>
+		<value xml:lang="zh-CN"><![CDATA[Choose the font size body]]></value>
+		<value xml:lang="zh-TW"><![CDATA[Choose the font size body]]></value>
+		<value xml:lang="ru"><![CDATA[Choose the font size body]]></value>
+		<value xml:lang="tr"><![CDATA[Choose the font size body]]></value>
+		<value xml:lang="vi"><![CDATA[Choose the font size body]]></value>
 	</item>
 	
 	<item name="font_preview">
@@ -2029,23 +2029,23 @@ Bài viết tự động lưu sẽ tự động hủy sau khi bạn hoàn thành
 		</item>
 		<item name="paging_prev_help">
 			<value xml:lang="ko"><![CDATA[이전 페이지로 이동합니다.]]></value>
-			<value xml:lang="en"><![CDATA[Move to previous page.]]></value>
+			<value xml:lang="en"><![CDATA[Move to previous page]]></value>
 			<value xml:lang="jp"><![CDATA[前のページへ移動します。]]></value>
 			<value xml:lang="zh-CN"><![CDATA[上一页。]]></value>
 			<value xml:lang="zh-TW"><![CDATA[往上一頁]]></value>
 			<value xml:lang="ru"><![CDATA[Перейти к предыдущей странице]]></value>
-			<value xml:lang="tr"><![CDATA[Önceki sayfaya git.]]></value>
-			<value xml:lang="vi"><![CDATA[Chuyển về trang trước.]]></value>
+			<value xml:lang="tr"><![CDATA[Önceki sayfaya git]]></value>
+			<value xml:lang="vi"><![CDATA[Chuyển về trang trước]]></value>
 		</item>
 		<item name="paging_next_help">
 			<value xml:lang="ko"><![CDATA[다음 페이지로 이동합니다.]]></value>
-			<value xml:lang="en"><![CDATA[Move to next page.]]></value>
+			<value xml:lang="en"><![CDATA[Move to next page]]></value>
 			<value xml:lang="jp"><![CDATA[次のページへ移動します。]]></value>
 			<value xml:lang="zh-CN"><![CDATA[下一页。]]></value>
 			<value xml:lang="zh-TW"><![CDATA[往下一頁]]></value>
 			<value xml:lang="ru"><![CDATA[Перейти кследующей странице]]></value>
-			<value xml:lang="tr"><![CDATA[Sonraki sayfaya git.]]></value>
-			<value xml:lang="vi"><![CDATA[Chuyển tới trang tiếp.]]></value>
+			<value xml:lang="tr"><![CDATA[Sonraki sayfaya git]]></value>
+			<value xml:lang="vi"><![CDATA[Chuyển tới trang tiếp]]></value>
 		</item>
 		<item name="toc">
 			<value xml:lang="ko"><![CDATA[목차]]></value>
@@ -2110,5 +2110,10 @@ Bài viết tự động lưu sẽ tự động hủy sau khi bạn hoàn thành
 		<value xml:lang="tr"><![CDATA[Detaylı bileşen yapılandırmasını; arkaplana, metne, resme ya da alıntılara çift tıklayarak ayarlayabilirsiniz]]></value>
 		<value xml:lang="vi"><![CDATA[Thiết lập khi bấm 2 lần vào nền, Chữ, Hình ảnh hoặc Trích dẫn]]></value>
 	</item>
-
+    <item name="editor_preview_desc">
+        <value xml:lang="en"><![CDATA[Works after the new settings have been saved.]]></value>
+    </item>
+    <item name="editor_preview">
+        <value xml:lang="en"><![CDATA[Editor preview:]]></value>
+    </item>
 </lang>

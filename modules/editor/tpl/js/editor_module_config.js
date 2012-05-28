@@ -15,6 +15,7 @@ function resultGetEditorSkinColorList(ret_obj,response_tags, params) {
 			selectbox = (params.type == 'document') ? $('select[name=sel_editor_colorset]') : $('select[name=sel_comment_editor_colorset]');
 		}
 		selectbox.html('');
+        selectbox.addClass('xe-ui-panel-select');
 
 		if(params.type == 'document'){
 			$("select[name=sel_editor_colorset]").hide()

@@ -40,76 +40,115 @@
             <form action="./" method="post" class="form" ruleset="generalConfig" id="gen_conf">
                 <input type="hidden" name="module" value="editor" />
                 <input type="hidden" name="act" value="procEditorAdminGeneralConfig	" />
-                <p class="form-list">
-                    <span class="desc">{$lang->guide_choose_main_editor}:</span>
-                    <!--@foreach($editor_skin_list as $editor)-->
-                    <input type="radio" name="editor_skin" value="{$editor}" id="doc_{$editor}" onClick="getEditorSkinColorList(this.value, null, 'document','doc_{$editor}')" <!--@if($editor==$editor_config->editor_skin)-->checked="checked" <!--@end-->/>
-                           <label for="doc_{$editor}" value='sdf'>{$editor}</label>
-                    <select name="sel_editor_colorset"  <!--@if($editor==$editor_config->editor_skin)--> >
-                            <!--@foreach($editor_colorset_list as $key => $val)-->
-                            <option value="{$val->name}" <!--@if($editor_config->sel_editor_colorset == $val->name)-->selected="selected"<!--@end-->>{$val->title}</option>
-                        <!--@end-->
-                        <!--@else-->style="display:none"> <!--@end-->
-                    </select>
-                    <br />
-                    <!--@end-->
-                </p>
-                <p class="form-list">
-                    <label for="editor_height" class="desc">{$lang->guide_set_height_main_editor}:</label>
-                    <input type="text" name="editor_height" id="editor_height" value="<!--@if($editor_config->editor_height)-->{$editor_config->editor_height}<!--@else-->{$editor_config_default['editor_height']}<!--@end-->" style="width:30px" class="xe-ui-panel-text" /> px
-                </p>
-                <p class="form-list">
-                    <span class="desc">{$lang->guide_choose_comment_editor}:</span>
-                    <!--@foreach($editor_skin_list as $editor)-->
-                    <input type="radio" name="comment_editor_skin" value="{$editor}" id="com_{$editor}"  onclick="getEditorSkinColorList(this.value, null, 'reply','com_{$editor}')" <!--@if($editor == $editor_config->comment_editor_skin)-->checked="checked" <!--@end-->/>
-                           <label for="com_{$editor}">{$editor}</label>
-                    <select name="sel_comment_editor_colorset" <!--@if($editor==$editor_config->comment_editor_skin)-->	 >
-                            <!--@foreach($editor_colorset_list as $key => $val)-->
-                            <option value="{$val->name}" <!--@if($editor_config->sel_comment_editor_colorset == $val->name)-->selected="selected"<!--@end-->>{$val->title}</option>
-                        <!--@end-->
-                        <!--@else-->style="display:none"> <!--@end-->
-                    </select>
-                    <br />
-                    <!--@end-->
-                </p>
-                <p class="form-list">
-                    <label for="comment_editor_height">{$lang->guide_set_height_comment_editor}:</label>
-                    <input type="text" name="comment_editor_height" id="comment_editor_height" value="<!--@if($editor_config->comment_editor_height)-->{$editor_config->comment_editor_height}<!--@else-->{$editor_config_default['comment_editor_height']}<!--@end-->" style="width:30px" class="xe-ui-panel-text"/> px
-                </p>
-                <p class="form-list">
-                    <span class="desc">{$lang->guide_choose_text_formatting}:</span>
-                    <!--@foreach($content_style_list as $key => $val)-->
-                    <input type="radio" name="content_style" value="{$key}" id="style_{$key}" checked="checked"|cond="$key==$editor_config->content_style||!$editor_config->content_style && $key=='default'"><label for="style_{$key}">{$key}</label>
-                    <!--@end-->
-                </p>
-                <p class="form-list">
-                    <span class="desc">{$lang->guide_choose_font_body}:</span>
-                    <textarea rows="3" cols="42" class="fontPreview" title="Font Preview">{$lang->font_preview}</textarea>
-                    <input type="radio" name="content_font" id="font_noFont" value="" <!--@if(!$editor_config->content_font)-->checked="checked" <!--@end-->/> <label for="font_noFont" style="font-family:''">none(inherit)</label><br />
-                    <!--@foreach($lang->edit->fontlist as $name => $detail)-->
-                    <input type="radio" name="content_font" id="font_{$name}" value="{$name}" <!--@if($editor_config->content_font==$name)-->checked="checked" <!--@end-->/> <label for="font_{$name}" style="font-family:{$detail}">{$detail}</label><br />
-                    <!--@end-->
-                </p>
-                <p class="form-list">
-                    <label for="fontSize" class="desc">{$lang->guide_choose_font_size_body}:</label>
-                    <textarea rows="3" cols="42" class="fontPreview" title="Font Preview">{$lang->font_preview}</textarea>
-                    <input type="text" id="fontSize" name="content_font_size" value="<!--@if($editor_config->content_font_size)-->{str_replace('px','',$editor_config->content_font_size)}<!--@else-->{str_replace('px','',$editor_config_default['content_font_size'])}<!--@end-->" style="width:30px" /> px
-                </p>
+                <table width="100%" cellpadding="0" border="0" cellspacing="0" class="xe-ui-form-table">
+                    <tbody>
+                        <tr>
+                            <td class="v-top" style="width: 220px;"><p>{$lang->guide_choose_main_editor}:</p></td>
+                            <td>
+                                <!--@foreach($editor_skin_list as $editor)-->
+                                <p>
+                                    <input type="radio" name="editor_skin" value="{$editor}" id="doc_{$editor}" onClick="getEditorSkinColorList(this.value, null, 'document','doc_{$editor}')" <!--@if($editor==$editor_config->editor_skin)-->checked="checked" <!--@end-->/>
+                                    <label for="doc_{$editor}" value='sdf'>{$editor}</label>
+                                    <select name="sel_editor_colorset"  <!--@if($editor==$editor_config->editor_skin)--> class="xe-ui-panel-select">
+                                        <!--@foreach($editor_colorset_list as $key => $val)-->
+                                        <option value="{$val->name}" <!--@if($editor_config->sel_editor_colorset == $val->name)-->selected="selected"<!--@end-->>{$val->title}</option>
+                                        <!--@end-->
+                                        <!--@else-->style="display:none"> <!--@end-->
+                                    </select>
+                                </p>
+                                <!--@end-->
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <p><label for="editor_height">{$lang->guide_set_height_main_editor}:</label></p>
+                            </td>
+                            <td>
+                                <p>
+                                    <input type="text" name="editor_height" id="editor_height" value="<!--@if($editor_config->editor_height)-->{$editor_config->editor_height}<!--@else-->{$editor_config_default['editor_height']}<!--@end-->" style="width:30px" class="xe-ui-panel-text" /> px
+                                </p>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="v-top">
+                                <p>{$lang->guide_choose_comment_editor}:</p>
+                            </td>
+                            <td>
+                                <!--@foreach($editor_skin_list as $editor)-->
+                                <p>
+                                <input type="radio" name="comment_editor_skin" value="{$editor}" id="com_{$editor}"  onclick="getEditorSkinColorList(this.value, null, 'reply','com_{$editor}')" <!--@if($editor == $editor_config->comment_editor_skin)-->checked="checked" <!--@end-->/>
+                                <label for="com_{$editor}">{$editor}</label>
+                                <select name="sel_comment_editor_colorset" <!--@if($editor==$editor_config->comment_editor_skin)--> class="xe-ui-panel-select">
+                                <!--@foreach($editor_colorset_list as $key => $val)-->
+                                <option value="{$val->name}" <!--@if($editor_config->sel_comment_editor_colorset == $val->name)-->selected="selected"<!--@end-->>{$val->title}</option>
+                                <!--@end-->
+                                <!--@else-->style="display:none"> <!--@end-->
+                                </select>
+                                </p>
+                                <!--@end-->
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <p>
+                                    <label for="comment_editor_height">{$lang->guide_set_height_comment_editor}:</label>
+                                </p>
+                            </td>
+                            <td>
+                                <p>
+                                    <input type="text" name="comment_editor_height" id="comment_editor_height" value="<!--@if($editor_config->comment_editor_height)-->{$editor_config->comment_editor_height}<!--@else-->{$editor_config_default['comment_editor_height']}<!--@end-->" style="width:30px" class="xe-ui-panel-text"/> px
+                                </p>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td><p>{$lang->guide_choose_text_formatting}:</p></td>
+                            <td><p>
+                                <!--@foreach($content_style_list as $key => $val)-->
+                                <input type="radio" name="content_style" value="{$key}" id="style_{$key}" checked="checked"|cond="$key==$editor_config->content_style||!$editor_config->content_style && $key=='default'">
+                                <label for="style_{$key}">{$key}</label>
+                                <!--@end-->
+                            </p></td>
+                        </tr>
+                        <tr>
+                            <td class="v-top"><p>{$lang->guide_choose_font_body}:</p></td>
+                            <td>
+                                <textarea rows="4" cols="80" title="Font Preview" class="xe-ui-panel-textarea">{$lang->font_preview}</textarea>
+                                <br />
+                                <p>
+                                    <input type="radio" name="content_font" id="font_noFont" value="" <!--@if(!$editor_config->content_font)-->checked="checked" <!--@end-->/> <label for="font_noFont" style="font-family:''">none(inherit)</label></p>
+                                <!--@foreach($lang->edit->fontlist as $name => $detail)-->
+                                <p>
+                                    <input type="radio" name="content_font" id="font_{$name}" value="{$name}" <!--@if($editor_config->content_font==$name)-->checked="checked" <!--@end-->/> <label for="font_{$name}" style="font-family:{$detail}">{$detail}</label>
+                                </p>
+                                <!--@end-->
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="v-top">
+                                <p><label for="fontSize">{$lang->guide_choose_font_size_body}:</label></p>
+                            </td>
+                            <td>
+                                <textarea rows="4" cols="80" class="xe-ui-panel-textarea" title="Font Preview">{$lang->font_preview}</textarea><br />
+                                <input type="text" id="fontSize" name="content_font_size" value="<!--@if($editor_config->content_font_size)-->{str_replace('px','',$editor_config->content_font_size)}<!--@else-->{str_replace('px','',$editor_config_default['content_font_size'])}<!--@end-->" style="width:30px" class="xe-ui-panel-text"/> px
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="v-top"><p>{$lang->editor_preview}</p></td>
+                            <td>
+                                <p>
+                                    <a href="{getUrl('module', 'admin', 'act', 'dispEditorConfigPreview')}" target="_blank" class="xe-ui-button-gray">{$lang->cmd_preview}</a>
+                                </p>
+                                <p class="desc">{$lang->editor_preview_desc}</p>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
             </form>
         </div>
         <div class="xe-ui-panel-controller">
             <hr />
             <p class="center">
                 <a href="#" onclick="jQuery('#gen_conf').submit();return false;" class="xe-ui-button-gray">{$lang->cmd_save}</a>
-            </p>
-        </div>
-    </div>
-    <div class="xe-ui-panel">
-        <div class="xe-ui-panel-content cleared">
-            <h2>{$lang->editor_preview}</h2>
-            <p class="form-list">
-                <span class="desc">Editor preview:</span>
-                <a href="{getUrl('module', 'admin', 'act', 'dispEditorConfigPreview')}" target="_blank" class="xe-ui-button-gray">{$lang->cmd_preview}</a>
             </p>
         </div>
     </div>
