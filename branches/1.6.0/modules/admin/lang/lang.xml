@@ -1429,4 +1429,7 @@ Lütfen son sürümü için indirme linkine tıklayınız.]]></value>
     <item name="session_manager">
         <value xml:lang="en"><![CDATA[Session Manager]]></value>
     </item>
+    <item name="integration_search_manager">
+        <value xml:lang="en"><![CDATA[Manage Integrated Search]]></value>
+    </item>
 </lang>
