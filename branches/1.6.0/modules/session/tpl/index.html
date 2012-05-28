@@ -1,8 +1,26 @@
 <load target="js/session.js" usecdn="true" />
 
-<h3 class="xeAdmin">{$lang->session} <span class="gray">{$lang->cmd_management}</span></h3>
-<div class="infoText">{nl2br($lang->about_session)}</div>
+<h1>{$lang->session_manager}</h1>
+<div class="xe-ui-title-separator">
+    <hr/>
+</div>
 
-<form action="./" method="post" onsubmit="return false;">
-<div class="fr"><span class="button black strong"><input type="button" value="{$lang->cmd_clear_session}" onclick="doClearSession(); return false; "/></span></div>
-</form>
+<div id="content" class="cleared">
+    <div cond="$XE_VALIDATOR_MESSAGE" class="xe-ui-message {$XE_VALIDATOR_MESSAGE_TYPE} gradient cleared">
+        <a href="#" style="float: right;" onclick="jQuery(this).parent().remove();return false;" class="xe-ui-button-gray gradient">Dismiss</a>
+        <p>{$XE_VALIDATOR_MESSAGE}</p>
+    </div>
+    <div class="xe-ui-panel">
+        <div class="xe-ui-panel-content">
+            <p>{nl2br($lang->about_session)}</p>
+        </div>
+        <div class="xe-ui-panel-controller">
+            <hr />
+            <form action="./" method="post" onsubmit="return false;">
+            <p class="center">
+                <a href="#" onclick="doClearSession(); return false;" class="xe-ui-button-gray">{$lang->cmd_clear_session}</a>
+            </p>
+            </form>
+        </div>
+    </div>
+</div>
