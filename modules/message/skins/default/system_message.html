@@ -5,6 +5,7 @@
 
 <!--%import("../../../../common/js/xe-ui.js")-->
 <!--%import("../../../../common/js/jQuery.tipTip.js")-->
+<!--%import("../../../../common/js/jquery.simplyscroll.js")-->
 <!--%import("../../../../common/js/prettyCheckboxes.js")-->
 <!--%import("../../../../common/css/xe-ui.css")-->
 <!--%import("../../../../common/css/tipTip.css")-->
@@ -16,14 +17,30 @@
 	</style>
 <![endif]-->
 
+<!--@if(!$is_logged)-->
 <script type="text/javascript">
-    jQuery( function(){
-        jQuery("input:checkbox").each( function() {
-            offset = jQuery(this).next().width() + 20;
-            jQuery(this).tipTip({defaultPosition: "right", activation: "focus", maxWidth:"300px", delay:"0", edgeOffset:offset});
+    jQuery(document).ready(function($) {
+
+        $(document).keypress(function(event) {
+            var keycode = (event.keyCode ? event.keyCode : event.which);
+            if(keycode == '13') {
+                var but = $('#logIn');
+                if ( but.attr('onclick') != null ) {
+                    but.click();
+                } else {
+                    window.location = but.attr('href');
+                }
+            }
         });
+
+        $("label[for=keepid]").each( function() {
+            offset = 10;
+            $(this).tipTip({defaultPosition: "right", activation: "hover", maxWidth:"300px", delay:"0", edgeOffset:offset});
+        });
+
     });
 </script>
+
 <h1 style="margin-top: 50px;">
     <img src="{getUrl()}common/img/logo.png" width="315" height="52" alt="XpressEngine logo" title="XpressEngine" />
 </h1>
@@ -40,16 +57,16 @@
             <input type="hidden" name="success_return_url" value="{getRequestUriByServerEnviroment()}" />
             <p>
                 <label for="user_id">{$lang->user_id}:</label>
-                <input type="text" name="user_id" id="uid" value="" class="xe-ui-panel-text" />
+                <input type="text" name="user_id" id="uid" value="" class="xe-ui-panel-text" style="width: 250px;"/>
             </p>
             <p>
                 <label for="password">{$lang->password}:</label>
-                <input type="password" name="password" id="upw" value="" class="xe-ui-panel-text" />
+                <input type="password" name="password" id="upw" value="" class="xe-ui-panel-text" style="width: 250px;"/>
             </p>
             <p>
                 <label></label>
-                <input type="checkbox" name="keep_signed" id="keepid" class="inputCheck" value="Y" title="{$lang->about_keep_warning}"/>
-                <label for="keepid" style="width: 150px;">{$lang->keep_signed}</label>
+                <input type="checkbox" name="keep_signed" id="keepid" class="inputCheck" value="Y"/>
+                <label for="keepid" style="width: 150px;" title="{$lang->about_keep_warning}">{$lang->keep_signed}</label>
             </p>
             <!--div id="loginAccess" class="gLogin">
                 <div class="mLogin" id="gLogin" cond="!$is_logged && $module == 'admin'">
@@ -70,7 +87,22 @@
     <div class="xe-ui-panel-controller cleared">
         <hr />
         <p style="text-align: center;">
-            <a href="#" onclick="jQuery('#gForm').submit();return false;" class="xe-ui-button-gray gradient">{$lang->cmd_login}</a>
+            <a href="#" onclick="jQuery('#gForm').submit();return false;" class="xe-ui-button-gray gradient" id="logIn">{$lang->cmd_login}</a>
         </p>
     </div>
 </div>
+<!--@else-->
+<h1 style="margin-top: 50px;">
+    <img src="{getUrl()}common/img/logo.png" width="315" height="52" alt="XpressEngine logo" title="XpressEngine" />
+</h1>
+<div class="xe-ui-panel cleared" style="width: 400px; margin: 50px auto;">
+    <div class="xe-ui-panel-content">
+    </div>
+    <div class="xe-ui-panel-controller cleared">
+        <hr />
+        <p style="text-align: center;">
+            <a href="#" onclick="jQuery('#gForm').submit();return false;" class="xe-ui-button-gray gradient" id="logOut">{$lang->cmd_logout}</a>
+        </p>
+    </div>
+</div>
+<!--@end-->
