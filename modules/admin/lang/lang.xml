@@ -1320,11 +1320,11 @@ Lütfen son sürümü için indirme linkine tıklayınız.]]></value>
     </item>
     <item name="ga_client_id">
         <value xml:lang="en"><![CDATA[GA Client ID]]></value>
-        <value xml:lang="en"><![CDATA[GA 클라이언트 ID]]></value>
+        <value xml:lang="ko"><![CDATA[GA 클라이언트 ID]]></value>
     </item>
     <item name="ga_client_secret">
         <value xml:lang="en"><![CDATA[GA Client Secret]]></value>
-        <value xml:lang="en"><![CDATA[GA 클라이언트 보안]]></value>
+        <value xml:lang="ko"><![CDATA[GA 클라이언트 보안]]></value>
     </item>
     <item name="ga_developer_key">
         <value xml:lang="en"><![CDATA[GA Developer Key]]></value>
