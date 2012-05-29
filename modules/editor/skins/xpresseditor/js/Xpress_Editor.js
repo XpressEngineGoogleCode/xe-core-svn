@@ -5074,12 +5074,14 @@ xe.XE_Editorresize = $.Class({
 			this.oApp.registerBrowserEvent(this.oIframeBody, 'keydown', 'XE_EDITOR_RESIZE');
 
 			this.inputArea.style.height = this.oIframe.style.height = this.oIframeBody[0].scrollHeight + 'px';
+            $(this.inputArea).addClass('auto_resize');
 		}else{
 			$(this.oIframeBody).unbind('keydown');
 
 			this.oVerticalResizer.style.display = 'block';
 			this.inputArea.style.height = this._prevHeight;
 			this.oIframe.style.height = this._prevHeight;
+            $(this.inputArea).removeClass('auto_resize');
 		}
 	},
 	$ON_XE_EDITOR_RESIZE : function(){
