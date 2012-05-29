@@ -29,19 +29,32 @@
         </div>
         <!--@end-->
         <!--@if($addTables || $needUpdate)-->
-        <div class="message update">
+        <div class="xe-ui-message update gradient cleared">
             <h2 cond="$needUpdate && $addTables">{$lang->need_update_and_table}</h2>
-			<h2 cond="$needUpdate && !$addTables">{$lang->need_update}</h2>
-			<h2 cond="!$needUpdate && $addTables">{$lang->need_table}</h2>
-            <ul>
+            <h2 cond="$needUpdate && !$addTables">{$lang->need_update}</h2>
+            <h2 cond="!$needUpdate && $addTables">{$lang->need_table}</h2>
+            <h2>{$lang->updates_available}</h2>
+            <table width="100%" cellpadding="0" cellspacing="0" border="0" class="xe-ui-table">
+                <thead>
+                <th class="aLeft">{$lang->module}</th>
+                <th>{$lang->cmd_update}</th>
+                </thead>
+                <tbody>
                 <!--@foreach($module_list AS $key => $value)-->
                 <!--@if($value->need_install)-->
-                <li style="margin:0 0 4px 0;">{$value->module} - <span class="btn"><button type="button" onclick="doInstallModule('{$value->module}')">{$lang->cmd_create_db_table}</button></span></li>
+                <tr>
+                    <td>{$value->module}</td>
+                    <td class="button"><a href="#" onclick="doInstallModule('{$value->module}');" class="xe-ui-button-gray">{$lang->cmd_create_db_table}</a></td>
+                </tr>
                 <!--@else if($value->need_update)-->
-                <li style="margin:0 0 4px 0;">{$value->module} - <span class="btn"><button type="button" onclick="doUpdateModule('{$value->module}')">{$lang->cmd_module_update}</button></span></li>
+                <tr>
+                    <td>{$value->module}</td>
+                    <td class="button"><a href="#" onclick="doUpdateModule('{$value->module}');" class="xe-ui-button-gray">{$lang->cmd_module_update}</a></td>
+                </tr>
                 <!--@end-->
                 <!--@end-->
-            </ul>
+                </tbody>
+            </table>
         </div>
         <!--@end-->
         <div class="xe-ui-panel" style="width: 220px; float: left; height: 330px;">
