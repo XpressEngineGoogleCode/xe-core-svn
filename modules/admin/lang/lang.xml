@@ -1432,4 +1432,19 @@ Lütfen son sürümü için indirme linkine tıklayınız.]]></value>
     <item name="integration_search_manager">
         <value xml:lang="en"><![CDATA[Manage Integrated Search]]></value>
     </item>
+    <item name="go_to_homepage">
+        <value xml:lang="en"><![CDATA[Go to the Homepage]]></value>
+    </item>
+    <item name="developers">
+        <value xml:lang="en"><![CDATA[Developer documentation]]></value>
+    </item>
+    <item name="support">
+        <value xml:lang="en"><![CDATA[Support]]></value>
+    </item>
+    <item name="extensions">
+        <value xml:lang="en"><![CDATA[Download extensions]]></value>
+    </item>
+    <item name="manual">
+        <value xml:lang="en"><![CDATA[User manual]]></value>
+    </item>
 </lang>
