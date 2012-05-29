@@ -24,4 +24,7 @@
 		<value xml:lang="tr"><![CDATA[Hata mesajlarının dış görünümlerini seçebilirsiniz]]></value>
 		<value xml:lang="vi"><![CDATA[Bạn có thể chọn giao diện khi hiển thị lỗi.]]></value>
 	</item>
+    <item name="manage_error">
+        <value xml:lang="en"><![CDATA[Manage Error Display]]></value>
+    </item>
 </lang>
