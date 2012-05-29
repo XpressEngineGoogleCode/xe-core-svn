@@ -14,17 +14,17 @@
     </actions>
 	<menus>
 		<menu name="trash">
-			<title xml:lang="en">Trash can</title>
+			<title xml:lang="en">Recycle bin</title>
 			<title xml:lang="ko">휴지통</title>
-			<title xml:lang="zh-CN">Trash can</title>
-			<title xml:lang="jp">Trash can</title>
-			<title xml:lang="es">Trash can</title>
-			<title xml:lang="ru">Trash can</title>
-			<title xml:lang="fr">Trash can</title>
+			<title xml:lang="zh-CN">Recycle bin</title>
+			<title xml:lang="jp">Recycle bin</title>
+			<title xml:lang="es">Recycle bin</title>
+			<title xml:lang="ru">Recycle bin</title>
+			<title xml:lang="fr">Recycle bin</title>
 			<title xml:lang="zh-TW">回收桶</title>
-			<title xml:lang="vi">Trash can</title>
-			<title xml:lang="mn">Trash can</title>
-			<title xml:lang="tr">Trash can</title>
+			<title xml:lang="vi">Recycle bin</title>
+			<title xml:lang="mn">Recycle bin</title>
+			<title xml:lang="tr">Recycle bin</title>
 		</menu>
 	</menus>
 </module>
