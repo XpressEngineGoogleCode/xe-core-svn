@@ -12,7 +12,7 @@
 <!--[if gte IE 9]>
 	<style type="text/css">
 		.gradient {
-                    filter: none;
+            filter: none;
 		}
 	</style>
 <![endif]-->
@@ -23,21 +23,21 @@
     <div class="xe-ui-menu-texture cleared">
         <ul class="f-left">
             <li class="xe-ui-menu-item image first but">
-                <a href="{getUrl('','module','admin')}" class="xe-ui-menu-item-but" title="Back to dashboard">
+                <a href="{getUrl('')}" class="xe-ui-menu-item-but" title="{$lang->go_to_homepage}">
                     <img width="26" height="27" src="{getUrl('')}common/img/menu_xe.png" />
                 </a>
                 <ul class="xe-ui-menu-submenu">
                     <li class="xe-ui-menu-submenu-item">
-                        <a href="">About XpressEngine</a>
+                        <a href="http://www.xpressengine.org/help_and_support">{$lang->manual}</a>
                     </li>
                     <li class="xe-ui-menu-submenu-item">
-                        <a href="">Documentation</a>
+                        <a href="http://www.xpressengine.org/forum">{$lang->support}</a>
                     </li>
                     <li class="xe-ui-menu-submenu-item">
-                        <a href="">Support forum</a>
+                        <a href="http://www.xpressengine.org/download">{$lang->extensions}</a>
                     </li>
                     <li class="xe-ui-menu-submenu-item">
-                        <a href="">Download extensions</a>
+                        <a href="http://www.xpressengine.org/developers_manual">{$lang->developers}</a>
                     </li>
                 </ul>
             </li>
@@ -60,7 +60,7 @@
             </li>
             <li class="xe-ui-menu-item icon but">
                 <a href="#bmk" class="xe-ui-menu-item-but" data-effect="fade" data-duration="200">
-                    <img src="{getUrl('')}common/img/menu_icon_favorites.png" />{$lang->favorite}
+                    <img src="{getUrl('')}common/img/menu_icon_favorites.png" />{$lang->favorites}
                 </a>
                 <ul class="xe-ui-menu-submenu">
                     <li loop="$favorite_list => $favorite">
