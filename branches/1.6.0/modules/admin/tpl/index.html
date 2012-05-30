@@ -44,12 +44,12 @@
                 <!--@if($value->need_install)-->
                 <tr>
                     <td>{$value->module}</td>
-                    <td class="button"><a href="#" onclick="doInstallModule('{$value->module}');" class="xe-ui-button-gray">{$lang->cmd_create_db_table}</a></td>
+                    <td class="button center"><a href="#" onclick="doInstallModule('{$value->module}');" class="xe-ui-button-gray">{$lang->cmd_create_db_table}</a></td>
                 </tr>
                 <!--@else if($value->need_update)-->
                 <tr>
                     <td>{$value->module}</td>
-                    <td class="button"><a href="#" onclick="doUpdateModule('{$value->module}');" class="xe-ui-button-gray">{$lang->cmd_module_update}</a></td>
+                    <td class="button center"><a href="#" onclick="doUpdateModule('{$value->module}');" class="xe-ui-button-gray">{$lang->cmd_module_update}</a></td>
                 </tr>
                 <!--@end-->
                 <!--@end-->
