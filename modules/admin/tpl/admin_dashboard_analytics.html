@@ -27,6 +27,9 @@
     <div class="xe-ui-panel">
         <div class="xe-ui-panel-content cleared">
             <form id="form_analytics" action="./" method="post">
+                <input type="hidden" name="type" value="{$type}" />
+                <input type="hidden" name="module" value="admin" />
+                <input type="hidden" name="act" id="act" value="procAdminSaveGAInfo" />
                 <p>
                     <label for="analytics_type">{$lang->choose_analytics_api}</label>
                     <select id="analytics_type" name="analytics_type" onchange="rel();" class="xe-ui-panel-select">
@@ -36,9 +39,6 @@
                         <!--<option value="naver">Naver Analytics</option>-->
                     </select>
                 </p>
-                <input type="hidden" name="type" value="{$type}" />
-                <input type="hidden" name="module" value="admin" />
-                <input type="hidden" name="act" id="act" value="procAdminSaveGAInfo" />
                 <div id="form_ga" <!--@if($type!='ga')-->style="display:none;"<!--@end-->>
                      <table class="xe-ui-form-table" cellspacing="0" cellpadding="0">
                         <tr>
@@ -111,7 +111,6 @@
             </form>
             <!--@if(isset($analytics_type))-->
             <script>
-                jQuery("#analytics_type option[value='{$analytics_type}']").attr("selected","selected");
                 jQuery("#form_{$analytics_type}").show();
             </script>
             <!--@end-->
