@@ -359,4 +359,7 @@
 		<value xml:lang="en"><![CDATA[Send a message to the author about this. If you don't write a message, it is not sent.]]></value>
 		<value xml:lang="jp"><![CDATA[作成者にメッセージを送信し、知らせます。作成しなければ送信されません。]]></value>
 	</item>
+    <item name="comm_manager">
+        <value xml:lang="en"><![CDATA[Communication manager]]></value>
+    </item>
 </lang>
