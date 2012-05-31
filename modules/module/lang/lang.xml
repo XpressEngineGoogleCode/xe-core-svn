@@ -1083,4 +1083,7 @@ Le module [Administration des Modules] montera tous les modules installés et vo
 		<value xml:lang="ko"><![CDATA[대상 모듈을 찾을 수 없습니다.]]></value>
 		<value xml:lang="en"><![CDATA[Cannot find a target module.]]></value>
 	</item>
+    <item name="modules">
+        <value xml:lang="en"><![CDATA[Modules]]></value>
+    </item>
 </lang>

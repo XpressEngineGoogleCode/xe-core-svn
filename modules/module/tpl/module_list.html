@@ -1,5 +1,6 @@
 <include target="header.html" />
 
+<h1>{$lang->modules}</h1>
 <div class="xe-ui-title-separator">
     <hr/>
 </div>
@@ -16,7 +17,6 @@
                     <p class="f-right">
                         <a cond="$act != 'dispModuleAdminCategory'" href="{getUrl('', 'module', 'admin', 'act', 'dispModuleAdminCategory')}" class="xe-ui-button-gray">{$lang->module_category}</a>
                         <block cond="$act == 'dispModuleAdminCategory'">{$lang->module_category}</block>
-						<span class="side"><button type="button" class="text"><span class="hide">{$lang->simple_view}</span><span class="show">{$lang->detail_view}</span></button></span>
                     </p>
                 </caption>
                 <thead>

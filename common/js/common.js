@@ -952,7 +952,7 @@ jQuery(function($){
             var targetName = objText.attr("id");
             if(typeof(targetName) == "undefined") targetName = objText.attr("name");
             if(typeof(targetName) == "undefined") return;
-            objText.after("<a href='"+request_uri.setQuery('module','module').setQuery('act','dispModuleAdminLangcode').setQuery('target',targetName)+"' class='buttonSet buttonSetting' onclick='popopen(this.href);return false;'><span>find_langcode</span></a>");
+            objText.after("<a href='"+request_uri.setQuery('module','module').setQuery('act','dispModuleAdminLangcode').setQuery('target',targetName)+"' class='buttonSet buttonSetting xe-ui-button-gray' onclick='popopen(this.href);return false;'><span>find_langcode</span></a>");
         }
         );
 
