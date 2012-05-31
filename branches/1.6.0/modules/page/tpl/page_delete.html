@@ -1,31 +1,39 @@
 <load target="js/page_admin.js" usecdn="true" />
 <!--#include("header.html")-->
 
-<div cond="$XE_VALIDATOR_MESSAGE" class="message {$XE_VALIDATOR_MESSAGE_TYPE}">
-	<p>{$XE_VALIDATOR_MESSAGE}</p>
+<div id="content" class="cleared">
+    <div cond="$XE_VALIDATOR_MESSAGE" class="xe-ui-message {$XE_VALIDATOR_MESSAGE_TYPE} gradient cleared">
+        <a href="#" style="float: right;" onclick="jQuery(this).parent().remove();return false;" class="xe-ui-button-gray gradient">Dismiss</a>
+        <p>{$XE_VALIDATOR_MESSAGE}</p>
+    </div>
+    <div class="xe-ui-panel cleared">
+        <div class="xe-ui-panel-content cleared">
+            <form ruleset="deletePage" action="./" method="post" class="form">
+                <input type="hidden" name="module" value="page" />
+                <input type="hidden" name="act" value="procPageAdminDelete" />
+                <input type="hidden" name="page" value="{$page}" />
+                <input type="hidden" name="module_srl" value="{$module_info->module_srl}" />
+                <h2>{$lang->confirm_delete}</h2>
+                <p>{$lang->page_delete_warning}</p>
+                <table width="100%" border="0" cellspacing="0" cellpadding="0" class="xe-ui-table">
+                    <tbody>
+                        <tr>
+                            <td>{$lang->module_name}</td>
+                            <td >{$module_info->mid}</td>
+                        </tr>
+                        <tr>
+                            <td>{$lang->module}</td>
+                            <td>{$module_info->module}</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </form>
+        </div>
+        <div class="xe-ui-panel-controller">
+            <hr />
+            <p class="center">
+                <a href="#" onclick="jQuery('.form').submit();return false;" class="xe-ui-button-gray">{$lang->cmd_delete}</a>
+            </p>
+        </div>
+    </div>
 </div>
-<form ruleset="deletePage" action="./" method="post">
-	<input type="hidden" name="module" value="page" />
-	<input type="hidden" name="act" value="procPageAdminDelete" />
-	<input type="hidden" name="page" value="{$page}" />
-	<input type="hidden" name="module_srl" value="{$module_info->module_srl}" />
-    <h3 class="h3">{$lang->confirm_delete}</h3>
-	<p>{$lang->page_delete_warning}</p>
-	<div class="table">
-		<table width="100%" border="1" cellspacing="0">
-			<tr>
-				<th scope="row">{$lang->module_name}</th>
-				<td >{$module_info->mid}</td>
-			</tr>
-			<tr>
-				<th scope="row">{$lang->module}</th>
-				<td>{$module_info->module}</td>
-			</tr>
-		</table>
-	</div>
-	<div class="btnArea">
-		<span class="btn"><input type="submit" value="{$lang->cmd_delete}" /></span>
-		<span class="btn"><a href="{getUrl('act','dispPageAdminContent')}">{$lang->cmd_back}</a></span>
-	</div>
-</form>
-
