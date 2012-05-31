@@ -1435,4 +1435,7 @@ Lütfen son sürümü için indirme linkine tıklayınız.]]></value>
     <item name="manual">
         <value xml:lang="en"><![CDATA[User manual]]></value>
     </item>
+    <item name="edit_content">
+        <value xml:lang="en"><![CDATA[Edit content]]></value>
+    </item>
 </lang>

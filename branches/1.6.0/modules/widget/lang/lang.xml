@@ -623,4 +623,7 @@ Sin la necesidad de utilizar los módulos de página o del diseño de XE, Usted 
 		<value xml:lang="jp"><![CDATA[インストールされたウィジェット]]></value>
 		<value xml:lang="zh-TW"><![CDATA[已安裝的 Widget]]></value>
 	</item>
+    <item name="widgets">
+        <value xml:lang="en"><![CDATA[Widgets]]></value>
+    </item>
 </lang>
