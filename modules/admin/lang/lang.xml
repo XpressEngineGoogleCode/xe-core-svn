@@ -1417,8 +1417,8 @@ Lütfen son sürümü için indirme linkine tıklayınız.]]></value>
     <item name="session_manager">
         <value xml:lang="en"><![CDATA[Session Manager]]></value>
     </item>
-    <item name="integration_search_manager">
-        <value xml:lang="en"><![CDATA[Manage Integrated Search]]></value>
+    <item name="search_manager">
+        <value xml:lang="en"><![CDATA[Manage Search]]></value>
     </item>
     <item name="go_to_homepage">
         <value xml:lang="en"><![CDATA[Go to the Homepage]]></value>
