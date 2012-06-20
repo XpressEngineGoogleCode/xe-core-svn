@@ -241,7 +241,7 @@ class searchController extends search {
             throw new Exception("invalid path '$path' for index");
         }
         $absolute = _XE_PATH_ . 'files/search/' . $path;
-        return $this->rrmdir($absolute) ? $this->createOrRetrieveIndex($path) : false;
+        return !is_dir($absolute) || $this->rrmdir($absolute) ? $this->createOrRetrieveIndex($path) : false;
     }
 
     function countDocuments($searchQuery, $searchTarget)
