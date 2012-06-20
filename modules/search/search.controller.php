@@ -240,7 +240,7 @@ class searchController extends search {
         if (!in_array($path, array(self::INDEX_PATH_DOCUMENTS, self::INDEX_PATH_COMMENTS))) {
             throw new Exception("invalid path '$path' for index");
         }
-        $absolute = _XE_PATH_ . '/files/search/' . $path;
+        $absolute = _XE_PATH_ . 'files/search/' . $path;
         return $this->rrmdir($absolute) ? $this->createOrRetrieveIndex($path) : false;
     }
 
