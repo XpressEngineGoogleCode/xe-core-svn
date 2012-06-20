@@ -91,7 +91,7 @@ class searchController extends search {
         Zend_Search_Lucene_Search_Query_Wildcard::setMinPrefixLength(2);
         Zend_Search_Lucene::setTermsPerQueryLimit(50);
         Zend_Search_Lucene::setResultSetLimit(self::RESULTS_LIMIT);
-        $path = _XE_PATH_ . '/files/search/';
+        $path = _XE_PATH_ . 'files/search/';
         if (!is_dir($path)) mkdir($path);
         if (!is_writable($path)) chmod($path, 0707);
         $path = $path . $index;
