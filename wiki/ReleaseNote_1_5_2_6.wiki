@@ -1,0 +1,11 @@
+=XE 1.5.2.6 Release Note=
+
+<wiki:toc />
+
+==For Users==
+
+===Defect===
+
+ * XSS 방어코드 추가 `[`r10796 cherryfilter`]`
+
+===Enhancement===
