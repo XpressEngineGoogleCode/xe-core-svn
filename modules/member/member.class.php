@@ -2,14 +2,21 @@
     /**
      * @class  member
      * @author NHN (developers@xpressengine.com)
-     * @brief high class of the member module
+     * high class of the member module
      **/
     class member extends ModuleObject {
 
+		/**
+		 * Use sha1 encryption
+		 *
+		 * @var boolean
+		 **/
 		var $useSha1 = false;
 
         /**
-         * @brief constructor
+         * constructor
+		 *
+		 * @return void
          **/
         function member() {
             if(!Context::isInstalled()) return;
@@ -30,7 +37,9 @@
         }
 
         /**
-         * @brief Implement if additional tasks are necessary when installing
+         * Implement if additional tasks are necessary when installing
+		 *
+		 * @return Object
          **/
         function moduleInstall() {
             // Register action forward (to use in administrator mode)
@@ -150,7 +159,9 @@
         }
 
         /**
-         * @brief a method to check if successfully installed
+         * a method to check if successfully installed
+		 * 
+		 * @return boolean
          **/
         function checkUpdate() {
             $oDB = &DB::getInstance();
@@ -195,7 +206,9 @@
         }
 
         /**
-         * @brief Execute update
+         * Execute update
+		 *
+		 * @return Object
          **/
         function moduleUpdate() {
             $oDB = &DB::getInstance();
@@ -329,7 +342,9 @@
         }
 
         /**
-         * @brief Re-generate the cache file
+         * Re-generate the cache file
+		 *
+		 * @return void
          **/
         function recompileCache() {
             set_include_path(_XE_PATH_."modules/member/php-openid-1.2.3");
@@ -337,5 +352,70 @@
             $store = new Auth_OpenID_XEStore();
             $store->reset();
         }
-    }
+
+		/**
+		 * @brief Record login error and return the error, about IPaddress.
+		**/
+		function recordLoginError($error = 0, $message = 'success')
+		{
+			if($error == 0) return new Object($error, $message);
+
+			$args->ipaddress = $_SERVER['REMOTE_ADDR'];
+
+			$output = executeQuery('member.getLoginCountByIp', $args);
+			if($output->data && $output->data->count)
+			{
+				// Create a member model object
+				$oMemberModel = &getModel('member');
+				$config = $oMemberModel->getMemberConfig();
+				$last_update = strtotime($output->data->last_update);
+				$term = intval(time()-$last_update);
+				//update, if IP address access in a short time, update count. If not, make count 1.
+				if($term < $config->max_error_count_time)
+				{
+					$args->count = $output->data->count + 1;
+				}
+				else
+				{
+					$args->count = 1;
+				}
+				unset($oMemberModel);
+				unset($config);
+				$output = executeQuery('member.updateLoginCountByIp', $args);
+			}
+			else
+			{
+				//insert
+				$args->count = 1;
+				$output = executeQuery('member.insertLoginCountByIp', $args);
+			}
+			return new Object($error, $message);
+		}
+
+		/**
+		 * @brief Record login error and return the error, about MemberSrl.
+		**/
+		function recordMemberLoginError($error = 0, $message = 'success', $args = NULL)
+		{
+			if($error == 0 || !$args->member_srl) return new Object($error, $message);
+
+			$output = executeQuery('member.getLoginCountHistoryByMemberSrl', $args);
+			if($output->data && $output->data->content)
+			{
+				//update
+				$content = unserialize($output->data->content);
+				$content[] = array($_SERVER['REMOTE_ADDR'],Context::getLang($message),time());
+				$args->content = serialize($content);
+				$output = executeQuery('member.updateLoginCountHistoryByMemberSrl', $args);
+			}
+			else
+			{
+				//insert
+				$content[0] = array($_SERVER['REMOTE_ADDR'],Context::getLang($message),time());
+				$args->content = serialize($content);
+				$output = executeQuery('member.insertLoginCountHistoryByMemberSrl', $args);
+			}
+			return $this->recordLoginError($error, $message);
+		}
+	}
 ?>
