@@ -1,6 +1,7 @@
 #sidebar Releases
 
 = XE 1.5.3 Release Note =
+(~r10901)
 
 <wiki:toc />
 
@@ -28,7 +29,7 @@
  * 모바일 모드에서 HTML5 DTD가 적용되지 않던 문제 해결 `[`issue 1827, 정찬명`]`
  * 공통 CSS에서 word-break:break-all 제거 `[`issue 2012, 정찬명`]`
  * 설치 과정의 CUBRID 매뉴얼 링크를 올바르게 변경 `[`issue 2013, 정찬명`]`
- * APC 캐시의 캐시 삭제가 되지 않던 문제 해결 `[`r10773, Ddan`]`
+ * APC 캐시의 캐시 삭제가 되지 않던 문제 해결 `[`r10773, r10901 Ddan`]`
  * 최신글위젯 등 하위호환성 개선 `[`issue 2064, Corina`]`
   * Condition operation 'not_in'을 허용
  * 쉬운설치에서 특정 조건 시 설치가 실패하던 문제 해결 `[`issue 1974, misol`]`
@@ -47,6 +48,13 @@
  * 캐시 사용 시 조회수가 업데이트되지 않던 문제 해결 `[`r10801, Ddan`]`
  * 확장변수로 검색할 때 다국어가 적용된 문서가 목록에 중복으로 나오던 문제 해결 `[`issue 1999, 체리필터. 패치 제공 sejin7940`]`
  * 일부 애드온 설정이 나오지 않던 문제 해결 `[`issue 2091, 난다날아`]`
+ * https인 상태로 가상사이트로 접속 시 404 에러가 나오던 문제 해결 `[`issue 2150, 똥똥`]`
+ * SSL 선택적 사용 시 로그인에 SSL 적용이 안 되는 등 전반적인 기능에 대한 문제 해결 `[`issue 2134, misol`]`
+ * vid로 접근 시 대소문자에 따라 가상 사이트를 찾을 수 없던 문제 해결 `[`issue 2129, 헤슨`]`
+ * 관리자 권한이 없이 관리자 페이지로 접근할 때 systeam_message.html을 찾을 수 없다고 나오던 문제 해결 `[`issue 2128, 난다날아`]`
+ * IE 계열 브라우저에서 위젯 수정 시 스크립트 에러가 나는 문제 해결 `[`issue 2130, 똥똥`]`
+ * XpressEditor의 입력창 크기 자동조절 부분의 정렬이 깨지던 문제 해결 `[`issue 2124, 정찬명`]`
+ * 댓글 관리 목록에서 댓글 삭제 후 본래 페이지로 돌아가지 않던 문제 해결 `[`issue 2122, 헤슨`]`
 
 ==== Enhancement ====
  * HTML5 DTD를 사용할 때 불필요한 type 속성을 javascript 노드에서 제거 `[`r10156, 정찬명, 1.6 리비전에서 역적용`]`
@@ -63,6 +71,10 @@
  * 사이트맵에서 레이아웃을 설정할 수 있도록 개선 `[`issue 1110, 체리필터`]`
  * 회원 포인트 목록의 검색 항목에 이름과 닉네임을 추가하고 검색폼을 상단에도 나오도록 개선 `[`issue 1459, 난다날아`]`
  * 레이아웃 목록에 생성한 레이아웃 목록을 볼 수 있도록 개선 `[`issue 877, 똥똥`]`
+ * 관리자 페이지의 h2, h3에 접기/펴기 기능 추가 `[`issue 963, issue 2139, 정찬명`]`
+ * 회원가입 약관을 파일로 저장하도록 개선 `[`issue 2138, 똥똥`]`
+ * 회원 모듈의 모바일 템플릿 정리 `[`issue 2106, misol`]`
+ * 관리자 페이지의 터키어 추가 `[`issue 2126, 정찬명`]`
 
 === For Developers ===
  * Validator에서 수식 규칙이 적용되지 않던 문제 해결 `[`issue 1990, 난다날아`]`
@@ -80,10 +92,13 @@
  * XmlQueryParser 또한 캐시파일을 저장한 후 파서 오브젝트를 반환하도록 추가 `[`r10563, Adrian, 1.6 리비전에서 역적용`]`
  * CSS 로드 순서를 common, layouts, modules, widgets, addons 가 되도록 개선 `[`issue 934, 체리필터, 1.6 리비전에서 역적용`]`
  * documentItem에 getDocumentMid(), getDocumentType(), getDocumentAlias(), getBrowserTitle() 헬퍼 메소드 추가 `[`issue 2014, Corina`]`
- * 컴파일된 템플릿의 내용에 PHP 닫는 태그와 여는 태그가 연속으로 있을 경우 제거하도록 개선 `[`r10775, misol`]`
+ * 컴파일된 템플릿의 내용에 PHP 닫는 태그와 여는 태그가 연속으로 있을 경우 제거하도록 개선 `[`r10775, r10861, misol`]`
  * 템플릿 핸들러의 정규식 개선 `[`r10779, misol`]
  * 쿼리 XML에서 Condition operation 'not_in'을 허용 `[`issue 2064, Corina`]`
  * 지원하지 않는 condition operation이 xml에 포함되어 있을 경우 sql syntax error가 발생하는 문제 해결 `[`issue 2064, Corina`]`
  * XML 쿼리의 condition operation 'null'이 작동하지 않던 문제 해결 `[`issue 2114, Corina, issue 2064에서 파생`]`
  * setRedirectUrl()을 사용하도록 개선 `[`issue 2112, 체리필터`]`
  * 변경 가능한 곳에 in_array() 대신 isset()을 사용하도록 개선 `[`issue 2109, 체리필터`]`
+ * error_return_url에 htmlspecialchars 적용 `[`issue 2136, misol`]`
+ * group by와 page navigation을 사용한 쿼리의 총 개수가 나오지 않던 문제 해결 `[`issue 2131, Corina`]`
+ * ModuleHandler::proc()에서 모든 경우에 Object를 반환하도록 개선 `[`issue 2127, 똥똥`]`
