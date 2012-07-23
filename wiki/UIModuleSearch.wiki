@@ -1,0 +1,55 @@
+#summary Module Search UI guideline for administrative interface
+#labels UI
+#sidebar DesignGuideTOC
+
+= Module Search =
+
+특정 모듈을 찾아야 할 필요가 있을 때 사용하는 UI 패턴이다. 기존 Module Finder와 기능은 동일하나 불편한 UI를 개선하기 위해서 개발됐다. 이 UI를 통해 선택할 수 있는 값은 모듈 종류, 모듈 아이디(고유 숫자)이다.
+
+== Basics ==
+모듈 검색기의 모든 컨트롤은 `moduleSearch`라는 클래스를 가진 컨테이너의 하위 요소여야 한다.
+
+모듈 검색기를 사용하기 위해 필요한 규칙은 다음과 같다.
+  # 모든 컨트롤은 `moduleSearch`라는 클래스를 가진 요소의 하위 요소이다.
+  # 가상 사이트를 검색하는 버튼은 `tgAnchor` 및 `moduleSearch`라는 클래스를 가지는 앵커 요소(&lt;a&gt;)이다.
+  # 모듈 선택 후 실행하고자 하는 함수가 있다면 
+  # 가상 사이트 및 모듈 타입/인스턴스명을 선택하는 UI의 마크업은 아래와 같아야 된다.
+
+{{{
+<div id="moduleSearchWindow" class="tgContent">
+	<div class="siteList sectionDiv">
+		<h2>{$lang->select_site}</h2>
+		<div class="siteListSearchBox">
+			<div class="siteListSearchBoxBorder">
+				<div class="searchImg icon-search"></div>
+				<input type="text" class="siteListSearchInput" name="site_filter">
+			</div>
+		</div>
+		<div class="siteListUL">
+			<ul>
+			</ul>
+		</div>
+	</div>
+	<div class="moduleTypeList sectionDiv">
+		<h2>{$lang->select_module_type}</h2>
+		<div>
+			<ul class="moduleTypeListUL">
+			</ul>
+		</div>
+	</div>
+	<div class="moduleInstanceList sectionDiv">
+		<h2>{$lang->select_module_instance}</h2>
+		<div>
+			<ul class="moduleInstanceListUL">
+			</ul>
+		</div>
+	</div>
+</div>
+}}}
+
+== jQuery Plugin ==
+이 패턴은 페이지를 읽어들일 때 자동으로 실행되기 때문에 페이지 요소를 동적으로 생성하는 경우에는 적용되지 않는 문제가 있다.
+다음과 같이 `moduleSearch` 요소를 선택한 후 `xeModuleSearch` 메소드를 실행하면 페이지를 읽어들인 뒤에도 스크립트를 적용할 수 있다.
+{{{
+$('.moduleSearch').xeModuleSearch();
+}}}
