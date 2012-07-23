@@ -4,6 +4,7 @@
     * [UIModalWindow Modal Window]
     * [UIPagination Pagination]
     * [UISortableTable Sortable Table]
+    * [UIModuleSearch Module Search]
     * [UIModuleFinder Module Finder]
     * [UIMultiLang Multi-language Editor]
     * [UIFileBox File Box]
