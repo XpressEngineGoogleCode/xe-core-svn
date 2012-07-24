@@ -22,6 +22,7 @@
 <script>
 jQuery(function($){
 	// 선택이벤트와 선택한 모듈 타입, 이름, 고유 번호로 호출된다.
+	// 한 페이지에 여러개의 .moduleSearch가 있다면, 각 컨테이너에 다른 클래스를 추가 할당 해 이것을 구분자로 이용
 	$('.moduleSearch').bind('moduleSelect', function(e, sModuleType, sModuleInstanceName, sModuleInstanceSrl){
 		$('#_target_module').val(sModuleInstanceName);
 		$('#index_module_srl').val(sModuleInstanceSrl);
