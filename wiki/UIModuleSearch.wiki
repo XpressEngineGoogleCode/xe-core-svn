@@ -67,7 +67,9 @@ jQuery(function($){
 }}}
 == jQuery Plugin ==
 이 패턴은 페이지를 읽어들일 때 자동으로 실행되기 때문에 페이지 요소를 동적으로 생성하는 경우에는 적용되지 않는 문제가 있다.
-다음과 같이 `moduleSearch` 요소를 선택한 후 `xeModuleSearch` 메소드를 실행하면 페이지를 읽어들인 뒤에도 스크립트를 적용할 수 있다.
+다음과 같이 컴포넌트를 적용한 컨테이너를 선택한 후 `$.fn.xeModuleSearch` 메소드를 실행하면 페이지를 읽어들인 뒤에도 스크립트를 적용할 수 있다.
 {{{
-$('.moduleSearch').xeModuleSearch();
+$('.moduleSearch newModule1').xeModuleSearch();
+// or
+$('.moduleSearch').each($.fn.xeModuleSearch);
 }}}
