@@ -15,9 +15,13 @@
   # 모듈 선택 후 실행하고자 하는 함수는 `moduleSearch`라는 클래스를 가진 컨테이너 요소에 `moduleSelect`라는 이벤트 명으로 할당 해 둔다.
   # 위에 언급한 내용을 모두 포함하는 마크업은 아래와 같다.
 {{{
+<!-- moduleSearch라는 클래스를 가진 컨테이너 요소 -->
 <div class="moduleSearch">
+
+<!-- 모듈 선택 후 실행하고자 하는 함수-->
 <script>
 jQuery(function($){
+	// 선택이벤트와 선택한 모듈 타입, 이름, 고유 번호로 호출된다.
 	$('.moduleSearch').bind('moduleSelect', function(e, sModuleType, sModuleInstanceName, sModuleInstanceSrl){
 		$('#_target_module').val(sModuleInstanceName);
 		$('#index_module_srl').val(sModuleInstanceSrl);
@@ -25,8 +29,10 @@ jQuery(function($){
 });
 </script>
 
+	<!-- 모듈 선택 창을 띄울 앵커 태그 -->
 	<a href="#moduleSearchWindowDiv" class="tgAnchor moduleSearch">{$lang->cmd_find}</a>
 
+	<!-- 모듈 선택 창 마크업 -->
 	<div id="moduleSearchWindowDiv" class="moduleSearchWindow tgContent">
 		<div class="siteList sectionDiv">
 			<h2>{$lang->select_site}</h2>
