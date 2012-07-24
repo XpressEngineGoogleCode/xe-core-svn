@@ -16,14 +16,14 @@
   # 위에 언급한 내용을 모두 포함하는 마크업은 아래와 같다.
 {{{
 <div class="moduleSearch">
-
+<script>
 jQuery(function($){
 	$('.moduleSearch').bind('moduleSelect', function(e, sModuleType, sModuleInstanceName, sModuleInstanceSrl){
 		$('#_target_module').val(sModuleInstanceName);
 		$('#index_module_srl').val(sModuleInstanceSrl);
 	});
 });
-
+</script>
 
 	<a href="#moduleSearchWindowDiv" class="tgAnchor moduleSearch">{$lang->cmd_find}</a>
 
@@ -57,15 +57,6 @@ jQuery(function($){
 		</div>
 	</div>
 </div>
-}}}
-
-{{{
-jQuery(function($){
-	$('.moduleSearch').bind('moduleSelect', function(e, sModuleType, sModuleInstanceName, sModuleInstanceSrl){
-		$('#_target_module').val(sModuleInstanceName);
-		$('#index_module_srl').val(sModuleInstanceSrl);
-	});
-});
 }}}
 == jQuery Plugin ==
 이 패턴은 페이지를 읽어들일 때 자동으로 실행되기 때문에 페이지 요소를 동적으로 생성하는 경우에는 적용되지 않는 문제가 있다.
