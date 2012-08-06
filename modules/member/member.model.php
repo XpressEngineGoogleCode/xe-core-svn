@@ -35,8 +35,7 @@
 			}
 
             // Get terms of user
-            $agreement_file = _XE_PATH_.'files/member_extra_info/agreement.txt';
-            if(!$config->agreement && file_exists($agreement_file)) $config->agreement = FileHandler::readFile($agreement_file);
+			$config->agreement = $this->_getAgreement();
 
             if(!$config->webmaster_name) $config->webmaster_name = 'webmaster';
             if(!$config->image_name_max_width) $config->image_name_max_width = 90;
@@ -56,6 +55,34 @@
 
             return $config;
         }
+
+		function _getAgreement()
+		{
+            $agreement_file = _XE_PATH_.'files/member_extra_info/agreement_' . Context::get('lang_type') . '.txt';
+			if(is_readable($agreement_file))
+			{
+				return FileHandler::readFile($agreement_file);
+			}
+
+            $db_info = Context::getDBInfo();
+			$agreement_file = _XE_PATH_.'files/member_extra_info/agreement_' . $db_info->lang_type . '.txt';
+			if(is_readable($agreement_file))
+			{
+				return FileHandler::readFile($agreement_file);
+			}
+
+			$lang_selected = Context::loadLangSelected();
+			foreach($lang_selected as $key => $val)
+			{
+				$agreement_file = _XE_PATH_.'files/member_extra_info/agreement_' . $key . '.txt';
+				if(is_readable($agreement_file))
+				{
+					return FileHandler::readFile($agreement_file);
+				}
+			}
+
+			return null;
+		}
 
         /**
          * @brief Display menus of the member
@@ -765,56 +792,6 @@
 			if($isSha1 && $hashed_password == md5(sha1(md5($password_text)))) return true;
 
             return false;
-        }
-
-        /**
-         * @brief Return all the open IDs of the member
-         **/
-        function getMemberOpenIDByMemberSrl($member_srl) {
-            $oModuleModel = &getModel('module');
-            $config = $oModuleModel->getModuleConfig('member');
-
-            $result = array();
-            if ($config->enable_openid != 'Y') return $result;
-
-            $args->member_srl = $member_srl;
-            $output = executeQuery('member.getMemberOpenIDByMemberSrl', $args);
-
-            if (!$output->data) {
-            }
-            else if (is_array($output->data)) {
-                foreach($output->data as $row) {
-                    $result[] = $row;
-                }
-            }
-            else {
-                $result[] = $output->data;
-            }
-
-            foreach($result as $row) {
-                $openid = $row->openid;
-                $bookmarklet_header = "javascript:var%20U='";
-                $bookmarklet_footer = "';function%20Z(W){var%20X=/(openid|ident)/i;try{var%20F=W.frames;var%20E=W.document.getElementsByTagName('input');for(var%20i=0;i<E.length;i++){var%20A=E[i];if(A.type=='text'&&X.test(A.name)){if(!J)J=E[i]}if(A.name=='submit'){V=A}}for(var%20i=0;i<F.length;i++){Z(F[i]);}}catch(e){}}var%20J,V;Z(window);try{try{V.parentNode.removeChild(V);}catch(z){}J.value=U;J.form.submit();}catch(e){top.document.location.href=((/^https?:\/\//img).test(U)?'':'http://')+U;}";
-                $row->bookmarklet = $bookmarklet_header . $openid . $bookmarklet_footer;
-            }
-
-            return $result;
-        }
-
-        /**
-         * @brief Return the member of the open ID.
-         **/
-        function getMemberSrlByOpenID($openid) {
-            $oModuleModel = &getModel('module');
-            $config = $oModuleModel->getModuleConfig('member');
-
-            if ($config->enable_openid != 'Y') return $result;
-
-            $args->member_srl = $member_srl;
-            $output = executeQuery('member.getMemberSrlByOpenID', $args);
-
-            if (!$output->data) return null;
-            return $output->data->member_srl;
         }
 
 		function getAdminGroupSrl($site_srl = 0)
