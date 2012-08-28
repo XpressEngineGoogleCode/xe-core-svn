@@ -775,8 +775,12 @@
 	 * @return string
      **/
     function removeHackTag($content) {
+		require_once(_XE_PATH_.'classes/security/EmbedFilter.class.php');
+		$oEmbedFilter = EmbedFilter::getInstance();
+		$oEmbedFilter->check($content);
+
         // change the specific tags to the common texts
-        $content = preg_replace('@<(\/?(?:html|body|head|title|meta|base|link|script|style|applet|iframe)(/*)[\w\s>])@i', '&lt;$1', $content);
+        $content = preg_replace('@<(\/?(?:html|body|head|title|meta|base|link|script|style|applet)(/*)[\w\s>])@i', '&lt;$1', $content);
 
         /**
          * Remove codes to abuse the admin session in src by tags of imaages and video postings
@@ -849,6 +853,15 @@
 					{
 						continue;
 					}
+				}
+			}
+
+			if($tag == 'img')
+			{
+				$attribute = strtolower(trim($name));
+				if(strpos(strtolower($val), 'data:') === 0)
+				{
+					continue;
 				}
 			}
 			$val    = str_replace('"', '&quot;', $val);
@@ -1126,10 +1139,10 @@
 	function htmlHeader()
 	{
 		echo <<<HTMLHEADER
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-<html lang="ko" xml:lang="ko" xmlns="http://www.w3.org/1999/xhtml">
+<!DOCTYPE html>
+<html lang="ko">
 <head>
-<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+<meta charset="utf-8" />
 </head>
 <body>
 HTMLHEADER;
@@ -1154,7 +1167,7 @@ HTMLHEADER;
 	function alertScript($msg)
 	{
 		if(!$msg) return;
-		echo '<script type="text/javascript">alert("'.$msg.'");</script>';
+		echo '<script>alert("'.$msg.'");</script>';
 	}
 
 	/**
@@ -1164,7 +1177,7 @@ HTMLHEADER;
 	 */
 	function closePopupScript()
 	{
-		echo '<script type="text/javascript">window.close();</script>';
+		echo '<script>window.close();</script>';
 	}
 
 	/**
@@ -1177,5 +1190,5 @@ HTMLHEADER;
 	{
 		$reloadScript = $isOpener ? 'window.opener.location.reload()' : 'document.location.reload()';
 
-		echo '<script type="text/javascript">'.$reloadScript.'</script>';
+		echo '<script>'.$reloadScript.'</script>';
 	}
