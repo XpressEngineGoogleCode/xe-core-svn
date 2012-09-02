@@ -21,11 +21,15 @@
 <!-- 모듈 선택 후 실행하고자 하는 함수-->
 <script>
 jQuery(function($){
-	// 선택이벤트와 선택한 모듈 타입, 이름, 고유 번호로 호출된다.
-	// 한 페이지에 여러개의 .moduleSearch가 있다면, 각 컨테이너에 다른 클래스를 추가 할당 해 이것을 구분자로 이용
-	$('.moduleSearch').bind('moduleSelect', function(e, sModuleType, sModuleInstanceName, sModuleInstanceSrl){
-		$('#_target_module').val(sModuleInstanceName);
-		$('#index_module_srl').val(sModuleInstanceSrl);
+	$('.moduleSearch1').bind('moduleSelect', function(e, aSelected){
+		var sType, sName, sSrl;
+		
+		for(var i=0, nLen=aSelected.length; i<nLen; i++){
+			sType = aSelected[i].type;
+			sName = aSelected[i].browser_title;
+			sSrl = aSelected[i].module_srl;
+			xe.broadcast("ADD_MODULE_TO_MODULELIST_MANAGER", [sType, sName, sSrl]);
+		}
 	});
 });
 </script>
@@ -55,13 +59,12 @@ jQuery(function($){
 				</ul>
 			</div>
 		</div>
-		<div class="moduleInstanceList sectionDiv">
-			<h2>{$lang->select_module_instance}</h2>
-			<div>
-				<ul class="moduleInstanceListUL">
-				</ul>
-			</div>
+		<div>
+			<!-- 단수 항목 선택 가능일 경우 multiple 속성 없앰 -->
+			<select class="moduleInstanceListSelect" style="width:100%" multiple="multiple" size="8">
+			</select>
 		</div>
+		<button class="btn btn_primary moduleSearch_ok" style="float:right">{$lang->cmd_select}</button>
 	</div>
 </div>
 }}}
