@@ -206,6 +206,7 @@
                         if(is_array($value)) $values = $value;
                         elseif(strpos($value,'|@|')!==false) $values = explode('|@|', $value);
                         elseif(strpos($value,',')!==false) $values = explode(',', $value);
+						else $values = array($value);
                         return $values;
                     break;
                 //case 'date' :
@@ -287,9 +288,9 @@
                 // Phone Number
                 case 'tel' :
                         $buff .=
-                            '<input type="text" name="'.$column_name.'[]" value="'.$value[0].'" size="4" class="tel" />'.
-                            '<input type="text" name="'.$column_name.'[]" value="'.$value[1].'" size="4" class="tel" />'.
-                            '<input type="text" name="'.$column_name.'[]" value="'.$value[2].'" size="4" class="tel" />';
+                            '<input type="text" name="'.$column_name.'[]" value="'.$value[0].'" size="4" maxlength="4" class="tel" />'.
+                            '<input type="text" name="'.$column_name.'[]" value="'.$value[1].'" size="4" maxlength="4" class="tel" />'.
+                            '<input type="text" name="'.$column_name.'[]" value="'.$value[2].'" size="4" maxlength="4" class="tel" />';
                     break;
 
                 // textarea
@@ -343,7 +344,7 @@
                         $buff .=
                             '<input type="hidden" name="'.$column_name.'" value="'.$value.'" />'.
                             '<input type="text" id="date_'.$column_name.'" value="'.zdate($value,'Y-m-d').'" class="date" /> <input type="button" value="' . Context::getLang('cmd_delete') . '" id="dateRemover_' . $column_name . '" />'."\n".
-                            '<script type="text/javascript">'."\n".
+                            '<script>'."\n".
                             '(function($){'."\n".
                             '    $(function(){'."\n".
                             '        var option = { dateFormat: "yy-mm-dd", changeMonth:true, changeYear:true, gotoCurrent: false,yearRange:\'-100:+10\', onSelect:function(){'."\n".
@@ -366,7 +367,7 @@
 
                         $buff .=
                             '<div id="addr_searched_'.$column_name.'" style="display:'.($value[0]?'block':'none').';">'.
-                                '<input type="text" readonly="readonly" name="'.$column_name.'" value="'.$value[0].'" class="address" />'.
+                                '<input type="text" readonly="readonly" name="'.$column_name.'[]" value="'.$value[0].'" class="address" />'.
                                 '<a href="#" onclick="doShowKrZipSearch(this, \''.$column_name.'\'); return false;" class="button red"><span>'.Context::getLang('cmd_cancel').'</span></a>'.
                             '</div>'.
 
@@ -381,7 +382,7 @@
                                 '<a href="#" onclick="doSearchKrZip(this, \''.$column_name.'\'); return false;" class="button green"><span>'.Context::getLang('cmd_search').'</span></a>'.
                             '</div>'.
 
-                            '<input type="text" name="'.$column_name.'" value="'.htmlspecialchars($value[1]).'" class="address" />'.
+                            '<input type="text" name="'.$column_name.'[]" value="'.htmlspecialchars($value[1]).'" class="address" />'.
                             '';
                     break;
                 // General text

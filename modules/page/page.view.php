@@ -24,12 +24,12 @@
 			switch($this->module_info->page_type)
 			{
 				case 'WIDGET' : {
-									$this->cache_file = sprintf("%sfiles/cache/page/%d.%s.cache.php", _XE_PATH_, $this->module_info->module_srl, Context::getLangType());
+									$this->cache_file = sprintf("%sfiles/cache/page/%d.%s.%s.cache.php", _XE_PATH_, $this->module_info->module_srl, Context::getLangType(), Context::getSslStatus());
 									$this->interval = (int)($this->module_info->page_caching_interval);
 									break;
 								}
 				case 'OUTSIDE' :  {
-									$this->cache_file = sprintf("./files/cache/opage/%d.cache.php", $this->module_info->module_srl); 
+									$this->cache_file = sprintf("./files/cache/opage/%d.%s.cache.php", $this->module_info->module_srl, Context::getSslStatus());
 									$this->interval = (int)($this->module_info->page_caching_interval);
 									$this->path = $this->module_info->path;
 									break;
@@ -60,7 +60,7 @@
                 if(!file_exists($this->cache_file)) $mtime = 0;
                 else $mtime = filemtime($this->cache_file);
 
-                if($mtime + $interval*60 > time()) {
+                if($mtime + $this->interval*60 > time()) {
                     $page_content = FileHandler::readFile($this->cache_file); 
 					$page_content = preg_replace('@<\!--#Meta:@', '<!--Meta:', $page_content);
                 } else {
@@ -76,6 +76,8 @@
 		}
 
 		function _getArticleContent(){
+			$oTemplate = &TemplateHandler::getInstance();
+
 			$oDocumentModel = &getModel('document');
 			$oDocument = $oDocumentModel->getDocument(0, true);
 			
@@ -87,10 +89,17 @@
 			Context::set('oDocument', $oDocument);
 
 			if ($this->module_info->skin)
-				$this->setTemplatePath(sprintf($this->module_path.'skins/%s', $this->module_info->skin));
+			{
+				$templatePath = (sprintf($this->module_path.'skins/%s', $this->module_info->skin));
+			}
 			else
-				$this->setTemplatePath($this->module_path.'skins/default');
-				
+			{
+				$templatePath = ($this->module_path.'skins/default');
+			}
+
+			$page_content = $oTemplate->compile($templatePath, 'content');
+
+			return $page_content;
 		}
 
 		function _getOutsideContent(){

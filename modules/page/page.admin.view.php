@@ -186,26 +186,30 @@
             $this->setTemplateFile('page_insert');
         }
 
-		function dispPageAdminMobileContent() {
-            if($this->module_srl) Context::set('module_srl',$this->module_srl);
-            // Specifying the cache file
-            $cache_file = sprintf("%sfiles/cache/page/%d.%s.m.cache.php", _XE_PATH_, $this->module_info->module_srl, Context::getLangType());
-            $interval = (int)($this->module_info->page_caching_interval);
-            if($interval>0) {
-                if(!file_exists($cache_file)) $mtime = 0;
-                else $mtime = filemtime($cache_file);
+		function dispPageAdminMobileContent() 
+		{
+			if($this->module_info->page_type == 'OUTSIDE')
+			{
+				return $this->stop(-1, 'msg_invalid_request');
+			}
 
-                if($mtime + $interval*60 > time()) {
-                    $page_content = FileHandler::readFile($cache_file);
-                } else {
-                    $oWidgetController = &getController('widget');
-                    $page_content = $oWidgetController->transWidgetCode($this->module_info->mcontent);
-                    FileHandler::writeFile($cache_file, $page_content);
-                }
-            } else {
-                if(file_exists($cache_file)) FileHandler::removeFile($cache_file);
-                $page_content = $this->module_info->mcontent;
-            }
+            if($this->module_srl) 
+			{
+				Context::set('module_srl',$this->module_srl);
+			}
+
+			$oPageMobile = &getMobile('page');
+			$oPageMobile->module_info = $this->module_info;
+			$page_type_name = strtolower($this->module_info->page_type);
+			$method = '_get' . ucfirst($page_type_name) . 'Content';
+			if (method_exists($oPageMobile, $method))
+			{
+				$page_content = $oPageMobile->{$method}();
+			}
+			else
+			{
+				return new Object(-1, sprintf('%s method is not exists', $method));
+			}
 
             Context::set('module_info', $this->module_info);
             Context::set('page_content', $page_content);
@@ -213,27 +217,18 @@
             $this->setTemplateFile('mcontent');
 		}
 
-		function dispPageAdminMobileContentModify() {
+		function dispPageAdminMobileContentModify() 
+		{
             Context::set('module_info', $this->module_info);
-            // Setting contents
-            $content = Context::get('mcontent');
-            if(!$content) $content = $this->module_info->mcontent;
-            Context::set('content', $content);
-            // Convert them to teach the widget
-            $oWidgetController = &getController('widget');
-            $content = $oWidgetController->transWidgetCode($content, true);
-            Context::set('page_content', $content);
-            // Set widget list
-            $oWidgetModel = &getModel('widget');
-            $widget_list = $oWidgetModel->getDownloadedWidgetList();
-            Context::set('widget_list', $widget_list);
 
-            //Security
-			$security = new Security();
-			$security->encodeHTML('widget_list..title','module_info.mid');
-
-			// Set a template file
-            $this->setTemplateFile('page_mobile_content_modify');
+			if ($this->module_info->page_type == 'WIDGET')
+			{
+				$this->_setWidgetTypeContentModify(true);
+			}
+			else if ($this->module_info->page_type == 'ARTICLE')
+			{
+				$this->_setArticleTypeContentModify(true);
+			}
 		}
 
         /**
@@ -243,19 +238,38 @@
             // Set the module information
             Context::set('module_info', $this->module_info);
 
-			if ($this->module_info->page_type == 'WIDGET') $this->_setWidgetTypeContentModify();
-			else if ($this->module_info->page_type == 'ARTICLE') $this->_setArticleTypeContentModify();
+			if ($this->module_info->page_type == 'WIDGET')
+			{
+				$this->_setWidgetTypeContentModify();
+			}
+			else if ($this->module_info->page_type == 'ARTICLE')
+			{
+				$this->_setArticleTypeContentModify();
+			}
         }
 
-		function _setWidgetTypeContentModify() {
+
+		function _setWidgetTypeContentModify($isMobile = false) 
+		{
             // Setting contents
-            $content = Context::get('content');
-            if(!$content) $content = $this->module_info->content;
+			if($isMobile)
+			{
+				$content = Context::get('mcontent');
+				if(!$content) $content = $this->module_info->mcontent;
+				$templateFile = 'page_mobile_content_modify';
+			}
+			else
+			{
+				$content = Context::get('content');
+				if(!$content) $content = $this->module_info->content;
+				$templateFile = 'page_content_modify';
+			}
+
             Context::set('content', $content);
             // Convert them to teach the widget
             $oWidgetController = &getController('widget');
-            $content = $oWidgetController->transWidgetCode($content, true, false);
-			$content = str_replace('$', '&#36;', $content);
+            $content = $oWidgetController->transWidgetCode($content, true, !$isMobile);
+			// $content = str_replace('$', '&#36;', $content);
             Context::set('page_content', $content);
             // Set widget list
             $oWidgetModel = &getModel('widget');
@@ -267,18 +281,32 @@
 			$security->encodeHTML('widget_list..title','module_info.mid');
 
             // Set a template file
-            $this->setTemplateFile('page_content_modify');
+            $this->setTemplateFile($templateFile);
         }
 
-		function _setArticleTypeContentModify() {
+		function _setArticleTypeContentModify($isMobile = false) 
+		{
 			$oDocumentModel = &getModel('document');
 			$oDocument = $oDocumentModel->getDocument(0, true);
+
+			if($isMobile)
+			{
+				Context::set('isMobile', 'Y');
+				$target = 'mdocument_srl';
+			}
+			else
+			{
+				Context::set('isMobile', 'N');
+				$target = 'document_srl';
+			}
 			
-			if ($this->module_info->document_srl){
-				$document_srl = $this->module_info->document_srl;
+			if ($this->module_info->{$target})
+			{
+				$document_srl = $this->module_info->{$target};
 				$oDocument->setDocument($document_srl);
 				Context::set('document_srl', $document_srl);
 			}
+
             Context::addJsFilter($this->module_path.'tpl/filter', 'insert_article.xml');
 			Context::set('oDocument', $oDocument);
 			Context::set('mid', $this->module_info->mid);
@@ -317,5 +345,29 @@
 			$security = new Security();
 			$security->encodeHTML('module_info.');
         }
+
+		/**
+		 * Display skin setting page
+		 */
+		function dispPageAdminSkinInfo()
+		{
+			$oModuleAdminModel = &getAdminModel('module');
+			$skin_content = $oModuleAdminModel->getModuleSkinHTML($this->module_info->module_srl);
+			Context::set('skin_content', $skin_content);
+
+			$this->setTemplateFile('skin_info');
+		}
+
+		/**
+		 * Display mobile skin setting page
+		 */
+		function dispPageAdminMobileSkinInfo()
+		{
+			$oModuleAdminModel = &getAdminModel('module');
+			$skin_content = $oModuleAdminModel->getModuleMobileSkinHTML($this->module_info->module_srl);
+			Context::set('skin_content', $skin_content);
+
+			$this->setTemplateFile('skin_info');
+		}
     }
 ?>

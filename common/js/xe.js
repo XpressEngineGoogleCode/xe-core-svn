@@ -473,7 +473,22 @@ jQuery(function($) {
             $(this).hide().prev('button').show().parent().next(fold_container).hide();
         });
     }
-
+	
+	jQuery('input[type="submit"]').click(function(ev){
+		var $el = jQuery(ev.currentTarget);
+		
+		setTimeout(function(){
+			return function(){
+				$el.attr('disabled', 'disabled');
+			};
+		}(), 0);
+		
+		setTimeout(function(){
+			return function(){
+				$el.removeAttr('disabled');
+			};
+		}(), 3000);
+	});
 });
 
 (function(){ // String extension methods
@@ -1706,7 +1721,7 @@ var Validator = xe.createApp('Validator', {
 	init : function() {
 		// {{{ add filters
 		// email
-		var regEmail = /^[\w-]+(\.[\w-]+)*@[\w-]+(\.[\w-]+)+$/;
+		var regEmail = /^[\w-]+((?:\.|\+|\~)[\w-]+)*@[\w-]+(\.[\w-]+)+$/;
 		this.cast('ADD_RULE', ['email', regEmail]);
 		this.cast('ADD_RULE', ['email_address', regEmail]);
 

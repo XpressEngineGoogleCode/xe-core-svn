@@ -71,7 +71,7 @@
                     $url = getUrl('','module','admin','act','dispCommentAdminList','search_target','ipaddress','search_keyword',$oComment->getIpAddress());
                     $oCommentController->addCommentPopupMenu($url,'cmd_search_by_ipaddress',$icon_path,'TraceByIpaddress');
 
-                    $url = sprintf("var params = new Array(); params['ipaddress']='%s'; exec_xml('spamfilter', 'procSpamfilterAdminInsertDeniedIP', params, completeCallModuleAction)", $oComment->getIpAddress());
+                    $url = sprintf("var params = new Array(); params['ipaddress_list']='%s'; exec_xml('spamfilter', 'procSpamfilterAdminInsertDeniedIP', params, completeCallModuleAction)", $oComment->getIpAddress());
                     $oCommentController->addCommentPopupMenu($url,'cmd_add_ip_to_spamfilter','','javascript');
                 }
             }
@@ -105,6 +105,17 @@
             $args->comment_srl = $comment_srl;
             $output = executeQuery('comment.getChildCommentCount', $args);
             return (int)$output->data->count;
+        }
+
+		/**
+		 * Returns the number of child comments
+		 * @param int $comment_srl
+		 * @return int
+		 */
+        function getChildComments($comment_srl) {
+            $args->comment_srl = $comment_srl;
+            $output = executeQueryArray('comment.getChildComments', $args);
+            return $output->data;
         }
 
 		/**
@@ -269,27 +280,30 @@
             if(is_array($obj->module_srl)) $args->module_srl = implode(',', $obj->module_srl);
             else $args->module_srl = $obj->module_srl;
             $args->list_count = $obj->list_count;
-        	// cache controll
+			// cache controll
 			$oCacheHandler = &CacheHandler::getInstance('object');
 			if($oCacheHandler->isSupport()){
 				$object_key = 'object_newest_comment_list:'.$obj->module_srl;
-                                $cache_key = $oCacheHandler->getGroupKey('newestCommentsList', $object_key);
+				$cache_key = $oCacheHandler->getGroupKey('newestCommentsList', $object_key);
 				$output = $oCacheHandler->get($cache_key);
 			}
-			if(!$output){
-				
+			if(!$output)
+			{
 				if(strpos($args->module_srl,",")===false)
 				{
-					// check if module is using comment validation system
-					$oCommentController = &getController("comment");
-					$is_using_validation = $oCommentController->isModuleUsingPublishValidation($obj->module_srl);
-					if($is_using_validation)
+					if($args->module_srl)
 					{
-						$args->status = 1;
+						// check if module is using comment validation system
+						$oCommentController = &getController("comment");
+						$is_using_validation = $oCommentController->isModuleUsingPublishValidation($obj->module_srl);
+						if($is_using_validation)
+						{
+							$args->status = 1;
+						}
 					}
 				}
-            	$output = executeQuery('comment.getNewestCommentList', $args, $columnList);
-            	if($oCacheHandler->isSupport()) $oCacheHandler->put($cache_key,$output);
+				$output = executeQuery('comment.getNewestCommentList', $args, $columnList);
+				if($oCacheHandler->isSupport()) $oCacheHandler->put($cache_key,$output);
 			}
             if(!$output->toBool()) return $output;
 

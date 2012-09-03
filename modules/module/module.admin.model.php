@@ -106,6 +106,7 @@
 			$security = new Security();
 			$security->encodeHTML('group_list..title');
 			$security->encodeHTML('group_list..description');
+			$security->encodeHTML('admin_member..nick_name');
 
 			// Get information of module_grants
             $oTemplate = &TemplateHandler::getInstance();
@@ -116,26 +117,76 @@
          * @brief Common:: skin setting page for the module
          **/
         function getModuleSkinHTML($module_srl) {
+			return $this->_getModuleSkinHTML($module_srl, 'P');
+        }
+
+		/**
+		 * Common:: skin setting page for the module (mobile)
+		 *
+		 * @param $module_srl sequence of module
+		 * @return string The html code
+		 */
+		function getModuleMobileSkinHTML($module_srl)
+		{
+			return $this->_getModuleSkinHtml($module_srl, 'M');
+		}
+
+		/**
+		 * Skin setting page for the module
+		 *
+		 * @param $module_srl sequence of module
+		 * @param $mode P or M
+		 * @return string The HTML code
+		 */
+		function _getModuleSkinHTML($module_srl, $mode)
+		{
+			$mode = $mode === 'P' ? 'P' : 'M';
+
             $oModuleModel = &getModel('module');
             $module_info = $oModuleModel->getModuleInfoByModuleSrl($module_srl);
             if(!$module_info) return;
 
-            $skin = $module_info->skin;
-            $module_path = './modules/'.$module_info->module;
-            // Get XML information of the skin
-            $skin_info = $oModuleModel->loadSkinInfo($module_path, $skin);
-            // Get skin information set in DB
-            $skin_vars = $oModuleModel->getModuleSkinVars($module_srl);
+			if($mode === 'P')
+			{
+            	$skin = $module_info->skin;
+			}
+			else
+			{
+				$skin = $module_info->mskin;
+			}
 
-            if(count($skin_info->extra_vars)) {
-                foreach($skin_info->extra_vars as $key => $val) {
+            $module_path = './modules/'.$module_info->module;
+
+            // Get XML information of the skin and skin sinformation set in DB
+			if($mode === 'P')
+			{
+            	$skin_info = $oModuleModel->loadSkinInfo($module_path, $skin);
+				$skin_vars = $oModuleModel->getModuleSkinVars($module_srl);
+			}
+			else
+			{
+				$skin_info = $oModuleModel->loadSkinInfo($module_path, $skin, 'm.skins');
+				$skin_vars = $oModuleModel->getModuleMobileSkinVars($module_srl);
+			}
+
+            if(count($skin_info->extra_vars)) 
+			{
+                foreach($skin_info->extra_vars as $key => $val) 
+				{
                     $group = $val->group;
                     $name = $val->name;
                     $type = $val->type;
-                    if($skin_vars[$name]) $value = $skin_vars[$name]->value;
+                    if($skin_vars[$name]) 
+					{
+						$value = $skin_vars[$name]->value;
+					}
                     else $value = '';
-                    if($type=="checkbox") $value = $value?unserialize($value):array();
-
+                    if($type=="checkbox")
+					{
+						$value = $value?unserialize($value):array();
+					}
+					
+					$value = empty($value) ? $val->default : $value;
                     $skin_info->extra_vars[$key]->value= $value;
                 }
             }
@@ -143,7 +194,8 @@
             Context::set('module_info', $module_info);
             Context::set('mid', $module_info->mid);
             Context::set('skin_info', $skin_info);
-            Context::set('skin_vars', $skin_vars);	
+            Context::set('skin_vars', $skin_vars);
+			Context::set('mode', $mode);
 			
 			//Security
 			$security = new Security(); 
@@ -153,7 +205,7 @@
 
             $oTemplate = &TemplateHandler::getInstance();
             return $oTemplate->compile($this->module_path.'tpl', 'skin_config');
-        }
+		}
 
         /**
          * @brief Get values for a particular language code

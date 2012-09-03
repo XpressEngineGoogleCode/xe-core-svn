@@ -164,7 +164,7 @@
                 $content_font = $editor_config->content_font;
                 $content_font_size = $editor_config->content_font_size;
                 if($content_font || $content_font_size) {
-                    $buff = '<style type="text/css"> .xe_content { ';
+                    $buff = '<style> .xe_content { ';
                     if($content_font) $buff .= 'font-family:'.$content_font.';';
                     if($content_font_size) $buff .= 'font-size:'.$content_font_size.';';
                     $buff .= ' }</style>';
@@ -426,5 +426,20 @@
             FileHandler::removeFile($oEditorModel->getCacheFile(true, $site_srl));
             FileHandler::removeFile($oEditorModel->getCacheFile(false, $site_srl));
         }
+
+		function triggerCopyModule(&$obj)
+		{
+			$oModuleModel = &getModel('module');
+			$editorConfig = $oModuleModel->getModulePartConfig('editor', $obj->originModuleSrl);
+
+			$oModuleController = &getController('module');
+			if(is_array($obj->moduleSrlList))
+			{
+				foreach($obj->moduleSrlList AS $key=>$moduleSrl)
+				{
+					$oModuleController->insertModulePartConfig('editor', $moduleSrl, $editorConfig);
+				}
+			}
+		}
     }
 ?>

@@ -234,12 +234,26 @@
             $module_info = $oModuleModel->getModuleInfoByModuleSrl($module_srl, $columnList);
 
             $content = $module_info->content;
-
-            $cache_file = sprintf("%sfiles/cache/page/%d.%s.cache.php", _XE_PATH_, $module_info->module_srl, Context::getLangType());
-            if(file_exists($cache_file)) FileHandler::removeFile($cache_file);
             // widget controller re-run of the cache files
             $oWidgetController = &getController('widget');
             $oWidgetController->recompileWidget($content);
+
+			if($module_info->page_type == 'WIDGET')
+			{
+				$cache_file = sprintf("%sfiles/cache/page/%d.%s.%s.cache.php", _XE_PATH_, $module_info->module_srl, Context::getLangType(), Context::getSslStatus());
+				$mcacheFile = sprintf("%sfiles/cache/page/%d.%s.%s.m.cache.php", _XE_PATH_, $module_info->module_srl, Context::getLangType(), Context::getSslStatus());
+			}
+			else if($module_info->page_type == 'OUTSIDE')
+			{
+				$cache_file = sprintf("%sfiles/cache/opage/%d.cache.php", _XE_PATH_, $module_info->module_srl);
+
+				if($module_info->mpath)
+				{
+					$mcacheFile =  sprintf("%sfiles/cache/opage/%d.m.cache.php", _XE_PATH_, $module_info->module_srl);
+				}
+			}
+            if(file_exists($cache_file)) FileHandler::removeFile($cache_file);
+			if(file_exists($mcacheFile)) FileHandler::removeFile($mcacheFile);
         }
 
 		function procPageAdminArticleDocumentInsert()
@@ -275,19 +289,30 @@
 			$bAnonymous = false;
 
             // 이미 존재하는 경우 수정
-            if($oDocument->isExists() && $oDocument->document_srl == $obj->document_srl) {
+            if($oDocument->isExists() && $oDocument->document_srl == $obj->document_srl) 
+			{
                 $output = $oDocumentController->updateDocument($oDocument, $obj);
                 $msg_code = 'success_updated';
             // 그렇지 않으면 신규 등록
-            } else {
+            } 
+			else 
+			{
+				if($obj->ismobile == 'Y')
+				{
+					$target = 'mdocument_srl';
+				}
+				else
+				{
+					$target = 'document_srl';
+				}
+
                 $output = $oDocumentController->insertDocument($obj, $bAnonymous);
                 $msg_code = 'success_registed';
-                $obj->document_srl = $output->get('document_srl');
+                $document_srl = $output->get('document_srl');
 
 				$oModuleController = &getController('module');
-				$this->module_info->document_srl = $obj->document_srl;
+				$this->module_info->{$target} = $document_srl;
 				$oModuleController->updateModule($this->module_info);
-
             }
 
             // 오류 발생시 멈춤
@@ -296,6 +321,7 @@
             // 결과를 리턴
             $this->add('mid', Context::get('mid'));
             $this->add('document_srl', $output->get('document_srl'));
+			$this->add('is_mobile', $obj->ismobile);
 
             // 성공 메세지 등록
             $this->setMessage($msg_code);
