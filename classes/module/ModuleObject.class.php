@@ -334,7 +334,7 @@
 
             if(isset($this->xml_info->action->{$this->act}) && method_exists($this, $this->act)) {
                 // Check permissions
-                if(!$this->grant->access){
+                if($this->module_srl && !$this->grant->access){
 					$this->stop("msg_not_permitted_act");
 					return FALSE;
 				}

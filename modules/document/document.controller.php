@@ -408,7 +408,10 @@ class documentController extends document {
 			}
 		}
 		// Remove iframe and script if not a top adminisrator in the session.
-		if($logged_info->is_admin != 'Y') $obj->content = removeHackTag($obj->content);
+		if($logged_info->is_admin != 'Y')
+		{
+			$obj->content = removeHackTag($obj->content);
+		}
 		// if temporary document, regdate is now setting
 		if($source_obj->get('status') == $this->getConfigStatus('temp')) $obj->regdate = date('YmdHis');
 
@@ -882,7 +885,10 @@ class documentController extends document {
 		if($point > 0) $failed_voted = 'failed_voted';
 		else $failed_voted = 'failed_blamed';
 		// Return fail if session already has information about votes
-		if($_SESSION['voted_document'][$document_srl]) return new Object(-1, $failed_voted);
+		if($_SESSION['voted_document'][$document_srl])
+		{
+			return new Object(-1, $failed_voted);
+		}
 		// Get the original document
 		$oDocumentModel = &getModel('document');
 		$oDocument = $oDocumentModel->getDocument($document_srl, false, false);
@@ -891,11 +897,13 @@ class documentController extends document {
 			$_SESSION['voted_document'][$document_srl] = true;
 			return new Object(-1, $failed_voted);
 		}
+
+		// Create a member model object
+		$oMemberModel = &getModel('member');
+		$member_srl = $oMemberModel->getLoggedMemberSrl();
+
 		// Check if document's author is a member.
 		if($oDocument->get('member_srl')) {
-			// Create a member model object
-			$oMemberModel = &getModel('member');
-			$member_srl = $oMemberModel->getLoggedMemberSrl();
 			// Pass after registering a session if author's information is same as the currently logged-in user's.
 			if($member_srl && $member_srl == $oDocument->get('member_srl')) {
 				$_SESSION['voted_document'][$document_srl] = true;

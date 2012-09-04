@@ -80,8 +80,6 @@
             unset($extendForm->find_member_account);
             unset($extendForm->find_member_answer);
             Context::set('extend_form_list', $extendForm);
-            if ($member_info->member_srl == $logged_info->member_srl)
-                Context::set('openids', $oMemberModel->getMemberOpenIDByMemberSrl($member_srl));
 
             $this->setTemplateFile('member_info');
         }
@@ -140,7 +138,6 @@
             // Get a list of extend join form
             Context::set('extend_form_list', $oMemberModel->getCombineJoinForm($member_info));
 
-            Context::set('openids', $oMemberModel->getMemberOpenIDByMemberSrl($member_srl));
             // Editor of the module set for signing by calling getEditor
             if($member_info->member_srl) {
                 $oEditorModel = &getModel('editor');
@@ -330,23 +327,6 @@
         }
 
         /**
-         * @brief OpenID member withdrawl
-         **/
-        function dispMemberOpenIDLeave() {
-            $oMemberModel = &getModel('member');
-            // A message appears if the user is not logged-in
-            if(!$oMemberModel->isLogged()) return $this->stop('msg_not_logged');
-
-            $logged_info = Context::get('logged_info');
-            $member_srl = $logged_info->member_srl;
-
-            $member_info = $oMemberModel->getMemberInfoByMemberSrl($member_srl);
-            Context::set('member_info',$member_info);
-            // Set a template file
-            $this->setTemplateFile('openid_leave_form');
-        }
-
-        /**
          * @brief Member log-out
          **/
         function dispMemberLogout() {
@@ -402,10 +382,29 @@
         /**
          * @brief Page of re-sending an authentication mail
          **/
-        function dispMemberResendAuthMail() {
-            if(Context::get('is_logged')) return $this->stop('already_logged');
+        function dispMemberResendAuthMail() 
+		{
+			$authMemberSrl = $_SESSION['auth_member_srl'];
+			unset($_SESSION['auth_member_srl']);
 
-            $this->setTemplateFile('resend_auth_mail');
+            if(Context::get('is_logged')) 
+			{
+				return $this->stop('already_logged');
+			}
+
+			if($authMemberSrl)
+			{
+				$oMemberModel = &getModel('member');
+				$memberInfo = $oMemberModel->getMemberInfoByMemberSrl($authMemberSrl);
+				
+				$_SESSION['auth_member_info'] = $memberInfo;
+				Context::set('memberInfo', $memberInfo);
+				$this->setTemplateFile('reset_mail');
+			}
+			else
+			{
+				$this->setTemplateFile('resend_auth_mail');
+			}
         }
 
         /**

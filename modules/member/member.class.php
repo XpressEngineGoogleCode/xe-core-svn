@@ -28,13 +28,22 @@
                 Context::addSSLAction('dispMemberModifyPassword');
                 Context::addSSLAction('dispMemberSignUpForm');
                 Context::addSSLAction('dispMemberModifyInfo');
+				Context::addSSLAction('dispMemberModifyEmailAddress');
+				Context::addSSLAction('dispMemberGetTempPassword');
+				Context::addSSLAction('dispMemberResendAuthMail');
 				Context::addSSLAction('dispMemberLoginForm');
 				Context::addSSLAction('dispMemberFindAccount');
+				Context::addSSLAction('dispMemberLeave');
                 Context::addSSLAction('procMemberLogin');
                 Context::addSSLAction('procMemberModifyPassword');
                 Context::addSSLAction('procMemberInsert');
                 Context::addSSLAction('procMemberModifyInfo');
                 Context::addSSLAction('procMemberFindAccount');
+				Context::addSSLAction('procMemberModifyEmailAddress');
+				Context::addSSLAction('procMemberUpdateAuthMail');
+				Context::addSSLAction('procMemberResendAuthMail');
+				Context::addSSLAction('procMemberLeave');
+				//Context::addSSLAction('getMemberMenu');
             }
         }
 
@@ -54,7 +63,7 @@
             $args = $oModuleModel->getModuleConfig('member');
             // Set the basic information
             $args->enable_join = 'Y';
-            if(!$args->enable_openid) $args->enable_openid = 'N';
+            $args->enable_openid = 'N';
             if(!$args->enable_auth_mail) $args->enable_auth_mail = 'N';
             if(!$args->image_name) $args->image_name = 'Y';
             if(!$args->image_mark) $args->image_mark = 'Y';
@@ -206,6 +215,9 @@
 			// check agreement field exist
 			if ($config->agreement) return true;
 
+			// supprot multilanguage agreement.
+			if (is_readable('./files/member_extra_info/agreement.txt')) return true;
+
 			if (!is_readable('./files/ruleset/insertMember.xml')) return true;
 			if (!is_readable('./files/ruleset/login.xml')) return true;
 			if (!is_readable('./files/ruleset/find_member_account_by_question.xml')) return true;
@@ -285,10 +297,10 @@
 			// check agreement value exist
 			if($config->agreement)
 			{
-				$agreement_file = _XE_PATH_.'files/member_extra_info/agreement.txt';
+				$agreement_file = _XE_PATH_.'files/member_extra_info/agreement_' . Context::get('lang_type') . '.txt';
 				$output = FileHandler::writeFile($agreement_file, $config->agreement);
 
-				unset($config->agreement);
+				$config->agreement = NULL;
 				$output = $oModuleController->updateModuleConfig('member', $config);
 			}
 
@@ -347,6 +359,14 @@
 				unset($config->agreement);
 				$output = $oModuleController->updateModuleConfig('member', $config);
 			}
+
+			if (is_readable('./files/member_extra_info/agreement.txt'))
+			{
+				$source_file = _XE_PATH_.'files/member_extra_info/agreement.txt';
+				$target_file = _XE_PATH_.'files/member_extra_info/agreement_' . Context::get('lang_type') . '.txt';
+
+				FileHandler::rename($source_file, $target_file);
+			}
 			
 			FileHandler::makeDir('./files/ruleset');
 			$oMemberAdminController = &getAdminController('member');
@@ -366,10 +386,6 @@
 		 * @return void
          **/
         function recompileCache() {
-            set_include_path(_XE_PATH_."modules/member/php-openid-1.2.3");
-            require_once('Auth/OpenID/XEStore.php');
-            $store = new Auth_OpenID_XEStore();
-            $store->reset();
         }
 
 		/**
@@ -378,6 +394,10 @@
 		function recordLoginError($error = 0, $message = 'success')
 		{
 			if($error == 0) return new Object($error, $message);
+			// Check if there is recoding table.
+			$oDB = &DB::getInstance();
+			if(!$oDB->isTableExists('member_login_count')) return new Object($error, $message);
+
 
 			$args->ipaddress = $_SERVER['REMOTE_ADDR'];
 
@@ -417,6 +437,10 @@
 		function recordMemberLoginError($error = 0, $message = 'success', $args = NULL)
 		{
 			if($error == 0 || !$args->member_srl) return new Object($error, $message);
+			// Check if there is recoding table.
+			$oDB = &DB::getInstance();
+			if(!$oDB->isTableExists('member_count_history')) return new Object($error, $message);
+
 
 			$output = executeQuery('member.getLoginCountHistoryByMemberSrl', $args);
 			if($output->data && $output->data->content)
