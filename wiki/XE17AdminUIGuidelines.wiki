@@ -12,6 +12,6 @@ If you want to toggling display of content box. Follow here example.
 or you can
 
 {{{
-<button href="#CONTENT" data-toggle="#CONTENT">...</button>
+<button type="button" data-toggle="#CONTENT">...</button>
 <div id="CONTENT">...</div>
 }}}
