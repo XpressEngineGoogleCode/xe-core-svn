@@ -1,0 +1,17 @@
+=CSS=
+
+=Javascript=
+==Content Toggle Rule==
+If you want to toggling display of content box. Follow here example.
+
+{{{
+<a href="#CONTENT" data-toggle="#CONTENT">...</a>
+<div id="CONTENT">...</div>
+}}}
+
+or you can
+
+{{{
+<button href="#CONTENT" data-toggle="#CONTENT">...</button>
+<div id="CONTENT">...</div>
+}}}
