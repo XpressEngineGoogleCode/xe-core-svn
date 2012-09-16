@@ -1,7 +1,8 @@
 =CSS=
 
 =Javascript=
-==Content Toggle: data-toggle="#target, #target"==
+==Content Toggle: data-toggle="#target, .target"==
+You can use this value as '#id' or '.class'. One or more than value can use.
 
 HTML
 {{{
@@ -12,14 +13,15 @@ HTML
 JS - /modules/admin/tpl/js/admin.js
 {{{
 // Content Toggle
-	$('.x [data-toggle^="#"]').click(function(){
+	$('.x [data-toggle]').click(function(){
 		$($(this).attr('data-toggle')).toggle();
 		return false;
 	});
 
 }}}
 
-==Content Open: data-open="#target, #target"==
+==Content Open: data-open="#target, .target"==
+You can use this value as '#id' or '.class'. One or more than value can use.
 
 HTML
 {{{
@@ -32,13 +34,14 @@ HTML
 JS - /modules/admin/tpl/js/admin.js
 {{{
 // Close Layer
-	$('.x [data-open^="#"]').click(function(){
+	$('.x [data-open]').click(function(){
 		$($(this).attr('data-open')).hide();
 		return false;
 	});
 }}}
 
-==Content Close: data-close="#target, #target"==
+==Content Close: data-close="#target, .target"==
+You can use this value as '#id' or '.class'. One or more than value can use.
 
 HTML
 {{{
@@ -51,7 +54,7 @@ HTML
 JS - /modules/admin/tpl/js/admin.js
 {{{
 // Close Layer
-	$('.x [data-close^="#"]').click(function(){
+	$('.x [data-close]').click(function(){
 		$($(this).attr('data-close')).hide();
 		return false;
 	});
