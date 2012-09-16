@@ -1,7 +1,7 @@
 =CSS=
 
 =Javascript=
-==Content Toggle Rule==
+==Content Toggle: data-toggle="#target"==
 
 HTML
 {{{
@@ -19,7 +19,7 @@ JS - /modules/admin/tpl/js/admin.js
 
 }}}
 
-==Layer close==
+==Layer close: data-close="#target"==
 
 HTML
 {{{
