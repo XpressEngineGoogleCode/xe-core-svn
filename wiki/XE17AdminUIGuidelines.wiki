@@ -21,12 +21,12 @@ JS - /modules/admin/tpl/js/admin.js
 
 }}}
 
-==TARGET show [data-open="#target, .target"]==
+==TARGET show [data-show="#target, .target"]==
 You can use this value as '#id' or '.class'. One or more than value can use.
 
 HTML
 {{{
-<a href="#TARGET" data-open="#TARGET">OPEN</a>
+<a href="#TARGET" data-show="#TARGET">OPEN</a>
 <div id="TARGET">
 	This layer will be opened.
 </div>
@@ -35,28 +35,28 @@ HTML
 JS - /modules/admin/tpl/js/admin.js
 {{{
 // Close Layer
-	$('.x [data-open]').click(function(){
-		$($(this).attr('data-open')).show();
+	$('.x [data-show]').click(function(){
+		$($(this).attr('data-show')).show();
 		return false;
 	});
 }}}
 
-==TARGET hide [data-close="#target, .target"]==
+==TARGET hide [data-hide="#target, .target"]==
 You can use this value as '#id' or '.class'. One or more than value can use.
 
 HTML
 {{{
 <div id="TARGET">
 	This layer will be closed.
-	<button type="button" class="x_close" data-close="#TARGET">&times;</button>
+	<button type="button" class="x_close" data-hide="#TARGET">&times;</button>
 </div>
 }}}
 
 JS - /modules/admin/tpl/js/admin.js
 {{{
 // Close Layer
-	$('.x [data-close]').click(function(){
-		$($(this).attr('data-close')).hide();
+	$('.x [data-hide]').click(function(){
+		$($(this).attr('data-hide')).hide();
 		return false;
 	});
 }}}
