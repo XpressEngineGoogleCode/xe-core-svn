@@ -55,6 +55,33 @@ JS - /modules/admin/tpl/js/admin.js
 		$($(this).attr('data-close')).hide();
 		return false;
 	});
+}}}
 
+==Horizontal Tab==
 
+HTML
+{{{
+<div class="x_tabbable">
+	<ul class="x_nav x_nav-tabs">
+		<li class="x_active"><a href="#one">#1</a></li>
+		<li><a href="#two">#2</a></li>
+	</ul>
+	<div class="x_tabcontent">
+		<div class="x_tab-pane x_active" id="one">#1 CONTENT</div>
+		<div class="x_tab-pane" id="two">#2 CONTENT</div>
+	</div>
+</div>
+}}}
+
+JS - /modules/admin/tpl/js/admin.js
+{{{
+// .x_tabbable
+	var $tabbable = $('.x .x_tabbable');
+	$tabbable.find('.x_tab-pane:not(".x_active")').hide();
+	$tabbable.find('.x_nav-tabs>li>a').click(function(){
+		var $this = $(this);
+		$this.parent('li').addClass('x_active').siblings().removeClass('x_active');
+		$tabbable.find($this.attr('href')).addClass('x_active').show().siblings().removeClass('x_active').hide();
+		return false;
+	});
 }}}
