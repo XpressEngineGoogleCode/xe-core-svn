@@ -31,18 +31,19 @@ JS CODE - /modules/admin/tpl/js/admin.js
 If you want to close layer(parent element), follow the example.
 
 {{{
-<div id="parentElemnt">
+<div id="CONTENT">
 	This layer will be closed.
-	<button type="button" class="x_close">&times;</button>
+	<button type="button" class="x_close" data-close="#CONTENT">&times;</button>
 </div>
 }}}
 
 JS CODE
 {{{
 // Close Layer
-	$('.x button.x_close').click(function(){
-		$(this).parent().hide();
+	$('.x [data-close^="#"]').click(function(){
+		$($(this).attr('data-close')).hide();
 		return false;
 	});
+
 
 }}}
