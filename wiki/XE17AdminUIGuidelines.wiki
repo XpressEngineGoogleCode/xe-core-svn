@@ -1,7 +1,7 @@
 =CSS=
 
 =Javascript=
-==Content Toggle: data-toggle="#target"==
+==Content Toggle: data-toggle="#target,#target"==
 
 HTML
 {{{
@@ -19,7 +19,7 @@ JS - /modules/admin/tpl/js/admin.js
 
 }}}
 
-==Content Open: data-open="#target"==
+==Content Open: data-open="#target,#target"==
 
 HTML
 {{{
@@ -38,7 +38,7 @@ JS - /modules/admin/tpl/js/admin.js
 	});
 }}}
 
-==Content Close: data-close="#target"==
+==Content Close: data-close="#target,#target"==
 
 HTML
 {{{
