@@ -2,22 +2,14 @@
 
 =Javascript=
 ==Content Toggle Rule==
-If you want to toggling display of content box, follow the example.
 
+HTML
 {{{
 <a href="#CONTENT" data-toggle="#CONTENT">...</a>
 <div id="CONTENT">...</div>
 }}}
 
-or you can
-
-{{{
-<button type="button" data-toggle="#CONTENT">...</button>
-<div id="CONTENT">...</div>
-}}}
-
-JS CODE - /modules/admin/tpl/js/admin.js
-
+JS - /modules/admin/tpl/js/admin.js
 {{{
 // Content Toggle
 	$('.x [data-toggle^="#"]').click(function(){
@@ -28,8 +20,8 @@ JS CODE - /modules/admin/tpl/js/admin.js
 }}}
 
 ==Layer close==
-If you want to close layer(parent element), follow the example.
 
+HTML
 {{{
 <div id="CONTENT">
 	This layer will be closed.
@@ -37,7 +29,7 @@ If you want to close layer(parent element), follow the example.
 </div>
 }}}
 
-JS CODE
+JS - /modules/admin/tpl/js/admin.js
 {{{
 // Close Layer
 	$('.x [data-close^="#"]').click(function(){
