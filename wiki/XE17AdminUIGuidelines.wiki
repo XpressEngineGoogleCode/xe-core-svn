@@ -6,13 +6,13 @@ You can use this value as '#id' or '.class'. One or more than value can use.
 
 HTML
 {{{
-<a href="#CONTENT" data-toggle="#CONTENT">...</a>
-<div id="CONTENT">...</div>
+<a href="#TARGET" data-toggle="#TARGET">...</a>
+<div id="TARGET">...</div>
 }}}
 
 JS - /modules/admin/tpl/js/admin.js
 {{{
-// Content Toggle
+// TARGET Toggle
 	$('.x [data-toggle]').click(function(){
 		$($(this).attr('data-toggle')).toggle();
 		return false;
@@ -20,13 +20,13 @@ JS - /modules/admin/tpl/js/admin.js
 
 }}}
 
-==Content Open: data-open="#target, .target"==
+==TARGET Open: data-open="#target, .target"==
 You can use this value as '#id' or '.class'. One or more than value can use.
 
 HTML
 {{{
-<a href="#CONTENT" data-open="#CONTENT">OPEN</a>
-<div id="CONTENT">
+<a href="#TARGET" data-open="#TARGET">OPEN</a>
+<div id="TARGET">
 	This layer will be opened.
 </div>
 }}}
@@ -35,19 +35,19 @@ JS - /modules/admin/tpl/js/admin.js
 {{{
 // Close Layer
 	$('.x [data-open]').click(function(){
-		$($(this).attr('data-open')).hide();
+		$($(this).attr('data-open')).show();
 		return false;
 	});
 }}}
 
-==Content Close: data-close="#target, .target"==
+==TARGET Close: data-close="#target, .target"==
 You can use this value as '#id' or '.class'. One or more than value can use.
 
 HTML
 {{{
-<div id="CONTENT">
+<div id="TARGET">
 	This layer will be closed.
-	<button type="button" class="x_close" data-close="#CONTENT">&times;</button>
+	<button type="button" class="x_close" data-close="#TARGET">&times;</button>
 </div>
 }}}
 
