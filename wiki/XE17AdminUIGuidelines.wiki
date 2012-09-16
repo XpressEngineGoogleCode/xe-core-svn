@@ -19,7 +19,26 @@ JS - /modules/admin/tpl/js/admin.js
 
 }}}
 
-==Layer close: data-close="#target"==
+==Content Open: data-open="#target"==
+
+HTML
+{{{
+<a href="#CONTENT" data-open="#CONTENT">OPEN</a>
+<div id="CONTENT">
+	This layer will be opened.
+</div>
+}}}
+
+JS - /modules/admin/tpl/js/admin.js
+{{{
+// Close Layer
+	$('.x [data-open^="#"]').click(function(){
+		$($(this).attr('data-open')).hide();
+		return false;
+	});
+}}}
+
+==Content Close: data-close="#target"==
 
 HTML
 {{{
