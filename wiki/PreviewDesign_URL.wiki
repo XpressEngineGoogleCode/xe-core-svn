@@ -1,0 +1,9 @@
+#sidebar ServerAPI
+
+http://code.google.com/p/xe-core/issues/detail?id=2367
+
+===layout 미리보기===
+{{{
+/?act=dispLayoutPreviewWithModule&module=모듈이름&mid=모듈ID&layout_srl=레이아웃srl&skin=스킨이름
+}}}
+위의 값을 iframe source로 사용.
