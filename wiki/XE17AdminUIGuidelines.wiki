@@ -2,8 +2,11 @@
 Coming Soon...
 
 =Javascript=
-==TARGET toggle [data-toggle="#target, .target"]==
-You can use this value as '#id' or '.class'. One or more than value can use.
+Related js functions are in /modules/admin/tpl/js/admin.js file.
+All events are delegated from document.body to bind less events and to take care of dynamically created elements
+
+==TARGET toggle [data-toggle="TARGET"]==
+Toggles the display status of the TARGET. The target can be any css query string.
 
 HTML
 {{{
@@ -11,18 +14,8 @@ HTML
 <div id="TARGET">...</div>
 }}}
 
-JS - /modules/admin/tpl/js/admin.js
-{{{
-// TARGET Toggle
-	$('.x [data-toggle]').click(function(){
-		$($(this).attr('data-toggle')).toggle();
-		return false;
-	});
-
-}}}
-
-==TARGET show [data-show="#target, .target"]==
-You can use this value as '#id' or '.class'. One or more than value can use.
+==TARGET show [data-show="TARGET"]==
+Shows the TARGET. The TARGET can be any css query string.
 
 HTML
 {{{
@@ -32,17 +25,9 @@ HTML
 </div>
 }}}
 
-JS - /modules/admin/tpl/js/admin.js
-{{{
-// Close Layer
-	$('.x [data-show]').click(function(){
-		$($(this).attr('data-show')).show();
-		return false;
-	});
-}}}
 
-==TARGET hide [data-hide="#target, .target"]==
-You can use this value as '#id' or '.class'. One or more than value can use.
+==TARGET hide [data-hide="TARGET"]==
+Hides the TARGET. The TARGET can be any css query string.
 
 HTML
 {{{
@@ -50,15 +35,6 @@ HTML
 	This layer will be closed.
 	<button type="button" class="x_close" data-hide="#TARGET">&times;</button>
 </div>
-}}}
-
-JS - /modules/admin/tpl/js/admin.js
-{{{
-// Close Layer
-	$('.x [data-hide]').click(function(){
-		$($(this).attr('data-hide')).hide();
-		return false;
-	});
 }}}
 
 ==Horizontal Tab==
