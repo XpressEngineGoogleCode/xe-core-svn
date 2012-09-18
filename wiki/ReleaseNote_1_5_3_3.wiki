@@ -1,6 +1,6 @@
 #sidebar Releases
  
-= XE 1.5.3.2 Release Note =
+= XE 1.5.3.3 Release Note =
 (~r11282)
  
 <wiki:toc />
