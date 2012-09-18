@@ -9,7 +9,7 @@ exec_xml("menu","getMenuAdminSiteMap", params, completeTmp, response_tags)
 
 Array
 (
-    \[0\] => stdClass Object
+    '[0]' => stdClass Object
         (
             \[menuSrl\] => 59
             \[title\] => welcome_menu
