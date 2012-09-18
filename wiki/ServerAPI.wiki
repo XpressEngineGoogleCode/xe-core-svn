@@ -3,3 +3,4 @@
 = Server API's =
 
 [SiteMap_Load_API 사이트 맵 메뉴 읽기]
+[SiteDefaultDesign_SET_API 기본 사이트 디자인(레이아웃, 스킨) 저장]
