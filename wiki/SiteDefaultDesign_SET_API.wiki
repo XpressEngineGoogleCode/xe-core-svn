@@ -1,0 +1,19 @@
+#sidebar ServerAPI
+
+https://code.google.com/p/xe-core/issues/detail?id=2370
+
+https://code.google.com/p/xe-core/issues/detail?id=2373
+
+https://code.google.com/p/xe-core/issues/detail?id=2374
+
+{{{
+var params = new Array();
+params['site_srl'] = siteSrl; // (int)사이트 srl
+params['layout_srl'] = layoutSrl; // (int)선택된 레이아웃의 srl : 모듈 스킨 정보만 저장할 경우 생략 가능
+params['module'] = moduleName; // (str)모듈 이름 : 레이아웃 정보만 저장할 경우 생략 가능
+params['module_skin'] = skinName; // (str)스킨 이름 : 레이아웃 정보만 저장할 경우 생략 가능
+params['skin_vars'] = objSkinVars; // (obj)스킨 설정 정보 : 레이아웃 정보만 저장할 경우 생략 가능
+exec_xml("admin","procAdminInsertDefaultDesignInfo", params, completeTmp)
+}}}
+
+위와 같이 호출 하면 사이트 srl별 사이트 기본 디자인 설정 정보를 저장
