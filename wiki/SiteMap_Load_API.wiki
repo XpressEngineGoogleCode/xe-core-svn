@@ -1,64 +1,66 @@
 http://code.google.com/p/xe-core/issues/detail?id=2362
 
+{{{
 var params = new Array();
 var response_tags = new Array('menuList');
-params[['menu_srl']] = menuSrl;
+params['menu_srl'] = menuSrl;
 exec_xml("menu","getMenuAdminSiteMap", params, completeTmp, response_tags)
-
+}}}
 위와 같이 호출 하면 아래와 같은 형태로 리턴 됨.
 
+{{{
 Array
 (
-    [[0]] => stdClass Object
+    [0] => stdClass Object
         (
-            [[menuSrl]] => 59
-            [[title]] => welcome_menu
-            [[menuItems]] => stdClass Object
+            [menuSrl] => 59
+            [title] => welcome_menu
+            [menuItems] => stdClass Object
                 (
-                    [[list]] => Array
+                    [list] => Array
                         (
-                            [[60]] => Array
+                            [60] => Array
                                 (
-                                    [[node_srl]] => 60
-                                    [[parent_srl]] => 0
-                                    [[text]] => menu1
-                                    [[href]] => 
-                                    [[url]] => 
-                                    [[open_window]] => N
-                                    [[normal_btn]] => 
-                                    [[hover_btn]] => 
-                                    [[active_btn]] => 
-                                    [[selected]] => 0
-                                    [[expand]] => N
-                                    [[list]] => Array
+                                    [node_srl] => 60
+                                    [parent_srl] => 0
+                                    [text] => menu1
+                                    [href] => 
+                                    [url] => 
+                                    [open_window] => N
+                                    [normal_btn] => 
+                                    [hover_btn] => 
+                                    [active_btn] => 
+                                    [selected] => 0
+                                    [expand] => N
+                                    [list] => Array
                                         (
-                                            [[61]] => Array
+                                            [61] => Array
                                                 (
-                                                    [[node_srl]] => 61
-                                                    [[parent_srl]] => 60
-                                                    [[text]] => menu1-1
-                                                    [[href]] => /maserati/index.php?mid=welcome_page
-                                                    [[url]] => welcome_page
-                                                    [[open_window]] => N
-                                                    [[normal_btn]] => 
-                                                    [[hover_btn]] => 
-                                                    [[active_btn]] => 
-                                                    [[selected]] => 0
-                                                    [[expand]] => N
-                                                    [[list]] => Array
+                                                    [node_srl] => 61
+                                                    [parent_srl] => 60
+                                                    [text] => menu1-1
+                                                    [href] => /maserati/index.php?mid=welcome_page
+                                                    [url] => welcome_page
+                                                    [open_window] => N
+                                                    [normal_btn] => 
+                                                    [hover_btn] => 
+                                                    [active_btn] => 
+                                                    [selected] => 0
+                                                    [expand] => N
+                                                    [list] => Array
                                                         (
                                                         )
 
-                                                    [[link]] => menu1-1
-                                                    [[module_srl]] => 63
-                                                    [[setup_index_act]] => dispPageAdminInfo
-                                                    [[is_start_module]] => 1
-                                                    [[layout_srl]] => 62
+                                                    [link] => menu1-1
+                                                    [module_srl] => 63
+                                                    [setup_index_act] => dispPageAdminInfo
+                                                    [is_start_module] => 1
+                                                    [layout_srl] => 62
                                                 )
 
                                         )
 
-                                    [[link]] => menu1
+                                    [link] => menu1
                                 )
 
                         )
@@ -68,6 +70,6 @@ Array
         )
 
 )
-
+}}}
 
 위의 내용에서 is_start_module의 값이 true(or 1)일 경우 시작 페이지임.
