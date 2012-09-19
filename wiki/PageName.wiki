@@ -1,0 +1,29 @@
+=메뉴 권한의 메뉴 접근 대상 설정=
+
+http://code.google.com/p/xe-core/issues/detail?id=2363
+
+{{{
+메뉴 노출 대상 설정은 다음과 같은 방법으로 사용.
+index.php?module=menu&menu_item_srl=메뉴번호&act=getMenuAdminItemInfo
+
+보여 주어야 할 그룹 목록은 returnObj.groupList로 사용 가능.
+선택된 그룹은 groupList.isChecked 값으로 확인.
+
+선택된 그룹이 아닌 '모든 사용자' 또는 '로그인 사용자'는 returnObj.group_srls로 사용.
+
+모든 사용자 : group_srls 값이 빈 값.
+로그인 사용자 : group_srls[0]의 값이 -1
+
+* 메뉴 권한 관련 api 호출 예제
+var params2 = new Array();
+var response_tags2 = new Array('grantList');
+params2['target_module'] = 'board';
+params2['module_srl'] = '106';
+exec_xml("module","getModuleAdminGrant", params2, completeTmp, response_tags2);
+
+* 그룹 리스트 관련 api 호출 예제
+var params3 = new Array();
+var response_tags3 = new Array('menuList');
+//params3['menu_srl'] = 59;
+exec_xml("menu","getMenuAdminSiteMap", params3, completeTmp, response_tags3);
+}}}
