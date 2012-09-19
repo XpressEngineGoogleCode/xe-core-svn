@@ -34,3 +34,19 @@ Array
     [message] => "등록했습니다."
 )
 }}}
+
+= Delete =
+{{{
+var params = new Array();
+params['menu_srl'] = '889';
+exec_xml("menu","procMenuAdminDelete", params, completeTmp)
+}}}
+위와 같이 호출 하면 아래와 같은 형태로 리턴 됨.
+
+{{{
+Array
+(
+    [error] => 0
+    [message] => "삭제했습니다."
+)
+}}}
