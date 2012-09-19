@@ -9,3 +9,5 @@
 [SiteDefaultDesign_SET_API 기본 사이트 디자인(레이아웃, 스킨) 저장]
 
 [PreviewDesign_URL 레이아웃 스킨 미리보기 URL]
+
+[ModuleSkinInfo_GET_API 모듈별 선택가능한 스킨 목록]
