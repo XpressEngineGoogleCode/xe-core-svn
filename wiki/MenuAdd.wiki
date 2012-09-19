@@ -1,19 +1,18 @@
 #sidebar ServerAPI
 
-= Add =
-{{{
-var params = new Array();
-var response_tags = new Array('menu_srl');
-params['title'] = "제목";
-exec_xml("menu","procMenuAdminInsert", params, completeTmp, response_tags)
-}}}
-위와 같이 호출 하면 아래와 같은 형태로 리턴 됨.
+메뉴 아이템의 추가는 버튼파일의 업로드로 인해 ajax call이 아닌 form submit을 해야 한다.
+필요한 파라미터는 다음과 같다.
 
-{{{
-Array
-(
-    [error] => 0
-    [message] => "등록했습니다."
-    [menu_srl] => 889
-)
-}}}
+menu_srl : sitemap 번호
+menu_open_window : 링크를 새창으로 열 것인지의 여부('Y', 'N')
+menu_expand : 처음 로딩 시 메뉴가 열려 있도록 할 것인지의 여부 (Y', 'N')
+group_srls : 노출제한을 특정 크룹으로 할 경우의 값 (ex new Array('1', '2', '3'))
+parent_srl : 특정 메뉴 아이템(node) 아래에 속하게 만들고 싶을 경우 해당 아이템(node)의 menu_item_srl 값. 최상위 메뉴로 만들고 싶을 경우 0을 사용하면 됨.
+cType : 메뉴의 타입
+  CREATE : 모듈 생성
+  SELECT : 모듈 선택
+  URL : 링크
+menu_item_srl : 메뉴 아이템의 번호, 없을 경우 신규 아이템, 있으면 기존 아이템을 업데이트 하게 된다.
+menu_normal_btn : 버튼 이미지(일반)
+menu_hover_btn : 버튼 이미지(마우스 오버)
+menu_active_btn : 버튼 이미지(선택 시)
