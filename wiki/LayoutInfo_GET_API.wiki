@@ -1,0 +1,130 @@
+#sidebar ServerAPI
+
+http://code.google.com/p/xe-core/issues/detail?id=2369
+
+{{{
+var params = new Array();
+var response_tags = new Array('layout_list');
+params['site_srl'] = site srl;
+params['layout_type'] = layout type ( P : PC, M: Mobile);
+exec_xml("layout","getLayoutInstanceListForJSONP", params, completeTmp, response_tags);
+}}}
+위와 같이 호출 하면 아래와 같은 형태로 리턴 됨.
+
+{{{
+Array
+(
+    [0] => stdClass Object
+        (
+            [layout_srl] => 157
+            [site_srl] => 0
+            [layout] => user_layout
+            [title] => 테스트 레이아웃
+            [extra_vars] => 
+            [layout_path] => 
+            [module_srl] => 0
+            [regdate] => 20120919135315
+            [layout_type] => P
+            [thumbnail] => ./layouts/user_layout/thumbnail.png
+        )
+
+    [1] => stdClass Object
+        (
+            [layout_srl] => 156
+            [site_srl] => 0
+            [layout] => xe_official
+            [title] => XE 공식 사이트 레이아웃
+            [extra_vars] => 
+            [layout_path] => 
+            [module_srl] => 0
+            [regdate] => 20120919135315
+            [layout_type] => P
+            [thumbnail] => ./layouts/xe_official/thumbnail.png
+        )
+
+    [2] => stdClass Object
+        (
+            [layout_srl] => 135
+            [site_srl] => 0
+            [layout] => user_layout
+            [title] => 테스트 레이아웃
+            [extra_vars] => 
+            [layout_path] => 
+            [module_srl] => 0
+            [regdate] => 20120917143532
+            [layout_type] => P
+            [thumbnail] => ./layouts/user_layout/thumbnail.png
+        )
+
+    [3] => stdClass Object
+        (
+            [layout_srl] => 134
+            [site_srl] => 0
+            [layout] => bootstrap.layout
+            [title] => Bootstrap.Layout
+            [extra_vars] => 
+            [layout_path] => 
+            [module_srl] => 0
+            [regdate] => 20120917143532
+            [layout_type] => P
+            [thumbnail] => ./layouts/bootstrap.layout/thumbnail.png
+        )
+
+    [4] => stdClass Object
+        (
+            [layout_srl] => 133
+            [site_srl] => 0
+            [layout] => xe_greystone|@|xe_greystone
+            [title] => xe_greystone
+            [extra_vars] => 
+            [layout_path] => 
+            [module_srl] => 0
+            [regdate] => 20120912113414
+            [layout_type] => P
+            [thumbnail] => ./themes/xe_greystone/layouts/xe_greystone/thumbnail.png
+        )
+
+    [5] => stdClass Object
+        (
+            [layout_srl] => 132
+            [site_srl] => 0
+            [layout] => xe_sapphire|@|xe_sapphire
+            [title] => xe_sapphire
+            [extra_vars] => 
+            [layout_path] => 
+            [module_srl] => 0
+            [regdate] => 20120912113414
+            [layout_type] => P
+            [thumbnail] => ./themes/xe_sapphire/layouts/xe_sapphire/thumbnail.png
+        )
+
+    [6] => stdClass Object
+        (
+            [layout_srl] => 131
+            [site_srl] => 0
+            [layout] => xe_solid_enterprise|@|xe_solid_enterprise
+            [title] => xe_solid_enterprise
+            [extra_vars] => 
+            [layout_path] => 
+            [module_srl] => 0
+            [regdate] => 20120912113414
+            [layout_type] => P
+            [thumbnail] => ./themes/xe_solid_enterprise/layouts/xe_solid_enterprise/thumbnail.png
+        )
+
+    [7] => stdClass Object
+        (
+            [layout_srl] => 62
+            [site_srl] => 0
+            [layout] => xe_official
+            [title] => welcome_layout
+            [extra_vars] => O:8:"stdClass":4:{s:8:"colorset";s:7:"default";s:9:"main_menu";i:59;s:11:"bottom_menu";i:59;s:14:"menu_name_list";a:1:{i:59;s:12:"welcome_menu";}}
+            [layout_path] => 
+            [module_srl] => 0
+            [regdate] => 20120911110022
+            [layout_type] => P
+            [thumbnail] => ./layouts/xe_official/thumbnail.png
+        )
+
+)
+}}}
