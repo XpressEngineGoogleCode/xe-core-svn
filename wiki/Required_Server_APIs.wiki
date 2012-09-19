@@ -1,4 +1,6 @@
-=필요한 서버 API 목록=
+#sidebar ServerAPI
+
+=우선적으로 필요한 서버 API 목록=
 <br>
 == 메뉴 트리 조회 API ==
 담당자: 오봉근
