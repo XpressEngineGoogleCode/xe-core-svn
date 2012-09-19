@@ -6,6 +6,8 @@
 
 [SiteMap_Load_API 사이트 맵 메뉴 읽기]
 
+[SiteMap_Add_Del_Mod_API 사이트맵 추가/삭제/수정 API]
+
 [SiteDefaultDesign_SET_API 기본 사이트 디자인(레이아웃, 스킨) 저장]
 
 [PreviewDesign_URL 레이아웃 스킨 미리보기 URL]
