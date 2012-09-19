@@ -7,6 +7,9 @@
   * act : procMenuAdminInsertItem
   * menu_srl : sitemap 번호
   * menu_name_key : 메뉴의 이름에 다국어가 쓰였을 경우 해당 변수 명 (ex: $user_lang->userLang20120919153529020)
+  * menu_name : 사용자에게 보여줘야 할 메뉴명
+  * module_type : 모듈의 타입, page module일 경우 WIDGET, ARTICLE, OUTSIDE의 값을 가질 수 있으며 기타 다른 모듈은 모듈명을 사용한다.
+  * select_menu_url : 모듈을 선택할 경우 모듈 mid
   * menu_open_window : 링크를 새창으로 열 것인지의 여부('Y', 'N')
   * menu_expand : 처음 로딩 시 메뉴가 열려 있도록 할 것인지의 여부 (Y', 'N')
   * group_srls : 노출제한을 특정 크룹으로 할 경우의 값 (ex new Array('1', '2', '3'))
