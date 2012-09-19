@@ -2,7 +2,7 @@
 
 = Server API's =
 
-[Required_Server_APIs 우선적으로 필요한 API 목록]
+*[Required_Server_APIs 우선적으로 필요한 API 목록]*
 
 [SiteMap_Load_API 사이트 맵 메뉴 읽기]
 
