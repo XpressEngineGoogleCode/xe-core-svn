@@ -1,5 +1,6 @@
 #sidebar ServerAPI
 
+= Add =
 {{{
 var params = new Array();
 var response_tags = new Array('menu_srl');
@@ -11,65 +12,6 @@ exec_xml("menu","procMenuAdminInsert", params, completeTmp, response_tags)
 {{{
 Array
 (
-    [0] => stdClass Object
-        (
-            [menuSrl] => 59
-            [title] => welcome_menu
-            [menuItems] => stdClass Object
-                (
-                    [list] => Array
-                        (
-                            [60] => Array
-                                (
-                                    [node_srl] => 60
-                                    [parent_srl] => 0
-                                    [text] => menu1
-                                    [href] => 
-                                    [url] => 
-                                    [open_window] => N
-                                    [normal_btn] => 
-                                    [hover_btn] => 
-                                    [active_btn] => 
-                                    [selected] => 0
-                                    [expand] => N
-                                    [list] => Array
-                                        (
-                                            [61] => Array
-                                                (
-                                                    [node_srl] => 61
-                                                    [parent_srl] => 60
-                                                    [text] => menu1-1
-                                                    [href] => /maserati/index.php?mid=welcome_page
-                                                    [url] => welcome_page
-                                                    [open_window] => N
-                                                    [normal_btn] => 
-                                                    [hover_btn] => 
-                                                    [active_btn] => 
-                                                    [selected] => 0
-                                                    [expand] => N
-                                                    [list] => Array
-                                                        (
-                                                        )
-
-                                                    [link] => menu1-1
-                                                    [module_srl] => 63
-                                                    [setup_index_act] => dispPageAdminInfo
-                                                    [is_start_module] => 1
-                                                    [layout_srl] => 62
-                                                )
-
-                                        )
-
-                                    [link] => menu1
-                                )
-
-                        )
-
-                )
-
-        )
-
+    [menu_srl] => 889
 )
 }}}
-
-위의 내용에서 is_start_module의 값이 true(or 1)일 경우 시작 페이지임.
