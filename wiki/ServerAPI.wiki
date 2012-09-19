@@ -14,6 +14,8 @@
 
 [ModuleSkinInfo_GET_API 모듈별 선택가능한 스킨 목록]
 
+[LayoutInfo_GET_API 레이아웃 목록]
+
 [DownloadAvailableList_GET_API 다운로드 가능한 목록 조회]
 
 [MenuTypeInstall_API 메뉴 추가 다운로드 & 설치 API]
