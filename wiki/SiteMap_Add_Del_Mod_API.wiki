@@ -1,12 +1,10 @@
 #sidebar ServerAPI
 
-http://code.google.com/p/xe-core/issues/detail?id=2362
-
 {{{
 var params = new Array();
-var response_tags = new Array('menuList');
-params['menu_srl'] = menuSrl;
-exec_xml("menu","getMenuAdminSiteMap", params, completeTmp, response_tags)
+var response_tags = new Array('menu_srl');
+params['title'] = title;
+exec_xml("menu","procMenuAdminInsert", params, completeTmp, response_tags)
 }}}
 위와 같이 호출 하면 아래와 같은 형태로 리턴 됨.
 
