@@ -1,0 +1,54 @@
+#sidebar ServerAPI
+
+http://code.google.com/p/xe-core/issues/detail?id=2369
+
+{{{
+var params = new Array();
+var response_tags = new Array('skin_info_list');
+params['module_name'] = 모듈이름;
+exec_jsonp("module","getModuleSkinInfoList", params, completeTmp, response_tags);
+}}}
+위와 같이 호출 하면 아래와 같은 형태로 리턴 됨.
+
+{{{
+Array
+(
+    [default] => stdClass Object
+        (
+            [title] => 회원 기본 스킨
+            [version] => 0.1
+            [date] => 20070228
+            [homepage] => 
+            [license] => 
+            [license_link] => 
+            [description] => 
+        회원모듈의 default스킨
+        NHN (developers@xpressengine.com)
+    
+            [author] => Array
+                (
+                    [0] => stdClass Object
+                        (
+                            [name] => NHN
+                            [email_address] => developers@xpressengine.com
+                            [homepage] => http://xpressengine.com/
+                        )
+
+                )
+
+            [colorset] => Array
+                (
+                    [0] => stdClass Object
+                        (
+                            [name] => white
+                            [title] => 기본
+                            [screenshot] => 
+                        )
+
+                )
+
+            [thumbnail] => ./modules/module/member/skins/default/thumbnail.gif
+        )
+
+)
+}}}
