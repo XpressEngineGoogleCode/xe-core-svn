@@ -13,3 +13,5 @@
 [PreviewDesign_URL 레이아웃 스킨 미리보기 URL]
 
 [ModuleSkinInfo_GET_API 모듈별 선택가능한 스킨 목록]
+
+[MenuTypeList_GET_API 다운로드 가능한 메뉴 목록 조회]
