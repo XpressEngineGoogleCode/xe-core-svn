@@ -6,6 +6,8 @@
 
 [SiteMap_Add_Del_Mod_API 사이트맵 추가/삭제/수정 API]
 
+[MenuAdd 메뉴(& 링크) 추가 API]
+
 [SiteDefaultDesign_SET_API 기본 사이트 디자인(레이아웃, 스킨) 저장]
 
 [MenuPerm 메뉴 권한 설정]
