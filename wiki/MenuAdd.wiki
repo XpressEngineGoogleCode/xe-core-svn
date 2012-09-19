@@ -10,8 +10,14 @@
   * menu_name : 사용자에게 보여줘야 할 메뉴명
   * module_type : 모듈의 타입, page module일 경우 WIDGET, ARTICLE, OUTSIDE의 값을 가질 수 있으며 기타 다른 모듈은 모듈명을 사용한다.
   * select_menu_url : 모듈을 선택할 경우 모듈 mid
+  * create_menu_url : 모듈을 생성할 경우 모듈 mid
+  * menu_url : url 타입의 메뉴일 경우 url
+  * layout_srl : 레이아웃 serial number
   * menu_open_window : 링크를 새창으로 열 것인지의 여부('Y', 'N')
   * menu_expand : 처음 로딩 시 메뉴가 열려 있도록 할 것인지의 여부 (Y', 'N')
+  * menu_grant_default : 노출제한
+    * 0 : 모든 사용자
+    * -1 : 로그인 사용자
   * group_srls : 노출제한을 특정 크룹으로 할 경우의 값 (ex new Array('1', '2', '3'))
   * parent_srl : 특정 메뉴 아이템(node) 아래에 속하게 만들고 싶을 경우 해당 아이템(node)의 menu_item_srl 값. 최상위 메뉴로 만들고 싶을 경우 0을 사용하면 됨.
   * cType : 메뉴의 타입
