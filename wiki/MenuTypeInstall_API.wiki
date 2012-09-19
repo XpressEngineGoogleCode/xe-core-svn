@@ -22,7 +22,7 @@ API: index.php?act=procAutoinstallAdminPackageinstall
 파라미터
 
 || package_srl || 설치할 패키지 번호 ||
-|| ftp_password ||  FTP 비밀번호. getAutoinstallAdminAuthed로 비밀번호 인증이 된 상태에서는 아무 값이 넣음. ||
+|| ftp_password ||  FTP 비밀번호. getAutoinstallAdminAuthed로 비밀번호 인증이 된 상태에서는 아무 값이나 넣음. ||
 
 응답
 {{{
