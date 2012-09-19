@@ -30,3 +30,5 @@
   * menu_hover_btn : 버튼 이미지(마우스 오버)
   * menu_active_btn : 버튼 이미지(선택 시)
   * success_return_url : 성공 시 돌아가야 할 주소
+
+* 메뉴 아이템의 수정시에도 사용할 수 있다. menu_item_srl 값을 넘겨주면 수정 mode로 작동한다. *
