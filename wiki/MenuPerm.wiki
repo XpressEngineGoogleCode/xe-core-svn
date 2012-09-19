@@ -1,3 +1,5 @@
+#summary ServerAPI
+
 =메뉴 권한의 메뉴 접근 대상 설정=
 
 http://code.google.com/p/xe-core/issues/detail?id=2363
