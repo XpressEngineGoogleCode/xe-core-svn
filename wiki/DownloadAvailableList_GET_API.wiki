@@ -1,0 +1,77 @@
+#sidebar ServerAPI
+
+=다른 메뉴 타입 목록=
+
+API: index.php?act=getAutoinstallAdminMenuPackageList
+
+Params
+
+|| search_keyword || 검색어 ||
+|| order_target || 정렬 기준 (newest:최신순, download:다운로드순, popular:인기순) ||
+|| order_type || 정렬 방식 (asc, desc) ||
+|| page || 페이지 ||
+
+응답
+
+{{{
+{
+	"item_list":[
+		{
+			"category_srl":"18322923",
+			"package_srl":"18324167",
+			"item_screenshot_url":"./files/attach/images/18322904/994/054/021/c58fd1d4349c72b7cc91d10197e676f3.jpg",
+			"package_voted":"378",
+			"package_voter":"94",
+			"package_description":"XpressEngine에서 동작하는 게시판 모듈입니다.",
+			"package_downloaded":"136133",
+			"item_regdate":"20120822164144",
+			"title":"게시판",
+			"item_version":"1.4.5",
+			"package_star":"4",
+			"depfrom":"18324212,18324211,18539546,18632016,18621989,18620644,18867310,19133046,18607436,19285120,19197549,19349000,19348911,19431275,19527443,19901434,18980346,20279228,18324168",
+			"category":""
+		},
+		... 생략 ...
+	],
+	"page_navigation":{
+		"total_count":"10",
+		"total_page":"1",
+		"cur_page":"1",
+		"page_count":"1",
+		"first_page":1,
+		"last_page":"1",
+		"point":0
+	},
+	"error":0,
+	"message":"success"
+}
+}}}
+
+=레이아웃 목록=
+
+API: index.php?act=getAutoinstallAdminLayoutPackageList
+
+Params
+
+|| search_keyword || 검색어 ||
+|| order_target || 정렬 기준 (newest:최신순, download:다운로드순, popular:인기순) ||
+|| order_type || 정렬 방식 (asc, desc) ||
+|| page || 페이지 ||
+|| *type* || PC인지 모바일인지 (P: PC, M: 모바일) ||
+
+응답은 상위와 동일
+
+= 스킨 목록 =
+
+API: index.php?act=getAutoinstallAdminSkinPackageList
+
+Params
+
+|| search_keyword || 검색어 ||
+|| order_target || 정렬 기준 (newest:최신순, download:다운로드순, popular:인기순) ||
+|| order_type || 정렬 방식 (asc, desc) ||
+|| page || 페이지 ||
+|| *type* || PC인지 모바일인지 (P: PC, M: 모바일) ||
+|| *parent_program* || 소속 모듈 이름 (예를 들어 게시판은 board) ||
+
+응답은 상위와 동일
