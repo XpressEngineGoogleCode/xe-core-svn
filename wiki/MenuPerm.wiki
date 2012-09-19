@@ -1,4 +1,4 @@
-#summary ServerAPI
+#sidebar ServerAPI
 
 =메뉴 권한의 메뉴 접근 대상 설정=
 
