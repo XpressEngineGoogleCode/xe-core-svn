@@ -1,0 +1,25 @@
+#sidebar ServerAPI
+
+= Delete =
+== module : menu ==
+== method : procMenuAdminDeleteItem ==
+
+{{{
+var params = new Array();
+var response_tags = new Array('menu_srl');
+params['menu_srl'] = 1;
+params['menu_item_srl'] = 2;
+exec_xml("menu","procMenuAdminDeleteItem", params, completeTmp, response_tags)
+}}}
+위와 같이 호출 하면 아래와 같은 형태로 리턴 됨.
+
+{{{
+Array
+(
+    [error] => "0"
+    [message] => "삭제했습니다."
+    [menu_item_srl] => "2"
+    [menu_title] => "Test Site Map"
+    [xml_file] => "./files/cache/menu/1.xml.php"
+)
+}}}
