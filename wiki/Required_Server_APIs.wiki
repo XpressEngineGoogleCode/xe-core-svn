@@ -27,11 +27,11 @@
 
 <br>
 == 메뉴(& 링크)삭제/수정(& 이동) API ==
-관련 이슈 URL: 
+관련 이슈 URL: 없슴
 
 예상 완료일: 
 
-(완료 됐다면) input/output 설명된 위키 페이지:  
+(완료 됐다면) input/output 설명된 위키 페이지: [http://code.google.com/p/xe-core/wiki/MenuAdd]
 
 <br>
 == mid에 해당하는 모듈 정보(전체 목록) ==
