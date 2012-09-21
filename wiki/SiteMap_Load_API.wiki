@@ -55,6 +55,7 @@ Array
 
                                                     [link] => menu1-1
                                                     [module_srl] => 63
+                                                    [module] => page
                                                     [setup_index_act] => dispPageAdminInfo
                                                     [is_start_module] => 1
                                                     [layout_srl] => 62
