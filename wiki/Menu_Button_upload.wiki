@@ -1,0 +1,18 @@
+#sidebar ServerAPI
+
+= Button Upload =
+
+Button upload의 경우 File upload가 있어서 ajax 통신이 아닌 Form submit을 해야 한다.
+Form submit 할 경우 callback parameter를 전송하여, Template에 해당 callback 명으로 javascript function을 생성한다.
+
+== module : menu ==
+== method : procMenuAdminButtonUpload ==
+== parameter ==
+
+  * menu_normal_btn : 버튼 이미지(일반) form 이름
+  * menu_hover_btn : 버튼 이미지(마우스 오버) form 이름
+  * menu_active_btn : 버튼 이미지(선택 시) form 이름
+  * isNormalDelete : 기존 normal button을 삭제하고자 하는 경우 ('Y' or 'N')
+  * isHoverDelete : 기존 hover button을 삭제하고자 하는 경우 ('Y' or 'N')
+  * isActiveDelete : 기존 active button을 삭제하고자 하는 경우 ('Y' or 'N')
+  * callback : javascript callback 함수명
