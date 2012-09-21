@@ -1,38 +1,41 @@
 #sidebar ServerAPI
 
-== module : menu ==
-== method : procMenuAdminInsertItem ==
+= Add =
+{{{
+var params = new Array();
+var response_tags = new Array('menu_srl');
+params['ruleset'] = "insertMenuItem";
+params['act'] = "procMenuAdminInsertItem";
+params['menu_srl'] = "sitemap 번호";
+params['menu_name_key'] = "메뉴의 이름에 다국어가 쓰였을 경우 해당 변수 명 (ex: $user_lang->userLang20120919153529020)";
+params['menu_name'] = "사용자에게 보여줘야 할 메뉴명";
+params['module_type'] = "모듈의 타입"; //page module일 경우 WIDGET, ARTICLE, OUTSIDE의 값을 가질 수 있으며 기타 다른 모듈은 모듈명을 사용한다.
+params['select_menu_url'] = "모듈을 선택할 경우 모듈 mid";
+params['create_menu_url'] = "모듈을 생성할 경우 모듈 mid";
+params['menu_url'] = "url 타입의 메뉴일 경우 url";
+params['layout_srl'] = "레이아웃 serial number";
+params['menu_open_window'] = "링크를 새창으로 열 것인지의 여부('Y', 'N')";
+params['menu_expand'] = "처음 로딩 시 메뉴가 열려 있도록 할 것인지의 여부 (Y', 'N')"
+params['menu_grant_default'] = "노출제한, 0 : 모든 사용자, -1 : 로그인 사용자";
+params['group_srls'] = "노출제한을 특정 크룹으로 할 경우의 값 (ex new Array('1', '2', '3'))";
+params['parent_srl'] = "특정 메뉴 아이템(node) 아래에 속하게 만들고 싶을 경우 해당 아이템(node)의 menu_item_srl 값. 최상위 메뉴로 만들고 싶을 경우 0을 사용하면 됨.";
+params['cType'] = "메뉴의 타입"; //CREATE : 모듈 생성, SELECT : 모듈 선택, URL : 링크
+params['menu_item_srl'] = "메뉴 아이템의 번호, 없을 경우 신규 아이템, 있으면 기존 아이템을 업데이트 하게 된다.";
+params['module_srl'] = "메뉴의 type이 SELECT일 경우 선택한 module의 serial number";
 
-메뉴 아이템의 추가는 버튼파일의 업로드로 인해 ajax call이 아닌 form submit을 해야 한다.
-필요한 파라미터는 다음과 같다.
+exec_xml("menu","procMenuAdminInsert", params, completeTmp, response_tags)
+}}}
+위와 같이 호출 하면 아래와 같은 형태로 리턴 됨.
 
-  * callback : proc 완료 후 호출할 callback script function 명.
-  * ruleset : form submit ruleset명. insertMenuItem으로 고정
-  * act : procMenuAdminInsertItem
-  * menu_srl : sitemap 번호
-  * menu_name_key : 메뉴의 이름에 다국어가 쓰였을 경우 해당 변수 명 (ex: $user_lang->userLang20120919153529020)
-  * menu_name : 사용자에게 보여줘야 할 메뉴명
-  * module_type : 모듈의 타입, page module일 경우 WIDGET, ARTICLE, OUTSIDE의 값을 가질 수 있으며 기타 다른 모듈은 모듈명을 사용한다.
-  * select_menu_url : 모듈을 선택할 경우 모듈 mid
-  * create_menu_url : 모듈을 생성할 경우 모듈 mid
-  * menu_url : url 타입의 메뉴일 경우 url
-  * layout_srl : 레이아웃 serial number
-  * menu_open_window : 링크를 새창으로 열 것인지의 여부('Y', 'N')
-  * menu_expand : 처음 로딩 시 메뉴가 열려 있도록 할 것인지의 여부 (Y', 'N')
-  * menu_grant_default : 노출제한
-    * 0 : 모든 사용자
-    * -1 : 로그인 사용자
-  * group_srls : 노출제한을 특정 크룹으로 할 경우의 값 (ex new Array('1', '2', '3'))
-  * parent_srl : 특정 메뉴 아이템(node) 아래에 속하게 만들고 싶을 경우 해당 아이템(node)의 menu_item_srl 값. 최상위 메뉴로 만들고 싶을 경우 0을 사용하면 됨.
-  * cType : 메뉴의 타입
-    * CREATE : 모듈 생성
-    * SELECT : 모듈 선택
-    * URL : 링크
-  * menu_item_srl : 메뉴 아이템의 번호, 없을 경우 신규 아이템, 있으면 기존 아이템을 업데이트 하게 된다.
-  * module_srl : 메뉴의 type이 SELECT일 경우 선택한 module의 serial number
-  * menu_normal_btn : 버튼 이미지(일반)
-  * menu_hover_btn : 버튼 이미지(마우스 오버)
-  * menu_active_btn : 버튼 이미지(선택 시)
-  * success_return_url : 성공 시 돌아가야 할 주소
-
-* 메뉴 아이템의 수정시에도 사용할 수 있다. menu_item_srl 값을 넘겨주면 수정 mode로 작동한다. *
+{{{
+Array
+(
+    [error] => "0"
+    [message] => "등록했습니다."
+    [xml_file] => "./files/cache/menu/1.xml.php"
+    [menu_srl] => "1"
+    [menu_item_srl] => "2"
+    [menu_title] => "제목"
+    [parent_srl] => "0"
+)
+}}}
