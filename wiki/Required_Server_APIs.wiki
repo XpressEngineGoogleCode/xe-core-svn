@@ -21,7 +21,7 @@
 == 메뉴(& 링크) 추가 API ==
 관련 이슈 URL: 없슴
 
-예상 완료일: 
+예상 완료일: 완료
 
 (완료 됐다면) input/output 설명된 위키 페이지:  [http://code.google.com/p/xe-core/wiki/MenuAdd]
 
