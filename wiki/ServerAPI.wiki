@@ -8,6 +8,8 @@
 
 [MenuAdd 메뉴(& 링크) 추가 API]
 
+[Menu_Button_upload 메뉴(& 링크) 버튼 업로드 API]
+
 [MenuDel_Mod_Move 메뉴(& 링크)삭제/수정(& 이동) API]
 
 [SiteDefaultDesign_SET_API 기본 사이트 디자인(레이아웃, 스킨) 저장]
