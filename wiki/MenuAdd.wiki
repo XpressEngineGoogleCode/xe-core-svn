@@ -3,25 +3,17 @@
 = Add =
 {{{
 var params = new Array();
-var response_tags = new Array('menu_srl');
+var response_tags = new Array('menu_item_srl');
 params['ruleset'] = "insertMenuItem";
 params['act'] = "procMenuAdminInsertItem";
 params['menu_srl'] = "sitemap 번호";
 params['menu_name_key'] = "메뉴의 이름에 다국어가 쓰였을 경우 해당 변수 명 (ex: $user_lang->userLang20120919153529020)";
 params['menu_name'] = "사용자에게 보여줘야 할 메뉴명";
 params['module_type'] = "모듈의 타입"; //page module일 경우 WIDGET, ARTICLE, OUTSIDE의 값을 가질 수 있으며 기타 다른 모듈은 모듈명을 사용한다.
-params['select_menu_url'] = "모듈을 선택할 경우 모듈 mid";
-params['create_menu_url'] = "모듈을 생성할 경우 모듈 mid";
-params['menu_url'] = "url 타입의 메뉴일 경우 url";
-params['layout_srl'] = "레이아웃 serial number";
+params['mid'] = "모듈을 생성할 경우 모듈 mid";
 params['menu_open_window'] = "링크를 새창으로 열 것인지의 여부('Y', 'N')";
 params['menu_expand'] = "처음 로딩 시 메뉴가 열려 있도록 할 것인지의 여부 (Y', 'N')"
-params['menu_grant_default'] = "노출제한, 0 : 모든 사용자, -1 : 로그인 사용자";
-params['group_srls'] = "노출제한을 특정 크룹으로 할 경우의 값 (ex new Array('1', '2', '3'))";
 params['parent_srl'] = "특정 메뉴 아이템(node) 아래에 속하게 만들고 싶을 경우 해당 아이템(node)의 menu_item_srl 값. 최상위 메뉴로 만들고 싶을 경우 0을 사용하면 됨.";
-params['cType'] = "메뉴의 타입"; //CREATE : 모듈 생성, SELECT : 모듈 선택, URL : 링크
-params['menu_item_srl'] = "메뉴 아이템의 번호, 없을 경우 신규 아이템, 있으면 기존 아이템을 업데이트 하게 된다.";
-params['module_srl'] = "메뉴의 type이 SELECT일 경우 선택한 module의 serial number";
 
 exec_xml("menu","procMenuAdminInsert", params, completeTmp, response_tags)
 }}}
@@ -32,11 +24,7 @@ Array
 (
     [error] => "0"
     [message] => "등록했습니다."
-    [xml_file] => "./files/cache/menu/1.xml.php"
-    [menu_srl] => "1"
     [menu_item_srl] => "2"
-    [menu_title] => "제목"
-    [parent_srl] => "0"
 )
 }}}
 
