@@ -1,5 +1,8 @@
 #sidebar ServerAPI
 
+== module : menu ==
+== method : procMenuAdminInsertItem ==
+
 메뉴 아이템의 추가는 버튼파일의 업로드로 인해 ajax call이 아닌 form submit을 해야 한다.
 필요한 파라미터는 다음과 같다.
 
