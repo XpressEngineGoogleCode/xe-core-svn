@@ -73,7 +73,7 @@
 
 예상 완료일 : 완료
 
-(완료 됐다면) input/output 설명된 위키 페이지:https://code.google.com/p/xe-core/wiki/UpdateIndexModule_API.wiki
+(완료 됐다면) input/output 설명된 위키 페이지:https://code.google.com/p/xe-core/wiki/UpdateIndexModule_API
 
 <br>
 == 이미 다운로드 & 설치된 메뉴 목록 조회 API ==
