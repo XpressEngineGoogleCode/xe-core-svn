@@ -23,3 +23,29 @@ Array
     [xml_file] => "./files/cache/menu/1.xml.php"
 )
 }}}
+
+= Modify =
+
+수정의 경우에는 [http://code.google.com/p/xe-core/wiki/MenuAdd]를 참조.
+
+= Move =
+
+{{{
+var params = new Array();
+params['menu_srl'] = 101;
+params['mode'] = 'move';
+params['parent_srl'] = 186;
+params['source_srl'] = 0;
+params['target_srl'] = 196;
+exec_xml("menu","procMenuAdminMoveItem", params, completeTmp);
+}}}
+
+위와 같이 호출 하면 아래와 같은 형태로 리턴 됨.
+
+{{{
+Array
+(
+    [error] => "0"
+    [message] => "success"
+)
+}}}
