@@ -10,51 +10,90 @@ API: index.php?act=getMenuAdminInstalledMenuType
 
 {{{
 {
-	"message_type":"",
-	"menu_types":{
-		"page":{
-			"title":"페이지",
-			"description":"페이지를 제작하여 컨텐츠로 연결할 수 있는 모듈",
-			"version":"0.2",
-			"homepage":"",
-			"category":"service",
-			"date":"20110615",
-			"license":"",
-			"license_link":"",
-			"author":[
-				{
-					"name":"NHN",
-					"email_address":
-					"developers@xpressengine.com",
-					"homepage":"http://xpressengine.com/"
-				}
-			],
-			"admin_index_act":"dispPageAdminContent",
-			"default_index_act":"dispPageIndex",
-			"setup_index_act":"dispPageAdminInfo"
-		},
-		"board":{
-			"title":"게시판",
-			"description":"게시판의 기능을 담당하는 모듈. 게시판의 생성/추가 관리등의 관리자 기능도 포함합니다.",
-			"version":"1.4.5",
-			"homepage":"",
-			"category":"service",
-			"date":"20120822",
-			"license":"",
-			"license_link":"",
-			"author":[
-				{
-					"name":"NHN",
-					"email_address":"developers@xpressengine.com",
-					"homepage":"http://xpressengine.com/"
-				}
-			],
-			"admin_index_act":"dispBoardAdminContent",
-			"default_index_act":"dispBoardContent",
-			"setup_index_act":"dispBoardAdminInsertBoard"
-		}
-	},
-	"error":0,
-	"message":"success"
+    "message_type": "",
+    "menu_types": {
+        "ARTICLE": {
+            "title": "문서 페이지",
+            "description": "페이지를 제작하여 컨텐츠로 연결할 수 있는 모듈",
+            "version": "0.2",
+            "homepage": "",
+            "category": "service",
+            "date": "20110615",
+            "license": "",
+            "license_link": "",
+            "author": [
+                {
+                    "name": "NHN",
+                    "email_address": "developers@xpressengine.com",
+                    "homepage": "http://xpressengine.com/"
+                }
+            ],
+            "admin_index_act": "dispPageAdminContent",
+            "default_index_act": "dispPageIndex",
+            "setup_index_act": "dispPageAdminInfo"
+        },
+        "WIDGET": {
+            "title": "위젯 페이지",
+            "description": "페이지를 제작하여 컨텐츠로 연결할 수 있는 모듈",
+            "version": "0.2",
+            "homepage": "",
+            "category": "service",
+            "date": "20110615",
+            "license": "",
+            "license_link": "",
+            "author": [
+                {
+                    "name": "NHN",
+                    "email_address": "developers@xpressengine.com",
+                    "homepage": "http://xpressengine.com/"
+                }
+            ],
+            "admin_index_act": "dispPageAdminContent",
+            "default_index_act": "dispPageIndex",
+            "setup_index_act": "dispPageAdminInfo"
+        },
+        "OUTSIDE": {
+            "title": "문서 페이지",
+            "description": "페이지를 제작하여 컨텐츠로 연결할 수 있는 모듈",
+            "version": "0.2",
+            "homepage": "",
+            "category": "service",
+            "date": "20110615",
+            "license": "",
+            "license_link": "",
+            "author": [
+                {
+                    "name": "NHN",
+                    "email_address": "developers@xpressengine.com",
+                    "homepage": "http://xpressengine.com/"
+                }
+            ],
+            "admin_index_act": "dispPageAdminContent",
+            "default_index_act": "dispPageIndex",
+            "setup_index_act": "dispPageAdminInfo"
+        },
+        "board": {
+            "title": "게시판",
+            "description": "게시판의 기능을 담당하는 모듈. 게시판의 생성/추가 관리등의 관리자 기능도 포함합니다.",
+            "version": "1.4.5",
+            "homepage": "",
+            "category": "service",
+            "date": "20120822",
+            "license": "",
+            "license_link": "",
+            "author": [
+                {
+                    "name": "NHN",
+                    "email_address": "developers@xpressengine.com",
+                    "homepage": "http://xpressengine.com/"
+                }
+            ],
+            "admin_index_act": "dispBoardAdminContent",
+            "default_index_act": "dispBoardContent",
+            "setup_index_act": "dispBoardAdminInsertBoard"
+        }
+    },
+    "error": 0,
+    "message": "success"
 }
 }}}
