@@ -34,7 +34,7 @@
 (완료 됐다면) input/output 설명된 위키 페이지: http://code.google.com/p/xe-core/wiki/MenuDel_Mod_Move
 
 <br>
-== mid에 해당하는 모듈 정보(전체 목록) ==
+== 특정 모듈(모듈 이름에 대한)에 해당하는 모듈 정보(전체 목록) ==
 관련 이슈 URL: 
 
 예상 완료일: 
