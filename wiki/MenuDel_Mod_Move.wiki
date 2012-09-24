@@ -34,7 +34,7 @@ var response_tags = new Array('menu_item_srl');
 params['menu_item_srl'] = '918';
 params['module_srl'] = '917';
 params['menu_name'] = '테스트 제목';
-params['mid'] = 'boardboard';
+params['url'] = 'boardboard';
 params['menu_open_window'] = 'N';
 params['menu_expand'] = 'N';
 
