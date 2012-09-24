@@ -1,0 +1,72 @@
+#sidebar ServerAPI
+
+= load =
+== module : menu ==
+== method : getMenuAdminItemInfo ==
+
+{{{
+var params = new Array();
+var response_tags = new Array('menu_item');
+params['menu_item_srl'] = '62';
+exec_xml("menu","getMenuAdminItemInfo", params, completeTmp, response_tags)
+}}}
+위와 같이 호출 하면 아래와 같은 형태로 리턴 됨.
+
+{{{
+Array
+(
+    [error] => "0"
+    [message] => "success"
+    [menu_item] => Array
+    (
+        [menu_item_srl] => 62
+        [parent_srl] => 0
+        [menu_srl] => 61
+        [name] => menu1
+        [url] => welcome_page
+        [is_shortcut] => N
+        [open_window] => N
+        [expand] => N
+        [normal_btn] => 
+        [hover_btn] => 
+        [active_btn] => 
+        [group_srls] => Array
+            (
+            )
+
+        [listorder] => -62
+        [regdate] => 20120924182822
+        [moduleType] => page
+        [pageType] => ARTICLE
+        [layoutSrl] => 64
+        [groupList] => Array
+            (
+                [1] => stdClass Object
+                    (
+                        [group_srl] => 1
+                        [title] => 관리그룹
+                        [isChecked] => 
+                    )
+
+                [2] => stdClass Object
+                    (
+                        [group_srl] => 2
+                        [title] => 준회원
+                        [isChecked] => 
+                    )
+
+                [3] => stdClass Object
+                    (
+                        [group_srl] => 3
+                        [title] => 정회원
+                        [isChecked] => 
+                    )
+
+            )
+
+        [name_key] => menu1
+    )
+)
+}}}
+
+menu item info의 normal_btn, hover_btn, active_btn 정보를 이용하면 됨.
