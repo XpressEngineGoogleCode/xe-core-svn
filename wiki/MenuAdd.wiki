@@ -15,7 +15,7 @@ params['menu_open_window'] = "링크를 새창으로 열 것인지의 여부('Y'
 params['menu_expand'] = "처음 로딩 시 메뉴가 열려 있도록 할 것인지의 여부 (Y', 'N')"
 params['parent_srl'] = "특정 메뉴 아이템(node) 아래에 속하게 만들고 싶을 경우 해당 아이템(node)의 menu_item_srl 값. 최상위 메뉴로 만들고 싶을 경우 0을 사용하면 됨.";
 
-exec_xml("menu","procMenuAdminInsert", params, completeTmp, response_tags)
+exec_xml("menu","procMenuAdminInsertItem", params, completeTmp, response_tags)
 }}}
 위와 같이 호출 하면 아래와 같은 형태로 리턴 됨.
 
