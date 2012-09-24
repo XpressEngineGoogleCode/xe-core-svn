@@ -1,0 +1,29 @@
+#sidebar ServerAPI
+
+= Copy =
+== module : menu ==
+== act : procMenuAdminCopyItem ==
+{{{
+var params = new Array();
+var response_tags = new Array('insertedMenuItemSrlList');
+params['menu_srl'] = '61';
+params['parent_srl'] = '0';
+params['menu_item_srl'] = '62';
+exec_xml("menu","procMenuAdminCopyItem", params, completeTmp, response_tags)
+}}}
+위와 같이 호출 하면 아래와 같은 형태로 리턴 됨.
+
+{{{
+Array
+(
+    [error] => 0
+    [message] => "등록했습니다."
+    [insertedMenuItemSrlList] => Array
+    (
+        [0] => 130
+        [1] => 131
+    )
+)
+}}}
+
+menu_item_srl 하위에 있는 자식 node들까지 복사가 되며, 복사된 menu item srl 값이 return 됨.
