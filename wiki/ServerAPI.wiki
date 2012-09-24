@@ -8,6 +8,8 @@
 
 [MenuAdd 메뉴(& 링크) 추가 API]
 
+[Menu_Button_load 메뉴(& 링크) 버튼 정보 Load API]
+
 [Menu_Button_upload 메뉴(& 링크) 버튼 업로드 API]
 
 [MenuDel_Mod_Move 메뉴(& 링크)삭제/수정(& 이동) API]
