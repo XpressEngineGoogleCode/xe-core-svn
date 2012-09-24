@@ -25,8 +25,32 @@ Array
 }}}
 
 = Modify =
+== module : menu ==
+== method : procMenuAdminUpdateItem ==
 
-수정의 경우에는 [http://code.google.com/p/xe-core/wiki/MenuAdd]를 참조.
+{{{
+var params = new Array();
+var response_tags = new Array('menu_item_srl');
+params['menu_item_srl'] = '918';
+params['module_srl'] = '917';
+params['menu_name'] = '테스트 제목';
+params['mid'] = 'boardboard';
+params['menu_open_window'] = 'N';
+params['menu_expand'] = 'N';
+
+exec_xml("menu","procMenuAdminUpdateItem", params, completeTmp);
+}}}
+
+위와 같이 호출 하면 아래와 같은 형태로 리턴 됨.
+
+{{{
+Array
+(
+    [error] => "0"
+    [message] => "수정했습니다."
+    [menu_item_srl] => "918"
+)
+}}}
 
 = Move =
 
