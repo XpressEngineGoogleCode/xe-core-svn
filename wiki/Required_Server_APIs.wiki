@@ -57,11 +57,15 @@
 == 메뉴별 이미지 버튼 로드 & 저장 ==
 필요한 곳: 메뉴 > 이미지 버튼
 
-관련 이슈 URL: 
+관련 이슈 URL: 없슴
 
-예상 완료일: 
+예상 완료일: 완료
 
-(완료 됐다면) input/output 설명된 위키 페이지:  
+(완료 됐다면) input/output 설명된 위키 페이지: 
+
+Load : http://code.google.com/p/xe-core/wiki/Menu_Button_load
+
+Upload : http://code.google.com/p/xe-core/wiki/Menu_Button_upload
 
 
 <br>
