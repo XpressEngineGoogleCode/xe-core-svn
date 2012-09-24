@@ -12,6 +12,8 @@
 
 [MenuDel_Mod_Move 메뉴(& 링크)삭제/수정(& 이동) API]
 
+[MenuCopy 메뉴(& 링크) 복사 API]
+
 [SiteDefaultDesign_SET_API 기본 사이트 디자인(레이아웃, 스킨) 저장]
 
 [MenuPerm 메뉴 권한 설정]
