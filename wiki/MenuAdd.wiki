@@ -6,7 +6,6 @@ var params = new Array();
 var response_tags = new Array('menu_item_srl');
 params['ruleset'] = "insertMenuItem";
 params['act'] = "procMenuAdminInsertItem";
-params['menu_srl'] = "sitemap 번호";
 params['menu_name_key'] = "메뉴의 이름에 다국어가 쓰였을 경우 해당 변수 명 (ex: $user_lang->userLang20120919153529020)";
 params['menu_name'] = "사용자에게 보여줘야 할 메뉴명";
 params['module_type'] = "모듈의 타입"; //page module일 경우 WIDGET, ARTICLE, OUTSIDE의 값을 가질 수 있으며 기타 다른 모듈은 모듈명을 사용한다.
