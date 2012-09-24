@@ -19,6 +19,13 @@ exec_xml("menu","procMenuAdminInsertItem", params, completeTmp, response_tags)
 }}}
 위와 같이 호출 하면 아래와 같은 형태로 리턴 됨.
 
+메뉴의 타입이 URL인 경우 위 parameter 중에 다음의 값만 아래와 같이 변경하여 보내면 됨.
+
+{{{
+params['module_type'] = 'url';
+params['url'] = 'http://www.naver.com';
+}}}
+
 {{{
 Array
 (
