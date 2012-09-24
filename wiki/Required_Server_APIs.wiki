@@ -72,11 +72,11 @@ Upload : http://code.google.com/p/xe-core/wiki/Menu_Button_upload
 == 메뉴별 사용 중인 레이아웃 얻는 API ==
 필요한 곳: 메뉴 > 디자인 > 레이아웃
 
-관련 이슈 URL: 
+관련 이슈 URL: 없음
 
-예상 완료일: 
+예상 완료일: 완료
 
-(완료 됐다면) input/output 설명된 위키 페이지:  
+(완료 됐다면) input/output 설명된 위키 페이지: 버튼 이미지 load 참조 [http://code.google.com/p/xe-core/wiki/Menu_Button_load]
 
 
 <br>
