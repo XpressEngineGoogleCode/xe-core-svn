@@ -15,7 +15,7 @@
 
 예상 완료일: 완료
 
-(완료 됐다면) input/output 설명된 위키 페이지:  [http://code.google.com/p/xe-core/wiki/SiteMap_Add_Del_Mod_API?ts=1348033617&updated=SiteMap_Add_Del_Mod_API]
+(완료 됐다면) input/output 설명된 위키 페이지:  [http://code.google.com/p/xe-core/wiki/SiteMap_Add_Del_Mod_API]
 
 <br>
 == 메뉴(& 링크) 추가 API ==
