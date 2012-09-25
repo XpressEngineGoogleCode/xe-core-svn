@@ -58,9 +58,9 @@ Array
 var params = new Array();
 params['menu_srl'] = 101;
 params['mode'] = 'move';
-params['parent_srl'] = 186;
-params['source_srl'] = 0;
-params['target_srl'] = 196;
+params['parent_srl'] = 186; //부모
+params['source_srl'] = 0;  //포지션(같은 depth)
+params['target_srl'] = 196;  //자신.
 exec_xml("menu","procMenuAdminMoveItem", params, completeTmp);
 }}}
 
