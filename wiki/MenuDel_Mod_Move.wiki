@@ -59,7 +59,7 @@ var params = new Array();
 params['menu_srl'] = 101;
 params['mode'] = 'move';
 params['parent_srl'] = 186; //부모
-params['source_srl'] = 0;  //포지션(같은 depth)
+params['source_srl'] = 0;  //parent_srl하위의 어느 노드 뒤에 삽입 할지. 0: parent_srl 바로 밑에. 다른 값: 해당 srl을 가진 노드 밑에
 params['target_srl'] = 196;  //자신.
 exec_xml("menu","procMenuAdminMoveItem", params, completeTmp);
 }}}
