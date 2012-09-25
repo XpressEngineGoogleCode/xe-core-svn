@@ -6,8 +6,7 @@
 
 {{{
 var params = new Array();
-var response_tags = new Array('menu_srl');
-params['menu_srl'] = 1;
+var response_tags = new Array('menu_item_srl', 'menu_title', 'xml_file');
 params['menu_item_srl'] = 2;
 exec_xml("menu","procMenuAdminDeleteItem", params, completeTmp, response_tags)
 }}}
@@ -32,7 +31,6 @@ Array
 var params = new Array();
 var response_tags = new Array('menu_item_srl');
 params['menu_item_srl'] = '918';
-params['module_srl'] = '917';
 params['menu_name'] = '테스트 제목';
 params['url'] = 'boardboard';
 params['menu_open_window'] = 'N';
