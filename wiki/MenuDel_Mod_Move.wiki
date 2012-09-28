@@ -54,7 +54,6 @@ Array
 
 {{{
 var params = new Array();
-params['menu_srl'] = 101;
 params['mode'] = 'move';
 
 // 위치를 이동 할 메뉴의 srl
