@@ -8,9 +8,11 @@ http://code.google.com/p/xe-core/issues/detail?id=2367
 }}}
 위의 값을 iframe source로 사용.
 
-스킨 추가 설정 정보는 배열값으로 iframe에 post전송
+스킨 추가 설정 정보는 아래 구조로 iframe에 post전송
 {{{
-var data = [];
-data.skin_vars.colorset = 'white';
-data.skin_vars.default_style = 'blahblah';
+var skin_vars= {};
+skin_vars.colorset = 'white';
+skin_vars.default_style = 'blahblah';
+
+var data = {skin_vars:getJSON(skin_vars)};
 }}}
