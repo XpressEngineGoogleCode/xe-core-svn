@@ -10,7 +10,7 @@ http://code.google.com/p/xe-core/issues/detail?id=2367
 
 스킨 추가 설정 정보는 배열값으로 iframe에 post전송
 {{{
-var skin_vars = [];
-skin_vars['colorset'] = 'white';
-skin_vars['default_style'] = 'blahblah';
+var data = [];
+data.skin_vars.colorset = 'white';
+data.skin_vars.default_style = 'blahblah';
 }}}
