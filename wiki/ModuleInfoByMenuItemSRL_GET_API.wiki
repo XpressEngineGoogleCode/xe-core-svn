@@ -1,0 +1,41 @@
+#sidebar ServerAPI
+
+http://code.google.com/p/xe-core/issues/detail?id=2369
+
+{{{
+var params = new Array();
+var response_tags = new Array('module_info_by_menu_item_srl');
+params['menu_item_srl'] = menu_item srl;
+exec_xml("module","getModuleInfoByMenuItemSrl", params, completeTmp, response_tags);
+}}}
+위와 같이 호출 하면 아래와 같은 형태로 리턴 됨.
+
+{{{
+stdClass Object
+(
+    [module_srl] => 63
+    [module] => page
+    [module_category_srl] => 0
+    [layout_srl] => 133   // is_layout_fix가 'N'인 경우 값은 -1000으로 들어옴
+    [use_mobile] => N
+    [mlayout_srl] => 0
+    [menu_srl] => 59
+    [site_srl] => 0
+    [mid] => welcome_page
+    [is_skin_fix] => Y  // 'N'인 경우 기본 스킨 사용 옵션
+    [skin] => default
+    [mskin] => 
+    [browser_title] => welcome_page
+    [description] => 
+    [is_default] => N
+    [content] => 
+    [mcontent] => 
+    [open_rss] => Y
+    [header_text] => 
+    [footer_text] => 
+    [regdate] => 20120911110022
+    [is_layout_fix] => Y   // 'N'인 경우 기본 레이아웃 사용 옵션
+    [document_srl] => 64
+    [page_type] => ARTICLE
+)
+}}}
