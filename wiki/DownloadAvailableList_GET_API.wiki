@@ -48,6 +48,11 @@ Params
 }
 }}}
 
+ * current_version: 설치된 상태이며 현재 설치된 버전
+ * need_update: Y이면 업데이트가 있음
+ * avail_remove: true이면 쉬운설치를 통하여 삭제가 가능
+
+
 =레이아웃 목록=
 
 API: index.php?act=getAutoinstallAdminLayoutPackageList
