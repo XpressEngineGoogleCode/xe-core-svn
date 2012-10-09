@@ -18,6 +18,7 @@ Params
 	"item_list":[
 		{
 			"category_srl":"18322923",
+                        "current_version": "1.5.2.1"
 			"package_srl":"18324167",
 			"item_screenshot_url":"./files/attach/images/18322904/994/054/021/c58fd1d4349c72b7cc91d10197e676f3.jpg",
 			"package_voted":"378",
@@ -30,7 +31,6 @@ Params
 			"package_star":"4",
 			"depfrom":"18324212,18324211,18539546,18632016,18621989,18620644,18867310,19133046,18607436,19285120,19197549,19349000,19348911,19431275,19527443,19901434,18980346,20279228,18324168",
 			"category":"",
-                        "is_installed":"Y"
 		},
 		... 생략 ...
 	],
