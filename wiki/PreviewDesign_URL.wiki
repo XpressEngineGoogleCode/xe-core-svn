@@ -14,5 +14,14 @@ var skin_vars= {};
 skin_vars.colorset = 'white';
 skin_vars.default_style = 'blahblah';
 
-var data = {skin_vars:getJSON(skin_vars)};
+<input type="hidden" name="skin_vars" value="getJSON(skin_vars)" />
+
+var layout_vars = {};
+layout_vars.title = 'title';
+layout_vars.description = 'blblblbl';
+
+<input type="hidden" name="layout_vars" value="getJSON(layout_vars)" />
+
+
+
 }}}
