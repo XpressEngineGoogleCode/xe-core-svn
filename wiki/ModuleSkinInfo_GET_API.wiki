@@ -53,6 +53,7 @@ Array
 )
 }}}
 
+{{{
 error: 0
 message: "success"
 message_type: ""
@@ -78,3 +79,4 @@ xe_guestbook: Object
 xe_official: Object
 xe_v3_default: Object
 xe_v3_gallery: Object
+}}}
