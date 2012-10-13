@@ -52,3 +52,29 @@ Array
 
 )
 }}}
+
+error: 0
+message: "success"
+message_type: ""
+skin_info_list: Object
+xe_board: Object
+author: Array[1]
+0: Object
+length: 1
+__proto__: Array[0]
+colorset: Array[6]
+date: "20120621"
+description: "↵        XE 게시판의 2007 기본 스킨입니다.↵    "
+extra_vars: Array[23]
+homepage: ""
+license: ""
+license_link: ""
+thumbnail: "./modules/board/skins/xe_board/thumbnail.png"
+title: "XE Default 2007"
+version: "0.2"
+__proto__: Object
+xe_default: Object
+xe_guestbook: Object
+xe_official: Object
+xe_v3_default: Object
+xe_v3_gallery: Object
