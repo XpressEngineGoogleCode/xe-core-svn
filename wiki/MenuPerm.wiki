@@ -60,28 +60,34 @@ var params = new Array();
 var response_tags = new Array('menu_item');
 params['menu_item_srl'] = '62';
 exec_xml("menu","getMenuAdminItemInfo", params, completeTmp, response_tags);
+{
+   "message_type":"",
+   "menu_item":{
+      "group_srls":[
 
-Array
-(
-    [1] => stdClass Object
-        (
-            [group_srl] => 1
-            [title] => 관리그룹
-            [isChecked] => 
-        )
-
-    [2] => stdClass Object
-        (
-            [group_srl] => 2
-            [title] => 준회원
-            [isChecked] => 
-        )
-
-    [3] => stdClass Object
-        (
-            [group_srl] => 3
-            [title] => 정회원
-            [isChecked] => 
-        )
-
-)
+      ],
+      "moduleType":"",
+      "groupList":[
+         {
+            "group_srl":"1",
+            "title":"관리그룹",
+            "isChecked":false
+         },
+         {
+            "group_srl":"2",
+            "title":"준회원",
+            "isChecked":false
+         },
+         {
+            "group_srl":"3",
+            "title":"정회원",
+            "isChecked":false
+         }
+      ],
+      "name_key":"",
+      "name":""
+   },
+   "error":0,
+   "message":"success"
+}
+}}}
