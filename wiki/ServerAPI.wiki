@@ -22,6 +22,8 @@
 
 [PreviewDesign_URL 레이아웃 스킨 미리보기 URL]
 
+[LayoutSetInfoView_GET_API 레이아웃 설정 하기 화면]
+
 [ModuleSkinInfo_GET_API 모듈별 선택가능한 스킨 목록]
 
 [LayoutInfo_GET_API 레이아웃 목록]
