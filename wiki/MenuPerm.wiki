@@ -9,9 +9,22 @@ http://code.google.com/p/xe-core/issues/detail?id=2363
 권환 관련 반환 값 중 grant와 group 값을 사용.
 grant는 all, member, site, group 값을 가질 수 있음.
 
+*default*
+
+해당 모듈의 기본 값.
+
+  * guest : 모든 옵션 사용 가능, 항상 권한 있음.
+  * member : '모든 사용자' 제외하고 사용 가능, 로그인 정보가 있을 경우 true
+  * site : '모든 사용자' 제외하고 사용 가능, 가상 사이트일 경우에는 가입된 그룹 정보가 있어야 하며, 가상 사이트가 아닐 경우에는 'member'와 동일.
+  * manager : '선택그룹 사용자' 옵션만 사용가능, 관리자일 경우에만 true
+  * root : manager와 동일.
+
 *grant*
 
-  * 모든 사용자 : 값이 없거나 'all' 인 경우
+관리자가 설정하여 DB에 저장된 값.
+
+  * 값이 없을 경우 : default 사용
+  * 모든 사용자 : 'all' 인 경우
   * 로그인 사용자 : 'member'
   * 가입한 사용자 : 'site'
   * 선택그룹 사용자 : 'group'
