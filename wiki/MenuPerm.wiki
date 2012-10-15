@@ -23,6 +23,38 @@ params2['target_module'] = 'board';
 params2['module_srl'] = '106';
 exec_xml("module","getModuleAdminGrant", params2, completeTmp, response_tags2);
 
+{
+   "message_type":"",
+   "grantList":{
+      "access":{
+         "title":"접근 권한",
+         "default":"guest"
+      },
+      "list":{
+         "title":"목록",
+         "default":"guest"
+      },
+      "view":{
+         "title":"열람",
+         "default":"guest"
+      },
+      "write_document":{
+         "title":"글 작성",
+         "default":"guest"
+      },
+      "write_comment":{
+         "title":"댓글 작성",
+         "default":"guest"
+      },
+      "manager":{
+         "title":"관리 권한",
+         "default":"manager"
+      }
+   },
+   "error":0,
+   "message":"success"
+}
+
 * 그룹 리스트 관련 api 호출 예제
 var params3 = new Array();
 var response_tags3 = new Array('menuList');
