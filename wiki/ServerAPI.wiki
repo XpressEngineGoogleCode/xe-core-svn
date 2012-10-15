@@ -24,6 +24,8 @@
 
 [LayoutSetInfoView_GET_API 레이아웃 설정 하기 화면]
 
+[LayoutSetHTMLCSSView_GET_API  레이아웃 HTML/CSS설정 하기 화면]
+
 [ModuleSkinInfo_GET_API 모듈별 선택가능한 스킨 목록]
 
 [LayoutInfo_GET_API 레이아웃 목록]
