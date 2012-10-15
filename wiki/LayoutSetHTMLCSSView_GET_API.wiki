@@ -1,0 +1,16 @@
+#sidebar ServerAPI
+
+http://code.google.com/p/xe-core/issues/detail?id=2585
+
+{{{
+var params = new Array();
+var response_tags = new Array('html');
+params['layout_srl'] = layout_srl;
+exec_xml("layout","getLayoutAdminSetHTMLCSS", params, completeTmp, response_tags);
+}}}
+위와 같이 호출 하면 레이아웃 HTML/CSS설정 화면의 html string이 리턴됨.
+
+해당 화면에 사용될 js내용을 수정하려면 아래 파일에 적용.
+{{{
+XE_PATH/modules/layout/tpl/js/layout_admin_set_html.js 
+}}}
