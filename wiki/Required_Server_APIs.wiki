@@ -15,11 +15,11 @@
 == 사이트맵 > 메뉴 > 디자인 > 레이아웃 > HTML/CSS ==
 상세: 설정 HTML 로드 / 설정 저장
 
-관련 이슈 URL: 
+관련 이슈 URL: https://code.google.com/p/xe-core/issues/detail?id=2585
 
 예상 완료일: 
 
-(완료 됐다면) input/output 설명된 위키 페이지: 
+(완료 됐다면) input/output 설명된 위키 페이지: https://code.google.com/p/xe-core/wiki/LayoutSetHTMLCSSView_GET_API
 
 <br>
 == 사이트맵 > 메뉴 > 디자인 > 레이아웃 > 복사본 생성 ==
