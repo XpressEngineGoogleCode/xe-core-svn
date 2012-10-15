@@ -4,18 +4,21 @@
 
 http://code.google.com/p/xe-core/issues/detail?id=2363
 
+권환 관련 반환 값 중 grant와 group 값을 사용.
+grant는 all, member, site, group 값을 가질 수 있음.
+
+*grant*
+
+  * 모든 사용자 : 값이 없거나 'all' 인 경우
+  * 로그인 사용자 : 'member'
+  * 가입한 사용자 : 'site'
+  * 선택그룹 사용자 : 'group'
+
+*group*
+
+  grant가 group일 경우 해당 되는 group_srl를 배열로 넘겨 줌.
+
 {{{
-메뉴 노출 대상 설정은 다음과 같은 방법으로 사용.
-index.php?module=menu&menu_item_srl=메뉴번호&act=getMenuAdminItemInfo
-
-보여 주어야 할 그룹 목록은 returnObj.groupList로 사용 가능.
-선택된 그룹은 groupList.isChecked 값으로 확인.
-
-선택된 그룹이 아닌 '모든 사용자' 또는 '로그인 사용자'는 returnObj.group_srls로 사용.
-
-모든 사용자 : group_srls 값이 빈 값.
-로그인 사용자 : group_srls[0]의 값이 -1
-
 * 메뉴 권한 관련 api 호출 예제
 var params2 = new Array();
 var response_tags2 = new Array('grantList');
@@ -40,11 +43,16 @@ exec_xml("module","getModuleAdminGrant", params2, completeTmp, response_tags2);
       },
       "write_document":{
          "title":"글 작성",
-         "default":"guest"
+         "default":"guest",
+         "grant":"group",
+         "group":{
+             1, 2, 3
+         }
       },
       "write_comment":{
          "title":"댓글 작성",
-         "default":"guest"
+         "default":"guest",
+         "grant":"member"
       },
       "manager":{
          "title":"관리 권한",
@@ -54,7 +62,21 @@ exec_xml("module","getModuleAdminGrant", params2, completeTmp, response_tags2);
    "error":0,
    "message":"success"
 }
+}}}
 
+
+메뉴 노출 대상 설정은 다음과 같은 방법으로 사용.
+index.php?module=menu&menu_item_srl=메뉴번호&act=getMenuAdminItemInfo
+
+보여 주어야 할 그룹 목록은 returnObj.groupList로 사용 가능.
+선택된 그룹은 groupList.isChecked 값으로 확인.
+
+선택된 그룹이 아닌 '모든 사용자' 또는 '로그인 사용자'는 returnObj.group_srls로 사용.
+
+모든 사용자 : group_srls 값이 빈 값.
+로그인 사용자 : group_srls[0]의 값이 -1
+
+{{{
 * 그룹 리스트 관련 api 호출 예제
 var params = new Array();
 var response_tags = new Array('menu_item');
