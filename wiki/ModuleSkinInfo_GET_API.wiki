@@ -6,6 +6,7 @@ http://code.google.com/p/xe-core/issues/detail?id=2369
 var params = new Array();
 var response_tags = new Array('skin_info_list');
 params['module_name'] = 모듈이름;
+params['skin_type'] = 'M' | 'P'; // M : 모바일, P or null : 피씨
 exec_jsonp("module","getModuleSkinInfoList", params, completeTmp, response_tags);
 }}}
 위와 같이 호출 하면 아래와 같은 형태로 리턴 됨.
