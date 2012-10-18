@@ -1,0 +1,16 @@
+#sidebar ServerAPI
+
+기존 액션 이용.
+
+{{{
+var params = new Array();
+params['layout_srl'] = layout_srl;
+exec_xml("layout","procLayoutAdminDelete", params, completeTmp);
+}}}
+
+or
+{{{
+<form method="post" action="./">
+     <input type="hidden" name="layout_srl" value="layout_srl" />
+</form>
+}}}
