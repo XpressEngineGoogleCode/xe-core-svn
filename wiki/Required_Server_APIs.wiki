@@ -25,11 +25,11 @@
 == 사이트맵 > 메뉴 > 디자인 > 레이아웃 > 복사본 생성 ==
 상세: 중복되지 않는 레이아웃 명 획득 API, 복사본 생성 API
 
-관련 이슈 URL: 
+관련 이슈 URL: http://code.google.com/p/xe-core/issues/detail?id=2601
 
 예상 완료일: 
 
-(완료 됐다면) input/output 설명된 위키 페이지: 
+(완료 됐다면) input/output 설명된 위키 페이지: http://code.google.com/p/xe-core/wiki/CopyLayout_API
 
 <br>
 == 사이트맵 > 메뉴 > 디자인 > 레이아웃 > 삭제 ==
