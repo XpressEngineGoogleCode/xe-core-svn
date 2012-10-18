@@ -11,6 +11,7 @@ exec_xml("layout","procLayoutAdminDelete", params, completeTmp);
 or
 {{{
 <form method="post" action="./">
+     <input type="hidden" name="act" value="procLayoutAdminDelete" />
      <input type="hidden" name="layout_srl" value="layout_srl" />
 </form>
 }}}
