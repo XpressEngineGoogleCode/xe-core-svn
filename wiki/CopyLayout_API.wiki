@@ -1,0 +1,17 @@
+#sidebar ServerAPI
+
+http://code.google.com/p/xe-core/issues/detail?id=2601
+
+{{{
+var params = new Array();
+params['layout_srl'] = layout_srl;
+exec_xml("layout","procLayoutAdminCopyLayout", params, completeTmp);
+}}}
+
+or
+{{{
+<form method="post" action="./">
+     <input type="hidden" name="act" value="procLayoutAdminCopyLayout" />
+     <input type="hidden" name="layout_srl" value="layout_srl" />
+</form>
+}}}
