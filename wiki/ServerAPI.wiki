@@ -39,3 +39,5 @@
 [ModuleInfoByMenuItemSRL_GET_API 메뉴별 모듈 정보 (레이아웃, 스킨 고정 값 정보 포함)]
 
 [RemoveLayout_API 레이아웃 삭제]
+
+[CopyLayout_API 레이아웃 복사]
