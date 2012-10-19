@@ -5,6 +5,7 @@ http://code.google.com/p/xe-core/issues/detail?id=2601
 {{{
 var params = new Array();
 params['layout_srl'] = layout_srl;
+params['title'] = 'New01'; //생략시 랜덤하게 생성
 exec_xml("layout","procLayoutAdminCopyLayout", params, completeTmp);
 }}}
 
