@@ -1,0 +1,15 @@
+#sidebar ServerAPI
+
+http://code.google.com/p/xe-core/issues/detail?id=2611
+
+{{{
+var params = new Array();
+var response_tags = new Array('setupUrl');
+params['menu_item_srl'] = '41390';
+exec_xml("menu","getMenuAdminDetailSetup", params, completeTmp, response_tags);
+}}}
+위와 같이 호출 하면 아래와 같은 형태로 리턴 됨.
+
+{{{
+https://ovclas.xpressengine.com/maserati/index.php?module=admin&act=dispBoardAdminInsertBoard&module_srl=41389&isLayoutDrop=1
+}}}
