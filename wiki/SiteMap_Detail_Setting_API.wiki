@@ -2,6 +2,8 @@
 
 http://code.google.com/p/xe-core/issues/detail?id=2611
 
+ * menu_item_srl : 메뉴의 일련 번호
+
 {{{
 var params = new Array();
 var response_tags = new Array('setupUrl');
@@ -11,5 +13,7 @@ exec_xml("menu","getMenuAdminDetailSetup", params, completeTmp, response_tags);
 위와 같이 호출 하면 아래와 같은 형태로 리턴 됨.
 
 {{{
-https://ovclas.xpressengine.com/maserati/index.php?module=admin&act=dispBoardAdminInsertBoard&module_srl=41389&isLayoutDrop=1
+[setupUrl] => https://ovclas.xpressengine.com/maserati/index.php?module=admin&act=dispBoardAdminInsertBoard&module_srl=41389&isLayoutDrop=1
 }}}
+
+위와 같이 리턴 된 setupUrl을 이용하여 해당 url을 호출하게 되면 layout이 제거 된 설정 화면을 볼 수 있슴.
