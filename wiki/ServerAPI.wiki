@@ -6,6 +6,8 @@
 
 [SiteMap_Add_Del_Mod_API 사이트맵 추가/삭제/수정 API]
 
+[SiteMap_Detail_Setting_API 사이트 맵 상세설정]
+
 [MenuAdd 메뉴(& 링크) 추가 API]
 
 [Menu_Button_load 메뉴(& 링크) 버튼 정보 Load API]
