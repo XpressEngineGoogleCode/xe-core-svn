@@ -3,47 +3,7 @@
 http://code.google.com/p/xe-core/issues/detail?id=2619
 
  * menu_item_srl : 메뉴의 일련 번호
- * skin : 선택한 스킨의 이름 (skin directory 명)
 
-{{{
-var params = new Array();
-params['menu_item_srl'] = '41390';
-params['skin'] = 'xe_default';
-exec_xml("menu","getMenuAdminModuleSkin", params, completeTmp);
-}}}
-위와 같이 호출 하면 아래와 같은 HTML 형태로 리턴 됨.
+아래와 같은 형식의 URL을 호출하면 된다.
 
-{{{
-<form action="./" method="post" enctype="multipart/form-data"><input type="hidden" name="error_return_url" value="/maserati/index.php" />
-        <input type="hidden" name="module" value="module" />
-        <input type="hidden" name="vid" value="" />
-        <input type="hidden" name="mid" value="freeboard_copy_20121004141912" />
-        <input type="hidden" name="act" value="procModuleAdminUpdateSkinInfo" />
-        <input type="hidden" name="_mode" value="P" />
-        <input type="hidden" name="module_srl" value="41389" />
-        <input type="hidden" name="page" value="" />
-        
-    <h2 class="h2">스킨 기본정보</h2>
-        <ul>
-                <li>
-                        <p class="q">스킨</p>
-                        <p class="a"></p>
-                </li>
-                <li>
-                        <p class="q">스킨 제작자</p>
-                        <p class="a">
-                                                        </p>
-                </li>
-                                <li>
-                        <p class="q">날짜</p>
-                        <p class="a"></p>
-                </li>
-                                        </ul>
-    <h2 class="h2">확장변수</h2>
-        <ul>
-                                        </ul>
-    <div class="btnArea">
-                <span class="btn"><input type="submit" value="등록" /></span>
-        </div>
-</form>
-}}}
+*index.php?module=admin&act=dispMenuAdminSkinSetup&menu_item_srl=57359*
