@@ -6,7 +6,6 @@ http://code.google.com/p/xe-core/issues/detail?id=2619
 
 {{{
 var params = new Array();
-var response_tags = new Array('setupUrl');
 params['menu_item_srl'] = '41390';
 exec_xml("menu","getMenuAdminModuleSkin", params, completeTmp);
 }}}
