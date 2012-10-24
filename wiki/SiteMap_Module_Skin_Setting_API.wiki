@@ -3,10 +3,12 @@
 http://code.google.com/p/xe-core/issues/detail?id=2619
 
  * menu_item_srl : 메뉴의 일련 번호
+ * skin : 선택한 스킨의 이름 (skin directory 명)
 
 {{{
 var params = new Array();
 params['menu_item_srl'] = '41390';
+params['skin'] = 'xe_default';
 exec_xml("menu","getMenuAdminModuleSkin", params, completeTmp);
 }}}
 위와 같이 호출 하면 아래와 같은 HTML 형태로 리턴 됨.
