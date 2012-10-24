@@ -28,6 +28,7 @@ Array
                                     [text] => menu1
                                     [href] => 
                                     [url] => 
+                                    [is_shortcut] => N
                                     [open_window] => N
                                     [normal_btn] => 
                                     [hover_btn] => 
@@ -43,6 +44,7 @@ Array
                                                     [text] => menu1-1
                                                     [href] => /maserati/index.php?mid=welcome_page
                                                     [url] => welcome_page
+                                                    [is_shortcut] => N
                                                     [open_window] => N
                                                     [normal_btn] => 
                                                     [hover_btn] => 
