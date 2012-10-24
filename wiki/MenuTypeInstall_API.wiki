@@ -9,7 +9,7 @@ API: index.php?act=getAutoinstallAdminIsAuthed
 응답
 {{{
 {
-	"is_authed":1,
+	"is_authed":1, // 1: 비밀번호 세션있음, 0: 세션 없음, -1: FTP 설정 안 됨
 	"error":0,
 	"message":"success"
 }
