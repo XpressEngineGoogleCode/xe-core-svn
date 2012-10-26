@@ -25,6 +25,7 @@ Array
                                 (
                                     [node_srl] => 60
                                     [parent_srl] => 0
+                                    [menu_name_key] => menu1
                                     [text] => menu1
                                     [href] => 
                                     [url] => 
@@ -41,6 +42,7 @@ Array
                                                 (
                                                     [node_srl] => 61
                                                     [parent_srl] => 60
+                                                    [menu_name_key] => $user_lang->userLang20121026153820095
                                                     [text] => menu1-1
                                                     [href] => /maserati/index.php?mid=welcome_page
                                                     [url] => welcome_page
@@ -77,4 +79,5 @@ Array
 )
 }}}
 
-위의 내용에서 is_start_module의 값이 true(or 1)일 경우 시작 페이지임.
+ * 위의 내용에서 is_start_module의 값이 true(or 1)일 경우 시작 페이지임.
+ * menu_name_key의 값은 다국어 사용을 위한 php 변수명을 내려 줌. 다국어를 사용하지 않을 경우에는 menu_name_key의 값은 text와 동일
