@@ -22,6 +22,8 @@
 
 [SiteDefaultDesign_SET_API 기본 사이트 디자인(레이아웃, 스킨) 저장]
 
+[ModuleDesignInfo_SET_API  모듈별 디자인 정보 저장]
+
 [MenuPerm 메뉴 권한 설정]
 
 [PreviewDesign_URL 레이아웃 스킨 미리보기 URL]
