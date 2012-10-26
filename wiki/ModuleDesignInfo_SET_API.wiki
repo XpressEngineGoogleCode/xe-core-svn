@@ -1,0 +1,18 @@
+#sidebar ServerAPI
+
+https://code.google.com/p/xe-core/issues/detail?id=2627
+
+{{{
+skin_vars = {'color':'white', 'head_title':'aaaaaa'};
+
+var params = new Array();
+params['target_module_srl'] = 모듈srl (mid가 있는 경우 생략 가능)
+params['target_mid'] = 모듈ID (module_srl이 있는 경우 생략 가능)
+params['skin_type'] = 'M'/'P' (생략할 경우 'P')
+params['layout_srl'] = layout_srl
+params['is_skin_fix'] = 'N' : 사이트 기본 스킨 사용 시 / 'Y' : 모듈 스킨 사용시
+params['skin_name'] = 스킨 이름(skin/mskin 값)
+params['skin_vars'] = 스킨 설정 정보 json_encode(skin_vars);
+
+exec_xml("module","procModuleAdminSetDesignInfo", params, completeTmp)
+}}}
