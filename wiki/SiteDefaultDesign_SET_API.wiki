@@ -12,6 +12,7 @@ var params = new Array();
 params['site_srl'] = siteSrl; // (int)사이트 srl
 params['layout_srl'] = layoutSrl; // (int)선택된 레이아웃의 srl : 모듈 스킨 정보만 저장할 경우 생략 가능
 params['module_skin'] = JSON.encode(module_skins); // (str)스킨 이름 : 레이아웃 정보만 저장할 경우 생략 가능
+params['target_type'] = 'M'/'P';
 exec_xml("admin","procAdminInsertDefaultDesignInfo", params, completeTmp)
 }}}
 
