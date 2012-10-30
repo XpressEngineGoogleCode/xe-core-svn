@@ -35,6 +35,7 @@ params['menu_name'] = '테스트 제목';
 params['url'] = 'boardboard';
 params['menu_open_window'] = 'N';
 params['menu_expand'] = 'N';
+params['shortcut_target'] = '123';
 
 exec_xml("menu","procMenuAdminUpdateItem", params, completeTmp);
 }}}
@@ -49,6 +50,9 @@ Array
     [menu_item_srl] => "918"
 )
 }}}
+
+ * shortcut_target이 http로 시작할 경우에는 url 타입, 숫자로 되어 있을 경우에는 타겟 메뉴의 번호로 인식함
+
 
 = Move =
 
