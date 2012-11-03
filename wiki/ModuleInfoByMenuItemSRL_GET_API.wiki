@@ -23,6 +23,7 @@ stdClass Object
     [site_srl] => 0
     [mid] => welcome_page
     [is_skin_fix] => Y  // 'N'인 경우 기본 스킨 사용 옵션
+    [is_mskin_fix] => Y  // 'N'인 경우 기본 스킨 사용 옵션
     [skin] => default
     [mskin] => 
     [browser_title] => welcome_page
@@ -34,7 +35,6 @@ stdClass Object
     [header_text] => 
     [footer_text] => 
     [regdate] => 20120911110022
-    [is_layout_fix] => Y   // 'N'인 경우 기본 레이아웃 사용 옵션
     [document_srl] => 64
     [page_type] => ARTICLE
 )
