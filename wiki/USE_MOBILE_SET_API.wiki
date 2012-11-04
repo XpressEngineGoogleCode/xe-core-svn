@@ -1,0 +1,10 @@
+#sidebar ServerAPI
+
+http://code.google.com/p/xe-core/issues/detail?id=2656
+
+{{{
+var params = new Array();
+params['menu_item_srl'] = menu_item srl;
+params['use_mobile'] = Y/N;
+exec_xml("module","procModuleAdminUpdateUseMobile", params, completeTmp);
+}}}
