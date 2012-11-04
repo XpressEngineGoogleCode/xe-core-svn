@@ -47,3 +47,5 @@
 [RemoveLayout_API 레이아웃 삭제]
 
 [CopyLayout_API 레이아웃 복사]
+
+[USE_MOBILE_SET_API 모듈 모바일 뷰 사용 옵션 저장]
