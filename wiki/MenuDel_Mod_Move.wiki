@@ -8,6 +8,7 @@
 var params = new Array();
 var response_tags = new Array('menu_item_srl', 'menu_title', 'xml_file');
 params['menu_item_srl'] = 2;
+params['is_force'] = 'Y';
 exec_xml("menu","procMenuAdminDeleteItem", params, completeTmp, response_tags)
 }}}
 위와 같이 호출 하면 아래와 같은 형태로 리턴 됨.
@@ -22,6 +23,9 @@ Array
     [xml_file] => "./files/cache/menu/1.xml.php"
 )
 }}}
+
+ * is_force가 Y인 경우 하부 메뉴가 있어도 삭제한다.
+ * is_force가 없거나 N인 경우 하부 메뉴가 있을 때에는 error를 -1로 반환하며 message는 '하부 메뉴가 있는 메뉴는 삭제할 수 없습니다.'로 정의 된다.
 
 = Modify =
 == module : menu ==
