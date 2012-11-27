@@ -63,6 +63,7 @@ Array
                                                     [setup_index_act] => dispPageAdminInfo
                                                     [is_start_module] => 1
                                                     [layout_srl] => 62
+                                                    [browser_title] => 브라우져 제목입니다.
                                                 )
 
                                         )
@@ -81,3 +82,4 @@ Array
 
  * 위의 내용에서 is_start_module의 값이 true(or 1)일 경우 시작 페이지임.
  * menu_name_key의 값은 다국어 사용을 위한 php 변수명을 내려 줌. 다국어를 사용하지 않을 경우에는 menu_name_key의 값은 text와 동일
+ * browser_title은 module일 경우이면서 해당 값이 있을 경우 내려 줌.
