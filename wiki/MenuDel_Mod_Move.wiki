@@ -40,6 +40,7 @@ params['url'] = 'boardboard';
 params['menu_open_window'] = 'N';
 params['menu_expand'] = 'N';
 params['shortcut_target'] = '123';
+params['browser_title'] = '새로운 브라우져 제목입니다.';
 
 exec_xml("menu","procMenuAdminUpdateItem", params, completeTmp);
 }}}
@@ -56,6 +57,7 @@ Array
 }}}
 
  * shortcut_target이 http로 시작할 경우에는 url 타입, 숫자로 되어 있을 경우에는 타겟 메뉴의 번호로 인식함
+ * module type의 메뉴이면서 browser_title이 있는 경우에는 기본 모듈에 셋팅되어 있는 browser_title을 변경 함
 
 
 = Move =
