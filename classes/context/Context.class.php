@@ -113,6 +113,20 @@ class Context {
 	 * @var bool true if attached file exists
 	 */
 	var $is_uploaded = false;
+	/**
+	 * Pattern for request vars check
+	 * @var array
+	 */
+	var $pattern = array(
+			'/<\?/iUsm',
+			'/<\%/iUsm',
+			'/<script(\s|\S)*language[\s]*=("|\')php("|\')(\s|\S)*/iUsm'
+			);
+	/**
+	 * Check init
+	 * @var bool false if init fail
+	 */
+	var $isSuccessInit = true;
 
 	/**
 	 * returns static context object (Singleton). It's to use Context without declaration of an object
@@ -812,12 +826,33 @@ class Context {
 
 			if($set_to_vars)
 			{
-				$val = preg_replace('/<\?.*(\?>)?/iUsm', '', $val);
-				$val = preg_replace('/<\%.*(\%>)?/iUsm', '', $val);
-				$val = preg_replace('/<script(\s|\S)*language[\s]*=("|\')php("|\')(\s|\S)*>.*<[\s]*\/[\s]*script[\s]*>/iUsm', '', $val);
+				$this->_recursiveCheckVar($val);
 			}
 
 			$this->set($key, $val, $set_to_vars);
+		}
+	}
+
+	function _recursiveCheckVar($val)
+	{
+		if(is_string($val))
+		{
+			foreach($this->pattern as $pattern)
+			{
+				$result = preg_match($pattern, $val);
+				if($result)
+				{
+					$this->isSuccessInit = FALSE;
+					return;
+				}
+			}
+		}
+		else if(is_array($val))
+		{
+			foreach($val as $val2)
+			{
+				$this->_recursiveCheckVar($val2);
+			}
 		}
 	}
 
