@@ -17,8 +17,72 @@ Array
 (
     [error] => 0
     [message] => success 
+    [simpleSetupHtml] => "<form  class="x_form-horizontal" action="./" method="post" enctype="multipart/form-data"><input type="hidden" name="error_return_url" value="/maserati/" /><input type="hidden" name="act" value="getMenuAdminDetailSetup" /><input type="hidden" name="mid" value="" /><input type="hidden" name="vid" value="" /><input type="hidden" name="ruleset" value="insertBoard" />
+        <div class="x_control-group">
+                <label class="x_control-label" for="header_text">상단 내용</label>
+                <div class="x_controls">
+                        <textarea name="header_text" id="header_text" class="lang_code" rows="8" cols="42" placeholder="모듈 상단에 표시되는 내용입니다. (HTML 태그 사용 가능)">상단 내용입니다.</textarea>
+                        <a href="#header_text_help" class="x_icon-question-sign" data-toggle></a>
+                        <p id="header_text_help" class="x_help-block" hidden>모듈 상단에 표시되는 내용입니다. (HTML 태그 사용 가능)</p>
+                </div>
+        </div>
+        <div class="x_control-group">
+                <label class="x_control-label" for="footer_text">하단 내용</label>
+                <div class="x_controls">
+                        <textarea name="footer_text" id="footer_text" class="lang_code" rows="8" cols="42" placeholder="모듈 하단에 표시되는 내용입니다. (HTML 태그 사용 가능)">하단 내용입니다.</textarea>
+                        <a href="#footer_text_help" class="x_icon-question-sign" data-toggle></a>
+                        <p id="footer_text_help" class="x_help-block" hidden>모듈 하단에 표시되는 내용입니다. (HTML 태그 사용 가능)</p>
+                </div>
+        </div>
+        <div class="x_control-group">
+                <label class="x_control-label">정렬방법</label>
+                <div class="x_controls">
+                        <select name="order_target" id="order_target" title="정렬대상">
+                                                        </select>
+                        <select name="order_type" id="order_type" title="정렬방법">
+                                <option value="asc">오름차순</option>
+                                <option value="desc" selected="selected">내림차순</option>
+                        </select>
+                </div>
+        </div>
+        <div class="x_control-group">
+                <label class="x_control-label" for="list_count">목록 수</label>
+                <div class="x_controls">
+                        <input type="text" name="list_count" id="list_count" value="30" style="width:30px" />
+                        <p class="x_help-inline">한 페이지에 표시될 글 수를 지정할 수 있습니다. (기본 20개)</p>
+                </div>
+        </div>
+        <div class="x_control-group">
+                <label class="x_control-label">상태</label>
+                <div class="x_controls">
+                        <input type="hidden" name="use_status[]" value="PUBLIC" />
+                        <label class="x_inline"><input type="checkbox" name="" value="" checked="checked" disabled="disabled" /> 공개</label>
+                                                                                                                                                                                                                <label class="x_inline" for="SECRET"><input type="checkbox" name="use_status[]" id="SECRET" value="SECRET" /> 비밀</label>
+                                                                                                                                        <p class="x_help-block">글 작성 시 선택할 수 있는 상태를 지정해주세요.</p>
+                </div>
+        </div>
+        <div class="x_control-group">
+                                <label class="x_control-label">
+                        관리자ID             </label>                <div class="x_controls">
+                        <div class="x_input-append" style="margin-bottom:8px">
+                                <select name="_admin_member" multiple="multiple" size="1">
+                                                                        </select>
+                                <button class="x_btn" type="button" onclick="doDeleteAdmin()">삭제</button>
+                        </div>
+                        <br>
+                        <div class="x_input-append">
+                                <input type="text" name="admin_id" />
+                                <button class="x_btn" type="button" onclick="doInsertAdmin()">추가</button>
+                        </div>
+                        <a href="#adminListHelp" class="x_icon-question-sign"></a>
+                        <span id="adminListHelp" hidden>해당 모듈에 대해 최고 권한을 가지는 관리자를 지정할 수 있습니다.</span>
+                </div>
+        </div>
+        <p style="text-align:right">&rsaquo; <a href="#"></a></p>
+</form>"
     [setupUrl] => https://ovclas.xpressengine.com/maserati/index.php?module=admin&act=dispBoardAdminInsertBoard&module_srl=41389&isLayoutDrop=1
 )
 }}}
 
-위와 같이 리턴 된 setupUrl을 이용하여 해당 url을 호출하게 되면 layout이 제거 된 설정 화면을 볼 수 있슴.
+Basic version의 관리자 화면이 있을 경우 simpleSetupHtml에 html이 담겨오게 된다.
+Basic version의 관리자가 없을 경우에는 리턴 된 setupUrl을 이용하여 해당 url을 호출하게 되면 layout이 제거 된 설정 화면을 볼 수 있다.
