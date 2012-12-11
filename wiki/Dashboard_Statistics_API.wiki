@@ -1,0 +1,35 @@
+#sidebar ServerAPI
+
+http://code.google.com/p/xe-core/issues/detail?id=2740
+
+{{{
+var params = {};
+var response_tags = new Array('count');
+
+exec_xml("member","getMemberAdminCountByDate", params, completeTmp, response_tags);
+
+var params2 = {};
+params2['date'] = '20121210';
+var response_tags2 = new Array('count');
+
+exec_xml("member","getMemberAdminCountByDate", params2, completeTmp, response_tags2);
+}}}
+
+위와 같이 호출 하면 아래와 같은 형태로 리턴 됨.
+date 파라미터가 있으면 해당 날짜에 가입한 회원 수를, 없으면 전체 회원 수를 리턴 함.
+
+{{{
+Array
+(
+    [error] => 0
+    [message] => success 
+    [count] => 3920
+)
+
+Array
+(
+    [error] => 0
+    [message] => success 
+    [count] => 0
+)
+}}}
