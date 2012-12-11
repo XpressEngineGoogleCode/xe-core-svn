@@ -2,6 +2,8 @@
 
 *[Required_Server_APIs 우선적으로 필요한 API 목록]*
 
+[Dashboard_Statistics_API 대시보드 통계 API]
+
 [SiteMap_Load_API 사이트 맵 메뉴 읽기]
 
 [SiteMap_Add_Del_Mod_API 사이트맵 추가/삭제/수정 API]
