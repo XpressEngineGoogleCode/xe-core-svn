@@ -8,7 +8,6 @@ http://code.google.com/p/xe-core/issues/detail?id=2740
 
 {{{
 var params = {};
-var response_tags = new Array('data');
 
 jQuery.exec_json("counter.getWeeklyUniqueVisitor", params, function(retObj){
     console.log(retObj);
