@@ -36,4 +36,37 @@ Array
 )
 }}}
 
+
+== Page View API ==
+
+{{{
+var params = {};
+
+jQuery.exec_json("counter.getWeeklyPageView", params, function(retObj){
+    console.log(retObj);
+});
+}}}
+
+위와 같이 호출 하면 아래와 같은 형태로 리턴 됨.
+
+{{{
+Array
+(
+    [error] => 0
+    [message] => success 
+    [list] => Array
+    (
+        [20121209] => 0
+        [20121210] => 18
+        [20121211] => 2
+        [20121212] => 0
+        [20121213] => 0
+        [20121214] => 0
+        [20121215] => 0
+    )
+    [max] => 18
+    [sum] => 20
+)
+}}}
+
 이번주의 정보를 보여주며 일요일 ~ 토요일 기준으로 내려 줌.
