@@ -326,7 +326,7 @@
 		$request_uri = Context::getRequestUri();
         if(!$num_args) return $request_uri;
 
-        $url = Context::getUrl($num_args, $args_list);
+        $url = Context::getUrl($num_args, $args_list, null, false);
         if(!preg_match('/^http/i',$url)){
 			preg_match('/^(http|https):\/\/([^\/]+)\//',$request_uri,$match);
 			$url = Context::getUrl($num_args, $args_list, null, false);
@@ -938,7 +938,7 @@
      **/
 	function getRequestUriByServerEnviroment()
 	{
-		return $_SERVER['REQUEST_URI'];
+		return removeHackTag($_SERVER['REQUEST_URI']);
 	}
 
     /**
@@ -1129,6 +1129,24 @@
 			set_include_path(_XE_PATH_."libs/PEAR.1.9");	
 
 		}
+	}
+
+	function checkCSRF()
+	{
+		if($_SERVER['REQUEST_METHOD'] != 'POST')
+		{
+			return false;
+		}
+
+		$defaultUrl = Context::getDefaultUrl();
+		$referer = parse_url($_SERVER["HTTP_REFERER"]);
+
+		if(!strstr($defaultUrl, $referer['host']))
+		{
+			return false;
+		}
+
+		return true;
 	}
 
 	/**
