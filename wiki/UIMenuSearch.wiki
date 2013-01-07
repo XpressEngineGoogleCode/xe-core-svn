@@ -1,0 +1,36 @@
+#summary Menu Search UI guideline for administrative interface
+#sidebar DesignGuideTOC
+
+= Menu Search =
+
+특정 메뉴를 찾아야 할 필요가 있을 때 사용하는 UI 패턴이다. 기존 Module Search/Module Finder와 기능이 유사하나, 1.7부터 XE 사이트 제작/편집 방식이 모듈 기반이 아닌 메뉴 기반으로 변경 되면서 모듈 선택기가 메뉴 선택기로 변경 됐다. 이 UI를 통해 선택할 수 있는 값은 메뉴 종류, 메뉴 아이디(고유 숫자)이다.
+
+== Basics ==
+input 태그에 아래와 같이 module_search 클래스를 할당하면 해당 필드가 아래 이미지와 같은 모양으로 렌더링 되고, 우측 버튼 클릭 시 메뉴 선택기가 레이어로 나타난다. (기존 모듈 선택기와 호환성을 위해서 동일한 클래스 사용)
+
+{{{
+<input type="text" name="module_srl" class="module_search" />
+}}}
+
+http://xe-core.googlecode.com/svn/wiki/img/AdminUIMenuSearchExample.png
+
+특정 메뉴 타입만 선택 가능하게 하고 싶다면 아래와 같이 data-allowedType을 설정한다.
+{{{
+<input type="text" name="module_srl" data-allowedType="board" class="module_search" />
+}}}
+
+특정 메뉴 타입만 선택하지 못하게 하고 싶다면 아래와 같이 data-disallowedType을 설정한다.
+{{{
+<input type="text" name="module_srl" data-disallowedType="page,_SHORTCUT,_ROOT" class="module_search" />
+}}}
+
+아래와 같이 두가지를 모두 사용 할 경우, data-allowedType에 정의 된 타입만 선택가능하게 되고, 그 중 data-disallowedType에 있는 항목은 선택 불가가 된다.
+{{{
+<input type="text" name="module_srl" data-allowedType="board" data-disallowedType="page,_SHORTCUT,_ROOT" class="module_search" />
+}}}
+
+== jQuery Plugin ==
+이 패턴은 페이지를 읽어들일 때 자동으로 실행되기 때문에 페이지 요소를 동적으로 생성하는 경우에는 적용되지 않는 문제가 있다. 다음과 같이 moduleSearch 요소를 선택한 후 xeModuleFinder 메소드를 실행하면 페이지를 읽어들인 뒤에도 스크립트를 적용할 수 있다.
+{{{
+$('.module_search').xeMenuSearch();
+}}}
