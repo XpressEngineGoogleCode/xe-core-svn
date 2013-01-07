@@ -14,9 +14,9 @@ input 태그에 아래와 같이 module_search 클래스를 할당하면 해당 
 
 http://xe-core.googlecode.com/svn/wiki/img/AdminUIMenuSearchExample.png
 
-특정 메뉴 타입만 선택 가능하게 하고 싶다면 아래와 같이 data-allowedType을 설정한다.
+다중 선택을 허용하기 위해서는 아래와 같이 multiple속성을 설정한다.
 {{{
-<input type="text" name="module_srl" data-allowedType="board" class="module_search" />
+<input type="text" name="module_srl" data-multiple="true" class="module_search" />
 }}}
 
 특정 메뉴 타입만 선택하지 못하게 하고 싶다면 아래와 같이 data-disallowedType을 설정한다.
@@ -24,9 +24,9 @@ http://xe-core.googlecode.com/svn/wiki/img/AdminUIMenuSearchExample.png
 <input type="text" name="module_srl" data-disallowedType="page,_SHORTCUT,_ROOT" class="module_search" />
 }}}
 
-아래와 같이 두가지를 모두 사용 할 경우, data-allowedType에 정의 된 타입만 선택가능하게 되고, 그 중 data-disallowedType에 있는 항목은 선택 불가가 된다.
+특정 메뉴 타입만 선택 가능하게 하고 싶다면 아래와 같이 data-allowedType을 설정한다. data-allowedType를 설정하면 data-allwedType에 정의되지 않은 나머지 타입은 모두 data-disallowedType에 정의된 것과 마찬가지이다.
 {{{
-<input type="text" name="module_srl" data-allowedType="board" data-disallowedType="page,_SHORTCUT,_ROOT" class="module_search" />
+<input type="text" name="module_srl" data-allowedType="board" class="module_search" />
 }}}
 
 == jQuery Plugin ==
