@@ -21,7 +21,7 @@ http://xe-core.googlecode.com/svn/wiki/img/AdminUIMenuSearchExample.png
 
 특정 메뉴 타입만 선택하지 못하게 하고 싶다면 아래와 같이 data-disallowedType을 설정한다.
 {{{
-<input type="text" name="module_srl" data-disallowedType="page,_SHORTCUT,_ROOT" class="module_search" />
+<input type="text" name="module_srl" data-disallowedType="page,faq" class="module_search" />
 }}}
 
 특정 메뉴 타입만 선택 가능하게 하고 싶다면 아래와 같이 data-allowedType을 설정한다. data-allowedType를 설정하면 data-allwedType에 정의되지 않은 나머지 타입은 모두 data-disallowedType에 정의된 것과 마찬가지이다.
