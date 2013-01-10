@@ -1,0 +1,19 @@
+#sidebar ServerAPI
+
+http://code.google.com/p/xe-core/issues/detail?id=2656
+
+{{{
+var params = new Array();
+params['del_image'] = 'Y';
+exec_xml("rss","procRssAdminDeleteFeedImage", params, completeTmp);
+}}}
+
+위와 같이 호출하게 되면 성공할 경우 아래와 같이 리턴 됨.
+
+{{{
+Array
+(
+    [error] => 0
+    [message] => "삭제했습니다."
+)
+}}}
