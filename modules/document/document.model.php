@@ -1166,9 +1166,9 @@
 		}
 
         /**
-         * 게시�?목록??검???�션??Setting??2011.03.08 - cherryfilter)
-		 * page변?��? ?�는 ?�태?�서 page 값을 ?�아?�는 method(getDocumentPage)??검?�하지 ?��? 값을 return?�서 검?�한 값을 가?�오?�록 검?�옵?�이 추�? ??
-		 * 검?�옵?�의 중복?�로 ?�해 private method�?별도 분리
+         * 게시물 목록의 검색 옵션을 Setting함(2011.03.08 - cherryfilter)
+		 * page변수가 없는 상태에서 page 값을 알아오는 method(getDocumentPage)는 검색하지 않은 값을 return해서 검색한 값을 가져오도록 검색옵션이 추가 됨.
+		 * 검색옵션의 중복으로 인해 private method로 별도 분리
 		 * @param object $searchOpt
 		 * @param object $args
 		 * @param string $query_id
