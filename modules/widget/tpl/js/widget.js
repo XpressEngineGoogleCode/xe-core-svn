@@ -375,7 +375,7 @@ function doAddWidgetCode(widget_code) {
 
         var cssfile = request_uri+cssfile;
         if(typeof(document.createStyleSheet)=='undefined') {
-            var css ='<link rel="stylesheet" href="'+cssfile+'" type="text/css" charset="UTF-8" />';
+            var css ='<link rel="stylesheet" href="'+cssfile+'" />';
             var dummy  = xCreateElement("DIV");
             xInnerHtml(dummy , css);
             document.body.appendChild(dummy);
@@ -682,7 +682,14 @@ function doShowWidgetSizeSetup(px, py, obj) {
 
 	jQuery.each(opts, function(key, val){
 		var el = form[0].elements[key];
-		if (el) el.value = val;
+		if (el)
+		{
+			el.value = val;
+			if(el.className.match(/\bcolor-indicator\b/))
+			{
+				el.style.background = el.value = '#'+el.value;
+			}
+		}
         if (el.tagName.toLowerCase() == "select")
         {
             if(el.selectedIndex == -1) {

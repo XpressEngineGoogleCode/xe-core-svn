@@ -4986,7 +4986,7 @@ xe.XE_Table = $.Class({
 			}
 		}
 
-		var sTable = '<table style="background:'+sBorderColorCode+'" cellspacing="'+iBorderWidth+'">';
+		var sTable = '<table style="background:'+sBorderColorCode+';border-spacing:1px" cellspacing="'+iBorderWidth+'">';
 		var sRow = '<tr style="background:'+sBGColorCode+'">';
 		var iColumns = this.oColumnInput.value;
 		for(var i=0; i<iColumns; i++){
@@ -5812,17 +5812,6 @@ xe.XE_Table = $.Class({
 		return isNaN(span)?1:span;
 	}
 }).extend(xe.XE_Table);
-
-// Auto Resize Checkbox Toggle Class
-$('.input_auto>input').change(function(){
-	setTimeout(function(){
-		if($('.input_control').is(':hidden')){
-			$('.input_auto').addClass('line');
-		} else {
-			$('.input_auto').removeClass('line');
-		}
-	},1);
-});
 
 })(jQuery);
 if (!window.xe) xe = {};

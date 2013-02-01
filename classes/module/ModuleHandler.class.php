@@ -38,14 +38,6 @@
                 $this->act = Context::get('act');
                 return;
             }
-
-			$oContext = Context::getInstance();
-			if($oContext->isSuccessInit == false)
-			{
-				$this->error = 'msg_invalid_request';
-				return;
-			}
-
             // Set variables from request arguments
             $this->module = $module?$module:Context::get('module');
             $this->act    = $act?$act:Context::get('act');
@@ -160,14 +152,22 @@
                 $this->module_info = $module_info;
                 Context::setBrowserTitle($module_info->browser_title);
 
-				if($module_info->use_mobile && Mobile::isFromMobilePhone())
+				$viewType = (Mobile::isFromMobilePhone())? 'M' : 'P';
+				$targetSrl = (Mobile::isFromMobilePhone())? 'mlayout_srl' : 'layout_srl';
+
+				// use the site default layout.
+				if($module_info->{$targetSrl} == -1)
 				{
-					$layoutSrl = $module_info->mlayout_srl;
+					$oLayoutAdminModel = &getAdminModel('layout');
+					$layoutSrl = $oLayoutAdminModel->getSiteDefaultLayout($viewType, $module_info->site_srl);
 				}
 				else
 				{
-					$layoutSrl = $module_info->layout_srl;
+					$layoutSrl = $module_info->{$targetSrl};
 				}
+
+				// reset a layout_srl in module_info.
+				$module_info->{$targetSrl} = $layoutSrl;
 
                 $part_config= $oModuleModel->getModulePartConfig('layout',$layoutSrl);
                 Context::addHtmlHeader($part_config->header_script);
@@ -212,6 +212,7 @@
 
             // If error occurred while preparation, return a message instance
             if($this->error) {
+				$this->_setInputErrorToContext();
 				$type = Mobile::isFromMobilePhone() ? 'mobile' : 'view';
                 $oMessageObject = &ModuleHandler::getModuleInstance('message',$type);
                 $oMessageObject->setError(-1);
@@ -240,6 +241,7 @@
                 $this->error = 'msg_module_is_not_exists';
 				$this->httpStatusCode = '404';
 
+				$this->_setInputErrorToContext();
 				$type = Mobile::isFromMobilePhone() ? 'mobile' : 'view';
                 $oMessageObject = &ModuleHandler::getModuleInstance('message',$type);
                 $oMessageObject->setError(-1);
@@ -259,27 +261,10 @@
             if(!$kind && $this->module == 'admin') $kind = 'admin';
 			if($this->module_info->use_mobile != "Y") Mobile::setMobile(false);
 
-			// admin menu check
-            if(Context::isInstalled())
-			{
-				$oMenuAdminModel = &getAdminModel('menu');
-				$output = $oMenuAdminModel->getMenuByTitle('__XE_ADMIN__');
-
-				if(!$output->menu_srl)
-				{
-					$oAdminClass = &getClass('admin');
-					$oAdminClass->createXeAdminMenu();
-				}
-				else if(!is_readable($output->php_file))
-				{
-					$oMenuAdminController = &getAdminController('menu');
-					$oMenuAdminController->makeXmlFile($output->menu_srl);
-				}
-			}
-
 			// Admin ip
 			$logged_info = Context::get('logged_info');
 			if($kind == 'admin' && $_SESSION['denied_admin'] == 'Y'){
+				$this->_setInputErrorToContext();
 				$this->error = "msg_not_permitted_act";
 				$oMessageObject = &ModuleHandler::getModuleInstance('message',$type);
 				$oMessageObject->setError(-1);
@@ -308,6 +293,7 @@
 			}
 
 			if(!is_object($oModule)) {
+				$this->_setInputErrorToContext();
 				$type = Mobile::isFromMobilePhone() ? 'mobile' : 'view';
                 $oMessageObject = &ModuleHandler::getModuleInstance('message',$type);
                 $oMessageObject->setError(-1);
@@ -326,6 +312,7 @@
 
 				if(!Context::isInstalled())
 				{
+					$this->_setInputErrorToContext();
 					$this->error = 'msg_invalid_request';
 					$oMessageObject = &ModuleHandler::getModuleInstance('message',$type);
 					$oMessageObject->setError(-1);
@@ -382,6 +369,7 @@
 
 					if(!is_object($oModule)) {
 						$type = Mobile::isFromMobilePhone() ? 'mobile' : 'view';
+						$this->_setInputErrorToContext();
 						$oMessageObject = &ModuleHandler::getModuleInstance('message',$type);
 						$oMessageObject->setError(-1);
 						$oMessageObject->setMessage('msg_module_is_not_exists');
@@ -407,6 +395,8 @@
 								$oModule->setLayoutFile("layout.html");
 							}
 						}else{
+							$this->_setInputErrorToContext();
+
 							$this->error = 'msg_is_not_administrator';
 							$oMessageObject = &ModuleHandler::getModuleInstance('message',$type);
 							$oMessageObject->setError(-1);
@@ -418,6 +408,7 @@
 					if ($kind == 'admin'){
 						$grant = $oModuleModel->getGrant($this->module_info, $logged_info);		
 						if(!$grant->is_admin && !$grant->manager) {
+							$this->_setInputErrorToContext();
                             $this->error = 'msg_is_not_manager';
                             $oMessageObject = &ModuleHandler::getModuleInstance('message','view');
                             $oMessageObject->setError(-1);
@@ -489,7 +480,7 @@
 			if($type == "view" && $this->module_info->use_mobile == "Y" && Mobile::isMobileCheckByAgent())
 			{
 				global $lang;
-				$header = '<style type="text/css">div.xe_mobile{opacity:0.7;margin:1em 0;padding:.5em;background:#333;border:1px solid #666;border-left:0;border-right:0}p.xe_mobile{text-align:center;margin:1em 0}a.xe_mobile{color:#ff0;font-weight:bold;font-size:24px}@media only screen and (min-width:500px){a.xe_mobile{font-size:15px}}</style>';
+				$header = '<style>div.xe_mobile{opacity:0.7;margin:1em 0;padding:.5em;background:#333;border:1px solid #666;border-left:0;border-right:0}p.xe_mobile{text-align:center;margin:1em 0}a.xe_mobile{color:#ff0;font-weight:bold;font-size:24px}@media only screen and (min-width:500px){a.xe_mobile{font-size:15px}}</style>';
 				$footer = '<div class="xe_mobile"><p class="xe_mobile"><a class="xe_mobile" href="'.getUrl('m', '1').'">'.$lang->msg_pc_to_mobile.'</a></p></div>';
 				Context::addHtmlHeader($header);
 				Context::addHtmlFooter($footer);
@@ -497,18 +488,26 @@
 
 			if($type == "view" && $kind != 'admin'){
 				$module_config= $oModuleModel->getModuleConfig('module');
-				if($module_config->htmlFooter){
-						Context::addHtmlFooter($module_config->htmlFooter);
+				if($module_config->htmlFooter)
+				{
+					Context::addHtmlFooter($module_config->htmlFooter);
+				}
+				if($module_config->siteTitle)
+				{
+					$siteTitle = Context::getBrowserTitle();
+					if(!$siteTitle)
+					{
+						Context::setBrowserTitle($module_config->siteTitle);
+					}
 				}
 			}
-
 
             // if failed message exists in session, set context
 			$this->_setInputErrorToContext();
 
             $procResult = $oModule->proc();
 
-			$methodList = array('XMLRPC'=>1, 'JSON'=>1);
+			$methodList = array('XMLRPC'=>1, 'JSON'=>1, 'JS_CALLBACK'=>1);
 			if(!$oModule->stop_proc && !isset($methodList[Context::getRequestMethod()]))
 			{
 				$error = $oModule->getError();
@@ -596,7 +595,7 @@
             }
 
             // If connection to DB has a problem even though it's not install module, set error
-            if($this->module != 'install' && $GLOBALS['__DB__'][Context::getDBType()]->isConnected() == false) {
+            if($this->module != 'install' && isset($GLOBALS['__DB__']) && $GLOBALS['__DB__'][Context::getDBType()]->isConnected() == false) {
                 $this->error = 'msg_dbconnect_failed';
             }
 
@@ -605,7 +604,7 @@
             if(!$output->toBool()) $this->error = $output->getMessage();
 
             // Use message view object, if HTML call
-			$methodList = array('XMLRPC'=>1, 'JSON'=>1);
+			$methodList = array('XMLRPC'=>1, 'JSON'=>1, 'JS_CALLBACK'=>1);
             if(!isset($methodList[Context::getRequestMethod()])) {
 
 				if($_SESSION['XE_VALIDATOR_RETURN_URL'])
@@ -654,6 +653,14 @@
 					$layout_srl = $oModule->module_info->layout_srl;
 				}
 
+				// if layout_srl is rollback by module, set default layout
+				if($layout_srl == -1)
+				{
+					$viewType = (Mobile::isFromMobilePhone())? 'M' : 'P';
+					$oLayoutAdminModel = &getAdminModel('layout');
+					$layout_srl = $oLayoutAdminModel->getSiteDefaultLayout($viewType, $oModule->module_info->site_srl);
+				}
+
                 if($layout_srl && !$oModule->getLayoutFile()) {
 
                     // If layout_srl exists, get information of the layout, and set the location of layout_path/ layout_file
@@ -674,6 +681,28 @@
                         // Set menus into context
                         if($layout_info->menu_count) {
                             foreach($layout_info->menu as $menu_id => $menu) {
+								// set default menu set(included home menu)
+								if(!$menu->menu_srl || $menu->menu_srl == -1)
+								{
+									$oMenuAdminController = &getAdminController('menu');
+									$homeMenuCacheFile = $oMenuAdminController->getHomeMenuCacheFile();
+
+									if(file_exists($homeMenuCacheFile))
+									{
+										@include($homeMenuCacheFile);
+									}
+
+									if(!$menu->menu_srl)
+									{
+										$menu->xml_file = str_replace('.xml.php', $homeMenuSrl.'.xml.php', $menu->xml_file);
+										$menu->php_file = str_replace('.php', $homeMenuSrl.'.php', $menu->php_file);
+									}
+									else
+									{
+										$menu->xml_file = str_replace($menu->menu_srl, $homeMenuSrl, $menu->xml_file);
+										$menu->php_file = str_replace($menu->menu_srl, $homeMenuSrl, $menu->php_file);
+									}
+								}
                                 if(file_exists($menu->php_file)) @include($menu->php_file);
                                 Context::set($menu_id, $menu);
                             }
@@ -690,6 +719,20 @@
                         if(file_exists($edited_layout)) $oModule->setEditedLayoutFile($edited_layout);
                     }
                 }
+				$isLayoutDrop = Context::get('isLayoutDrop');
+				if($isLayoutDrop)
+				{
+            		$kind = strpos(strtolower($this->act),'admin')!==false?'admin':'';
+					if($kind == 'admin')
+					{
+						$oModule->setLayoutFile('popup_layout');
+					}
+					else
+					{
+						$oModule->setLayoutPath('common/tpl');
+						$oModule->setLayoutFile('default_layout');
+					}
+				}
             }
 
             // Display contents

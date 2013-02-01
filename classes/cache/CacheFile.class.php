@@ -5,8 +5,9 @@
  * Filedisk Cache Handler
  *
  * @author Arnia Software (xe_dev@arnia.ro)
- **/
-class CacheFile extends CacheBase {
+ */
+class CacheFile extends CacheBase
+{
 	/**
 	 * Default valid time
 	 * @var int
@@ -18,13 +19,14 @@ class CacheFile extends CacheBase {
 	 * @var string
 	 */
 	var $cache_dir = 'files/cache/store/';
-	
+
 	/**
 	 * Get instance of CacheFile
 	 *
 	 * @return CacheFile instance of CacheFile
 	 */
-	function getInstance(){
+	function getInstance()
+	{
 		if(!$GLOBALS['__CacheFile__']) {
 			$GLOBALS['__CacheFile__'] = new CacheFile();
 		}
@@ -36,7 +38,8 @@ class CacheFile extends CacheBase {
 	 *
 	 * @return void
 	 */
-	function CacheFile(){
+	function CacheFile()
+	{
 		$this->cache_dir = _XE_PATH_ . $this->cache_dir;
 		if(!is_dir($this->cache_dir)) FileHandler::makeDir($this->cache_dir);
 	}
@@ -47,16 +50,18 @@ class CacheFile extends CacheBase {
 	 * @param string $key The key that will be associated with the item.
 	 * @return string Returns cache file path
 	 */
-	function getCacheFileName($key){
+	function getCacheFileName($key)
+	{
 		return $this->cache_dir . str_replace(':', '_', $key);
 	}
-	
+
 	/**
 	 * Return whether support or not support cache
 	 *
 	 * @return true
 	 */
-	function isSupport(){
+	function isSupport()
+	{
 		return true;
 	}
 
@@ -68,7 +73,8 @@ class CacheFile extends CacheBase {
 	 * @param int $valid_time Not used
 	 * @return void
 	 */
-	function put($key, $obj, $valid_time = 0){
+	function put($key, $obj, $valid_time = 0)
+	{
 		$cache_file = $this->getCacheFileName($key);		
 		$text = serialize($obj);
 		FileHandler::writeFile($cache_file, $text);
@@ -81,10 +87,11 @@ class CacheFile extends CacheBase {
 	 * @param int $modified_time Not used
 	 * @return bool Return true on valid or false on invalid.
 	 */
-	function isValid($key, $modified_time = 0) {
+	function isValid($key, $modified_time = 0)
+	{
 		$cache_file = $this->getCacheFileName($key);
 		if(file_exists($cache_file)) return true;
-		
+
 		return false;
 	}
 
@@ -95,11 +102,12 @@ class CacheFile extends CacheBase {
 	 * @param int $modified_time Not used
 	 * @return false|mixed Return false on failure. Return the string associated with the $key on success.
 	 */
-	function get($key, $modified_time = 0) {
+	function get($key, $modified_time = 0)
+	{
 		$cache_file = $this->getCacheFileName($key);
 		$content = FileHandler::readFile($cache_file);
 		if(!$content) return false;
-		
+
 		return unserialize($content);
 	}
 
@@ -109,7 +117,8 @@ class CacheFile extends CacheBase {
 	 * @param string $_key Used to store the value.
 	 * @return void
 	 */
-	function _delete($_key) {
+	function _delete($_key)
+	{
 		$cache_file = $this->getCacheFileName($_key);
 		FileHandler::removeFile($cache_file);
 	}
@@ -120,7 +129,8 @@ class CacheFile extends CacheBase {
 	 * @param string $key Used to store the value.
 	 * @return void
 	 */
-	function delete($key) {
+	function delete($key)
+	{
 		$this->_delete($key);
 	}
 
@@ -129,7 +139,8 @@ class CacheFile extends CacheBase {
 	 *
 	 * @return bool Returns true on success or false on failure.
 	 */
-	function truncate() {
+	function truncate()
+	{
 		FileHandler::removeFilesInDir($this->cache_dir);
 	}
 }

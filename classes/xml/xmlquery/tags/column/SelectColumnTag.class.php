@@ -1,30 +1,27 @@
 <?php
 /**
- * Models the &lt;column&gt; tag inside an XML Query file whose action is 'select'
+ * SelectColumnTag
+ * Models the <column> tag inside an XML Query file whose action is 'select'
  *
- * @author Corina Udrescu (corina.udrescu@arnia.ro)
- * @package classes\xml\xmlquery\tags\column
+ * @author Arnia Software
+ * @package /classes/xml/xmlquery/tags/column
  * @version 0.1
  */
 class SelectColumnTag extends ColumnTag
 {
 	/**
-	 * Column alias
-	 *
+	 * alias
 	 * @var string
 	 */
 	var $alias;
-
 	/**
-	 * Click count status
-	 *
+	 * click count status
 	 * @var bool
 	 */
 	var $click_count;
 
 	/**
-	 * Constructor
-	 *
+	 * constructor
 	 * @param string|object $column
 	 * @return void
 	 */
@@ -46,26 +43,16 @@ class SelectColumnTag extends ColumnTag
 		}
 	}
 
-	/**
-	 * Returns the string to be output in the cache file
-	 *
-	 * A select column tag in an XML query can be used for:
-	 * <ul>
-	 *   <li> a star expression: SELECT *
-	 *   <li> a click count expression: SELECT + UPDATE
-	 *   <li> any other select expression (column name, function call etc). </li>
-	 * </ul>
-	 *
-	 * @return string
-	 */
 	function getExpressionString()
 	{
 		if($this->name == '*') return "new StarExpression()";
 		if($this->click_count)
-			return sprintf('new ClickCountExpression(\'%s\', %s, $args->%s)', $this->name, $this->alias ? '\'' . $this->alias . '\'' : "''",$this->click_count);
+			return sprintf('new ClickCountExpression(%s, %s, $args->%s)', $this->name, $this->alias,$this->click_count);
 		if(strpos($this->name, '$') === 0)
 			return sprintf('new SelectExpression($args->%s)', substr($this->name, 1));
 		$dbParser = DB::getParser();
-		return sprintf('new SelectExpression(\'%s\'%s)', $this->name, $this->alias ? ', \''.$dbParser->escape($this->alias) .'\'': '');
+		return sprintf('new SelectExpression(\'%s\'%s)', $this->name, $this->alias ? ', \''.$dbParser->escape($this->alias) .'\'': '');	
 	}
 }
+/* End of file SelectColumnTag.class.php */
+/* Location: ./classes/xml/xmlquery/tags/column/SelectColumnTag.class.php */

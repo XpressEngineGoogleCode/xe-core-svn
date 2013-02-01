@@ -20,12 +20,8 @@ class DBTest extends PHPUnit_Framework_TestCase {
                         $querySql = $db->{$methodName}($output);
 
                         // Remove whitespaces, tabs and all
-						if(is_a($querySql, 'Object'))
-						{
-							$querySql = $querySql->getMessage();
-						}
-						$querySql = Helper::cleanString($querySql);
-						$expected = Helper::cleanString($expected);
+                        $querySql = Helper::cleanString($querySql);
+                        $expected = Helper::cleanString($expected);
                 }
                 $this->assertEquals($expected, $querySql);
         }

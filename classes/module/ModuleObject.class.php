@@ -340,12 +340,35 @@
 					$this->stop("msg_not_permitted_act");
 					return FALSE;
 				}
+
                 // integrate skin information of the module(change to sync skin info with the target module only by seperating its table)
-                $oModuleModel = &getModel('module');
-                $oModuleModel->syncSkinInfoToModuleInfo($this->module_info);
-                Context::set('module_info', $this->module_info);
-                // Run
-                $output = $this->{$this->act}();
+				$is_default_skin = ((!Mobile::isFromMobilePhone() && $this->module_info->is_skin_fix == 'N') || (Mobile::isFromMobilePhone() && $this->module_info->is_mskin_fix == 'N'));
+				$usedSkinModule = !($this->module == 'page' && ($this->module_info->page_type == 'OUTSIDE' || $this->module_info->page_type == 'WIDGET'));
+				if($usedSkinModule && $is_default_skin && $this->module != 'admin' && strpos($this->act, 'Admin') === false)
+				{
+					$dir = (Mobile::isFromMobilePhone()) ? 'm.skins' : 'skins';
+					$oModuleModel = getModel('module');
+					$skinType = (Mobile::isFromMobilePhone()) ? 'M' : 'P';
+					$skinName = $oModuleModel->getModuleDefaultSkin($this->module, $skinType);
+					if($this->module == 'page')
+					{
+						$this->module_info->skin = $skinName;
+					}
+					else
+					{
+						$isTemplatPath = (strpos($this->getTemplatePath(), '/tpl/') !== FALSE);
+						if(!$isTemplatPath)
+						{
+							$this->setTemplatePath(sprintf('%s%s/%s/', $this->module_path, $dir, $skinName));
+						}
+					}
+				}
+
+				$oModuleModel = &getModel('module');
+				$oModuleModel->syncSkinInfoToModuleInfo($this->module_info);
+				Context::set('module_info', $this->module_info);
+				// Run
+				$output = $this->{$this->act}();
             }
 			else {
 				return false;

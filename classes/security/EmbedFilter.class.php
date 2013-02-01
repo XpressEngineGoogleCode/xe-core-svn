@@ -3,16 +3,6 @@ include _XE_PATH_ . 'classes/security/phphtmlparser/src/htmlparser.inc';
 
 class EmbedFilter
 {
-	/**
-	 * allow script access list
-	 * @var array
-	 */
-	var $allowscriptaccessList = array();
-	/**
-	 * allow script access key
-	 * @var int
-	 */
-	var $allowscriptaccessKey = 0;
 	var $whiteUrlXmlFile = './classes/security/conf/embedWhiteUrl.xml';
 	var $whiteUrlCacheFile = './files/cache/embedfilter/embedWhiteUrl.php';
 	var $whiteUrlList = array();
@@ -279,15 +269,22 @@ class EmbedFilter
 		return $GLOBALS['__EMBEDFILTER_INSTANCE__'];
 	}
 
+	public function getWhiteUrlList()
+	{
+		return $this->whiteUrlList;
+	}
+
+	public function getWhiteIframeUrlList()
+	{
+		return $this->whiteIframeUrlList;
+	}
+
 	/**
 	 * Check the content.
 	 * @return void
 	 */
 	function check(&$content)
 	{
-		$content = preg_replace_callback('/<(object|param|embed)[^>]*/is', array($this, '_checkAllowScriptAccess'), $content);
-		$content = preg_replace_callback('/<object[^>]*>/is', array($this, '_addAllowScriptAccess'), $content);
-
 		$this->checkObjectTag($content);
 		$this->checkEmbedTag($content);
 		$this->checkIframeTag($content);
@@ -406,6 +403,9 @@ class EmbedFilter
 	 */
 	function checkIframeTag(&$content)
 	{
+		// check in Purifier class
+		return;
+
 		preg_match_all('/<\s*iframe\s*[^>]+(?:\/?>)/is', $content, $m);
 		$iframeTagList = $m[0];
 		if($iframeTagList)
@@ -543,49 +543,6 @@ class EmbedFilter
 		return false;
 	}
 
-	function _checkAllowScriptAccess($m)
-	{
-		if($m[1] == 'object')
-		{
-			$this->allowscriptaccessList[] = 1;
-		}
-
-		if($m[1] == 'param')
-		{
-			if(strpos(strtolower($m[0]), 'allowscriptaccess'))
-			{
-				$m[0] = '<param name="allowscriptaccess" value="never"';
-				if(substr($m[0], -1) == '/')
-				{
-					$m[0] .= '/';
-				}
-				$this->allowscriptaccessList[count($this->allowscriptaccessList)-1]--;
-			}
-		}
-		else if($m[1] == 'embed')
-		{
-			if(strpos(strtolower($m[0]), 'allowscriptaccess'))
-			{
-				$m[0] = preg_replace('/always|samedomain/i', 'never', $m[0]);
-			}
-			else
-			{
-				$m[0] = preg_replace('/\<embed/i', '<embed allowscriptaccess="never"', $m[0]);
-			}
-		}
-		return $m[0];
-	}
-
-	function _addAllowScriptAccess($m)
-	{
-		if($this->allowscriptaccessList[$this->allowscriptaccessKey] == 1)
-		{
-			$m[0] = $m[0].'<param name="allowscriptaccess" value="never"></param>';
-		}
-		$this->allowscriptaccessKey++;
-		return $m[0];
-	}
-
 	/**
 	 * Make white domain list cache file from xml config file.
 	 * @return void
@@ -652,3 +609,4 @@ class EmbedFilter
 	}
 }
 /* End of file : EmbedFilter.class.php */
+/* Location: ./classes/security/EmbedFilter.class.php */
