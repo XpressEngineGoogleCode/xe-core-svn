@@ -173,12 +173,21 @@ class DBMysql extends DB
 	 * this method is private
 	 * @param string $query
 	 * @param resource $connection
+	 * @param bool $buffered is use buffered query
 	 * @return resource
 	 */
-	function __query($query, $connection)
+	function __query($query, $connection, $buffered)
 	{
 		// Run the query statement
-		$result = mysql_query($query, $connection);
+		if($buffered)
+		{
+			$result = mysql_query($query, $connection);
+		}
+		else
+		{
+			$result = mysql_unbuffered_query($query, $connection);
+		}
+
 		// Error Check
 		if(mysql_error($connection)) $this->setError(mysql_errno($connection), mysql_error($connection));
 		// Return result
@@ -189,16 +198,32 @@ class DBMysql extends DB
 	 * Fetch the result
 	 * @param resource $result
 	 * @param int|NULL $arrayIndexEndValue
+	 * @param bool $buffered is use buffered query
+	 * @param callable $callback callback function called when fetch
 	 * @return array
 	 */
-	function _fetch($result, $arrayIndexEndValue = NULL)
+	function _fetch($result, $arrayIndexEndValue = NULL, $buffered = TRUE, $callback = NULL)
 	{
 		$output = array();
 		if(!$this->isConnected() || $this->isError() || !$result) return $output;
 		while($tmp = $this->db_fetch_object($result))
 		{
-			if($arrayIndexEndValue) $output[$arrayIndexEndValue--] = $tmp;
-			else $output[] = $tmp;
+			if(isset($callback))
+			{
+				if(is_callable($callback))
+				{
+					call_user_func($callback, $tmp);
+				}
+				else
+				{
+					break;
+				}
+			}
+			else
+			{
+				if($arrayIndexEndValue) $output[$arrayIndexEndValue--] = $tmp;
+				else $output[] = $tmp;
+			}
 		}
 		if(count($output)==1)
 		{
@@ -523,9 +548,11 @@ class DBMysql extends DB
 	 * @param Object $queryObject
 	 * @param resource $connection
 	 * @param boolean $with_values
+	 * @param boolean $buffered is use buffered query
+	 * @param callable $callback callback function called when fetch
 	 * @return Object
 	 */
-	function _executeSelectAct($queryObject, $connection = null, $with_values = true)
+	function _executeSelectAct($queryObject, $connection = null, $with_values = true, $buffered = TRUE, $callback = NULL)
 	{
 		$limit = $queryObject->getLimit();
 		$result = NULL;
@@ -538,11 +565,11 @@ class DBMysql extends DB
 				return;
 			$query .= (__DEBUG_QUERY__ & 1 && $queryObject->queryID) ? sprintf(' ' . $this->comment_syntax, $queryObject->queryID) : '';
 
-			$result = $this->_query($query, $connection);
+			$result = $this->_query($query, $connection, $buffered);
 			if ($this->isError())
 				return $this->queryError($queryObject);
 
-			$data = $this->_fetch($result);
+			$data = $this->_fetch($result, NULL, $buffered, $callback);
 			$buff = new Object ();
 			$buff->data = $data;
 			return $buff;

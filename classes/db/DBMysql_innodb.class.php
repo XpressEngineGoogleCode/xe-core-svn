@@ -85,12 +85,21 @@ class DBMysql_innodb extends DBMysql
 	 * this method is private
 	 * @param string $query
 	 * @param resource $connection
+	 * @param bool $buffered is use buffered query
 	 * @return resource
 	 */
-	function __query($query, $connection)
+	function __query($query, $connection, $buffered)
 	{
 		// Run the query statement
-		$result = @mysql_query($query, $connection);
+		if($buffered)
+		{
+			$result = @mysql_query($query, $connection);
+		}
+		else
+		{
+			$result = @mysql_unbuffered_query($query, $connection);
+		}
+
 		// Error Check
 		if(mysql_error($connection)) $this->setError(mysql_errno($connection), mysql_error($connection));
 		// Return result

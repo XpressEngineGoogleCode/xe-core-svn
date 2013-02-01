@@ -109,9 +109,10 @@ class DBMysqli extends DBMysql {
 	 * this method is private
 	 * @param string $query
 	 * @param resource $connection
+	 * @param bool $buffered is use buffered query
 	 * @return resource
 	 */
-	function __query($query, $connection)
+	function __query($query, $connection, $buffered)
 	{
 		if($this->use_prepared_statements == 'Y')
 		{			
@@ -154,7 +155,16 @@ class DBMysqli extends DBMysql {
 
 		}
 		// Run the query statement
-		$result = mysqli_query($connection,$query);
+		if($buffered)
+		{
+			$resultMode = MYSQLI_STORE_RESULT;
+		}
+		else
+		{
+			$resultModel = MYSQLI_USE_RESULT;
+		}
+		
+		$result = mysqli_query($connection,$query, $resultMode);
 		// Error Check
 		$error = mysqli_error($connection);
 		if($error)
@@ -221,13 +231,15 @@ class DBMysqli extends DBMysql {
 	 * Fetch the result
 	 * @param resource $result
 	 * @param int|NULL $arrayIndexEndValue
+	 * @param bool $buffered is use buffered query
+	 * @param callable $callback callback function called when fetch
 	 * @return array
 	 */
-	function _fetch($result, $arrayIndexEndValue = NULL)
+	function _fetch($result, $arrayIndexEndValue = NULL, $buffered = TRUE, $callback = NULL)
 	{
 		if($this->use_prepared_statements != 'Y')
 		{
-			return parent::_fetch($result, $arrayIndexEndValue);
+			return parent::_fetch($result, $arrayIndexEndValue, $buffered, $callback);
 		}
 		$output = array();
 		if(!$this->isConnected() || $this->isError() || !$result) return $output;
@@ -256,7 +268,7 @@ class DBMysqli extends DBMysql {
 		}
 		$resultArray = array_merge(array($stmt), $resultArray);
 
-		if($longtext_exists)
+		if($longtext_exists && $buffered)
 		{
 			mysqli_stmt_store_result($stmt);
 		}
@@ -359,16 +371,18 @@ class DBMysqli extends DBMysql {
 	 * @param Object $queryObject
 	 * @param resource $connection
 	 * @param boolean $with_values
+	 * @param boolean $buffered is use buffered query
+	 * @param callable $callback callback function called when fetch
 	 * @return Object
 	 */
-	function _executeSelectAct($queryObject, $connection = null, $with_values = false)
+	function _executeSelectAct($queryObject, $connection = null, $with_values = false, $buffered = TRUE, $callback = NULL)
 	{
 		if($this->use_prepared_statements != 'Y')
 		{
-			return parent::_executeSelectAct($queryObject, $connection);
+			return parent::_executeSelectAct($queryObject, $connection, $with_values, $buffered, $callback);
 		}				
 		$this->param = $queryObject->getArguments();
-		$result = parent::_executeSelectAct($queryObject, $connection, $with_values);		
+		$result = parent::_executeSelectAct($queryObject, $connection, $with_values, $buffered, $callback);
 		unset($this->param);
 		return $result;
 	}
