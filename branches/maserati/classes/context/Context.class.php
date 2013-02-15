@@ -1912,12 +1912,15 @@ class Context
 	/**
 	 * Get SSL Action
 	 *
-	 * @return string act
+	 * @return string acts in array
 	 */
 	function getSSLActions()
 	{
 		is_a($this, 'Context') ? $self = $this : $self = Context::getInstance();
-		return $self->ssl_actions;
+		if($self->getSslStatus() == 'optional')
+		{
+			return $self->ssl_actions;
+		}
 	}
 
 	/**
