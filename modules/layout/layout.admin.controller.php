@@ -744,7 +744,7 @@ class layoutAdminController extends layout
 		// Get information to create a layout
 		$args->site_srl = (int)$layout->site_srl;
 		$args->layout = $layout->layout;
-		$args->layout_type = $layout->type;
+		$args->layout_type = $layout->layout_type;
 		if(!$args->layout_type) $args->layout_type = "P";
 
 		$oDB = &DB::getInstance();
