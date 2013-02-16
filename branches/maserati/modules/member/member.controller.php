@@ -242,7 +242,7 @@ class memberController extends member
 	 * 
 	 * @return void|Object (void : success, Object : fail)
 	 */
-	public function procMemberInsert()
+	function procMemberInsert()
 	{
 		if (Context::getRequestMethod () == "GET") return new Object (-1, "msg_invalid_request");
 		$oMemberModel = &getModel ('member');
@@ -464,6 +464,7 @@ class memberController extends member
 		$all_args = Context::getRequestVars();
 		unset($all_args->module);
 		unset($all_args->act);
+		unset($all_args->member_srl);
 		unset($all_args->is_admin);
 		unset($all_args->description);
 		unset($all_args->group_srl_list);
@@ -1791,7 +1792,7 @@ class memberController extends member
 	/**
 	 * Add users to the member table
 	 */
-	private function insertMember(&$args, $password_is_hashed = false)
+	function insertMember(&$args, $password_is_hashed = false)
 	{
 		// Call a trigger (before)
 		$output = ModuleHandler::triggerCall('member.insertMember', 'before', $args);
@@ -1968,6 +1969,10 @@ class memberController extends member
 		{
 			unset($args->is_admin);
 			unset($args->denied);
+			if($logged_info->member_srl != $args->member_srl)
+			{
+				return $this->stop('msg_invalid_request');
+			}
 		}
 
 		// check member identifier form
