@@ -185,7 +185,7 @@ class adminAdminController extends admin
 
 		foreach($vars->module_skin as $moduleName => $skinName)
 		{
-			$designInfo->module->{$moduleName} = new stdClass();
+			if(!isset($designInfo->module->{$moduleName})) $designInfo->module->{$moduleName} = new stdClass();
 			$designInfo->module->{$moduleName}->{$skinTarget} = $skinName;
 		}
 
