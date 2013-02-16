@@ -242,7 +242,7 @@ class memberController extends member
 	 * 
 	 * @return void|Object (void : success, Object : fail)
 	 */
-	function procMemberInsert()
+	public function procMemberInsert()
 	{
 		if (Context::getRequestMethod () == "GET") return new Object (-1, "msg_invalid_request");
 		$oMemberModel = &getModel ('member');
@@ -275,8 +275,7 @@ class memberController extends member
 		}
 		$args->birthday = intval(strtr($args->birthday, array('-'=>'', '/'=>'', '.'=>'', ' '=>'')));
 		if(!$args->birthday && $args->birthday_ui) $args->birthday = intval(strtr($args->birthday_ui, array('-'=>'', '/'=>'', '.'=>'', ' '=>'')));
-		$args->member_srl = getNextSequence();
-		$args->list_order = -1 * $args->member_srl;
+
 		$args->find_account_answer = Context::get('find_account_answer');
 		$args->allow_mailing = Context::get('allow_mailing');
 		$args->allow_message = Context::get('allow_message');
@@ -288,6 +287,7 @@ class memberController extends member
 		unset($all_args->module);
 		unset($all_args->act);
 		unset($all_args->is_admin);
+		unset($all_args->member_srl);
 		unset($all_args->description);
 		unset($all_args->group_srl_list);
 		unset($all_args->body);
@@ -306,11 +306,6 @@ class memberController extends member
 		// Add extra vars after excluding necessary information from all the requested arguments
 		$extra_vars = delObjectVars($all_args, $args);
 		$args->extra_vars = serialize($extra_vars);
-		// Execute insert or update depending on the value of member_srl
-
-		if(!$args->user_id) $args->user_id = 't'.$args->member_srl;
-		if(!$args->user_name) $args->user_name = $args->member_srl;
-		if(!$args->nick_name) $args->nick_name = $args->member_srl;
 
 		// remove whitespace
 		$checkInfos = array('user_id', 'nick_name', 'email_address');
@@ -1796,7 +1791,7 @@ class memberController extends member
 	/**
 	 * Add users to the member table
 	 */
-	function insertMember(&$args, $password_is_hashed = false)
+	private function insertMember(&$args, $password_is_hashed = false)
 	{
 		// Call a trigger (before)
 		$output = ModuleHandler::triggerCall('member.insertMember', 'before', $args);
@@ -1810,9 +1805,15 @@ class memberController extends member
 		if($config->limit_day) $args->limit_date = date("YmdHis", time()+$config->limit_day*60*60*24);
 
 		$args->member_srl = getNextSequence();
-		// Enter the user's identity changed to lowercase
+		$args->list_order = -1 * $args->member_srl;
+
+		// Execute insert or update depending on the value of member_srl
 		if(!$args->user_id) $args->user_id = 't'.$args->member_srl;
+		// Enter the user's identity changed to lowercase
 		else $args->user_id = strtolower($args->user_id);
+		if(!$args->user_name) $args->user_name = $args->member_srl;
+		if(!$args->nick_name) $args->nick_name = $args->member_srl;
+
 		// Control of essential parameters
 		if($args->allow_mailing!='Y') $args->allow_mailing = 'N';
 		if($args->denied!='Y') $args->denied = 'N';
