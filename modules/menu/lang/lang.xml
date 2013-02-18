@@ -873,6 +873,18 @@ Menu không phải là người quản lý, nhiệm vụ của nó chỉ là li�
 		<value xml:lang="ko"><![CDATA[메뉴 타입 변경을 위해서는 메뉴를 삭제 후 재생성 해야 됩니다.]]></value>
 		<value xml:lang="en"><![CDATA[To change the menu type, you have to delete and recreate the menu.]]></value>
 	</item>
+	<item name="how_to_modify_menu">
+		<value xml:lang="ko"><![CDATA[생성한 메뉴는 [메뉴 수정]에서 수정 할 수 있습니다.]]></value>
+		<value xml:lang="en"><![CDATA[생성한 메뉴는 [메뉴 수정]에서 수정 할 수 있습니다.]]></value>
+	</item>
+	<item name="can_drag_menu">
+		<value xml:lang="ko"><![CDATA[사이트 맵에서 메뉴를 드래그 해서도 위치를 변경 할 수 있습니다.]]></value>
+		<value xml:lang="en"><![CDATA[사이트 맵에서 메뉴를 드래그 해서도 위치를 변경 할 수 있습니다.]]></value>
+	</item>
+	<item name="good_to_duplicate_layout">
+		<value xml:lang="ko"><![CDATA[레이아웃 설정 변경 시, [복사본 생성] 버튼을 눌러 복사본을 만들어 설정을 변경 하는 것이 좋습니다.]]></value>
+		<value xml:lang="en"><![CDATA[레이아웃 설정 변경 시, [복사본 생성] 버튼을 눌러 복사본을 만들어 설정을 변경 하는 것이 좋습니다.]]></value>
+	</item>
 	<item name="img_uploaded">
 		<value xml:lang="ko"><![CDATA[버튼 이미지가 등록 됐습니다.]]></value>
 		<value xml:lang="en"><![CDATA[Button image is uploaded.]]></value>
