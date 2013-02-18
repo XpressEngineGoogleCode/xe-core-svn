@@ -137,7 +137,7 @@ class Purifier
 		{
 			foreach($whiteIframeUrlList AS $key => $value)
 			{
-				$whiteDomainRegex .= $value;
+				$whiteDomainRegex .= $value.'|';
 			}
 		}
 		$whiteDomainRegex .= ')%';
