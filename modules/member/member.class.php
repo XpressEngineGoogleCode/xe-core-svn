@@ -114,10 +114,9 @@ class member extends ModuleObject {
 		$output = executeQuery('member.getMemberList', $admin_args);
 		if(!$output->data)
 		{
-			$admin_info = Context::gets('password','nick_name','email_address');
+			$admin_info = Context::gets('password','nick_name','email_address', 'user_id');
 			if($admin_info->email_address)
 			{
-				$admin_info->user_id = 'admin';
 				$admin_info->user_name = 'admin';
 				// Insert admin information
 				$oMemberAdminController->insertAdmin($admin_info);
