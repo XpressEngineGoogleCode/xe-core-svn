@@ -31,8 +31,7 @@ button.btn{*height:26px}
 .btn>a,
 .btn>button,
 .btn>input,
-.btn>span{display:inline;margin:0;padding:0;text-decoration:none !important;width:auto;height:auto;line-height:normal !important;border:0;background:none;color:#333;font-size:12px;vertical-align:middle;overflow:visible;cursor:pointer}
-.btn>input{display:inline-block;line-height:24px;height:24px}
+.btn>span{display:inline-block;*zoom:1;margin:0;padding:0;text-decoration:none !important;width:auto;line-height:24px;height:24px;border:0;background:none;color:#333;font-size:12px;vertical-align:middle;overflow:visible;cursor:pointer}
 .btn-group{position:relative;display:inline-block;*display:inline;*margin-left:.3em;font-size:0;white-space:nowrap;vertical-align:middle;*zoom:1}
 .btn-group:first-child{*margin-left:0}
 .btn-group+.btn-group{margin-left:5px}
