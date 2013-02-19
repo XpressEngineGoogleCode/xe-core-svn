@@ -1,0 +1,656 @@
+<!DOCTYPE HTML>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="apple-mobile-web-app-capable" content="yes" />
+<meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1, maximum-scale=1, user-scalable=no" />
+<title>XE Admin Template</title>
+<link rel="stylesheet" href="/xe17/common/css/xe.css">
+<link rel="stylesheet" href="/xe17/modules/admin/tpl/css/admin.bootstrap.min.css">
+<link rel="stylesheet" href="/xe17/modules/admin/tpl/css/admin.css">
+<link rel="stylesheet" href="/xe17/modules/admin/tpl/css/admin_ko.css">
+<script src="/xe17/common/js/jquery.js"></script>
+<script src="/xe17/common/js/x.js"></script>
+<script src="/xe17/common/js/common.js"></script>
+<script src="/xe17/common/js/js_app.js"></script>
+<script src="/xe17/common/js/xml_handler.js"></script>
+<script src="/xe17/common/js/xml_js_filter.js"></script>
+<script src="/xe17/modules/admin/tpl/js/config.js"></script>
+<script src="/xe17/modules/session/tpl/js/session.js"></script>
+<script src="/xe17/modules/admin/tpl/js/admin.js"></script>
+<script src="/xe17/modules/admin/tpl/js/jquery.tmpl.js"></script>
+<script src="/xe17/modules/admin/tpl/js/jquery.jstree.js"></script>
+<!--[if lt IE 9]><script src="/xe17/common/js/html5.js"></script><![endif]-->
+<style>
+body>.x:first-child{margin:0 80px 0 auto;padding:20px}
+.x>section{padding-right:14px}
+.x>section>h1{margin-right:-14px}
+.x>section:target>h1{background:#FFC}
+.x>section:target>h1+.view+.codeTrigger{display:none}
+.x>section:target>h1+.view+.codeTrigger+.code{display:block !important}
+.view{border:1px solid #ddd;border-radius:5px;padding:20px;margin:1em -14px 1em 0;box-shadow:0 0 3px #ccc inset}
+.codeTrigger.x_btn{border:1px solid #ddd;border-top:0;margin:-15px 0 0 0;border-radius:0 0 3px 3px;text-decoration:none;padding:4px 8px;background:#fff}
+.code{margin:1em 0 4em 0;font-family:"Courier New", Courier, monospace;white-space:pre;overflow:auto;width:100%}
+.code>strong{color:red}
+.code>br{display:none}
+.code>.highlight{background:yellow;font-weight:bold}
+.goTop{position:fixed;right:15px;bottom:50px;text-align:right;height:0}
+.goTop>a{font-size:12px}
+</style>
+<script>
+//<![CDATA[
+var current_url = "http://dece24.dev3.xpressengine.com/xe17/?module=admin";
+var request_uri = "http://dece24.dev3.xpressengine.com/xe17/";
+var current_mid = "";
+var waiting_message = "서버에 요청 중입니다. 잠시만 기다려주세요.";
+var ssl_actions = new Array();
+var default_url = "http://dece24.dev3.xpressengine.com/xe17/";
+xe.current_lang = "ko";
+xe.cmd_find = "찾기";
+//]]>
+</script>
+</head>
+<body>
+<div class="x">
+	<div class="x_page-header">
+		<h1>XE Admin Template</h1>
+	</div>
+	<ol id="toc">
+	</ol>
+	<hr>
+	<section class="section" id="page-header">
+		<h1>Page Header</h1>
+		<div class="view">
+<div class="x_page-header">
+	<h1>Page Header</h1>
+</div>
+		</div>
+	</section>
+	<section class="section" id="section-heading">
+		<h1>Section &amp; Heading</h1>
+		<div class="view">
+<section class="section">
+	<h1>Section &amp; Heading 1</h1>
+	<p>One 'section' element must have only one 'h1' element.</p>
+</section>
+<section class="section">
+	<h2>Section &amp; Heading 2</h2>
+	<p>One 'section' element can has more than one 'h2' element.</p>
+</section>
+		</div>
+	</section>
+	<section class="section" id="horizontal-alignment">
+		<h1>Horizontal float &amp; alignment</h1>
+		<div class="view">
+<div class="x_clearfix" style="border:1px dashed #ccc;padding:5px">
+	<p>.x_clearfix</p>
+	<span class="x_pull-left" style="border:1px dashed #ccc">.x_pull-left</span>
+	<span class="x_pull-right" style="border:1px dashed #ccc">.x_pull-right</span>
+</div>
+		</div>
+	</section>
+	<section class="section" id="buttons-color">
+		<h1>Buttons color variation</h1>
+<table class="x_table x_table-striped x_table-hover">
+	<thead>
+		<tr>
+			<th>Button</th>
+			<th>class=""</th>
+			<th>Description</th>
+		</tr>
+	</thead>
+	<tbody>
+		<tr>
+			<td><button type="button" class="x_btn">Default</button></td>
+			<td><code style="white-space:nowrap">x_btn</code></td>
+			<td>중요도가 높지 않은 과업에 사용하는 기본 회색 버튼.<br>Standard gray button with gradient.</td>
+		</tr>
+		<tr>
+			<td><button type="button" class="x_btn x_btn-inverse">Inverse</button></td>
+			<td><code style="white-space:nowrap">x_btn x_btn-inverse</code></td>
+			<td>중요도가 높지 않은 과업에 사용하는 기본 검정 버튼. <br>디자인 맥락에 따라 기본 회색 버튼 대신 사용할 수 있다.<br>Alternate dark gray button, not tied to a semantic action or use.</td>
+		</tr>
+		<tr>
+			<td><button type="button" class="x_btn x_btn-info">Default</button></td>
+			<td><code style="white-space:nowrap">x_btn x_btn-info</code></td>
+			<td>양자 택일(취소|확인)을 해야 하는 경우 기본 회색 버튼과 함께 사용. <br>[취소]는 기본 회색 버튼, [확인]은 색이 들어있는 이 버튼을 사용하면 적합.<br>Used as an alternative to the default styles.</td>
+		</tr>
+		<tr>
+			<td><button type="button" class="x_btn x_btn-primary">Primary</button></td>
+			<td><code style="white-space:nowrap">x_btn x_btn-primary</code></td>
+			<td>중요도가 높은 과업에 사용하는 버튼. 보통 폼을 서밋하는 경우에 사용.<br>Provides extra visual weight and identifies the primary action in a set of buttons.</td>
+		</tr>
+		<tr>
+			<td><button type="button" class="x_btn x_btn-success">Success</button></td>
+			<td><code style="white-space:nowrap">x_btn x_btn-success</code></td>
+			<td>과업 성공을 의미한다. 과업 이후의 페이지로 연결하는 버튼.<br>Indicates a successful or positive action.</td>
+		</tr>
+		<tr>
+			<td><button type="button" class="x_btn x_btn-warning">Warning</button></td>
+			<td><code style="white-space:nowrap">x_btn x_btn-warning</code></td>
+			<td>이 버튼을 누를 때 신중해야 한다.<br>Indicates caution should be taken with this action.</td>
+		</tr>
+		<tr>
+			<td><button type="button" class="x_btn x_btn-danger">Danger</button></td>
+			<td><code style="white-space:nowrap">x_btn x_btn-danger</code></td>
+			<td>이 버튼을 누를 때 데이터베이스에 저장된 내용을 지운다.<br>Indicates a dangerous or potentially negative action.</td>
+		</tr>
+		<tr>
+			<td><button type="button" class="x_btn x_btn-link">Link</button></td>
+			<td><code style="white-space:nowrap">x_btn x_btn-link</code></td>
+			<td>button 요소가 link처럼 보이기를 원할 때 사용.<br>Deemphasize a button by making it look like a link while maintaining button behavior.</td>
+		</tr>
+		<tr>
+			<td><button type="button" class="x_btn x_disabled">Disabled</button></td>
+			<td><code style="white-space:nowrap">x_btn x_disabled</code></td>
+			<td>button 요소 비활성.<br> Button element disabled.</td>
+		</tr>
+	</tbody>
+</table>
+	</section>
+	<section class="section" id="buttons-size">
+		<h1>Buttons size variation</h1>
+<table class="x_table x_table-striped x_table-hover">
+	<thead>
+		<tr>
+			<th scope="col">Button</th>
+			<th scope="col">class=&quot;&quot;</th>
+			<th scope="col">Description</th>
+		</tr>
+	</thead>
+	<tbody>
+		<tr>
+			<td><button type="button" class="x_btn x_btn-large x_btn-primary">Large button</button></td>
+			<td><code style="white-space:nowrap">x_btn x_btn-large x_btn-primary</code></td>
+			<td>Most important. 가장 중요한. </td>
+		</tr>
+		<tr>
+			<td><button type="button" class="x_btn">Default button</button></td>
+			<td><code style="white-space:nowrap">x_btn</code></td>
+			<td>Normal. 기본. </td>
+		</tr>
+		<tr>
+			<td><button type="button" class="x_btn x_btn-mini">Mini button</button></td>
+			<td><code style="white-space:nowrap">x_btn x_btn-mini</code></td>
+			<td>Minority. 가벼운. </td>
+		</tr>
+	</tbody>
+</table>
+	</section>
+	<section class="section" id="buttons-group">
+		<h1>Buttons group</h1>
+		<p>취소 또는 뒤로가기 기능 버튼은 왼쪽, 과업을 진행하기 위한 버튼은 오른쪽에 둔다. Cancel or Back button on the left, and for the progress of the task buttons to the right place.</p>
+		<div class="view">
+<div class="x_clearfix btnArea">
+	<span class="x_pull-left">
+		<button type="button" class="x_btn">Cancel</button>
+	</span>
+	<span class="x_pull-right x_btn-group">
+		<button type="button" class="x_btn">Create...</button>
+		<button type="button" class="x_btn x_btn-info">Selected Member...</button>
+	</span>
+</div>
+		</div>
+	</section>
+	<section id="vertical-divider" class="section">
+		<h1>Vertical Divider</h1>
+		<div class="view">
+<a href="#" class="active">One</a> <i>|</i> <a href="#">Two</a> <i>|</i> <a href="#">Three</a>
+		</div>
+	</section>
+	<section class="section" id="basic-tabs">
+		<h1>Basic tabs</h1>
+		<div class="view">
+<ul class="x_nav x_nav-tabs">
+	<li class="x_active"><a href="#">Home</a></li>
+	<li><a href="#">Profile</a></li>
+</ul>	
+		</div>
+	</section>
+	<section class="section" id="tabbable-nav">
+		<h1>Tabbable nav</h1>
+		<div class="view">
+<div class="x_tabbable">
+	<ul class="x_nav x_nav-tabs">
+		<li class="x_active"><a href="#tab1">Section 1</a></li>
+		<li><a href="#tab2">Section 2</a></li>
+	</ul>
+	<div class="x_tab-content">
+		<div class="x_tab-pane x_active" id="tab1">
+			<p><a href="#" class="active">One</a> <i>|</i> <a href="#">Two</a> <i>|</i> <a href="#">Three</a></p>
+			<p>I'm in Section 1.</p>
+		</div>
+		<div class="x_tab-pane" id="tab2">
+			<p><a href="#" class="active">Four</a> <i>|</i> <a href="#">Five</a> <i>|</i> <a href="#">Six</a></p>
+			<p>Howdy, I'm in Section 2.</p>
+		</div>
+	</div>
+</div>
+		</div>
+	</section>
+	<section class="section" id="stacked-tabs">
+		<h1>Stacked Tabs</h1>
+		<div class="view">
+<ul class="x_nav x_nav-tabs x_nav-stacked">
+	<li class="active"><a href="#">Home</a></li>
+	<li><a href="#">Profile</a></li>
+	<li><a href="#">Messages</a></li>
+</ul>
+		</div>
+	</section>
+	<section class="section" id="nav-list">
+		<h1>Nav List</h1>
+		<div class="view">
+<ul class="x_nav x_nav-list">
+	<li class="x_nav-header">List header</li>
+	<li class="x_active"><a href="#">Home</a></li>
+	<li><a href="#">Library</a></li>
+	<li><a href="#">Applications</a></li>
+	<li class="x_nav-header">Another list header</li>
+	<li><a href="#">Profile</a></li>
+	<li><a href="#">Settings</a></li>
+	<li class="x_divider"></li>
+	<li><a href="#">Help</a></li>
+</ul>
+		</div>
+	</section>
+	<section class="section" id="table">
+		<h1>Table</h1>
+		<div class="view">
+<table class="x_table x_table-striped x_table-hover">
+	<caption>
+		<strong>Table Caption</strong>
+		<div class="x_btn-group x_pull-right">
+			<a href="#" class="x_btn">링크</a> 
+			<button type="button" class="x_btn">버튼</button>
+		</div>
+	</caption>
+	<thead>
+		<tr>
+			<th style="width:20px">#</th>
+			<th>First Name</th>
+			<th>Username</th>
+			<th style="width:20px"><input type="checkbox"></th>
+		</tr>
+	</thead>
+	<tfoot>
+		<tr>
+			<th>#</th>
+			<th>First Name</th>
+			<th>Username</th>
+			<th><input type="checkbox"></th>
+		</tr>
+	</tfoot>
+	<tbody>
+		<tr>
+			<td>1</td>
+			<td>Mark</td>
+			<td>@mdo</td>
+			<td><input type="checkbox"></td>
+		</tr>
+		<tr>
+			<td>2</td>
+			<td>Jacob</td>
+			<td>@fat</td>
+			<td><input type="checkbox"></td>
+		</tr>
+	</tbody>
+</table>
+<div class="x_clearfix">
+	<div class="x_btn-group x_pull-right">
+		<a href="#" class="x_btn">링크</a> 
+		<button type="button" class="x_btn">버튼</button>
+	</div>
+</div>
+		</div>
+	</section>
+	<section class="section" id="form-horizontal">
+		<h1>Form horizontal(default)</h1>
+		<div class="view">
+<section class="section">
+	<h1>Log-in</h1>
+	<form action="" class="x_form-horizontal">
+		<div class="x_control-group">
+			<label class="x_control-label" for="inputEmail2">Email</label>
+			<div class="x_controls">
+				<span class="x_input-append">
+					<input type="email" id="inputEmail2" placeholder="example@example.com"> 
+					<button type="button" class="x_btn">Validate</button> 
+				</span>
+				Example inline-level help text here.
+			</div>
+		</div>
+		<div class="x_control-group">
+			<label class="x_control-label" for="inputPassword2">Password</label>
+			<div class="x_controls">
+				<input type="password" id="inputPassword2" placeholder="More than 6~20 characters">
+				<span class="x_help-block">Example block-level help text here.</span>
+			</div>
+		</div>
+		<div class="x_control-group">
+			<div class="x_controls">
+				<label><input type="checkbox"> Remember me</label>
+			</div>
+		</div>
+		<div class="x_clearfix btnArea">
+			<div class="x_pull-left">
+				<button type="button" class="x_btn">취소</button>
+			</div>
+			<div class="x_pull-right">
+				<button type="submit" class="x_btn x_btn-primary">확인</button>
+			</div>
+		</div>
+	</form>
+</section>
+		</div>
+	</section>
+	<section class="section" id="form-vertical">
+		<h1>Form vertical</h1>
+		<div class="view">
+<section class="section">
+	<h1>Log-in</h1>
+	<form action="">
+		<div class="x_control-group x_input-append">
+			<label for="inputEmail1">Email</label>
+			<input type="email" id="inputEmail1" placeholder="example@example.com">
+			<button type="button" class="x_btn">Validate</button> Example inline-level help text here.
+		</div>
+		<div class="x_control-group">
+			<label for="inputPassword1">Password</label>
+			<input type="password" id="inputPassword1" placeholder="More than 6~20 characters">
+			<span class="x_help-block">Example block-level help text here.</span>
+		</div>
+		<div class="x_control-group">
+			<label><input type="checkbox"> Remember me</label>
+		</div>
+		<div class="x_clearfix btnArea">
+			<div class="x_pull-left">
+				<button type="button" class="x_btn">취소</button>
+			</div>
+			<div class="x_pull-right">
+				<button type="submit" class="x_btn x_btn-primary">확인</button>
+			</div>
+		</div>
+	</form>
+</section>
+		</div>
+	</section>
+	<section class="section" id="radio-check-vertical">
+		<h1>Radio &amp; Checkbox vertical</h1>
+		<div class="view">
+<label><input type="checkbox" checked> Checkbox for multi select</label>
+<label><input type="checkbox"> Checkbox for multi select</label>
+<label><input type="radio" name="radioGroup" checked> Radio for single select</label>
+<label><input type="radio" name="radioGroup"> Radio for single select</label>
+		</div>
+	</section>
+	<section class="section" id="radio-check-horizontal">
+		<h1>Radio &amp; Checkbox inline</h1>
+		<div class="view">
+<label class="x_inline"><input type="checkbox" checked> Checkbox for multi select</label>
+<label class="x_inline"><input type="checkbox"> Checkbox for multi select</label>
+<label class="x_inline"><input type="radio" name="radioGroup" checked> Radio for single select</label>
+<label class="x_inline"><input type="radio" name="radioGroup"> Radio for single select</label>
+		</div>
+	</section>
+	<section class="section" id="selects">
+		<h1>Selects</h1>
+		<div class="view">
+<p>
+	<select style="vertical-align:top">
+		<option>1</option>
+		<option>2</option>
+		<option>3</option>
+		<option>4</option>
+		<option>5</option>
+	</select>
+	<button type="button" class="x_btn">Go</button>
+</p>
+<p>
+	<select multiple size="5" style="vertical-align:top">
+		<option>1</option>
+		<option>2</option>
+		<option>3</option>
+		<option>4</option>
+		<option>5</option>
+	</select>
+	<button type="button" class="x_btn">Go</button>
+</p>
+		</div>
+	</section>
+	<section class="section" id="search">
+		<h1>Search</h1>
+		<div class="view">
+<form action="" class="search center x_input-append">
+	<select name="" style="margin-right:4px">
+		<option value="">option1</option>
+		<option value="">option2</option>
+	</select>
+	<input type="search" required title="Search">
+	<button class="x_btn x_btn-inverse" type="submit">Search</button>
+	<a href="#" class="x_btn">Cancel</a>
+</form>
+		</div>
+	</section>
+	<section class="section" id="file-input">
+		<h1>Input [type="file"] overlapping</h1>
+		<p>Write this code. <strong>&lt;input type=&quot;file&quot; class=&quot;overlap&quot; title=&quot;...&quot;&gt;</strong> Another code is created automatically by JS.</p>
+		<div class="view">
+<input type="file" class="overlap" title="파일 등록/변경">
+		</div>
+	</section>
+	<section class="section" id="pagination">
+		<h1>Pagination</h1>
+		<p>This is the template code added format below.</p>
+		<div class="view">
+<form action="" class="x_pagination x_pagination-centered">
+	<ul>
+		<li class="x_disabled"><a href="#">&laquo; LAST</a></li>
+		<li class="x_active"><a href="#">1</a></li>
+		<li><a href="#">2</a></li>
+		<li><a href="#">3</a></li>
+		<li><a href="#">4</a></li>
+		<li>
+			<a href="#goTo" data-toggle title="Jump to">&hellip;</a>
+			<span id="goTo" class="x_input-append">
+				<input type="number" min="1" max="9999" required name="" title="Go to">
+				<button type="submit" class="x_add-on">Go</button>
+			</span>
+		</li>
+		<li><a href="#">9999</a></li>
+		<li><a href="#">FIRST &raquo;</a></li>
+	</ul>
+</form>
+		</div>
+	</section>
+	<section class="section" id="muted">
+		<h1>Muted</h1>
+		<div class="view">
+<p>This is a normal paragraph.</p>
+<p class="x_muted">This is a muted paragraph. You can apply this class to any HTML elements.</p>
+		</div>
+	</section>
+	<section class="section" id="multi-lang">
+		<h1>Multilingual</h1>
+		<p>Write this code. <strong>&lt;input type=&quot;text&quot; class=&quot;lang_code&quot; /&gt;</strong> Another code is created automatically by JS.</p>
+		<div class="view">
+<input type="text" class="lang_code" />
+		</div>
+	</section>
+	<section class="section" id="modal">
+		<h1>Modal</h1>
+		<div class="view">
+<a href="#exModal-1" class="x_btn modalAnchor">Show me the modal 1 window.</a>
+<a href="#exModal-2" class="x_btn modalAnchor">Show me the modal 2 window.</a>
+<section class="x_modal" id="exModal-1">
+	<div class="x_modal-header">
+		<h1>Modal 1 header</h1>
+	</div>
+	<div class="x_modal-body">
+		<p>One fine body…</p>
+	</div>
+	<div class="x_modal-footer">
+		<button type="button" class="x_btn x_pull-left" data-hide="#exModal-1">Close</button>
+		<span class="x_btn-group x_pull-right">
+			<button type="submit" class="x_btn">Modify</button>
+			<button type="submit" class="x_btn x_btn-danger">Delete</button>
+		</span>
+	</div>
+</section>
+<section class="x_modal" id="exModal-2">
+	<div class="x_modal-header">
+		<h1>Modal 2 header</h1>
+	</div>
+	<div class="x_modal-body">
+		<p>One fine body…</p>
+	</div>
+	<div class="x_modal-footer">
+		<button type="button" class="x_btn x_pull-left" data-hide="#exModal-2">Close</button>
+		<span class="x_btn-group x_pull-right">
+			<button type="submit" class="x_btn">Modify</button>
+			<button type="submit" class="x_btn x_btn-danger">Delete</button>
+		</span>
+	</div>
+</section>
+		</div>
+	</section>
+	<section class="section" id="module-search">
+		<h1>Module Search</h1>
+		<p>Write this code. <strong>&lt;input type=&quot;text&quot; class=&quot;module_search&quot; /&gt;</strong> Another code is created automatically by JS.</p>
+		<div class="view">
+<input type="text" class="module_search" />
+		</div>
+	</section>
+	<section class="section" id="alerts">
+		<h1>Alerts</h1>
+		<div class="view">
+<div class="x_alert x_alert-info">
+	<h4>Heads up! 참고하세요!</h4> 
+	<p>This alert needs your attention, but it's not super important.</p>
+</div>
+<div class="x_alert x_alert-block">
+	<h4>Warning! 주의하세요!</h4>
+	<p>Best check yourself, you're not looking too good.</p>
+</div>
+<div class="x_alert x_alert-error">
+	<h4>Oh snap! 오류입니다!</h4> 
+	<p>Change a few things up and try submitting again.</p>
+</div>
+<div class="x_alert x_alert-success">
+	<h4>Well done! 성공했어요!</h4> 
+	<p>You successfully read this important alert message.</p>
+</div>
+		</div>
+	</section>
+	<section class="section" id="thumbnail">
+		<h1>Thumbnail</h1>
+		<div class="view">
+<div class="x_thumbnail"> 
+	<img src="http://naradesign.net/photo/DSCN0996.JPG" alt="">
+	<div class="x_caption">
+		<h4>Thumbnail label</h4>
+		<p>Cras justo odio, dapibus ac facilisis in, egestas eget quam. Donec id elit non mi porta gravida at eget metus. Nullam id dolor id nibh ultricies vehicula ut id elit.</p>
+	</div>
+</div>
+		</div>
+	</section>
+	<section class="section" id="well">
+		<h1>Well</h1>
+		<div class="view">
+<div class="x_well">
+	<dl>
+		<dt>Well</dt>
+		<dd>A well is a hole in the ground from which a supply of water is extracted. In Korean '우물' or '구덩이'.</dd>
+	</dl>
+</div>
+		</div>
+	</section>
+	<section class="section" id="#">
+		<h1>#</h1>
+		<div class="view">
+#
+		</div>
+	</section>
+</div>
+<p class="goTop"><a href="#">▲ Go Top</a></p>
+<script>
+/*
+highlight v3
+Highlights arbitrary terms.
+<http://johannburkard.de/blog/programming/javascript/highlight-javascript-text-higlighting-jquery-plugin.html>
+MIT license.
+Johann Burkard
+<http://johannburkard.de>
+<mailto:jb@eaio.com>
+*/
+jQuery.fn.highlight = function(pat) {
+	function innerHighlight(node, pat) {
+		var skip = 0;
+		if (node.nodeType == 3) {
+			var pos = node.data.toUpperCase().indexOf(pat);
+			if (pos >= 0) {
+				var spannode = document.createElement('mark');
+				spannode.className = 'highlight';
+				var middlebit = node.splitText(pos);
+				var endbit = middlebit.splitText(pat.length);
+				var middleclone = middlebit.cloneNode(true);
+				spannode.appendChild(middleclone);
+				middlebit.parentNode.replaceChild(spannode, middlebit);
+				skip = 1;
+			}
+		}
+		else if (node.nodeType == 1 && node.childNodes && !/(script|style)/i.test(node.tagName)) {
+			for (var i = 0; i < node.childNodes.length; ++i) {
+				i += innerHighlight(node.childNodes[i], pat);
+			}
+		}
+		return skip;
+	}
+	return this.each(function() {
+		innerHighlight(this, pat.toUpperCase());
+	});
+};
+
+jQuery.fn.removeHighlight = function() {
+	return this.find("mark.highlight").each(function() {
+		this.parentNode.firstChild.nodeName;
+		with (this.parentNode) {
+			replaceChild(this.firstChild, this);
+			normalize();
+		}
+	}).end();
+};
+
+jQuery(function($){
+// 목차를 생성한다
+	var $toc = $('#toc');
+	var $section = $('.x>.section');
+	var $chapterHx = $section.find('>h1:first-child');
+	var $view = $section.find('>.view');
+	var chapterNum = $chapterHx.length;
+	// 목차 생성
+	$chapterHx.each(function(index){
+		var chapterText = $(this).clone().find('button').remove().end().text();
+		var chapterId = $(this).closest('section').attr('id');
+		$toc.append('<li><a href="#"></a></li>').find('>li').eq(index).find('>a').attr('href', '#' + chapterId).text(chapterText);
+	});
+	// 코드 보기 생성
+	$view.after('<blockquote class="code" />');
+	var $code = $section.find('>.code');
+	$code.hide();
+	$view.after('<button type="button" class="x_btn x_btn-link x_pull-right codeTrigger">HTML</button>');
+	var $codeTrigger = $section.find('>.codeTrigger');
+	$codeTrigger.click(function(){
+		$(this).next('.code').toggle();
+	});
+	// 코드 생성
+	$code.each(function(){
+		var $this = $(this);
+		$this.text($this.parent('.section').find('>.view').html());
+	});
+	// 하이라잇
+	$code.highlight('class=').highlight('id=').highlight('for=').highlight('href=');
+});
+</script>
+</body>
+</html>
