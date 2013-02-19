@@ -16,6 +16,7 @@
 		</span>
 	</form>
 </section>
+<hr>
 <section cond="count($lang->find_account_question_items)>1">
 	<h1>{$lang->cmd_find_member_account_with_email_question}</h1>
 	<p>{$lang->about_find_account_question}</p>
@@ -43,6 +44,20 @@
 			<input type="text" name="find_account_answer" value="" required placeholder="{$lang->find_account_question}" title="{$lang->find_account_question}" />
 		</div>
 		<input type="submit" class="btn btn-inverse" value="{$lang->cmd_get_temp_password}" style="min-width:220px" />
+	</form>
+</section>
+<hr>
+<section>
+	<h1>{$lang->cmd_resend_auth_mail}</h1>
+	<p>{$lang->about_resend_auth_mail}</p>
+	<form ruleset="resendAuthMail" action="./" method="post">
+		<input type="hidden" name="module" value="member" />
+		<input type="hidden" name="act" value="procMemberResendAuthMail" />
+		<input type="hidden" name="success_return_url" value="{getUrl(act, $act)}" />
+		<span class="input-append">
+			<input type="email" id="email_address" name="email_address" value="" required placeholder="{$lang->email_address}" title="{$lang->email_address}" />
+			<input type="submit" value="{$lang->cmd_resend_auth_mail}" class="btn btn-inverse" />
+		</span>
 	</form>
 </section>
 <include target="./common_footer.html" />
