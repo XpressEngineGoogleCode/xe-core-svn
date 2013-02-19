@@ -1,5 +1,6 @@
 @charset "utf-8";
 .xm em{font-style:normal;color:#f00}
+.xm h1{font-size:22px}
 .xm .nav a,
 .xm .btn{text-decoration:none}
 .xm .dl-horizontal>dd{margin-bottom:10px}
