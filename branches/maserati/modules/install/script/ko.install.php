@@ -49,8 +49,8 @@ $extra_vars->menu_name_list[$menu_srl] = 'welcome_menu';
 
 $args->site_srl = 0;
 $layout_srl = $args->layout_srl = getNextSequence();
-$args->layout = 'bootstrap.layout';
-$args->title = 'bootstrap.layout';
+$args->layout = 'default';
+$args->title = 'default';
 $args->layout_type = 'P';
 
 $oLayoutAdminController = &getAdminController('layout');
