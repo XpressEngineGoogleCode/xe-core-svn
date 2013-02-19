@@ -292,6 +292,10 @@ class admin extends ModuleObject
 
 		$oMenuAdminConroller = getAdminController('menu');
 		$oMenuAdminConroller->makeXmlFile($menuSrl);
+
+		// does not recreate lang cache sometimes
+		FileHandler::RemoveFilesInDir('./files/cache/lang');
+		FileHandler::RemoveFilesInDir('./files/cache/menu/admin_lang');
 	}
 
 	/**

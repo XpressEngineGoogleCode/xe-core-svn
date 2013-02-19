@@ -127,6 +127,13 @@ class adminAdminView extends admin
 	{
 		global $lang;
 
+		// Check is_shortcut column
+		$oDB = DB::getInstance();
+		if(!$oDB->isColumnExists('menu_item', 'is_shortcut'))
+		{
+			return;
+		}
+
 		$oAdminAdminModel = getAdminModel('admin');
 		$lang->menu_gnb_sub = $oAdminAdminModel->getAdminMenuLang();
 
@@ -135,6 +142,7 @@ class adminAdminView extends admin
 		{
 			header('Location: ' . getNotEncodedUrl('', 'module', 'admin'));
 			Context::close();
+			exit;
 		}
 		include $result->php_file;
 
@@ -160,7 +168,8 @@ class adminAdminView extends admin
 			{
 				$oMenuAdminConroller->makeXmlFile($result->menu_srl);
 				header('Location: ' . getNotEncodedUrl('', 'module', 'admin'));
-				break;
+				Context::close;
+				exit;
 			}
 
 			if(!is_array($parentMenu['list']) || !count($parentMenu['list']))
@@ -179,7 +188,8 @@ class adminAdminView extends admin
 				{
 					$oMenuAdminConroller->makeXmlFile($result->menu_srl);
 					header('Location: ' . getNotEncodedUrl('', 'module', 'admin'));
-					break;
+					Context::close();
+					exit;
 				}
 
 				if($subMenuTitle == $childMenu['text'])
