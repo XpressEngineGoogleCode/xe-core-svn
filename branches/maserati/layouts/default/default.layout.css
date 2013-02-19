@@ -37,10 +37,10 @@ body{margin:0}
 .account{margin-right:15px !important}
 
 /* Search */
-.search{display:inline-block;*display:inline;zoom:1;vertical-align:top;margin:0}
-.search>input{font-size:12px;vertical-align:top;border-radius:2px}
-.search>input[type="text"]{background:#e5e6e8;border:1px solid #dedede;height:21px;line-height:21px;padding:0 4px;margin:0 -6px 0 0;width:126px}
-.search>input[type="submit"]{background:#484d51;border:1px solid #272b30;color:#fff;height:23px;line-height:23px;padding:0 15px;margin:0;cursor:pointer;box-shadow:0 1px 0 #6d7174 inset}
+.header .search{display:inline-block;*display:inline;zoom:1;vertical-align:top;margin:0}
+.header .search>input{font-size:12px;vertical-align:top;border-radius:2px}
+.header .search>input[type="text"]{background:#e5e6e8;border:1px solid #dedede;height:21px;line-height:21px;padding:0 4px;margin:0 -6px 0 0;width:126px}
+.header .search>input[type="submit"]{background:#484d51;border:1px solid #272b30;color:#fff;height:23px;line-height:23px;padding:0 15px;margin:0;cursor:pointer;box-shadow:0 1px 0 #6d7174 inset}
 
 /* GNB */
 .gnb{position:relative;border:1px solid #080808;margin:19px 0 0 0;font-size:13px;height:31px;clear:both;background-color:#080808;background:-webkit-linear-gradient(top, #2e2d32, #0c0c0e);background:-moz-linear-gradient(top, #2e2d32, #0c0c0e);background:-o-linear-gradient(top, #2e2d32, #0c0c0e);background:-ms-linear-gradient(top, #2e2d32, #0c0c0e);background:linear-gradient(top, #2e2d32, #0c0c0e);filter:progid:DXImageTransform.Microsoft.gradient(startColorStr=#2e2d32, endColorStr=#0c0c0e)}
