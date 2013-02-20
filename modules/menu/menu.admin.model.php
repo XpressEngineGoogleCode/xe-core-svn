@@ -112,6 +112,26 @@ class menuAdminModel extends menu
 	}
 
 	/**
+	 * Get information of a new menu from the DB, search condition is menu title
+	 * Return DB and XML information of the menu(list Type)
+	 * @param string $title
+	 * @return object
+	 */
+	function getMenuListByTitle($title)
+	{
+		// Get information from the DB
+		$args = new stdClass();
+		$args->title = $title;
+		$output = executeQueryArray('menu.getMenuByTitle', $args);
+		if(!$output->data)
+		{
+			return array();
+		}
+
+		return $output->data;
+	}
+
+	/**
 	 * Return item information of the menu_srl
 	 * group_srls uses a seperator with comma(,) and converts to an array by explode
 	 * @param int $menu_item_srl

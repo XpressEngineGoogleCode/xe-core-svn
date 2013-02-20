@@ -162,40 +162,45 @@ class adminAdminView extends admin
 
 		$parentSrl = 0;
 		$oMenuAdminConroller = getAdminController('menu');
-		foreach((array) $menu->list as $parentKey => $parentMenu)
+		if(!$_SESSION['isMakeXml'])
 		{
-			if(!$parentMenu['text'])
+			foreach((array) $menu->list as $parentKey => $parentMenu)
 			{
-				$oMenuAdminConroller->makeXmlFile($result->menu_srl);
-				header('Location: ' . getNotEncodedUrl('', 'module', 'admin'));
-				Context::close;
-				exit;
-			}
-
-			if(!is_array($parentMenu['list']) || !count($parentMenu['list']))
-			{
-				continue;
-			}
-			if($parentMenu['href'] == '#' && count($parentMenu['list']))
-			{
-				$firstChild = current($parentMenu['list']);
-				$menu->list[$parentKey]['href'] = $firstChild['href'];
-			}
-
-			foreach($parentMenu['list'] as $childKey => $childMenu)
-			{
-				if(!$childMenu['text'])
+				if(!$parentMenu['text'])
 				{
 					$oMenuAdminConroller->makeXmlFile($result->menu_srl);
+					$_SESSION['isMakeXml'] = true;
 					header('Location: ' . getNotEncodedUrl('', 'module', 'admin'));
 					Context::close();
 					exit;
 				}
 
-				if($subMenuTitle == $childMenu['text'])
+				if(!is_array($parentMenu['list']) || !count($parentMenu['list']))
 				{
-					$parentSrl = $childMenu['parent_srl'];
-					break;
+					continue;
+				}
+				if($parentMenu['href'] == '#' && count($parentMenu['list']))
+				{
+					$firstChild = current($parentMenu['list']);
+					$menu->list[$parentKey]['href'] = $firstChild['href'];
+				}
+
+				foreach($parentMenu['list'] as $childKey => $childMenu)
+				{
+					if(!$childMenu['text'])
+					{
+						$oMenuAdminConroller->makeXmlFile($result->menu_srl);
+						$_SESSION['isMakeXml'] = true;
+						header('Location: ' . getNotEncodedUrl('', 'module', 'admin'));
+						Context::close();
+						exit;
+					}
+
+					if($subMenuTitle == $childMenu['text'])
+					{
+						$parentSrl = $childMenu['parent_srl'];
+						break;
+					}
 				}
 			}
 		}
