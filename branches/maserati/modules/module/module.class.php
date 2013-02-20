@@ -101,6 +101,10 @@ class module extends ModuleObject
 
 		// check fix mskin
 		if(!$oDB->isColumnExists("modules", "is_mskin_fix")) return true;
+
+		$oModuleModel = getModel('module');
+		$moduleConfig = $oModuleModel->getModuleConfig('module');
+		if(!$moduleConfig->isUpdateFixedValue) return true;
 		return false;
 	}
 
@@ -356,19 +360,7 @@ class module extends ModuleObject
 		if(!$oDB->isColumnExists("modules", "is_skin_fix"))
 		{
 			$oDB->addColumn('modules', 'is_skin_fix', 'char', 1, 'N');
-			$output = executeQueryArray('module.getAllSkinSetModule');
-			if($output->toBool() && $output->data)
-			{
-				$module_srls = array();
-				foreach($output->data as $val)
-				{
-					$module_srls[] = $val->module_srl;
-				}
-				unset($args);
-				$args->module_srls = implode(',', $module_srls);
-				$args->is_skin_fix = 'Y';
-				$output = executeQuery('module.updateSkinFixModules', $args);
-			}
+			$output = executeQuery('module.updateSkinFixModules');
 		}
 		if(!$oDB->isColumnExists("module_config", "site_srl"))
 		{
@@ -398,19 +390,7 @@ class module extends ModuleObject
 		if(!$oDB->isColumnExists("modules", "is_mskin_fix"))
 		{
 			$oDB->addColumn('modules', 'is_mskin_fix', 'char', 1, 'N');
-			$output = executeQueryArray('module.getAllMobileSkinSetModule');
-			if($output->toBool() && $output->data)
-			{
-				$module_srls = array();
-				foreach($output->data as $val)
-				{
-					$module_srls[] = $val->module_srl;
-				}
-				unset($args);
-				$args->module_srls = implode(',', $module_srls);
-				$args->is_mskin_fix = 'Y';
-				$output = executeQuery('module.updateMobileSkinFixModules', $args);
-			}
+			$output = executeQuery('module.updateMobileSkinFixModules');
 		}
 
 		$output = executeQueryArray('module.getNotLinkedModuleGroupSiteSrl');
@@ -436,14 +416,21 @@ class module extends ModuleObject
 				//getNotLinkedModuleBySiteSrl
 				$soutput = executeQueryArray('module.getNotLinkedModuleBySiteSrl', $args);
 				$uoutput = $this->updateLinkModule($soutput->data, $menuSrl);
-
-				if(!$uoutput->toBool())
-				{
-					return $uoutput;
-				}
 			}
-
 		}
+
+		$oModuleModel = getModel('module');
+		$moduleConfig = $oModuleModel->getModuleConfig('module');
+		if(!$moduleConfig->isUpdateFixedValue)
+		{
+			$output = executeQuery('module.updateSkinFixModules');
+			$output = executeQuery('module.updateMobileSkinFixModules');
+
+			$oModuleController = getController('module');
+			$moduleConfig->isUpdateFixedValue = TRUE;
+			$output = $oModuleController->updateModuleConfig('module', $moduleConfig);
+		}
+	
 
 		return new Object(0, 'success_updated');
 	}
