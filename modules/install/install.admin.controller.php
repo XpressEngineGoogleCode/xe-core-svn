@@ -286,7 +286,7 @@ class installAdminController extends install
 
 		$args->htmlFooter = $config->htmlFooter;
 		$args->siteTitle = $config->siteTitle;
-		$oModuleController->insertModuleConfig('module',$args);
+		$oModuleController->updateModuleConfig('module',$args);
 
 		return $output;
 	}
