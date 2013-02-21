@@ -10,15 +10,17 @@ jQuery(function($){
 			$(this).width($(this).width());
 		});
 	}
-	$gnb.mouseover(function(){
-		$gnb.addClass('open');
-	});
+	if($gnb_sub.length){
+		$gnb.mouseover(function(){
+			$gnb.addClass('open');
+		});
+		$gnb.mouseleave(function(){
+			$gnb.removeClass('open');
+			$gnb_li.removeClass('hover');
+		});
+	}
 	$gnb_a.mouseover(function(){
 		$(this).parent('li').addClass('hover').siblings('li').removeClass('hover');
-	});
-	$gnb.mouseleave(function(){
-		$gnb.removeClass('open');
-		$gnb_li.removeClass('hover');
 	});
 	$gnb_a.focus(function(){
 		$(this).trigger('mouseover');
