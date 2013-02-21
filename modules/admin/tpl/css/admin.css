@@ -240,7 +240,7 @@ body>.x,
 .x>.body.wide>.gnb{width:auto}
 }
 /* Header */
-.x>.header>h1{margin:0 15px 0 0;float:left}
+.x>.header>h1{margin:0 15px 0 0;float:left;white-space:nowrap}
 .x>.header>h1>a{text-decoration:none;color:#333;font-size:24px;line-height:40px;font-family:Arial, Helvetica, sans-serif}
 .x>.header>h1>a>img{vertical-align:text-bottom}
 .x>.header>.site{margin:14px 0 0 0;float:left;font-size:11px}
