@@ -637,6 +637,15 @@ class menuAdminController extends menu
 		$this->makeXmlFile($args->menu_srl);
 	}
 
+	public function updateMenuItem($itemInfo)
+	{
+		$output = executeQuery('menu.updateMenuItem', $itemInfo);
+
+		// recreate menu cache file
+		$this->makeXmlFile($itemInfo->menu_srl);
+		return $output;
+	}
+
 	/**
 	 * Delete menu item(menu of the menu)
 	 * @return void|Object

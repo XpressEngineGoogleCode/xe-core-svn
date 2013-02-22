@@ -1479,11 +1479,14 @@ function changeValueInUrl($key, $requestKey, $dbKey, $urlName = 'success_return_
 		if($arrayUrl['query'])
 		{
 			parse_str($arrayUrl['query'], $parsedStr);
-			$parsedStr[$key] = $requestKey;
-		}
 
-		$successReturnUrl .= $arrayUrl['path'].'?'.http_build_query($parsedStr);
-		Context::set($urlName, $successReturnUrl);
+			if(isset($parsedStr[$key]))
+			{
+				$parsedStr[$key] = $requestKey;
+				$successReturnUrl .= $arrayUrl['path'].'?'.http_build_query($parsedStr);
+				Context::set($urlName, $successReturnUrl);
+			}
+		}
 	}
 }
 
