@@ -187,7 +187,7 @@ class documentController extends document
 	 */
 	function insertDocument($obj, $manual_inserted = false, $isRestore = false, $isLatest = true)
 	{
-		if(!checkCSRF())
+		if(!$manual_inserted && !checkCSRF())
 		{
 			return new Object(-1, 'msg_invalid_request');
 		}
@@ -331,11 +331,12 @@ class documentController extends document
 	 * Update the document
 	 * @param object $source_obj
 	 * @param object $obj
+	 * @param bool $manual_updated
 	 * @return object
 	 */
-	function updateDocument($source_obj, $obj)
+	function updateDocument($source_obj, $obj, $manual_updated = FALSE)
 	{
-		if(!checkCSRF())
+		if(!$manual_updated && !checkCSRF())
 		{
 			return new Object(-1, 'msg_invalid_request');
 		}
