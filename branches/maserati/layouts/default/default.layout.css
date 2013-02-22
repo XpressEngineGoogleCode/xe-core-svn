@@ -19,6 +19,7 @@ body{margin:0}
 .body:after{content:"";display:block;clear:both}
 .content{padding:0 0 40px 0;zoom:1}
 .content>*:first-child{margin-top:0}
+.content img{max-width:100%;height:auto}
 
 /* Header */
 .header>h1{float:left;margin:19px 0}
@@ -68,7 +69,7 @@ body{margin:0}
 /* Visial */
 .visual>.list{position:relative;width:300%;left:-100%;z-index:1}
 .visual>.list.total1{width:auto;left:0}
-.visual img{display:block}
+.visual img{display:block;max-width:100%;height:auto}
 .visual a{display:block;float:left;position:relative;color:#fff;text-decoration:none;font-family:Corbel,Arial,Helvetica,sans-serif}
 .visual a[href=""]{cursor:default}
 .visual .total1 a{float:none}
