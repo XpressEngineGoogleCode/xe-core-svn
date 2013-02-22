@@ -412,12 +412,12 @@ class moduleController extends module
 		$oDB = &DB::getInstance();
 		$oDB->begin();
 
+		$oModuleModel = &getModel('module');
+		$columnList = array('module_srl', 'site_srl', 'browser_title', 'mid');
+		$module_info = $oModuleModel->getModuleInfoByModuleSrl($args->module_srl);
+
 		if(!$args->site_srl || !$args->browser_title)
 		{
-			$oModuleModel = &getModel('module');
-			$columnList = array('module_srl', 'site_srl', 'browser_title');
-			$module_info = $oModuleModel->getModuleInfoByModuleSrl($args->module_srl);
-
 			if(!$args->site_srl) $args->site_srl = (int)$module_info->site_srl;
 			if(!$args->browser_title) $args->browser_title = $module_info->browser_title;
 		}
@@ -467,6 +467,25 @@ class moduleController extends module
 		{
 			$oDB->rollback();
 			return $output;
+		}
+
+		$menuArgs->url = $module_info->mid;
+		$menuArgs->site_srl = $module_info->site_srl;
+		$menuOutput = executeQuery('menu.getMenuItemByUrl', $menuArgs);
+
+		if($menuOutput->data->menu_item_srl)
+		{
+			$oMenuAdminController = &getAdminController('menu');
+
+			$itemInfo = $menuOutput->data;
+			$itemInfo->url = $args->mid;
+
+			$updateMenuItemOutput = $oMenuAdminController->updateMenuItem($itemInfo);
+			if(!$updateMenuItemOutput->toBool())
+			{
+				$oDB->rollback();
+				return $updateMenuItemOutput;
+			}
 		}
 
 		// Insert module extra vars
