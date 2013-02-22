@@ -1127,7 +1127,7 @@ jQuery(function($){
 	
 	var $foggyLayer = $.xeMsgBox.$foggyLayer = $("<div />");
 	$foggyLayer.css({
-		position: 'absolute',
+		position: 'fixed',
 		top:0,
 		left:0,
 		backgroundColor:'#000',
@@ -1167,7 +1167,7 @@ jQuery(function($){
 	
 	var $foggyLayer = $.xeFoggy.$foggyLayer = $("<div />");
 	$foggyLayer.css({
-		position: 'absolute',
+		position: 'fixed',
 		top:0,
 		left:0,
 		backgroundColor:'#000',
