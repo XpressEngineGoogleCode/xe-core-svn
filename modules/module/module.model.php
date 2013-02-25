@@ -986,7 +986,6 @@ class moduleModel extends module
 			{
 				$type = 'M';
 			}
-
 			$defaultSkinName = $this->getModuleDefaultSkin($module, $type, $site_info->site_srl);
 
 			if(isset($defaultSkinName))
@@ -1693,6 +1692,7 @@ class moduleModel extends module
 	function getModuleDefaultSkin($module_name, $skin_type = 'P', $site_srl = 0, $updateCache = true)
 	{
 		$target = ($skin_type == 'M') ? 'mskin' : 'skin';
+		if(!$site_srl) $site_srl = 0;
 
 		$designInfoFile = sprintf(_XE_PATH_.'files/site_design/design_%s.php', $site_srl);
 		if(is_readable($designInfoFile))
@@ -1701,7 +1701,6 @@ class moduleModel extends module
 
 			$skinName = $designInfo->module->{$module_name}->{$target};
 		}
-
 		if(!$skinName)
 		{
 			$dir = ($skin_type == 'M') ? 'm.skins/' : 'skins/';

@@ -407,7 +407,6 @@ class moduleController extends module
 	{
 		$output = $this->arrangeModuleInfo($args, $extra_vars);
 		if(!$output->toBool()) return $output;
-
 		// begin transaction
 		$oDB = &DB::getInstance();
 		$oDB->begin();
@@ -446,13 +445,13 @@ class moduleController extends module
 			}
 		}
 		
-		if($args->mskin = '/USE_DEFAULT/')
+		if($args->mskin == '/USE_DEFAULT/')
 		{
 			$args->is_mskin_fix = 'N';
 		}
 		else
 		{
-			if(isset($args->is_skin_fix))
+			if(isset($args->is_mskin_fix))
 			{
 				$args->is_mskin_fix = ($args->is_mskin_fix != 'Y') ? 'N' : 'Y';
 			}
@@ -461,7 +460,6 @@ class moduleController extends module
 				$args->is_mskin_fix = 'Y';
 			}
 		}
-
 		$output = executeQuery('module.updateModule', $args);
 		if(!$output->toBool())
 		{
