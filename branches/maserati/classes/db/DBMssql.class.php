@@ -783,7 +783,7 @@ class DBMssql extends DB
 			$orderBy = ' ORDER BY ' . $orderBy;
 		}
 
-		if($limitCount != '')
+		if($limitCount != '' && $query->limit->start > 0)
 		{
 			$order = $query->getOrder();
 			$first_columns = array();
@@ -794,7 +794,7 @@ class DBMssql extends DB
 				$first_sub_columns[] = $tmpColumnName;
 			}
 
-			$first_query = sprintf("select %s from (select top %d %s %s %s %s %s) xet", implode(',',$first_columns),  $limitCount, implode(',',$first_sub_columns), $from, $where, $groupBy, $orderBy);
+			$first_query = sprintf("select %s from (select top %d %s %s %s %s %s) xet", implode(',',$first_columns),  $query->limit->start, implode(',',$first_sub_columns), $from, $where, $groupBy, $orderBy);
 			$this->param = $query->getArguments();
 			$result = $this->__query($first_query, $connection);
 			$tmp = $this->_fetch($result);
