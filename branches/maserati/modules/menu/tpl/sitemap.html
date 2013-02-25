@@ -2630,7 +2630,7 @@ jQuery(function($){
 		}, function(htData){
 			$._xeAdminVar.htSiteDefaultLayout.P = {
 				layout_srl : htData.layout_srl,
-				title : htData.title
+				title : htData.layout_srl > 0 ? htData.title : xe.lang.no_use_layout
 			}
 		});
 		jQuery.exec_json("layout.getLayoutAdminSiteDefaultLayout", {
@@ -2639,7 +2639,7 @@ jQuery(function($){
 		}, function(htData){
 			$._xeAdminVar.htSiteDefaultLayout.M = {
 				layout_srl : htData.layout_srl,
-				title : htData.title
+				title : htData.layout_srl > 0 ? htData.title : xe.lang.no_use_layout
 			}
 		});
 	}
