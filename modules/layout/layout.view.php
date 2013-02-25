@@ -137,45 +137,52 @@ class layoutView extends layout
 				$site_srl = ($oModule) ? $oModule->module_info->site_srl : 0;
 				$designInfoFile = sprintf(_XE_PATH_.'/files/site_design/design_%s.php', $site_srl);
 				@include($designInfoFile);
-				$layoutSrl = $designInfo->layout_srl;
+
+				if($skinType == 'M')
+				{
+					$layoutSrl = $designInfo->mlayout_srl;
+				}
+				else
+				{
+					$layoutSrl = $designInfo->layout_srl;
+				}
 			}
 
 			$oLayoutModel = getModel('layout');
 			$layoutInfo = $oLayoutModel->getLayout($layoutSrl);
 
-			if(!$layoutInfo) 
+			// If there is no layout, pass it.
+			if($layoutInfo) 
 			{
-				return new Object(-1, 'msg_invalid_request');
-			}
-
-			// Set names and values of extra_vars to $layout_info
-			if($layoutInfo->extra_var_count) 
-			{
-				foreach($layoutInfo->extra_var as $var_id => $val) 
+				// Set names and values of extra_vars to $layout_info
+				if($layoutInfo->extra_var_count)
 				{
-					$layoutInfo->{$var_id} = $val->value;
+					foreach($layoutInfo->extra_var as $var_id => $val)
+					{
+						$layoutInfo->{$var_id} = $val->value;
+					}
 				}
-			}
 
-			if($layoutVars)
-			{
-				foreach($layoutVars as $key => $val) 
+				if($layoutVars)
 				{
-					$layoutInfo->{$key} = $val;
+					foreach($layoutVars as $key => $val)
+					{
+						$layoutInfo->{$key} = $val;
+					}
 				}
-			}
 
-			// menu in layout information becomes an argument for Context:: set
-			if($layoutInfo->menu_count) 
-			{
-				foreach($layoutInfo->menu as $menu_id => $menu) 
+				// menu in layout information becomes an argument for Context:: set
+				if($layoutInfo->menu_count)
 				{
-					if(file_exists($menu->php_file)) @include($menu->php_file);
-					Context::set($menu_id, $menu);
+					foreach($layoutInfo->menu as $menu_id => $menu)
+					{
+						if(file_exists($menu->php_file)) @include($menu->php_file);
+						Context::set($menu_id, $menu);
+					}
 				}
-			}
 
-			Context::set('layout_info', $layoutInfo);
+				Context::set('layout_info', $layoutInfo);
+			}
 		}
 
 		// Compile
