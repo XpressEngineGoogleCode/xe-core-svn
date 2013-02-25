@@ -725,7 +725,7 @@ class DBMssql extends DB
 	 * @param boolean $with_values
 	 * @return string
 	 */
-	function getSelectSql($query, $with_values = TRUE)
+	function getSelectSql($query, $with_values = TRUE, $connection=NULL)
 	{
 		$with_values = false;
 
@@ -783,7 +783,30 @@ class DBMssql extends DB
 			$orderBy = ' ORDER BY ' . $orderBy;
 		}
 
-		return $select . ' ' . $from . ' ' . $where . ' ' . $groupBy . ' ' . $orderBy;
+		if($limitCount != '')
+		{
+			$order = $query->getOrder();
+			$first_columns = array();
+			foreach($order as $val)
+			{
+				$tmpColumnName = $val->getPureColumnName();
+				$first_columns[] = sprintf('%s(%s) as %s', $val->getPureSortOrder()=='asc'?'max':'min', $tmpColumnName, $tmpColumnName);
+				$first_sub_columns[] = $tmpColumnName;
+			}
+
+			$first_query = sprintf("select %s from (select top %d %s %s %s %s %s) xet", implode(',',$first_columns),  $limitCount, implode(',',$first_sub_columns), $from, $where, $groupBy, $orderBy);
+			$this->param = $query->getArguments();
+			$result = $this->__query($first_query, $connection);
+			$tmp = $this->_fetch($result);
+
+			$sub_cond = array();
+			foreach($order as $k => $v)
+			{
+				$sub_cond[] = sprintf("%s %s '%s'", $v->getPureColumnName(), $v->sort_order->value=='asc'?'>':'<', $tmp->{$v->getPureColumnName()});
+			}
+			$sub_condition = ' and( '.implode(' and ',$sub_cond).' )';
+		}
+		return $select . ' ' . $from . ' ' . $where .$sub_condition. ' ' . $groupBy . ' ' . $orderBy;
 	}
 
 	/**
@@ -796,7 +819,7 @@ class DBMssql extends DB
 	 */
 	function _executeSelectAct($queryObject, $connection = null)
 	{
-		$query = $this->getSelectSql($queryObject);
+		$query = $this->getSelectSql($queryObject, true, $connection);
 
 		if(strpos($query, "substr"))
 		{

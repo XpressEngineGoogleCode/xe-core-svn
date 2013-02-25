@@ -109,6 +109,11 @@ class Argument
 		return $this->_value;
 	}
 
+	function getPureValue()
+	{
+		return $this->value;
+	}
+
 	function getColumnOperation()
 	{
 		return $this->column_operation;
