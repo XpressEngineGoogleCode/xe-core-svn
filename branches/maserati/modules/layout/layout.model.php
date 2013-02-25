@@ -42,6 +42,37 @@ class layoutModel extends layout
 		$args->layout_type = $layout_type;
 		$output = executeQueryArray('layout.getLayoutList', $args, $columnList);
 
+		//TODO If remove a support themes, remove this codes also.
+		if($layout_type == 'P')
+		{
+			$pathPrefix = _XE_PATH_ . 'layouts/';
+			$themePathFormat = _XE_PATH_ . 'themes/%s/layouts/%s';
+		}
+		else
+		{
+			$pathPrefix = _XE_PATH_ . 'm.layouts/';
+			$themePathFormat = _XE_PATH_ . 'themes/%s/m.layouts/%s';
+		}
+
+		foreach($output->data as $no => &$val)
+		{
+			if(strpos($val->layout, '|@|') !== FALSE)
+			{
+				list($themeName, $layoutName) = explode('|@|', $val->layout);
+				$path = sprintf($themePathFormat, $themeName, $layoutName);
+				$val->layout = str_replace('|@|', '/', $val->layout);
+			}
+			else
+			{
+				$path = $pathPrefix . $val->layout;
+			}
+			
+			if(!is_dir($path))
+			{
+				unset($output->data[$no]);
+			}
+		}
+
 		$oLayoutAdminModel = getAdminModel('layout');
 		$siteDefaultLayoutSrl = $oLayoutAdminModel->getSiteDefaultLayout($layout_type, $site_srl);
 		if($siteDefaultLayoutSrl)
