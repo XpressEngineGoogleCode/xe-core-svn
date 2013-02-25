@@ -369,9 +369,16 @@ class moduleAdminModel extends module
 	 * @brief Get values for a particular language code
 	 * Return its corresponding value if lang_code is specified. Otherwise return $name.
 	 */
-	function getLangCode($site_srl, $name)
+	function getLangCode($site_srl, $name, $isFullLanguage = FALSE)
 	{
-		$lang_supported = Context::get('lang_supported');
+		if($isFullLanguage)
+		{
+			$lang_supported = Context::loadLangSupported();
+		}
+		else
+		{
+			$lang_supported = Context::get('lang_supported');
+		}
 
 		if(substr($name,0,12)=='$user_lang->')
 		{

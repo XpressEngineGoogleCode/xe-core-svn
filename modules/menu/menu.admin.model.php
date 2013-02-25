@@ -269,7 +269,7 @@ class menuAdminModel extends menu
 		}
 		// Get language code
 		$oModuleAdminModel = &getAdminModel('module');
-		return $oModuleAdminModel->getLangCode($site_srl, $source_name);
+		return $oModuleAdminModel->getLangCode($site_srl, $source_name, TRUE);
 	}
 
 	/**
