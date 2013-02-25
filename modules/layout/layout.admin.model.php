@@ -170,6 +170,14 @@ class layoutAdminModel extends layout
 			return 0;
 		}
 
+		$oModel = getModel('layout');
+		$layout_info = $oModel->getLayout($designInfo->{$target});
+
+		if(!$layout_info)
+		{
+			return 0;
+		}
+
 		return $designInfo->{$target};
 	}
 }
