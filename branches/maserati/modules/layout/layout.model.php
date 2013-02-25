@@ -60,7 +60,6 @@ class layoutModel extends layout
 			{
 				list($themeName, $layoutName) = explode('|@|', $val->layout);
 				$path = sprintf($themePathFormat, $themeName, $layoutName);
-				$val->layout = str_replace('|@|', '/', $val->layout);
 			}
 			else
 			{
