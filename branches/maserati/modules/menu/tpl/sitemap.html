@@ -359,14 +359,14 @@
 						<div class="x_tab-content">
 							<div class="x_tab-pane x_active" id="pc">
 								<div class="shadow">
-									<iframe name="_pc_preview_ifr" src="about:_blank"></iframe><i class="mask"></i>
+									<iframe name="_pc_preview_ifr" src="about:_blank" style="display:none"></iframe><i class="mask"><span></span></i>
 									<input type="submit" class="x_icon-zoom-in x_icon-white _pc_preview_open" value="{$lang->view_zoom}" />
 								</div>
 							</div>
 							<div class="x_tab-pane" id="mobile">
 								<label class="mvOption"><input type="checkbox" name="use_mobile" value="Y"> {$lang->use_mobile_view}</label>
 								<div class="shadow">
-									<iframe name="_mobile_preview_ifr" src="about:_blank"></iframe><i class="mask"></i>
+									<iframe name="_mobile_preview_ifr" src="about:_blank" style="display:none"></iframe><i class="mask"><span></span></i>
 									<input type="submit" class="x_icon-zoom-in x_icon-white _mobile_preview_open" value="{$lang->view_zoom}" />
 								</div>
 							</div>
@@ -1192,6 +1192,8 @@ jQuery(function($){
 	setTimeout(function(){$('#design').show();},0);
 
 	<!--@end-->
+
+	$._xeAdminVar.htPrevSetting = {};
 	
 	$("#tmpl_noDownloadableItem").template( "noDownloadableItem" );
 	$("#tmpl_downloadableItem").template( "downloadableItem" );
@@ -2822,8 +2824,10 @@ jQuery(function($){
 		$('#design').show();
 	});
 	
-	$('#design').bind('hide', function(){
-		$._xeAdminVar.htPrevSetting = {};
+	$('#design').bind('hide', function(e){
+		if(e.target == this){
+			$._xeAdminVar.htPrevSetting = {};
+		}
 	});
 	function updateSelectedDesign(htDesign){
 		var sMode = $._xeAdminVar.htPrevSetting.bMobilePreviewTabOpen?"M":"P";
@@ -2892,7 +2896,34 @@ jQuery(function($){
 		$('._preview_form').submit();
 		
 		$('._preview_form').attr('target', "xe_preview");
+
+		var $iframe = $("iframe[name="+sTarget+"]");
+		var $container = $iframe.next('i');
+		var $text = $container.children('span');
+		var $zoom = $container.next('input');
+		$text.hide();
+		$container.removeClass('on_message');
+		$zoom.hide();
+		$iframe.hide();
 	}
+
+	$('iframe[name=_pc_preview_ifr], iframe[name=_mobile_preview_ifr]').bind("load", function(){
+		var $this = $(this);
+		var $errElm = $('#preview_error', $this.contents());
+		var message = $errElm.text();
+		var $container = $this.next('i');
+		var $text = $container.children('span');
+		var $zoom = $container.next('input');
+
+		if($errElm.length){
+			$this.hide();
+			$text.text(message).show();
+			$container.addClass('on_message');
+		}else{
+			$zoom.show();
+			$(this).show();
+		}
+	});
 	
 	$('._pc_preview_open').click(function(ev){
 		window.open($('input[name=_pc_preview_ifr]').attr('src'), "xe_preview", "resizable=yes,width=" + jQuery('body').width() + ",height=" + jQuery('body').height());
@@ -3152,6 +3183,7 @@ jQuery(function($){
 		var sLayoutTitle = $(this).closest('li').data('LayoutTitle');
 		htDesign.sLayoutSrl = sLayoutSrl;
 		htDesign.sLayoutTitle = sLayoutTitle;
+		htDesign.sModuleName = '';
 		
 		updateSelectedDesign(htDesign);
 	})
