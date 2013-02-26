@@ -42,31 +42,9 @@ class layoutModel extends layout
 		$args->layout_type = $layout_type;
 		$output = executeQueryArray('layout.getLayoutList', $args, $columnList);
 
-		//TODO If remove a support themes, remove this codes also.
-		if($layout_type == 'P')
-		{
-			$pathPrefix = _XE_PATH_ . 'layouts/';
-			$themePathFormat = _XE_PATH_ . 'themes/%s/layouts/%s';
-		}
-		else
-		{
-			$pathPrefix = _XE_PATH_ . 'm.layouts/';
-			$themePathFormat = _XE_PATH_ . 'themes/%s/m.layouts/%s';
-		}
-
 		foreach($output->data as $no => &$val)
 		{
-			if(strpos($val->layout, '|@|') !== FALSE)
-			{
-				list($themeName, $layoutName) = explode('|@|', $val->layout);
-				$path = sprintf($themePathFormat, $themeName, $layoutName);
-			}
-			else
-			{
-				$path = $pathPrefix . $val->layout;
-			}
-			
-			if(!is_dir($path))
+			if(!$this->isExistsLayoutFile($val->layout, $layout_type))
 			{
 				unset($output->data[$no]);
 			}
@@ -156,9 +134,16 @@ class layoutModel extends layout
 		$instanceList = array();
 		if(is_array($output->data))
 		{
-			foreach($output->data as $iInfo)
+			foreach($output->data as $no => $iInfo)
 			{
-				$instanceList[] = $iInfo->layout;
+				if($this->isExistsLayoutFile($iInfo->layout, $layoutType))
+				{
+					$instanceList[] = $iInfo->layout;
+				}
+				else
+				{
+					unset($output->data[$no]);
+				}
 			}
 		}
 
@@ -214,9 +199,54 @@ class layoutModel extends layout
 		if($isCreateInstance)
 		{
 			$output = executeQueryArray('layout.getLayoutList', $args, $columnList);
+
+			if(is_array($output->data))
+			{
+				foreach($output->data as $no => $iInfo)
+				{
+					if(!$this->isExistsLayoutFile($iInfo->layout, $layoutType))
+					{
+						unset($output->data[$no]);
+					}
+				}
+			}
 		}
 
 		return $output->data;
+	}
+
+	/**
+	 * If exists layout file returns true
+	 *
+	 * @param string $layout layout name
+	 * @param string $layoutType P or M
+	 * @return bool
+	 */
+	function isExistsLayoutFile($layout, $layoutType)
+	{
+		//TODO If remove a support themes, remove this codes also.
+		if($layoutType == 'P')
+		{
+			$pathPrefix = _XE_PATH_ . 'layouts/';
+			$themePathFormat = _XE_PATH_ . 'themes/%s/layouts/%s';
+		}
+		else
+		{
+			$pathPrefix = _XE_PATH_ . 'm.layouts/';
+			$themePathFormat = _XE_PATH_ . 'themes/%s/m.layouts/%s';
+		}
+
+		if(strpos($layout, '|@|') !== FALSE)
+		{
+			list($themeName, $layoutName) = explode('|@|', $layout);
+			$path = sprintf($themePathFormat, $themeName, $layoutName);
+		}
+		else
+		{
+			$path = $pathPrefix . $layout;
+		}
+
+		return is_dir($path);
 	}
 
 	/**
