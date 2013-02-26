@@ -24,13 +24,14 @@
 (function($){
 $(function(){
 	var option = {
-		changeMonth:true,
-		changeYear:true,
-		gotoCurrent: false
+		changeMonth:true
+		,changeYear:true
+		,gotoCurrent: false
 		,yearRange:'-100:+10'
 		, onSelect:function(){
 			$(this).prev('input[type="hidden"]').val(this.value.replace(/-/g,""));
 		}
+		,minDate: new Date("{date('Y-m-d',time()+60*60*24*30)}")
 	};
 	$.extend(option,$.datepicker.regional['{$lang_type}']);
 	$(".inputDate").datepicker(option);
