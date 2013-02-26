@@ -200,7 +200,7 @@ jQuery(function($){
 			}, 500);
 		});
 // Check All
-	$('.x th>input[type="checkbox"]')
+	$('.x th :checkbox')
 		.change(function() {
 			var $this = $(this), name = $this.data('name');
 			$this.closest('table')
@@ -221,7 +221,12 @@ jQuery(function($){
 // Section Toggle
 	if($('.section').length > 1){
 		var $section_heading = $('.x .section').find('>h1:first');
-		$section_heading.append('<button type="button" class="snToggle x_icon-chevron-up">Toggle this section</button>');
+		$section_heading.each(function(){
+			var $this = $(this);
+			if($this.next().length){
+				$this.append('<button type="button" class="snToggle x_icon-chevron-up">Toggle this section</button>');
+			}
+		});
 		$('.x .section.collapsed>h1>.snToggle').removeClass('x_icon-chevron-up').addClass('x_icon-chevron-down');
 		$section_heading.find('>.snToggle').click(function(){
 			var $this = $(this);

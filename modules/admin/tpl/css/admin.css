@@ -86,6 +86,8 @@ body>.x,
 .x .x_table>caption>a,
 .x .x_table>caption>i,
 .x .x_table>caption>strong{position:relative;top:7px}
+.x .x_table thead th{vertical-align:top}
+.x .x_table input{margin:0}
 .x .x_inline{display:inline-block;*display:inline;*zoom:1}
 .x .x_page-header+.x_form-horizontal{margin-top:-20px}
 .x .x_controls:after{content:"";display:block;clear:both}
@@ -141,7 +143,6 @@ body>.x,
 .x select[multiple]{height:auto}
 .x textarea{vertical-align:top}
 .x .x_tab-content{overflow:visible}
-.x .x_table thead th{vertical-align:top}
 .x .x_well>*:first-child{margin-top:0}
 .x .x_well>*:last-child{margin-bottom:0}
 .x legend{font-size:14px;font-weight:bold;line-height:24px}
@@ -549,7 +550,7 @@ html[lang="mn"] .x .g11n.active>[disabled],
 .x .table tfoot td{font-weight:bold;background:#f8f8f8}
 .x .table.even tbody tr:nth-of-type(even){background-color:#fafafa}
 .x .table tbody tr:hover{background:#ffd !important}
-.x .table td>input[type=text]{margin:-1px 0 !important;vertical-align:middle}
+.x .table td>input[type="text"]{margin:-1px 0 !important;vertical-align:middle}
 .x .table img{vertical-align:middle}
 .x .table em{font-style:normal;font-weight:normal;color:#e00}
 /* Form */
@@ -558,11 +559,11 @@ html[lang="mn"] .x .g11n.active>[disabled],
 .x .form.search fieldset{border:1px solid #ccc;padding:5px 15px;border-radius:3px}
 .x .form em{font-style:normal;color:#e00}
 .x .form label{line-height:1;vertical-align:middle}
-.x .form input[type=radio]+label,
-.x .form input[type=checkbox]+label{margin-right:1em}
-.x .form input[type=checkbox]+label,
-.x .form input[type=radio]+label,
-.x .form input[type=file]{cursor:pointer}
+.x .form input[type="radio"]+label,
+.x .form input[type="checkbox"]+label{margin-right:1em}
+.x .form input[type="checkbox"]+label,
+.x .form input[type="radio"]+label,
+.x .form input[type="file"]{cursor:pointer}
 .x .form ul{position:relative;margin:1em 0;padding:0;list-style:none;border-top:2px solid #ccc;border-bottom:1px solid #ccc;zoom:1}
 .x .form li{list-style:none;border:1px solid #ddd;border-left:0;border-right:0;margin:-1px 0;padding:8px 0;vertical-align:top;zoom:1}
 .x .form li:hover{background:#ffd}
@@ -570,22 +571,22 @@ html[lang="mn"] .x .g11n.active>[disabled],
 .x .form li>label:first-child{display:block;font-weight:bold}
 .x .form li label em{font-weight:normal}
 .x .form label.overlap{position:absolute;color:#aaa}
-.x .form input[type=text],
-.x .form input[type=password],
-.x .form input[type=file],
+.x .form input[type="text"],
+.x .form input[type="password"],
+.x .form input[type="file"],
 .x .form select[size],
 .x .form textarea{position:relative;width:280px;margin:2px 0;border:1px solid #b7b7b7;border-right-color:#e1e1e1;border-bottom-color:#e1e1e1;background:transparent}
-.x .form input[type=text],
-.x .form input[type=password],
-.x .form input[type=file]{height:22px;line-height:22px;vertical-align:middle;padding:0 4px}
-.x .form input[type=checkbox],
-.x .form input[type=radio]{margin:0;padding:0;width:13px;height:13px;vertical-align:middle}
-.x .form input[type=text][disabled=disabled],
-.x .form input[type=password][disabled=disabled],
-.x .form input[type=radio][disabled=disabled],
-.x .form input[type=checkbox][disabled=disabled],
-.x .form select[disabled=disabled],
-.x .form textarea[disabled=disabled]{background:#ddd;text-shadow:1px 1px 0 #fff}
+.x .form input[type="text"],
+.x .form input[type="password"],
+.x .form input[type="file"]{height:22px;line-height:22px;vertical-align:middle;padding:0 4px}
+.x .form input[type="checkbox"],
+.x .form input[type="radio"]{margin:0;padding:0;width:13px;height:13px;vertical-align:middle}
+.x .form input[type="text"][disabled="disabled"],
+.x .form input[type="password"][disabled="disabled"],
+.x .form input[type="radio"][disabled="disabled"],
+.x .form input[type="checkbox"][disabled="disabled"],
+.x .form select[disabled="disabled"],
+.x .form textarea[disabled="disabled"]{background:#ddd;text-shadow:1px 1px 0 #fff}
 .x .form textarea{padding:3px 4px;vertical-align:top;resize:both}
 .x .form span.desc, 
 .x .form em.desc{line-height:22px;vertical-align:middle;margin:0 10px}
