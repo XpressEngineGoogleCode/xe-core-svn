@@ -68,8 +68,9 @@ body{margin:0}
 
 /* Visial */
 .visual>.list{position:relative;width:300%;left:-100%;z-index:1}
+.visual>.list:after{content:"";display:block;clear:both}
 .visual>.list.total1{width:auto;left:0}
-.visual img{display:block;max-width:100%;height:auto}
+.visual img{display:block;max-width:100%;height:auto;margin:0 auto}
 .visual a{display:block;float:left;position:relative;color:#fff;text-decoration:none;font-family:Corbel,Arial,Helvetica,sans-serif}
 .visual a[href=""]{cursor:default}
 .visual .total1 a{float:none}
@@ -78,6 +79,8 @@ body{margin:0}
 .visual a>p{margin:-24px 0 0 0;padding:0 100px;position:absolute;top:50%;left:0;right:0;text-align:center;font-size:47px;letter-spacing:-1px;line-height:1}
 .visual.sub a>p{font-size:32px;text-align:left}
 .visual>button{zoom:1;border:0;background:url(blank.gif);cursor:pointer;width:100px;position:absolute;z-index:2;top:0;bottom:0;margin:0;padding:0;color:#fff}
+.visual>button:hover,
+.visual>button:focus{background-color:rgba(0,0,0,.25)}
 .visual>button>i{position:absolute;top:50%;left:50%;width:25px;height:50px;background:url(slideNav.png) no-repeat;margin:-25px 0 0 -12px}
 .visual>.prev{left:0}
 .visual>.next{right:0}
