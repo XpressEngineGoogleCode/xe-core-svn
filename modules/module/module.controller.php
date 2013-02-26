@@ -383,6 +383,52 @@ class moduleController extends module
 			}
 		}
 
+		unset($output);
+		$menuArgs->url = $args->mid;
+		$menuArgs->site_srl = $args->site_srl;
+		$output = executeQuery('menu.getMenuItemByUrl', $menuArgs);
+
+		// if menu is not created, create menu also
+		if(!$output->data)
+		{
+			$oMenuAdminModel = &getAdminModel('menu');
+			$tempMenu = $oMenuAdminModel->getMenuByTitle(array('Temporary menu'));
+
+			if(!$tempMenu)
+			{
+				$siteMapOutput->site_srl = $args->site_srl;
+				$siteMapArgs->title = 'Temporary menu';
+				$tempMenu->menu_srl = $siteMapArgs->menu_srl = getNextSequence();
+				$siteMapArgs->listorder = $siteMapArgs->menu_srl * -1;
+
+				$siteMapOutput = executeQuery('menu.insertMenu', $siteMapArgs);
+				if(!$siteMapOutput->toBool())
+				{
+					$oDB->rollback();
+					return $siteMapOutput;
+				}
+			}
+
+			$menuArgs->menu_srl = $tempMenu->menu_srl;
+			$menuArgs->menu_item_srl = getNextSequence();
+			$menuArgs->parent_srl = 0;
+			$menuArgs->open_window = 'N';
+			$menuArgs->expand = 'N';
+			$menuArgs->is_shortcut = 'N';
+			$menuArgs->name = $args->browser_title;
+			$menuArgs->listorder = $args->menu_item_srl * -1;
+
+			$output = executeQuery('menu.insertMenuItem', $menuArgs);
+			if(!$output->toBool())
+			{
+				$oDB->rollback();
+				return $output;
+			}
+
+			$oMenuAdminController = &getAdminController('menu');
+			$oMenuAdminController->makeXmlFile($tempMenu->menu_srl);
+		}
+
 		// Insert a module
 		$output = executeQuery('module.insertModule', $args);
 		if(!$output->toBool())

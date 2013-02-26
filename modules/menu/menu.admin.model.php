@@ -92,11 +92,12 @@ class menuAdminModel extends menu
 	 * @param string $title
 	 * @return object
 	 */
-	function getMenuByTitle($title)
+	function getMenuByTitle($title, $site_srl = 0)
 	{
 		// Get information from the DB
 		$args = new stdClass();
 		$args->title = $title;
+		$args->site_srl = $site_srl;
 		$output = executeQuery('menu.getMenuByTitle', $args);
 		if(!$output->data) return;
 
