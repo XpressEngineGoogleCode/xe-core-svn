@@ -55,6 +55,10 @@ jQuery(function($){
 		$last_item.prependTo($visual_list);
 	}
 	// Prev
+	var $vpn = $('.visual, .visual>button');
+	$(window).load(function(){
+		$vpn.height($visual_list.find('>.item:eq(1)').height());
+	});
 	$visual.find('>.prev').click(function(){
 		$visual_list.animate({
 			left: '+=100%'
@@ -67,6 +71,7 @@ jQuery(function($){
 				$visual_list.find('>.item:last-child').clone().prependTo($visual_list);
 			}
 			$visual_list.css('left','-100%');
+			$vpn.height($visual_list.find('>.item:eq(1)').height());
 		});
 	});
 	// Next
@@ -82,6 +87,7 @@ jQuery(function($){
 				$visual_list.find('>.item:first-child').clone().appendTo($visual_list);
 			}
 			$visual_list.css('left','-100%');
+			$vpn.height($visual_list.find('>.item:eq(1)').height());
 		});
 	});
 });
