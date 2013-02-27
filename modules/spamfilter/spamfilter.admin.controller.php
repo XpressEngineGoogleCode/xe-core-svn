@@ -57,9 +57,10 @@ class spamfilterAdminController extends spamfilter
 		{
 			$output = $this->insertWord($word_list);
 			if(!$output->toBool() && !$output->get('fail_list')) return $output;
+
+			if($output->get('fail_list')) $message_fail = '<em>'.sprintf(Context::getLang('msg_faillist'),$output->get('fail_list')).'</em>';
+			$this->setMessage(Context::getLang('success_registed').$message_fail);
 		}
-		if($output->get('fail_list')) $message_fail = '<em>'.sprintf(Context::getLang('msg_faillist'),$output->get('fail_list')).'</em>';
-		$this->setMessage(Context::getLang('success_registed').$message_fail);
 
 		$returnUrl = Context::get('success_return_url') ? Context::get('success_return_url') : getNotEncodedUrl('', 'module', 'admin', 'act', 'dispSpamfilterAdminDeniedWordList');
 		$this->setRedirectUrl($returnUrl);
