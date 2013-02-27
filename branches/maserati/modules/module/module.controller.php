@@ -384,9 +384,8 @@ class moduleController extends module
 		}
 
 		unset($output);
-		$menuArgs->url = $args->mid;
-		$menuArgs->site_srl = $args->site_srl;
-		$output = executeQuery('menu.getMenuItemByUrl', $menuArgs);
+		$menuArgs->menu_srl = $args->menu_srl;
+		$output = executeQuery('menu.getMenu', $menuArgs);
 
 		// if menu is not created, create menu also
 		if(!$output->data)
