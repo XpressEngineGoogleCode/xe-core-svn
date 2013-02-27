@@ -30,7 +30,7 @@
 		</tr>
 	</tbody>
 </table>
-<div cond="$XE_VALIDATOR_MESSAGE" class="message {$XE_VALIDATOR_MESSAGE_TYPE}">
+<div cond="$XE_VALIDATOR_MESSAGE && $XE_VALIDATOR_ID == 'modules/addon/tpl/setup_addon/1'" class="message {$XE_VALIDATOR_MESSAGE_TYPE}">
 	<p>{$XE_VALIDATOR_MESSAGE}</p>
 </div>
 <form action="./" method="post" class="x_form-horizontal">
@@ -38,6 +38,7 @@
 	<input type="hidden" name="module" value="{$module}" />
 	<input type="hidden" name="act" value="procAddonAdminSetupAddon" />
 	<input type="hidden" name="addon_name" value="{$addon_info->addon_name}" />
+	<input type="hidden" name="xe_validator_id" value="modules/addon/tpl/setup_addon/1" />
 
 	<block cond="count($addon_info->extra_vars)">
 		<block loop="$addon_info->extra_vars => $id, $var">

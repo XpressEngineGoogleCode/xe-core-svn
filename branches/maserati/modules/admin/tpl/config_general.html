@@ -4,7 +4,7 @@
 <div class="x_page-header">
 	<h1>{$lang->menu_gnb_sub['adminConfigurationGeneral']} <a class="x_icon-question-sign" href="./help/index.html#UMAN_config_general" target="_blank">{$lang->help}</a></h1>
 </div>
-<div cond="$XE_VALIDATOR_MESSAGE" class="message {$XE_VALIDATOR_MESSAGE_TYPE}">
+<div cond="$XE_VALIDATOR_MESSAGE && $XE_VALIDATOR_ID == 'modules/admin/tpl/config_general/1'" class="message {$XE_VALIDATOR_MESSAGE_TYPE}">
 	<p>{$XE_VALIDATOR_MESSAGE}</p>
 </div>
 <section class="section">
@@ -12,6 +12,7 @@
 	<form action="./" method="post" enctype="multipart/form-data" class="x_form-horizontal">
 		<input type="hidden" name="module" value="install" />
 		<input type="hidden" name="act" value="procInstallAdminConfig" />
+		<input type="hidden" name="xe_validator_id" value="modules/admin/tpl/config_general/1" />
 
 		<div class="x_control-group">
 			<label class="x_control-label">{$lang->site_title} <a class="x_icon-question-sign" href="./help/index.html#UMAN_config_general_site_title" target="_blank">{$lang->help}</a></label>

@@ -1,7 +1,7 @@
 <div class="x_page-header">
 	<h1>RSS <a class="x_icon-question-sign" href="./help/index.html#UMAN_content_rss" target="_blank">{$lang->help}</a></h1>
 </div>
-<div cond="$XE_VALIDATOR_MESSAGE" class="message {$XE_VALIDATOR_MESSAGE_TYPE}">
+<div cond="$XE_VALIDATOR_MESSAGE && $XE_VALIDATOR_ID == 'modules/rss/tpl/rss_admin_index/1'" class="message {$XE_VALIDATOR_MESSAGE_TYPE}">
 	<p>{$XE_VALIDATOR_MESSAGE}</p>
 </div>
 <section class="section">
@@ -9,6 +9,7 @@
 	<form ruleset="insertRssConfig" action="./" method="post" enctype="multipart/form-data" class="x_form-horizontal">
 		<input type="hidden" name="module" value="rss" />
 		<input type="hidden" name="act" value="procRssAdminInsertConfig" />
+		<input type="hidden" name="xe_validator_id" value="modules/rss/tpl/rss_admin_index/1" />
 		<div class="x_control-group">
 			<div class="x_control-label">{$lang->url}</div>
 			<div class="x_controls" style="padding-top:5px"><a href="{getFullSiteUrl()}rss" target="_blank">{getFullSiteUrl()}rss</a></div>
@@ -85,6 +86,7 @@
 	<form action="./" method="post">
 		<input type="hidden" name="act" value="procRssAdminInsertModuleConfig" />
 		<input type="hidden" name="success_return_url" value="{getUrl('', 'module', $module, 'act', 'dispRssAdminIndex')}" />
+		<input type="hidden" name="xe_validator_id" value="modules/rss/tpl/rss_admin_index/1" />
 		<table class="x_table x_table-striped x_table-hover" style="border-top:0;margin-top:0">
 			<thead>
 				<tr>
