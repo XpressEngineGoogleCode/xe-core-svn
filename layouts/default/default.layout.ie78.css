@@ -2,3 +2,4 @@
 .gnb,
 .gnb>ul>li.active>a,
 .gnb>ul>li.hover>a{filter:none}
+.visual>button>i{top:auto}
