@@ -1,12 +1,15 @@
 <script>
+var newTitle = '{$lang->new_title}';
+var layoutTitle = '{$layout->layout_title}';
 var addLang = '{$lang->cmd_insert}';
 </script>
+<load target="js/layout_admin.js" usecdn="true" />
 
 <form action="./" method="post" id="__layout_copy">
 	<div class="x_modal-header">
 		<h1>{$lang->cmd_layout_copy}</h1>
 	</div>
-	<div class="x_modal-body x_form-horizontal">
+	<div class="x_modal-body x_form-horizontal" id="inputDiv">
 		<input type="hidden" name="layout" value="{$layout->layout}" />
 		<input type="hidden" name="act" value="procLayoutAdminCopyLayout" />
 		<input type="hidden" name="layout_srl" value="{$layout->layout_srl}" />
