@@ -554,6 +554,7 @@ class ModuleHandler extends Handler
 					$_SESSION['XE_VALIDATOR_MESSAGE'] = $this->error;
 					$_SESSION['XE_VALIDATOR_MESSAGE_TYPE'] = 'error';
 					$_SESSION['XE_VALIDATOR_RETURN_URL'] = $returnUrl;
+					$_SESSION['XE_VALIDATOR_ID'] = Context::get('xe_validator_id');
 					$this->_setInputValueToSession();
 					return $oModule;
 				}
@@ -623,6 +624,7 @@ class ModuleHandler extends Handler
 			}
 
 			$_SESSION['XE_VALIDATOR_ERROR'] = $error;
+			$_SESSION['XE_VALIDATOR_ID'] = Context::get('xe_validator_id');
 			if($message != 'success')
 			{
 				$_SESSION['XE_VALIDATOR_MESSAGE'] = $message;
@@ -661,6 +663,10 @@ class ModuleHandler extends Handler
 		{
 			Context::set('XE_VALIDATOR_RETURN_URL', $_SESSION['XE_VALIDATOR_RETURN_URL']);
 		}
+		if($_SESSION['XE_VALIDATOR_ID'] && !Context::get('XE_VALIDATOR_ID'))
+		{
+			Context::set('XE_VALIDATOR_ID', $_SESSION['XE_VALIDATOR_ID']);
+		}
 
 		$this->_clearErrorSession();
 	}
@@ -675,6 +681,7 @@ class ModuleHandler extends Handler
 		$_SESSION['XE_VALIDATOR_MESSAGE'] = '';
 		$_SESSION['XE_VALIDATOR_MESSAGE_TYPE'] = '';
 		$_SESSION['XE_VALIDATOR_RETURN_URL'] = '';
+		$_SESSION['XE_VALIDATOR_ID'] = '';
 	}
 
 	/**

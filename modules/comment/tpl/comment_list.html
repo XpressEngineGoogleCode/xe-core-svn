@@ -3,7 +3,7 @@
 xe.lang.msg_empty_search_target = '{$lang->msg_empty_search_target}';
 xe.lang.msg_empty_search_keyword = '{$lang->msg_empty_search_keyword}';
 </script>
-<div cond="$XE_VALIDATOR_MESSAGE" class="message {$XE_VALIDATOR_MESSAGE_TYPE}">
+<div cond="$XE_VALIDATOR_MESSAGE && $XE_VALIDATOR_ID == 'modules/comment/tpl/comment_list/1'" class="message {$XE_VALIDATOR_MESSAGE_TYPE}">
 	<p>{$XE_VALIDATOR_MESSAGE}</p>
 </div>
 <form id="fo_list" action="./" method="post">
@@ -133,6 +133,7 @@ xe.lang.msg_empty_search_keyword = '{$lang->msg_empty_search_keyword}';
 	<input type="hidden" name="will_publish" value="0" />
 	<input type="hidden" name="search_target" value="{$search_target}" />
 	<input type="hidden" name="search_keyword" value="{$search_keyword}" />
+	<input type="hidden" name="xe_validator_id" value="modules/comment/tpl/comment_list/1" />
 	<div class="x_modal-header">
 		<h1>{$lang->comment_manager}: <span class="_sub"></span></h1>
 	</div>

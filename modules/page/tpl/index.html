@@ -1,6 +1,10 @@
 <load target="js/page_admin.js" usecdn="true" />
 <include target="header.html" />
 
+<div cond="$XE_VALIDATOR_MESSAGE && $XE_VALIDATOR_ID == 'modules/module/tpl/manage_selected'" class="message {$XE_VALIDATOR_MESSAGE_TYPE}">
+	<p>{$XE_VALIDATOR_MESSAGE}</p>
+</div>
+
 <!-- 검색 -->
 <form action="./" method="get" class="search x_input-append x_pull-right" style="margin-bottom:-28px">
 	<input type="hidden" name="module" value="{$module}" />

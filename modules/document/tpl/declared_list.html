@@ -6,7 +6,7 @@ xe.lang.msg_empty_search_keyword = '{$lang->msg_empty_search_keyword}';
 <div class="x_page-header">
 	<h1>{$lang->document} <a class="x_icon-question-sign" href="./help/index.html#UMAN_content_document" target="_blank">{$lang->help}</a></h1>
 </div>
-<div cond="$XE_VALIDATOR_MESSAGE" class="message {$XE_VALIDATOR_MESSAGE_TYPE}">
+<div cond="$XE_VALIDATOR_MESSAGE && $XE_VALIDATOR_ID == 'modules/document/tpl/declared_list/1'" class="message {$XE_VALIDATOR_MESSAGE_TYPE}">
 	<p>{$XE_VALIDATOR_MESSAGE}</p>
 </div>
 <form id="fo_list" action="./" method="get">
@@ -110,6 +110,7 @@ xe.lang.msg_empty_search_keyword = '{$lang->msg_empty_search_keyword}';
 	<input type="hidden" name="type" value="" />
 	<input type="hidden" name="module_srl" value="" />
 	<input type="hidden" name="success_return_url" value="{getUrl('', 'module', 'admin', 'act', 'dispDocumentAdminDeclared')}" />
+	<input type="hidden" name="xe_validator_id" value="modules/document/tpl/declared_list/1" />
 	<div class="x_modal-header">
 		<h1>{$lang->document_manager}: <span class="_sub"></span></h1>
 	</div>

@@ -156,52 +156,6 @@ class pageAdminView extends page
 		$security->encodeHTML('module_info.');
 	}
 
-	/**
-	 * @brief Add Page Form Output
-	 */
-	function dispPageAdminInsert()
-	{
-		// Get module_srl by GET parameter
-		$module_srl = Context::get('module_srl');
-		// Get and set module information if module_srl exists
-		if($module_srl)
-		{
-			$oModuleModel = &getModel('module');
-			$columnList = array('module_srl', 'mid', 'module_category_srl', 'browser_title', 'layout_srl', 'use_mobile', 'mlayout_srl');
-			$module_info = $oModuleModel->getModuleInfoByModuleSrl($module_srl, $columnList);
-			if($module_info->module_srl == $module_srl) Context::set('module_info',$module_info);
-			else
-			{
-				unset($module_info);
-				unset($module_srl);
-			}
-		}
-		// Get a layout list
-		$oLayoutModel = &getModel('layout');
-		$layout_list = $oLayoutModel->getLayoutList();
-		Context::set('layout_list', $layout_list);
-
-		$mobile_layout_list = $oLayoutModel->getLayoutList(0,"M");
-		Context::set('mlayout_list', $mobile_layout_list);
-
-		$oModuleModel = &getModel('module');
-		$skin_list = $oModuleModel->getSkins($this->module_path);
-		Context::set('skin_list',$skin_list);
-
-		$mskin_list = $oModuleModel->getSkins($this->module_path, "m.skins");
-		Context::set('mskin_list', $mskin_list);
-
-		//Security
-		$security = new Security();
-		$security->encodeHTML('layout_list..layout');
-		$security->encodeHTML('layout_list..title');
-		$security->encodeHTML('mlayout_list..layout');
-		$security->encodeHTML('mlayout_list..title');
-
-		// Set a template file
-		$this->setTemplateFile('page_insert');
-	}
-
 	function dispPageAdminMobileContent() 
 	{
 		if($this->module_info->page_type == 'OUTSIDE')
@@ -288,7 +242,7 @@ class pageAdminView extends page
 
 		Context::set('content', $content);
 		// Convert them to teach the widget
-		$oWidgetController = &getController('widget');
+		$oWidgetController = getController('widget');
 		$content = $oWidgetController->transWidgetCode($content, true, !$isMobile);
 		// $content = str_replace('$', '&#36;', $content);
 		Context::set('page_content', $content);

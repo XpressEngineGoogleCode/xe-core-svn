@@ -7,7 +7,8 @@
 		<h2>{$lang->cmd_login}</h2>
 		<input type="hidden" name="act" value="procMemberLogin" />
 		<input type="hidden" name="success_return_url" value="{htmlspecialchars(getRequestUriByServerEnviroment())}" />
-		<div cond="$XE_VALIDATOR_MESSAGE" class="message {$XE_VALIDATOR_MESSAGE_TYPE}">
+		<input type="hidden" name="xe_validator_id" value="widgets/login_info/skins/default/login_form/1" />
+		<div cond="$XE_VALIDATOR_MESSAGE && $XE_VALIDATOR_ID == 'widgets/login_info/skins/default/login_form/1'" class="message {$XE_VALIDATOR_MESSAGE_TYPE}">
 			<p>{$XE_VALIDATOR_MESSAGE}</p>
 		</div>
 		<div class="idpw">
