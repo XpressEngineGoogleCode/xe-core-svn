@@ -43,9 +43,12 @@ class menuMobile extends moduleObject
 		$oAdminModel =& getAdminModel('menu');
 		$menu_info = $oAdminModel->getMenu($menu_srl);
 		if(file_exists($menu_info->php_file)) @include($menu_info->php_file);
-		foreach($menu->list as $menu_item)
+		if(is_array($menu->list))
 		{
-			$this->straightenMenu($menu_item, 0);
+			foreach($menu->list as $menu_item)
+			{
+				$this->straightenMenu($menu_item, 0);
+			}
 		}
 
 		Context::set('menu', $this->result);	
