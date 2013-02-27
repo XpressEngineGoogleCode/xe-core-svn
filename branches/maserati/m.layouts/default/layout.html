@@ -1,6 +1,6 @@
 <!--%import("mx.css")-->
 <div class="hd">
-	<h1 class="h1"><a href="{$layout_info->index_url}">
+	<h1 class="h1"><a href="{$layout_info->index_url}"|cond="$layout_info->index_url" href="{geturl('')}"|cond="!$layout_info->index_url">
 	<!--@if($layout_info->logo_image)-->
 	<img src="{$layout_info->logo_image}" alt="{$layout_info->index_title}"|cond="$layout_info->index_title" alt="{Context::getSiteTitle()}"|cond="!$layout_info->index_title && Context::getSiteTitle()" />
 	<!--@elseif($layout_info->index_title)-->
