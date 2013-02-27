@@ -161,7 +161,7 @@ class commentController extends comment
 	 */
 	function isModuleUsingPublishValidation($module_srl = NULL)
 	{
-		if(!$module_srl == NULL)
+		if($module_srl == NULL)
 		{
 			return FALSE;
 		}
@@ -221,7 +221,6 @@ class commentController extends comment
 				$obj->status = 0;
 			}
 		}
-
 		$obj->__isupdate = FALSE;
 
 		// call a trigger (before)
