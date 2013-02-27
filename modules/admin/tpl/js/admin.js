@@ -75,18 +75,14 @@ jQuery(function($){
 		$('.x .x_tab-content>.x_tab-pane:not(".x_active")').hide();
 	}
 	$('.x .x_tabbable').xeTabbable();
-	$(document.body).on('click', '.x .x_nav-tabs>li>a[href*="#"]', function(){
+	$(document.body).on('click', '.x .x_nav-tabs>li>a[href^="#"]', function(){
 		var $this = $(this);
-
 		if($this.parent('li').hasClass('x_disabled')){
 			return false;
 		}
-
 		$this.parent('li').addClass('x_active').siblings().removeClass('x_active');
 		$this.closest('.x_nav-tabs').next('.x_tab-content').find('>.x_tab-pane').eq($this.attr('data-index')-1).addClass('x_active').show().siblings('.x_tab-pane').removeClass('x_active').hide();
-		
-		$(this).parents('.x_tabbable').trigger('tab_change', [parseInt($(this).attr('data-index'))-1, $(this)]);
-		
+		$this.parents('.x_tabbable').trigger('tab_change', [parseInt($this.attr('data-index'))-1, $this]);
 		return false;
 	});
 // #content reflow
