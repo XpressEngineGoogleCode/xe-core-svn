@@ -260,6 +260,20 @@ class HTMLDisplayHandler
 		{
 			case 'text':
 			case 'hidden':
+			case 'email':
+			case 'search':
+			case 'tel':
+			case 'url':
+			case 'email':
+			case 'datetime':
+			case 'date':
+			case 'month':
+			case 'week':
+			case 'time':
+			case 'datetime-local':
+			case 'number':
+			case 'range':
+			case 'color':
 				$str = preg_replace('@\svalue="[^"]*?"@', ' ', $str) . ' value="' . @htmlspecialchars($INPUT_ERROR[$match[3]]) . '"';
 				break;
 			case 'password':
