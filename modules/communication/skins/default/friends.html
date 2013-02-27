@@ -52,7 +52,7 @@
 		<select name="target_friend_group_srl" style="margin:0">
 			<option loop="$friend_group_list => $key,$val" value="{$val->friend_group_srl}">{$val->title}</option>
 		</select>
-		<span class="btn-group">
+		<span class="btn-group __submit_group">
 			<button type="submit" name="act" class="btn" value="procCommunicationMoveFriend">{$lang->cmd_move}</button>
 			<button type="submit" name="act" class="btn" value="procCommunicationDeleteFriend">{$lang->cmd_delete}</button>
 		</span>
