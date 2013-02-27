@@ -425,8 +425,6 @@ class ModuleObject extends Object
 				}
 			}
 
-			debugPrint(2);
-
 			$oModuleModel = getModel('module');
 			$oModuleModel->syncSkinInfoToModuleInfo($this->module_info);
 			Context::set('module_info', $this->module_info);
