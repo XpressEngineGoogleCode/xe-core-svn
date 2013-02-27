@@ -384,6 +384,17 @@ class moduleController extends module
 		}
 
 		unset($output);
+
+		// Insert a module
+		$output = executeQuery('module.insertModule', $args);
+		if(!$output->toBool())
+		{
+			$oDB->rollback();
+			return $output;
+		}
+		// Insert module extra vars
+		$this->insertModuleExtraVars($args->module_srl, $extra_vars);
+
 		$menuArgs->menu_srl = $args->menu_srl;
 		$output = executeQuery('menu.getMenu', $menuArgs);
 
@@ -412,31 +423,22 @@ class moduleController extends module
 			$menuArgs->menu_item_srl = getNextSequence();
 			$menuArgs->parent_srl = 0;
 			$menuArgs->open_window = 'N';
+			$menuArgs->url = $args->mid;
 			$menuArgs->expand = 'N';
 			$menuArgs->is_shortcut = 'N';
 			$menuArgs->name = $args->browser_title;
 			$menuArgs->listorder = $args->menu_item_srl * -1;
 
-			$output = executeQuery('menu.insertMenuItem', $menuArgs);
-			if(!$output->toBool())
+			$menuItemOutput = executeQuery('menu.insertMenuItem', $menuArgs);
+			if(!$menuItemOutput->toBool())
 			{
 				$oDB->rollback();
-				return $output;
+				return $menuItemOutput;
 			}
 
 			$oMenuAdminController = &getAdminController('menu');
 			$oMenuAdminController->makeXmlFile($tempMenu->menu_srl);
 		}
-
-		// Insert a module
-		$output = executeQuery('module.insertModule', $args);
-		if(!$output->toBool())
-		{
-			$oDB->rollback();
-			return $output;
-		}
-		// Insert module extra vars
-		$this->insertModuleExtraVars($args->module_srl, $extra_vars);
 
 		// commit
 		$oDB->commit();
