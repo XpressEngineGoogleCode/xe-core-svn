@@ -93,7 +93,10 @@ class moduleAdminController extends module
 			$module_srl = $args->module_srl;
 		}
 
-		if(!$module_srl) return;
+		if(!$module_srl)
+		{
+			return $this->_returnByProc($isProc);
+		}
 
 		// Get module name to create and browser title
 		$clones = array();
@@ -107,7 +110,10 @@ class moduleAdminController extends module
 			if($mid && !$browser_title) $browser_title = $mid;
 			$clones[$mid] = $browser_title;
 		}
-		if(!count($clones)) return;
+		if(!count($clones))
+		{
+			return $this->_returnByProc($isProc);
+		}
 
 		$oModuleModel = &getModel('module');
 		$oModuleController = &getController('module');
@@ -246,6 +252,16 @@ class moduleAdminController extends module
 		}
 
 		return $module_srl;
+	}
+
+	private function _returnByProc($isProc, $msg='msg_invalid_request')
+	{
+		if(!$isProc)
+			return;
+		else
+		{
+			return new Object(-1, $msg);
+		}
 	}
 
 	/**
