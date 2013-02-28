@@ -56,8 +56,7 @@ xe.lang.confirm_poll_delete = '{$lang->confirm_poll_delete}';
 	</span>
 </form>
 
-<form action="./" class="x_pagination x_pull-left" style="margin:0">
-	<input type="hidden" name="error_return_url" value="" />
+<form action="./" class="x_pagination x_pull-left" style="margin:0" no-error-return-url="true">
 	<input type="hidden" name="module" value="{$module}" />
 	<input type="hidden" name="act" value="{$act}" />
 	<input cond="$search_keyword" type="hidden" name="search_keyword" value="{$search_keyword}" />
@@ -94,10 +93,9 @@ xe.lang.confirm_poll_delete = '{$lang->confirm_poll_delete}';
 	</ul>
 </form>
 
-<form action="./" method="get" class="search center x_input-append" style="clear:both;padding:10px 0 0 0;margin:0">
+<form action="./" method="get" class="search center x_input-append" style="clear:both;padding:10px 0 0 0;margin:0" no-error-return-url="true">
 	<input type="hidden" name="module" value="{$module}" />
 	<input type="hidden" name="act" value="{$act}" />
-	<input type="hidden" name="error_return_url" value="" />
 	<select name="search_target" title="{$lang->search_target}" style="margin-right:4px">
 		<option loop="$lang->search_poll_target_list => $key, $val" value="{$key}" selected="selected"|cond="$search_target==$key">{$val}</option>
 	</select>
