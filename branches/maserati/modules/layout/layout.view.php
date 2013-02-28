@@ -253,8 +253,8 @@ class layoutView extends layout
 			{
 				throw new Exception(Context::getLang('msg_unabled_preview'));
 			}
-
-			$mid = $output->data[1]->mid;
+		
+			$mid = current($output->data)->mid;
 		}
 
 		// if form site design and preview layout, find start module
