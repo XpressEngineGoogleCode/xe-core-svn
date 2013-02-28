@@ -339,15 +339,17 @@ class menuAdminModel extends menu
 	function getModuleListInSitemap($site_srl = 0)
 	{
 		$oModuleModel = &getModel('module');
-		$columnList = array('module');
 		$moduleList = array('page');
 
-		$output = $oModuleModel->getModuleListByInstance($site_srl, $columnList);
+		$output = $oModuleModel->getModuleListByInstance($site_srl);
 		if(is_array($output->data))
 		{
 			foreach($output->data AS $key=>$value)
 			{
-				array_push($moduleList, $value->module);
+				if($value->instanceCount > 1)
+				{
+					array_push($moduleList, $value->module);
+				}
 			}
 		}
 
@@ -605,7 +607,8 @@ class menuAdminModel extends menu
 			unset($moduleInfo);
 			$midInfo = $oModuleModel->getModuleInfoByMid($menu['url'], $siteSrl);
 			$moduleInfo = $oModuleModel->getModuleInfoXml($midInfo->module);
-			if($moduleInfo->setup_index_act)
+
+			if($midInfo)
 			{
 				$menu['module_srl'] = $midInfo->module_srl;
 				$menu['module'] = $midInfo->module;
@@ -617,8 +620,17 @@ class menuAdminModel extends menu
 				{
 					$menu['module_type'] = $midInfo->module;
 				}
+			}
+
+			if($moduleInfo->setup_index_act)
+			{
 				$menu['setup_index_act'] = $moduleInfo->setup_index_act;
 			}
+			else if($moduleInfo->default_index_act)
+			{
+				$menu['setup_index_act'] = $moduleInfo->default_index_act;
+			}
+
 			if($menu['is_shortcut'] == 'N' && $midInfo->mid == $start_module->mid)
 			{
 				$menu['is_start_module'] = true;
