@@ -327,7 +327,56 @@ class menuAdminModel extends menu
 	 */
 	function getMenuAdminInstalledMenuType()
 	{
+		$oModuleModel = getModel('module');
+		$oAutoinstallModel = getModel('autoinstall');
 		$this->add('menu_types', $this->getModuleListInSitemap(0));
+
+		$_allModules = $oModuleModel->getModuleList();
+		$allModules = array();
+
+		Context::loadLang('modules/page/lang');
+		foreach($_allModules AS $key=>$value)
+		{
+			//$moduleInfo = $oModuleModel->getModuleInfoXml($value->module);
+			$defaultSkin = $oModuleModel->getModuleDefaultSkin($value->module, 'P');
+			$defaultMobileSkin = $oModuleModel->getModuleDefaultSkin($value->module, 'M');
+			$skinInfo = $oModuleModel->loadSkinInfo(ModuleHandler::getModulePath($value->module), $defaultSkin);
+			$mobileSkinInfo = $oModuleModel->loadSkinInfo(ModuleHandler::getModulePath($value->module), $defaultMobileSkin, 'm.skins');
+			$value->defaultSkin = new stdClass();
+			$value->defaultSkin->skin = $defaultSkin;
+			$value->defaultSkin->title = $skinInfo->title ? $skinInfo->title : $defaultSkin;
+			$value->defaultMobileSkin = new stdClass();
+			$value->defaultMobileSkin->skin = $defaultMobileSkin;
+			$value->defaultMobileSkin->title = $mobileSkinInfo->title ? $mobileSkinInfo->title : $defaultMobileSkin;
+
+			$value->package_srl = $oAutoinstallModel->getPackageSrlByPath('./modules/' . $value->module);
+			$value->url = _XE_LOCATION_SITE_ . '?mid=download&package_srl=' . $value->package_srl;
+
+			if($value->module == 'page')
+			{
+				$pageTypeName = Context::getLang('page_type_name');
+				$value->title = $pageTypeName['ARTICLE'];
+				$allModules['ARTICLE'] = $value;
+				$wModuleInfo = clone $value;
+				unset($wModuleInfo->default_skin);
+				unset($wModuleInfo->default_mskin);
+				$wModuleInfo->title = $pageTypeName['WIDGET'];
+				$wModuleInfo->no_skin = 'Y';
+				$allModules['WIDGET'] = $wModuleInfo;
+				$oModuleInfo = clone $value;
+				unset($oModuleInfo->default_skin);
+				unset($oModuleInfo->default_mskin);
+				$oModuleInfo->title = $pageTypeName['OUTSIDE'];
+				$oModuleInfo->no_skin = 'Y';
+				$allModules['OUTSIDE'] = $oModuleInfo;
+			}
+			else
+			{
+				$allModules[$value->module] = $value;
+			}
+		}
+
+		$this->add('all_modules', $allModules);
 	}
 
 	/**
@@ -388,19 +437,6 @@ class menuAdminModel extends menu
 			foreach($moduleList AS $key=>$value)
 			{
 				$moduleInfo = $oModuleModel->getModuleInfoXml($value);
-				$defaultSkin = $oModuleModel->getModuleDefaultSkin($value, 'P');
-				$defaultMobileSkin = $oModuleModel->getModuleDefaultSkin($value, 'M');
-				$skinInfo = $oModuleModel->loadSkinInfo(ModuleHandler::getModulePath($value), $defaultSkin);
-				$mobileSkinInfo = $oModuleModel->loadSkinInfo(ModuleHandler::getModulePath($value), $defaultMobileSkin, 'm.skins');
-				$moduleInfo->defaultSkin = new stdClass();
-				$moduleInfo->defaultSkin->skin = $defaultSkin;
-				$moduleInfo->defaultSkin->title = $skinInfo->title ? $skinInfo->title : $defaultSkin;
-				$moduleInfo->defaultMobileSkin = new stdClass();
-				$moduleInfo->defaultMobileSkin->skin = $defaultMobileSkin;
-				$moduleInfo->defaultMobileSkin->title = $mobileSkinInfo->title ? $mobileSkinInfo->title : $defaultMobileSkin;
-
-				$moduleInfo->package_srl = $oAutoinstallModel->getPackageSrlByPath('./modules/' . $value);
-				$moduleInfo->url = _XE_LOCATION_SITE_ . '?mid=download&package_srl=' . $moduleInfo->package_srl;
 
 				if($value == 'page')
 				{
