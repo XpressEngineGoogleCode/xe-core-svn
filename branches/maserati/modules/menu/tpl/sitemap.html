@@ -359,14 +359,14 @@
 						<div class="x_tab-content">
 							<div class="x_tab-pane x_active" id="pc">
 								<div class="shadow">
-									<iframe name="_pc_preview_ifr" src="about:_blank" style="display:none"></iframe><i class="mask"><span></span></i>
+									<iframe name="_pc_preview_ifr" src="about:_blank"></iframe><i class="mask"><span></span></i>
 									<input type="submit" class="x_icon-zoom-in x_icon-white _pc_preview_open" value="{$lang->view_zoom}" />
 								</div>
 							</div>
 							<div class="x_tab-pane" id="mobile">
 								<label class="mvOption"><input type="checkbox" name="use_mobile" value="Y"> {$lang->use_mobile_view}</label>
 								<div class="shadow">
-									<iframe name="_mobile_preview_ifr" src="about:_blank" style="display:none"></iframe><i class="mask"><span></span></i>
+									<iframe name="_mobile_preview_ifr" src="about:_blank"></iframe><i class="mask"><span></span></i>
 									<input type="submit" class="x_icon-zoom-in x_icon-white _mobile_preview_open" value="{$lang->view_zoom}" />
 								</div>
 							</div>
@@ -2908,7 +2908,7 @@ jQuery(function($){
 		$text.hide();
 		$container.removeClass('on_message');
 		$zoom.hide();
-		$iframe.hide();
+		$container.addClass('loading');
 	}
 
 	$('iframe[name=_pc_preview_ifr], iframe[name=_mobile_preview_ifr]').bind("load", function(){
@@ -2920,12 +2920,11 @@ jQuery(function($){
 		var $zoom = $container.next('input');
 
 		if($errElm.length){
-			$this.hide();
 			$text.text(message).show();
 			$container.addClass('on_message');
 		}else{
 			$zoom.show();
-			$(this).show();
+			$container.removeClass('loading');
 		}
 	});
 	
