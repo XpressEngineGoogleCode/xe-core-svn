@@ -398,15 +398,15 @@ class moduleController extends module
 		$menuArgs->menu_srl = $args->menu_srl;
 		$menuOutput = executeQuery('menu.getMenu', $menuArgs);
 
-		// if menu is not created, create menu also
-		if(!$menuOutput->data)
+		// if menu is not created, create menu also. and does not supported that in virtual site.
+		if(!$output->data && !$args->site_srl)
 		{
 			$oMenuAdminModel = &getAdminModel('menu');
 			$tempMenu = $oMenuAdminModel->getMenuByTitle(array('Temporary menu'));
 
 			if(!$tempMenu)
 			{
-				$siteMapOutput->site_srl = $args->site_srl;
+				$siteMapOutput->site_srl = 0;
 				$siteMapArgs->title = 'Temporary menu';
 				$tempMenu->menu_srl = $siteMapArgs->menu_srl = getNextSequence();
 				$siteMapArgs->listorder = $siteMapArgs->menu_srl * -1;
