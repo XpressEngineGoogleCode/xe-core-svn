@@ -193,11 +193,16 @@ http://xe-core.googlecode.com/svn/wiki/ko/img/ValidationProcess.png
 ...
 <customrules>
     <rule name="규칙이름" type="유형" test="테스트 코드" />
+    <rule name="규칙이름" type="유형" test="테스트 코드">
+        <message xml:lang="ko">%s의 값이 틀립니다.</message>
+    </rule>
 </customrules>
 ...
 }}}
 
 규칙 유형은 `regex`, `enum`, `expression` 중 하나를 사용할 수 있습니다. `regex`는 정규표현식을 작성할 때, `enum`은 주어진 값 중 하나만 선택할 수 있을 때, `expression`은 수식이 필요할 때 사용합니다.
+
+사용자 정의 규칙에 맞지 않을 경우 출력할 메시지를 `<rule>` 요소의 자식인 `<message>` 요소에 작성할 수 있습니다. %s 포매터는 해당 필드의 이름으로 대체됩니다.
 
 ===== 정규표현식 : regex =====
 정규표현식으로 규칙을 작성합니다. `type` 속성의 값을 `regex`로 설정하고, `test` 속성에 적용할 정규표현식을 입력하면 됩니다. 예를 들어, 알파벳, 숫자, 밑줄을 허용하는 규칙을 작성하려면 다음과 같이 작성할 수 있습니다.
@@ -249,6 +254,19 @@ http://xe-core.googlecode.com/svn/wiki/ko/img/ValidationProcess.png
     </fields>
 </ruleset>
 }}}
+
+해당 필드가 유효성 검사를 통과하지 못했을 경우 해당 필드의 이름과 미리 정의된 메시지를 조합하여 사용자에게 오류 메시지를 보여주게 됩니다. 이때 해당 필드의 이름은 XE 다국어 파일에 정의된 값을 사용하게 되지만 특별히 해당 필드의 이름을 직접 명시하고 싶다면 아래와 같이 할 수 있습니다.
+{{{
+<?xml version="1.0" encoding="utf-8"?>
+<ruleset version="1.5.0">
+    <fields>
+        <field name="userid" rule="userid" required="true">
+            <title xml:lang="ko">사용자 아이디</title>
+        </field>
+    </fields>
+</ruleset>
+}}}
+
 `<field>` 요소에 사용하는 속성에 따라 다양한 검사가 가능합니다.
 
 ==== 적용할 규칙 ====
