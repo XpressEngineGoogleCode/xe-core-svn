@@ -396,10 +396,10 @@ class moduleController extends module
 		$this->insertModuleExtraVars($args->module_srl, $extra_vars);
 
 		$menuArgs->menu_srl = $args->menu_srl;
-		$output = executeQuery('menu.getMenu', $menuArgs);
+		$menuOutput = executeQuery('menu.getMenu', $menuArgs);
 
 		// if menu is not created, create menu also
-		if(!$output->data)
+		if(!$menuOutput->data)
 		{
 			$oMenuAdminModel = &getAdminModel('menu');
 			$tempMenu = $oMenuAdminModel->getMenuByTitle(array('Temporary menu'));
