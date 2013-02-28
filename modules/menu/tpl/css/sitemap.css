@@ -283,6 +283,7 @@ body>.x{max-width:none !important}
 #design .x_icon-zoom-in:after{content:normal}
 #design .mask{position:absolute;width:100%;height:100%;top:0;left:0}
 #design .mask.on_message{background:#666;color:white}
+#design .mask.loading{background:white}
 #design .mask>span{display:block;padding:10px;text-align:center}
 #design .btnBoth{position:absolute;bottom:4px;left:4px;right:4px;margin:0}
 #design._mobile_view_disabled #mobile .shadow,
