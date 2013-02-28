@@ -413,7 +413,6 @@ if(jQuery) jQuery.noConflict();
             }
         }
     }
-
 }) (jQuery);
 
 
@@ -637,7 +636,7 @@ function winopen(url, target, attribute) {
 function popopen(url, target) {
     if(typeof(target) == "undefined") target = "_blank";
     if(typeof(xeVid)!='undefined' && url.indexOf(request_uri)>-1 && !url.getQuery('vid')) url = url.setQuery('vid',xeVid);
-    winopen(url, target, "width=650,height=500,scrollbars=yes,resizable=yes,toolbars=no");
+    winopen(url, target, "width=800,height=600,scrollbars=yes,resizable=yes,toolbars=no");
 }
 
 /**
@@ -1619,7 +1618,7 @@ function arr2obj(arr) {
 /**
  * @brief exec_json (exec_xml와 같은 용도)
  **/
-$.exec_json = function(action,data,func){
+$.exec_json = function(action,data,func,f_error){
     if(typeof(data) == 'undefined') data = {};
     action = action.split(".");
     if(action.length == 2){
@@ -1646,9 +1645,11 @@ $.exec_json = function(action,data,func){
 					if(data.error == -1 && data.message == 'msg_is_not_administrator'){
 						alert('You are not logged in as an administrator');
 	//					window.location.reload();
+						if($.isFunction(f_error)) f_error(data);
 						return;
 					}else{
 						alert(data.message);
+						if($.isFunction(f_error)) f_error(data);
 						return;
 					}
 				}

@@ -700,6 +700,10 @@
 	xe.lang.msg_cannot_delete_homemenu = '{$lang->msg_cannot_delete_homemenu}';
 	xe.lang.set_as_homepage = '{$lang->set_as_homepage}';
 	xe.lang.has_been_set_as_homepage = '{$lang->has_been_set_as_homepage}';
+	xe.lang.need_ftp_password = '{$lang->need_ftp_password}';
+	xe.lang.need_ftp_password_title = '{$lang->need_ftp_password_title}';
+	xe.lang.need_core_update = '{$lang->need_core_update}';
+	xe.lang.need_core_update_continue = '{$lang->need_core_update_continue}';
 </script>
 
 <!--[if IE 7]>
@@ -3642,13 +3646,13 @@ jQuery(function($){
 				case 0:
 				$.xeMsgBox.confirmDialog(
 					{
-						sTitle : 'FTP 계정 정보가 필요 합니다.',
-						sText : 'FTP 비밀번호: <input type="password"/>',
+						sTitle : xe.lang.need_ftp_password,
+						sText :  xe.lang.need_ftp_password + ': <input type="password"/>',
 						bSmall : true,
 						fnOnOK : function(){
 							var sPw = $.xeMsgBox.$msgBox.find('input[type="password"]').val();
 							setTimeout(function(){
-								doInstallPackage(sPackageSrl, sPackageType, sPw, $item);
+								getInstallInfo(sPackageSrl, sPackageType, sPw, $item);
 							}, 0);
 						}
 					}
@@ -3660,8 +3664,39 @@ jQuery(function($){
 				break;
 			}
 
-			doInstallPackage(sPackageSrl, sPackageType, ".", $item);
+			getInstallInfo(sPackageSrl, sPackageType, ".", $item);
 		});
+	}
+
+	function getInstallInfo(sPackageSrl, sPackageType, sPw, $item){
+		// get install info
+		$.exec_json('autoinstall.getAutoInstallAdminInstallInfo', {
+			package_srl: sPackageSrl
+		}, function(htData){
+			if(!htData) return;
+
+			// check contain core.
+			if(htData.package.contain_core){
+				$.xeMsgBox.confirmDialog(
+					{
+						sTitle : xe.lang.need_core_update,
+						sText : xe.lang.need_core_update_continue,
+						bSmall : true,
+						fnOnOK : function(){
+							setTimeout(function(){
+								doInstallPackage(htData.package.package_srl, sPackageType, sPw, $item);
+							}, 0);
+						}
+					}
+				);
+				
+				return;
+			}
+
+			// pass all packagesrls
+			doInstallPackage(htData.package.package_srl, sPackageType, sPw, $item);
+		});
+		return;
 	}
 	
 	function doInstallPackage(sPackageSrl, sPackageType, sPw, $item){
@@ -3670,7 +3705,7 @@ jQuery(function($){
 			downloadLayout: fillInInstalledLayoutList,
 			downloadSkin: fillInInstalledSkinList
 		};
-		
+
 		//showFoggy();
 		$.xeFoggy.show(true);
 		
@@ -3688,6 +3723,8 @@ jQuery(function($){
 			}
 			
 			$.xeMsgBox.alert(xe.lang.installation_completed);
+		}, function(htData){
+			$.xeFoggy.hide();
 		});
 	}
 	top.fullSetupDone = function(htData){
