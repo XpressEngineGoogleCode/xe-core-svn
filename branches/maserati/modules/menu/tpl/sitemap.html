@@ -1140,7 +1140,7 @@ function clearInputs($elm){
 
 function setItemTypes(htTypes){
 	var $ = jQuery;
-$.test=htTypes;
+	$.test=htTypes;
 	$._xeAdminVar.htItemTypes = htTypes || {};
 
 	$._xeAdminVar.htItemTypes._SHORTCUT = {
@@ -1149,6 +1149,18 @@ $.test=htTypes;
 		description : xe.lang.shortcut_desc
 	}
 	//console.log($._xeAdminVar.htItemTypes);
+}
+
+function setAllModules(htModules){
+	var $ = jQuery;
+	$.test = htModules;
+	$._xeAdminVar.htAllModules = htModules || {};
+
+	$._xeAdminVar.htAllModules._SHORTCUT = {
+		title: xe.lang.shortcut,
+		moduleName:'',
+		description : xe.lang.shortcut_desc
+	}
 }
 
 jQuery(function($){
@@ -1185,6 +1197,7 @@ jQuery(function($){
 
 	$.exec_json("menu.getMenuAdminInstalledMenuType", {}, function(htData){
 		setItemTypes(htData.menu_types);
+		setAllModules(htData.all_modules);
 	});
 	<!--@end-->
 	
@@ -1583,6 +1596,8 @@ jQuery(function($){
 		$("#siteMapTree").addClass('_node_renaming');
 	});
 	$('#properties').bind("show", function(ev, htOpt){
+		if(typeof($._xeAdminVar.htAllModules) == 'undefined') return;
+		
 		$('#site_map').next().hide(null, null, null, htOpt);
 		
 		var sMenuId = $._htMarkupActionParam.sMenuId;
@@ -1591,8 +1606,13 @@ jQuery(function($){
 
 		$(ev.target).find('.title').attr('href', htInfo.href);
 		//$(ev.target).find('.url').html(htInfo.url);
+
+		var title = htInfo.sModuleType;
+		if($._xeAdminVar.htAllModules[htInfo.sModuleType]){
+			title = $._xeAdminVar.htAllModules[htInfo.sModuleType].title;
+		}
 		
-		$(ev.target).find('.module_type').html($._xeAdminVar.htItemTypes[htInfo.sModuleType].title);
+		$(ev.target).find('.module_type').html($._xeAdminVar.htAllModules[htInfo.sModuleType].title);
 
 		if(htInfo.bShortCut){
 			$(ev.target).removeClass('prop-general');
@@ -1692,7 +1712,7 @@ jQuery(function($){
 		
 		var $title = $(this).find("._title");
 		$title.html($._xeAdminVar.sSelectedModuleTitle);
-		var htItemType = $._xeAdminVar.htItemTypes[$._xeAdminVar.sSelectedModuleName];
+		var htItemType = $._xeAdminVar.htAllModules[$._xeAdminVar.sSelectedModuleName];
 
 		var $link = $(this).find("._link");
 		
@@ -2537,10 +2557,10 @@ jQuery(function($){
 			}));
 			
 			// if the module type has no skin support, do not even display the option.
-			if($._xeAdminVar.htItemTypes[htInfo.sModuleType].no_skin !== "Y"){
+			if($._xeAdminVar.htAllModules[htInfo.sModuleType].no_skin !== "Y"){
 				$itemList.append($.tmpl( "deisgn_skinItem", {
 						ModuleType : htInfo.sModuleType,
-						ModuleTypeTitle : $._xeAdminVar.htItemTypes[htInfo.sModuleType].title,
+						ModuleTypeTitle : $._xeAdminVar.htAllModules[htInfo.sModuleType].title,
 						SkinTitle : sSkinTitle
 					} 
 				));
@@ -2561,6 +2581,7 @@ jQuery(function($){
 			
 		$.exec_json("menu.getMenuAdminInstalledMenuType", {}, function(htData){
 			setItemTypes(htData.menu_types);
+			setAllModules(htData.all_modules);
 			
 			var sLayoutTitle = $._xeAdminVar.htSiteDefaultLayout[sMode].title;
 			$list = $('#design').find('._itemList');
@@ -2573,7 +2594,7 @@ jQuery(function($){
 				if(! $._xeAdminVar.htItemTypes.hasOwnProperty(sModuleName)) continue;
 				if(sModuleName === "_SHORTCUT") continue;
 				
-				item = $._xeAdminVar.htItemTypes[sModuleName];
+				item = $._xeAdminVar.htAllModules[sModuleName];
 
 				if(item.no_skin === "Y") continue;
 				
@@ -2766,7 +2787,7 @@ jQuery(function($){
 			if(! $._xeAdminVar.htItemTypes.hasOwnProperty(sModuleName)) continue;
 			if(sModuleName === "_SHORTCUT") continue;
 
-			item = $._xeAdminVar.htItemTypes[sModuleName];
+			item = $._xeAdminVar.htAllModules[sModuleName];
 			sModuleTitle = item.title;
 			
 			htSkins[sModuleName] = (sMode === "P") ? item.defaultSkin.skin : item.defaultMobileSkin.skin;
@@ -2799,6 +2820,7 @@ jQuery(function($){
 
 			var sResult = "";
 			setItemTypes(htData.menu_types);
+			setAllModules(htData.all_modules);
 			//$._xeAdminVar.htItemTypes = htData.menu_types;
 
 			var item;
@@ -2807,7 +2829,7 @@ jQuery(function($){
 				//item = htData.menu_types[i];
 				if(!$._xeAdminVar.htItemTypes.hasOwnProperty(sModuleName)) continue;
 				
-				item = $._xeAdminVar.htItemTypes[sModuleName];
+				item = $._xeAdminVar.htAllModules[sModuleName];
 				sModuleTitle = item.title;
 				//console.log(item);
 				
@@ -2863,9 +2885,9 @@ jQuery(function($){
 			var sModuleType = htDesign.sModuleName==="page"?"ARTICLE":htDesign.sModuleName;
 			if($._xeAdminVar.htItemTypes[sModuleType]){
 				if(sMode === "P"){
-					sSkinTitle = $._xeAdminVar.htItemTypes[sModuleType].defaultSkin.title;
+					sSkinTitle = $._xeAdminVar.htAllModules[sModuleType].defaultSkin.title;
 				}else{
-					sSkinTitle = $._xeAdminVar.htItemTypes[sModuleType].defaultMobileSkin.title;
+					sSkinTitle = $._xeAdminVar.htAllModules[sModuleType].defaultMobileSkin.title;
 				}
 			}
 		}
@@ -3387,11 +3409,11 @@ jQuery(function($){
 		
 		<!--@if($act == 'dispMenuAdminSiteDesign')-->
 		if(sMode == "P"){
-			htDesign.sSkinName = $._xeAdminVar.htItemTypes[$._htMarkupActionParam.moduleType].defaultSkin.skin;
-			htDesign.sSkinTitle = $._xeAdminVar.htItemTypes[$._htMarkupActionParam.moduleType].defaultSkin.title;
+			htDesign.sSkinName = $._xeAdminVar.htAllModules[$._htMarkupActionParam.moduleType].defaultSkin.skin;
+			htDesign.sSkinTitle = $._xeAdminVar.htAllModules[$._htMarkupActionParam.moduleType].defaultSkin.title;
 		}else{
-			htDesign.sSkinName = $._xeAdminVar.htItemTypes[$._htMarkupActionParam.moduleType].defaultMobileSkin.skin;
-			htDesign.sSkinTitle = $._xeAdminVar.htItemTypes[$._htMarkupActionParam.moduleType].defaultMobileSkin.title;
+			htDesign.sSkinName = $._xeAdminVar.htAllModules[$._htMarkupActionParam.moduleType].defaultMobileSkin.skin;
+			htDesign.sSkinTitle = $._xeAdminVar.htAllModules[$._htMarkupActionParam.moduleType].defaultMobileSkin.title;
 		}
 		<!--@end-->
 		
@@ -3548,11 +3570,11 @@ jQuery(function($){
 		
 		<!--@if($act == 'dispMenuAdminSiteDesign')-->
 		if(sMode == "P"){
-			$._xeAdminVar.htItemTypes[$._htMarkupActionParam.moduleType].defaultSkin.skin = sSkinName;
-			$._xeAdminVar.htItemTypes[$._htMarkupActionParam.moduleType].defaultSkin.title = sSkinTitle;
+			$._xeAdminVar.htAllModules[$._htMarkupActionParam.moduleType].defaultSkin.skin = sSkinName;
+			$._xeAdminVar.htAllModules[$._htMarkupActionParam.moduleType].defaultSkin.title = sSkinTitle;
 		}else{
-			$._xeAdminVar.htItemTypes[$._htMarkupActionParam.moduleType].defaultMobileSkin.skin = sSkinName;
-			$._xeAdminVar.htItemTypes[$._htMarkupActionParam.moduleType].defaultMobileSkin.title = sSkinTitle;
+			$._xeAdminVar.htAllModules[$._htMarkupActionParam.moduleType].defaultMobileSkin.skin = sSkinName;
+			$._xeAdminVar.htAllModules[$._htMarkupActionParam.moduleType].defaultMobileSkin.title = sSkinTitle;
 		}
 		<!--@end-->
 		
