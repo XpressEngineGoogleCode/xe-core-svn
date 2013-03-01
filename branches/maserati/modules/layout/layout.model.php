@@ -246,7 +246,7 @@ class layoutModel extends layout
 			$path = $pathPrefix . $layout;
 		}
 
-		return is_dir($path);
+		return is_readable($path . '/layout.html');
 	}
 
 	/**
@@ -785,7 +785,7 @@ class layoutModel extends layout
 	 * Get ini configurations and make them an array.
 	 * @param int $layout_srl
 	 * @param string $layout_name
-	 * @return array 
+	 * @return array
 	 */
 	function getUserLayoutIniConfig($layout_srl, $layout_name=null)
 	{
