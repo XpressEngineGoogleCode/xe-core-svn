@@ -2595,6 +2595,7 @@ jQuery(function($){
 				if(sModuleName === "_SHORTCUT") continue;
 				
 				item = $._xeAdminVar.htAllModules[sModuleName];
+				if(!item) continue;
 
 				if(item.no_skin === "Y") continue;
 				
