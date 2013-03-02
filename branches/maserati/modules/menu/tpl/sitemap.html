@@ -2945,6 +2945,7 @@ jQuery(function($){
 		if($errElm.length){
 			$text.text(message).show();
 			$container.addClass('on_message');
+			$container.removeClass('loading');
 		}else{
 			$zoom.show();
 			$container.removeClass('loading');
