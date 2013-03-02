@@ -63,21 +63,41 @@ class menuAdminController extends menu
 	{
 		// List variables
 		$site_module_info = Context::get('site_module_info');
+
+		$output = $this->addMenu(Context::get('title'), (int)$site_module_info->site_srl);
+		if(!$output->toBool()) return $output;
+
+		$this->add('menu_srl', $output->get('menuSrl'));
+		$this->setMessage('success_registed');
+
+		$returnUrl = Context::get('success_return_url') ? Context::get('success_return_url') : getNotEncodedUrl('', 'module', 'admin', 'act', 'dispMenuAdminContent');
+		$this->setRedirectUrl($returnUrl);
+	}
+
+	/**
+	 * Add a menu
+	 *
+	 * @param string $title
+	 * @param int $siteSrl
+	 * @return Object If success, it contains menuSrl
+	 */
+	public function addMenu($title, $siteSrl = 0)
+	{
 		$args = new stdClass();
-		$args->site_srl = (int)$site_module_info->site_srl;
-		$args->title = Context::get('title');
+		$args->site_srl = $siteSrl;
+		$args->title = $title;
 
 		$args->menu_srl = getNextSequence();
 		$args->listorder = $args->menu_srl * -1;
 
 		$output = executeQuery('menu.insertMenu', $args);
-		if(!$output->toBool()) return $output;
+		if(!$output->toBool())
+		{
+			return $output;
+		}
 
-		$this->add('menu_srl', $args->menu_srl);
-		$this->setMessage('success_registed');
-
-		$returnUrl = Context::get('success_return_url') ? Context::get('success_return_url') : getNotEncodedUrl('', 'module', 'admin', 'act', 'dispMenuAdminContent');
-		$this->setRedirectUrl($returnUrl);
+		$output->add('menuSrl', $args->menu_srl);
+		return $output;
 	}
 
 	/**
@@ -275,7 +295,7 @@ class menuAdminController extends menu
 
 		if(!$isProc)
 		{
-			return $args->menu_item_srl;
+			return $this->get('menu_item_srl');
 		}
 	}
 
@@ -687,7 +707,7 @@ class menuAdminController extends menu
 		$itemInfo = $oMenuAdminModel->getMenuItemInfo($args->menu_item_srl);
 		$args->menu_srl = $itemInfo->menu_srl;
 
-		// Display an error that the category cannot be deleted if it has a child node	603	
+		// Display an error that the category cannot be deleted if it has a child node	603
 		if($args->is_force != 'Y')
 		{
 			$output = executeQuery('menu.getChildMenuCount', $args);
