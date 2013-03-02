@@ -185,7 +185,7 @@ class moduleController extends module
 		{
 			$cache_key = 'object:module_config:module_'.$module.'_site_srl_'.$site_srl;
 			$oCacheHandler->delete($cache_key);
-		}			
+		}
 		return $output;
 	}
 
@@ -366,8 +366,8 @@ class moduleController extends module
 				$args->is_skin_fix = 'Y';
 			}
 		}
-		
-		if($args->mskin = '/USE_DEFAULT/')
+
+		if($args->mskin == '/USE_DEFAULT/')
 		{
 			$args->is_mskin_fix = 'N';
 		}
@@ -399,7 +399,7 @@ class moduleController extends module
 		$menuOutput = executeQuery('menu.getMenu', $menuArgs);
 
 		// if menu is not created, create menu also. and does not supported that in virtual site.
-		if(!$output->data && !$args->site_srl)
+		if(!$menuOutput->data && !$args->site_srl)
 		{
 			$oMenuAdminModel = &getAdminModel('menu');
 			$tempMenu = $oMenuAdminModel->getMenuByTitle(array('Temporary menu'));
@@ -491,7 +491,7 @@ class moduleController extends module
 				$args->is_skin_fix = 'Y';
 			}
 		}
-		
+
 		if($args->mskin == '/USE_DEFAULT/')
 		{
 			$args->is_mskin_fix = 'N';

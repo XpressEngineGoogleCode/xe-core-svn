@@ -409,7 +409,7 @@ class menuAdminModel extends menu
 		$localModuleList = array_unique($moduleList);
 
 		$oAutoinstallModel = getModel('autoinstall');
-		
+
 		// get have instance
 		$remotePackageList = $oAutoinstallModel->getHaveInstance(array('path'));
 		$remoteModuleList = array();
