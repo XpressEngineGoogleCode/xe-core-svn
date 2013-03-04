@@ -399,9 +399,13 @@ class module extends ModuleObject
 			foreach($output->data as $siteInfo)
 			{
 				unset($args);
-				$args->site_srl = $siteInfo->site_srl;
+				if($siteInfo->site_srl > 0)
+				{
+					continue;
+				}
 
 				//create temp menu.
+				$args->site_srl = $siteInfo->site_srl;
 				$args->title = 'Temporary menu';
 				$menuSrl = $args->menu_srl = getNextSequence();
 				$args->listorder = $args->menu_srl * -1;
