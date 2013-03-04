@@ -74,7 +74,7 @@
 				{@$cnt ++}
 			</block>
 			<div class="x_control-group">
-				<label class="x_control-label" for="{$name}">{$var->title}</label>
+				<label class="x_control-label" for="{$name}"|cond="$var->type!='text'&&$var->type!='textarea'" for="lang_{$name}"|cond="$var->type=='text'||$var->type=='textarea'">{$var->title}</label>
 				<div class="x_controls">
 					<div cond="$var->type == 'text'">
 						<input type="text" name="{$name}" id="{$name}" class="lang_code" value="<!--@if(strpos($var->value, "$user_lang->") !== false)-->{htmlspecialchars($var->value)}<!--@else-->{$var->value}<!--@end-->" />
