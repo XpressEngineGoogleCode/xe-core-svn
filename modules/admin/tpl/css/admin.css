@@ -137,8 +137,8 @@ body>.x,
 .x input[type="url"], 
 .x input[type="search"], 
 .x input[type="tel"], 
-.x input[type="color"], 
-.x_uneditable-input{height:16px;line-height:16px}
+.x input[type="color"]{height:16px;line-height:16px}
+.x input[type="number"]{width:50px}
 .x select{padding:0;height:26px;line-height:26px}
 .x select[multiple]{height:auto}
 .x textarea{vertical-align:top}

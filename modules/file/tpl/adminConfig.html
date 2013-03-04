@@ -34,13 +34,13 @@
 	<div class="x_control-group">
 		<label for="filesize" class="x_control-label">{$lang->allowed_filesize} <a class="x_icon-question-sign" href="./help/index.html#UMAN_config_file_size" target="_blank">{$lang->help}</a></label>
 		<div class="x_controls">
-			<input id="filesize" type="number" name="allowed_filesize" value="{$config->allowed_filesize}" style="width:50px" /> MB/{ini_get('upload_max_filesize')}
+			<input type="number" id="filesize" name="allowed_filesize" value="{$config->allowed_filesize}" /> MB/{ini_get('upload_max_filesize')}
 		</div>
 	</div>
 	<div class="x_control-group">
 		<label for="attachSize" class="x_control-label">{$lang->allowed_attach_size} <a class="x_icon-question-sign" href="./help/index.html#UMAN_config_file_document_attach_limit" target="_blank">{$lang->help}</a></label>
 		<div class="x_controls">
-			<input id="attachSize" type="number" name="allowed_attach_size" value="{$config->allowed_attach_size}" style="width:50px" /> MB
+			<input type="number" id="attachSize" name="allowed_attach_size" value="{$config->allowed_attach_size}" /> MB
 		</div>
 	</div>
 	<div class="x_control-group">
