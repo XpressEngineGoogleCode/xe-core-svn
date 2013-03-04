@@ -705,6 +705,7 @@
 	xe.lang.need_core_update = '{$lang->need_core_update}';
 	xe.lang.need_core_update_continue = '{$lang->need_core_update_continue}';
 	xe.lang.password = '{$lang->password}';
+	xe.lang.not_found_module = '{$lang->not_found_module}';
 </script>
 
 <!--[if IE 7]>
@@ -1597,6 +1598,7 @@ jQuery(function($){
 		$("#siteMapTree").addClass('_node_renaming');
 	});
 	$('#properties').bind("show", function(ev, htOpt){
+		if(ev.target != this) return;
 		if(typeof($._xeAdminVar.htAllModules) == 'undefined') return;
 		
 		$('#site_map').next().hide(null, null, null, htOpt);
@@ -1613,7 +1615,11 @@ jQuery(function($){
 			title = $._xeAdminVar.htAllModules[htInfo.sModuleType].title;
 		}
 		
-		$(ev.target).find('.module_type').html($._xeAdminVar.htAllModules[htInfo.sModuleType].title);
+		if(!$._xeAdminVar.htAllModules[htInfo.sModuleType]){
+			$(ev.target).find('.module_type').html(htInfo.sModuleType + '(' + xe.lang.not_found_module +')');
+		}else{
+			$(ev.target).find('.module_type').html($._xeAdminVar.htAllModules[htInfo.sModuleType].title);
+		}
 
 		if(htInfo.bShortCut){
 			$(ev.target).removeClass('prop-general');
@@ -1642,9 +1648,13 @@ jQuery(function($){
 				var $form = $('#fullSetup form');
 				$form.attr('target', 'submitTarget');
 				$form.append($("<INPUT>").attr("type", "hidden").attr("name", "xe_js_callback").attr("value", "top.fullSetupSaved"));
-			}else{
+			}else if(htData.setupUrl){
 				$('#properties').removeClass('_hasFullSetup');
 				$._xeAdminVar.sFullSetupUrl = htData.setupUrl;
+				$('#properties ._hasFullSetupX').show();
+			}else{
+				$('#properties').removeClass('_hasFullSetup');
+				$('#properties ._hasFullSetupX').hide();
 			}
 		});
 	}
@@ -2579,7 +2589,7 @@ jQuery(function($){
 			}));
 			
 			// if the module type has no skin support, do not even display the option.
-			if($._xeAdminVar.htAllModules[htInfo.sModuleType].no_skin !== "Y"){
+			if($._xeAdminVar.htAllModules[htInfo.sModuleType] && $._xeAdminVar.htAllModules[htInfo.sModuleType].no_skin !== "Y"){
 				$itemList.append($.tmpl( "deisgn_skinItem", {
 						ModuleType : htInfo.sModuleType,
 						ModuleTypeTitle : $._xeAdminVar.htAllModules[htInfo.sModuleType].title,

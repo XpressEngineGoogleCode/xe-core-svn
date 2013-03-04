@@ -597,7 +597,11 @@ class menuAdminModel extends menu
 		// get xml info
 		$moduleConfInfo = $oModuleModel->getModuleInfoXml($moduleInfo->module);
 
-		$setupUrl = getNotEncodedUrl('', 'module', 'admin', 'act', $moduleConfInfo->setup_index_act, 'module_srl', $moduleInfo->module_srl, 'isLayoutDrop', '1');
+		if($moduleConfInfo->setup_index_act)
+		{
+			$setupUrl = getNotEncodedUrl('', 'module', 'admin', 'act', $moduleConfInfo->setup_index_act, 'module_srl', $moduleInfo->module_srl, 'isLayoutDrop', '1');
+		}
+
 		if($moduleConfInfo->simple_setup_index_act)
 		{
 			$oTargetmoduleAdminModel = &getAdminModel($moduleInfo->module);

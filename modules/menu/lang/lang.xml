@@ -909,4 +909,7 @@ Menu không phải là người quản lý, nhiệm vụ của nó chỉ là li�
 	<item name="need_core_update_continue">
 		<value xml:lang="ko"><![CDATA[XE core 업데이트가 함께 진행됩니다. 계속하시겠습니까?]]></value>
 	</item>
+	<item name="not_found_module">
+		<value xml:lang="ko"><![CDATA[모듈이 존재하지 않음]]></value>
+	</item>
 </lang>
