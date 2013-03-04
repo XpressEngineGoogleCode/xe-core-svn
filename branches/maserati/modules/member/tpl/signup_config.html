@@ -18,7 +18,7 @@
 	<div class="x_control-group">
 		<label class="x_control-label" for="limit_day">{$lang->limit_day}</label>
 		<div class="x_controls">
-			<input type="number" min="0" id="limit_day" name="limit_day" value="{$config->limit_day}" style="width:40px" /> {$lang->unit_day}
+			<input type="number" min="0" id="limit_day" name="limit_day" value="{$config->limit_day}" /> {$lang->unit_day}
 			<p class="x_help-block">{$lang->about_limit_day}</p>
 		</div>
 	</div>
@@ -125,9 +125,9 @@
 							<label for="{$item->name}_re" class="x_inline"><input type="radio" id="{$item->name}_re" name="{$item->name}" value="required" checked="checked"|cond="$item->mustRequired || $item->required" disabled="disabled"|cond="$item->mustRequired || !$item->isUse" /> {$lang->cmd_required}</label>
 							<label for="{$item->name}_op" class="x_inline"><input type="radio" id="{$item->name}_op" name="{$item->name}" value="option" checked="checked"|cond="!$item->mustRequired && ($item->isUse && !$item->required)" disabled="disabled"|cond="$item->mustRequired || !$item->isUse" /> {$lang->cmd_optional}</label>
 							<div cond="$item->imageType" class="_subItem" style="display:none">
-								<label for="{$item->name}_max_width" class="x_inline">{$lang->cmd_image_max_width} <input type="number" min="1" name="{$item->name}_max_width" id="{$item->name}_max_width" value="{$item->max_width}" style="width:40px" /> px</label>
+								<label for="{$item->name}_max_width" class="x_inline">{$lang->cmd_image_max_width} <input type="number" min="1" name="{$item->name}_max_width" id="{$item->name}_max_width" value="{$item->max_width}" /> px</label>
 								/
-								<label for="{$item->name}_max_height" class="x_inline">{$lang->cmd_image_max_height} <input type="number" min="1" name="{$item->name}_max_height" id="{$item->name}_max_height" value="{$item->max_height}" style="width:40px" /> px</label>
+								<label for="{$item->name}_max_height" class="x_inline">{$lang->cmd_image_max_height} <input type="number" min="1" name="{$item->name}_max_height" id="{$item->name}_max_height" value="{$item->max_height}" /> px</label>
 							</div>
 							<div cond="$item->name == 'signature'" class="_subItem" style="display:none;padding-top:5px">
 								<select id="signature_editor" name="signature_editor_skin" onchange="getEditorSkinColorList(this.value)">
