@@ -1843,9 +1843,9 @@ jQuery(function($){
 				var width = $this.width();
 				
 				if(t.tagName == 'TEXTAREA' || $this.data('type') == 'textarea'){
-					var $displayInput = $('<textarea id="lang_' + id + '" class="displayInput" style="width:' + width + 'px" data-width="' + width + '">').data('lang-id', id);
+					var $displayInput = $('<textarea id="lang_' + id + '" class="lang_code" style="width:' + width + 'px" data-width="' + width + '">').data('lang-id', id);
 				}else{
-					var $displayInput = $('<input type="text" id="lang_' + id + '" class="displayInput" style="width:' + (width-28) + 'px" data-width="' + (width-28) + '">').data('lang-id', id);
+					var $displayInput = $('<input type="text" id="lang_' + id + '" class="lang_code" style="width:' + (width-28) + 'px" data-width="' + (width-28) + '">').data('lang-id', id);
 				}
 				$displayInput.attr('placeholder', $this.attr('placeholder'))
 				var $remover = $('<button type="button" class="x_add-on remover" title="' + xe.cmd_remove_multilingual_text + '"><i class="x_icon-remove"></i>' + xe.cmd_remove_multilingual_text + '</button>').data('lang-target', id);
@@ -1877,7 +1877,7 @@ jQuery(function($){
 				// bind open window
 				$setter.bind('open.mw',function(){
 					var $this = $(this);
-					var $displayInput = $this.siblings('.displayInput');
+					var $displayInput = $this.siblings('.lang_code');
 
 					if($displayInput.data('active')){
 						$multilingualWindow.trigger('before-open.g11n', $displayInput.prev('.lang_code').val().replace('$user_lang->', ''));
@@ -1896,7 +1896,7 @@ jQuery(function($){
 				// Remover click
 				$remover.click(function(){
 					var $this = $(this);
-					var $displayInput = $this.siblings('.displayInput');
+					var $displayInput = $this.siblings('.lang_code');
 
 					if(!$displayInput.data('active')) return;
 
@@ -2431,7 +2431,7 @@ jQuery(function($){
 				$btn = $container.find('button.x_btn-primary,button.x_btn-inverse');
 				if($btn.length>0){
 					// multi-lang field won't set the value until the input element is blured
-					if($(ev.target).hasClass('displayInput')) $(ev.target).blur();
+					if($(ev.target).hasClass('lang_code')) $(ev.target).blur();
 					
 					ev.preventDefault();
 					$btn.click();
