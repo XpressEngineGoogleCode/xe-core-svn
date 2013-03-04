@@ -134,7 +134,7 @@ jQuery(function($){
 		}
 	}).change();
 	// Modal anchor button action
-	$('a.modalAnchor').click(function(){
+	$('a.modalAnchor').bind('before-open.mw', function(){
 		if($docTable.find('tbody :checked').length == 0){
 			$('body').css('overflow','auto');
 			alert('{$lang->msg_cart_is_null}');

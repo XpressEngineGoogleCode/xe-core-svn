@@ -142,7 +142,7 @@ jQuery(function($){
 		}
 	}).change();
 	// Modal anchor button action
-	$('a[data-value]').click(function(){
+	$('a[data-value]').bind('before-open.mw', function(){
 		if($docTable.find('tbody :checked').length == 0){
 			$('body').css('overflow','auto');
 			alert('{$lang->msg_not_selected_document}');
