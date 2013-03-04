@@ -566,7 +566,7 @@ class ModuleHandler extends Handler
 		$this->module_info->module_type = $type;
 		$oModule->setModuleInfo($this->module_info, $xml_info);
 
-		if($type == "view" && $this->module_info->use_mobile == "Y" && Mobile::isMobileCheckByAgent())
+		if($type == "view" && $this->module_info->use_mobile == "Y" && Mobile::isMobileCheckByAgent() && Context::get('act') != 'dispLayoutPreviewWithModule')
 		{
 			global $lang;
 			$header = '<style>div.xe_mobile{opacity:0.7;margin:1em 0;padding:.5em;background:#333;border:1px solid #666;border-left:0;border-right:0}p.xe_mobile{text-align:center;margin:1em 0}a.xe_mobile{color:#ff0;font-weight:bold;font-size:24px}@media only screen and (min-width:500px){a.xe_mobile{font-size:15px}}</style>';

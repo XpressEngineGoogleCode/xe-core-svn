@@ -108,7 +108,7 @@
 	</div>
 	<div class="col prop-general" id="properties" style="display:none;">
 		<section>
-			<h1><a href="#" target="_blank" class="title"><!--메뉴 이름--></a></h1>
+			<h1><a href="" target="_blank" class="title"><!--메뉴 이름--></a></h1>
 			<div class="cnt">
 				<ul>
 					<li class="type"><strong>{$lang->menu_type}</strong>: <span class="module_type"></span></li>
@@ -704,6 +704,7 @@
 	xe.lang.need_ftp_password_title = '{$lang->need_ftp_password_title}';
 	xe.lang.need_core_update = '{$lang->need_core_update}';
 	xe.lang.need_core_update_continue = '{$lang->need_core_update_continue}';
+	xe.lang.password = '{$lang->password}';
 </script>
 
 <!--[if IE 7]>
@@ -1753,6 +1754,9 @@ jQuery(function($){
 		
 		showMenuSelector($(this).find('._menuSelector_menuTreeContainer'));
 		
+	});
+	$('#add_menu').bind("after-show", function(ev){
+		scrollToRight();
 	});
 	$('#add_menu').bind("hide", function(ev){
 		if(this !== ev.target) return;
@@ -3693,7 +3697,7 @@ jQuery(function($){
 						sText : xe.lang.go_to_ftp_setup,
 						bSmall : true,
 						fnOnOK : function(){
-							var sSuccessReturnURL = window.location.href.replace(/#.*$/, "")+"&continue_install_package="+sPackageSrl+"&continue_install_package_type="+sPackageType;
+							var sSuccessReturnURL = current_url.setQuery('continue_install_package', sPackageSrl).setQuery('continue_install_package_type', sPackageType);
 							window.location.href="./?module=admin&act=dispAdminConfigFtp&success_return_url="+Base64.encode(sSuccessReturnURL);
 						}
 					}
@@ -3705,13 +3709,19 @@ jQuery(function($){
 				$.xeMsgBox.confirmDialog(
 					{
 						sTitle : xe.lang.need_ftp_password,
-						sText :  xe.lang.need_ftp_password + ': <input type="password"/>',
+						sText :  xe.lang.password + ': <input type="password"/>',
 						bSmall : true,
 						fnOnOK : function(){
 							var sPw = $.xeMsgBox.$msgBox.find('input[type="password"]').val();
 							setTimeout(function(){
 								getInstallInfo(sPackageSrl, sPackageType, sPw, $item);
 							}, 0);
+						},
+						fnOnCancel: function(){
+							if($._xeAdminVar.isFromFtpSetup){
+								window.location = current_url.setQuery('continue_install_package', '').setQuery('continue_install_package_type', '');
+								$._xeAdminVar.isFromFtpSetup = false;
+							}
 						}
 					}
 				);
@@ -3780,8 +3790,26 @@ jQuery(function($){
 				htFunc[sPackageType]();
 			}
 			
-			$.xeMsgBox.alert(xe.lang.installation_completed);
+			$.xeMsgBox.alertDialog({
+				sText: xe.lang.installation_completed,
+				bNobody : true,
+				bSmall: true,
+				fnOnShow: function(){
+					if($._xeAdminVar.isFromFtpSetup){
+						setTimeout(function(){ window.location = current_url.setQuery('continue_install_package', '').setQuery('continue_install_package_type', ''); }, 500);
+						$._xeAdminVar.isFromFtpSetup = false;
+					}else{
+						setTimeout(function(){ $.xeMsgBox.$msgBox.find("._ok").trigger('click') }, 500);
+					}
+				}
+			});
 		}, function(htData){
+			$.xeMsgBox.htOptions.fnOnHide = function(){
+				if($._xeAdminVar.isFromFtpSetup){
+					window.location = current_url.setQuery('continue_install_package', '').setQuery('continue_install_package_type', '');
+					$._xeAdminVar.isFromFtpSetup = false;
+				}
+			}
 			$.xeFoggy.hide();
 		});
 	}
@@ -3849,7 +3877,8 @@ jQuery(function($){
 	var sPackageSrl = getParameterByName('continue_install_package');
 	var sPackageType = getParameterByName('continue_install_package_type');
 	if(sPackageSrl && sPackageType){
-		doInstallPackage(sPackageSrl, sPackageType, ".", null);
+		$._xeAdminVar.isFromFtpSetup = true;
+		installPackage(sPackageSrl, sPackageType, null);
 	}
 
 });
