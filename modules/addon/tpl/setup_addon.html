@@ -49,7 +49,7 @@
 			{@$not_first = true}
 			<div class="x_control-group" cond="!$not_first && $group != $var->group"></div>
 			<div class="x_control-group">
-				<label class="x_control-label" for="{$var->name}">{$var->title}</label>
+				<label class="x_control-label" for="{$var->name}"|cond="$var->type != 'textarea'" for="lang_{$var->name}"|cond="$var->type == 'textarea'">{$var->title}</label>
 				<div class="x_controls">
 					<input cond="$var->type == 'text'" type="text" name="{$var->name}" id="{$var->name}" value="{htmlspecialchars($var->value)}">
 					<textarea cond="$var->type == 'textarea'" name="{$var->name}" id="{$var->name}" class="lang_code" rows="8" cols="42">{htmlspecialchars($var->value)}</textarea>
