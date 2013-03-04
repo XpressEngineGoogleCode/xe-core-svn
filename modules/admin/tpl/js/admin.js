@@ -974,7 +974,13 @@ jQuery(function($){
 			//scrollToRight();
 		}
 
-		return _show.apply(this, arguments);
+		var rst = _show.apply(this, arguments);
+		var $this = $(this);
+		
+		// elem. display not yet... using setTimeout...
+		setTimeout(function(){$this.trigger('after-show', [htOpt]) }, 0);
+		
+		return rst;
 	}
 	
 });
