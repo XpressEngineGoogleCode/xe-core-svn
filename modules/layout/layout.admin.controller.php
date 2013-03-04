@@ -292,7 +292,7 @@ class layoutAdminController extends layout
 			$layoutInfo = $oLayoutModel->getLayout($layout_srl);
 			if($layoutInfo)
 			{
-				$layoutList = $oLayoutModel->getLayoutInstanceList($layoutInfo->site_srl, $layoutInfo->layout_type, $layoutInfo->layout, array('layout_srl'));
+				$layoutList = $oLayoutModel->getLayoutInstanceList($layoutInfo->site_srl, $layoutInfo->layout_type, $layoutInfo->layout, array('layout_srl', 'layout'));
 				if(count($layoutList) <= 1)
 				{
 					// uninstall package
@@ -304,11 +304,16 @@ class layoutAdminController extends layout
 
 					if($packageSrl)
 					{
-						$oAutoinstallAdminController->uninstallPackageByPackageSrl($packageSrl);
+						$output = $oAutoinstallAdminController->uninstallPackageByPackageSrl($packageSrl);
 					}
 					else
 					{
-						$oAutoinstallAdminController->uninstallPackageByPath($path);
+						$output = $oAutoinstallAdminController->uninstallPackageByPath($path);
+					}
+
+					if(!$output->toBool())
+					{
+						return new Object(-1, $output->message);
 					}
 				}
 			}

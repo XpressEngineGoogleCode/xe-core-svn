@@ -329,7 +329,7 @@ class autoinstallAdminController extends autoinstall
 		$oModel = getModel('autoinstall');
 		$package = $oModel->getPackage($package_srl);
 
-		$this->_uninstallPackage($package);
+		return $this->_uninstallPackage($package);
 	}
 
 	/**
@@ -340,7 +340,7 @@ class autoinstallAdminController extends autoinstall
 	function uninstallPackageByPath($path)
 	{
 		$package->path = $path;
-		$this->_uninstallPackage($package);
+		return $this->_uninstallPackage($package);
 	}
 
 	private function _uninstallPackage($package)
