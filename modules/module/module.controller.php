@@ -385,16 +385,6 @@ class moduleController extends module
 
 		unset($output);
 
-		// Insert a module
-		$output = executeQuery('module.insertModule', $args);
-		if(!$output->toBool())
-		{
-			$oDB->rollback();
-			return $output;
-		}
-		// Insert module extra vars
-		$this->insertModuleExtraVars($args->module_srl, $extra_vars);
-
 		$menuArgs->menu_srl = $args->menu_srl;
 		$menuOutput = executeQuery('menu.getMenu', $menuArgs);
 
@@ -439,6 +429,17 @@ class moduleController extends module
 			$oMenuAdminController = &getAdminController('menu');
 			$oMenuAdminController->makeXmlFile($tempMenu->menu_srl);
 		}
+
+		$args->menu_srl = $menuArgs->menu_srl;
+		// Insert a module
+		$output = executeQuery('module.insertModule', $args);
+		if(!$output->toBool())
+		{
+			$oDB->rollback();
+			return $output;
+		}
+		// Insert module extra vars
+		$this->insertModuleExtraVars($args->module_srl, $extra_vars);
 
 		// commit
 		$oDB->commit();
@@ -585,7 +586,6 @@ class moduleController extends module
 
 		unset($output);
 		$output = executeQuery('menu.getMenuItemByUrl', $args);
-
 		// menu delete
 		if($output->data)
 		{
