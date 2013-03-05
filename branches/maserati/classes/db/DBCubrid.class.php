@@ -1049,7 +1049,7 @@ class DBCubrid extends DB
 			$page_count = 10;
 		}
 		$page = $limit->page->getValue();
-		if(!$page)
+		if(!$page || $page < 1)
 		{
 			$page = 1;
 		}
