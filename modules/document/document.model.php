@@ -273,6 +273,7 @@ class documentModel extends document
 			else
 			{
 				$output = executeQueryArray($query_id, $args, $columnList);
+				debugPrint($output->get('_query'));
 			}
 		}
 		// Return if no result or an error occurs
