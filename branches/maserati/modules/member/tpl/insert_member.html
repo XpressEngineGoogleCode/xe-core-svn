@@ -81,7 +81,7 @@
 		<label class="x_control-label" for="until">{$lang->limit_date}</label>
 		<div class="x_controls">
 			<input type="hidden" name="limit_date" id="date_limit_date" value="{$member_info->limit_date}" />
-			<input type="text" disabled placeholder="YYYY-MM-DD" class="inputDate" id="until" value="{zdate($member_info->limit_date,'Y-m-d',false)}" />
+			<input type="text" readonly placeholder="YYYY-MM-DD" class="inputDate" id="until" value="{zdate($member_info->limit_date,'Y-m-d',false)}" />
 			<input type="button" value="{$lang->cmd_delete}" class="x_btn dateRemover" />
 			<span class="x_help-inline">{$lang->about_limit_date}</span>
 		</div>
@@ -117,11 +117,7 @@
 <script>
 (function($){
     $(function(){
-		$tmp = $("<input>").attr("type", "date");
-		if($tmp[0].type === "date") return;
-		
         var option = { changeMonth: true, changeYear: true, gotoCurrent: false,yearRange:'-100:+10', dateFormat:'yy-mm-dd', onSelect:function(){
-
             $(this).prev('input[type="hidden"]').val(this.value.replace(/-/g,""))}
         };
         $.extend(option,$.datepicker.regional['{$lang_type}']);
