@@ -96,7 +96,9 @@ class module extends ModuleObject
 		}
 
 		// XE 1.7
-		$output = executeQueryArray('module.getNotLinkedModuleGroupSiteSrl');
+		$args->site_srl = 0;
+		$output = executeQueryArray('module.getNotLinkedModuleBySiteSrl',$args);
+
 		if($output->toBool() && $output->data && count($output->data) > 0) return true;
 
 		// check fix mskin
@@ -393,34 +395,27 @@ class module extends ModuleObject
 			$output = executeQuery('module.updateMobileSkinFixModules');
 		}
 
-		$output = executeQueryArray('module.getNotLinkedModuleGroupSiteSrl');
+		unset($args);
+		$args->site_srl = 0;
+		$output = executeQueryArray('module.getNotLinkedModuleBySiteSrl',$args);
+		
 		if($output->toBool() && $output->data && count($output->data) > 0)
 		{
-			foreach($output->data as $siteInfo)
+			//create temp menu.
+			$args->title = 'Temporary menu';
+			$menuSrl = $args->menu_srl = getNextSequence();
+			$args->listorder = $args->menu_srl * -1;
+
+			$ioutput = executeQuery('menu.insertMenu', $args);
+
+			if(!$ioutput->toBool())
 			{
-				unset($args);
-				if($siteInfo->site_srl > 0)
-				{
-					continue;
-				}
-
-				//create temp menu.
-				$args->site_srl = $siteInfo->site_srl;
-				$args->title = 'Temporary menu';
-				$menuSrl = $args->menu_srl = getNextSequence();
-				$args->listorder = $args->menu_srl * -1;
-
-				$ioutput = executeQuery('menu.insertMenu', $args);
-
-				if(!$ioutput->toBool())
-				{
-					return $ioutput;
-				}
-
-				//getNotLinkedModuleBySiteSrl
-				$soutput = executeQueryArray('module.getNotLinkedModuleBySiteSrl', $args);
-				$uoutput = $this->updateLinkModule($soutput->data, $menuSrl);
+				return $ioutput;
 			}
+
+			//getNotLinkedModuleBySiteSrl
+			$soutput = executeQueryArray('module.getNotLinkedModuleBySiteSrl', $args);
+			$uoutput = $this->updateLinkModule($soutput->data, $menuSrl);
 		}
 
 		$oModuleModel = getModel('module');
