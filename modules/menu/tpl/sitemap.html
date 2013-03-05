@@ -3856,21 +3856,50 @@ jQuery(function($){
 		$.xeMsgBox.alert(xe.lang.go_to_site_design_setup);
 	});
 // Set #site height fix
-	$(window).resize(function(){
+	<!--@if(Mobile::isMobileCheckByAgent())-->
+		$._xeAdminVar.prevColumn = new Array();
+		$._xeAdminVar.prevColumn.push($('#site_map'));
+		$('#site').css({ 'display': 'inline-block', 'min-width': '100%'});
+		$('#site_map').css('display', 'inline-block');
+		$('#site > .col').css({
+			'box-sizing': 'border-box',
+			'-moz-box-sizing': 'border-box',
+			'-webkit-box-sizing': 'border-box',
+			'width': '100%',
+			'margin': 0
+		});
+		$('#site > .col .cnt').css('margin-bottom', '25px');
+		$('#properties, #propertiesRoot, #imgbtn, #layoutSetup, #layoutMarkupSetup, #skinSetup').find('.cnt').css('margin-bottom', '25px');
+
 		var wHeigh = $(window).height();
+		<!--@if($act == 'dispMenuAdminSiteMap')-->
+		//$('#design').find('.cnt').height(wHeigh - 75);
+		<!--@end-->
 		
-		<!--@if(Mobile::isMobileCheckByAgent())-->
-			$('#site').height(wHeigh).find('>.col').height(wHeigh - 38).find('.cnt').height(wHeigh - 105);
-			$('#properties, #propertiesRoot, #imgbtn, #layoutSetup, #layoutMarkupSetup, #skinSetup').find('.cnt').height(wHeigh - 75);
-	
-			<!--@if($act == 'dispMenuAdminSiteMap')-->
-			$('#design').find('.cnt').height(wHeigh - 75);
-			<!--@end-->
+		<!--@if($act == 'dispMenuAdminSiteDesign')-->
+		//$('#layout, #skin').find('.cnt').height(wHeigh - 75);
+		<!--@end-->
+
+		$('#site > .col').bind('show', function(ev){
+			if(ev.target != this) return;
+			$(this).css('display', 'inline-block').siblings().css('display', 'none');
+			$._xeAdminVar.prevColumn.push(this);
+		});
+		$('#site > .col').bind('after-show', function(ev){
+			if(ev.target != this) return;
 			
-			<!--@if($act == 'dispMenuAdminSiteDesign')-->
-			$('#layout, #skin').find('.cnt').height(wHeigh - 75);
-			<!--@end-->
-		<!--@else-->
+		});
+		$('#site > .col').bind('hide', function(ev){
+			if(ev.target != this) return;
+			if($._xeAdminVar.prevColumn[$._xeAdminVar.prevColumn.length - 1] != this) return;
+			$._xeAdminVar.prevColumn.pop();
+			var $prev = $($._xeAdminVar.prevColumn[$._xeAdminVar.prevColumn.length - 1]);
+			$prev.css('display', 'inline-block');
+		});
+	<!--@else-->
+		$(window).resize(function(){
+			var wHeigh = $(window).height();
+			
 			$('#site').height(wHeigh - 147).find('>.col').height(wHeigh - 185).find('.cnt').height(wHeigh - 252);
 			$('#properties, #propertiesRoot, #imgbtn, #layoutSetup, #layoutMarkupSetup, #skinSetup').find('.cnt').height(wHeigh - 222);
 
@@ -3881,8 +3910,8 @@ jQuery(function($){
 			<!--@if($act == 'dispMenuAdminSiteDesign')-->
 			$('#layout, #skin').find('.cnt').height(wHeigh - 222);
 			<!--@end-->
-		<!--@end-->
-	}).resize();
+		}).resize();
+	<!--@end-->
 
 	var sPackageSrl = getParameterByName('continue_install_package');
 	var sPackageType = getParameterByName('continue_install_package_type');
