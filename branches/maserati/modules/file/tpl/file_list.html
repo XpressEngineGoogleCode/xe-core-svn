@@ -78,6 +78,8 @@ xe.lang.msg_empty_search_keyword = '{$lang->msg_empty_search_keyword}';
 					<a href="#popup_menu_area" class="member_{$document_list[$document_srl]->get('member_srl')}">{$document_list[$document_srl]->getNickName()}</a>
 					<!--@elseif($val->upload_target_type == 'com' && $comment_list[$val->upload_target_srl])-->
 					<a href="#popup_menu_area" class="member_{$comment_list[$val->upload_target_srl]->get('member_srl')}">{$comment_list[$val->upload_target_srl]->getNickName()}</a>
+					<!--@else-->
+					<a href="#popup_menu_area" class="member_{$val->member_srl}">{$val->nick_name}</a>
 					<!--@end-->
 				</td>
 				<td class="nowr">{zdate($val->regdate,"Y-m-d H:i")}</td>
