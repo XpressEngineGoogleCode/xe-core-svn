@@ -3270,18 +3270,10 @@ jQuery(function($){
 			
 			var $configForm = $('#config_form');
 			$configForm.on('submit', function(ev){
-				var htData = {};
-				var sKey, sValue;
-				$(this).find('input').each(function(){
-					sKey = $(this).attr('name');
-					sValue = $(this).val();
-					htData[sKey] = sValue;
-				});
-//				console.log(htData);
 				ev.preventDefault();
 				
 				var sUrl = $('#config_form').attr('action');
-				$.post( sUrl, htData,
+				$.post( sUrl, $(this).serialize(),
 					function( strRes ) {
 						var htData = $.parseJSON(strRes);
 						
