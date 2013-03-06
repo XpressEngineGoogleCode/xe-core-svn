@@ -136,7 +136,7 @@ class autoinstallAdminController extends autoinstall
 						$type = "theme";
 						break;
 				}
-				
+
 				if(!$config_file)
 				{
 					continue;
@@ -144,7 +144,7 @@ class autoinstallAdminController extends autoinstall
 
 				$xml = new XmlParser();
 				$xmlDoc = $xml->loadXmlFile($real_path . $config_file);
-				
+
 				if(!$xmlDoc)
 				{
 					continue;
@@ -383,6 +383,8 @@ class autoinstallAdminController extends autoinstall
 		$this->_updateinfo();
 
 		$this->setMessage('success_deleted', 'update');
+
+		return new Object();
 	}
 
 }
