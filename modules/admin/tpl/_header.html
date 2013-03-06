@@ -4,8 +4,7 @@
 <p class="skipNav"><a href="#content">{$lang->skip_to_content}</a></p>
 	<header class="header">
 		<h1>
-			<a href="{getUrl('','module','admin')}" cond="!Context::getSiteTitle()"><img src="{getUrl('')}{$gnb_title_info->adminLogo}" alt="{$gnb_title_info->adminTitle}" /> {$gnb_title_info->adminTitle}</a>
-			<a href="{getUrl('','module','admin')}" cond="Context::getSiteTitle()"><img src="{getUrl('')}{$gnb_title_info->adminLogo}" alt="{$gnb_title_info->adminTitle}" /> {Context::getSiteTitle()} {$lang->admin}</a>
+			<a href="{getUrl('','module','admin')}"><img src="{getUrl('')}{$gnb_title_info->adminLogo}" alt="{$gnb_title_info->adminTitle}" /> {$gnb_title_info->adminTitle}</a>
 		</h1>
 		<p class="site"><a href="{getFullUrl('')}">{getFullUrl('')}</a></p>
 		<div class="account">
