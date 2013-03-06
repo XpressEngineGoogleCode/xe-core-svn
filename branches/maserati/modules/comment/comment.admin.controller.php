@@ -235,7 +235,7 @@ class commentAdminController extends comment
 		// comment into trash
 		if($isTrash == 'true')
 		{
-			$this->_moveCommentToTrash($comment_srl_list, $oCommentController, $oDB);
+			$this->_moveCommentToTrash($comment_srl_list, $oCommentController, $oDB, $message_content);
 		}
 
 		$deleted_count = 0;
@@ -285,7 +285,7 @@ class commentAdminController extends comment
 	 * comment move to trash
 	 * @return void|object
 	 */
-	function _moveCommentToTrash($commentSrlList, &$oCommentController, &$oDB)
+	function _moveCommentToTrash($commentSrlList, &$oCommentController, &$oDB, $message_content = NULL)
 	{
 		require_once(_XE_PATH_ . 'modules/trash/model/TrashVO.php');
 
@@ -303,6 +303,7 @@ class commentAdminController extends comment
 				$oTrashVO->setTitle(trim(strip_tags($oComment->variables['content'])));
 				$oTrashVO->setOriginModule('comment');
 				$oTrashVO->setSerializedObject(serialize($oComment->variables));
+				$oTrashVO->setDescription($message_content);
 
 				$output = $oTrashAdminController->insertTrash($oTrashVO);
 				if(!$output->toBool())
