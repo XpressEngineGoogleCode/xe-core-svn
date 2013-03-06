@@ -43,11 +43,11 @@ class layoutAdminModel extends layout
 			}
 			foreach($info->cssList as $css)
 			{
-				$css .= sprintf('<link rel="stylesheet" href="%s" />', $css);
+				$csss .= sprintf('<link rel="stylesheet" href="%s" />', $css);
 			}
 		}
 
-		$this->add('html', $css . $script . $html);
+		$this->add('html', $csss . $script . $html);
 
 		if($isReturn)
 		{
