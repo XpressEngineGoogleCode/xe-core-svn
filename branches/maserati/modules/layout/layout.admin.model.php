@@ -23,10 +23,31 @@ class layoutAdminModel extends layout
 
 		Context::set('is_sitemap', '1');
 		$script = '<script src="./modules/layout/tpl/js/layout_modify.js"></script>';
-		$oTemplate = &TemplateHandler::getInstance();
+		$oTemplate = TemplateHandler::getInstance();
 		$html = $oTemplate->compile($this->module_path.'tpl/', 'layout_info_view');
 
-		$this->add('html', $script.$html);
+		preg_match_all('/<!--#JSPLUGIN:(.*)-->/', $html, $m);
+		$pluginList = $m[1];
+
+		foreach($pluginList as $plugin)
+		{
+			$info = Context::getJavascriptPluginInfo($plugin);
+			if(!$info)
+			{
+				continue;
+			}
+
+			foreach($info->jsList as $js)
+			{
+				$script .= sprintf('<script src="%s"></script>', $js);
+			}
+			foreach($info->cssList as $css)
+			{
+				$css .= sprintf('<link rel="stylesheet" href="%s" />', $css);
+			}
+		}
+
+		$this->add('html', $css . $script . $html);
 
 		if($isReturn)
 		{

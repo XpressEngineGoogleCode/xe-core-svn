@@ -372,7 +372,7 @@ class TemplateHandler
 
 	/**
 	 * preg_replace_callback hanlder
-	 * 
+	 *
 	 * replace image path
 	 * @param array $match
 	 *
@@ -610,12 +610,14 @@ class TemplateHandler
 				// <!--%load_js_plugin-->
 				case 'load_js_plugin':
 					$plugin = $this->_replaceVar($m[5]);
+					$s = "<!--#JSPLUGIN:{$plugin}-->";
 					if(strpos($plugin, '$__Context') === false)
 					{
 						$plugin = "'{$plugin}'";
 					}
 
-					return "<?php Context::loadJavascriptPlugin({$plugin}); ?>";
+					$s .= "<?php Context::loadJavascriptPlugin({$plugin}); ?>";
+					return $s;
 				// <load ...> or <unload ...> or <!--%import ...--> or <!--%unload ...-->
 				case 'import':
 				case 'load':
