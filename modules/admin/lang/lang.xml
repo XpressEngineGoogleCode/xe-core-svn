@@ -1,5 +1,12 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <lang>  
+	<item name="admin">
+		<value xml:lang="ko"><![CDATA[관리자]]></value>
+		<value xml:lang="en"><![CDATA[Admin]]></value>
+		<value xml:lang="jp"><![CDATA[管理]]></value>
+		<value xml:lang="zh-CN"><![CDATA[管理员]]></value>
+		<value xml:lang="tr"><![CDATA[yönetim]]></value>
+	</item>
 	<item name="subtitle_primary">
 		<value xml:lang="ko"><![CDATA[기본]]></value>
 		<value xml:lang="en"><![CDATA[Primary]]></value>
