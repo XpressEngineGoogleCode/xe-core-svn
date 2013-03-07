@@ -204,7 +204,12 @@ class layoutView extends layout
 		if($layoutInfo)
 		{
 			$layout_path = $layoutInfo->path;
-			$edit_layout_tpl = $this->getRealLayoutFile($layoutSrl);
+			$editLayoutTPL = $this->getRealLayoutFile($layoutSrl);
+			$editLayoutCSS = $this->getRealLayoutCSS($layoutSrl);
+			if($editLayoutCSS != '')
+			{
+				Context::addCSSFile($editLayoutCSS);
+			}
 			$layout_file = 'layout';
 			$oModuleModel = getModel('module');
 			$part_config = $oModuleModel->getModulePartConfig('layout', $layoutSrl);
@@ -216,7 +221,7 @@ class layoutView extends layout
 			$layout_file = 'default_layout';
 		}
 
-		$layout_tpl = $oTemplate->compile($layout_path, $layout_file, $edit_layout_tpl);
+		$layout_tpl = $oTemplate->compile($layout_path, $layout_file, $editLayoutTPL);
 		Context::set('layout','none');
 
 		// Convert widgets and others
@@ -383,6 +388,24 @@ class layoutView extends layout
 		}
 
 	}
+
+	private function getRealLayoutCSS($layoutSrl)
+	{
+		$oLayoutModel = getModel('layout');
+		$cssFile = $oLayoutModel->getUserLayoutCss($layoutSrl);
+
+		if(file_exists($cssFile))
+		{
+			return $cssFile;
+		}
+		else
+		{
+			return ''; 
+		}
+
+	}
+
+
 
 }
 /* End of file layout.view.php */
