@@ -164,6 +164,19 @@ class commentAdminController extends comment
 			// call a trigger for calling "send mail to subscribers" (for moment just for forum)
 			ModuleHandler::triggerCall("comment.procCommentAdminChangeStatus", "after", $comment_srl_list);
 		}
+
+		// for message send - start
+		$message_content = Context::get('message_content');
+		if($message_content)
+		{
+			$message_content = nl2br($message_content);
+		}
+
+		if($message_content)
+		{
+			$this->_sendMessageForComment($message_content, $comment_srl_list);
+		}
+		// for message send - end
 	}
 
 	/**
@@ -208,28 +221,7 @@ class commentAdminController extends comment
 
 		if($message_content)
 		{
-			$oCommunicationController = getController('communication');
-			$oCommentModel = getModel('comment');
-
-			$logged_info = Context::get('logged_info');
-
-			$title = cut_str($message_content, 10, '...');
-			$sender_member_srl = $logged_info->member_srl;
-
-			for($i = 0; $i < $comment_count; $i++)
-			{
-				$comment_srl = $comment_srl_list[$i];
-				$oComment = $oCommentModel->getComment($comment_srl, TRUE);
-
-				if(!$oComment->get('member_srl') || $oComment->get('member_srl') == $sender_member_srl)
-				{
-					continue;
-				}
-
-				$content = sprintf("<div>%s</div><hr /><div style=\"font-weight:bold\">%s</div>", $message_content, $oComment->getContentText(20));
-
-				$oCommunicationController->sendMessage($sender_member_srl, $oComment->get('member_srl'), $title, $content, FALSE);
-			}
+			$this->_sendMessageForComment($message_content, $comment_srl_list);
 		}
 		// for message send - end
 		// comment into trash
@@ -279,6 +271,33 @@ class commentAdminController extends comment
 
 		$returnUrl = Context::get('success_return_url') ? Context::get('success_return_url') : getNotEncodedUrl('', 'module', 'admin', 'act', 'dispCommentAdminList', 'search_keyword', $search_keyword, 'search_target', $search_target, 'page', $page);
 		$this->setRedirectUrl($returnUrl);
+	}
+
+	private function _sendMessageForComment($message_content, $comment_srl_list)
+	{
+		$oCommunicationController = getController('communication');
+		$oCommentModel = getModel('comment');
+
+		$logged_info = Context::get('logged_info');
+
+		$title = cut_str($message_content, 10, '...');
+		$sender_member_srl = $logged_info->member_srl;
+
+		$comment_count = count($comment_srl_list);
+		for($i = 0; $i < $comment_count; $i++)
+		{
+			$comment_srl = $comment_srl_list[$i];
+			$oComment = $oCommentModel->getComment($comment_srl, TRUE);
+
+			if(!$oComment->get('member_srl') || $oComment->get('member_srl') == $sender_member_srl)
+			{
+				continue;
+			}
+
+			$content = sprintf("<div>%s</div><hr /><div style=\"font-weight:bold\">%s</div>", $message_content, $oComment->getContentText(20));
+
+			$oCommunicationController->sendMessage($sender_member_srl, $oComment->get('member_srl'), $title, $content, FALSE);
+		}
 	}
 
 	/**
