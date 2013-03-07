@@ -2516,4 +2516,8 @@
 		<value xml:lang="ko"><![CDATA[그룹전체]]></value>
 		<value xml:lang="en"><![CDATA[Entire Group]]></value>
 	</item>
+	<item name="msg_insert_group_name_detail">
+		<value xml:lang="ko"><![CDATA[그룹제목이 빈 곳은 반영되지 않습니다]]></value>
+		<value xml:lang="en"><![CDATA[If group title are empty, does not apply.]]></value>
+	</item>
 </lang>

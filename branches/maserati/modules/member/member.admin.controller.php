@@ -1172,7 +1172,7 @@ class memberAdminController extends member
 		$default_args->group_srl = $defaultGroupSrl;
 		$output = $this->updateGroup($default_args);
 
-		$this->setMessage('success_updated');
+		$this->setMessage(Context::getLang('success_updated').' ('.Context::getLang('msg_insert_group_name_detail').')');
 
 		$returnUrl = Context::get('success_return_url') ? Context::get('success_return_url') : getNotEncodedUrl('', 'module', 'admin', 'act', 'dispMemberAdminGroupList');
 		$this->setRedirectUrl($returnUrl);
