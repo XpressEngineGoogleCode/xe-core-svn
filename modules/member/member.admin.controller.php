@@ -1125,20 +1125,9 @@ class memberAdminController extends member
 	 * Set group config
 	 * @return void
 	 */
-	function procMemberAdminGroupConfig()
+	public function procMemberAdminGroupConfig()
 	{
 		$vars = Context::getRequestVars();	
-
-		if(is_array($vars->group_titles))
-		{
-			foreach($vars->group_titles AS $key=>$value)
-			{
-				if(!$value)
-				{
-					return new Object(-1,'msg_insert_group_name');
-				}
-			}
-		}
 
 		$oMemberModel = &getModel('member');
 		$oModuleController = &getController('module');
@@ -1149,31 +1138,46 @@ class memberAdminController extends member
 		unset($config->agreement);
 		$output = $oModuleController->updateModuleConfig('member', $config);
 
-		// group data save
+		$defaultGroup = $oMemberModel->getDefaultGroup(0);
+		$defaultGroupSrl = $defaultGroup->group_srl;
 		$group_srls = $vars->group_srls;
 		foreach($group_srls as $order=>$group_srl)
 		{
+			$isInsert = false;
 			$update_args = new stdClass();
 			$update_args->title = $vars->group_titles[$order];
-			$update_args->is_default = ($vars->defaultGroup == $group_srl)?'Y':'N';
 			$update_args->description = $vars->descriptions[$order];
 			$update_args->image_mark = $vars->image_marks[$order];
 			$update_args->list_order = $order + 1;
 
-			if(is_numeric($group_srl))
-			{
+			if(!$update_args->title) continue;
+
+			if(is_numeric($group_srl)) {
 				$update_args->group_srl = $group_srl;
 				$output = $this->updateGroup($update_args);
 			}
-			else
+			else {
+				$update_args->group_srl = getNextSequence();
 				$output = $this->insertGroup($update_args);
+			}
+
+			if($vars->defaultGroup == $group_srl) {
+				$defaultGroupSrl = $update_args->group_srl;
+			}
 		}
+
+		//set default group
+		$default_args = $oMemberModel->getGroup($defaultGroupSrl);
+		$default_args->is_default = 'Y';
+		$default_args->group_srl = $defaultGroupSrl;
+		$output = $this->updateGroup($default_args);
 
 		$this->setMessage('success_updated');
 
 		$returnUrl = Context::get('success_return_url') ? Context::get('success_return_url') : getNotEncodedUrl('', 'module', 'admin', 'act', 'dispMemberAdminGroupList');
 		$this->setRedirectUrl($returnUrl);
 	}
+
 
 	/**
 	 * Set group order
