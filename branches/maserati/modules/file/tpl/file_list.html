@@ -198,7 +198,7 @@ jQuery(function($){
 	$('a.modalAnchor').bind('before-open.mw', function(){
 		if($docTable.find('tbody :checked').length == 0){
 			$('body').css('overflow','auto');
-			alert('{$lang->msg_cart_is_null}');
+			alert('{$lang->msg_file_cart_is_null}');
 			return false;
 		}
 	});
