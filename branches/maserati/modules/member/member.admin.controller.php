@@ -195,11 +195,15 @@ class memberAdminController extends member
 
 		if($args->redirect_url)
 		{
-			$tmpArgs = new stdClass();
-			$tmpArgs->menu_item_srl = (int)$args->redirect_url;
-			$output = executeQuery('module.getModuleInfoByMenuItemSrl', $tmpArgs);
+			$oModuleModel = getModel('module');
+			$redirectModuleInfo = $oModuleModel->getModuleInfoByModuleSrl($args->redirect_url, array('mid'));
 
-			$args->redirect_url = Context::getDefaultUrl().$output->data->mid;
+			if(!$redirectModuleInfo)
+			{
+				return new Object('-1', 'msg_exist_selected_module');
+			}
+
+			$args->redirect_url = Context::getDefaultUrl().$redirectModuleInfo->mid;
 		}
 
 		$args->profile_image = $args->profile_image ? 'Y' : 'N';
@@ -277,6 +281,7 @@ class memberAdminController extends member
 
 			unset($args->agreement);
 		}
+
 		$output = $oModuleController->updateModuleConfig('member', $args);
 
 		// default setting end

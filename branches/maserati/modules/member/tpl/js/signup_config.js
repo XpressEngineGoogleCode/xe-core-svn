@@ -205,4 +205,9 @@ jQuery(function($){
 		else return true;
 	});
 
+	$('.__redirect_url_btn').click(function(e){
+		$(this).parent().find('input[name=redirect_url]').val('');
+		$(this).parent().find('input[type=text]').val('');
+	});
+
 });

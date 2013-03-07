@@ -1928,8 +1928,8 @@
 		<value xml:lang="vi"><![CDATA[Bạn có thể thiết đặt địa chỉ nào đó sẽ hiển thị sau khi thoát. Để trống nếu không sử dụng.]]></value>
 	</item>
 	<item name="about_redirect_url">
-		<value xml:lang="ko"><![CDATA[회원 가입 후 이동할 url을 입력해 주세요. 입력 url이 없는 경우 이전 페이지로 돌아갑니다.]]></value>
-		<value xml:lang="en"><![CDATA[Please enter a URL where users will go after sign up. When this is empty, it will be set as the previous page of the sign up page.]]></value>
+		<value xml:lang="ko"><![CDATA[회원 가입 후 이동할 페이지를 선택해 주세요. 선택된 페이지가 없는 경우 이전 페이지로 돌아갑니다.]]></value>
+		<value xml:lang="en"><![CDATA[Please select a page where users will go after sign up. When this is empty, it will be set as the previous page of the sign up page.]]></value>
 		<value xml:lang="jp"><![CDATA[会員登録後、表示されるページのURLを指定できます。指定のない場合は会員登録する前のページに戻ります。]]></value>
 		<value xml:lang="zh-CN"><![CDATA[请输入注册会员后的页面转向 url。(留空为返回前页)]]></value>
 		<value xml:lang="zh-TW"><![CDATA[請輸入會員註冊後的頁面轉向網址。(留空為返回前頁)]]></value>
@@ -2520,4 +2520,9 @@
 		<value xml:lang="ko"><![CDATA[그룹제목이 빈 곳은 반영되지 않습니다]]></value>
 		<value xml:lang="en"><![CDATA[If group title are empty, does not apply.]]></value>
 	</item>
+	<item name="msg_exist_selected_module">
+		<value xml:lang="ko"><![CDATA[회원 가입 후 이동할 주소의 정보가 존재하지 않습니다.]]></value>
+		<value xml:lang="en"><![CDATA[Address information does not exist.]]></value>
+	</item>
+
 </lang>
