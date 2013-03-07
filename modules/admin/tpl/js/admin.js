@@ -1896,11 +1896,10 @@ jQuery(function($){
 				// Remover click
 				$remover.click(function(){
 					var $this = $(this);
-					var $displayInput = $this.siblings('.lang_code');
-
-					if(!$displayInput.data('active')) return;
-
 					var $g11n_set_input = $('#lang_' + $this.data('lang-target'));
+
+					if(!$g11n_set_input.data('active')) return;
+
 					var width = $g11n_set_input.width();
 					$g11n_set_input
 						.val('')
