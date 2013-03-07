@@ -2545,6 +2545,10 @@ jQuery(function($){
 			var sLayoutTitle, sLayoutSrl;
 			var sSkinTitle, sSkinName;
 			
+			if(htTmp.module == 'page'){
+				htTmp.module = htTmp.page_type;
+			}
+			
 			if(sMode === "P"){
 				sLayoutSrl = htTmp.layout_srl;
 				sLayoutTitle = htData.module_info_by_menu_item_srl.designSettings.layout.pc;
@@ -2922,7 +2926,7 @@ jQuery(function($){
 		var sSkinName = htDesign.sSkinName;
 		if(sSkinName == ""){
 			var sModuleType = htDesign.sModuleName==="page"?"ARTICLE":htDesign.sModuleName;
-			if($._xeAdminVar.htItemTypes[sModuleType]){
+			if($._xeAdminVar.htAllModules[sModuleType]){
 				if(sMode === "P"){
 					sSkinTitle = $._xeAdminVar.htAllModules[sModuleType].defaultSkin.title;
 				}else{
@@ -3255,7 +3259,7 @@ jQuery(function($){
 		var sLayoutTitle = $(this).closest('li').data('LayoutTitle');
 		htDesign.sLayoutSrl = sLayoutSrl;
 		htDesign.sLayoutTitle = sLayoutTitle;
-		htDesign.sModuleName = '';
+		//htDesign.sModuleName = '';
 		
 		updateSelectedDesign(htDesign);
 	})
@@ -3287,6 +3291,8 @@ jQuery(function($){
 					}
 				);
 			})
+			
+			scrollToRight();
 		});
 	})
 	$('#layoutSetup').bind('after-show', function(ev){
@@ -3344,6 +3350,8 @@ jQuery(function($){
 					}
 				);
 			})
+			
+			scrollToRight();
 		});
 	});
 	$('#layoutMarkupSetup').on('after-show', function(ev){
@@ -3554,11 +3562,11 @@ jQuery(function($){
 				//console.log(htDesign.sSkinName);
 
 				// if nothing is selected, select the first one.
-				sTmpName = htDesign.sTmpSkinName || sName;
+				//sTmpName = htDesign.sTmpSkinName || sName;
 				//console.log(22, sTmpName);
-				if(!htDesign.sSkinName){
-					htDesign.sSkinName = sTmpName;
-				}
+				//if(!htDesign.sSkinName){
+				//	htDesign.sSkinName = sTmpName;
+				//}
 				
 				htInfo = htData.skin_info_list[sName];
 			//for(var i=0, nLen=htData.skin_info_list.length; i<nLen; i++){
@@ -3567,7 +3575,11 @@ jQuery(function($){
 
 				sSelected = "";
 				//console.log(33, sTmpName, sName, htDesign.sSkinName, htInfo.sName);
-				if(htDesign.sSkinName == htInfo.sName){
+				var sSkinName = htDesign.sSkinName;
+				if(!sSkinName){
+					sSkinName = sType == 'P' ? $._xeAdminVar.htAllModules[htDesign.sModuleName].defaultSkin.skin : $._xeAdminVar.htAllModules[htDesign.sModuleName].defaultMobileSkin.skin;
+				}
+				if(sSkinName == htInfo.sName){
 					//htDesign.sTmpSkinName = "";
 					
 					sSelectedSkinName = htInfo.sName;
