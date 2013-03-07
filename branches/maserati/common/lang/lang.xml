@@ -1,5 +1,9 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <lang>
+	<item name="help">
+		<value xml:lang="ko"><![CDATA[도움말]]></value>
+		<value xml:lang="en"><![CDATA[Help]]></value>
+	</item>
 	<item name="cmd_write">
 		<value xml:lang="ko"><![CDATA[쓰기]]></value>
 		<value xml:lang="en"><![CDATA[Write]]></value>
