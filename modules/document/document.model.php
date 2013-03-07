@@ -1351,6 +1351,10 @@ class documentModel extends document
 					$args->{"s_".$search_target} = $search_keyword;
 					break;
 				case 'is_notice' :
+					if($search_keyword=='N') $args->{"s_".$search_target} = 'N';
+					elseif($search_keyword=='Y') $args->{"s_".$search_target} = 'Y';
+					else $args->{"s_".$search_target} = '';
+					break;
 				case 'is_secret' :
 					if($search_keyword=='N') $args->statusList = array($this->getConfigStatus('public'));
 					elseif($search_keyword=='Y') $args->statusList = array($this->getConfigStatus('secret'));
