@@ -699,14 +699,52 @@ class documentController extends document
 		$oDB = &DB::getInstance();
 		$oDB->begin();
 
-		/*$output = executeQuery('document.insertTrash', $trash_args);
-		  if (!$output->toBool()) {
-		  $oDB->rollback();
-		  return $output;
-		  }*/
+		require_once(_XE_PATH_.'modules/trash/model/TrashVO.php');
+
+		// delete Comment
+		if($oDocument->get('comment_count') > 0)
+		{
+			$oCommentModel = &getModel('comment');
+			$commentOutput = $oCommentModel->getCommentList($oDocument->get('document_srl'));
+
+			$commentSrlList = array();
+			if(is_array($commentOutput->data))
+			{
+				foreach($commentOutput->data AS $key=>$value)
+				{
+					array_push($commentSrlList, $value->comment_srl);
+				}
+			}
+
+			$oCommentAdminController = &getAdminController('comment');
+			$oCommentController = &getController('comment');
+			$output = $oCommentAdminController->_moveCommentToTrash($commentSrlList, $oCommentController, $oDB, $obj->description);
+
+			if($output && !$output->toBool())
+			{
+				$oDB->rollback();
+				return $output;
+			}
+
+			// Delete the comment posting
+			for($i = 0; $i < $oDocument->get('comment_count') ; $i++)
+			{
+				$comment_srl = trim($commentSrlList[$i]);
+				if(!$comment_srl)
+				{
+					continue;
+				}
+
+				$output = $oCommentController->deleteComment($comment_srl, TRUE, 'true');
+				if(!$output->toBool())
+				{
+					$oDB->rollback();
+					return $output;
+				}
+			}
+		}
 
 		// new trash module
-		require_once(_XE_PATH_.'modules/trash/model/TrashVO.php');
 		$oTrashVO = new TrashVO();
 		$oTrashVO->setTrashSrl(getNextSequence());
 		$oTrashVO->setTitle($oDocument->variables['title']);
@@ -748,6 +786,7 @@ class documentController extends document
 			$args->isvalid = 'N';
 			executeQuery('file.updateFileValid', $args);
 		}
+
 		// Call a trigger (after)
 		if($output->toBool())
 		{
