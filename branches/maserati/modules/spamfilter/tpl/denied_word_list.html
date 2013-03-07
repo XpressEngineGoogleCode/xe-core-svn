@@ -26,7 +26,7 @@
 			<tbody>
 				<tr loop="$word_list => $word_info">
 					<td>{$word_info->word}</td>
-					<td><!--@if($word_info->latest_hit)-->{$word_info->latest_hit}<!--@else-->-<!--@end--></td>
+					<td><!--@if($word_info->latest_hit)-->{zdate($word_info->latest_hit,'Y-m-d H:i')}<!--@else-->-<!--@end--></td>
 					<td>{$word_info->hit}</td>
 					<td>{zdate($word_info->regdate,'Y-m-d')}</td>
 					<td><input type="checkbox" name="word[]" value="{$word_info->word}" /></td>
@@ -40,7 +40,6 @@
 	<form action="./" style="margin-right:14px">
 		<input type="hidden" name="act" value="procSpamfilterAdminInsertDeniedWord" />
 		<input type="hidden" name="module" value="spamfilter" />
-		<input type="hidden" name="ruleset" value="insertDeniedWord" />
 		<input type="hidden" name="active" value="word" />
 		<input type="hidden" name="xe_validator_id" value="modules/spamfilter/tpl/1" />
 		<textarea name="word_list" title="{$lang->add_denied_word}: {$lang->about_denied_word}" placeholder="{$lang->about_denied_word}" rows="4" cols="42" style="width:100%"></textarea>
