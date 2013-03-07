@@ -72,7 +72,7 @@ class spamfilterAdminController extends spamfilter
 	function procSpamfilterAdminDeleteDeniedIP()
 	{
 		$ipAddressList = Context::get('ipaddress');
-		$this->deleteIP($ipAddressList);
+		if($ipAddressList) $this->deleteIP($ipAddressList);
 
 		$this->setMessage(Context::getLang('success_deleted'));
 
