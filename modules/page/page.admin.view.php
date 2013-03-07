@@ -281,6 +281,10 @@ class pageAdminView extends page
 			$oDocument->setDocument($document_srl);
 			Context::set('document_srl', $document_srl);
 		}
+		else
+		{
+			$oDocument->add('module_srl', $this->module_info->module_srl);
+		}
 
 		Context::addJsFilter($this->module_path.'tpl/filter', 'insert_article.xml');
 		Context::set('oDocument', $oDocument);
