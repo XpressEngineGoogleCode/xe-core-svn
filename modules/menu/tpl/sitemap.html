@@ -1642,19 +1642,19 @@ jQuery(function($){
 		$.exec_json("menu.getMenuAdminDetailSetup", {
 			menu_item_srl : htNodeInfo[$._xeAdminVar.sSelectedMenuSrl].sNodeSrl
 		}, function(htData){
+			$('#properties ._hasFullSetupX, #properties ._hasFullSetupO').hide();
+			$('#properties').removeClass('_hasFullSetup');
+			
 			if(htData.simpleSetupHtml){
 				$('#properties').addClass('_hasFullSetup');
 				$('#fullSetup').find('._setupHTML').html(htData.simpleSetupHtml);
 				var $form = $('#fullSetup form');
 				$form.attr('target', 'submitTarget');
 				$form.append($("<INPUT>").attr("type", "hidden").attr("name", "xe_js_callback").attr("value", "top.fullSetupSaved"));
+				$('#properties ._hasFullSetupO').show();
 			}else if(htData.setupUrl){
-				$('#properties').removeClass('_hasFullSetup');
 				$._xeAdminVar.sFullSetupUrl = htData.setupUrl;
 				$('#properties ._hasFullSetupX').show();
-			}else{
-				$('#properties').removeClass('_hasFullSetup');
-				$('#properties ._hasFullSetupX').hide();
 			}
 		});
 	}
