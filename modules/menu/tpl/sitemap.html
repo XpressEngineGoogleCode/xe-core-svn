@@ -2514,6 +2514,7 @@ jQuery(function($){
 		if(nIdx === 0){
 			// PC
 			$._xeAdminVar.htPrevSetting.bMobilePreviewTabOpen = false;
+			$._xeAdminVar.sOpenDeisgnWith = "P";
 			
 			$('#design').addClass('_pcMode');
 			$('#design').removeClass('_mobileMode');
@@ -2521,6 +2522,7 @@ jQuery(function($){
 		}else{
 			// mobile
 			$._xeAdminVar.htPrevSetting.bMobilePreviewTabOpen = true;
+			$._xeAdminVar.sOpenDeisgnWith = "M";
 			
 			$('#design').removeClass('_pcMode');
 			$('#design').addClass('_mobileMode');
@@ -2813,7 +2815,6 @@ jQuery(function($){
 				$('#design .x_tabbable a[href="#pc"]').click();
 			}
 			
-			$._xeAdminVar.sOpenDeisgnWith = "P";
 		//});
 	});
 	$('#design ._btn_save').click(function(ev){
