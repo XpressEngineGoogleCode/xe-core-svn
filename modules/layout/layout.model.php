@@ -869,9 +869,9 @@ class layoutModel extends layout
 	function getUserLayoutHtml($layout_srl)
 	{
 		$src = $this->getUserLayoutPath($layout_srl). 'layout.html';
-		$temp = $this->getUserLayoutTempHtml($layout_srl);
 		if($this->useUserLayoutTemp == 'temp')
 		{
+			$temp = $this->getUserLayoutTempHtml($layout_srl);
 			if(!file_exists(FileHandler::getRealPath($temp))) FileHandler::copyFile($src,$temp);
 			return $temp;
 		}

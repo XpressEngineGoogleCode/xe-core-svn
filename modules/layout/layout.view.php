@@ -204,6 +204,7 @@ class layoutView extends layout
 		if($layoutInfo)
 		{
 			$layout_path = $layoutInfo->path;
+			$edit_layout_tpl = $this->getRealLayoutFile($layoutSrl);
 			$layout_file = 'layout';
 			$oModuleModel = getModel('module');
 			$part_config = $oModuleModel->getModulePartConfig('layout', $layoutSrl);
@@ -215,7 +216,7 @@ class layoutView extends layout
 			$layout_file = 'default_layout';
 		}
 
-		$layout_tpl = $oTemplate->compile($layout_path, $layout_file);
+		$layout_tpl = $oTemplate->compile($layout_path, $layout_file, $edit_layout_tpl);
 		Context::set('layout','none');
 
 		// Convert widgets and others
@@ -365,6 +366,22 @@ class layoutView extends layout
 		// Delete Temporary Files
 		FileHandler::removeFile($edited_layout_file);
 		$this->setTemplateFile('layout_preview');
+	}
+
+	private function getRealLayoutFile($layoutSrl)
+	{
+		$oLayoutModel = getModel('layout');
+		$layoutFile = $oLayoutModel->getUserLayoutHtml($layoutSrl);
+
+		if(file_exists($layoutFile))
+		{
+			return $layoutFile;
+		}
+		else
+		{
+			return ''; 
+		}
+
 	}
 
 }
