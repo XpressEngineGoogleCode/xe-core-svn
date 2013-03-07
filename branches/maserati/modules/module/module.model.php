@@ -259,7 +259,7 @@ class moduleModel extends module
 		$layoutInfoPc = $layoutSrlPc ? $oLayoutModel->getLayoutRawData($layoutSrlPc, array('title')) : NULL;
 		$layoutInfoMobile = $layoutSrlMobile ? $oLayoutModel->getLayoutRawData($layoutSrlMobile, array('title')) : NULL;
 		$skinInfoPc = $this->loadSkinInfo(Modulehandler::getModulePath($moduleInfo->module), $skinNamePc);
-		$skinInfoMobile = $this->loadSkinInfo(Modulehandler::getModulePath($moduleInfo->module), $skinNameMobile, 'm.skin');
+		$skinInfoMobile = $this->loadSkinInfo(Modulehandler::getModulePath($moduleInfo->module), $skinNameMobile, 'm.skins');
 		if(!$skinInfoPc)
 		{
 			$skinInfoPc = new stdClass();
@@ -355,7 +355,7 @@ class moduleModel extends module
 
 	/**
 	 * Apply default skin info
-	 * 
+	 *
 	 * @param stdClass $moduleInfo Module information
 	 */
 	private function applyDefaultSkin(&$moduleInfo)
@@ -364,7 +364,7 @@ class moduleModel extends module
 		{
 			$moduleInfo->skin = '/USE_DEFAULT';
 		}
-		
+
 		if($moduleInfo->is_mskin_fix == 'N')
 		{
 			$moduleInfo->mskin = '/USE_DEFAULT';
@@ -937,6 +937,10 @@ class moduleModel extends module
 
 		foreach($list as $skin_name)
 		{
+			if(!is_dir($path . $dir . '/' . $skin_name))
+			{
+				continue;
+			}
 			unset($skin_info);
 			$skin_info = $this->loadSkinInfo($path, $skin_name, $dir);
 			if(!$skin_info)
@@ -1000,7 +1004,7 @@ class moduleModel extends module
 				$skin_list = array_merge($useDefaultList, $skin_list);
 			}
 		}
-		
+
 		return $skin_list;
 	}
 
@@ -1834,7 +1838,7 @@ class moduleModel extends module
 	function getGrant($module_info, $member_info, $xml_info = '')
 	{
 		$grant = new stdClass();
-		
+
 		if(!$xml_info)
 		{
 			$module = $module_info->module;

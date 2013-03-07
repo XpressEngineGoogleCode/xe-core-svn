@@ -142,7 +142,7 @@ class adminAdminController extends admin
 			$vars->site_srl = 0;
 		}
 
-		// create a DesignInfo file 
+		// create a DesignInfo file
 		$output = $this->updateDefaultDesignInfo($vars);
 		return $this->setRedirectUrl(Context::get('error_return_url'), $output);
 	}
@@ -185,6 +185,11 @@ class adminAdminController extends admin
 
 		foreach($vars->module_skin as $moduleName => $skinName)
 		{
+			if($moduleName == 'ARTICLE')
+			{
+				$moduleName = 'page';
+			}
+
 			if(!isset($designInfo->module->{$moduleName})) $designInfo->module->{$moduleName} = new stdClass();
 			$designInfo->module->{$moduleName}->{$skinTarget} = $skinName;
 		}
