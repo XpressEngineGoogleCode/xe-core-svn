@@ -379,7 +379,7 @@
 					</script>
 					
 					<script id="tmpl_skinItem" type="text/x-jquery-tmpl">
-					<li><a href="#skin" data-admin-show="#skin" data-param='{ "moduleType" : "${ModuleType}"}'>${ModuleTypeTitle} [<span class="themeName _skinTitle">${SkinTitle}</span>] <i class="x_icon-circle-arrow-right"></i></a></li>
+					<li><a href="#skin" data-admin-show="#skin" data-param='{ "moduleType" : "${ModuleType}"}'>${ModuleTypeTitle} [<span class="themeName _skinTitle">{{if SkinTitle}}${SkinTitle}{{else}}{$lang->no_skin}{{/if}}</span>] <i class="x_icon-circle-arrow-right"></i></a></li>
 					</script>
 				</ul>
 				<div class="btnBoth siteDesignUI">
@@ -2643,6 +2643,7 @@ jQuery(function($){
 					sSkinTitle = item.defaultMobileSkin.title;
 				}
 				
+
 				$list.append($.tmpl( "deisgn_skinItem", {
 					ModuleType : sModuleName,
 					ModuleTypeTitle : sModuleTitle,
@@ -2928,6 +2929,10 @@ jQuery(function($){
 					sSkinTitle = $._xeAdminVar.htAllModules[sModuleType].defaultMobileSkin.title;
 				}
 			}
+		}
+		
+		if(!sSkinTitle){
+			sSkinTitle = '{$lang->no_skin}';
 		}
 		
 		$('#design ._layoutName').html(sLayoutTitle);

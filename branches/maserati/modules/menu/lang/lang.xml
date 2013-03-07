@@ -912,4 +912,7 @@ Menu không phải là người quản lý, nhiệm vụ của nó chỉ là li�
 	<item name="not_found_module">
 		<value xml:lang="ko"><![CDATA[모듈이 존재하지 않음]]></value>
 	</item>
+	<item name="no_skin">
+		<value xml:lang="ko"><![CDATA[스킨 없음]]></value>
+	</item>
 </lang>
