@@ -822,15 +822,19 @@ class commentController extends comment
 		// update the number of comments
 		$comment_count = $oCommentModel->getCommentCount($document_srl);
 
-		// create the controller object of the document
-		$oDocumentController = getController('document');
-
-		// update comment count of the article posting
-		$output = $oDocumentController->updateCommentCount($document_srl, $comment_count, NULL, FALSE);
-		if(!$output->toBool())
+		// only document is exists
+		if(isset($comment_count))
 		{
-			$oDB->rollback();
-			return $output;
+			// create the controller object of the document
+			$oDocumentController = getController('document');
+
+			// update comment count of the article posting
+			$output = $oDocumentController->updateCommentCount($document_srl, $comment_count, NULL, FALSE);
+			if(!$output->toBool())
+			{
+				$oDB->rollback();
+				return $output;
+			}
 		}
 
 		// call a trigger (after)
