@@ -1000,4 +1000,11 @@
 		<value xml:lang="ko"><![CDATA[db.config.php 유효성 확인]]></value>
 		<value xml:lang="en"><![CDATA[Validation of db.config.php]]></value>
 	</item>
+	<item name="msg_possible_only_file">
+		<value xml:lang="ko"><![CDATA[파일만 업로드 가능합니다.]]></value>
+		<value xml:lang="en"><![CDATA[You can upload files only.]]></value>
+		<value xml:lang="jp"><![CDATA[ファイルのみアップロード可能です。]]></value>
+		<value xml:lang="zh-CN"><![CDATA[请上传文件.]]></value>
+		<value xml:lang="tr"><![CDATA[Sadece dosyalarını yükleyebilirsiniz.]]></value>
+	</item>
 </lang>
