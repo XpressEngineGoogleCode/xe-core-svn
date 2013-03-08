@@ -135,24 +135,3 @@ function completeResetAdminMenu(ret_obj) {
 	document.location.reload();
 }
 
-
-function doSubmitConfig()
-{
-	var $forms = jQuery('#admin_config').find('input[name][type="hidden"], input[name][type="text"], input[name][type="checkbox"]:checked, select[name], textarea[name], input[name][type="radio"]:checked');
-	var $configForm = jQuery('#config_form');
-	var $container = $configForm.children('div');
-	$container.empty();
-
-	$forms.each(function($)
-	{
-		var $this = jQuery(this);
-
-		if($this.parents('.imageUpload').length) return;
-
-		var $input = jQuery('<input>').attr('type', 'hidden').attr('name', $this.attr('name')).val($this.val());
-		console.log($this.val());
-		$container.append($input);
-	});
-	$configForm.submit();
-}
-
