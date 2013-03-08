@@ -9,11 +9,13 @@
 </div>
 <section class="section">
 	<h1>{$lang->subtitle_primary}</h1>
-	<form action="./" method="post" enctype="multipart/form-data" class="x_form-horizontal">
+	<form action="./" method="post" enctype="multipart/form-data" id="config_form" class="x_form-horizontal">
 		<input type="hidden" name="module" value="install" />
 		<input type="hidden" name="act" value="procInstallAdminConfig" />
 		<input type="hidden" name="xe_validator_id" value="modules/admin/tpl/config_general/1" />
-
+		<div></div>
+	</form>
+	<div class="x_form-horizontal" id="admin_config">
 		<div class="x_control-group">
 			<label class="x_control-label">{$lang->site_title} <a class="x_icon-question-sign" href="./help/index.html#UMAN_config_general_site_title" target="_blank">{$lang->help}</a></label>
 			<div class="x_controls">
@@ -90,9 +92,17 @@
 				<p id="faviconPreview">
 					<img src="{$favicon_url}" alt="favicon" width="16" height="16" class="fn1">
 					<img src="{$favicon_url}" alt="favicon Image" width="16" height="16" class="fn2">
+					<input type="hidden" name="do_update_favicon" id="do_update_favicon">
 				</p>
 				<label><input type="checkbox" name="is_delete_favicon" value="1" /> {$lang->cmd_delete}</label>
-				<label><input type="file" name="favicon" id="favicon" title="favicon" /></label>
+				<form action="./" enctype="multipart/form-data" method="post" target="hiddenIframe" class="imageUpload" style="margin:0">
+					<input type="hidden" name="module" value="install">
+					<input type="hidden" name="act" value="procInstallAdminConfigIconUpload">
+					<p>
+						<input type="file" name="favicon" id="favicon" title="Mobile Home Icon"/>
+						<input class="x_btn" type="submit" value="{$lang->cmd_submit}" style="vertical-align:top">
+					</p>
+				</form>
 				<span class="x_help-block">{$lang->about_use_favicon}</span>
 			</div>
 		</div>
@@ -101,19 +111,27 @@
 			<div class="x_controls">
 				<p id="mobiconPreview">
 					<img src="{$mobicon_url}" alt="Mobile Home Icon" width="32" height="32" />
+					<input type="hidden" name="do_update_mobicon" id="do_update_mobicon">
 					<span>www</span>
 				</p>
 				<label><input type="checkbox" name="is_delete_mobicon" value="1" /> {$lang->cmd_delete}</label>
-				<label><input type="file" name="mobicon" id="mobicon" title="Mobile Home Icon"/></label>
+				<form action="./" enctype="multipart/form-data" method="post" target="hiddenIframe" class="imageUpload" style="margin:0">
+					<input type="hidden" name="module" value="install">
+					<input type="hidden" name="act" value="procInstallAdminConfigIconUpload">
+					<p>
+						<input type="file" name="mobicon" id="mobicon" title="Mobile Home Icon"/>
+						<input class="x_btn" type="submit" value="{$lang->cmd_submit}" style="vertical-align:top">
+					</p>
+				</form>
 				<span class="x_help-block">{$lang->detail_use_mobile_icon}</span>
 			</div>
 		</div>
 		<div class="x_clearfix btnArea">
 			<div class="x_pull-right">
-				<button type="submit" class="x_btn x_btn-primary">{$lang->cmd_save}</button>
+				<button type="submit" class="x_btn x_btn-primary" onclick="doSubmitConfig()">{$lang->cmd_save}</button>
 			</div>
 		</div>
-	</form>
+	</div>
 </section>
 <section class="section collapsed">
 	<h1>{$lang->subtitle_advanced}</h1>
@@ -190,22 +208,17 @@
 		</div>
 	</form>
 </section>
+<iframe name="hiddenIframe" src="about:blank" hidden></iframe>
 <script>
-jQuery(function($){
-	$('#favicon').change(function(){
-		var re_favicon = /[^.]+\.ico$/
-		if(re_favicon.test($(this).val()) != true){
-			alert('*.ico {$lang->msg_possible_only_file}');
-			return false;
-		}
-	});
-	$('#mobicon').change(function(){
-		var re_favicon = /[^.]+\.png$/
-		if(re_favicon.test($(this).val()) != true){
-			alert('*.png {$lang->msg_possible_only_file}');
-			return false;
-		}
-	});
-});
+function afterUploadConfigImage(name, fileName, tmpFileName)
+{
+	jQuery('#' + name + 'Preview img').attr('src', tmpFileName);
+	jQuery('#' + name).val('');
+	jQuery('#do_update_' + name).val('1');
+}
+
+function alertUploadMessage(msg) {
+	alert(msg);
+}
 </script>
 
