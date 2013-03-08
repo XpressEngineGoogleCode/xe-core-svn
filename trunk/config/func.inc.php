@@ -1138,6 +1138,14 @@
 			return false;
 		}
 
+		// exception blog api write
+		$act = Context::get('act');
+		$actList = array('rss'=>1, 'atom'=>1, 'api'=>1);
+		if(isset($actList[$act]))
+		{
+			return true;
+		}
+
 		$defaultUrl = Context::getDefaultUrl();
 		$referer = parse_url($_SERVER["HTTP_REFERER"]);
 
