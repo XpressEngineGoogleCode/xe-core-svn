@@ -133,11 +133,20 @@ class Purifier
 		$whiteIframeUrlList = $oEmbedFilter->getWhiteIframeUrlList();
 
 		$whiteDomainRegex = '%^(';
+		$whiteDomainCount = count($whiteIframeUrlList);
+
+		$i=1;
 		if(is_array($whiteIframeUrlList))
 		{
 			foreach($whiteIframeUrlList AS $key => $value)
 			{
-				$whiteDomainRegex .= $value.'|';
+				$whiteDomainRegex .= $value;
+
+				if($i < $whiteDomainCount)
+				{
+					$whiteDomainRegex .= '|';
+				}
+				$i++;
 			}
 		}
 		$whiteDomainRegex .= ')%';
