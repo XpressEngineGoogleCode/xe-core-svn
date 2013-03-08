@@ -300,7 +300,7 @@ class EmbedFilter
 	 */
 	function checkObjectTag(&$content)
 	{
-		preg_match_all('/<\s*object\s*[^>]+(?:\/?>)/is', $content, $m);
+		preg_match_all('/<\s*object\s*[^>]+(?:\/?>?)/is', $content, $m);
 		$objectTagList = $m[0];
 		if($objectTagList)
 		{
@@ -353,7 +353,7 @@ class EmbedFilter
 	 */
 	function checkEmbedTag(&$content)
 	{
-		preg_match_all('/<\s*embed\s*[^>]+(?:\/?>)/is', $content, $m);
+		preg_match_all('/<\s*embed\s*[^>]+(?:\/?>?)/is', $content, $m);
 		$embedTagList = $m[0];
 		if($embedTagList)
 		{
@@ -406,7 +406,7 @@ class EmbedFilter
 	 */
 	function checkIframeTag(&$content)
 	{
-		preg_match_all('/<\s*iframe\s*[^>]+(?:\/?>)/is', $content, $m);
+		preg_match_all('/<\s*iframe\s*[^>]+(?:\/?>?)/is', $content, $m);
 		$iframeTagList = $m[0];
 		if($iframeTagList)
 		{
@@ -446,7 +446,7 @@ class EmbedFilter
 	 */
 	function checkParamTag(&$content)
 	{
-		preg_match_all('/<\s*param\s*[^>]+(?:\/?>)/is', $content, $m);
+		preg_match_all('/<\s*param\s*[^>]+(?:\/?>?)/is', $content, $m);
 		$paramTagList = $m[0];
 		if($paramTagList)
 		{
