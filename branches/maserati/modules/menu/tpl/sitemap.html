@@ -2616,7 +2616,14 @@ jQuery(function($){
 		<!--@end-->
 		
 		<!--@if($act == 'dispMenuAdminSiteDesign')-->
-			
+		
+		if(!$._xeAdminVar.htSiteDefaultLayout || !$._xeAdminVar.htSiteDefaultLayout[sMode]){
+			var $this = $(this);
+			setTimeout(function(){
+				$this.trigger('tab_change', [nIdx, $el]);
+			}, 10);
+			return false;
+		}
 		$.exec_json("menu.getMenuAdminInstalledMenuType", {}, function(htData){
 			setItemTypes(htData.menu_types);
 			setAllModules(htData.all_modules);
