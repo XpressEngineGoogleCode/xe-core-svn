@@ -61,14 +61,31 @@ class pageAdminView extends page
 		$search_target_list = array('s_mid','s_browser_title');
 		$search_target = Context::get('search_target');
 		$search_keyword = Context::get('search_keyword');
-		if(in_array($search_target,$search_target_list) && $search_keyword) $args->{$search_target} = $search_keyword; 
+		if(in_array($search_target,$search_target_list) && $search_keyword) $args->{$search_target} = $search_keyword;
 
 		$output = executeQuery('page.getPageList', $args);
 		$oModuleModel = &getModel('module');
 		$page_list = $oModuleModel->addModuleExtraVars($output->data);
 		moduleModel::syncModuleToSite($page_list);
 
-		$oModuleAdminModel = &getAdminModel('module');
+		$oModuleAdminModel = &getAdminModel('module'); /* @var $oModuleAdminModel moduleAdminModel */
+
+		// get the skins path
+		$oModuleModel = &getModel('module');
+		$skin_list = $oModuleModel->getSkins($this->module_path);
+		Context::set('skin_list',$skin_list);
+
+		$mskin_list = $oModuleModel->getSkins($this->module_path, "m.skins");
+		Context::set('mskin_list', $mskin_list);
+
+		// get the layouts path
+		$oLayoutModel = &getModel('layout');
+		$layout_list = $oLayoutModel->getLayoutList();
+		Context::set('layout_list', $layout_list);
+
+		$mobile_layout_list = $oLayoutModel->getLayoutList(0,"M");
+		Context::set('mlayout_list', $mobile_layout_list);
+
 		$tabChoice = array('tab1'=>1, 'tab3'=>1);
 		$selected_manage_content = $oModuleAdminModel->getSelectedManageHTML($this->xml_info->grant, $tabChoice);
 		Context::set('selected_manage_content', $selected_manage_content);
@@ -156,14 +173,14 @@ class pageAdminView extends page
 		$security->encodeHTML('module_info.');
 	}
 
-	function dispPageAdminMobileContent() 
+	function dispPageAdminMobileContent()
 	{
 		if($this->module_info->page_type == 'OUTSIDE')
 		{
 			return $this->stop(-1, 'msg_invalid_request');
 		}
 
-		if($this->module_srl) 
+		if($this->module_srl)
 		{
 			Context::set('module_srl',$this->module_srl);
 		}
@@ -192,7 +209,7 @@ class pageAdminView extends page
 		$this->setTemplateFile('mcontent');
 	}
 
-	function dispPageAdminMobileContentModify() 
+	function dispPageAdminMobileContentModify()
 	{
 		Context::set('module_info', $this->module_info);
 
@@ -224,7 +241,7 @@ class pageAdminView extends page
 		}
 	}
 
-	function _setWidgetTypeContentModify($isMobile = false) 
+	function _setWidgetTypeContentModify($isMobile = false)
 	{
 		// Setting contents
 		if($isMobile)
@@ -259,7 +276,7 @@ class pageAdminView extends page
 		$this->setTemplateFile($templateFile);
 	}
 
-	function _setArticleTypeContentModify($isMobile = false) 
+	function _setArticleTypeContentModify($isMobile = false)
 	{
 		$oDocumentModel = &getModel('document');
 		$oDocument = $oDocumentModel->getDocument(0, true);
