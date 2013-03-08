@@ -362,12 +362,12 @@ class moduleModel extends module
 	{
 		if($moduleInfo->is_skin_fix == 'N')
 		{
-			$moduleInfo->skin = '/USE_DEFAULT';
+			$moduleInfo->skin = '/USE_DEFAULT/';
 		}
 
 		if($moduleInfo->is_mskin_fix == 'N')
 		{
-			$moduleInfo->mskin = '/USE_DEFAULT';
+			$moduleInfo->mskin = '/USE_DEFAULT/';
 		}
 	}
 	/**

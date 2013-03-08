@@ -78,7 +78,7 @@ class moduleAdminController extends module
 	/**
 	 * @brief Copy Module
 	 */
-	function procModuleAdminCopyModule($args = NULL) 
+	function procModuleAdminCopyModule($args = NULL)
 	{
 		$isProc = false;
 		if(!$args)
@@ -170,7 +170,7 @@ class moduleAdminController extends module
 		$triggerObj->moduleSrlList = array();
 
 		$errorLog = array();
-		foreach($clones as $mid => $browser_title) 
+		foreach($clones as $mid => $browser_title)
 		{
 			$clone_args = null;
 			$clone_args = clone($module_info);
@@ -363,7 +363,7 @@ class moduleAdminController extends module
 		$oModuleModel = &getModel('module');
 		$columnList = array('module_srl', 'module', 'skin', 'mskin');
 		$module_info = $oModuleModel->getModuleInfoByModuleSrl($module_srl, $columnList);
-		if($module_info->module_srl) 
+		if($module_info->module_srl)
 		{
 			if($mode === 'M')
 			{
@@ -398,9 +398,9 @@ class moduleAdminController extends module
 			unset($obj->module);
 			unset($obj->_mode);
 			// Separately handle if a type of extra_vars is an image in the original skin_info
-			if($skin_info->extra_vars) 
+			if($skin_info->extra_vars)
 			{
-				foreach($skin_info->extra_vars as $vars) 
+				foreach($skin_info->extra_vars as $vars)
 				{
 					if($vars->type!='image') continue;
 
@@ -822,7 +822,7 @@ class moduleAdminController extends module
 	function makeCacheDefinedLangCode($site_srl = 0)
 	{
 		$args = new stdClass();
-		
+
 		// Get the language file of the current site
 		if(!$site_srl)
 		{
@@ -903,10 +903,12 @@ class moduleAdminController extends module
 
 		$layoutSrl = Context::get('layout_srl');
 
-		$skinFixTargetValue = ($skinType == 'M') ? 'is_mskin_fix' : 'is_skin_fix';
-		$isSkinFix = Context::get($skinFixTargetValue);
+		$isSkinFix = Context::get('is_skin_fix');
 
-		$isSkinFix = ($isSkinFix == 'N') ? 'N' : 'Y';
+		if($isSkinFix)
+		{
+			$isSkinFix = ($isSkinFix == 'N') ? 'N' : 'Y';
+		}
 
 		$skinName = Context::get('skin_name');
 		$skinVars = Context::get('skin_vars');
@@ -944,8 +946,15 @@ class moduleAdminController extends module
 		$layoutTargetValue = ($skinType == 'M') ? 'mlayout_srl' : 'layout_srl';
 		$skinFixTargetValue = ($skinType == 'M') ? 'is_mskin_fix' : 'is_skin_fix';
 
-		$moduleInfo->{$layoutTargetValue} = $layoutSrl;
-		$moduleInfo->{$skinFixTargetValue} = $isSkinFix;
+		if($layoutSrl)
+		{
+			$moduleInfo->{$layoutTargetValue} = $layoutSrl;
+		}
+
+		if($isSkinFix)
+		{
+			$moduleInfo->{$skinFixTargetValue} = $isSkinFix;
+		}
 
 		if($isSkinFix == 'Y')
 		{
@@ -964,10 +973,6 @@ class moduleAdminController extends module
 					$moduleInfo->{$key} = $val;
 				}
 			}
-		}
-		else
-		{
-			$moduleInfo->{$skinTargetValue} = '';
 		}
 
 		$oModuleController = getController('module');
