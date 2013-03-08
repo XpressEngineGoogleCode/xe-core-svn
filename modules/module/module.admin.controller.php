@@ -498,7 +498,7 @@ class moduleAdminController extends module
 		$updateList = array('module_category_srl','layout_srl','skin','mlayout_srl','mskin','description','header_text','footer_text'); //use_mobile
 		foreach($updateList as $key=>$val)
 		{
-			if(!$vars->{$val} && $vars->{$val} !== 0)
+			if(!strlen($vars->{$val}))
 			{
 				unset($updateList[$key]);
 				$columnList[] = $val;
