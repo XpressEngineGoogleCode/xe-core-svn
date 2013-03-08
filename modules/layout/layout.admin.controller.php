@@ -741,6 +741,17 @@ class layoutAdminController extends layout
 		$args = new stdClass();
 		$args->extra_vars = $output->extra_vars;
 		$extra_vars = unserialize($args->extra_vars);
+		
+		if($layout->extra_var_count) {
+			$reg = "/^.\/files\/attach\/images\/([0-9]+)\/(.*)/";
+			foreach($extra_vars as $key => $val) {
+				if($layout->extra_var->{$key}->type == 'image') {
+					if(!preg_match($reg,$val,$matches)) continue;
+					$image_list[$key]->filename = $matches[2];
+					$image_list[$key]->old_file = $val;
+				}
+			}
+		}
 
 		$oModuleController = &getController('module');
 		$layout_config = new stdClass();
@@ -766,6 +777,15 @@ class layoutAdminController extends layout
 
 				$args->layout_srl = getNextSequence();
 				$args->title = $value;
+
+				if(is_array($image_list)) {
+					foreach($image_list as $key=>$val) {
+						$new_file = sprintf("./files/attach/images/%s/%s", $args->layout_srl,$val->filename);
+						FileHandler::copyFile($val->old_file, $new_file);
+						$extra_vars->{$key} = $new_file;
+					}
+					$args->extra_vars = serialize($extra_vars);
+				}
 
 				// for header script
 				$oModuleController->insertModulePartConfig('layout', $args->layout_srl, $layout_config);
