@@ -82,7 +82,7 @@
 								<p>{$lang->about_public_item}</p>
 							</div>
 						</th>
-						<th scope="col" class="nowr" style="text-align:center">{$lang->cmd_required}/{$lang->cmd_optional}</th>
+						<th scope="col" class="nowr">{$lang->cmd_required}/{$lang->cmd_optional}</th>
 						<th scope="col" class="desc" style="text-align:center">{$lang->description}</th>
 						<th scope="col" class="nowr" style="text-align:center">{$lang->cmd_edit}</th>
 					</tr>
@@ -101,7 +101,7 @@
 						<td style="text-align:center"><input type="radio" name="identifier" value="{$item->name}" checked="checked" /></td>
 						<td style="text-align:center"><input type="checkbox" name="usable_list[]" value="{$item->name}" title="{$lang->use}" checked="checked"  disabled="disabled" /></td>
 						<td style="text-align:center"><input type="checkbox" name="is_{$item->name}_public" value="Y" checked="checked"|cond="$item->isPublic == 'Y'"/></td>
-						<td class="nowr" style="text-align:center">
+						<td class="nowr">
 							<label for="{$item->name}_re" class="x_inline"><input type="radio" id="{$item->name}_re" name="{$item->name}" value="requierd" checked="checked" disabled="disabled" /> {$lang->cmd_required}</label>
 							<label for="{$item->name}_op" class="x_inline"><input type="radio" id="{$item->name}_op" name="{$item->name}" value="option" disabled="disabled" /> {$lang->cmd_optional}</label>
 						</td>
@@ -122,7 +122,7 @@
 						<td style="text-align:center"><input type="radio" name="identifier" value="{$item->name}" cond="$item->name== 'email_address' || $item->name=='user_id'" /></td>
 						<td style="text-align:center"><input type="checkbox" name="usable_list[]" value="{$item->name}" title="{$lang->use}" checked="checked"|cond="$item->mustRequired || $item->isUse" disabled="disabled"|cond="$item->mustRequired" /></td>
 						<td style="text-align:center"><input type="checkbox" name="is_{$item->name}_public" value="Y" checked="checked"|cond="$item->isPublic == 'Y'" disabled="disabled"|cond="in_array($item->name, $fixed_public_list) || !$item->isUse" /></td>
-						<td class="nowr" style="text-align:center">
+						<td class="nowr">
 							<label for="{$item->name}_re" class="x_inline"><input type="radio" id="{$item->name}_re" name="{$item->name}" value="required" checked="checked"|cond="$item->mustRequired || $item->required" disabled="disabled"|cond="$item->mustRequired || !$item->isUse" /> {$lang->cmd_required}</label>
 							<label for="{$item->name}_op" class="x_inline"><input type="radio" id="{$item->name}_op" name="{$item->name}" value="option" checked="checked"|cond="!$item->mustRequired && ($item->isUse && !$item->required)" disabled="disabled"|cond="$item->mustRequired || !$item->isUse" /> {$lang->cmd_optional}</label>
 							<div cond="$item->imageType" class="_subItem" style="display:none">
@@ -159,7 +159,7 @@
 						<td></td>
 						<td style="text-align:center"><input type="checkbox" name="usable_list[]" value="{$item->name}" title="{$lang->use}" checked="checked"|cond="$item->isUse" /></td>
 						<td style="text-align:center"><input type="checkbox" name="is_{$item->name}_public" value="Y" checked="checked"|cond="$item->isPublic == 'Y'" disabled="disabled"|cond="!$item->isUse" /></td>
-						<td class="nowr" style="text-align:center">
+						<td class="nowr">
 							<label for="{$item->name}_re" class="x_inline"><input type="radio" id="{$item->name}_re" name="{$item->name}" value="required" checked="checked"|cond="$item->required" disabled="disabled"|cond="!$item->isUse"/> {$lang->cmd_required}</label>
 							<label for="{$item->name}_op" class="x_inline"><input type="radio" id="{$item->name}_op" name="{$item->name}" value="option" checked="checked"|cond="$item->isUse && !$item->required" disabled="disabled"|cond="!$item->isUse" /> {$lang->cmd_optional}</label>
 						</td>
