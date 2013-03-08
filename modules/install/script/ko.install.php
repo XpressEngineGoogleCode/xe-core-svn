@@ -12,6 +12,9 @@ if(!$output->toBool())
 }
 $menuSrl = $output->get('menuSrl');
 
+// make home menu cache
+$oMenuAdminController->makeHomemenuCacheFile($menuSrl);
+
 // insertMenuItem
 // create 1depth menuitem
 
