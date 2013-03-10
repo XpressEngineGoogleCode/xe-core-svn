@@ -946,12 +946,12 @@ class moduleAdminController extends module
 		$layoutTargetValue = ($skinType == 'M') ? 'mlayout_srl' : 'layout_srl';
 		$skinFixTargetValue = ($skinType == 'M') ? 'is_mskin_fix' : 'is_skin_fix';
 
-		if($layoutSrl)
+		if(strlen($layoutSrl))
 		{
 			$moduleInfo->{$layoutTargetValue} = $layoutSrl;
 		}
 
-		if($isSkinFix)
+		if(strlen($isSkinFix))
 		{
 			$moduleInfo->{$skinFixTargetValue} = $isSkinFix;
 		}
