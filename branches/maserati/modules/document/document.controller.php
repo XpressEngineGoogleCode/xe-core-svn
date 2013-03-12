@@ -202,6 +202,7 @@ class documentController extends document
 		if($obj->allow_trackback!='Y') $obj->allow_trackback = 'N';
 		if($obj->homepage &&  !preg_match('/^[a-z]+:\/\//i',$obj->homepage)) $obj->homepage = 'http://'.$obj->homepage;
 		if($obj->notify_message != 'Y') $obj->notify_message = 'N';
+		if(!$obj->email_address) $obj->email_address = '';
 		if(!$isRestore) $obj->ipaddress = $_SERVER['REMOTE_ADDR'];	//board?�서 form key값으�?ipaddress�??�용?�면 ?�한 ip가 ?�록?? ?�터?�???��??�슴
 
 		// Serialize the $extra_vars, check the extra_vars type, because duplicate serialized avoid
@@ -1447,7 +1448,7 @@ class documentController extends document
 
 		$logged_info = Context::get('logged_info');
 
-		foreach($extra_keys as $idx => $val) 
+		foreach($extra_keys as $idx => $val)
 		{
 			$idx = $val->idx;
 			if($val->type == 'kr_zip')
