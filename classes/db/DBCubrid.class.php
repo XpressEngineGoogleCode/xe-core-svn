@@ -858,6 +858,7 @@ class DBCubrid extends DB
 		$query = $this->getInsertSql($queryObject, $with_values);
 		if(is_a($query, 'Object'))
 		{
+			unset($this->param);
 			return;
 		}
 
@@ -888,6 +889,7 @@ class DBCubrid extends DB
 		$query = $this->getUpdateSql($queryObject, $with_values);
 		if(is_a($query, 'Object'))
 		{
+			unset($this->param);
 			return;
 		}
 
@@ -919,6 +921,7 @@ class DBCubrid extends DB
 		$query = $this->getDeleteSql($queryObject, $with_values);
 		if(is_a($query, 'Object'))
 		{
+			unset($this->param);
 			return;
 		}
 
@@ -961,6 +964,7 @@ class DBCubrid extends DB
 			$query = $this->getSelectSql($queryObject, $with_values);
 			if(is_a($query, 'Object'))
 			{
+				unset($this->param);
 				return;
 			}
 
@@ -969,6 +973,7 @@ class DBCubrid extends DB
 
 			if($this->isError())
 			{
+				unset($this->param);
 				return $this->queryError($queryObject);
 			}
 
@@ -1075,6 +1080,7 @@ class DBCubrid extends DB
 			$buff->page = $page;
 			$buff->data = array();
 			$buff->page_navigation = new PageHandler($total_count, $total_page, $page, $page_count);
+			unset($this->param);
 			return $buff;
 		}
 		$start_count = ($page - 1) * $list_count;
@@ -1084,6 +1090,7 @@ class DBCubrid extends DB
 		$result = $this->_query($query, $connection);
 		if($this->isError())
 		{
+			unset($this->param);
 			return $this->queryError($queryObject);
 		}
 
