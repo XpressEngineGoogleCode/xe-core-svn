@@ -222,7 +222,7 @@ body>.x,
 .x>.header{position:relative;z-index:2;padding:10px 15px;zoom:1;border-bottom:1px solid #ddd;background-color:#fff;zoom:1}
 .x>.header:after{content:"";display:block;clear:both}
 .x>.header:before{content:"";position:absolute;bottom:0;left:1px;right:1px;height:1px;box-shadow:0 2px 3px #ddd}
-.x>.body{position:relative;zoom:1;padding:0 0 50px 215px}
+.x>.body{position:relative;zoom:1;padding:0 0 50px 215px;z-index:1}
 .x>.body.wide{padding-left:70px}
 .x>.body:after{content:"";display:block;clear:both}
 .x>.body>.content{width:100%;padding:1px 0 0 0;float:right;margin:0 0 0 -100%;outline:none}
