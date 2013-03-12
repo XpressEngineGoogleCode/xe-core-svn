@@ -361,17 +361,31 @@ class moduleAdminController extends module
 		$mode = $mode === 'P' ? 'P' : 'M';
 
 		$oModuleModel = &getModel('module');
-		$columnList = array('module_srl', 'module', 'skin', 'mskin');
+		$columnList = array('module_srl', 'module', 'skin', 'mskin', 'is_skin_fix', 'is_mskin_fix');
 		$module_info = $oModuleModel->getModuleInfoByModuleSrl($module_srl, $columnList);
 		if($module_info->module_srl)
 		{
 			if($mode === 'M')
 			{
-				$skin = $module_info->mskin;
+				if($module_info->is_mskin_fix == 'Y')
+				{
+					$skin = $module_info->mskin;
+				}
+				else
+				{
+					$skin = $oModuleModel->getModuleDefaultSkin($module_info->module, 'M');
+				}
 			}
 			else
 			{
-				$skin = $module_info->skin;
+				if($module_info->is_skin_fix == 'Y')
+				{
+					$skin = $module_info->skin;
+				}
+				else
+				{
+					$skin = $oModuleModel->getModuleDefaultSkin($module_info->module, 'P');
+				}
 			}
 
 			// Get skin information (to check extra_vars)
