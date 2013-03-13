@@ -1522,7 +1522,14 @@ jQuery(function($){
 			if(typeof name == 'undefined') name = '';
 			if(typeof scroll == 'undefined') scroll = true;
 
-			$.exec_json('module.getModuleAdminLangListHtml', {'page': page, 'lang_code': lang_code, 'search_keyword': search_keyword, 'name': name, 'list_count': options.list_count}, function(data){
+			$.exec_json('module.getModuleAdminLangListHtml', {
+				'page': page, 
+				'lang_code': lang_code, 
+				'search_keyword': search_keyword, 
+				'name': name, 
+				'list_count': options.list_count,
+				'mid': current_url.getQuery('mid')
+			}, function(data){
 				if(!data || !data.html) return;
 
 				$g11n_search.html(data.html);
@@ -1600,7 +1607,10 @@ jQuery(function($){
 
 				if(typeof $this.data('is_loaded') != 'undefined') return;
 
-				$.exec_json('module.getModuleAdminLangCode', {'name': lang_code}, on_complete);
+				$.exec_json('module.getModuleAdminLangCode', {
+					'name': lang_code,
+					'mid': current_url.getQuery('mid')
+				}, on_complete);
 
 				function on_complete(data){
 					var $textareas = $this.next('fieldset').find('textarea');
@@ -1660,7 +1670,10 @@ jQuery(function($){
 
 				lang_name = $this.closest('.item').find('[href^="#lang-"]').data('lang_code');
 
-				$.exec_json('module.procModuleAdminDeleteLang', {'name': lang_name}, function (data){
+				$.exec_json('module.procModuleAdminDeleteLang', {
+					'name': lang_name,
+					'mid': current_url.getQuery('mid')
+				}, function (data){
 					if(!data) return;
 					if(data.error){
 						alert(data.message);
@@ -1697,6 +1710,7 @@ jQuery(function($){
 				});
 
 				params.lang_name = $anchor.data('lang_code');
+				params.mid = current_url.getQuery('mid');
 
 				// submit
 				$.exec_json('module.procModuleAdminInsertLang', params, function (data){
@@ -1754,6 +1768,8 @@ jQuery(function($){
 				return false;
 			}
 
+			params.mid = current_url.getQuery('mid');
+
 			// submit
 			$.exec_json('module.procModuleAdminInsertLang', params, on_complete);
 
@@ -1804,7 +1820,9 @@ jQuery(function($){
 			$(data.html).appendTo($content).xeMultilingualWindow();
 			$('.lang_code').trigger('loaded-multilingualWindow');
 		}
-		$.exec_json('module.getModuleAdminMultilingualHtml', {}, on_complete);
+		$.exec_json('module.getModuleAdminMultilingualHtml', {
+			'mid': current_url.getQuery('mid')
+		}, on_complete);
 
 		return this;
 	}
@@ -1944,7 +1962,10 @@ jQuery(function($){
 							$displayInput.val(data.langs[xe.current_lang]).attr('disabled', 'disabled').width(width - 44).data('active', true);
 						}
 
-						$.exec_json('module.getModuleAdminLangCode', {'name': $displayInput.val().replace('$user_lang->', '')}, on_complete2);
+						$.exec_json('module.getModuleAdminLangCode', {
+							'name': $displayInput.val().replace('$user_lang->', ''),
+							'mid': current_url.getQuery('mid')
+						}, on_complete2);
 					}
 				}
 
