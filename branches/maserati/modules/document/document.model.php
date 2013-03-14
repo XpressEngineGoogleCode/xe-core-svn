@@ -1381,7 +1381,7 @@ class documentModel extends document
 					$query_id = 'document.getDocumentListWithinComment';
 					$use_division = true;
 					break;
-				case 'tags' :
+				case 'tag' :
 					$args->s_tags = str_replace(' ','%',$search_keyword);
 					$query_id = 'document.getDocumentListWithinTag';
 					break;
