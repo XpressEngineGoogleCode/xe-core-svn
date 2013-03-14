@@ -454,7 +454,7 @@
 			<value xml:lang="tr"><![CDATA[Gizli]]></value>
 			<value xml:lang="vi"><![CDATA[Bí mật]]></value>
 		</item>
-		<item name="tags">
+		<item name="tag">
 			<value xml:lang="ko"><![CDATA[태그]]></value>
 			<value xml:lang="en"><![CDATA[Tag]]></value>
 			<value xml:lang="jp"><![CDATA[タグ]]></value>
