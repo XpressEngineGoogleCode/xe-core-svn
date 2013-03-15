@@ -215,7 +215,7 @@ jQuery(function($){
 		return false;
 	});
 // Section Toggle
-	if($('.section').length > 1){
+	if($('.x .section').length > 1){
 		var $section_heading = $('.x .section').find('>h1:first');
 		$section_heading.each(function(){
 			var $this = $(this);
