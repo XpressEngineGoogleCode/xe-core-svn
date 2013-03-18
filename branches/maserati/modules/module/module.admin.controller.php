@@ -173,12 +173,13 @@ class moduleAdminController extends module
 		foreach($clones as $mid => $browser_title)
 		{
 			$clone_args = null;
-			$clone_args = clone($module_info);
+			$clone_args = clone $module_info;
 			$clone_args->module_srl = null;
 			$clone_args->content = null;
 			$clone_args->mid = $mid;
 			$clone_args->browser_title = $browser_title;
 			$clone_args->is_default = 'N';
+			unset($clone_args->menu_srl);
 			// Create a module
 			$output = $oModuleController->insertModule($clone_args);
 

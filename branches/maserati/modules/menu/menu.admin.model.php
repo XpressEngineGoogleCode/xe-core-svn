@@ -95,6 +95,10 @@ class menuAdminModel extends menu
 	function getMenuByTitle($title, $site_srl = 0)
 	{
 		// Get information from the DB
+		if(!is_array($title))
+		{
+			$title = array($title);
+		}
 		$args = new stdClass();
 		$args->title = $title;
 		$args->site_srl = $site_srl;
