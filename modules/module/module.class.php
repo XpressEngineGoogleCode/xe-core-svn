@@ -518,6 +518,7 @@ class module extends ModuleObject
 			// search menu.
 			$args->url = $moduleInfo->mid;
 			$args->site_srl = $moduleInfo->site_srl;
+			$args->is_shortcut = 'N';
 
 			$output = executeQuery('menu.getMenuItemByUrl', $args);
 
