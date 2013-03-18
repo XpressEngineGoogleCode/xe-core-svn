@@ -666,6 +666,11 @@ class EmbedFilter
 						$buff .= sprintf('$whiteIframeUrlList[] = \'%s\';', $patternList->body);
 				}
 			}
+
+			if(Context::getDefaultUrl())
+			{
+				$buff .= sprintf('$whiteIframeUrlList[] = \'%s\';', Context::getDefaultUrl());
+			}
 			$buff .= '?>';
 			FileHandler::writeFile($this->whiteUrlCacheFile, $buff);
 		}
