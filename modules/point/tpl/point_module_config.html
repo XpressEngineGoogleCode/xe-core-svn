@@ -50,10 +50,11 @@
 				<input type="number" name="blamed" id="blamed" value="{$module_config['blamed']}" /> {$module_config['point_name']}
 			</div>
 		</div>
-
 		<div class="x_clearfix btnArea">
-			<button class="x_btn x_pull-left" type="button" onclick="doPointReset('{$module_config['module_srl']?$module_config['module_srl']:$module_srls}')">{$lang->cmd_reset}</button>
-			<input class="x_btn x_btn-primary x_pull-right" type="submit" value="{$lang->cmd_save}">
+			<button class="x_btn x_btn-warning x_pull-left" type="button" onclick="doPointReset('{$module_config['module_srl']?$module_config['module_srl']:$module_srls}')">{$lang->cmd_reset}</button>
+			<span class="x_pull-right">
+				<input class="x_btn x_btn-primary" type="submit" value="{$lang->cmd_save}">
+			</span>
 		</div>
 	</form>
 </section>
