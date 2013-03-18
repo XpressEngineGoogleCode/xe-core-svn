@@ -1494,7 +1494,7 @@ jQuery(function($){
 				g11n_get_list(1, xe.current_lang, '', '', false);
 			}else{
 				g11n_get_list(1, xe.current_lang, '', code, false);
-				$g11n_get.find('[href="#lang_search"]').trigger('click');
+				$g11n_get.find('[href="#lang_search"]').trigger('click', true);
 			}
 		}
 
@@ -1787,8 +1787,10 @@ jQuery(function($){
 			return false;
 		});
 
-		$g11n_get.find('[href="#lang_search"]').click(function(){
-			g11n_get_list();
+		$g11n_get.find('[href="#lang_search"]').click(function(e, just_tab){
+			if(typeof(just_tab) == 'undefined'){
+				g11n_get_list();
+			}
 		});
 
 		// default
@@ -1895,7 +1897,7 @@ jQuery(function($){
 				// bind open window
 				$setter.bind('open.mw',function(){
 					var $this = $(this);
-					var $displayInput = $this.siblings('.lang_code');
+					//var $displayInput = $this.siblings('.lang_code');
 
 					if($displayInput.data('active')){
 						$multilingualWindow.trigger('before-open.g11n', $displayInput.prev('.lang_code').val().replace('$user_lang->', ''));
