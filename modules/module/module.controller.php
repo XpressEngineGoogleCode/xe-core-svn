@@ -263,7 +263,7 @@ class moduleController extends module
 
 			if($args->domain && !isSiteID($args->domain))
 			{
-				$args->domain = $args->domain;
+				$args->domain = preg_replace('/\/$/','',$args->domain);
 			}
 		}
 		$output = executeQuery('module.updateSite', $args);
