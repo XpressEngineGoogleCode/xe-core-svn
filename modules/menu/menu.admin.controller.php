@@ -1064,6 +1064,7 @@ class menuAdminController extends menu
 			$copyArg->module_srl = $moduleInfo->module_srl;
 			$copyArg->mid_1 = $args->module_id;
 			$copyArg->browser_title_1 = $moduleInfo->browser_title;
+			$copyArg->isMenuCreate = FALSE;
 			$copiedModuleSrl = $oModuleAdminController->procModuleAdminCopyModule($copyArg);
 
 			$args->module_srl = $copiedModuleSrl;
