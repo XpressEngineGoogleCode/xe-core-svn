@@ -179,6 +179,7 @@ class moduleAdminController extends module
 			$clone_args->mid = $mid;
 			$clone_args->browser_title = $browser_title;
 			$clone_args->is_default = 'N';
+			$clone_args->isMenuCreate = $args->isMenuCreate;
 			unset($clone_args->menu_srl);
 			// Create a module
 			$output = $oModuleController->insertModule($clone_args);
