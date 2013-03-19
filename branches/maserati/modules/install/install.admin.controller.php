@@ -32,7 +32,7 @@ class installAdminController extends install
 	 */
 	function procInstallAdminUpdate()
 	{
-		set_time_limit(0);
+		@set_time_limit(0);
 		$module_name = Context::get('module_name');
 		if(!$module_name) return new object(-1, 'invalid_request');
 
@@ -86,8 +86,8 @@ class installAdminController extends install
 
 		$db_info = Context::getDBInfo();
 		$db_info->default_url = $default_url;
-		$db_info->qmail_compatibility = $qmail_compatibility; 
-		$db_info->use_db_session = $use_db_session; 
+		$db_info->qmail_compatibility = $qmail_compatibility;
+		$db_info->use_db_session = $use_db_session;
 		$db_info->use_rewrite = $use_rewrite;
 		$db_info->use_sso = $use_sso;
 		$db_info->use_ssl = $use_ssl;
@@ -214,7 +214,7 @@ class installAdminController extends install
 
 		$db_info = Context::getDBInfo();
 		$db_info->use_mobile_view = $use_mobile_view;
-		$db_info->time_zone = $time_zone; 
+		$db_info->time_zone = $time_zone;
 
 		unset($db_info->lang_type);
 		Context::setDBInfo($db_info);
@@ -232,10 +232,10 @@ class installAdminController extends install
 		$selected_lang = Context::get('selected_lang');
 		$this->saveLangSelected($selected_lang);
 
-		//save icon images 
+		//save icon images
 		$deleteFavicon = Context::get('is_delete_favicon');
 		$updateFavicon = Context::get('do_update_favicon');
-		
+
 		$updateMovicon = Context::get('do_update_mobicon');
 		$deleteMobicon = Context::get('is_delete_mobicon');
 
@@ -270,7 +270,7 @@ class installAdminController extends install
 			$name = 'mobicon';
 			$tmpFileName = $this->saveIconTmp($mobicon,'mobicon.png');
 		}
-		
+
 		Context::set('name', $name);
 		Context::set('tmpFileName', $tmpFileName);
 	}
@@ -297,7 +297,7 @@ class installAdminController extends install
 	function setModulesConfig($config)
 	{
 		$args = new stdClass();
-		
+
 		if(!$config->thumbnail_type || $config->thumbnail_type != 'ratio' ) $args->thumbnail_type = 'crop';
 		else $args->thumbnail_type = 'ratio';
 
@@ -364,7 +364,7 @@ class installAdminController extends install
 
 	private function updateIcon($iconname, $updateIcon = false, $deleteIcon = false) {
 		$image_filepath = _XE_PATH_.'files/attach/xeicon/';
-		
+
 		if($deleteIcon) {
 			FileHandler::removeFile($image_filepath.$iconname);
 		}

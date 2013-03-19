@@ -2003,7 +2003,7 @@ class documentController extends document
 	 */
 	function procDocumentManageCheckedDocument()
 	{
-		set_time_limit(0);
+		@set_time_limit(0);
 		if(!Context::get('is_logged')) return new Object(-1,'msg_not_permitted');
 
 		if(!checkCSRF())
