@@ -379,7 +379,7 @@ class memberModel extends member
 	}
 
 	/**
-	 * @brief Get member_srl corresponding to EmailAddress 
+	 * @brief Get member_srl corresponding to EmailAddress
 	 */
 	function getMemberSrlByEmailAddress($email_address)
 	{
@@ -400,12 +400,12 @@ class memberModel extends member
 		return $output->data->member_srl;
 	}
 
-	/** 
-	 * @brief Return member_srl of the current logged-in user 
-	 */ 
-	function getLoggedMemberSrl() 
-	{ 
-		if(!$this->isLogged()) return; 
+	/**
+	 * @brief Return member_srl of the current logged-in user
+	 */
+	function getLoggedMemberSrl()
+	{
+		if(!$this->isLogged()) return;
 		return $_SESSION['member_srl'];
 	}
 
@@ -511,7 +511,7 @@ class memberModel extends member
 	 */
 	function getGroups($site_srl = 0)
 	{
-		if(!$GLOBALS['__group_info__'][$site_srl]) 
+		if(!$GLOBALS['__group_info__'][$site_srl])
 		{
 			$result = array();
 
@@ -531,7 +531,7 @@ class memberModel extends member
 
 			$group_list = $output->data;
 
-			foreach($group_list as $val) 
+			foreach($group_list as $val)
 			{
 				$result[$val->group_srl] = $val;
 			}
@@ -663,7 +663,7 @@ class memberModel extends member
 	{
 		$extend_form_list = $this->getJoinFormlist();
 		if(!$extend_form_list) return;
-		// Member info is open only to an administrator and him/herself when is_private is true. 
+		// Member info is open only to an administrator and him/herself when is_private is true.
 		$logged_info = Context::get('logged_info');
 
 		foreach($extend_form_list as $srl => $item)
@@ -776,7 +776,7 @@ class memberModel extends member
 	/**
 	 * @brief Verify if nick name is denied
 	 */
-	function isDeniedNickName($nickName) 
+	function isDeniedNickName($nickName)
 	{
 		$args = new stdClass();
 		$args->nick_name = $nickName;
@@ -866,9 +866,9 @@ class memberModel extends member
 	/**
 	 * @brief Get the image mark of the group
 	 */
-	function getGroupImageMark($member_srl,$site_srl=0) 
+	function getGroupImageMark($member_srl,$site_srl=0)
 	{
-		if(!isset($GLOBALS['__member_info__']['group_image_mark'][$member_srl])) 
+		if(!isset($GLOBALS['__member_info__']['group_image_mark'][$member_srl]))
 		{
 			$oModuleModel = &getModel('module');
 			$config = $oModuleModel->getModuleConfig('member');
@@ -916,7 +916,7 @@ class memberModel extends member
 			if(file_exists($filename))
 			{
 				$buff = FileHandler::readFile($filename);
-				$signature = trim(substr($buff, 38));
+				$signature = preg_replace('/<\?.*\?>/', '', $buff);
 				$GLOBALS['__member_info__']['signature'][$member_srl] = $signature;
 			}
 			else $GLOBALS['__member_info__']['signature'][$member_srl] = null;
