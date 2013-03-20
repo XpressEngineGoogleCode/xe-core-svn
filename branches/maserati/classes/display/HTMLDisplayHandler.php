@@ -13,7 +13,7 @@ class HTMLDisplayHandler
 		$oTemplate = TemplateHandler::getInstance();
 
 		// compile module tpl
-		// deprecated themes skin 
+		// deprecated themes skin
 
 		$template_path = $oModule->getTemplatePath();
 
@@ -225,6 +225,7 @@ class HTMLDisplayHandler
 		$oTemplate = TemplateHandler::getInstance();
 		if(Mobile::isFromMobilePhone())
 		{
+			$this->_loadMobileJSCSS();
 			$output = $oTemplate->compile('./common/tpl', 'mobile_layout');
 		}
 		else
@@ -430,6 +431,25 @@ class HTMLDisplayHandler
 				$oContext->loadFile(array('./modules/admin/tpl/js/jquery.tmpl.js', '', '', 1), true);
 				$oContext->loadFile(array('./modules/admin/tpl/js/jquery.jstree.js', '', '', 1), true);
 			}
+		}
+	}
+
+	/**
+	 * import basic .js files for mobile
+	 */
+	private function _loadMobileJSCSS()
+	{
+		$oContext = Context::getInstance();
+		$lang_type = Context::getLangType();
+
+		// add common JS/CSS files
+		if(__DEBUG__)
+		{
+			$oContext->loadFile(array('./common/css/mobile.css', '', '', -1000000), true);
+		}
+		else
+		{
+			$oContext->loadFile(array('./common/css/mobile.min.css', '', '', -1000000), true);
 		}
 	}
 
