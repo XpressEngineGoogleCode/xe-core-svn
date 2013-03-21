@@ -929,6 +929,11 @@ class moduleModel extends module
 	 */
 	function getSkins($path, $dir = 'skins')
 	{
+		if(substr($path, -1) == '/')
+		{
+			$path = substr($path, 0, -1);
+		}
+
 		$skin_path = sprintf("%s/%s/", $path, $dir);
 		$list = FileHandler::readDir($skin_path);
 		if(!count($list)) return;
@@ -937,7 +942,7 @@ class moduleModel extends module
 
 		foreach($list as $skin_name)
 		{
-			if(!is_dir($path . $dir . '/' . $skin_name))
+			if(!is_dir($skin_path . $skin_name))
 			{
 				continue;
 			}
