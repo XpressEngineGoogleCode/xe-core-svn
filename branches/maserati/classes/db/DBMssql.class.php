@@ -802,7 +802,18 @@ class DBMssql extends DB
 			$sub_cond = array();
 			foreach($order as $k => $v)
 			{
-				$sub_cond[] = sprintf("%s %s '%s'", $v->getPureColumnName(), $v->sort_order->value=='asc'?'>':'<', $tmp->{$v->getPureColumnName()});
+				//for example... use Document
+				if(get_class($v->sort_order) == 'SortArgument')
+				{
+					$sort_order = $v->sort_order->value;
+				}
+				//for example... use comment, file
+				else
+				{
+					$sort_order = $v->sort_order;
+				}
+
+				$sub_cond[] = sprintf("%s %s '%s'", $v->getPureColumnName(), $sort_order=='asc'?'>':'<', $tmp->{$v->getPureColumnName()});
 			}
 			$sub_condition = ' and( '.implode(' and ',$sub_cond).' )';
 		}
