@@ -177,7 +177,7 @@
 .xm .form-horizontal .hide{display:none}
 .xm .control-group{margin-bottom:10px}
 /* Tabs */
-.xm .nav{margin-bottom:20px;margin-left:0;list-style:none}
+.xm .nav{margin:0 0 20px 0;padding:0;list-style:none}
 .xm .nav>li>a{display:block}
 .xm .nav>li>a:hover,
 .xm .nav>li>a:focus{text-decoration:none;background-color:#eeeeee}
