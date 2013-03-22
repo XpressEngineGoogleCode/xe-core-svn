@@ -815,7 +815,15 @@ class DBMssql extends DB
 
 				$sub_cond[] = sprintf("%s %s '%s'", $v->getPureColumnName(), $sort_order=='asc'?'>':'<', $tmp->{$v->getPureColumnName()});
 			}
-			$sub_condition = ' and( '.implode(' and ',$sub_cond).' )';
+
+			if(!$where)
+			{
+				$sub_condition = ' WHERE ( '.implode(' and ',$sub_cond).' )';
+			}
+			else
+			{
+				$sub_condition = ' and ( '.implode(' and ',$sub_cond).' )';
+			}
 		}
 		return $select . ' ' . $from . ' ' . $where .$sub_condition. ' ' . $groupBy . ' ' . $orderBy;
 	}
