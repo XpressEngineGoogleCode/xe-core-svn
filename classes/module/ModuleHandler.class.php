@@ -620,11 +620,7 @@ class ModuleHandler extends Handler
 			}
 			else
 			{
-				if(count($_SESSION['INPUT_ERROR']))
-				{
-					Context::set('INPUT_ERROR', $_SESSION['INPUT_ERROR']);
-					$_SESSION['INPUT_ERROR'] = '';
-				}
+
 			}
 
 			$_SESSION['XE_VALIDATOR_ERROR'] = $error;
@@ -671,6 +667,10 @@ class ModuleHandler extends Handler
 		{
 			Context::set('XE_VALIDATOR_ID', $_SESSION['XE_VALIDATOR_ID']);
 		}
+		if(count($_SESSION['INPUT_ERROR']))
+		{
+			Context::set('INPUT_ERROR', $_SESSION['INPUT_ERROR']);
+		}
 
 		$this->_clearErrorSession();
 	}
@@ -686,6 +686,7 @@ class ModuleHandler extends Handler
 		$_SESSION['XE_VALIDATOR_MESSAGE_TYPE'] = '';
 		$_SESSION['XE_VALIDATOR_RETURN_URL'] = '';
 		$_SESSION['XE_VALIDATOR_ID'] = '';
+		$_SESSION['INPUT_ERROR'] = '';
 	}
 
 	/**

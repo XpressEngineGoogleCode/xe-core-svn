@@ -157,12 +157,20 @@ class DBCubrid extends DB
 	 * this method is private
 	 * @return boolean
 	 */
-	function _begin()
+	function _begin($transactionLevel)
 	{
 		if(__CUBRID_VERSION__ >= '8.4.0')
 		{
 			$connection = $this->_getConnection('master');
-			cubrid_set_autocommit($connection, CUBRID_AUTOCOMMIT_FALSE);
+
+			if(!$transactionLevel)
+			{
+				cubrid_set_autocommit($connection, CUBRID_AUTOCOMMIT_FALSE);
+			}
+			else
+			{
+				$this->_query("SAVEPOINT SP" . $transactionLevel, $connection);
+			}
 		}
 		return TRUE;
 	}
@@ -172,10 +180,21 @@ class DBCubrid extends DB
 	 * this method is private
 	 * @return boolean
 	 */
-	function _rollback()
+	function _rollback($transactionLevel)
 	{
 		$connection = $this->_getConnection('master');
-		@cubrid_rollback($connection);
+
+		$point = $transactionLevel - 1;
+
+		if($point)
+		{
+			$this->_query("ROLLBACK TO SP" . $point, $connection);
+		}
+		else
+		{
+			@cubrid_rollback($connection);
+		}
+
 		return TRUE;
 	}
 

@@ -126,12 +126,20 @@ class DBMssql extends DB
 	 * this method is private
 	 * @return boolean
 	 */
-	function _begin()
+	function _begin($transactionLevel)
 	{
 		$connection = $this->_getConnection('master');
-		if(sqlsrv_begin_transaction($connection) === false)
+
+		if(!$transactionLevel)
 		{
-			return;
+			if(sqlsrv_begin_transaction($connection) === false)
+			{
+				return;
+			}
+		}
+		else
+		{
+			$this->_query("SAVE TRANS SP" . $transactionLevel, $connection);
 		}
 		return true;
 	}
@@ -141,10 +149,20 @@ class DBMssql extends DB
 	 * this method is private
 	 * @return boolean
 	 */
-	function _rollback()
+	function _rollback($transactionLevel)
 	{
 		$connection = $this->_getConnection('master');
-		sqlsrv_rollback($connection);
+
+		$point = $transactionLevel - 1;
+
+		if($point)
+		{
+			$this->_query("ROLLBACK TRANS SP" . $point, $connection);
+		}
+		else
+		{
+			sqlsrv_rollback($connection);
+		}
 		return true;
 	}
 
