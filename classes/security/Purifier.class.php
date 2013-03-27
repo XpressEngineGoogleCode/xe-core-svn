@@ -31,7 +31,7 @@ class Purifier
 	private function _setConfig()
 	{
 		$whiteDomainRegex = $this->_getWhiteDomainRegx();
-		$allowdClasses = array('emoticon');
+		//$allowdClasses = array('emoticon');
 
 		$this->_config = HTMLPurifier_Config::createDefault();
 		$this->_config->set('HTML.TidyLevel', 'light');
@@ -39,7 +39,7 @@ class Purifier
 		$this->_config->set('HTML.SafeIframe', TRUE);
 		$this->_config->set('URI.SafeIframeRegexp', $whiteDomainRegex);
 		$this->_config->set('Cache.SerializerPath', $this->_cacheDir);
-		$this->_config->set('Attr.AllowedClasses', $allowdClasses);
+		//$this->_config->set('Attr.AllowedClasses', $allowdClasses);
 
 		$this->_def = $this->_config->getHTMLDefinition(TRUE);
 	}
