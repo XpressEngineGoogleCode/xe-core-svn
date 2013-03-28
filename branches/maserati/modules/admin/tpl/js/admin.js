@@ -118,6 +118,7 @@ jQuery(function($){
 		$xGnb_li.find('>ul>li.active_').clone().addClass('active').attr('data-index', parentIndex).prependTo('#gnbNav').find('>a').prepend('<i />');
 		// GNB Click toggle
 		$xGnb_li.find('>a').click(function(){
+			var $this = $(this);
 			var $parent = $(this).parent('li');
 			var hasOpen = $parent.hasClass('open');
 			var hasActive = $parent.hasClass('active');
@@ -130,10 +131,12 @@ jQuery(function($){
 			if(!hasOpen && !hasActive && hasList){ // Down to open
 				$parent.addClass('open').find('>ul').slideDown(100);
 				openGNB();
+				setCookie('__xe_admin_gnb_tx_' + $this.data('href'), 'open', d365);
 				return false;
 			} else if(hasOpen && !hasActive && hasList && !hasWide){ // Up to close
 				$parent.removeClass('open').find('>ul').slideUp(100);
 				openGNB();
+				setCookie('__xe_admin_gnb_tx_' + $this.data('href'), 'close', d365);
 				return false;
 			} else if(hasWide && !hasList || hasActive || hasWide && hasOpen){ // Right to open
 				openGNB();
@@ -179,6 +182,11 @@ jQuery(function($){
 		var gnb_ex_status = getCookie('__xe_admin_gnb_ex_status');
 		if(gnb_ex_status){
 			setCookie('__xe_admin_gnb_xe_status', gnb_ex_status, d365);
+		}
+		for(var i in  __xe_admin_gnb_txs){
+			var item = __xe_admin_gnb_txs[i];
+			var status = getCookie(item);
+			setCookie(item, status, d365);
 		}
 	};
 	$('.gnb').gnb();
@@ -1523,10 +1531,10 @@ jQuery(function($){
 			if(typeof scroll == 'undefined') scroll = true;
 
 			$.exec_json('module.getModuleAdminLangListHtml', {
-				'page': page, 
-				'lang_code': lang_code, 
-				'search_keyword': search_keyword, 
-				'name': name, 
+				'page': page,
+				'lang_code': lang_code,
+				'search_keyword': search_keyword,
+				'name': name,
 				'list_count': options.list_count,
 				'mid': current_url.getQuery('mid')
 			}, function(data){
