@@ -583,7 +583,7 @@ class moduleController extends module
 	 * Attempt to delete all related information when deleting a module.
 	 * Origin method is changed. because menu validation check is needed
 	 */
-	function deleteModule($module_srl)
+	function deleteModule($module_srl, $site_srl = 0)
 	{
 		if(!$module_srl) return new Object(-1,'msg_invalid_request');
 
@@ -594,9 +594,24 @@ class moduleController extends module
 		$args = new stdClass();
 		$args->url = $output->mid;
 		$args->is_shortcut = 'N';
-		$args->site_srl = $site_module_info->site_srl;
+		if(!$site_srl) $args->site_srl = $site_module_info->site_srl;
+		else $args->site_srl = $site_srl;
 
 		unset($output);
+
+		$oMenuAdminModel = &getAdminModel('menu');
+		$menuOutput = $oMenuAdminModel->getMenuList($args);
+
+		// get menu_srl by site_srl
+		if(is_array($menuOutput->data))
+		{
+			foreach($menuOutput->data AS $key=>$value)
+			{
+				$args->menu_srl = $value->menu_srl;
+				break;
+			}
+		}
+
 		$output = executeQuery('menu.getMenuItemByUrl', $args);
 		// menu delete
 		if($output->data)

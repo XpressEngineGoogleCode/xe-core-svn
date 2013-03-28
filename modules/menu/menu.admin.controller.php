@@ -191,6 +191,9 @@ class menuAdminController extends menu
 		$args = new stdClass();
 		$args->menu_srl = $menu_srl;
 
+		$oMenuAdminModel = &getAdminModel('menu');
+		$menuInfo = $oMenuAdminModel->getMenu($args->menu_srl);
+
 		// Delete modules
 		$output = executeQueryArray('menu.getMenuItems', $args);
 		if(!$output->toBool())
