@@ -286,6 +286,7 @@ class autoinstallModel extends autoinstall
 			case "addon":
 			case "layout":
 			case "widget":
+			case 'theme': // for backward compatibility
 				$config_file = "/conf/info.xml";
 				break;
 			case "component":
