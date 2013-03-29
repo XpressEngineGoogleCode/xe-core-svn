@@ -183,10 +183,12 @@ jQuery(function($){
 		if(gnb_ex_status){
 			setCookie('__xe_admin_gnb_xe_status', gnb_ex_status, d365);
 		}
-		for(var i in  __xe_admin_gnb_txs){
-			var item = __xe_admin_gnb_txs[i];
-			var status = getCookie(item);
-			setCookie(item, status, d365);
+		if(typeof __xe_admin_gnb_txs != 'undefined'){
+			for(var i in  __xe_admin_gnb_txs){
+				var item = __xe_admin_gnb_txs[i];
+				var status = getCookie(item);
+				setCookie(item, status, d365);
+			}
 		}
 	};
 	$('.gnb').gnb();
