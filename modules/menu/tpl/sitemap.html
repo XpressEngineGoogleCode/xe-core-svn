@@ -1664,6 +1664,7 @@ jQuery(function($){
 		loadFullSetup();
 	};
 	$('#properties').bind("hide", function(ev, htOpt){
+		if(ev.target != this) return;
 		if(htOpt && htOpt.bOpeningProp) return;
 
 		if($('#propertiesRoot').is(':visible')) return;
