@@ -67,8 +67,6 @@ jQuery(function($){
 	suForm.find(':checkbox[name="usable_list[]"]').each(function(){
 		var $i = $(this);
 
-		changeTable($i);
-
 		$i.change(function(){
 			changeTable($i);
 		});
