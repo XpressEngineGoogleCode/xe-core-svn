@@ -419,8 +419,8 @@ class adminAdminView extends admin
 		$oAdminModel = getAdminModel('admin');
 		$favicon_url = $oAdminModel->getFaviconUrl();
 		$mobicon_url = $oAdminModel->getMobileIconUrl();
-		Context::set('favicon_url', $favicon_url);
-		Context::set('mobicon_url', $mobicon_url);
+		Context::set('favicon_url', $favicon_url.'?'.time());
+		Context::set('mobicon_url', $mobicon_url.'?'.time());
 
 		$oDocumentModel = getModel('document');
 		$config = $oDocumentModel->getDocumentConfig();
