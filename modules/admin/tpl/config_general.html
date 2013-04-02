@@ -90,9 +90,8 @@
 			<label class="x_control-label">{$lang->allow_use_favicon}</label>
 			<div class="x_controls">
 				<p id="faviconPreview">
-					<img src="{$favicon_url}" alt="favicon" width="16" height="16" class="fn1">
-					<img src="{$favicon_url}" alt="favicon Image" width="16" height="16" class="fn2">
-					<input type="hidden" name="do_update_favicon" id="do_update_favicon">
+					<img src="{$favicon_url}" alt="favicon" class="fn1" style="width:16px;height:16px">
+					<img src="{$favicon_url}" alt="favicon Image" class="fn2" style="width:16px;height:16px">
 				</p>
 				<label><input type="checkbox" name="is_delete_favicon" value="1" /> {$lang->cmd_delete}</label>
 				<form action="./" enctype="multipart/form-data" method="post" target="hiddenIframe" class="imageUpload" style="margin:0">
@@ -111,7 +110,6 @@
 			<div class="x_controls">
 				<p id="mobiconPreview">
 					<img src="{$mobicon_url}" alt="Mobile Home Icon" width="32" height="32" />
-					<input type="hidden" name="do_update_mobicon" id="do_update_mobicon">
 					<span>www</span>
 				</p>
 				<label><input type="checkbox" name="is_delete_mobicon" value="1" /> {$lang->cmd_delete}</label>
@@ -214,7 +212,6 @@ function afterUploadConfigImage(name, fileName, tmpFileName)
 {
 	jQuery('#' + name + 'Preview img').attr('src', tmpFileName);
 	jQuery('#' + name).val('');
-	jQuery('#do_update_' + name).val('1');
 }
 
 function alertUploadMessage(msg) {
