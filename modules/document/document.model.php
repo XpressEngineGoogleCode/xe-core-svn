@@ -595,6 +595,7 @@ class documentModel extends document
 		$args->var_idx = $search_obj->s_var_idx;
 		$args->var_eid = $search_obj->s_var_eid;
 		$args->var_value = $search_obj->s_var_value;
+		$args->var_lang_code = Context::getLangType();
 
 		$output = executeQuery('document.getDocumentExtraVarsCount', $args);
 		// Return total number of
