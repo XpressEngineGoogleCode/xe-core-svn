@@ -27,6 +27,7 @@ body, #access table, #access input, #access textarea, #access select, #access bu
 #access .submit{position:absolute;top:0;right:0}
 #access p{margin:10px 0}
 #access #warning{margin-right:-14px}
+#access a{color: #0088cc;text-decoration: none;}
 @media all and (max-width:480px){
 #access{position:static;margin:0;width:100%}
 }
