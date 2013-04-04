@@ -671,11 +671,6 @@ class memberModel extends member
 			$column_name = $item->column_name;
 			$value = $member_info->{$column_name};
 
-			if($logged_info->is_admin != 'Y' && $logged_info->member_srl != $member_info->member_srl && $member_info->{'open_'.$column_name}!='Y')
-			{
-				$extend_form_list[$srl]->is_private = true;
-				continue;
-			}
 			// Change values depening on the type of extend form
 			switch($item->column_type)
 			{
