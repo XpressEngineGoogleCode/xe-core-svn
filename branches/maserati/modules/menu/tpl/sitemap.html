@@ -1886,7 +1886,7 @@ jQuery(function($){
 			}else{
 				// URL shortcut
 				$(this).find('a[href="#fix_linkUrl"]').click();
-				$(this).find('._url_link').val(htInfo.url);
+				$(this).find('._url_link').val($('<div />').html(htInfo.url).text());
 				
 				showMenuSelector($(this).find('._menuSelector_menuTreeContainer'));
 			}
