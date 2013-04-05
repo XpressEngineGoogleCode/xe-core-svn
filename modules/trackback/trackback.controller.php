@@ -150,12 +150,12 @@ class trackbackController extends trackback
 		Context::setRequestMethod("XMLRPC");
 		// When receiving the necessary variables yeokingeul Wanted
 		$obj = Context::gets('document_srl','blog_name','url','title','excerpt');
-		if(!$obj->document_srl || !$obj->url || !$obj->title || !$obj->excerpt) return $this->stop('fail');
+		if(!$obj->document_srl || !$obj->url || !$obj->title || !$obj->excerpt) return $this->stop('msg_invalid_request');
 		// Checks for correct trackback url
 		$given_key = Context::get('key');
 		$oTrackbackModel = &getModel('trackback');
 		$key = $oTrackbackModel->getTrackbackKey($obj->document_srl);
-		if($key != $given_key) return $this->stop('fail');
+		if($key != $given_key) return $this->stop('msg_invalid_key');
 		// Yeokingeul module out of the default settings
 		$module_srl = Context::get('module_srl');
 		$oModuleModel = &getModel('module');
@@ -168,7 +168,7 @@ class trackbackController extends trackback
 		}
 
 		// If managers were banned does not Trackbacks
-		if($enable_trackback == 'N') return $this->stop('fail');
+		if($enable_trackback == 'N') return $this->stop('msg_disable_trackback');
 
 		return $this->insertTrackback($obj);
 	}
