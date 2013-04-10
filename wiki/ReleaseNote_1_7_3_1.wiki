@@ -1,6 +1,8 @@
 #sidebar Releases
 
-XE 1.7.3.0 Release Notes
+=XE XE 1.7.3.1 Release Note=
+
+<wiki:toc />
 
 =Summary=
 
