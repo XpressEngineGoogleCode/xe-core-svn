@@ -200,7 +200,7 @@ class pointAdminController extends point
 	 */
 	function procPointAdminReCal()
 	{
-		set_time_limit(0);
+		@set_time_limit(0);
 		// Get per-module points information
 		$oModuleModel = &getModel('module');
 		$config = $oModuleModel->getModuleConfig('point');

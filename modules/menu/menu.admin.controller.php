@@ -191,6 +191,9 @@ class menuAdminController extends menu
 		$args = new stdClass();
 		$args->menu_srl = $menu_srl;
 
+		$oMenuAdminModel = &getAdminModel('menu');
+		$menuInfo = $oMenuAdminModel->getMenu($args->menu_srl);
+
 		// Delete modules
 		$output = executeQueryArray('menu.getMenuItems', $args);
 		if(!$output->toBool())
@@ -1064,6 +1067,7 @@ class menuAdminController extends menu
 			$copyArg->module_srl = $moduleInfo->module_srl;
 			$copyArg->mid_1 = $args->module_id;
 			$copyArg->browser_title_1 = $moduleInfo->browser_title;
+			$copyArg->isMenuCreate = FALSE;
 			$copiedModuleSrl = $oModuleAdminController->procModuleAdminCopyModule($copyArg);
 
 			$args->module_srl = $copiedModuleSrl;

@@ -18,7 +18,6 @@
 .xc select,
 .xc textarea{font-weight:normal;line-height:20px}
 .xc label{display:block;margin-bottom:5px}
-.xc select,
 .xc textarea,
 .xc input[type="text"],
 .xc input[type="password"],
@@ -77,7 +76,7 @@
 .xc input[type="radio"],
 .xc input[type="checkbox"]{width:auto}
 .xc select,
-.xc input[type="file"]{height:30px;*margin-top:4px;line-height:30px}
+.xc input[type="file"]{height:26px;*margin-top:4px;line-height:26px}
 .xc select{background-color:#ffffff;border:1px solid #cccccc}
 .xc select[multiple],
 .xc select[size]{height:auto}
@@ -177,7 +176,7 @@
 .xc .form-horizontal .hide{display:none}
 .xc .control-group{margin-bottom:10px}
 /* Tabs */
-.xc .nav{margin-bottom:20px;margin-left:0;list-style:none}
+.xc .nav{margin:0 0 20px 0;padding:0;list-style:none}
 .xc .nav>li>a{display:block}
 .xc .nav>li>a:hover,
 .xc .nav>li>a:focus{text-decoration:none;background-color:#eeeeee}
@@ -234,7 +233,7 @@
 .xc .pagination ul>li:last-child>span{-webkit-border-top-right-radius:4px;border-top-right-radius:4px;-webkit-border-bottom-right-radius:4px;border-bottom-right-radius:4px;-moz-border-radius-topright:4px;-moz-border-radius-bottomright:4px}
 .xc .pagination-centered{text-align:center}
 /* Button */
-.xc .btn{display:inline-block;*display:inline;padding:4px 12px;margin-bottom:0;*margin-left:.3em;line-height:20px;height:auto;color:#333333;text-align:center;text-shadow:0 1px 1px rgba(255, 255, 255, 0.75);vertical-align:middle;cursor:pointer;background-color:#f5f5f5;*background-color:#e6e6e6;background-image:-moz-linear-gradient(top, #ffffff, #e6e6e6);background-image:-webkit-gradient(linear, 0 0, 0 100%, from(#ffffff), to(#e6e6e6));background-image:-webkit-linear-gradient(top, #ffffff, #e6e6e6);background-image:-o-linear-gradient(top, #ffffff, #e6e6e6);background-image:linear-gradient(to bottom, #ffffff, #e6e6e6);background-repeat:repeat-x;border:1px solid #cccccc;*border:0;border-color:#e6e6e6 #e6e6e6 #bfbfbf;border-color:rgba(0, 0, 0, 0.1) rgba(0, 0, 0, 0.1) rgba(0, 0, 0, 0.25);border-bottom-color:#b3b3b3;-webkit-border-radius:4px;-moz-border-radius:4px;border-radius:4px;filter:progid:DXImageTransform.Microsoft.gradient(startColorstr='#ffffff', endColorstr='#e6e6e6', GradientType=0);filter:progid:DXImageTransform.Microsoft.gradient(enabled=false);*zom:1;-webkit-box-shadow:inset 0 1px 0 rgba(255, 255, 255, 0.2), 0 1px 2px rgba(0, 0, 0, 0.05);-moz-box-shadow:inset 0 1px 0 rgba(255, 255, 255, 0.2), 0 1px 2px rgba(0, 0, 0, 0.05);box-shadow:inset 0 1px 0 rgba(255, 255, 255, 0.2), 0 1px 2px rgba(0, 0, 0, 0.05)}
+.xc .btn{font-size:12px;font-family:inherit;display:inline-block;*display:inline;padding:4px 12px;margin-bottom:0;*margin-left:.3em;line-height:20px;height:auto;color:#333333;text-align:center;text-shadow:0 1px 1px rgba(255, 255, 255, 0.75);vertical-align:middle;cursor:pointer;background-color:#f5f5f5;*background-color:#e6e6e6;background-image:-moz-linear-gradient(top, #ffffff, #e6e6e6);background-image:-webkit-gradient(linear, 0 0, 0 100%, from(#ffffff), to(#e6e6e6));background-image:-webkit-linear-gradient(top, #ffffff, #e6e6e6);background-image:-o-linear-gradient(top, #ffffff, #e6e6e6);background-image:linear-gradient(to bottom, #ffffff, #e6e6e6);background-repeat:repeat-x;border:1px solid #cccccc;*border:0;border-color:#e6e6e6 #e6e6e6 #bfbfbf;border-color:rgba(0, 0, 0, 0.1) rgba(0, 0, 0, 0.1) rgba(0, 0, 0, 0.25);border-bottom-color:#b3b3b3;-webkit-border-radius:4px;-moz-border-radius:4px;border-radius:4px;filter:progid:DXImageTransform.Microsoft.gradient(startColorstr='#ffffff', endColorstr='#e6e6e6', GradientType=0);filter:progid:DXImageTransform.Microsoft.gradient(enabled=false);*zom:1;-webkit-box-shadow:inset 0 1px 0 rgba(255, 255, 255, 0.2), 0 1px 2px rgba(0, 0, 0, 0.05);-moz-box-shadow:inset 0 1px 0 rgba(255, 255, 255, 0.2), 0 1px 2px rgba(0, 0, 0, 0.05);box-shadow:inset 0 1px 0 rgba(255, 255, 255, 0.2), 0 1px 2px rgba(0, 0, 0, 0.05)}
 .xc .btn:hover,
 .xc .btn:focus,
 .xc .btn:active,
@@ -265,7 +264,7 @@
 .xc input[type="submit"].btn{*padding-top:3px;*padding-bottom:3px}
 .xc button.btn::-moz-focus-inner,
 .xc input[type="submit"].btn::-moz-focus-inner{padding:0;border:0}
-.xc .btn-group {position:relative;display:inline-block;*display:inline;*margin-left:.3em;font-size:0;white-space:nowrap;vertical-align:middle;*zoom:1}
+.xc .btn-group{position:relative;display:inline-block;*display:inline;*margin-left:.3em;font-size:0;white-space:nowrap;vertical-align:middle;*zoom:1}
 .xc .btn-group:first-child{*margin-left:0}
 .xc .btn-group+.btn-group{margin-left:5px}
 .xc .btn-group>.btn{position:relative;-webkit-border-radius:0;-moz-border-radius:0;border-radius:0}

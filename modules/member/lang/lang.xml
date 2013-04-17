@@ -749,6 +749,20 @@
 		<value xml:lang="vi"><![CDATA[Xin hãy nhập Email của Webmaster.]]></value>
 	</item>
 	<item name="search_target_list" type="array">
+		<item name="nick_name">
+		<value xml:lang="ko"><![CDATA[닉네임]]></value>
+		<value xml:lang="en"><![CDATA[Nick Name]]></value>
+		<value xml:lang="jp"><![CDATA[ニックネーム]]></value>
+		<value xml:lang="zh-CN"><![CDATA[昵称]]></value>
+		<value xml:lang="zh-TW"><![CDATA[暱稱]]></value>
+		<value xml:lang="fr"><![CDATA[Surnom]]></value>
+		<value xml:lang="de"><![CDATA[Spitzname]]></value>
+		<value xml:lang="ru"><![CDATA[Ник]]></value>
+		<value xml:lang="es"><![CDATA[Apodo]]></value>
+		<value xml:lang="tr"><![CDATA[Takma Ad]]></value>
+		<value xml:lang="vi"><![CDATA[NickName]]></value>
+		<value xml:lang="mn"><![CDATA[Ник]]></value>
+		</item>
 		<item name="email_address">
 			<value xml:lang="ko"><![CDATA[이메일]]></value>
 			<value xml:lang="en"><![CDATA[Email Address]]></value>

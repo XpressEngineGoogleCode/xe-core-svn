@@ -302,7 +302,7 @@ class TemplateHandler
 
 				$matches[2] = '<input type="hidden" name="ruleset" value="' . $m[1] . '" />' . $matches[2];
 				//assign to addJsFile method for js dynamic recache
-				$matches[1] = '<?php Context::addJsFile("' . $path . '", FALSE, "", 0, "head", TRUE, "' . $autoPath . '") ?' . '>' . $matches[1];
+				$matches[1] = '<?php Context::addJsFile("' . $path . '", FALSE, "", 0, "body", TRUE, "' . $autoPath . '") ?' . '>' . $matches[1];
 			}
 		}
 

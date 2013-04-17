@@ -32,7 +32,7 @@ class installAdminController extends install
 	 */
 	function procInstallAdminUpdate()
 	{
-		set_time_limit(0);
+		@set_time_limit(0);
 		$module_name = Context::get('module_name');
 		if(!$module_name) return new object(-1, 'invalid_request');
 
@@ -86,8 +86,8 @@ class installAdminController extends install
 
 		$db_info = Context::getDBInfo();
 		$db_info->default_url = $default_url;
-		$db_info->qmail_compatibility = $qmail_compatibility; 
-		$db_info->use_db_session = $use_db_session; 
+		$db_info->qmail_compatibility = $qmail_compatibility;
+		$db_info->use_db_session = $use_db_session;
 		$db_info->use_rewrite = $use_rewrite;
 		$db_info->use_sso = $use_sso;
 		$db_info->use_ssl = $use_ssl;
@@ -214,7 +214,7 @@ class installAdminController extends install
 
 		$db_info = Context::getDBInfo();
 		$db_info->use_mobile_view = $use_mobile_view;
-		$db_info->time_zone = $time_zone; 
+		$db_info->time_zone = $time_zone;
 
 		unset($db_info->lang_type);
 		Context::setDBInfo($db_info);
@@ -232,16 +232,12 @@ class installAdminController extends install
 		$selected_lang = Context::get('selected_lang');
 		$this->saveLangSelected($selected_lang);
 
-		//save icon images 
+		//save icon images
 		$deleteFavicon = Context::get('is_delete_favicon');
-		$updateFavicon = Context::get('do_update_favicon');
-		
-		$updateMovicon = Context::get('do_update_mobicon');
 		$deleteMobicon = Context::get('is_delete_mobicon');
 
-		$this->updateIcon('favicon.ico',$updateFavicon,$deleteFavicon);
-		$this->updateIcon('mobicon.png',$updateMovicon,$deleteMobicon);
-		FileHandler::removeFile($image_filepath.'tmp');
+		$this->updateIcon('favicon.ico',$deleteFavicon);
+		$this->updateIcon('mobicon.png',$deleteMobicon);
 
 		//모듈 설정 저장(썸네일, 풋터스크립트)
 		$config = new stdClass();
@@ -270,9 +266,9 @@ class installAdminController extends install
 			$name = 'mobicon';
 			$tmpFileName = $this->saveIconTmp($mobicon,'mobicon.png');
 		}
-		
+
 		Context::set('name', $name);
-		Context::set('tmpFileName', $tmpFileName);
+		Context::set('tmpFileName', $tmpFileName.'?'.time());
 	}
 
 	/**
@@ -297,7 +293,7 @@ class installAdminController extends install
 	function setModulesConfig($config)
 	{
 		$args = new stdClass();
-		
+
 		if(!$config->thumbnail_type || $config->thumbnail_type != 'ratio' ) $args->thumbnail_type = 'crop';
 		else $args->thumbnail_type = 'ratio';
 
@@ -320,13 +316,6 @@ class installAdminController extends install
 		$relative_filename = 'files/attach/xeicon/tmp/'.$iconname;
 		$target_filename = _XE_PATH_.$relative_filename;
 
-		/*
-		if($isDelete && is_readable($target_filename))
-		{
-			@FileHandler::removeFile($target_filename);
-		}
-		*/
-
 		list($width, $height, $type_no, $attrs) = @getimagesize($target_file);
 		if($iconname == 'favicon.ico')
 		{
@@ -334,7 +323,7 @@ class installAdminController extends install
 				Context::set('msg', '*.icon '.Context::getLang('msg_possible_only_file'));
 				return;
 			}
-			if($width != '16' || $height != '16') {
+			if($width && $height && ($width != '16' || $height != '16')) {
 				Context::set('msg', Context::getLang('msg_invalid_format').' (size : 16x16)');
 				return;
 			}
@@ -362,15 +351,22 @@ class installAdminController extends install
 		return $relative_filename;
 	}
 
-	private function updateIcon($iconname, $updateIcon = false, $deleteIcon = false) {
+	private function updateIcon($iconname, $deleteIcon = false) {
 		$image_filepath = _XE_PATH_.'files/attach/xeicon/';
-		
+
 		if($deleteIcon) {
 			FileHandler::removeFile($image_filepath.$iconname);
+			return;
 		}
-		else if($updateIcon) {
-			FileHandler::moveFile($image_filepath.'tmp/'.$iconname, $image_filepath.$iconname);
+
+		$tmpicon_filepath = $image_filepath.'tmp/'.$iconname;
+		$icon_filepath = $image_filepath.$iconname;
+		if(file_exists($tmpicon_filepath))
+		{
+			FileHandler::moveFile($tmpicon_filepath, $icon_filepath);
 		}
+
+		FileHandler::removeFile($tmpicon_filepath);
 	}
 
 

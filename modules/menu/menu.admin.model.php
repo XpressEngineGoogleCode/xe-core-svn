@@ -95,6 +95,10 @@ class menuAdminModel extends menu
 	function getMenuByTitle($title, $site_srl = 0)
 	{
 		// Get information from the DB
+		if(!is_array($title))
+		{
+			$title = array($title);
+		}
 		$args = new stdClass();
 		$args->title = $title;
 		$args->site_srl = $site_srl;
@@ -426,9 +430,10 @@ class menuAdminModel extends menu
 
 		// union have instance and all module list
 		$haveInstance = array_intersect($remoteModuleList, $allModuleList);
+		$haveDirectory = array_intersect($localModuleList, $allModuleList);
 
 		// union
-		$moduleList = array_unique(array_merge($localModuleList, $haveInstance));
+		$moduleList = array_unique(array_merge($haveDirectory, $haveInstance));
 
 		$moduleInfoList = array();
 		Context::loadLang('modules/page/lang');

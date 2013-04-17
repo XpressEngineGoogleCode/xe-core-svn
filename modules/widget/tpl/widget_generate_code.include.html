@@ -126,6 +126,7 @@
 				<option value="">-</option>
 				<option loop="$menu_list => $key, $val" value="{$val->menu_srl}">{$val->title}</option>
 			</select>
+			<p cond="$var->description">{$var->description}</p>
 		</div>
 	</div>
 </block>

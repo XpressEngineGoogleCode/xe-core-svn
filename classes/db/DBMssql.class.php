@@ -126,12 +126,20 @@ class DBMssql extends DB
 	 * this method is private
 	 * @return boolean
 	 */
-	function _begin()
+	function _begin($transactionLevel)
 	{
 		$connection = $this->_getConnection('master');
-		if(sqlsrv_begin_transaction($connection) === false)
+
+		if(!$transactionLevel)
 		{
-			return;
+			if(sqlsrv_begin_transaction($connection) === false)
+			{
+				return;
+			}
+		}
+		else
+		{
+			$this->_query("SAVE TRANS SP" . $transactionLevel, $connection);
 		}
 		return true;
 	}
@@ -141,10 +149,20 @@ class DBMssql extends DB
 	 * this method is private
 	 * @return boolean
 	 */
-	function _rollback()
+	function _rollback($transactionLevel)
 	{
 		$connection = $this->_getConnection('master');
-		sqlsrv_rollback($connection);
+
+		$point = $transactionLevel - 1;
+
+		if($point)
+		{
+			$this->_query("ROLLBACK TRANS SP" . $point, $connection);
+		}
+		else
+		{
+			sqlsrv_rollback($connection);
+		}
 		return true;
 	}
 
@@ -802,9 +820,28 @@ class DBMssql extends DB
 			$sub_cond = array();
 			foreach($order as $k => $v)
 			{
-				$sub_cond[] = sprintf("%s %s '%s'", $v->getPureColumnName(), $v->sort_order->value=='asc'?'>':'<', $tmp->{$v->getPureColumnName()});
+				//for example... use Document
+				if(get_class($v->sort_order) == 'SortArgument')
+				{
+					$sort_order = $v->sort_order->value;
+				}
+				//for example... use comment, file
+				else
+				{
+					$sort_order = $v->sort_order;
+				}
+
+				$sub_cond[] = sprintf("%s %s '%s'", $v->getPureColumnName(), $sort_order=='asc'?'>':'<', $tmp->{$v->getPureColumnName()});
 			}
-			$sub_condition = ' and( '.implode(' and ',$sub_cond).' )';
+
+			if(!$where)
+			{
+				$sub_condition = ' WHERE ( '.implode(' and ',$sub_cond).' )';
+			}
+			else
+			{
+				$sub_condition = ' and ( '.implode(' and ',$sub_cond).' )';
+			}
 		}
 		return $select . ' ' . $from . ' ' . $where .$sub_condition. ' ' . $groupBy . ' ' . $orderBy;
 	}

@@ -436,6 +436,14 @@ class documentController extends document
 		if($obj->title == '') $obj->title = 'Untitled';
 		// Remove XE's own tags from the contents.
 		$obj->content = preg_replace('!<\!--(Before|After)(Document|Comment)\(([0-9]+),([0-9]+)\)-->!is', '', $obj->content);
+		if(Mobile::isFromMobilePhone())
+		{
+			if($obj->use_html != 'Y')
+			{
+				$obj->content = htmlspecialchars($obj->content);
+			}
+			$obj->content = nl2br($obj->content);
+		}
 		// Change not extra vars but language code of the original document if document's lang_code is different from author's setting.
 		if($source_obj->get('lang_code') != Context::getLangType())
 		{
@@ -2003,7 +2011,7 @@ class documentController extends document
 	 */
 	function procDocumentManageCheckedDocument()
 	{
-		set_time_limit(0);
+		@set_time_limit(0);
 		if(!Context::get('is_logged')) return new Object(-1,'msg_not_permitted');
 
 		if(!checkCSRF())

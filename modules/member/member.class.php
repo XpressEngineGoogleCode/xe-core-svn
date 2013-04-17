@@ -148,7 +148,7 @@ class member extends ModuleObject {
 
 	/**
 	 * a method to check if successfully installed
-	 * 
+	 *
 	 * @return boolean
 	 */
 	function checkUpdate()
@@ -277,7 +277,7 @@ class member extends ModuleObject {
 		if(!$oDB->isColumnExists("member", "list_order"))
 		{
 			$oDB->addColumn("member", "list_order", "number", 11);
-			set_time_limit(0);
+			@set_time_limit(0);
 			$args->list_order = 'member_srl';
 			executeQuery('member.updateMemberListOrderAll',$args);
 			executeQuery('member.updateMemberListOrderAll');
