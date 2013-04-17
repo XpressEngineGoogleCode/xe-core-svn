@@ -2883,7 +2883,9 @@ jQuery(function($){
 				if(!$._xeAdminVar.htItemTypes.hasOwnProperty(sModuleName)) continue;
 				
 				item = $._xeAdminVar.htAllModules[sModuleName];
-				sModuleTitle = item.title;
+				if(!item){
+					continue;
+				}
 				//console.log(item);
 				
 				sResult += $.tmpl( "menuTypeItem", {
