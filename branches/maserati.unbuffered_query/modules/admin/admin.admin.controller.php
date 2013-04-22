@@ -1,4 +1,5 @@
 <?php
+
 /**
  * adminAdminController class
  * admin controller class of admin module
@@ -8,6 +9,7 @@
  */
 class adminAdminController extends admin
 {
+
 	/**
 	 * initialization
 	 * @return void
@@ -15,9 +17,12 @@ class adminAdminController extends admin
 	function init()
 	{
 		// forbit access if the user is not an administrator
-		$oMemberModel = &getModel('member');
+		$oMemberModel = getModel('member');
 		$logged_info = $oMemberModel->getLoggedInfo();
-		if($logged_info->is_admin!='Y') return $this->stop("msg_is_not_administrator");
+		if($logged_info->is_admin != 'Y')
+		{
+			return $this->stop("msg_is_not_administrator");
+		}
 	}
 
 	/**
@@ -27,11 +32,17 @@ class adminAdminController extends admin
 	function procAdminMenuReset()
 	{
 		$menuSrl = Context::get('menu_srl');
-		if (!$menuSrl) return $this->stop('msg_invalid_request');
+		if(!$menuSrl)
+		{
+			return $this->stop('msg_invalid_request');
+		}
 
-		$oMenuAdminController = &getAdminController('menu');
+		$oMenuAdminController = getAdminController('menu');
 		$output = $oMenuAdminController->deleteMenu($menuSrl);
-		if(!$output->toBool()) return $output;
+		if(!$output->toBool())
+		{
+			return $output;
+		}
 
 		FileHandler::removeDir('./files/cache/menu/admin_lang/');
 
@@ -45,30 +56,33 @@ class adminAdminController extends admin
 	function procAdminRecompileCacheFile()
 	{
 		// rename cache dir
-		$temp_cache_dir = './files/cache_'. time();
+		$temp_cache_dir = './files/cache_' . time();
 		FileHandler::rename('./files/cache', $temp_cache_dir);
 		FileHandler::makeDir('./files/cache');
 
 		// remove debug files
-		FileHandler::removeFile(_XE_PATH_.'files/_debug_message.php');
-		FileHandler::removeFile(_XE_PATH_.'files/_debug_db_query.php');
-		FileHandler::removeFile(_XE_PATH_.'files/_db_slow_query.php');
+		FileHandler::removeFile(_XE_PATH_ . 'files/_debug_message.php');
+		FileHandler::removeFile(_XE_PATH_ . 'files/_debug_db_query.php');
+		FileHandler::removeFile(_XE_PATH_ . 'files/_db_slow_query.php');
 
-		$oModuleModel = &getModel('module');
+		$oModuleModel = getModel('module');
 		$module_list = $oModuleModel->getModuleList();
 
 		// call recompileCache for each module
 		foreach($module_list as $module)
 		{
-			$oModule = null;
-			$oModule = &getClass($module->module);
-			if(method_exists($oModule, 'recompileCache')) $oModule->recompileCache();
+			$oModule = NULL;
+			$oModule = getClass($module->module);
+			if(method_exists($oModule, 'recompileCache'))
+			{
+				$oModule->recompileCache();
+			}
 		}
 
 		// remove cache
 		$truncated = array();
-		$oObjectCacheHandler = &CacheHandler::getInstance('object');
-		$oTemplateCacheHandler = &CacheHandler::getInstance('template');
+		$oObjectCacheHandler = CacheHandler::getInstance('object');
+		$oTemplateCacheHandler = CacheHandler::getInstance('template');
 
 		if($oObjectCacheHandler->isSupport())
 		{
@@ -80,26 +94,29 @@ class adminAdminController extends admin
 			$truncated[] = $oTemplateCacheHandler->truncate();
 		}
 
-		if(count($truncated) && in_array(false,$truncated))
+		if(count($truncated) && in_array(FALSE, $truncated))
 		{
-			return new Object(-1,'msg_self_restart_cache_engine');
+			return new Object(-1, 'msg_self_restart_cache_engine');
 		}
 
 		// remove cache dir
-		$tmp_cache_list = FileHandler::readDir('./files','/(^cache_[0-9]+)/');
+		$tmp_cache_list = FileHandler::readDir('./files', '/(^cache_[0-9]+)/');
 		if($tmp_cache_list)
 		{
 			foreach($tmp_cache_list as $tmp_dir)
 			{
-				if($tmp_dir) FileHandler::removeDir('./files/'.$tmp_dir);
+				if($tmp_dir)
+				{
+					FileHandler::removeDir('./files/' . $tmp_dir);
+				}
 			}
 		}
 
 		// remove duplicate indexes (only for CUBRID)
-		$db_type = &Context::getDBType();
+		$db_type = Context::getDBType();
 		if($db_type == 'cubrid')
 		{
-			$db = &DB::getInstance();
+			$db = DB::getInstance();
 			$db->deleteDuplicateIndexes();
 		}
 		$this->setMessage('success_updated');
@@ -111,12 +128,11 @@ class adminAdminController extends admin
 	 */
 	function procAdminLogout()
 	{
-		$oMemberController = &getController('member');
+		$oMemberController = getController('member');
 		$oMemberController->procMemberLogout();
 
-		header('Location: '.getNotEncodedUrl('', 'module','admin'));
+		header('Location: ' . getNotEncodedUrl('', 'module', 'admin'));
 	}
-
 
 	public function procAdminInsertDefaultDesignInfo()
 	{
@@ -126,14 +142,14 @@ class adminAdminController extends admin
 			$vars->site_srl = 0;
 		}
 
-		// create a DesignInfo file 
+		// create a DesignInfo file
 		$output = $this->updateDefaultDesignInfo($vars);
 		return $this->setRedirectUrl(Context::get('error_return_url'), $output);
 	}
 
 	public function updateDefaultDesignInfo($vars)
 	{
-		$siteDesignPath = _XE_PATH_.'files/site_design/';
+		$siteDesignPath = _XE_PATH_ . 'files/site_design/';
 
 		$vars->module_skin = json_decode($vars->module_skin);
 
@@ -142,7 +158,7 @@ class adminAdminController extends admin
 			FileHandler::makeDir($siteDesignPath);
 		}
 
-		$siteDesignFile = _XE_PATH_.'files/site_design/design_'.$vars->site_srl.'.php';
+		$siteDesignFile = _XE_PATH_ . 'files/site_design/design_' . $vars->site_srl . '.php';
 
 		$layoutTarget = 'layout_srl';
 		$skinTarget = 'skin';
@@ -169,6 +185,12 @@ class adminAdminController extends admin
 
 		foreach($vars->module_skin as $moduleName => $skinName)
 		{
+			if($moduleName == 'ARTICLE')
+			{
+				$moduleName = 'page';
+			}
+
+			if(!isset($designInfo->module->{$moduleName})) $designInfo->module->{$moduleName} = new stdClass();
 			$designInfo->module->{$moduleName}->{$skinTarget} = $skinName;
 		}
 
@@ -181,28 +203,28 @@ class adminAdminController extends admin
 	{
 		if($designInfo->layout_srl)
 		{
-			$buff .= sprintf('$designInfo->layout_srl = %s; ', $designInfo->layout_srl)."\n";
+			$buff .= sprintf('$designInfo->layout_srl = %s; ', $designInfo->layout_srl) . "\n";
 		}
 
 		if($designInfo->mlayout_srl)
 		{
-			$buff .= sprintf('$designInfo->mlayout_srl = %s;', $designInfo->mlayout_srl)."\n";
+			$buff .= sprintf('$designInfo->mlayout_srl = %s;', $designInfo->mlayout_srl) . "\n";
 		}
 
-		$buff .= '$designInfo->module = new stdClass();'."\n";
+		$buff .= '$designInfo->module = new stdClass();' . "\n";
 
 		foreach($designInfo->module as $moduleName => $skinInfo)
 		{
-			$buff .= sprintf('$designInfo->module->%s = new stdClass();', $moduleName)."\n";
+			$buff .= sprintf('$designInfo->module->%s = new stdClass();', $moduleName) . "\n";
 			foreach($skinInfo as $target => $skinName)
 			{
-				$buff .= sprintf('$designInfo->module->%s->%s = \'%s\';', $moduleName, $target, $skinName)."\n";
+				$buff .= sprintf('$designInfo->module->%s->%s = \'%s\';', $moduleName, $target, $skinName) . "\n";
 			}
 		}
 
-		$buff = sprintf('<?php if(!defined("__ZBXE__")) exit();' . "\n" . 'if(!defined("__XE__")) exit();' ."\n" . '$designInfo = new stdClass();' . "\n" . '%s ?>', $buff);
+		$buff = sprintf('<?php if(!defined("__XE__")) exit();' . "\n" . '$designInfo = new stdClass();' . "\n" . '%s ?>', $buff);
 
-		$siteDesignFile = _XE_PATH_.'files/site_design/design_'.$site_srl.'.php';
+		$siteDesignFile = _XE_PATH_ . 'files/site_design/design_' . $site_srl . '.php';
 		FileHandler::writeFile($siteDesignFile, $buff);
 	}
 
@@ -216,9 +238,12 @@ class adminAdminController extends admin
 		$moduleName = Context::get('module_name');
 
 		// check favorite exists
-		$oModel = &getAdminModel('admin');
+		$oModel = getAdminModel('admin');
 		$output = $oModel->isExistsFavorite($siteSrl, $moduleName);
-		if(!$output->toBool()) return $output;
+		if(!$output->toBool())
+		{
+			return $output;
+		}
 
 		// if exists, delete favorite
 		if($output->get('result'))
@@ -234,7 +259,10 @@ class adminAdminController extends admin
 			$result = 'on';
 		}
 
-		if(!$output->toBool()) return $output;
+		if(!$output->toBool())
+		{
+			return $output;
+		}
 
 		$this->add('result', $result);
 
@@ -279,6 +307,7 @@ class adminAdminController extends admin
 			return new Object();
 		}
 
+		$args = new stdClass();
 		$args->admin_favorite_srls = $deleteTargets;
 		$output = executeQuery('admin.deleteFavorites', $args);
 		if(!$output->toBool())
@@ -296,10 +325,16 @@ class adminAdminController extends admin
 	function procAdminEnviromentGatheringAgreement()
 	{
 		$isAgree = Context::get('is_agree');
-		if($isAgree == 'true') $_SESSION['enviroment_gather'] = 'Y';
-		else $_SESSION['enviroment_gather'] = 'N';
+		if($isAgree == 'true')
+		{
+			$_SESSION['enviroment_gather'] = 'Y';
+		}
+		else
+		{
+			$_SESSION['enviroment_gather'] = 'N';
+		}
 
-		$redirectUrl = getUrl('', 'module', 'admin');
+		$redirectUrl = getNotEncodedUrl('', 'module', 'admin');
 		$this->setRedirectUrl($redirectUrl);
 	}
 
@@ -312,8 +347,13 @@ class adminAdminController extends admin
 		$adminTitle = Context::get('adminTitle');
 		$file = $_FILES['adminLogo'];
 
-		$oModuleModel = &getModel('module');
+		$oModuleModel = getModel('module');
 		$oAdminConfig = $oModuleModel->getModuleConfig('admin');
+
+		if(!is_object($oAdminConfig))
+		{
+			$oAdminConfig = new stdClass();
+		}
 
 		if($file['tmp_name'])
 		{
@@ -322,21 +362,36 @@ class adminAdminController extends admin
 
 			// Get file information
 			list($width, $height, $type, $attrs) = @getimagesize($file['tmp_name']);
-			if($type == 3) $ext = 'png';
-			elseif($type == 2) $ext = 'jpg';
-			else $ext = 'gif';
+			if($type == 3)
+			{
+				$ext = 'png';
+			}
+			elseif($type == 2)
+			{
+				$ext = 'jpg';
+			}
+			else
+			{
+				$ext = 'gif';
+			}
 
 			$target_filename = sprintf('%s%s.%s.%s', $target_path, 'adminLogo', date('YmdHis'), $ext);
 			@move_uploaded_file($file['tmp_name'], $target_filename);
 
 			$oAdminConfig->adminLogo = $target_filename;
 		}
-		if($adminTitle) $oAdminConfig->adminTitle = strip_tags($adminTitle);
-		else unset($oAdminConfig->adminTitle);
+		if($adminTitle)
+		{
+			$oAdminConfig->adminTitle = strip_tags($adminTitle);
+		}
+		else
+		{
+			unset($oAdminConfig->adminTitle);
+		}
 
 		if($oAdminConfig)
 		{
-			$oModuleController = &getController('module');
+			$oModuleController = getController('module');
 			$oModuleController->insertModuleConfig('admin', $oAdminConfig);
 		}
 
@@ -352,13 +407,13 @@ class adminAdminController extends admin
 	 */
 	function procAdminDeleteLogo()
 	{
-		$oModuleModel = &getModel('module');
+		$oModuleModel = getModel('module');
 		$oAdminConfig = $oModuleModel->getModuleConfig('admin');
 
-		FileHandler::removeFile(_XE_PATH_.$oAdminConfig->adminLogo);
+		FileHandler::removeFile(_XE_PATH_ . $oAdminConfig->adminLogo);
 		unset($oAdminConfig->adminLogo);
 
-		$oModuleController = &getController('module');
+		$oModuleController = getController('module');
 		$oModuleController->insertModuleConfig('admin', $oAdminConfig);
 
 		$this->setMessage('success_deleted', 'info');
@@ -373,6 +428,7 @@ class adminAdminController extends admin
 	 */
 	function _insertFavorite($siteSrl, $module, $type = 'module')
 	{
+		$args = new stdClass();
 		$args->adminFavoriteSrl = getNextSequence();
 		$args->site_srl = $siteSrl;
 		$args->module = $module;
@@ -387,6 +443,7 @@ class adminAdminController extends admin
 	 */
 	function _deleteFavorite($favoriteSrl)
 	{
+		$args = new stdClass();
 		$args->admin_favorite_srl = $favoriteSrl;
 		$output = executeQuery('admin.deleteFavorite', $args);
 		return $output;
@@ -398,7 +455,7 @@ class adminAdminController extends admin
 	 */
 	function _deleteAllFavorite()
 	{
-		$args = null;
+		$args = NULL;
 		$output = executeQuery('admin.deleteAllFavorite', $args);
 		return $output;
 	}
@@ -407,19 +464,21 @@ class adminAdminController extends admin
 	 * Remove admin icon
 	 * @return object|void
 	 */
-	function procAdminRemoveIcons(){
+	function procAdminRemoveIcons()
+	{
 		$iconname = Context::get('iconname');
-		$file_exist = FileHandler::readFile(_XE_PATH_.'files/attach/xeicon/'.$iconname);
+		$file_exist = FileHandler::readFile(_XE_PATH_ . 'files/attach/xeicon/' . $iconname);
 		if($file_exist)
 		{
-			@FileHandler::removeFile(_XE_PATH_.'files/attach/xeicon/'.$iconname);
+			@FileHandler::removeFile(_XE_PATH_ . 'files/attach/xeicon/' . $iconname);
 		}
 		else
 		{
-			return new Object(-1,'fail_to_delete');
+			return new Object(-1, 'fail_to_delete');
 		}
 		$this->setMessage('success_deleted');
 	}
+
 }
 /* End of file admin.admin.controller.php */
 /* Location: ./modules/admin/admin.admin.controller.php */

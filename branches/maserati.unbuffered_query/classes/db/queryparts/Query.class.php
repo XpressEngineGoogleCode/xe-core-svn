@@ -1,4 +1,5 @@
 <?php
+
 /**
  * @author NHN (developers@xpressengine.com)
  * @package /classes/db/queryparts
@@ -6,16 +7,19 @@
  */
 class Query extends Object
 {
+
 	/**
 	 * Query id, defined in query xml file
 	 * @var string
 	 */
 	var $queryID;
+
 	/**
 	 * DML type, ex) INSERT, DELETE, UPDATE, SELECT
 	 * @var string
 	 */
 	var $action;
+
 	/**
 	 * priority level ex)LOW_PRIORITY, HIGHT_PRIORITY
 	 * @var string
@@ -27,26 +31,31 @@ class Query extends Object
 	 * @var string|array
 	 */
 	var $columns;
+
 	/**
 	 * table list
 	 * @var string|array
 	 */
 	var $tables;
+
 	/**
 	 * condition list
 	 * @var string|array
 	 */
 	var $conditions;
+
 	/**
 	 * group list
 	 * @var string|array
 	 */
 	var $groups;
+
 	/**
 	 * order list
 	 * @var array
 	 */
 	var $orderby;
+
 	/**
 	 * limit count
 	 * @var int
@@ -57,13 +66,13 @@ class Query extends Object
 	 * argument list
 	 * @var array
 	 */
-	var $arguments = null;
+	var $arguments = NULL;
 
 	/**
 	 * column list
 	 * @var array
 	 */
-	var $columnList = null;
+	var $columnList = NULL;
 
 	/**
 	 * order by text
@@ -84,21 +93,25 @@ class Query extends Object
 	 * @param string $priority
 	 * @return void
 	 */
-	function Query($queryID = null
-			, $action = null
-			, $columns = null
-			, $tables = null
-			, $conditions = null
-			, $groups = null
-			, $orderby = null
-			, $limit = null
-			, $priority = null)
+	function Query($queryID = NULL
+	, $action = NULL
+	, $columns = NULL
+	, $tables = NULL
+	, $conditions = NULL
+	, $groups = NULL
+	, $orderby = NULL
+	, $limit = NULL
+	, $priority = NULL)
 	{
 		$this->queryID = $queryID;
 		$this->action = $action;
 		$this->priority = $priority;
 
-		if(!isset($tables)) return;
+		if(!isset($tables))
+		{
+			return;
+		}
+
 		$this->columns = $this->setColumns($columns);
 		$this->tables = $this->setTables($tables);
 		$this->conditions = $this->setConditions($conditions);
@@ -109,7 +122,7 @@ class Query extends Object
 
 	function show()
 	{
-		return true;
+		return TRUE;
 	}
 
 	function setQueryId($queryID)
@@ -153,7 +166,10 @@ class Query extends Object
 			return;
 		}
 
-		if(!is_array($columns)) $columns = array($columns);
+		if(!is_array($columns))
+		{
+			$columns = array($columns);
+		}
 
 		$this->columns = $columns;
 	}
@@ -162,12 +178,15 @@ class Query extends Object
 	{
 		if(!isset($tables) || count($tables) === 0)
 		{
-			$this->setError(true);
+			$this->setError(TRUE);
 			$this->setMessage("You must provide at least one table for the query.");
 			return;
 		}
 
-		if(!is_array($tables)) $tables = array($tables);
+		if(!is_array($tables))
+		{
+			$tables = array($tables);
+		}
 
 		$this->tables = $tables;
 	}
@@ -180,34 +199,63 @@ class Query extends Object
 	function setConditions($conditions)
 	{
 		$this->conditions = array();
-		if(!isset($conditions) || count($conditions) === 0) return;
-		if(!is_array($conditions)) $conditions = array($conditions);
+		if(!isset($conditions) || count($conditions) === 0)
+		{
+			return;
+		}
+		if(!is_array($conditions))
+		{
+			$conditions = array($conditions);
+		}
 
 		foreach($conditions as $conditionGroup)
 		{
-			if($conditionGroup->show()) $this->conditions[] = $conditionGroup;
+			if($conditionGroup->show())
+			{
+				$this->conditions[] = $conditionGroup;
+			}
 		}
 	}
 
 	function setGroups($groups)
 	{
-		if(!isset($groups) || count($groups) === 0) return;
-		if(!is_array($groups)) $groups = array($groups);
+		if(!isset($groups) || count($groups) === 0)
+		{
+			return;
+		}
+		if(!is_array($groups))
+		{
+			$groups = array($groups);
+		}
 
 		$this->groups = $groups;
 	}
 
 	function setOrder($order)
 	{
-		if(!isset($order) || count($order) === 0) return;
-		if(!is_array($order)) $order = array($order);
+		if(!isset($order) || count($order) === 0)
+		{
+			return;
+		}
+		if(!is_array($order))
+		{
+			$order = array($order);
+		}
 
 		$this->orderby = $order;
 	}
 
+	function getOrder()
+	{
+		return $this->orderby;
+	}
+
 	function setLimit($limit = NULL)
 	{
-		if(!isset($limit)) return;
+		if(!isset($limit))
+		{
+			return;
+		}
 		$this->limit = $limit;
 	}
 
@@ -217,7 +265,7 @@ class Query extends Object
 	 * @param string|array $columns
 	 * @return Query return Query instance
 	 */
-	function select($columns= null)
+	function select($columns = NULL)
 	{
 		$this->action = 'select';
 		$this->setColumns($columns);
@@ -278,6 +326,7 @@ class Query extends Object
 		$this->setLimit($limit);
 		return $this;
 	}
+
 	// END Fluent interface
 
 	function getAction()
@@ -287,7 +336,31 @@ class Query extends Object
 
 	function getPriority()
 	{
-		return $this->priority?'LOW_PRIORITY':'';
+		return $this->priority ? 'LOW_PRIORITY' : '';
+	}
+
+	/**
+	 * Check if current query uses the click count attribute
+	 * For CUBRID, this statement uses the click count feature.
+	 * For the other databases, using this attribute causes a query
+	 * to produce both a select and an update
+	 */
+	function usesClickCount()
+	{
+		return count($this->getClickCountColumns()) > 0;
+	}
+
+	function getClickCountColumns()
+	{
+		$click_count_columns = array();
+		foreach($this->columns as $column)
+		{
+			if($column->show() && is_a($column, 'ClickCountExpression'))
+			{
+				$click_count_columns[] = $column;
+			}
+		}
+		return $click_count_columns;
 	}
 
 	/**
@@ -295,17 +368,21 @@ class Query extends Object
 	 * @param boolean $with_values
 	 * @return string
 	 */
-	function getSelectString($with_values = true)
+	function getSelectString($with_values = TRUE)
 	{
 		foreach($this->columns as $column)
 		{
 			if($column->show())
+			{
 				if($column->isSubquery())
 				{
-					$select[] = $column->toString($with_values) . ' as '. $column->getAlias();
+					$select[] = $column->toString($with_values) . ' as ' . $column->getAlias();
 				}
 				else
+				{
 					$select[] = $column->getExpression($with_values);
+				}
+			}
 		}
 		return trim(implode($select, ', '));
 	}
@@ -315,12 +392,14 @@ class Query extends Object
 	 * @param boolean $with_values
 	 * @return string
 	 */
-	function getUpdateString($with_values = true)
+	function getUpdateString($with_values = TRUE)
 	{
 		foreach($this->columns as $column)
 		{
 			if($column->show())
+			{
 				$update[] = $column->getExpression($with_values);
+			}
 		}
 		return trim(implode($update, ', '));
 	}
@@ -330,7 +409,7 @@ class Query extends Object
 	 * @param boolean $with_values
 	 * @return string
 	 */
-	function getInsertString($with_values = true)
+	function getInsertString($with_values = TRUE)
 	{
 		$columnsList = '';
 		// means we have insert-select
@@ -374,20 +453,32 @@ class Query extends Object
 	 * @param boolean $with_values
 	 * @return string
 	 */
-	function getFromString($with_values = true)
+	function getFromString($with_values = TRUE)
 	{
 		$from = '';
 		$simple_table_count = 0;
 		foreach($this->tables as $table)
 		{
-			if($table->isJoinTable() || !$simple_table_count) $from .= $table->toString($with_values) . ' ';
-			else $from .= ', '.$table->toString($with_values) . ' ';
+			if($table->isJoinTable() || !$simple_table_count)
+			{
+				$from .= $table->toString($with_values) . ' ';
+			}
+			else
+			{
+				$from .= ', ' . $table->toString($with_values) . ' ';
+			}
 
-			if(is_a($table, 'Subquery')) $from .= $table->getAlias() ? ' as ' . $table->getAlias() . ' ' : ' ';
+			if(is_a($table, 'Subquery'))
+			{
+				$from .= $table->getAlias() ? ' as ' . $table->getAlias() . ' ' : ' ';
+			}
 
 			$simple_table_count++;
 		}
-		if(trim($from) == '') return '';
+		if(trim($from) == '')
+		{
+			return '';
+		}
 		return $from;
 	}
 
@@ -397,7 +488,7 @@ class Query extends Object
 	 * @param boolean $with_optimization
 	 * @return string
 	 */
-	function getWhereString($with_values = true, $with_optimization = true)
+	function getWhereString($with_values = TRUE, $with_optimization = TRUE)
 	{
 		$where = '';
 		$condition_count = 0;
@@ -414,11 +505,13 @@ class Query extends Object
 		}
 
 		if($with_optimization &&
-			(strstr($this->getOrderByString(), 'list_order') || strstr($this->getOrderByString(), 'update_order')))
+				(strstr($this->getOrderByString(), 'list_order') || strstr($this->getOrderByString(), 'update_order')))
 		{
 
 			if($condition_count !== 0)
+			{
 				$where = '(' . $where . ') ';
+			}
 
 			foreach($this->orderby as $order)
 			{
@@ -427,7 +520,9 @@ class Query extends Object
 				{
 					$opt_condition = new ConditionWithoutArgument($colName, 2100000000, 'less', 'and');
 					if($condition_count === 0)
+					{
 						$opt_condition->setPipe("");
+					}
 					$where .= $opt_condition->toString($with_values) . ' ';
 					$condition_count++;
 				}
@@ -444,8 +539,13 @@ class Query extends Object
 	function getGroupByString()
 	{
 		$groupBy = '';
-		if($this->groups) if($this->groups[0] !== "")
-			$groupBy = implode(', ', $this->groups);
+		if($this->groups)
+		{
+			if($this->groups[0] !== "")
+			{
+				$groupBy = implode(', ', $this->groups);
+			}
+		}
 		return $groupBy;
 	}
 
@@ -457,11 +557,14 @@ class Query extends Object
 	{
 		if(!$this->_orderByString)
 		{
-			if(count($this->orderby) === 0) return '';
+			if(count($this->orderby) === 0)
+			{
+				return '';
+			}
 			$orderBy = '';
 			foreach($this->orderby as $order)
 			{
-				$orderBy .= $order->toString() .', ';
+				$orderBy .= $order->toString() . ', ';
 			}
 			$orderBy = substr($orderBy, 0, -2);
 			$this->_orderByString = $orderBy;
@@ -512,7 +615,10 @@ class Query extends Object
 					if($table->isJoinTable() || is_a($table, 'Subquery'))
 					{
 						$args = $table->getArguments();
-						if($args) $this->arguments = array_merge($this->arguments, $args);
+						if($args)
+						{
+							$this->arguments = array_merge($this->arguments, $args);
+						}
 					}
 				}
 			}
@@ -526,30 +632,43 @@ class Query extends Object
 					if($column->show())
 					{
 						$args = $column->getArguments();
-						if($args) $this->arguments = array_merge($this->arguments, $args);
+						if($args)
+						{
+							$this->arguments = array_merge($this->arguments, $args);
+						}
 					}
 				}
 			}
 
 			// Condition arguments
 			if(count($this->conditions) > 0)
+			{
 				foreach($this->conditions as $conditionGroup)
 				{
 					$args = $conditionGroup->getArguments();
-					if(count($args) > 0) $this->arguments = array_merge($this->arguments, $args);
+					if(count($args) > 0)
+					{
+						$this->arguments = array_merge($this->arguments, $args);
+					}
 				}
+			}
 
 			// Navigation arguments
 			if(count($this->orderby) > 0)
+			{
 				foreach($this->orderby as $order)
 				{
 					$args = $order->getArguments();
-					if(count($args) > 0) $this->arguments = array_merge($this->arguments, $args);
+					if(count($args) > 0)
+					{
+						$this->arguments = array_merge($this->arguments, $args);
+					}
 				}
+			}
 		}
 		return $this->arguments;
 	}
-}
 
+}
 /* End of file Query.class.php */
 /* Location: ./classes/db/queryparts/Query.class.php */

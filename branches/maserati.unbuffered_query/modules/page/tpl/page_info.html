@@ -1,5 +1,5 @@
 <!--#include("header.html")-->
-<div cond="$XE_VALIDATOR_MESSAGE" class="message {$XE_VALIDATOR_MESSAGE_TYPE}">
+<div cond="$XE_VALIDATOR_MESSAGE && $XE_VALIDATOR_ID == 'modules/page/tpl/page_info/1'" class="message {$XE_VALIDATOR_MESSAGE_TYPE}">
 	<p>{$XE_VALIDATOR_MESSAGE}</p>
 </div>
 <section class="section">
@@ -9,6 +9,7 @@
 	<input type="hidden" name="page" value="{$page}" />
 	<input type="hidden" name="module_srl" value="{$module_srl}" />
 	<input type="hidden" name="success_return_url" value="{getRequestUriByServerEnviroment()}" />
+	<input type="hidden" name="xe_validator_id" value="modules/page/tpl/page_info/1" />
 	<div class="x_control-group">
 		<label class="x_control-label">{$lang->page_type}</label>
 		<div class="x_controls" style="padding-top:4px">{$lang->page_type_name[$module_info->page_type]}</div>

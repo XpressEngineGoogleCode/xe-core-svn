@@ -104,6 +104,7 @@ class documentController extends document
 	 */
 	function deleteDocumentAliasByModule($module_srl)
 	{
+		$args = new stdClass();
 		$args->module_srl = $module_srl;
 		executeQuery("document.deleteAlias", $args);
 	}
@@ -115,6 +116,7 @@ class documentController extends document
 	 */
 	function deleteDocumentAliasByDocument($document_srl)
 	{
+		$args =new stdClass();
 		$args->document_srl = $document_srl;
 		executeQuery("document.deleteAlias", $args);
 	}
@@ -128,6 +130,7 @@ class documentController extends document
 	 */
 	function deleteDocumentHistory($history_srl, $document_srl, $module_srl)
 	{
+		$args = new stdClass();
 		$args->history_srl = $history_srl;
 		$args->module_srl = $module_srl;
 		$args->document_srl = $document_srl;
@@ -184,6 +187,11 @@ class documentController extends document
 	 */
 	function insertDocument($obj, $manual_inserted = false, $isRestore = false, $isLatest = true)
 	{
+		if(!$manual_inserted && !checkCSRF())
+		{
+			return new Object(-1, 'msg_invalid_request');
+		}
+
 		// begin transaction
 		$oDB = &DB::getInstance();
 		$oDB->begin();
@@ -194,7 +202,8 @@ class documentController extends document
 		if($obj->allow_trackback!='Y') $obj->allow_trackback = 'N';
 		if($obj->homepage &&  !preg_match('/^[a-z]+:\/\//i',$obj->homepage)) $obj->homepage = 'http://'.$obj->homepage;
 		if($obj->notify_message != 'Y') $obj->notify_message = 'N';
-		if(!$isRestore) $obj->ipaddress = $_SERVER['REMOTE_ADDR'];	//board?ì„œ form keyê°’ìœ¼ë¡?ipaddressë¥??¬ìš©?˜ë©´ ?„í•œ ipê°€ ?±ë¡?? ?„í„°?€???ê??†ìŠ´
+		if(!$obj->email_address) $obj->email_address = '';
+		if(!$isRestore) $obj->ipaddress = $_SERVER['REMOTE_ADDR'];	//board?ï¿½ì„œ form keyê°’ìœ¼ï¿½?ipaddressï¿½??ï¿½ìš©?ï¿½ë©´ ?ï¿½í•œ ipê°€ ?ï¿½ë¡?? ?ï¿½í„°?ï¿½???ï¿½ï¿½??ï¿½ìŠ´
 
 		// Serialize the $extra_vars, check the extra_vars type, because duplicate serialized avoid
 		if(!is_string($obj->extra_vars)) $obj->extra_vars = serialize($obj->extra_vars);
@@ -323,10 +332,16 @@ class documentController extends document
 	 * Update the document
 	 * @param object $source_obj
 	 * @param object $obj
+	 * @param bool $manual_updated
 	 * @return object
 	 */
-	function updateDocument($source_obj, $obj)
+	function updateDocument($source_obj, $obj, $manual_updated = FALSE)
 	{
+		if(!$manual_updated && !checkCSRF())
+		{
+			return new Object(-1, 'msg_invalid_request');
+		}
+
 		if(!$source_obj->document_srl || !$obj->document_srl) return new Object(-1,'msg_invalied_request');
 		if(!$obj->status && $obj->is_secret == 'Y') $obj->status = 'SECRET';
 		if(!$obj->status) $obj->status = 'PUBLIC';
@@ -343,6 +358,10 @@ class documentController extends document
 		if(!$obj->module_srl) $obj->module_srl = $source_obj->get('module_srl');
 		$module_srl = $obj->module_srl;
 		$document_config = $oModuleModel->getModulePartConfig('document', $module_srl);
+		if(!$document_config)
+		{
+			$document_config = new stdClass();
+		}
 		if(!isset($document_config->use_history)) $document_config->use_history = 'N';
 		$bUseHistory = $document_config->use_history == 'Y' || $document_config->use_history == 'Trace';
 
@@ -417,6 +436,14 @@ class documentController extends document
 		if($obj->title == '') $obj->title = 'Untitled';
 		// Remove XE's own tags from the contents.
 		$obj->content = preg_replace('!<\!--(Before|After)(Document|Comment)\(([0-9]+),([0-9]+)\)-->!is', '', $obj->content);
+		if(Mobile::isFromMobilePhone())
+		{
+			if($obj->use_html != 'Y')
+			{
+				$obj->content = htmlspecialchars($obj->content);
+			}
+			$obj->content = nl2br($obj->content);
+		}
 		// Change not extra vars but language code of the original document if document's lang_code is different from author's setting.
 		if($source_obj->get('lang_code') != Context::getLangType())
 		{
@@ -527,6 +554,7 @@ class documentController extends document
 	function deleteDocument($document_srl, $is_admin = false, $isEmptyTrash = false, $oDocument = null)
 	{
 		// Call a trigger (before)
+		$trigger_obj =new stdClass();
 		$trigger_obj->document_srl = $document_srl;
 		$output = ModuleHandler::triggerCall('document.deleteDocument', 'before', $trigger_obj);
 		if(!$output->toBool()) return $output;
@@ -549,6 +577,7 @@ class documentController extends document
 		if(!$oDocument->isGranted()) return new Object(-1, 'msg_not_permitted');
 
 		//if empty trash, document already deleted, therefore document not delete
+		$args = new stdClass();
 		$args->document_srl = $document_srl;
 		if(!$isEmptyTrash)
 		{
@@ -646,6 +675,7 @@ class documentController extends document
 	 */
 	function moveDocumentToTrash($obj)
 	{
+		$trash_args = new stdClass();
 		// Get trash_srl if a given trash_srl doesn't exist
 		if(!$obj->trash_srl) $trash_args->trash_srl = getNextSequence();
 		else $trash_args->trash_srl = $obj->trash_srl;
@@ -670,6 +700,7 @@ class documentController extends document
 			$trash_args->nick_name = $logged_info->nick_name;
 		}
 		// Date setting for updating documents
+		$doucment_args = new stdClass();
 		$document_args->module_srl = 0;
 		$document_args->document_srl = $obj->document_srl;
 
@@ -721,6 +752,7 @@ class documentController extends document
 		// Set the attachment to be invalid state
 		if($oDocument->hasUploadedFiles())
 		{
+			$args = new stdClass();
 			$args->upload_target_srl = $oDocument->document_srl;
 			$args->isvalid = 'N';
 			executeQuery('file.updateFileValid', $args);
@@ -814,6 +846,7 @@ class documentController extends document
 	{
 		if(!$module_srl || !$var_idx || !$var_name || !$var_type || !$eid) return new Object(-1,'msg_invalid_request');
 
+		$obj = new stdClass();
 		$obj->module_srl = $module_srl;
 		$obj->var_idx = $var_idx;
 		$obj->var_name = $var_name;
@@ -842,6 +875,7 @@ class documentController extends document
 	function deleteDocumentExtraKeys($module_srl, $var_idx = null)
 	{
 		if(!$module_srl) return new Object(-1,'msg_invalid_request');
+		$obj = new stdClass();
 		$obj->module_srl = $module_srl;
 		if(!is_null($var_idx)) $obj->var_idx = $var_idx;
 
@@ -923,6 +957,7 @@ class documentController extends document
 	 */
 	function deleteDocumentExtraVars($module_srl, $document_srl = null, $var_idx = null, $lang_code = null, $eid = null)
 	{
+		$obj =new stdClass();
 		$obj->module_srl = $module_srl;
 		if(!is_null($document_srl)) $obj->document_srl = $document_srl;
 		if(!is_null($var_idx)) $obj->var_idx = $var_idx;
@@ -1062,6 +1097,7 @@ class documentController extends document
 		}
 
 		// Check if previously reported
+		$args = new stdClass();
 		$args->document_srl = $document_srl;
 		$output = executeQuery('document.getDeclaredDocument', $args);
 		if(!$output->toBool()) return $output;
@@ -1156,6 +1192,7 @@ class documentController extends document
 	 */
 	function updateCommentCount($document_srl, $comment_count, $last_updater, $comment_inserted = false)
 	{
+		$args = new stdClass();
 		$args->document_srl = $document_srl;
 		$args->comment_count = $comment_count;
 
@@ -1279,6 +1316,7 @@ class documentController extends document
 	 */
 	function deleteCategory($category_srl)
 	{
+		$args = new stdClass();
 		$args->category_srl = $category_srl;
 		$oDocumentModel = &getModel('document');
 		$category_info = $oDocumentModel->getCategory($category_srl);
@@ -1292,8 +1330,7 @@ class documentController extends document
 
 		$this->makeCategoryFile($category_info->module_srl);
 		// Update category_srl of the documents in the same category to 0
-		unset($args);
-
+		$args = new stdClass();
 		$args->target_category_srl = 0;
 		$args->source_category_srl = $category_srl;
 		$output = executeQuery('document.updateDocumentCategory', $args);
@@ -1308,6 +1345,7 @@ class documentController extends document
 	 */
 	function deleteModuleCategory($module_srl)
 	{
+		$args = new stdClass();
 		$args->module_srl = $module_srl;
 		$output = executeQuery('document.deleteModuleCategory', $args);
 		return $output;
@@ -1418,7 +1456,7 @@ class documentController extends document
 
 		$logged_info = Context::get('logged_info');
 
-		foreach($extra_keys as $idx => $val) 
+		foreach($extra_keys as $idx => $val)
 		{
 			$idx = $val->idx;
 			if($val->type == 'kr_zip')
@@ -1656,6 +1694,7 @@ class documentController extends document
 		$xml_file = sprintf("./files/cache/document_category/%s.xml.php", $module_srl);
 		$php_file = sprintf("./files/cache/document_category/%s.php", $module_srl);
 		// Get a category list
+		$args = new stdClass();
 		$args->module_srl = $module_srl;
 		$args->sort_index = 'list_order';
 		$output = executeQuery('document.getCategoryList', $args);
@@ -1682,7 +1721,7 @@ class documentController extends document
 		{
 			$xml_buff = "<root />";
 			FileHandler::writeFile($xml_file, $xml_buff);
-			FileHandler::writeFile($php_file, '<?php if(!defined("__ZBXE__")) exit(); ?>');
+			FileHandler::writeFile($php_file, '<?php if(!defined("__XE__")) exit(); ?>');
 			return $xml_file;
 		}
 		// Change to an array if only a single data is obtained
@@ -1713,7 +1752,6 @@ class documentController extends document
 		$xml_body_buff = $this->getXmlTree($tree[0], $tree, $module_info->site_srl, $xml_header_buff);
 		$xml_buff = sprintf(
 			'<?php '.
-			'define(\'__ZBXE__\', true); '.
 			'define(\'__XE__\', true); '.
 			'require_once(\''.FileHandler::getRealPath('./config/config.inc.php').'\'); '.
 			'$oContext = &Context::getInstance(); '.
@@ -1737,7 +1775,7 @@ class documentController extends document
 		$php_output = $this->getPhpCacheCode($tree[0], $tree, $module_info->site_srl, $php_header_buff);
 		$php_buff = sprintf(
 			'<?php '.
-			'if(!defined("__ZBXE__")) exit(); '.
+			'if(!defined("__XE__")) exit(); '.
 			'%s; '.
 			'%s; '.
 			'$menu->list = array(%s); '.
@@ -1890,6 +1928,7 @@ class documentController extends document
 		$document_popup_menu_list = Context::get('document_popup_menu_list');
 		if(!is_array($document_popup_menu_list)) $document_popup_menu_list = array();
 
+		$obj = new stdClass();
 		$obj->url = $url;
 		$obj->str = $str;
 		$obj->icon = $icon;
@@ -1972,8 +2011,13 @@ class documentController extends document
 	 */
 	function procDocumentManageCheckedDocument()
 	{
-		set_time_limit(0);
+		@set_time_limit(0);
 		if(!Context::get('is_logged')) return new Object(-1,'msg_not_permitted');
+
+		if(!checkCSRF())
+		{
+			return new Object(-1, 'msg_invalid_request');
+		}
 
 		$type = Context::get('type');
 		$target_module = Context::get('target_module');
@@ -2059,6 +2103,7 @@ class documentController extends document
 		}
 		else if($type == 'trash')
 		{
+			$args = new stdClass();
 			$args->description = $message_content;
 
 			$oDB = &DB::getInstance();

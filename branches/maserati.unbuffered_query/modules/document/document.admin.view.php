@@ -35,6 +35,7 @@ class documentAdminView extends document
 	function dispDocumentAdminList()
 	{
 		// option to get a list
+		$args = new stdClass();
 		$args->page = Context::get('page'); // /< Page
 		$args->list_count = 30; // /< the number of posts to display on a single page
 		$args->page_count = 5; // /< the number of pages that appear in the page navigation
@@ -61,6 +62,9 @@ class documentAdminView extends document
 		Context::set('document_list', $output->data);
 		Context::set('status_name_list', $statusNameList);
 		Context::set('page_navigation', $output->page_navigation);
+
+		$oSecurity = new Security();
+		$oSecurity->encodeHTML('document_list..variables.');
 
 		// set a search option used in the template
 		$count_search_option = count($this->search_option);
@@ -97,6 +101,7 @@ class documentAdminView extends document
 	function dispDocumentAdminDeclared()
 	{
 		// option for a list
+		$args =new stdClass();
 		$args->page = Context::get('page'); // /< Page
 		$args->list_count = 30; // /< the number of posts to display on a single page
 		$args->page_count = 10; // /< the number of pages that appear in the page navigation

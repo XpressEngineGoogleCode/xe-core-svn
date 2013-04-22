@@ -1,7 +1,8 @@
 <?php
-define('FOLLOW_REQUEST_SSL',0);
-define('ENFORCE_SSL',1);
-define('RELEASE_SSL',2);
+
+define('FOLLOW_REQUEST_SSL', 0);
+define('ENFORCE_SSL', 1);
+define('RELEASE_SSL', 2);
 
 /**
  * Manages Context such as request arguments/environment variables
@@ -11,113 +12,146 @@ define('RELEASE_SSL',2);
  */
 class Context
 {
+
 	/**
 	 * Allow rewrite
 	 * @var bool true: using rewrite mod, false: otherwise
 	 */
 	var $allow_rewrite = false;
+
 	/**
 	 * Request method
 	 * @var string GET|POST|XMLRPC
 	 */
-	var $request_method  = 'GET';
+	var $request_method = 'GET';
+
 	/**
 	 * js callback function name.
 	 * @var string
 	 */
 	var $js_callback_func = '';
+
 	/**
 	 * Response method.If it's not set, it follows request method.
-	 * @var string HTML|XMLRPC 
+	 * @var string HTML|XMLRPC
 	 */
 	var $response_method = '';
+
 	/**
 	 * Conatins request parameters and environment variables
 	 * @var object
 	 */
-	var $context  = NULL;
+	var $context = NULL;
+
 	/**
-	 * DB info 
+	 * DB info
 	 * @var object
 	 */
-	var $db_info  = NULL;
+	var $db_info = NULL;
+
 	/**
-	 * FTP info 
+	 * FTP info
 	 * @var object
 	 */
 	var $ftp_info = NULL;
+
 	/**
 	 * ssl action cache file
 	 * @var array
 	 */
 	var $sslActionCacheFile = './files/cache/sslCacheFile.php';
+
 	/**
 	 * List of actions to be sent via ssl (it is used by javascript xml handler for ajax)
 	 * @var array
 	 */
 	var $ssl_actions = array();
+
 	/**
 	 * obejct oFrontEndFileHandler()
 	 * @var object
 	 */
 	var $oFrontEndFileHandler;
+
 	/**
 	 * script codes in <head>..</head>
 	 * @var string
 	 */
 	var $html_header = NULL;
+
 	/**
 	 * class names of <body>
 	 * @var array
 	 */
-	var $body_class  = array();
+	var $body_class = array();
+
 	/**
 	 * codes after <body>
 	 * @var string
 	 */
 	var $body_header = NULL;
+
 	/**
 	 * class names before </body>
 	 * @var string
 	 */
 	var $html_footer = NULL;
+
 	/**
-	 * path of Xpress Engine 
+	 * path of Xpress Engine
 	 * @var string
 	 */
 	var $path = '';
-
 	// language information - it is changed by HTTP_USER_AGENT or user's cookie
 	/**
-	 * language type 
+	 * language type
 	 * @var string
 	 */
 	var $lang_type = '';
+
 	/**
 	 * contains language-specific data
-	 * @var object 
+	 * @var object
 	 */
 	var $lang = NULL;
+
 	/**
 	 * list of loaded languages (to avoid re-loading them)
 	 * @var array
 	 */
 	var $loaded_lang_files = array();
+
 	/**
 	 * site's browser title
 	 * @var string
 	 */
 	var $site_title = '';
+
 	/**
 	 * variables from GET or form submit
 	 * @var mixed
 	 */
 	var $get_vars = NULL;
+
 	/**
-	 * Checks uploaded 
+	 * Checks uploaded
 	 * @var bool true if attached file exists
 	 */
 	var $is_uploaded = false;
+	/**
+	 * Pattern for request vars check
+	 * @var array
+	 */
+	var $patterns = array(
+			'/<\?/iUsm',
+			'/<\%/iUsm',
+			'/<script\s*?language\s*?=\s*?("|\')?\s*?php\s*("|\')?/iUsm'
+			);
+	/**
+	 * Check init
+	 * @var bool false if init fail
+	 */
+	var $isSuccessInit = true;
 
 	/**
 	 * returns static context object (Singleton). It's to use Context without declaration of an object
@@ -127,17 +161,9 @@ class Context
 	function &getInstance()
 	{
 		static $theInstance = null;
-		if(!$theInstance) $theInstance = new Context();
-
-		// include ssl action cache file
-		$theInstance->sslActionCacheFile = FileHandler::getRealPath($theInstance->sslActionCacheFile);
-		if(is_readable($theInstance->sslActionCacheFile))
+		if(!$theInstance)
 		{
-			require_once($theInstance->sslActionCacheFile);
-			if(isset($sslActions))
-			{
-				$theInstance->ssl_actions = $sslActions;
-			}
+			$theInstance = new Context();
 		}
 
 		return $theInstance;
@@ -151,6 +177,18 @@ class Context
 	function Context()
 	{
 		$this->oFrontEndFileHandler = new FrontEndFileHandler();
+		$this->get_vars = new stdClass();
+
+		// include ssl action cache file
+		$this->sslActionCacheFile = FileHandler::getRealPath($this->sslActionCacheFile);
+		if(is_readable($this->sslActionCacheFile))
+		{
+			require_once($this->sslActionCacheFile);
+			if(isset($sslActions))
+			{
+				$this->ssl_actions = $sslActions;
+			}
+		}
 	}
 
 	/**
@@ -178,8 +216,14 @@ class Context
 		// If XE is installed, get virtual site information
 		if(Context::isInstalled())
 		{
-			$oModuleModel = &getModel('module');
+			$oModuleModel = getModel('module');
 			$site_module_info = $oModuleModel->getDefaultMid();
+
+			if(!isset($site_module_info))
+			{
+				$site_module_info = new stdClass();
+			}
+
 			// if site_srl of site_module_info is 0 (default site), compare the domain to default_url of db_config
 			if($site_module_info->site_srl == 0 && $site_module_info->domain != $this->db_info->default_url)
 			{
@@ -187,11 +231,25 @@ class Context
 			}
 
 			$this->set('site_module_info', $site_module_info);
-			if($site_module_info->site_srl && isSiteID($site_module_info->domain)) $this->set('vid', $site_module_info->domain, true);
+			if($site_module_info->site_srl && isSiteID($site_module_info->domain))
+			{
+				$this->set('vid', $site_module_info->domain, true);
+			}
+
+			if(!isset($this->db_info))
+			{
+				$this->db_info = new stdClass();
+			}
 
 			$this->db_info->lang_type = $site_module_info->default_language;
-			if(!$this->db_info->lang_type) $this->db_info->lang_type = 'en';
-			if(!$this->db_info->use_db_session) $this->db_info->use_db_session = 'N';
+			if(!$this->db_info->lang_type)
+			{
+				$this->db_info->lang_type = 'en';
+			}
+			if(!$this->db_info->use_db_session)
+			{
+				$this->db_info->use_db_session = 'N';
+			}
 		}
 
 		// Load Language File
@@ -203,7 +261,7 @@ class Context
 			$this->lang_type = $this->get('l');
 			if($_COOKIE['lang_type'] != $this->lang_type)
 			{
-				setcookie('lang_type', $this->lang_type, time()+3600*24*1000, '/');
+				setcookie('lang_type', $this->lang_type, time() + 3600 * 24 * 1000, '/');
 			}
 		}
 		elseif($_COOKIE['lang_type'])
@@ -212,43 +270,50 @@ class Context
 		}
 
 		// If it's not exists, follow default language type set in db_info
-		if(!$this->lang_type) $this->lang_type = $this->db_info->lang_type;
+		if(!$this->lang_type)
+		{
+			$this->lang_type = $this->db_info->lang_type;
+		}
 
 		// if still lang_type has not been set or has not-supported type , set as English.
-		if(!$this->lang_type) $this->lang_type = 'en';
-		if(is_array($lang_supported)&&!isset($lang_supported[$this->lang_type])) $this->lang_type = 'en';
+		if(!$this->lang_type)
+		{
+			$this->lang_type = 'en';
+		}
+		if(is_array($lang_supported) && !isset($lang_supported[$this->lang_type]))
+		{
+			$this->lang_type = 'en';
+		}
 
 		$this->set('lang_supported', $lang_supported);
 		$this->setLangType($this->lang_type);
 
 		// load module module's language file according to language setting
-		$this->loadLang(_XE_PATH_.'modules/module/lang');
+		$this->loadLang(_XE_PATH_ . 'modules/module/lang');
 
 		// set session handler
 		if(Context::isInstalled() && $this->db_info->use_db_session == 'Y')
 		{
-			$oSessionModel = &getModel('session');
-			$oSessionController = &getController('session');
+			$oSessionModel = getModel('session');
+			$oSessionController = getController('session');
 			session_set_save_handler(
-					array(&$oSessionController, 'open'),
-					array(&$oSessionController, 'close'),
-					array(&$oSessionModel, 'read'),
-					array(&$oSessionController, 'write'),
-					array(&$oSessionController, 'destroy'),
-					array(&$oSessionController, 'gc')
-					);
+					array(&$oSessionController, 'open'), array(&$oSessionController, 'close'), array(&$oSessionModel, 'read'), array(&$oSessionController, 'write'), array(&$oSessionController, 'destroy'), array(&$oSessionController, 'gc')
+			);
 		}
 		session_start();
-		if($sess=$_POST[session_name()]) session_id($sess);
+		if($sess = $_POST[session_name()])
+		{
+			session_id($sess);
+		}
 
 		// set authentication information in Context and session
 		if(Context::isInstalled())
 		{
-			$oModuleModel = &getModel('module');
+			$oModuleModel = getModel('module');
 			$oModuleModel->loadModuleExtends();
 
-			$oMemberModel = &getModel('member');
-			$oMemberController = &getController('member');
+			$oMemberModel = getModel('member');
+			$oMemberController = getController('member');
 
 			if($oMemberController && $oMemberModel)
 			{
@@ -263,50 +328,56 @@ class Context
 					$oMemberController->doAutologin();
 				}
 
-				$this->set('is_logged', $oMemberModel->isLogged() );
-				$this->set('logged_info', $oMemberModel->getLoggedInfo() );
+				$this->set('is_logged', $oMemberModel->isLogged());
+				$this->set('logged_info', $oMemberModel->getLoggedInfo());
 			}
 		}
 
 		// load common language file
 		$this->lang = &$GLOBALS['lang'];
-		$this->loadLang(_XE_PATH_.'common/lang/');
+		$this->loadLang(_XE_PATH_ . 'common/lang/');
 
 		// check if using rewrite module
-		if(file_exists(_XE_PATH_.'.htaccess')&&$this->db_info->use_rewrite == 'Y') $this->allow_rewrite = true;
-		else $this->allow_rewrite = false;
+		if(file_exists(_XE_PATH_ . '.htaccess') && $this->db_info->use_rewrite == 'Y')
+		{
+			$this->allow_rewrite = true;
+		}
+		else
+		{
+			$this->allow_rewrite = false;
+		}
 
 		// set locations for javascript use
 		if($_SERVER['REQUEST_METHOD'] == 'GET')
 		{
 			if($this->get_vars)
 			{
-				foreach($this->get_vars as $key=>$val)
+				foreach($this->get_vars as $key => $val)
 				{
-					if(is_array($val)&&count($val))
+					if(is_array($val) && count($val))
 					{
 						foreach($val as $k => $v)
 						{
-							$url .= ($url?'&':'').$key.'['.$k.']='.urlencode($v);
+							$url .= ($url ? '&' : '') . $key . '[' . $k . ']=' . urlencode($v);
 						}
 					}
-					elseif ($val)
+					elseif($val)
 					{
-						$url .= ($url?'&':'').$key.'='.urlencode($val);
+						$url .= ($url ? '&' : '') . $key . '=' . urlencode($val);
 					}
 				}
-				$this->set('current_url',sprintf('%s?%s', Context::getRequestUri(), $url));
+				$this->set('current_url', sprintf('%s?%s', Context::getRequestUri(), $url));
 			}
 			else
 			{
-				$this->set('current_url',$this->getUrl());
+				$this->set('current_url', $this->getUrl());
 			}
 		}
 		else
 		{
-			$this->set('current_url',Context::getRequestUri());
+			$this->set('current_url', Context::getRequestUri());
 		}
-		$this->set('request_uri',Context::getRequestUri());
+		$this->set('request_uri', Context::getRequestUri());
 	}
 
 	/**
@@ -317,11 +388,17 @@ class Context
 	function close()
 	{
 		// Session Close
-		if(function_exists('session_write_close')) session_write_close();
+		if(function_exists('session_write_close'))
+		{
+			session_write_close();
+		}
 
 		// DB close
-		$oDB = &DB::getInstance();
-		if(is_object($oDB)&&method_exists($oDB, 'close')) $oDB->close();
+		$oDB = DB::getInstance();
+		if(is_object($oDB) && method_exists($oDB, 'close'))
+		{
+			$oDB->close();
+		}
 	}
 
 	/**
@@ -331,52 +408,74 @@ class Context
 	 */
 	function loadDBInfo()
 	{
-		is_a($this,'Context')?$self=&$this:$self=&Context::getInstance();
+		is_a($this, 'Context') ? $self = $this : $self = Context::getInstance();
 
-		if(!$self->isInstalled()) return;
+		if(!$self->isInstalled())
+		{
+			return;
+		}
 
 		$config_file = $self->getConfigFile();
-		if(is_readable($config_file)) @include($config_file);
+		if(is_readable($config_file))
+		{
+			@include($config_file);
+		}
 
 		// If master_db information does not exist, the config file needs to be updated
 		if(!isset($db_info->master_db))
 		{
 			$db_info->master_db = array();
-			$db_info->master_db["db_type"] = $db_info->db_type; unset($db_info->db_type);
-			$db_info->master_db["db_port"] = $db_info->db_port; unset($db_info->db_port);
-			$db_info->master_db["db_hostname"] = $db_info->db_hostname; unset($db_info->db_hostname);
-			$db_info->master_db["db_password"] = $db_info->db_password; unset($db_info->db_password);
-			$db_info->master_db["db_database"] = $db_info->db_database; unset($db_info->db_database);
-			$db_info->master_db["db_userid"] = $db_info->db_userid; unset($db_info->db_userid);
-			$db_info->master_db["db_table_prefix"] = $db_info->db_table_prefix; unset($db_info->db_table_prefix);
-			if(substr($db_info->master_db["db_table_prefix"],-1)!='_') $db_info->master_db["db_table_prefix"] .= '_';
+			$db_info->master_db["db_type"] = $db_info->db_type;
+			unset($db_info->db_type);
+			$db_info->master_db["db_port"] = $db_info->db_port;
+			unset($db_info->db_port);
+			$db_info->master_db["db_hostname"] = $db_info->db_hostname;
+			unset($db_info->db_hostname);
+			$db_info->master_db["db_password"] = $db_info->db_password;
+			unset($db_info->db_password);
+			$db_info->master_db["db_database"] = $db_info->db_database;
+			unset($db_info->db_database);
+			$db_info->master_db["db_userid"] = $db_info->db_userid;
+			unset($db_info->db_userid);
+			$db_info->master_db["db_table_prefix"] = $db_info->db_table_prefix;
+			unset($db_info->db_table_prefix);
+			if(substr($db_info->master_db["db_table_prefix"], -1) != '_')
+			{
+				$db_info->master_db["db_table_prefix"] .= '_';
+			}
 
 			$slave_db = $db_info->master_db;
 			$db_info->slave_db = array($slave_db);
 
 			$self->setDBInfo($db_info);
 
-			$oInstallController = &getController('install');
+			$oInstallController = getController('install');
 			$oInstallController->makeConfigFile();
 		}
 
-		if(!$db_info->use_prepared_statements) 
+		if(!$db_info->use_prepared_statements)
 		{
 			$db_info->use_prepared_statements = 'Y';
 		}
 
-		if(!$db_info->time_zone) $db_info->time_zone = date('O');
+		if(!$db_info->time_zone)
+			$db_info->time_zone = date('O');
 		$GLOBALS['_time_zone'] = $db_info->time_zone;
 
-		if($db_info->qmail_compatibility != 'Y') $db_info->qmail_compatibility = 'N';
+		if($db_info->qmail_compatibility != 'Y')
+			$db_info->qmail_compatibility = 'N';
 		$GLOBALS['_qmail_compatibility'] = $db_info->qmail_compatibility;
 
-		if(!$db_info->use_db_session) $db_info->use_db_session = 'N';
-		if(!$db_info->use_ssl) $db_info->use_ssl = 'none';
+		if(!$db_info->use_db_session)
+			$db_info->use_db_session = 'N';
+		if(!$db_info->use_ssl)
+			$db_info->use_ssl = 'none';
 		$this->set('_use_ssl', $db_info->use_ssl);
 
-		if($db_info->http_port)  $self->set('_http_port', $db_info->http_port);
-		if($db_info->https_port) $self->set('_https_port', $db_info->https_port);
+		if($db_info->http_port)
+			$self->set('_http_port', $db_info->http_port);
+		if($db_info->https_port)
+			$self->set('_https_port', $db_info->https_port);
 
 		$self->setDBInfo($db_info);
 	}
@@ -388,7 +487,7 @@ class Context
 	 */
 	function getDBType()
 	{
-		is_a($this,'Context')?$self=&$this:$self=&Context::getInstance();
+		is_a($this, 'Context') ? $self = $this : $self = Context::getInstance();
 		return $self->db_info->master_db["db_type"];
 	}
 
@@ -400,7 +499,7 @@ class Context
 	 */
 	function setDBInfo($db_info)
 	{
-		is_a($this,'Context')?$self=&$this:$self=&Context::getInstance();
+		is_a($this, 'Context') ? $self = $this : $self = Context::getInstance();
 		$self->db_info = $db_info;
 	}
 
@@ -411,14 +510,14 @@ class Context
 	 */
 	function getDBInfo()
 	{
-		is_a($this,'Context')?$self=&$this:$self=&Context::getInstance();
+		is_a($this, 'Context') ? $self = $this : $self = Context::getInstance();
 		return $self->db_info;
 	}
 
 	/**
 	 * Return ssl status
 	 *
-	 * @return object SSL status (Optional - none|always|optional) 
+	 * @return object SSL status (Optional - none|always|optional)
 	 */
 	function getSslStatus()
 	{
@@ -447,10 +546,10 @@ class Context
 		static $lang_supported = null;
 		if(!$lang_supported)
 		{
-			$langs = file(_XE_PATH_.'common/lang/lang.info');
+			$langs = file(_XE_PATH_ . 'common/lang/lang.info');
 			foreach($langs as $val)
 			{
-				list($lang_prefix, $lang_text) = explode(',',$val);
+				list($lang_prefix, $lang_text) = explode(',', $val);
 				$lang_text = trim($lang_text);
 				$lang_supported[$lang_prefix] = $lang_text;
 			}
@@ -468,11 +567,11 @@ class Context
 		static $lang_selected = null;
 		if(!$lang_selected)
 		{
-			$orig_lang_file = _XE_PATH_.'common/lang/lang.info';
-			$selected_lang_file = _XE_PATH_.'files/config/lang_selected.info';
+			$orig_lang_file = _XE_PATH_ . 'common/lang/lang.info';
+			$selected_lang_file = _XE_PATH_ . 'files/config/lang_selected.info';
 			if(!FileHandler::hasContent($selected_lang_file))
 			{
-				$old_selected_lang_file = _XE_PATH_.'files/cache/lang_selected.info';
+				$old_selected_lang_file = _XE_PATH_ . 'files/cache/lang_selected.info';
 				FileHandler::moveFile($old_selected_lang_file, $selected_lang_file);
 			}
 
@@ -487,7 +586,7 @@ class Context
 				$langs = file($selected_lang_file);
 				foreach($langs as $val)
 				{
-					list($lang_prefix, $lang_text) = explode(',',$val);
+					list($lang_prefix, $lang_text) = explode(',', $val);
 					$lang_text = trim($lang_text);
 					$lang_selected[$lang_prefix] = $lang_text;
 				}
@@ -504,14 +603,26 @@ class Context
 	function checkSSO()
 	{
 		// pass if it's not GET request or XE is not yet installed
-		if($this->db_info->use_sso != 'Y' || isCrawler()) return true;
-		$checkActList = array('rss'=>1, 'atom'=>1);
-		if(Context::getRequestMethod()!='GET' || !Context::isInstalled() || isset($checkActList[Context::get('act')])) return true;
+		if($this->db_info->use_sso != 'Y' || isCrawler())
+		{
+			return true;
+		}
+		$checkActList = array('rss' => 1, 'atom' => 1);
+		if(Context::getRequestMethod() != 'GET' || !Context::isInstalled() || isset($checkActList[Context::get('act')]))
+		{
+			return true;
+		}
 
 		// pass if default URL is not set
 		$default_url = trim($this->db_info->default_url);
-		if(!$default_url) return true;
-		if(substr($default_url,-1)!='/') $default_url .= '/';
+		if(!$default_url)
+		{
+			return true;
+		}
+		if(substr($default_url, -1) != '/')
+		{
+			$default_url .= '/';
+		}
 
 		// for sites recieving SSO valdiation
 		if($default_url == Context::getRequestUri())
@@ -520,9 +631,9 @@ class Context
 			{
 				$url = base64_decode(Context::get('default_url'));
 				$url_info = parse_url($url);
-				$url_info['query'].= ($url_info['query']?'&':'').'SSOID='.session_id();
-				$redirect_url = sprintf('%s://%s%s%s?%s',$url_info['scheme'],$url_info['host'],$url_info['port']?':'.$url_info['port']:'',$url_info['path'], $url_info['query']);
-				header('location:'.$redirect_url);
+				$url_info['query'].= ($url_info['query'] ? '&' : '') . 'SSOID=' . session_id();
+				$redirect_url = sprintf('%s://%s%s%s?%s', $url_info['scheme'], $url_info['host'], $url_info['port'] ? ':' . $url_info['port'] : '', $url_info['path'], $url_info['query']);
+				header('location:' . $redirect_url);
 				return false;
 			}
 			// for sites requesting SSO validation
@@ -535,16 +646,16 @@ class Context
 				$session_name = Context::get('SSOID');
 				setcookie(session_name(), $session_name);
 
-				$url = preg_replace('/([\?\&])$/','',str_replace('SSOID='.$session_name,'',Context::getRequestUrl()));
-				header('location:'.$url);
+				$url = preg_replace('/([\?\&])$/', '', str_replace('SSOID=' . $session_name, '', Context::getRequestUrl()));
+				header('location:' . $url);
 				return false;
 				// send SSO request
 			}
-			else if($_COOKIE['sso']!=md5(Context::getRequestUri()) && !Context::get('SSOID'))
+			else if($_COOKIE['sso'] != md5(Context::getRequestUri()) && !Context::get('SSOID'))
 			{
-				setcookie('sso',md5(Context::getRequestUri()),0,'/');
+				setcookie('sso', md5(Context::getRequestUri()), 0, '/');
 				$url = sprintf("%s?default_url=%s", $default_url, base64_encode(Context::getRequestUrl()));
-				header('location:'.$url);
+				header('location:' . $url);
 				return false;
 			}
 		}
@@ -560,7 +671,10 @@ class Context
 	function isFTPRegisted()
 	{
 		$ftp_config_file = Context::getFTPConfigFile();
-		if(file_exists($ftp_config_file)) return true;
+		if(file_exists($ftp_config_file))
+		{
+			return true;
+		}
 		return false;
 	}
 
@@ -571,8 +685,11 @@ class Context
 	 */
 	function getFTPInfo()
 	{
-		is_a($this,'Context')?$self=&$this:$self=&Context::getInstance();
-		if(!$self->isFTPRegisted()) return null;
+		is_a($this, 'Context') ? $self = $this : $self = Context::getInstance();
+		if(!$self->isFTPRegisted())
+		{
+			return null;
+		}
 
 		$ftp_config_file = $self->getFTPConfigFile();
 		@include($ftp_config_file);
@@ -588,11 +705,20 @@ class Context
 	 */
 	function addBrowserTitle($site_title)
 	{
-		if(!$site_title) return;
-		is_a($this,'Context')?$self=&$this:$self=&Context::getInstance();
+		if(!$site_title)
+		{
+			return;
+		}
+		is_a($this, 'Context') ? $self = $this : $self = Context::getInstance();
 
-		if($self->site_title) $self->site_title .= ' - '.$site_title;
-		else $self->site_title = $site_title;
+		if($self->site_title)
+		{
+			$self->site_title .= ' - ' . $site_title;
+		}
+		else
+		{
+			$self->site_title = $site_title;
+		}
 	}
 
 	/**
@@ -603,8 +729,11 @@ class Context
 	 */
 	function setBrowserTitle($site_title)
 	{
-		if(!$site_title) return;
-		is_a($this,'Context')?$self=&$this:$self=&Context::getInstance();
+		if(!$site_title)
+		{
+			return;
+		}
+		is_a($this, 'Context') ? $self = $this : $self = Context::getInstance();
 		$self->site_title = $site_title;
 	}
 
@@ -615,18 +744,38 @@ class Context
 	 */
 	function getBrowserTitle()
 	{
-		is_a($this,'Context')?$self=&$this:$self=&Context::getInstance();
+		is_a($this, 'Context') ? $self = $this : $self = Context::getInstance();
 
-		$oModuleController = &getController('module');
+		$oModuleController = getController('module');
 		$oModuleController->replaceDefinedLangCode($self->site_title);
 
 		return htmlspecialchars($self->site_title);
 	}
+
+	/**
+	 * Return layout's title
+	 * @return string layout's title
+	 */
+	public function getSiteTitle()
+	{
+		$oModuleModel = &getModel('module');
+		$moduleConfig = $oModuleModel->getModuleConfig('module');
+
+		if(isset($moduleConfig->siteTitle))
+		{
+			return $moduleConfig->siteTitle;
+		}
+		return '';
+	}
+
 	/**
 	 * Get browser title
 	 * @deprecated
 	 */
-	function _getBrowserTitle() { return $this->getBrowserTitle(); }
+	function _getBrowserTitle()
+	{
+		return $this->getBrowserTitle();
+	}
 
 	/**
 	 * Load language file according to language type
@@ -638,17 +787,32 @@ class Context
 	{
 		global $lang;
 
-		is_a($this,'Context')?$self=&$this:$self=&Context::getInstance();
-		if(!is_object($lang)) $lang = new stdClass;
-		if(!$self->lang_type) return;
+		is_a($this, 'Context') ? $self = $this : $self = Context::getInstance();
+		if(!is_object($lang))
+		{
+			$lang = new stdClass;
+		}
+		if(!$self->lang_type)
+		{
+			return;
+		}
 
 		$filename = $self->_loadXmlLang($path);
-		if(!$filename) $filename = $self->_loadPhpLang($path);
+		if(!$filename)
+		{
+			$filename = $self->_loadPhpLang($path);
+		}
 
-		if(!is_array($self->loaded_lang_files)) $self->loaded_lang_files = array();
-		if(in_array($filename, $self->loaded_lang_files)) return;
+		if(!is_array($self->loaded_lang_files))
+		{
+			$self->loaded_lang_files = array();
+		}
+		if(in_array($filename, $self->loaded_lang_files))
+		{
+			return;
+		}
 
-		if ($filename && is_readable($filename))
+		if($filename && is_readable($filename))
 		{
 			$self->loaded_lang_files[] = $filename;
 			@include($filename);
@@ -669,17 +833,23 @@ class Context
 	{
 		global $lang;
 
-		$_path = 'eval://'.$path;
+		$_path = 'eval://' . $path;
 
-		if(in_array($_path, $this->loaded_lang_files)) return;
+		if(in_array($_path, $this->loaded_lang_files))
+		{
+			return;
+		}
 
-		if(substr($path,-1)!='/') $path .= '/';
-		$file = $path.'lang.xml';
+		if(substr($path, -1) != '/')
+		{
+			$path .= '/';
+		}
+		$file = $path . 'lang.xml';
 
 		$oXmlLangParser = new XmlLangParser($file, $this->lang_type);
 		$content = $oXmlLangParser->getCompileContent();
 
-		if ($content)
+		if($content)
 		{
 			$this->loaded_lang_files[] = $_path;
 			eval($content);
@@ -694,8 +864,11 @@ class Context
 	 */
 	function _loadXmlLang($path)
 	{
-		if(substr($path,-1)!='/') $path .= '/';
-		$file = $path.'lang.xml';
+		if(substr($path, -1) != '/')
+		{
+			$path .= '/';
+		}
+		$file = $path . 'lang.xml';
 
 		$oXmlLangParser = new XmlLangParser($file, $this->lang_type);
 		$file = $oXmlLangParser->compile();
@@ -711,17 +884,23 @@ class Context
 	 */
 	function _loadPhpLang($path)
 	{
-		if(substr($path,-1)!='/') $path .= '/';
-		$path_tpl = $path.'%s.lang.php';
+		if(substr($path, -1) != '/')
+		{
+			$path .= '/';
+		}
+		$path_tpl = $path . '%s.lang.php';
 		$file = sprintf($path_tpl, $this->lang_type);
 
-		$langs = array('ko','en'); // this will be configurable.
+		$langs = array('ko', 'en'); // this will be configurable.
 		while(!is_readable($file) && $langs[0])
 		{
 			$file = sprintf($path_tpl, array_shift($langs));
 		}
 
-		if(!is_readable($file)) return false;
+		if(!is_readable($file))
+		{
+			return false;
+		}
 		return $file;
 	}
 
@@ -733,7 +912,7 @@ class Context
 	 */
 	function setLangType($lang_type = 'ko')
 	{
-		is_a($this,'Context')?$self=&$this:$self=&Context::getInstance();
+		is_a($this, 'Context') ? $self = $this : $self = Context::getInstance();
 
 		$self->lang_type = $lang_type;
 		$self->set('lang_type', $lang_type);
@@ -748,7 +927,7 @@ class Context
 	 */
 	function getLangType()
 	{
-		is_a($this,'Context')?$self=&$this:$self=&Context::getInstance();
+		is_a($this, 'Context') ? $self = $this : $self = Context::getInstance();
 		return $self->lang_type;
 	}
 
@@ -760,8 +939,14 @@ class Context
 	 */
 	function getLang($code)
 	{
-		if(!$code) return;
-		if($GLOBALS['lang']->{$code}) return $GLOBALS['lang']->{$code};
+		if(!$code)
+		{
+			return;
+		}
+		if($GLOBALS['lang']->{$code})
+		{
+			return $GLOBALS['lang']->{$code};
+		}
 		return $code;
 	}
 
@@ -774,6 +959,10 @@ class Context
 	 */
 	function setLang($code, $val)
 	{
+		if(isset($GLOBALS['lang']))
+		{
+			$GLOBALS['lang'] = new stdClass();
+		}
 		$GLOBALS['lang']->{$code} = $val;
 	}
 
@@ -786,68 +975,78 @@ class Context
 	function convertEncoding($source_obj)
 	{
 		$charset_list = array(
-				'UTF-8', 'EUC-KR', 'CP949', 'ISO8859-1', 'EUC-JP', 'SHIFT_JIS', 'CP932',
-				'EUC-CN', 'HZ', 'GBK', 'GB18030', 'EUC-TW', 'BIG5', 'CP950', 'BIG5-HKSCS',
-				'ISO2022-CN', 'ISO2022-CN-EXT', 'ISO2022-JP', 'ISO2022-JP-2', 'ISO2022-JP-1',
-				'ISO8859-6', 'ISO8859-8', 'JOHAB', 'ISO2022-KR', 'CP1255', 'CP1256', 'CP862',
-				'ASCII', 'ISO8859-1', 'ISO8850-2', 'ISO8850-3', 'ISO8850-4', 'ISO8850-5',
-				'ISO8850-7', 'ISO8850-9', 'ISO8850-10', 'ISO8850-13', 'ISO8850-14',
-				'ISO8850-15', 'ISO8850-16', 'CP1250', 'CP1251', 'CP1252', 'CP1253', 'CP1254',
-				'CP1257', 'CP850', 'CP866',
-				);
+			'UTF-8', 'EUC-KR', 'CP949', 'ISO8859-1', 'EUC-JP', 'SHIFT_JIS', 'CP932',
+			'EUC-CN', 'HZ', 'GBK', 'GB18030', 'EUC-TW', 'BIG5', 'CP950', 'BIG5-HKSCS',
+			'ISO2022-CN', 'ISO2022-CN-EXT', 'ISO2022-JP', 'ISO2022-JP-2', 'ISO2022-JP-1',
+			'ISO8859-6', 'ISO8859-8', 'JOHAB', 'ISO2022-KR', 'CP1255', 'CP1256', 'CP862',
+			'ASCII', 'ISO8859-1', 'ISO8850-2', 'ISO8850-3', 'ISO8850-4', 'ISO8850-5',
+			'ISO8850-7', 'ISO8850-9', 'ISO8850-10', 'ISO8850-13', 'ISO8850-14',
+			'ISO8850-15', 'ISO8850-16', 'CP1250', 'CP1251', 'CP1252', 'CP1253', 'CP1254',
+			'CP1257', 'CP850', 'CP866',
+		);
 
-		$obj = clone($source_obj);
+		$obj = clone $source_obj;
 
 		foreach($charset_list as $charset)
 		{
-			$flag = true;
-			foreach($obj as $key=>$val)
-			{
-				if(!$val) continue;
-				if(!is_array($val) && iconv($charset,$charset,$val)!=$val) $flag = false;
-				else if(is_array($val))
-				{
-					$userdata = array('charset1'=>$charset,'charset2'=>$charset,'useFlag'=>true);
-					Context::arrayConvWalkCallback($val,null,$userdata);
-					if($userdata['returnFlag'] === false) $flag = false;
-				}
-			}
+			array_walk($obj,'Context::checkConvertFlag',$charset);
+			$flag = Context::checkConvertFlag($flag = true);
 			if($flag)
 			{
-				if($charset == 'UTF-8') return $obj;
-				foreach($obj as $key => $val)
+				if($charset == 'UTF-8')
 				{
-					if(!is_array($val)) $obj->{$key} = iconv($charset,'UTF-8',$val);
-					else Context::arrayConvWalkCallback($val,null,array($charset,'UTF-8'));
+					return $obj;
 				}
-
+				array_walk($obj,'Context::doConvertEncoding',$charset);
 				return $obj;
 			}
 		}
-
 		return $obj;
 	}
 
 	/**
-	 * Convert array type variables into UTF-8 
+	 * Check flag
 	 *
 	 * @param mixed $val
 	 * @param string $key
-	 * @param mixed $userdata charset1 charset2 useFlag retrunFlag
+	 * @param mixed $charset charset
+	 * @see arrayConvWalkCallback will replaced array_walk_recursive in >=PHP5
+	 * @return void
+	 */
+	function checkConvertFlag(&$val, $key = null, $charset = null)
+	{
+		static $flag = true;
+		if($charset)
+		{
+			if(is_array($val))
+				array_walk($val,'Context::checkConvertFlag',$charset);
+			else if($val && iconv($charset,$charset,$val)!=$val) $flag = false;
+			else $flag = false;
+		}
+		else
+		{
+			$return = $flag;
+			$flag = true;
+			return $return;
+		}
+	}
+
+	/**
+	 * Convert array type variables into UTF-8
+	 *
+	 * @param mixed $val
+	 * @param string $key
+	 * @param string $charset character set
 	 * @see arrayConvWalkCallback will replaced array_walk_recursive in >=PHP5
 	 * @return object converted object
 	 */
-	function arrayConvWalkCallback(&$val, $key = null, &$userdata)
+	function doConvertEncoding(&$val, $key = null, $charset)
 	{
-		if (is_array($val)) array_walk($val,'Context::arrayConvWalkCallback', $userdata);
-		else 
+		if (is_array($val))
 		{
-			if(!$userdata['useFlag']) $val = iconv($userdata['charset1'],$userdata['charset2'],$val);
-			else
-			{
-				if(iconv($charset,$charset,$val)!=$val) $userdata['returnFlag'] = (bool)false;
-			}
+			array_walk($val,'Context::doConvertEncoding',$charset);
 		}
+		else $val = iconv($charset,'UTF-8',$val);
 	}
 
 	/**
@@ -858,6 +1057,7 @@ class Context
 	 */
 	function convertEncodingStr($str)
 	{
+		$obj = new stdClass();
 		$obj->str = $str;
 		$obj = Context::convertEncoding($obj);
 		return $obj->str;
@@ -869,11 +1069,11 @@ class Context
 	 * @param string $method Response method. [HTML|XMLRPC|JSON]
 	 * @return void
 	 */
-	function setResponseMethod($method='HTML')
+	function setResponseMethod($method = 'HTML')
 	{
-		is_a($this,'Context')?$self=&$this:$self=&Context::getInstance();
+		is_a($this, 'Context') ? $self = $this : $self = Context::getInstance();
 
-		$methods = array('HTML'=>1, 'XMLRPC'=>1, 'JSON'=>1, 'JS_CALLBACK' => 1);
+		$methods = array('HTML' => 1, 'XMLRPC' => 1, 'JSON' => 1, 'JS_CALLBACK' => 1);
 		$self->response_method = isset($methods[$method]) ? $method : 'HTML';
 	}
 
@@ -884,12 +1084,15 @@ class Context
 	 */
 	function getResponseMethod()
 	{
-		is_a($this,'Context')?$self=&$this:$self=&Context::getInstance();
+		is_a($this, 'Context') ? $self = $this : $self = Context::getInstance();
 
-		if($self->response_method) return $self->response_method;
+		if($self->response_method)
+		{
+			return $self->response_method;
+		}
 
-		$method  = $self->getRequestMethod();
-		$methods = array('HTML'=>1, 'XMLRPC'=>1, 'JSON'=>1, 'JS_CALLBACK' => 1);
+		$method = $self->getRequestMethod();
+		$methods = array('HTML' => 1, 'XMLRPC' => 1, 'JSON' => 1, 'JS_CALLBACK' => 1);
 
 		return isset($methods[$method]) ? $method : 'HTML';
 	}
@@ -900,17 +1103,17 @@ class Context
 	 * @param string $type Request method. (Optional - GET|POST|XMLRPC|JSON)
 	 * @return void
 	 */
-	function setRequestMethod($type='')
+	function setRequestMethod($type = '')
 	{
-		is_a($this,'Context')?$self=&$this:$self=&Context::getInstance();
+		is_a($this, 'Context') ? $self = $this : $self = Context::getInstance();
 
 		$self->js_callback_func = isset($_GET['xe_js_callback']) ? $_GET['xe_js_callback'] : $_POST['xe_js_callback'];
 
-		($type && $self->request_method=$type) or
-			(strpos($_SERVER['CONTENT_TYPE'],'json') && $self->request_method='JSON') or
-			($GLOBALS['HTTP_RAW_POST_DATA'] && $self->request_method='XMLRPC') or
-			($self->js_callback_func && $self->request_method='JS_CALLBACK') or
-			($self->request_method = $_SERVER['REQUEST_METHOD']);
+		($type && $self->request_method = $type) or
+				(strpos($_SERVER['CONTENT_TYPE'], 'json') && $self->request_method = 'JSON') or
+				($GLOBALS['HTTP_RAW_POST_DATA'] && $self->request_method = 'XMLRPC') or
+				($self->js_callback_func && $self->request_method = 'JS_CALLBACK') or
+				($self->request_method = $_SERVER['REQUEST_METHOD']);
 	}
 
 	/**
@@ -920,26 +1123,65 @@ class Context
 	 */
 	function _setRequestArgument()
 	{
-		if(!count($_REQUEST)) return;
+		if(!count($_REQUEST))
+		{
+			return;
+		}
 
 		foreach($_REQUEST as $key => $val)
 		{
-			if($val === '' || Context::get($key)) continue;
+			if($val === '' || Context::get($key))
+			{
+				continue;
+			}
 			$val = $this->_filterRequestVar($key, $val);
 
-			if($this->getRequestMethod()=='GET'&&isset($_GET[$key])) $set_to_vars = true;
-			elseif($this->getRequestMethod()=='POST'&&isset($_POST[$key])) $set_to_vars = true;
-			elseif($this->getRequestMethod()=='JS_CALLBACK' && (isset($_GET[$key]) || isset($_POST[$key]))) $set_to_vars = true;
-			else $set_to_vars = false;
+			if($this->getRequestMethod() == 'GET' && isset($_GET[$key]))
+			{
+				$set_to_vars = true;
+			}
+			elseif($this->getRequestMethod() == 'POST' && isset($_POST[$key]))
+			{
+				$set_to_vars = true;
+			}
+			elseif($this->getRequestMethod() == 'JS_CALLBACK' && (isset($_GET[$key]) || isset($_POST[$key])))
+			{
+				$set_to_vars = true;
+			}
+			else
+			{
+				$set_to_vars = false;
+			}
 
 			if($set_to_vars)
 			{
-				$val = preg_replace('/<\?/i', '', $val);
-				$val = preg_replace('/<\%/i', '', $val);
-				$val = preg_replace('/<script\s+language\s*=\s*("|\')php("|\')\s*>/ism', '', $val);
+				$this->_recursiveCheckVar($val);
 			}
 
 			$this->set($key, $val, $set_to_vars);
+		}
+	}
+
+	function _recursiveCheckVar($val)
+	{
+		if(is_string($val))
+		{
+			foreach($this->patterns as $pattern)
+			{
+				$result = preg_match($pattern, $val);
+				if($result)
+				{
+					$this->isSuccessInit = FALSE;
+					return;
+				}
+			}
+		}
+		else if(is_array($val))
+		{
+			foreach($val as $val2)
+			{
+				$this->_recursiveCheckVar($val2);
+			}
 		}
 	}
 
@@ -950,14 +1192,17 @@ class Context
 	 */
 	function _setJSONRequestArgument()
 	{
-		if($this->getRequestMethod() != 'JSON') return;
+		if($this->getRequestMethod() != 'JSON')
+		{
+			return;
+		}
 
 		$params = array();
-		parse_str($GLOBALS['HTTP_RAW_POST_DATA'],$params);
+		parse_str($GLOBALS['HTTP_RAW_POST_DATA'], $params);
 
 		foreach($params as $key => $val)
 		{
-			$val = $this->_filterRequestVar($key, $val,0);
+			$val = $this->_filterRequestVar($key, $val, 1);
 			$this->set($key, $val, true);
 		}
 	}
@@ -969,7 +1214,10 @@ class Context
 	 */
 	function _setXmlRpcArgument()
 	{
-		if($this->getRequestMethod() != 'XMLRPC') return;
+		if($this->getRequestMethod() != 'XMLRPC')
+		{
+			return;
+		}
 		$oXml = new XmlParser();
 		$xml_obj = $oXml->parse();
 
@@ -977,10 +1225,13 @@ class Context
 		unset($params->node_name);
 
 		unset($params->attrs);
-		if(!count($params)) return;
+		if(!count($params))
+		{
+			return;
+		}
 		foreach($params as $key => $obj)
 		{
-			$val = $this->_filterRequestVar($key, $obj->body,0);
+			$val = $this->_filterRequestVar($key, $obj->body, 0);
 			$this->set($key, $val, true);
 		}
 	}
@@ -1007,7 +1258,7 @@ class Context
 		{
 			if($key === 'page' || $key === 'cpage' || substr($key, -3) === 'srl')
 			{
-				$val[$k] = !preg_match('/^[0-9,]+$/', $v) ? (int)$v : $v;
+				$val[$k] = !preg_match('/^[0-9,]+$/', $v) ? (int) $v : $v;
 			}
 			elseif($key === 'mid' || $key === 'vid' || $key === 'search_keyword')
 			{
@@ -1044,7 +1295,7 @@ class Context
 	 */
 	function isUploaded()
 	{
-		is_a($this,'Context')?$self=&$this:$self=&Context::getInstance();
+		is_a($this, 'Context') ? $self = $this : $self = Context::getInstance();
 		return $self->is_uploaded;
 	}
 
@@ -1055,31 +1306,43 @@ class Context
 	 */
 	function _setUploadedArgument()
 	{
-		if($_SERVER['REQUEST_METHOD'] != 'POST') return;
-		if(!preg_match('/multipart\/form-data/i',$_SERVER['CONTENT_TYPE'])) return;
-		if(!$_FILES) return;
+		if($_SERVER['REQUEST_METHOD'] != 'POST')
+		{
+			return;
+		}
+		if(!preg_match('/multipart\/form-data/i', $_SERVER['CONTENT_TYPE']))
+		{
+			return;
+		}
+		if(!$_FILES)
+		{
+			return;
+		}
 
 		foreach($_FILES as $key => $val)
 		{
 			$tmp_name = $val['tmp_name'];
 			if(!is_array($tmp_name))
 			{
-				if(!$tmp_name || !is_uploaded_file($tmp_name)) continue;
+				if(!$tmp_name || !is_uploaded_file($tmp_name))
+				{
+					continue;
+				}
 				$val['name'] = htmlspecialchars($val['name']);
 				$this->set($key, $val, true);
 				$this->is_uploaded = true;
 			}
 			else
 			{
-				for($i=0;$i< count($tmp_name);$i++)
+				for($i = 0; $i < count($tmp_name); $i++)
 				{
 					if($val['size'][$i] > 0)
 					{
-						$file['name']=$val['name'][$i];
-						$file['type']=$val['type'][$i];
-						$file['tmp_name']=$val['tmp_name'][$i];
-						$file['error']=$val['error'][$i];
-						$file['size']=$val['size'][$i];
+						$file['name'] = $val['name'][$i];
+						$file['type'] = $val['type'][$i];
+						$file['tmp_name'] = $val['tmp_name'][$i];
+						$file['error'] = $val['error'][$i];
+						$file['size'] = $val['size'][$i];
 						$files[] = $file;
 					}
 				}
@@ -1094,7 +1357,7 @@ class Context
 	 */
 	function getRequestMethod()
 	{
-		is_a($this,'Context')?$self=&$this:$self=&Context::getInstance();
+		is_a($this, 'Context') ? $self = $this : $self = Context::getInstance();
 		return $self->request_method;
 	}
 
@@ -1126,7 +1389,7 @@ class Context
 	 */
 	function getJSCallbackFunc()
 	{
-		is_a($this,'Context')?$self=&$this:$self=&Context::getInstance();
+		is_a($this, 'Context') ? $self = $this : $self = Context::getInstance();
 		return $self->js_callback_func;
 	}
 
@@ -1140,15 +1403,18 @@ class Context
 	 * @param bool $autoEncode If true, url encode automatically, detailed. Use this option, $encode value should be true
 	 * @return string URL
 	 */
-	function getUrl($num_args=0, $args_list=array(), $domain = null, $encode = true, $autoEncode = false)
+	function getUrl($num_args = 0, $args_list = array(), $domain = null, $encode = true, $autoEncode = false)
 	{
 		static $site_module_info = null;
 		static $current_info = null;
 
-		is_a($this,'Context')?$self=&$this:$self=&Context::getInstance();
+		is_a($this, 'Context') ? $self = $this : $self = Context::getInstance();
 
 		// retrieve virtual site information
-		if(is_null($site_module_info)) $site_module_info = Context::get('site_module_info');
+		if(is_null($site_module_info))
+		{
+			$site_module_info = Context::get('site_module_info');
+		}
 
 		// If $domain is set, handle it (if $domain is vid type, remove $domain and handle with $vid)
 		if($domain && isSiteID($domain))
@@ -1160,33 +1426,48 @@ class Context
 		// If $domain, $vid are not set, use current site information
 		if(!$domain && !$vid)
 		{
-			if($site_module_info->domain && isSiteID($site_module_info->domain)) $vid = $site_module_info->domain;
-			else $domain = $site_module_info->domain;
+			if($site_module_info->domain && isSiteID($site_module_info->domain))
+			{
+				$vid = $site_module_info->domain;
+			}
+			else
+			{
+				$domain = $site_module_info->domain;
+			}
 		}
 
 		// if $domain is set, compare current URL. If they are same, remove the domain, otherwise link to the domain.
 		if($domain)
 		{
 			$domain_info = parse_url($domain);
-			if(is_null($current_info)) $current_info = parse_url(($_SERVER['HTTPS']=='on'?'https':'http').'://'.$_SERVER['HTTP_HOST'].getScriptPath());
-			if($domain_info['host'].$domain_info['path']==$current_info['host'].$current_info['path'])
+			if(is_null($current_info))
+			{
+				$current_info = parse_url(($_SERVER['HTTPS'] == 'on' ? 'https' : 'http') . '://' . $_SERVER['HTTP_HOST'] . getScriptPath());
+			}
+			if($domain_info['host'] . $domain_info['path'] == $current_info['host'] . $current_info['path'])
 			{
 				unset($domain);
 			}
 			else
 			{
-				$domain = preg_replace('/^(http|https):\/\//i','', trim($domain));
-					if(substr($domain,-1) != '/') $domain .= '/';
+				$domain = preg_replace('/^(http|https):\/\//i', '', trim($domain));
+				if(substr($domain, -1) != '/')
+				{
+					$domain .= '/';
+				}
 			}
 		}
 
 		$get_vars = null;
 
 		// If there is no GET variables or first argument is '' to reset variables
-		if(!$self->get_vars || $args_list[0]=='')
+		if(!$self->get_vars || $args_list[0] == '')
 		{
 			// rearrange args_list
-			if(is_array($args_list) && $args_list[0]=='') array_shift($args_list);
+			if(is_array($args_list) && $args_list[0] == '')
+			{
+				array_shift($args_list);
+			}
 		}
 		else
 		{
@@ -1195,10 +1476,10 @@ class Context
 		}
 
 		// arrange args_list
-		for($i=0,$c=count($args_list);$i<$c;$i=$i+2)
+		for($i = 0, $c = count($args_list); $i < $c; $i = $i + 2)
 		{
 			$key = $args_list[$i];
-			$val = trim($args_list[$i+1]);
+			$val = trim($args_list[$i + 1]);
 
 			// If value is not set, remove the key
 			if(!isset($val) || !strlen($val))
@@ -1212,18 +1493,27 @@ class Context
 
 		// remove vid, rnd
 		unset($get_vars['rnd']);
-		if($vid) $get_vars['vid'] = $vid;
-		else unset($get_vars['vid']);
+		if($vid)
+		{
+			$get_vars['vid'] = $vid;
+		}
+		else
+		{
+			unset($get_vars['vid']);
+		}
 
 		// for compatibility to lower versions
 		$act = $get_vars['act'];
 		$act_alias = array(
-				'dispMemberFriend'=>'dispCommunicationFriend',
-				'dispMemberMessages'=>'dispCommunicationMessages',
-				'dispDocumentAdminManageDocument'=>'dispDocumentManageDocument',
-				'dispModuleAdminSelectList'=>'dispModuleSelectList'
-				);
-		if($act_alias[$act]) $get_vars['act'] = $act_alias[$act];
+			'dispMemberFriend' => 'dispCommunicationFriend',
+			'dispMemberMessages' => 'dispCommunicationMessages',
+			'dispDocumentAdminManageDocument' => 'dispDocumentManageDocument',
+			'dispModuleAdminSelectList' => 'dispModuleSelectList'
+		);
+		if($act_alias[$act])
+		{
+			$get_vars['act'] = $act_alias[$act];
+		}
 
 		// organize URL
 		$query = '';
@@ -1243,31 +1533,28 @@ class Context
 				$key = $get_vars['key'];
 				$srl = $get_vars['document_srl'];
 
-				$tmpArray = array('rss'=>1, 'atom'=>1, 'api'=>1);
+				$tmpArray = array('rss' => 1, 'atom' => 1, 'api' => 1);
 				$is_feed = isset($tmpArray[$act]);
 
 				$target_map = array(
-						'vid'=>$vid,
-						'mid'=>$mid,
-						'mid.vid'=>"$vid/$mid",
+					'vid' => $vid,
+					'mid' => $mid,
+					'mid.vid' => "$vid/$mid",
+					'entry.mid' => "$mid/entry/" . $get_vars['entry'],
+					'entry.mid.vid' => "$vid/$mid/entry/" . $get_vars['entry'],
+					'document_srl' => $srl,
+					'document_srl.mid' => "$mid/$srl",
+					'document_srl.vid' => "$vid/$srl",
+					'document_srl.mid.vid' => "$vid/$mid/$srl",
+					'act.mid' => $is_feed ? "$mid/$act" : '',
+					'act.mid.vid' => $is_feed ? "$vid/$mid/$act" : '',
+					'act.document_srl.key' => ($act == 'trackback') ? "$srl/$key/$act" : '',
+					'act.document_srl.key.mid' => ($act == 'trackback') ? "$mid/$srl/$key/$act" : '',
+					'act.document_srl.key.vid' => ($act == 'trackback') ? "$vid/$srl/$key/$act" : '',
+					'act.document_srl.key.mid.vid' => ($act == 'trackback') ? "$vid/$mid/$srl/$key/$act" : ''
+				);
 
-						'entry.mid'    =>"$mid/entry/".$get_vars['entry'],
-						'entry.mid.vid'=>"$vid/$mid/entry/".$get_vars['entry'],
-
-						'document_srl'=>$srl,
-						'document_srl.mid'=>"$mid/$srl",
-						'document_srl.vid'=>"$vid/$srl",
-						'document_srl.mid.vid'=>"$vid/$mid/$srl",
-
-						'act.mid'    =>$is_feed?"$mid/$act":'',
-						'act.mid.vid'=>$is_feed?"$vid/$mid/$act":'',
-						'act.document_srl.key'    =>($act=='trackback')?"$srl/$key/$act":'',
-						'act.document_srl.key.mid'=>($act=='trackback')?"$mid/$srl/$key/$act":'',
-						'act.document_srl.key.vid'=>($act=='trackback')?"$vid/$srl/$key/$act":'',
-						'act.document_srl.key.mid.vid'=>($act=='trackback')?"$vid/$mid/$srl/$key/$act":''
-						);
-
-				$query  = $target_map[$target];
+				$query = $target_map[$target];
 			}
 
 			if(!$query)
@@ -1277,14 +1564,20 @@ class Context
 				{
 					if(is_array($val) && count($val))
 					{
-						foreach($val as $k => $v) $queries[] = $key.'['.$k.']='.urlencode($v);
+						foreach($val as $k => $v)
+						{
+							$queries[] = $key . '[' . $k . ']=' . urlencode($v);
+						}
 					}
 					else
 					{
-						$queries[] = $key.'='.@urlencode($val);
+						$queries[] = $key . '=' . @urlencode($val);
 					}
 				}
-				if(count($queries)) $query = 'index.php?'.implode('&', $queries);
+				if(count($queries))
+				{
+					$query = 'index.php?' . implode('&', $queries);
+				}
 			}
 		}
 
@@ -1292,44 +1585,56 @@ class Context
 		$_use_ssl = $self->get('_use_ssl');
 		if($_use_ssl == 'always')
 		{
-			$query = $self->getRequestUri(ENFORCE_SSL, $domain).$query;
+			$query = $self->getRequestUri(ENFORCE_SSL, $domain) . $query;
 			// optional SSL use
 		}
 		elseif($_use_ssl == 'optional')
 		{
 			$ssl_mode = RELEASE_SSL;
-			if($get_vars['act'] && $self->isExistsSSLAction($get_vars['act'])) $ssl_mode = ENFORCE_SSL;
-			$query = $self->getRequestUri($ssl_mode, $domain).$query;
+			if($get_vars['act'] && $self->isExistsSSLAction($get_vars['act']))
+			{
+				$ssl_mode = ENFORCE_SSL;
+			}
+			$query = $self->getRequestUri($ssl_mode, $domain) . $query;
 			// no SSL
 		}
 		else
 		{
 			// currently on SSL but target is not based on SSL
-			if($_SERVER['HTTPS']=='on' ) $query = $self->getRequestUri(ENFORCE_SSL, $domain).$query;
+			if($_SERVER['HTTPS'] == 'on')
+			{
+				$query = $self->getRequestUri(ENFORCE_SSL, $domain) . $query;
+			}
 
 			// if $domain is set
-			else if($domain) $query = $self->getRequestUri(FOLLOW_REQUEST_SSL, $domain).$query;
+			else if($domain)
+			{
+				$query = $self->getRequestUri(FOLLOW_REQUEST_SSL, $domain) . $query;
+			}
 
-			else $query = getScriptPath().$query;
+			else
+			{
+				$query = getScriptPath() . $query;
+			}
 		}
 
-		if ($encode)
+		if($encode)
 		{
 			if($autoEncode)
 			{
 				$parsedUrl = parse_url($query);
 				parse_str($parsedUrl['query'], $output);
 				$encode_queries = array();
-				foreach($output as $key=>$value)
+				foreach($output as $key => $value)
 				{
-					if (preg_match('/&([a-z]{2,}|#\d+);/', urldecode($value)))
+					if(preg_match('/&([a-z]{2,}|#\d+);/', urldecode($value)))
 					{
 						$value = urlencode(htmlspecialchars_decode(urldecode($value)));
 					}
-					$encode_queries[] = $key.'='.$value;
+					$encode_queries[] = $key . '=' . $value;
 				}
 				$encode_query = implode('&', $encode_queries);
-				return htmlspecialchars($parsedUrl['path'].'?'.$encode_query);
+				return htmlspecialchars($parsedUrl['path'] . '?' . $encode_query);
 			}
 			else
 			{
@@ -1338,7 +1643,7 @@ class Context
 		}
 		else
 		{
-			return $query;		
+			return $query;
 		}
 	}
 
@@ -1354,34 +1659,56 @@ class Context
 		static $url = array();
 
 		// HTTP Request가 아니면 패스
-		if(!isset($_SERVER['SERVER_PROTOCOL'])) return ;
-		if(Context::get('_use_ssl') == 'always') $ssl_mode = ENFORCE_SSL;
+		if(!isset($_SERVER['SERVER_PROTOCOL']))
+		{
+			return;
+		}
 
-		if($domain) $domain_key = md5($domain);
-		else $domain_key = 'default';
+		if(Context::get('_use_ssl') == 'always')
+		{
+			$ssl_mode = ENFORCE_SSL;
+		}
 
-		if(isset($url[$ssl_mode][$domain_key])) return $url[$ssl_mode][$domain_key];
+		if($domain)
+		{
+			$domain_key = md5($domain);
+		}
+		else
+		{
+			$domain_key = 'default';
+		}
 
-		$current_use_ssl = $_SERVER['HTTPS']=='on' ? true : false;
+		if(isset($url[$ssl_mode][$domain_key]))
+		{
+			return $url[$ssl_mode][$domain_key];
+		}
+
+		$current_use_ssl = $_SERVER['HTTPS'] == 'on' ? true : false;
 
 		switch($ssl_mode)
 		{
-			case FOLLOW_REQUEST_SSL: $use_ssl = $current_use_ssl; break;
-			case ENFORCE_SSL: $use_ssl = true;  break;
-			case RELEASE_SSL: $use_ssl = false; break;
+			case FOLLOW_REQUEST_SSL: $use_ssl = $current_use_ssl;
+				break;
+			case ENFORCE_SSL: $use_ssl = true;
+				break;
+			case RELEASE_SSL: $use_ssl = false;
+				break;
 		}
 
 		if($domain)
 		{
 			$target_url = trim($domain);
-			if(substr($target_url,-1) != '/') $target_url.= '/';
+			if(substr($target_url, -1) != '/')
+			{
+				$target_url.= '/';
+			}
 		}
 		else
 		{
-			$target_url= $_SERVER['HTTP_HOST'].getScriptPath();
+			$target_url = $_SERVER['HTTP_HOST'] . getScriptPath();
 		}
 
-		$url_info = parse_url('http://'.$target_url);
+		$url_info = parse_url('http://' . $target_url);
 
 		if($current_use_ssl != $use_ssl)
 		{
@@ -1391,17 +1718,29 @@ class Context
 		if($use_ssl)
 		{
 			$port = Context::get('_https_port');
-			if($port && $port != 443)      $url_info['port'] = $port;
-			elseif($url_info['port']==443) unset($url_info['port']);
+			if($port && $port != 443)
+			{
+				$url_info['port'] = $port;
+			}
+			elseif($url_info['port'] == 443)
+			{
+				unset($url_info['port']);
+			}
 		}
 		else
 		{
 			$port = Context::get('_http_port');
-			if($port && $port != 80)      $url_info['port'] = $port;
-			elseif($url_info['port']==80) unset($url_info['port']);
+			if($port && $port != 80)
+			{
+				$url_info['port'] = $port;
+			}
+			elseif($url_info['port'] == 80)
+			{
+				unset($url_info['port']);
+			}
 		}
 
-		$url[$ssl_mode][$domain_key] = sprintf('%s://%s%s%s',$use_ssl?'https':$url_info['scheme'], $url_info['host'], $url_info['port']&&$url_info['port']!=80?':'.$url_info['port']:'',$url_info['path']);
+		$url[$ssl_mode][$domain_key] = sprintf('%s://%s%s%s', $use_ssl ? 'https' : $url_info['scheme'], $url_info['host'], $url_info['port'] && $url_info['port'] != 80 ? ':' . $url_info['port'] : '', $url_info['path']);
 
 		return $url[$ssl_mode][$domain_key];
 	}
@@ -1414,17 +1753,23 @@ class Context
 	 * @param mixed $set_to_get_vars If not false, Set to get vars.
 	 * @return void
 	 */
-	function set($key, $val, $set_to_get_vars=0)
+	function set($key, $val, $set_to_get_vars = 0)
 	{
-		is_a($this,'Context')?$self=&$this:$self=&Context::getInstance();
+		is_a($this, 'Context') ? $self = $this : $self = Context::getInstance();
 		$self->context->{$key} = $val;
-		if($set_to_get_vars === false) return;
+		if($set_to_get_vars === false)
+		{
+			return;
+		}
 		if($val === NULL || $val === '')
 		{
 			unset($self->get_vars->{$key});
 			return;
 		}
-		if($set_to_get_vars || $self->get_vars->{$key}) $self->get_vars->{$key} = $val;
+		if($set_to_get_vars || $self->get_vars->{$key})
+		{
+			$self->get_vars->{$key} = $val;
+		}
 	}
 
 	/**
@@ -1435,9 +1780,12 @@ class Context
 	 */
 	function get($key)
 	{
-		is_a($this,'Context')?$self=&$this:$self=&Context::getInstance();
+		is_a($this, 'Context') ? $self = $this : $self = Context::getInstance();
 
-		if(!isset($self->context->{$key})) return null;
+		if(!isset($self->context->{$key}))
+		{
+			return null;
+		}
 		return $self->context->{$key};
 	}
 
@@ -1449,10 +1797,14 @@ class Context
 	function gets()
 	{
 		$num_args = func_num_args();
-		if($num_args<1) return;
-		is_a($this,'Context')?$self=&$this:$self=&Context::getInstance();
+		if($num_args < 1)
+		{
+			return;
+		}
+		is_a($this, 'Context') ? $self = $this : $self = Context::getInstance();
 
 		$args_list = func_get_args();
+		$output = new stdClass();
 		foreach($args_list as $v)
 		{
 			$output->{$v} = $self->get($v);
@@ -1467,7 +1819,7 @@ class Context
 	 */
 	function getAll()
 	{
-		is_a($this,'Context')?$self=&$this:$self=&Context::getInstance();
+		is_a($this, 'Context') ? $self = $this : $self = Context::getInstance();
 		return $self->context;
 	}
 
@@ -1478,21 +1830,23 @@ class Context
 	 */
 	function getRequestVars()
 	{
-		is_a($this,'Context')?$self=&$this:$self=&Context::getInstance();
-		if($self->get_vars) return clone($self->get_vars);
+		is_a($this, 'Context') ? $self = $this : $self = Context::getInstance();
+		if($self->get_vars)
+		{
+			return clone($self->get_vars);
+		}
 		return new stdClass;
 	}
 
-
 	/**
-	 * Register if actions is to be encrypted by SSL. Those actions are sent to https in common/js/xml_handler.js
+	 * Register if an action is to be encrypted by SSL. Those actions are sent to https in common/js/xml_handler.js
 	 *
 	 * @param string $action act name
 	 * @return void
 	 */
 	function addSSLAction($action)
 	{
-		is_a($this,'Context')?$self=&$this:$self=&Context::getInstance();
+		is_a($this, 'Context') ? $self = $this : $self = Context::getInstance();
 
 		if(!is_readable($self->sslActionCacheFile))
 		{
@@ -1502,20 +1856,71 @@ class Context
 
 		if(!isset($self->ssl_actions[$action]))
 		{
+			$self->ssl_actions[$action] = 1;
 			$sslActionCacheString = sprintf('$sslActions[\'%s\'] = 1;', $action);
 			FileHandler::writeFile($self->sslActionCacheFile, $sslActionCacheString, 'a');
 		}
 	}
 
 	/**
+	 * Register if actions are to be encrypted by SSL. Those actions are sent to https in common/js/xml_handler.js
+	 *
+	 * @param string $action act name
+	 * @return void
+	 */
+	function addSSLActions($action_array)
+	{
+		is_a($this, 'Context') ? $self = $this : $self = Context::getInstance();
+
+		if(!is_readable($self->sslActionCacheFile))
+		{
+			unset($self->ssl_actions);
+			$buff = '<?php if(!defined("__XE__"))exit;';
+			FileHandler::writeFile($self->sslActionCacheFile, $buff);
+		}
+
+		foreach($action_array as $action)
+		{
+			if(!isset($self->ssl_actions[$action]))
+			{
+				$self->ssl_actions[$action] = 1;
+				$sslActionCacheString = sprintf('$sslActions[\'%s\'] = 1;', $action);
+				FileHandler::writeFile($self->sslActionCacheFile, $sslActionCacheString, 'a');
+			}
+		}
+	}
+
+	/**
+	 * Delete if action is registerd to be encrypted by SSL.
+	 *
+	 * @param string $action act name
+	 * @return void
+	 */
+	function subtractSSLAction($action)
+	{
+		is_a($this, 'Context') ? $self = $this : $self = Context::getInstance();
+
+		if($self->isExistsSSLAction($action))
+		{
+			$sslActionCacheString = sprintf('$sslActions[\'%s\'] = 1;', $action);
+			$buff = FileHandler::readFile($self->sslActionCacheFile);
+			$buff = str_replace($sslActionCacheString, '', $buff);
+			FileHandler::writeFile($self->sslActionCacheFile, $buff);
+		}
+	}
+
+	/**
 	 * Get SSL Action
 	 *
-	 * @return string act
+	 * @return string acts in array
 	 */
 	function getSSLActions()
 	{
-		is_a($this,'Context')?$self=&$this:$self=&Context::getInstance();
-		return $self->ssl_actions;
+		is_a($this, 'Context') ? $self = $this : $self = Context::getInstance();
+		if($self->getSslStatus() == 'optional')
+		{
+			return $self->ssl_actions;
+		}
 	}
 
 	/**
@@ -1526,7 +1931,7 @@ class Context
 	 */
 	function isExistsSSLAction($action)
 	{
-		is_a($this,'Context')?$self=&$this:$self=&Context::getInstance();
+		is_a($this, 'Context') ? $self = $this : $self = Context::getInstance();
 		return isset($self->ssl_actions[$action]);
 	}
 
@@ -1539,9 +1944,15 @@ class Context
 	 */
 	function normalizeFilePath($file)
 	{
-		if(strpos($file,'://')===false && $file{0}!='/' && $file{0}!='.') $file = './'.$file;
+		if(strpos($file, '://') === false && $file{0} != '/' && $file{0} != '.')
+		{
+			$file = './' . $file;
+		}
 		$file = preg_replace('@/\./|(?<!:)\/\/@', '/', $file);
-		while(strpos($file,'/../')) $file = preg_replace('/\/([^\/]+)\/\.\.\//s','/',$file,1);
+		while(strpos($file, '/../'))
+		{
+			$file = preg_replace('/\/([^\/]+)\/\.\.\//s', '/', $file, 1);
+		}
 
 		return $file;
 	}
@@ -1556,8 +1967,14 @@ class Context
 	function getAbsFileUrl($file)
 	{
 		$file = Context::normalizeFilePath($file);
-		if(strpos($file,'./')===0) $file = dirname($_SERVER['SCRIPT_NAME']).'/'.substr($file,2);
-		elseif(strpos($file,'../')===0) $file = Context::normalizeFilePath(dirname($_SERVER['SCRIPT_NAME'])."/{$file}");
+		if(strpos($file, './') === 0)
+		{
+			$file = dirname($_SERVER['SCRIPT_NAME']) . '/' . substr($file, 2);
+		}
+		elseif(strpos($file, '../') === 0)
+		{
+			$file = Context::normalizeFilePath(dirname($_SERVER['SCRIPT_NAME']) . "/{$file}");
+		}
 
 		return $file;
 	}
@@ -1566,16 +1983,16 @@ class Context
 	 * Load front end file
 	 *
 	 * @param array $args array
-	 * case js : 
-	 *		$args[0]: file name,
-	 *		$args[1]: type (head | body),
-	 *		$args[2]: target IE,
-	 *		$args[3]: index
-	 * case css : 
-	 *		$args[0]: file name,
-	 *		$args[1]: media,
-	 *		$args[2]: target IE,
-	 *		$args[3]: index
+	 * case js :
+	 * 		$args[0]: file name,
+	 * 		$args[1]: type (head | body),
+	 * 		$args[2]: target IE,
+	 * 		$args[3]: index
+	 * case css :
+	 * 		$args[0]: file name,
+	 * 		$args[1]: media,
+	 * 		$args[2]: target IE,
+	 * 		$args[3]: index
 	 * @param bool $useCdn use cdn
 	 * @param string $cdnPrefix cdn prefix
 	 * @param string $cdnVersion cdn version
@@ -1583,9 +2000,9 @@ class Context
 	 */
 	function loadFile($args, $useCdn = false, $cdnPrefix = '', $cdnVersion = '')
 	{
-		is_a($this,'Context')?$self=&$this:$self=&Context::getInstance();
+		is_a($this, 'Context') ? $self = $this : $self = Context::getInstance();
 
-		if ($useCdn && !$cdnPrefix)
+		if($useCdn && !$cdnPrefix)
 		{
 			$cdnPrefix = __XE_CDN_PREFIX__;
 			$cdnVersion = __XE_CDN_VERSION__;
@@ -1604,7 +2021,7 @@ class Context
 	 */
 	function unloadFile($file, $targetIe = '', $media = 'all')
 	{
-		is_a($this,'Context')?$self=&$this:$self=&Context::getInstance();
+		is_a($this, 'Context') ? $self = $this : $self = Context::getInstance();
 		$self->oFrontEndFileHandler->unloadFile($file, $targetIe, $media);
 	}
 
@@ -1614,10 +2031,9 @@ class Context
 	 * @param string $type Unload target (optional - all|css|js)
 	 * @return void
 	 */
-
 	function unloadAllFiles($type = 'all')
 	{
-		is_a($this,'Context')?$self=&$this:$self=&Context::getInstance();
+		is_a($this, 'Context') ? $self = $this : $self = Context::getInstance();
 		$self->oFrontEndFileHandler->unloadAllFiles($type);
 	}
 
@@ -1634,21 +2050,24 @@ class Context
 	 * @param string $autoPath If path not readed, set the path automatically.
 	 * @return void
 	 */
-	function addJsFile($file, $optimized = false, $targetie = '',$index=0, $type='head', $isRuleset = false, $autoPath = null)
+	function addJsFile($file, $optimized = false, $targetie = '', $index = 0, $type = 'head', $isRuleset = false, $autoPath = null)
 	{
 		if($isRuleset)
 		{
-			if (strpos($file, '#') !== false)
+			if(strpos($file, '#') !== false)
 			{
 				$file = str_replace('#', '', $file);
-				if (!is_readable($file)) $file = $autoPath;
+				if(!is_readable($file))
+				{
+					$file = $autoPath;
+				}
 			}
-			$validator   = new Validator($file);
+			$validator = new Validator($file);
 			$validator->setCacheDir('files/cache');
 			$file = $validator->getJsPath();
 		}
 
-		is_a($this,'Context')?$self=&$this:$self=&Context::getInstance();
+		is_a($this, 'Context') ? $self = $this : $self = Context::getInstance();
 		$self->oFrontEndFileHandler->loadFile(array($file, $type, $targetie, $index));
 	}
 
@@ -1663,7 +2082,7 @@ class Context
 	 */
 	function unloadJsFile($file, $optimized = false, $targetie = '')
 	{
-		is_a($this,'Context')?$self=&$this:$self=&Context::getInstance();
+		is_a($this, 'Context') ? $self = $this : $self = Context::getInstance();
 		$self->oFrontEndFileHandler->unloadFile($file, $targetie);
 	}
 
@@ -1674,7 +2093,7 @@ class Context
 	 */
 	function unloadAllJsFiles()
 	{
-		is_a($this,'Context')?$self=&$this:$self=&Context::getInstance();
+		is_a($this, 'Context') ? $self = $this : $self = Context::getInstance();
 		$self->oFrontEndFileHandler->unloadAllFiles('js');
 	}
 
@@ -1682,7 +2101,7 @@ class Context
 	 * Add javascript filter
 	 *
 	 * @param string $path File path
-	 * @param string $filename File name 
+	 * @param string $filename File name
 	 * @return void
 	 */
 	function addJsFilter($path, $filename)
@@ -1690,6 +2109,7 @@ class Context
 		$oXmlFilter = new XmlJSFilter($path, $filename);
 		$oXmlFilter->compile();
 	}
+
 	/**
 	 * Same as array_unique but works only for file subscript
 	 *
@@ -1703,9 +2123,12 @@ class Context
 		$files = array_values($files);
 		$filenames = array();
 		$size = count($files);
-		for($i = 0; $i < $size; ++ $i)
+		for($i = 0; $i < $size; ++$i)
 		{
-			if(in_array($files[$i]['file'], $filenames)) unset($files[$i]);
+			if(in_array($files[$i]['file'], $filenames))
+			{
+				unset($files[$i]);
+			}
 			$filenames[] = $files[$i]['file'];
 		}
 
@@ -1718,9 +2141,9 @@ class Context
 	 * @param string $type Added position. (head:<head>..</head>, body:<body>..</body>)
 	 * @return array Returns javascript file list. Array contains file, targetie.
 	 */
-	function getJsFile($type='head')
+	function getJsFile($type = 'head')
 	{
-		is_a($this,'Context')?$self=&$this:$self=&Context::getInstance();
+		is_a($this, 'Context') ? $self = $this : $self = Context::getInstance();
 		return $self->oFrontEndFileHandler->getJsFileList($type);
 	}
 
@@ -1736,9 +2159,9 @@ class Context
 	 * @return void
 	 *
 	 */
-	function addCSSFile($file, $optimized=false, $media='all', $targetie='',$index=0)
+	function addCSSFile($file, $optimized = false, $media = 'all', $targetie = '', $index = 0)
 	{
-		is_a($this,'Context')?$self=&$this:$self=&Context::getInstance();
+		is_a($this, 'Context') ? $self = $this : $self = Context::getInstance();
 		$self->oFrontEndFileHandler->loadFile(array($file, $media, $targetie, $index));
 	}
 
@@ -1754,7 +2177,7 @@ class Context
 	 */
 	function unloadCSSFile($file, $optimized = false, $media = 'all', $targetie = '')
 	{
-		is_a($this,'Context')?$self=&$this:$self=&Context::getInstance();
+		is_a($this, 'Context') ? $self = $this : $self = Context::getInstance();
 		$self->oFrontEndFileHandler->unloadFile($file, $targetie, $media);
 	}
 
@@ -1765,7 +2188,7 @@ class Context
 	 */
 	function unloadAllCSSFiles()
 	{
-		is_a($this,'Context')?$self=&$this:$self=&Context::getInstance();
+		is_a($this, 'Context') ? $self = $this : $self = Context::getInstance();
 		$self->oFrontEndFileHandler->unloadAllFiles('css');
 	}
 
@@ -1776,10 +2199,64 @@ class Context
 	 */
 	function getCSSFile()
 	{
-		is_a($this,'Context')?$self=&$this:$self=&Context::getInstance();
+		is_a($this, 'Context') ? $self = $this : $self = Context::getInstance();
 		return $self->oFrontEndFileHandler->getCssFileList();
 	}
 
+	/**
+	 * Returns javascript plugin file info
+	 * @param string $pluginName
+	 * @return stdClass
+	 */
+	function getJavascriptPluginInfo($pluginName)
+	{
+		if($plugin_name == 'ui.datepicker')
+		{
+			$plugin_name = 'ui';
+		}
+
+		$plugin_path = './common/js/plugins/' . $pluginName . '/';
+		$info_file = $plugin_path . 'plugin.load';
+		if(!is_readable($info_file))
+		{
+			return;
+		}
+
+		$list = file($info_file);
+		$result = new stdClass();
+		$result->jsList = array();
+		$result->cssList = array();
+
+		foreach($list as $filename)
+		{
+			$filename = trim($filename);
+			if(!$filename)
+			{
+				continue;
+			}
+
+			if(substr($filename, 0, 2) == './')
+			{
+				$filename = substr($filename, 2);
+			}
+
+			if(preg_match('/\.js$/i', $filename))
+			{
+				$result->jsList[] = $plugin_path . $filename;
+			}
+			elseif(preg_match('/\.css$/i', $filename))
+			{
+				$result->cssList[] = $plugin_path . $filename;
+			}
+		}
+
+		if(is_dir($plugin_path . 'lang'))
+		{
+			$result->langPath = $plugin_path . 'lang';
+		}
+
+		return $result;
+	}
 	/**
 	 * Load javascript plugin
 	 *
@@ -1790,28 +2267,52 @@ class Context
 	{
 		static $loaded_plugins = array();
 
-		is_a($this,'Context')?$self=&$this:$self=&Context::getInstance();
-		if($plugin_name == 'ui.datepicker') $plugin_name = 'ui';
+		is_a($this, 'Context') ? $self = $this : $self = Context::getInstance();
+		if($plugin_name == 'ui.datepicker')
+		{
+			$plugin_name = 'ui';
+		}
 
-		if($loaded_plugins[$plugin_name]) return;
+		if($loaded_plugins[$plugin_name])
+		{
+			return;
+		}
 		$loaded_plugins[$plugin_name] = true;
 
-		$plugin_path = './common/js/plugins/'.$plugin_name.'/';
-		$info_file   = $plugin_path.'plugin.load';
-		if(!is_readable($info_file)) return;
+		$plugin_path = './common/js/plugins/' . $plugin_name . '/';
+		$info_file = $plugin_path . 'plugin.load';
+		if(!is_readable($info_file))
+		{
+			return;
+		}
 
 		$list = file($info_file);
 		foreach($list as $filename)
 		{
 			$filename = trim($filename);
-			if(!$filename) continue;
+			if(!$filename)
+			{
+				continue;
+			}
 
-			if(substr($filename,0,2)=='./') $filename = substr($filename,2);
-			if(preg_match('/\.js$/i',  $filename))     $self->loadFile(array($plugin_path.$filename, 'body', '', 0), true);
-			elseif(preg_match('/\.css$/i', $filename)) $self->loadFile(array($plugin_path.$filename, 'all', '', 0), true);
+			if(substr($filename, 0, 2) == './')
+			{
+				$filename = substr($filename, 2);
+			}
+			if(preg_match('/\.js$/i', $filename))
+			{
+				$self->loadFile(array($plugin_path . $filename, 'body', '', 0), true);
+			}
+			elseif(preg_match('/\.css$/i', $filename))
+			{
+				$self->loadFile(array($plugin_path . $filename, 'all', '', 0), true);
+			}
 		}
 
-		if(is_dir($plugin_path.'lang')) $self->loadLang($plugin_path.'lang');
+		if(is_dir($plugin_path . 'lang'))
+		{
+			$self->loadLang($plugin_path . 'lang');
+		}
 	}
 
 	/**
@@ -1822,13 +2323,13 @@ class Context
 	 */
 	function addHtmlHeader($header)
 	{
-		is_a($this,'Context')?$self=&$this:$self=&Context::getInstance();
-		$self->html_header .= "\n".$header;
+		is_a($this, 'Context') ? $self = $this : $self = Context::getInstance();
+		$self->html_header .= "\n" . $header;
 	}
 
 	function clearHtmlHeader()
 	{
-		is_a($this,'Context')?$self=&$this:$self=&Context::getInstance();
+		is_a($this, 'Context') ? $self = $this : $self = Context::getInstance();
 		$self->html_header = '';
 	}
 
@@ -1839,7 +2340,7 @@ class Context
 	 */
 	function getHtmlHeader()
 	{
-		is_a($this,'Context')?$self=&$this:$self=&Context::getInstance();
+		is_a($this, 'Context') ? $self = $this : $self = Context::getInstance();
 		return $self->html_header;
 	}
 
@@ -1850,7 +2351,7 @@ class Context
 	 */
 	function addBodyClass($class_name)
 	{
-		is_a($this,'Context')?$self=&$this:$self=&Context::getInstance();
+		is_a($this, 'Context') ? $self = $this : $self = Context::getInstance();
 		$self->body_class[] = $class_name;
 	}
 
@@ -1861,10 +2362,10 @@ class Context
 	 */
 	function getBodyClass()
 	{
-		is_a($this,'Context')?$self=&$this:$self=&Context::getInstance();
+		is_a($this, 'Context') ? $self = $this : $self = Context::getInstance();
 		$self->body_class = array_unique($self->body_class);
 
-		return count($self->body_class)?sprintf(' class="%s"', implode(' ',$self->body_class)):'';
+		return count($self->body_class) ? sprintf(' class="%s"', implode(' ', $self->body_class)) : '';
 	}
 
 	/**
@@ -1874,8 +2375,8 @@ class Context
 	 */
 	function addBodyHeader($header)
 	{
-		is_a($this,'Context')?$self=&$this:$self=&Context::getInstance();
-		$self->body_header .= "\n".$header;
+		is_a($this, 'Context') ? $self = $this : $self = Context::getInstance();
+		$self->body_header .= "\n" . $header;
 	}
 
 	/**
@@ -1885,7 +2386,7 @@ class Context
 	 */
 	function getBodyHeader()
 	{
-		is_a($this,'Context')?$self=&$this:$self=&Context::getInstance();
+		is_a($this, 'Context') ? $self = $this : $self = Context::getInstance();
 		return $self->body_header;
 	}
 
@@ -1896,8 +2397,8 @@ class Context
 	 */
 	function addHtmlFooter($footer)
 	{
-		is_a($this,'Context')?$self=&$this:$self=&Context::getInstance();
-		$self->html_footer .= ($self->Htmlfooter?"\n":'').$footer;
+		is_a($this, 'Context') ? $self = $this : $self = Context::getInstance();
+		$self->html_footer .= ($self->Htmlfooter ? "\n" : '') . $footer;
 	}
 
 	/**
@@ -1907,7 +2408,7 @@ class Context
 	 */
 	function getHtmlFooter()
 	{
-		is_a($this,'Context')?$self=&$this:$self=&Context::getInstance();
+		is_a($this, 'Context') ? $self = $this : $self = Context::getInstance();
 		return $self->html_footer;
 	}
 
@@ -1918,7 +2419,7 @@ class Context
 	 */
 	function getConfigFile()
 	{
-		return _XE_PATH_.'files/config/db.config.php';
+		return _XE_PATH_ . 'files/config/db.config.php';
 	}
 
 	/**
@@ -1928,7 +2429,7 @@ class Context
 	 */
 	function getFTPConfigFile()
 	{
-		return _XE_PATH_.'files/config/ftp.config.php';
+		return _XE_PATH_ . 'files/config/ftp.config.php';
 	}
 
 	/**
@@ -1959,7 +2460,7 @@ class Context
 	 */
 	function isAllowRewrite()
 	{
-		$oContext = &Context::getInstance();
+		$oContext = Context::getInstance();
 		return $oContext->allow_rewrite;
 	}
 
@@ -1971,28 +2472,40 @@ class Context
 	 */
 	function pathToUrl($path)
 	{
-		$xe   = _XE_PATH_;
+		$xe = _XE_PATH_;
 		$path = strtr($path, "\\", "/");
 
 		$base_url = preg_replace('@^https?://[^/]+/?@', '', Context::getRequestUri());
 
-		$_xe   = explode('/', $xe);
+		$_xe = explode('/', $xe);
 		$_path = explode('/', $path);
 		$_base = explode('/', $base_url);
 
-		if(!$_base[count($_base)-1]) array_pop($_base);
-
-		foreach($_xe as $idx=>$dir)
+		if(!$_base[count($_base) - 1])
 		{
-			if($_path[0] != $dir) break;
+			array_pop($_base);
+		}
+
+		foreach($_xe as $idx => $dir)
+		{
+			if($_path[0] != $dir)
+			{
+				break;
+			}
 			array_shift($_path);
 		}
 
 		$idx = count($_xe) - $idx - 1;
 		while($idx--)
 		{
-			if(count($_base)) array_shift($_base);
-			else array_unshift($_base, '..');
+			if(count($_base))
+			{
+				array_shift($_base);
+			}
+			else
+			{
+				array_unshift($_base, '..');
+			}
 		}
 
 		if(count($_base))
@@ -2000,8 +2513,11 @@ class Context
 			array_unshift($_path, implode('/', $_base));
 		}
 
-		$path = '/'.implode('/', $_path);
-		if(substr($path,-1)!='/') $path .= '/';
+		$path = '/' . implode('/', $_path);
+		if(substr($path, -1) != '/')
+		{
+			$path .= '/';
+		}
 		return $path;
 	}
 
@@ -2011,17 +2527,20 @@ class Context
 	 */
 	function getMetaTag()
 	{
-		is_a($this,'Context')?$self=&$this:$self=&Context::getInstance();
+		is_a($this, 'Context') ? $self = $this : $self = Context::getInstance();
 
-		if(!is_array($self->meta_tags)) $self->meta_tags = array();
+		if(!is_array($self->meta_tags))
+		{
+			$self->meta_tags = array();
+		}
 
 		$ret = array();
 		$map = &$self->meta_tags;
 
-		foreach($map as $key=>$val)
+		foreach($map as $key => $val)
 		{
 			list($name, $is_http_equiv) = explode("\t", $key);
-			$ret[] = array('name'=>$name, 'is_http_equiv'=>$is_http_equiv, 'content' => $val);
+			$ret[] = array('name' => $name, 'is_http_equiv' => $is_http_equiv, 'content' => $val);
 		}
 
 		return $ret;
@@ -2037,14 +2556,14 @@ class Context
 	 */
 	function addMetaTag($name, $content, $is_http_equiv = false)
 	{
-		is_a($this,'Context')?$self=&$this:$self=&Context::getInstance();
+		is_a($this, 'Context') ? $self = $this : $self = Context::getInstance();
 
-		$key = $name."\t".($is_http_equiv ? '1' : '0');
+		$key = $name . "\t" . ($is_http_equiv ? '1' : '0');
 		$map = &$self->meta_tags;
 
 		$map[$key] = $content;
 	}
-}
 
+}
 /* End of file Context.class.php */
 /* Location: ./classes/context/Context.class.php */

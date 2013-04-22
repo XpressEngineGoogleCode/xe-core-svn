@@ -127,6 +127,7 @@ class memberController extends member
 		$oDocumentModel = &getModel('document');
 		$oDocument = $oDocumentModel->getDocument($document_srl);
 		// Variables
+		$args = new stdClass();
 		$args->document_srl = $document_srl;
 		$args->member_srl = $logged_info->member_srl;
 		$args->user_id = $oDocument->get('user_id');
@@ -270,9 +271,11 @@ class memberController extends member
 		foreach($getVars as $val)
 		{
 			$args->{$val} = Context::get($val);
+			if($val == 'birthday') $args->birthday_ui = Context::get('birthday_ui');
 		}
-		$args->member_srl = getNextSequence();
-		$args->list_order = -1 * $args->member_srl;
+		$args->birthday = intval(strtr($args->birthday, array('-'=>'', '/'=>'', '.'=>'', ' '=>'')));
+		if(!$args->birthday && $args->birthday_ui) $args->birthday = intval(strtr($args->birthday_ui, array('-'=>'', '/'=>'', '.'=>'', ' '=>'')));
+
 		$args->find_account_answer = Context::get('find_account_answer');
 		$args->allow_mailing = Context::get('allow_mailing');
 		$args->allow_message = Context::get('allow_message');
@@ -284,6 +287,7 @@ class memberController extends member
 		unset($all_args->module);
 		unset($all_args->act);
 		unset($all_args->is_admin);
+		unset($all_args->member_srl);
 		unset($all_args->description);
 		unset($all_args->group_srl_list);
 		unset($all_args->body);
@@ -302,11 +306,6 @@ class memberController extends member
 		// Add extra vars after excluding necessary information from all the requested arguments
 		$extra_vars = delObjectVars($all_args, $args);
 		$args->extra_vars = serialize($extra_vars);
-		// Execute insert or update depending on the value of member_srl
-
-		if(!$args->user_id) $args->user_id = 't'.$args->member_srl;
-		if(!$args->user_name) $args->user_name = $args->member_srl;
-		if(!$args->nick_name) $args->nick_name = $args->member_srl;
 
 		// remove whitespace
 		$checkInfos = array('user_id', 'nick_name', 'email_address');
@@ -454,15 +453,18 @@ class memberController extends member
 		foreach($getVars as $val)
 		{
 			$args->{$val} = Context::get($val);
+			if($val == 'birthday') $args->birthday_ui = Context::get('birthday_ui');
 		}
 		// Login Information
 		$logged_info = Context::get('logged_info');
 		$args->member_srl = $logged_info->member_srl;
-		$args->birthday = strtr($args->birthday, array('-'=>'', '/'=>'', '.'=>'', ' '=>''));
+		$args->birthday = intval(strtr($args->birthday, array('-'=>'', '/'=>'', '.'=>'', ' '=>'')));
+		if(!$args->birthday && $args->birthday_ui) $args->birthday = intval(strtr($args->birthday_ui, array('-'=>'', '/'=>'', '.'=>'', ' '=>'')));
 		// Remove some unnecessary variables from all the vars
 		$all_args = Context::getRequestVars();
 		unset($all_args->module);
 		unset($all_args->act);
+		unset($all_args->member_srl);
 		unset($all_args->is_admin);
 		unset($all_args->description);
 		unset($all_args->group_srl_list);
@@ -879,6 +881,7 @@ class memberController extends member
 			if($output->toBool() && $output->data->count != '0') return new Object(-1, 'msg_user_not_confirmed');
 		}
 		// Insert data into the authentication DB
+		$args = new stdClass();
 		$args->user_id = $member_info->user_id;
 		$args->member_srl = $member_info->member_srl;
 		$args->new_password = rand(111111,999999);
@@ -1072,7 +1075,7 @@ class memberController extends member
 		}
 		// Get content of the email to send a member
 		Context::set('auth_args', $auth_args);
-		Context::set('member_info', $member_info);
+		Context::set('memberInfo', $member_info);
 
 		$oModuleModel = &getModel('module');
 		$member_config = $oModuleModel->getModuleConfig('member');
@@ -1134,7 +1137,7 @@ class memberController extends member
 		if(!$output->data || !$output->data[0]->auth_key)  return new Object(-1, 'msg_invalid_request');
 		$auth_info = $output->data[0];
 		// Get content of the email to send a member
-		Context::set('member_info', $memberInfo);
+		Context::set('memberInfo', $memberInfo);
 		$oModuleModel = &getModel('module');
 		$member_config = $oModuleModel->getModuleConfig('member');
 		if(!$member_config->skin) $member_config->skin = "default";
@@ -1376,7 +1379,7 @@ class memberController extends member
 
 		if(!$check_signature) return FileHandler::removeFile($filename);
 
-		$buff = sprintf('<?php if(!defined("__ZBXE__")) exit();?>%s', $signature);
+		$buff = sprintf('<?php if(!defined("__XE__")) exit();?>%s', $signature);
 		FileHandler::makeDir($path);
 		FileHandler::writeFile($filename, $buff);
 	}
@@ -1405,6 +1408,7 @@ class memberController extends member
 	 */
 	function addMemberToGroup($member_srl,$group_srl,$site_srl=0)
 	{
+		$args = new stdClass();
 		$args->member_srl = $member_srl;
 		$args->group_srl = $group_srl;
 		if($site_srl) $args->site_srl = $site_srl;
@@ -1565,6 +1569,7 @@ class memberController extends member
 		$user_id = strtolower($user_id);
 		if(!$user_id) return new Object(-1, 'null_user_id');
 		// Call a trigger before log-in (before)
+		$trigger_obj = new stdClass();
 		$trigger_obj->user_id = $user_id;
 		$trigger_obj->password = $password;
 		$trigger_output = ModuleHandler::triggerCall('member.doLogin', 'before', $trigger_obj);
@@ -1574,28 +1579,8 @@ class memberController extends member
 
 		// check IP access count.
 		$config = $oMemberModel->getMemberConfig();
+		$args = new stdClass();
 		$args->ipaddress = $_SERVER['REMOTE_ADDR'];
-		$output = executeQuery('member.getLoginCountByIp', $args);
-		$count = (int)$output->data->count;
-		if($config->max_error_count < $count)
-		{
-			$last_update = strtotime($output->data->last_update);
-			$term = intval(time()-$last_update);
-			if($term < $config->max_error_count_time)
-			{
-				$term = $config->max_error_count_time - $term;
-				if($term < 60) $term = intval($term).Context::getLang('unit_sec');
-				elseif(60 <= $term && $term < 3600) $term = intval($term/60).Context::getLang('unit_min');
-				elseif(3600 <= $term && $term < 86400) $term = intval($term/3600).Context::getLang('unit_hour');
-				else $term = intval($term/86400).Context::getLang('unit_day');
-				return new Object(-1, sprintf(Context::getLang('excess_ip_access_count'),$term));
-			}
-			else
-			{
-				$args->ipaddress = $_SERVER['REMOTE_ADDR'];
-				$output = executeQuery('member.deleteLoginCountByIp', $args);
-			}
-		}
 
 		// check identifier
 		if($config->identifier == 'email_address')
@@ -1613,8 +1598,38 @@ class memberController extends member
 			// Set an invalid user if no value returned
 			if(!$user_id || strtolower($this->memberInfo->user_id) != strtolower($user_id)) return $this->recordLoginError(-1, 'invalid_user_id');
 		}
+
 		// Password Check
-		if($password && !$oMemberModel->isValidPassword($this->memberInfo->password, $password, $this->memberInfo->member_srl)) return $this->recordMemberLoginError(-1, 'invalid_password',$this->memberInfo);
+		if($password && !$oMemberModel->isValidPassword($this->memberInfo->password, $password, $this->memberInfo->member_srl))
+		{
+			$output = executeQuery('member.getLoginCountByIp', $args);
+			$count = (int)$output->data->count + 1;
+			if($config->max_error_count < $count)
+			{
+				$last_update = strtotime($output->data->last_update);
+				$term = intval(time()-$last_update);
+				if($term < $config->max_error_count_time)
+				{
+					$term = $config->max_error_count_time - $term;
+					if($term < 60) $term = intval($term).Context::getLang('unit_sec');
+					elseif(60 <= $term && $term < 3600) $term = intval($term/60).Context::getLang('unit_min');
+					elseif(3600 <= $term && $term < 86400) $term = intval($term/3600).Context::getLang('unit_hour');
+					else $term = intval($term/86400).Context::getLang('unit_day');
+
+					$this->recordMemberLoginError(-1, 'invalid_password',$this->memberInfo);
+
+					return new Object(-1, sprintf(Context::getLang('excess_ip_access_count'),$term));
+				}
+				else
+				{
+					$args->ipaddress = $_SERVER['REMOTE_ADDR'];
+					$output = executeQuery('member.deleteLoginCountByIp', $args);
+				}
+			}
+
+			return $this->recordMemberLoginError(-1, 'invalid_password',$this->memberInfo);
+		}
+
 		// If denied == 'Y', notify
 		if($this->memberInfo->denied == 'Y') 
 		{
@@ -1800,9 +1815,15 @@ class memberController extends member
 		if($config->limit_day) $args->limit_date = date("YmdHis", time()+$config->limit_day*60*60*24);
 
 		$args->member_srl = getNextSequence();
-		// Enter the user's identity changed to lowercase
+		$args->list_order = -1 * $args->member_srl;
+
+		// Execute insert or update depending on the value of member_srl
 		if(!$args->user_id) $args->user_id = 't'.$args->member_srl;
+		// Enter the user's identity changed to lowercase
 		else $args->user_id = strtolower($args->user_id);
+		if(!$args->user_name) $args->user_name = $args->member_srl;
+		if(!$args->nick_name) $args->nick_name = $args->member_srl;
+
 		// Control of essential parameters
 		if($args->allow_mailing!='Y') $args->allow_mailing = 'N';
 		if($args->denied!='Y') $args->denied = 'N';
@@ -1957,6 +1978,10 @@ class memberController extends member
 		{
 			unset($args->is_admin);
 			unset($args->denied);
+			if($logged_info->member_srl != $args->member_srl)
+			{
+				return $this->stop('msg_invalid_request');
+			}
 		}
 
 		// check member identifier form
@@ -2105,6 +2130,7 @@ class memberController extends member
 	function deleteMember($member_srl)
 	{
 		// Call a trigger (before)
+		$tirgger_obj = new stdClass();
 		$trigger_obj->member_srl = $member_srl;
 		$output = ModuleHandler::triggerCall('member.deleteMember', 'before', $trigger_obj);
 		if(!$output->toBool()) return $output;
@@ -2123,6 +2149,7 @@ class memberController extends member
 		$oDB = &DB::getInstance();
 		$oDB->begin();
 
+		$args = new stdClass();
 		$args->member_srl = $member_srl;
 		// Delete the entries in member_auth_mail
 		$output = executeQuery('member.deleteAuthMail', $args);
@@ -2195,6 +2222,7 @@ class memberController extends member
 
 		if($memberSrl || $_COOKIE['xeak'])
 		{
+			$args = new stdClass();
 			$args->member_srl = $memberSrl;
 			$args->autologin_key = $_COOKIE['xeak'];
 			$output = executeQuery('member.deleteAutologin', $args);

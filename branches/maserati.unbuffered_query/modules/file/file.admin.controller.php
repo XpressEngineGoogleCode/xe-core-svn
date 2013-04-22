@@ -22,6 +22,7 @@ class fileAdminController extends file
 	function deleteModuleFiles($module_srl)
 	{
 		// Get a full list of attachments
+		$args = new stdClass();
 		$args->module_srl = $module_srl;
 		$columnList = array('file_srl', 'uploaded_filename');
 		$output = executeQueryArray('file.getModuleFiles',$args, $columnList);
@@ -60,11 +61,11 @@ class fileAdminController extends file
 	{
 		// An error appears if no document is selected
 		$cart = Context::get('cart');
-		if(!$cart) return $this->stop('msg_cart_is_null');
+		if(!$cart) return $this->stop('msg_file_cart_is_null');
 		if(!is_array($cart)) $file_srl_list= explode('|@|', $cart);
 		else $file_srl_list = $cart;
 		$file_count = count($file_srl_list);
-		if(!$file_count) return $this->stop('msg_cart_is_null');
+		if(!$file_count) return $this->stop('msg_file_cart_is_null');
 
 		$oFileController = &getController('file');
 		// Delete the post

@@ -57,6 +57,7 @@ class menuAdminModel extends menu
 			$site_srl = (int)$site_module_info->site_srl;
 		}
 		// Get information from the DB
+		$args = new stdClass();
 		$args->site_srl = $site_srl ;
 		$args->menu_srl = $menu_srl;
 		$output = executeQueryArray('menu.getMenus', $args);
@@ -74,6 +75,7 @@ class menuAdminModel extends menu
 	function getMenu($menu_srl)
 	{
 		// Get information from the DB
+		$args = new stdClass();
 		$args->menu_srl = $menu_srl;
 		$output = executeQuery('menu.getMenu', $args);
 		if(!$output->data) return;
@@ -90,10 +92,16 @@ class menuAdminModel extends menu
 	 * @param string $title
 	 * @return object
 	 */
-	function getMenuByTitle($title)
+	function getMenuByTitle($title, $site_srl = 0)
 	{
 		// Get information from the DB
+		if(!is_array($title))
+		{
+			$title = array($title);
+		}
+		$args = new stdClass();
 		$args->title = $title;
+		$args->site_srl = $site_srl;
 		$output = executeQuery('menu.getMenuByTitle', $args);
 		if(!$output->data) return;
 
@@ -109,6 +117,26 @@ class menuAdminModel extends menu
 	}
 
 	/**
+	 * Get information of a new menu from the DB, search condition is menu title
+	 * Return DB and XML information of the menu(list Type)
+	 * @param string $title
+	 * @return object
+	 */
+	function getMenuListByTitle($title)
+	{
+		// Get information from the DB
+		$args = new stdClass();
+		$args->title = $title;
+		$output = executeQueryArray('menu.getMenuByTitle', $args);
+		if(!$output->data)
+		{
+			return array();
+		}
+
+		return $output->data;
+	}
+
+	/**
 	 * Return item information of the menu_srl
 	 * group_srls uses a seperator with comma(,) and converts to an array by explode
 	 * @param int $menu_item_srl
@@ -117,6 +145,7 @@ class menuAdminModel extends menu
 	function getMenuItemInfo($menu_item_srl)
 	{
 		// Get the menu information if menu_item_srl exists
+		$args = new stdClass();
 		$args->menu_item_srl = $menu_item_srl;
 		$output = executeQuery('menu.getMenuItem', $args);
 		$node = $output->data;
@@ -191,7 +220,7 @@ class menuAdminModel extends menu
 			$groupList = array();
 			foreach($output AS $key=>$value)
 			{
-
+				$groupList[$value->group_srl] = new stdClass();
 				$groupList[$value->group_srl]->group_srl = $value->group_srl;
 				if(substr($value->title,0,12)=='$user_lang->')
 				{
@@ -222,6 +251,7 @@ class menuAdminModel extends menu
 	 */
 	function getMenuItems($menu_srl, $parent_srl = null, $columnList = array())
 	{
+		$args = new stdClass();
 		$args->menu_srl = $menu_srl;
 		$args->parent_srl = $parent_srl;
 
@@ -244,7 +274,7 @@ class menuAdminModel extends menu
 		}
 		// Get language code
 		$oModuleAdminModel = &getAdminModel('module');
-		return $oModuleAdminModel->getLangCode($site_srl, $source_name);
+		return $oModuleAdminModel->getLangCode($site_srl, $source_name, TRUE);
 	}
 
 	/**
@@ -301,7 +331,56 @@ class menuAdminModel extends menu
 	 */
 	function getMenuAdminInstalledMenuType()
 	{
+		$oModuleModel = getModel('module');
+		$oAutoinstallModel = getModel('autoinstall');
 		$this->add('menu_types', $this->getModuleListInSitemap(0));
+
+		$_allModules = $oModuleModel->getModuleList();
+		$allModules = array();
+
+		Context::loadLang('modules/page/lang');
+		foreach($_allModules AS $key=>$value)
+		{
+			//$moduleInfo = $oModuleModel->getModuleInfoXml($value->module);
+			$defaultSkin = $oModuleModel->getModuleDefaultSkin($value->module, 'P');
+			$defaultMobileSkin = $oModuleModel->getModuleDefaultSkin($value->module, 'M');
+			$skinInfo = $oModuleModel->loadSkinInfo(ModuleHandler::getModulePath($value->module), $defaultSkin);
+			$mobileSkinInfo = $oModuleModel->loadSkinInfo(ModuleHandler::getModulePath($value->module), $defaultMobileSkin, 'm.skins');
+			$value->defaultSkin = new stdClass();
+			$value->defaultSkin->skin = $defaultSkin;
+			$value->defaultSkin->title = $skinInfo->title ? $skinInfo->title : $defaultSkin;
+			$value->defaultMobileSkin = new stdClass();
+			$value->defaultMobileSkin->skin = $defaultMobileSkin;
+			$value->defaultMobileSkin->title = $mobileSkinInfo->title ? $mobileSkinInfo->title : $defaultMobileSkin;
+
+			$value->package_srl = $oAutoinstallModel->getPackageSrlByPath('./modules/' . $value->module);
+			$value->url = _XE_LOCATION_SITE_ . '?mid=download&package_srl=' . $value->package_srl;
+
+			if($value->module == 'page')
+			{
+				$pageTypeName = Context::getLang('page_type_name');
+				$value->title = $pageTypeName['ARTICLE'];
+				$allModules['ARTICLE'] = $value;
+				$wModuleInfo = clone $value;
+				unset($wModuleInfo->default_skin);
+				unset($wModuleInfo->default_mskin);
+				$wModuleInfo->title = $pageTypeName['WIDGET'];
+				$wModuleInfo->no_skin = 'Y';
+				$allModules['WIDGET'] = $wModuleInfo;
+				$oModuleInfo = clone $value;
+				unset($oModuleInfo->default_skin);
+				unset($oModuleInfo->default_mskin);
+				$oModuleInfo->title = $pageTypeName['OUTSIDE'];
+				$oModuleInfo->no_skin = 'Y';
+				$allModules['OUTSIDE'] = $oModuleInfo;
+			}
+			else
+			{
+				$allModules[$value->module] = $value;
+			}
+		}
+
+		$this->add('all_modules', $allModules);
 	}
 
 	/**
@@ -313,15 +392,17 @@ class menuAdminModel extends menu
 	function getModuleListInSitemap($site_srl = 0)
 	{
 		$oModuleModel = &getModel('module');
-		$columnList = array('module');
 		$moduleList = array('page');
 
-		$output = $oModuleModel->getModuleListByInstance($site_srl, $columnList);
+		$output = $oModuleModel->getModuleListByInstance($site_srl);
 		if(is_array($output->data))
 		{
 			foreach($output->data AS $key=>$value)
 			{
-				array_push($moduleList, $value->module);
+				if($value->instanceCount > 1)
+				{
+					array_push($moduleList, $value->module);
+				}
 			}
 		}
 
@@ -332,7 +413,7 @@ class menuAdminModel extends menu
 		$localModuleList = array_unique($moduleList);
 
 		$oAutoinstallModel = getModel('autoinstall');
-		
+
 		// get have instance
 		$remotePackageList = $oAutoinstallModel->getHaveInstance(array('path'));
 		$remoteModuleList = array();
@@ -349,9 +430,10 @@ class menuAdminModel extends menu
 
 		// union have instance and all module list
 		$haveInstance = array_intersect($remoteModuleList, $allModuleList);
+		$haveDirectory = array_intersect($localModuleList, $allModuleList);
 
 		// union
-		$moduleList = array_unique(array_merge($localModuleList, $haveInstance));
+		$moduleList = array_unique(array_merge($haveDirectory, $haveInstance));
 
 		$moduleInfoList = array();
 		Context::loadLang('modules/page/lang');
@@ -360,19 +442,6 @@ class menuAdminModel extends menu
 			foreach($moduleList AS $key=>$value)
 			{
 				$moduleInfo = $oModuleModel->getModuleInfoXml($value);
-				$defaultSkin = $oModuleModel->getModuleDefaultSkin($value, 'P');
-				$defaultMobileSkin = $oModuleModel->getModuleDefaultSkin($value, 'M');
-				$skinInfo = $oModuleModel->loadSkinInfo(ModuleHandler::getModulePath($value), $defaultSkin);
-				$mobileSkinInfo = $oModuleModel->loadSkinInfo(ModuleHandler::getModulePath($value), $defaultMobileSkin);
-				$moduleInfo->defaultSkin = new stdClass();
-				$moduleInfo->defaultSkin->skin = $defaultSkin;
-				$moduleInfo->defaultSkin->title = $skinInfo->title ? $skinInfo->title : $defaultSkin;
-				$moduleInfo->defaultMobileSkin = new stdClass();
-				$moduleInfo->defaultMobileSkin->skin = $defaultMobileSkin;
-				$moduleInfo->defaultMobileSkin->title = $mobileSkinInfo->title ? $mobileSkinInfo->title : $defaultMobileSkin;
-
-				$moduleInfo->package_srl = $oAutoinstallModel->getPackageSrlByPath('./modules/' . $value);
-				$moduleInfo->url = _XE_LOCATION_SITE_ . '?mid=download&package_srl=' . $moduleInfo->package_srl;
 
 				if($value == 'page')
 				{
@@ -434,7 +503,7 @@ class menuAdminModel extends menu
 			{
 				foreach($menu->list AS $key=>$value)
 				{
-					$this->_menuInfoSetting($menu->list[$key], $start_module, $isMenuFixed, $menuSrl);
+					$this->_menuInfoSetting($menu->list[$key], $start_module, $isMenuFixed, $menuSrl,$siteSrl);
 				}
 			}
 
@@ -474,7 +543,7 @@ class menuAdminModel extends menu
 						{
 							foreach($menu->list AS $key2=>$value2)
 							{
-								$this->_menuInfoSetting($menu->list[$key2], $start_module, $isMenuFixed, $value->menu_srl);
+								$this->_menuInfoSetting($menu->list[$key2], $start_module, $isMenuFixed, $value->menu_srl,$siteSrl);
 							}
 						}
 
@@ -484,6 +553,7 @@ class menuAdminModel extends menu
 							$oMenuAdminController->makeXmlFile($value->menu_srl);
 						}
 
+						$menuItems = new stdClass();
 						$menuItems->menuSrl = $value->menu_srl;
 						$menuItems->title = $value->title;
 						$menuItems->menuItems = $menu;
@@ -502,7 +572,6 @@ class menuAdminModel extends menu
 			}
 		}
 		ksort($menuList);
-
 		$this->add('menuList', $menuList);
 	}
 
@@ -533,7 +602,11 @@ class menuAdminModel extends menu
 		// get xml info
 		$moduleConfInfo = $oModuleModel->getModuleInfoXml($moduleInfo->module);
 
-		$setupUrl = getNotEncodedUrl('', 'module', 'admin', 'act', $moduleConfInfo->setup_index_act, 'module_srl', $moduleInfo->module_srl, 'isLayoutDrop', '1');
+		if($moduleConfInfo->setup_index_act)
+		{
+			$setupUrl = getNotEncodedUrl('', 'module', 'admin', 'act', $moduleConfInfo->setup_index_act, 'module_srl', $moduleInfo->module_srl, 'isLayoutDrop', '1');
+		}
+
 		if($moduleConfInfo->simple_setup_index_act)
 		{
 			$oTargetmoduleAdminModel = &getAdminModel($moduleInfo->module);
@@ -553,7 +626,7 @@ class menuAdminModel extends menu
 	 * @param array $menu
 	 * @return void
 	 */
-	private function _menuInfoSetting(&$menu, &$start_module, &$isMenuFixed, $menuSrl)
+	private function _menuInfoSetting(&$menu, &$start_module, &$isMenuFixed, $menuSrl,$siteSrl = 0)
 	{
 		$oModuleModel = &getModel('module');
 		// if url is empty and is_shortcut is 'N', change to is_shortcut 'Y'
@@ -577,9 +650,10 @@ class menuAdminModel extends menu
 		{
 			unset($midInfo);
 			unset($moduleInfo);
-			$midInfo = $oModuleModel->getModuleInfoByMid($menu['url'], 0);
+			$midInfo = $oModuleModel->getModuleInfoByMid($menu['url'], $siteSrl);
 			$moduleInfo = $oModuleModel->getModuleInfoXml($midInfo->module);
-			if($moduleInfo->setup_index_act)
+
+			if($midInfo)
 			{
 				$menu['module_srl'] = $midInfo->module_srl;
 				$menu['module'] = $midInfo->module;
@@ -591,8 +665,17 @@ class menuAdminModel extends menu
 				{
 					$menu['module_type'] = $midInfo->module;
 				}
+			}
+
+			if($moduleInfo->setup_index_act)
+			{
 				$menu['setup_index_act'] = $moduleInfo->setup_index_act;
 			}
+			else if($moduleInfo->default_index_act)
+			{
+				$menu['setup_index_act'] = $moduleInfo->default_index_act;
+			}
+
 			if($menu['is_shortcut'] == 'N' && $midInfo->mid == $start_module->mid)
 			{
 				$menu['is_start_module'] = true;

@@ -26,6 +26,7 @@ class moduleModel extends module
 		$dirs[] = 'api';
 		if(in_array($id, $dirs)) return true;
 		// mid test
+		$args = new stdClass();
 		$args->mid = $id;
 		$args->site_srl = $site_srl;
 		$output = executeQuery('module.isExistsModuleName', $args);
@@ -33,6 +34,7 @@ class moduleModel extends module
 		// vid test (check mid != vid if site_srl=0, which means it is not a virtual site)
 		if(!$site_srl)
 		{
+			$site_args = new stdClass();
 			$site_args->domain = $id;
 			$output = executeQuery('module.isExistsSiteDomain', $site_args);
 			if($output->data->count) return true;
@@ -46,6 +48,7 @@ class moduleModel extends module
 	 */
 	function getSiteInfo($site_srl, $columnList = array())
 	{
+		$args = new stdClass();
 		$args->site_srl = $site_srl;
 		$output = executeQuery('module.getSiteInfo', $args, $columnList);
 		return $output->data;
@@ -53,6 +56,7 @@ class moduleModel extends module
 
 	function getSiteInfoByDomain($domain, $columnList = array())
 	{
+		$args = new stdClass();
 		$args->domain= $domain;
 		$output = executeQuery('module.getSiteInfoByDomain', $args, $columnList);
 		return $output->data;
@@ -64,6 +68,7 @@ class moduleModel extends module
 	 */
 	function getModuleInfoByDocumentSrl($document_srl)
 	{
+		$args = new stdClass();
 		$args->document_srl = $document_srl;
 		$output = executeQuery('module.getModuleInfoByDocument', $args);
 		$this->applyDefaultSkin($output->data);
@@ -109,6 +114,7 @@ class moduleModel extends module
 			if($oCacheHandler->isSupport()) $output = $oCacheHandler->get('domain_' . $domain);
 			if(!$output)
 			{
+				$args = new stdClass();
 				$args->domain = $domain;
 				$output = executeQuery('module.getSiteInfoByDomain', $args);
 				if($oCacheHandler->isSupport() && $output->data) $oCacheHandler->put('domain_' . $domain, $output);
@@ -126,6 +132,7 @@ class moduleModel extends module
 			if($oCacheHandler->isSupport())	$output = $oCacheHandler->get('default_site');
 			if(!$output)
 			{
+				$args = new stdClass();
 				$args->site_srl = 0;
 				$output = executeQuery('module.getSiteInfo', $args);
 				// Update the related informaion if there is no default site info
@@ -176,6 +183,7 @@ class moduleModel extends module
 			return;
 		}
 
+		$args = new stdClass();
 		$args->mid = $mid;
 		$args->site_srl = (int)$site_srl;
 		$oCacheHandler = &CacheHandler::getInstance('object');
@@ -225,6 +233,7 @@ class moduleModel extends module
 			return;
 		}
 
+		$args = new stdClass();
 		$args->menu_item_srl = $menuItemSrl;
 		$output = executeQuery('module.getModuleInfoByMenuItemSrl', $args);
 		if(!$output->toBool())
@@ -250,7 +259,7 @@ class moduleModel extends module
 		$layoutInfoPc = $layoutSrlPc ? $oLayoutModel->getLayoutRawData($layoutSrlPc, array('title')) : NULL;
 		$layoutInfoMobile = $layoutSrlMobile ? $oLayoutModel->getLayoutRawData($layoutSrlMobile, array('title')) : NULL;
 		$skinInfoPc = $this->loadSkinInfo(Modulehandler::getModulePath($moduleInfo->module), $skinNamePc);
-		$skinInfoMobile = $this->loadSkinInfo(Modulehandler::getModulePath($moduleInfo->module), $skinNameMobile, 'm.skin');
+		$skinInfoMobile = $this->loadSkinInfo(Modulehandler::getModulePath($moduleInfo->module), $skinNameMobile, 'm.skins');
 		if(!$skinInfoPc)
 		{
 			$skinInfoPc = new stdClass();
@@ -314,6 +323,7 @@ class moduleModel extends module
 	function getModuleInfoByModuleSrl($module_srl, $columnList = array())
 	{
 		// Get data
+		$args = new stdClass();
 		$args->module_srl = $module_srl;
 		$oCacheHandler = &CacheHandler::getInstance('object');
 		if($oCacheHandler->isSupport())
@@ -330,6 +340,7 @@ class moduleModel extends module
 		}
 		if(count($columnList))
 		{
+			$module_info = new stdClass();
 			foreach($output->data as $key => $item)
 			{
 				if(in_array($key, $columnList))
@@ -344,19 +355,19 @@ class moduleModel extends module
 
 	/**
 	 * Apply default skin info
-	 * 
+	 *
 	 * @param stdClass $moduleInfo Module information
 	 */
 	private function applyDefaultSkin(&$moduleInfo)
 	{
 		if($moduleInfo->is_skin_fix == 'N')
 		{
-			$moduleInfo->skin = '/USE_DEFAULT';
+			$moduleInfo->skin = '/USE_DEFAULT/';
 		}
-		
+
 		if($moduleInfo->is_mskin_fix == 'N')
 		{
-			$moduleInfo->mskin = '/USE_DEFAULT';
+			$moduleInfo->mskin = '/USE_DEFAULT/';
 		}
 	}
 	/**
@@ -384,6 +395,7 @@ class moduleModel extends module
 	function getModulesInfo($module_srls, $columnList = array())
 	{
 		if(is_array($module_srls)) $module_srls = implode(',',$module_srls);
+		$args = new stdClass();
 		$args->module_srls = $module_srls;
 		$output = executeQueryArray('module.getModulesInfo', $args, $columnList);
 		if(!$output->toBool()) return;
@@ -490,6 +502,7 @@ class moduleModel extends module
 	 */
 	function getActionForward($act, $module = "")
 	{
+		$args = new stdClass();
 		$args->act = $act;
 		$args->module = ($module)?$module:null;
 		if(strlen ($args->module) > 0) $output = executeQuery ('module.getActionForwardWithModule', $args);
@@ -511,6 +524,7 @@ class moduleModel extends module
 		}
 		if(!$output)
 		{
+			$args = new stdClass();
 			$args->trigger_name = $trigger_name;
 			$args->called_position = $called_position;
 			$output = executeQueryArray('module.getTriggers',$args);
@@ -524,6 +538,7 @@ class moduleModel extends module
 	 */
 	function getTrigger($trigger_name, $module, $type, $called_method, $called_position)
 	{
+		$args = new stdClass();
 		$args->trigger_name = $trigger_name;
 		$args->module = $module;
 		$args->type = $type;
@@ -613,6 +628,7 @@ class moduleModel extends module
 		if($xml_obj->version && $xml_obj->attrs->version == '0.2')
 		{
 			// module format 0.2
+			$module_info = new stdClass();
 			$module_info->title = $xml_obj->title->body;
 			$module_info->description = $xml_obj->description->body;
 			$module_info->version = $xml_obj->version->body;
@@ -629,7 +645,7 @@ class moduleModel extends module
 
 			foreach($author_list as $author)
 			{
-				unset($author_obj);
+				$author_obj = new stdClass();
 				$author_obj->name = $author->name->body;
 				$author_obj->email_address = $author->attrs->email_address;
 				$author_obj->homepage = $author->attrs->link;
@@ -724,10 +740,11 @@ class moduleModel extends module
 		$xml_file = sprintf("%sconf/module.xml", $class_path);
 		if(!file_exists($xml_file)) return;
 		// Check if cached file exists
-		$cache_file = sprintf("./files/cache/module_info/%s.%s.%s.php", $module, Context::getLangType(), __ZBXE_VERSION__);
+		$cache_file = sprintf("./files/cache/module_info/%s.%s.%s.php", $module, Context::getLangType(), __XE_VERSION__);
 		// Update if no cache file exists or it is older than xml file
 		if(!file_exists($cache_file) || filemtime($cache_file)<filemtime($xml_file))
 		{
+			$info = new stdClass();
 			$buff = ""; // /< Set buff variable to use in the cache file
 
 			$xml_obj = XmlParser::loadXmlFile($xml_file); // /< Read xml file and convert it to xml object
@@ -746,12 +763,14 @@ class moduleModel extends module
 				if(is_array($grants)) $grant_list = $grants;
 				else $grant_list[] = $grants;
 
+				$info->grant = new stdClass();
 				foreach($grant_list as $grant)
 				{
 					$name = $grant->attrs->name;
 					$default = $grant->attrs->default?$grant->attrs->default:'guest';
 					$title = $grant->title->body;
 
+					$info->grant->{$name} = new stdClass();
 					$info->grant->{$name}->title = $title;
 					$info->grant->{$name}->default = $default;
 
@@ -765,6 +784,7 @@ class moduleModel extends module
 				if(is_array($permissions)) $permission_list = $permissions;
 				else $permission_list[] = $permissions;
 
+				$info->permission = new stdClass();
 				foreach($permission_list as $permission)
 				{
 					$action = $permission->attrs->action;
@@ -781,12 +801,14 @@ class moduleModel extends module
 				if(is_array($menus)) $menu_list = $menus;
 				else $menu_list[] = $menus;
 
+				$info->menu = new stdClass();
 				foreach($menu_list as $menu)
 				{
 					$menu_name = $menu->attrs->name;
 					$menu_title = is_array($menu->title) ? $menu->title[0]->body : $menu->title->body;
 					$menu_type = $menu->attrs->type;
 
+					$info->menu->{$menu_name} = new stdClass();
 					$info->menu->{$menu_name}->title = $menu_title;
 					$info->menu->{$menu_name}->acts = array();
 					$info->menu->{$menu_name}->type = $menu_type;
@@ -802,6 +824,7 @@ class moduleModel extends module
 				if(is_array($actions)) $action_list = $actions;
 				else $action_list[] = $actions;
 
+				$info->action = new stdClass();
 				foreach($action_list as $action)
 				{
 					$name = $action->attrs->name;
@@ -817,10 +840,7 @@ class moduleModel extends module
 					$simple_setup_index = $action->attrs->simple_setup_index;
 					$menu_index = $action->attrs->menu_index;
 
-					$output->action->{$name}->type = $type;
-					$output->action->{$name}->grant = $grant;
-					$output->action->{$name}->standalone= $standalone;
-
+					$info->action->{$name} = new stdClass();
 					$info->action->{$name}->type = $type;
 					$info->action->{$name}->grant = $grant;
 					$info->action->{$name}->standalone = $standalone=='true'?true:false;
@@ -869,7 +889,7 @@ class moduleModel extends module
 					}
 				}
 			}
-			$buff = sprintf('<?php if(!defined("__ZBXE__")) exit();$info->default_index_act = \'%s\';$info->setup_index_act=\'%s\';$info->simple_setup_index_act=\'%s\';$info->admin_index_act = \'%s\';%s?>', $default_index_act, $setup_index_act, $simple_setup_index_act, $admin_index_act, $buff);
+			$buff = sprintf('<?php if(!defined("__XE__")) exit();$info->default_index_act = \'%s\';$info->setup_index_act=\'%s\';$info->simple_setup_index_act=\'%s\';$info->admin_index_act = \'%s\';%s?>', $default_index_act, $setup_index_act, $simple_setup_index_act, $admin_index_act, $buff);
 
 			FileHandler::writeFile($cache_file, $buff);
 
@@ -909,6 +929,11 @@ class moduleModel extends module
 	 */
 	function getSkins($path, $dir = 'skins')
 	{
+		if(substr($path, -1) == '/')
+		{
+			$path = substr($path, 0, -1);
+		}
+
 		$skin_path = sprintf("%s/%s/", $path, $dir);
 		$list = FileHandler::readDir($skin_path);
 		if(!count($list)) return;
@@ -917,9 +942,17 @@ class moduleModel extends module
 
 		foreach($list as $skin_name)
 		{
+			if(!is_dir($skin_path . $skin_name))
+			{
+				continue;
+			}
 			unset($skin_info);
 			$skin_info = $this->loadSkinInfo($path, $skin_name, $dir);
-			if(!$skin_info) $skin_info->title = $skin_name;
+			if(!$skin_info)
+			{
+				$skin_info = new stdClass();
+				$skin_info->title = $skin_name;
+			}
 
 			$skin_list[$skin_name] = $skin_info;
 		}
@@ -962,7 +995,6 @@ class moduleModel extends module
 			{
 				$type = 'M';
 			}
-
 			$defaultSkinName = $this->getModuleDefaultSkin($module, $type, $site_info->site_srl);
 
 			if(isset($defaultSkinName))
@@ -977,7 +1009,7 @@ class moduleModel extends module
 				$skin_list = array_merge($useDefaultList, $skin_list);
 			}
 		}
-		
+
 		return $skin_list;
 	}
 
@@ -997,6 +1029,7 @@ class moduleModel extends module
 		if(!$_xml_obj->skin) return;
 		$xml_obj = $_xml_obj->skin;
 		// Skin Name
+		$skin_info = new stdClass();
 		$skin_info->title = $xml_obj->title->body;
 		// Author information
 		if($xml_obj->version && $xml_obj->attrs->version == '0.2')
@@ -1015,7 +1048,7 @@ class moduleModel extends module
 
 			foreach($author_list as $author)
 			{
-				unset($author_obj);
+				$author_obj = new stdClass();
 				$author_obj->name = $author->name->body;
 				$author_obj->email_address = $author->attrs->email_address;
 				$author_obj->homepage = $author->attrs->link;
@@ -1039,7 +1072,7 @@ class moduleModel extends module
 
 					foreach($extra_vars as $key => $val)
 					{
-						unset($obj);
+						$obj = new stdClass();
 						if(!$val->attrs->type) { $val->attrs->type = 'text'; }
 
 						$obj->group = $group->title->body;
@@ -1058,12 +1091,14 @@ class moduleModel extends module
 
 							for($i = 0; $i < $option_count; $i++)
 							{
+								$obj->options[$i] = new stdClass();
 								$obj->options[$i]->title = $val->options[$i]->title->body;
 								$obj->options[$i]->value = $val->options[$i]->attrs->value;
 							}
 						}
 						else
 						{
+							$obj->options[0] = new stdClass();
 							$obj->options[0]->title = $val->options->title->body;
 							$obj->options[0]->value = $val->options->attrs->value;
 						}
@@ -1133,6 +1168,7 @@ class moduleModel extends module
 			$skin_info->license_link = $xml_obj->license->attrs->link;
 			$skin_info->description = $xml_obj->maker->description->body;
 
+			$skin_info->author[0] = new stdClass();
 			$skin_info->author[0]->name = $xml_obj->maker->name->body;
 			$skin_info->author[0]->email_address = $xml_obj->maker->attrs->email_address;
 			$skin_info->author[0]->homepage = $xml_obj->maker->attrs->link;
@@ -1214,7 +1250,7 @@ class moduleModel extends module
 				}
 				else $screenshot = "";
 
-				unset($obj);
+				$obj = new stdClass();
 				$obj->name = $name;
 				$obj->title = $title;
 				$obj->screenshot = $screenshot;
@@ -1275,6 +1311,7 @@ class moduleModel extends module
 		{
 			if(!$GLOBALS['__ModuleConfig__'][$site_srl][$module])
 			{
+				$args = new stdClass();
 				$args->module = $module;
 				$args->site_srl = $site_srl;
 				$output = executeQuery('module.getModuleConfig', $args);
@@ -1310,6 +1347,7 @@ class moduleModel extends module
 		{
 			if(!$GLOBALS['__ModulePartConfig__'][$module][$module_srl])
 			{
+				$args = new stdClass();
 				$args->module = $module;
 				$args->module_srl = $module_srl;
 				$output = executeQuery('module.getModulePartConfig', $args);
@@ -1332,6 +1370,7 @@ class moduleModel extends module
 	 */
 	function getModulePartConfigs($module, $site_srl = 0)
 	{
+		$args = new stdClass();
 		$args->module = $module;
 		if($site_srl) $args->site_srl = $site_srl;
 		$output = executeQueryArray('module.getModulePartConfigs', $args);
@@ -1349,6 +1388,7 @@ class moduleModel extends module
 	 */
 	function getModuleCategories($moduleCategorySrl = array())
 	{
+		$args = new stdClass();
 		$args->moduleCategorySrl = $moduleCategorySrl;
 		// Get data from the DB
 		$output = executeQuery('module.getModuleCategories', $args);
@@ -1526,6 +1566,7 @@ class moduleModel extends module
 			$module_srls[] = $data->module_srl;
 		}
 
+		$args = new stdClass();
 		$args->module_srls = implode(',',$module_srls);
 		$output = executeQueryArray('module.getModuleSites', $args);
 		if(!$output->data) return array();
@@ -1555,6 +1596,7 @@ class moduleModel extends module
 		if(!$member_info->member_srl) return false;
 		if($member_info->is_admin == 'Y') return true;
 
+		$args = new stdClass();
 		if(!isset($site_srl))
 		{
 			$site_module_info = Context::get('site_module_info');
@@ -1587,6 +1629,7 @@ class moduleModel extends module
 	 */
 	function getAdminId($module_srl)
 	{
+		$obj = new stdClass();
 		$obj->module_srl = $module_srl;
 		$output = executeQueryArray('module.getAdminID', $obj);
 		if(!$output->toBool() || !$output->data) return;
@@ -1610,6 +1653,7 @@ class moduleModel extends module
 		}
 		if(!$vars)
 		{
+			$args = new stdClass();
 			$args->module_srl = $module_srl;
 			$output = executeQueryArray('module.getModuleExtraVars',$args);
 			if(!$output->toBool() || !$output->data)
@@ -1621,6 +1665,10 @@ class moduleModel extends module
 			foreach($output->data as $key => $val)
 			{
 				if(in_array($val->name, array('mid','module')) || $val->value == 'Array') continue;
+				if(!isset($vars[$val->module_srl]))
+				{
+					$vars[$val->module_srl] = new stdClass();
+				}
 				$vars[$val->module_srl]->{$val->name} = $val->value;
 			}
 			if($oCacheHandler->isSupport()) $oCacheHandler->put($cache_key,$vars);
@@ -1637,6 +1685,7 @@ class moduleModel extends module
 	 */
 	function getModuleSkinVars($module_srl)
 	{
+		$args = new stdClass();
 		$args->module_srl = $module_srl;
 		$output = executeQueryArray('module.getModuleSkinVars',$args);
 		if(!$output->toBool() || !$output->data) return;
@@ -1652,6 +1701,7 @@ class moduleModel extends module
 	function getModuleDefaultSkin($module_name, $skin_type = 'P', $site_srl = 0, $updateCache = true)
 	{
 		$target = ($skin_type == 'M') ? 'mskin' : 'skin';
+		if(!$site_srl) $site_srl = 0;
 
 		$designInfoFile = sprintf(_XE_PATH_.'files/site_design/design_%s.php', $site_srl);
 		if(is_readable($designInfoFile))
@@ -1660,7 +1710,6 @@ class moduleModel extends module
 
 			$skinName = $designInfo->module->{$module_name}->{$target};
 		}
-
 		if(!$skinName)
 		{
 			$dir = ($skin_type == 'M') ? 'm.skins/' : 'skins/';
@@ -1689,6 +1738,7 @@ class moduleModel extends module
 
 			if($updateCache && $skinName)
 			{
+				$designInfo->module->{$module_name} = new stdClass();
 				$designInfo->module->{$module_name}->{$target} = $skinName;
 
 				$oAdminController = getAdminController('admin');
@@ -1725,6 +1775,7 @@ class moduleModel extends module
 		}
 		if(!$output)
 		{
+			$args = new stdClass();
 			$args->module_srl = $module_info->module_srl;
 			$output = executeQueryArray($query,$args);
 			//insert in cache
@@ -1746,6 +1797,7 @@ class moduleModel extends module
 	 */
 	function getModuleMobileSkinVars($module_srl)
 	{
+		$args = new stdClass();
 		$args->module_srl = $module_srl;
 		$output = executeQueryArray('module.getModuleMobileSkinVars',$args);
 		if(!$output->toBool() || !$output->data) return;
@@ -1790,6 +1842,8 @@ class moduleModel extends module
 	 */
 	function getGrant($module_info, $member_info, $xml_info = '')
 	{
+		$grant = new stdClass();
+
 		if(!$xml_info)
 		{
 			$module = $module_info->module;
@@ -1822,6 +1876,7 @@ class moduleModel extends module
 			// If a just logged-in member is, check if the member is a module administrator
 			if(!$grant->manager && $member_info->member_srl)
 			{
+				$args = new stdClass();
 				$args->module_srl = $module_srl;
 				$args->member_srl = $member_info->member_srl;
 				$output = executeQuery('module.getModuleAdmin',$args);
@@ -1830,7 +1885,7 @@ class moduleModel extends module
 			// If not an administrator, get information from the DB and grant manager privilege.
 			if(!$grant->manager)
 			{
-				$args = null;
+				$args = new stdClass();
 				// If planet, get permission settings from the planet home
 				if($module_info->module == 'planet')
 				{
@@ -1938,6 +1993,7 @@ class moduleModel extends module
 
 	function getModuleFileBox($module_filebox_srl)
 	{
+		$args = new stdClass();
 		$args->module_filebox_srl = $module_filebox_srl;
 		return executeQuery('module.getModuleFileBox', $args);
 	}
@@ -1946,6 +2002,7 @@ class moduleModel extends module
 	{
 		$oModuleModel = &getModel('module');
 
+		$args = new stdClass();
 		$args->page = Context::get('page');
 		$args->list_count = 5;
 		$args->page_count = 5;
@@ -2093,6 +2150,7 @@ class moduleModel extends module
 	 */
 	function getModuleListByInstance($site_srl = 0, $columnList = array())
 	{
+		$args = new stdClass();
 		$args->site_srl = $site_srl;
 		$output = executeQueryArray('module.getModuleListByInstance', $args, $columnList);
 		return $output;

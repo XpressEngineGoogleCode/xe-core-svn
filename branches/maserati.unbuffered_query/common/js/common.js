@@ -106,9 +106,6 @@ if(jQuery) jQuery.noConflict();
                                         click_str = " onclick=\""+url+"; return false; \"";
                                         url="#";
                                     break;
-                                default :
-                                        click_str = " onclick=\"window.open(this.href); return false;\"";
-                                    break;
                             }
 
                             html += '<li '+styleText+'><a href="'+url+'"'+click_str+'>'+str+'</a></li> ';
@@ -128,11 +125,10 @@ if(jQuery) jQuery.noConflict();
                 if(area.outerWidth()+areaOffset.left > $(window).width()+$(window).scrollLeft())
                     areaOffset.left = $(window).width() - area.outerWidth() + $(window).scrollLeft();
 
-                area.css({ top:areaOffset.top, left:areaOffset.left }).show();
+                area.css({ top:areaOffset.top, left:areaOffset.left }).show().focus();
             }
         }
     }
-
 }) (jQuery);
 
 
@@ -142,7 +138,7 @@ jQuery(function($) {
 
 	// Anchor: focus move to target
 	$('a[href^="#"]').click(function(){
-		$($(this).attr('href')).attr('tabindex','0').css('outline','0').focus();
+		$($(this).attr('href')).attr('tabindex','0').focus();
 	});
 
     /* select - option의 disabled=disabled 속성을 IE에서도 체크하기 위한 함수 */
@@ -356,7 +352,7 @@ function winopen(url, target, attribute) {
 function popopen(url, target) {
     if(typeof(target) == "undefined") target = "_blank";
     if(typeof(xeVid)!='undefined' && url.indexOf(request_uri)>-1 && !url.getQuery('vid')) url = url.setQuery('vid',xeVid);
-    winopen(url, target, "width=650,height=500,scrollbars=yes,resizable=yes,toolbars=no");
+    winopen(url, target, "width=800,height=600,scrollbars=yes,resizable=yes,toolbars=no");
 }
 
 /**
@@ -913,7 +909,7 @@ jQuery(function($){
 	// display popup menu that contains member actions and document actions
 	$(document).click(function(evt) {
 		var $area = $('#popup_menu_area');
-		if(!$area.length) $area = $('<div id="popup_menu_area" style="display:none;z-index:9999" />').appendTo(document.body);
+		if(!$area.length) $area = $('<div id="popup_menu_area" tabindex="0" style="display:none;z-index:9999" />').appendTo(document.body);
 
 		// 이전에 호출되었을지 모르는 팝업메뉴 숨김
 		$area.hide();

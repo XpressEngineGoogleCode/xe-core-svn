@@ -153,6 +153,7 @@ class memberAdminView extends member
 		Context::set('editor_skin_list', $oEditorModel->getEditorSkinList());
 
 		// get an editor
+		$option = new stdClass();
 		$option->primary_key_name = 'temp_srl';
 		$option->content_key_name = 'agreement';
 		$option->allow_fileupload = false;
@@ -332,13 +333,17 @@ class memberAdminView extends member
 		$oMemberModel = &getModel('member');
 
 		$memberInfo = Context::get('member_info');
-		$memberInfo->signature = $oMemberModel->getSignature($this->memberInfo->member_srl);
+		if(isset($memberInfo))
+		{
+			$memberInfo->signature = $oMemberModel->getSignature($this->memberInfo->member_srl);
+		}
 		Context::set('member_info', $memberInfo);
 
 		// get an editor for the signature
 		if($memberInfo->member_srl)
 		{
 			$oEditorModel = &getModel('editor');
+			$option = new stdClass();
 			$option->primary_key_name = 'member_srl';
 			$option->content_key_name = 'signature';
 			$option->allow_fileupload = false;
@@ -360,6 +365,7 @@ class memberAdminView extends member
 		$member_config = $this->memberConfig;
 
 		global $lang;
+		$identifierForm = new stdClass();
 		$identifierForm->title = $lang->{$member_config->identifier};
 		$identifierForm->name = $member_config->identifier;
 		$identifierForm->value = $memberInfo->{$member_config->identifier};
@@ -398,7 +404,7 @@ class memberAdminView extends member
 		{
 			if(!$formInfo->isUse)continue;
 			if($formInfo->name == $member_config->identifier || $formInfo->name == 'password') continue;
-			unset($formTag);
+			$formTag = new stdClass();
 			$inputTag = '';
 			$formTag->title = ($formInfo->isDefaultForm) ? $lang->{$formInfo->name} : $formInfo->title;
 			if($isAdmin)
@@ -458,7 +464,7 @@ class memberAdminView extends member
 					else if($formInfo->name == 'birthday')
 					{
 						$formTag->type = 'date';
-						$inputTag = sprintf('<input type="hidden" name="birthday" id="date_birthday" value="%s" /><input type="date" placeholder="YYYY-MM-DD" class="inputDate" id="birthday" value="%s" /> <input type="button" value="%s" class="btn dateRemover" />',
+						$inputTag = sprintf('<input type="hidden" name="birthday" id="date_birthday" value="%s" /><input type="text" placeholder="YYYY-MM-DD" name="birthday_ui" class="inputDate" id="birthday" value="%s" readonly="readonly" /> <input type="button" value="%s" class="btn dateRemover" />',
 							$memberInfo['birthday'],
 							zdate($memberInfo['birthday'], 'Y-m-d', false),
 							$lang->cmd_delete);
@@ -622,7 +628,7 @@ EOD;
 					else if($extendForm->column_type == 'date')
 					{
 						$extentionReplace = array('date' => zdate($extendForm->value, 'Y-m-d'), 'cmd_delete' => $lang->cmd_delete);
-						$template = '<input type="hidden" name="%column_name%" id="date_%column_name%" value="%value%" /><input type="date" placeholder="YYYY-MM-DD" class="inputDate" value="%date%" readonly="readonly" /> <input type="button" value="%cmd_delete%" class="dateRemover" />';
+						$template = '<input type="hidden" name="%column_name%" id="date_%column_name%" value="%value%" /><input type="text" placeholder="YYYY-MM-DD" class="inputDate" value="%date%" readonly="readonly" /> <input type="button" value="%cmd_delete%" class="btn dateRemover" />';
 					}
 
 					$replace = array_merge($extentionReplace, $replace);

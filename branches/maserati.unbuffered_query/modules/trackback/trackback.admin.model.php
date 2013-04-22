@@ -28,6 +28,8 @@ class trackbackAdminModel extends trackback
 		$search_target = $obj->search_target?$obj->search_target:trim(Context::get('search_target'));
 		$search_keyword = $obj->search_keyword?$obj->search_keyword:trim(Context::get('search_keyword'));
 
+		$args = new stdClass();
+		
 		if($search_target && $search_keyword)
 		{
 			switch($search_target)

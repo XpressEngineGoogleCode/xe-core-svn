@@ -1,32 +1,48 @@
 <?php
+
 /**
- * QueryParser class
- * @author NHN (developers@xpressengine.com)
- * @package /classes/xml/xmlquery
+ * File containing the QueryParser class
+ */
+
+/**
+ * Parses an XML Object and returns a string used for generating the PHP cache file <br />
+ * The XML Object structure must be the one defined in the XmlParser class
+ *
+ * @author Corina Udrescu (corina.udrescu@arnia.ro)
+ * @package classes\xml\xmlquery
  * @version 0.1
  */
 class QueryParser
 {
+
 	/**
-	 * QueryTag object
+	 * Property containing the associated QueryTag object
+	 *
 	 * @var QueryTag object
 	 */
 	var $queryTag;
 
 	/**
-	 * constructor
-	 * @param object $query
+	 * Constructor
+	 *
+	 * @param object $query XML object obtained after reading the XML Query file
 	 * @param bool $isSubQuery
 	 * @return void
 	 */
-	function QueryParser($query = NULL, $isSubQuery = false)
+	function QueryParser($query = NULL, $isSubQuery = FALSE)
 	{
 		if($query)
+		{
 			$this->queryTag = new QueryTag($query, $isSubQuery);
+		}
 	}
 
 	/**
-	 * Return table information
+	 * Returns table information
+	 *
+	 * Used for finding column type info (string/numeric) <br />
+	 * Obtains the table info from XE's XML schema files
+	 *
 	 * @param object $query_id
 	 * @param bool $table_name
 	 * @return array
@@ -46,12 +62,14 @@ class QueryParser
 		else if(count($id_args) == 3)
 		{
 			$target = $id_args[0];
-			$targetList = array('modules'=>1, 'addons'=>1, 'widgets'=>1);
-			if (!isset($targetList[$target]))
+			$targetList = array('modules' => 1, 'addons' => 1, 'widgets' => 1);
+			if(!isset($targetList[$target]))
+			{
 				return;
+			}
 			$module = $id_args[1];
 			$id = $id_args[2];
-		} 
+		}
 
 		// get column properties from the table
 		$table_file = sprintf('%s%s/%s/schemas/%s.xml', _XE_PATH_, 'modules', $module, $table_name);
@@ -63,7 +81,9 @@ class QueryParser
 			{
 				$table_file = sprintf('%s%s/%s/schemas/%s.xml', _XE_PATH_, 'modules', $searched_list[$i], $table_name);
 				if(file_exists($table_file))
+				{
 					break;
+				}
 			}
 		}
 
@@ -90,15 +110,17 @@ class QueryParser
 	}
 
 	/**
-	 * Change code string from queryTag object
+	 * Returns the contents for the query cache file
+	 *
 	 * @return string
 	 */
 	function toString()
 	{
-		return "<?php if(!defined('__ZBXE__')) exit();\n"
-			. $this->queryTag->toString()
-			. 'return $query; ?>';
+		return "<?php if(!defined('__XE__')) exit();\n"
+				. $this->queryTag->toString()
+				. 'return $query; ?>';
 	}
+
 }
 /* End of file QueryParser.class.php */
 /* Location: ./classes/xml/xmlquery/QueryParser.class.php */

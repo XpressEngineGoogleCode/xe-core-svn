@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Model class of the autoinstall module
  * @author NHN (developers@xpressengine.com)
@@ -28,7 +29,7 @@ class autoinstallAdminModel extends autoinstall
 			$order_type = 'desc';
 		}
 
-		$page = (int)$page;
+		$page = (int) $page;
 		if($page < 1)
 		{
 			$page = 1;
@@ -164,14 +165,14 @@ class autoinstallAdminModel extends autoinstall
 	{
 		$is_authed = 0;
 
-		$ftp_info =  Context::getFTPInfo();
+		$ftp_info = Context::getFTPInfo();
 		if(!$ftp_info->ftp_root_path)
 		{
 			$is_authed = -1;
 		}
 		else
 		{
-			$is_authed = (int)isset($_SESSION['ftp_password']);
+			$is_authed = (int) isset($_SESSION['ftp_password']);
 		}
 
 		$this->add('is_authed', $is_authed);
@@ -184,14 +185,17 @@ class autoinstallAdminModel extends autoinstall
 	{
 		$oModel = getModel('autoinstall');
 		$output = executeQueryArray('autoinstall.getNeedUpdate');
-		if(!is_array($output->data)) return NULL;
+		if(!is_array($output->data))
+		{
+			return NULL;
+		}
 
 		$result = array();
 		$xml = new XmlParser();
 		foreach($output->data as $package)
 		{
 			$packageSrl = $package->package_srl;
-			
+
 			$packageInfo = new stdClass();
 			$packageInfo->currentVersion = $package->current_version;
 			$packageInfo->version = $package->version;
@@ -210,9 +214,18 @@ class autoinstallAdminModel extends autoinstall
 				if($xmlDoc)
 				{
 					$type = $packageInfo->type;
-					if($type == "drcomponent") $type = "component";
-					if($type == "style" || $type == "m.skin") $type = "skin";
-					if($type == "m.layout") $type = "layout";
+					if($type == "drcomponent")
+					{
+						$type = "component";
+					}
+					if($type == "style" || $type == "m.skin")
+					{
+						$type = "skin";
+					}
+					if($type == "m.layout")
+					{
+						$type = "layout";
+					}
 					$title = $xmlDoc->{$type}->title->body;
 				}
 				else
@@ -227,6 +240,111 @@ class autoinstallAdminModel extends autoinstall
 		}
 
 		return $result;
+	}
+
+	/**
+	 * Get install info
+	 *
+	 * @param int $packageSrl Package sequence to get info
+	 * @return stdClass install info
+	 */
+	public function getInstallInfo($packageSrl)
+	{
+		$params["act"] = "getResourceapiInstallInfo";
+		$params["package_srl"] = $packageSrl;
+		$xmlDoc = XmlGenerater::getXmlDoc($params);
+		$oModel = getModel('autoinstall');
+
+		$targetpackages = array();
+		if($xmlDoc)
+		{
+			$xmlPackage = $xmlDoc->response->package;
+			$package = new stdClass();
+			$package->package_srl = $xmlPackage->package_srl->body;
+			$package->title = $xmlPackage->title->body;
+			$package->package_description = $xmlPackage->package_description->body;
+			$package->version = $xmlPackage->version->body;
+			$package->path = $xmlPackage->path->body;
+			if($xmlPackage->depends)
+			{
+				if(!is_array($xmlPackage->depends->item))
+				{
+					$xmlPackage->depends->item = array($xmlPackage->depends->item);
+				}
+
+				$package->depends = array();
+				foreach($xmlPackage->depends->item as $item)
+				{
+					$dep_item = new stdClass();
+					$dep_item->package_srl = $item->package_srl->body;
+					$dep_item->title = $item->title->body;
+					$dep_item->version = $item->version->body;
+					$dep_item->path = $item->path->body;
+					$package->depends[] = $dep_item;
+					$targetpackages[$dep_item->package_srl] = 1;
+				}
+
+				$packages = $oModel->getInstalledPackages(array_keys($targetpackages));
+				$package->deplist = "";
+				foreach($package->depends as $key => $dep)
+				{
+					if(!$packages[$dep->package_srl])
+					{
+						$package->depends[$key]->installed = FALSE;
+						$package->package_srl .= "," . $dep->package_srl;
+					}
+					else
+					{
+						$package->depends[$key]->installed = TRUE;
+						$package->depends[$key]->cur_version = $packages[$dep->package_srl]->current_version;
+						if(version_compare($dep->version, $packages[$dep->package_srl]->current_version, ">"))
+						{
+							$package->depends[$key]->need_update = TRUE;
+							$package->package_srl .= "," . $dep->package_srl;
+
+							if($dep->path === '.')
+							{
+								$package->contain_core = TRUE;
+							}
+						}
+						else
+						{
+							$package->need_update = FALSE;
+						}
+					}
+				}
+			}
+
+			$installedPackage = $oModel->getInstalledPackage($package_srl);
+			if($installedPackage)
+			{
+				$package->installed = TRUE;
+				$package->cur_version = $installedPackage->current_version;
+				$package->need_update = version_compare($package->version, $installedPackage->current_version, ">");
+			}
+
+			if($package->path === '.')
+			{
+				$package->contain_core = TRUE;
+			}
+		}
+
+		return $package;
+	}
+
+	/**
+	 * get install info (act)
+	 */
+	public function getAutoInstallAdminInstallInfo()
+	{
+		$packageSrl = Context::get('package_srl');
+		if(!$packageSrl)
+		{
+			return new Object(-1, 'msg_invalid_request');
+		}
+
+		$package = $this->getInstallInfo($packageSrl);
+		$this->add('package', $package);
 	}
 
 }

@@ -78,7 +78,7 @@ class moduleAdminController extends module
 	/**
 	 * @brief Copy Module
 	 */
-	function procModuleAdminCopyModule($args = NULL) 
+	function procModuleAdminCopyModule($args = NULL)
 	{
 		$isProc = false;
 		if(!$args)
@@ -93,7 +93,10 @@ class moduleAdminController extends module
 			$module_srl = $args->module_srl;
 		}
 
-		if(!$module_srl) return;
+		if(!$module_srl)
+		{
+			return $this->_returnByProc($isProc);
+		}
 
 		// Get module name to create and browser title
 		$clones = array();
@@ -107,7 +110,10 @@ class moduleAdminController extends module
 			if($mid && !$browser_title) $browser_title = $mid;
 			$clones[$mid] = $browser_title;
 		}
-		if(!count($clones)) return;
+		if(!count($clones))
+		{
+			return $this->_returnByProc($isProc);
+		}
 
 		$oModuleModel = &getModel('module');
 		$oModuleController = &getController('module');
@@ -115,6 +121,7 @@ class moduleAdminController extends module
 		$columnList = array('module', 'module_category_srl', 'layout_srl', 'use_mobile', 'mlayout_srl', 'menu_srl', 'site_srl', 'skin', 'mskin', 'description', 'mcontent', 'open_rss', 'header_text', 'footer_text', 'regdate');
 		$module_info = $oModuleModel->getModuleInfoByModuleSrl($module_srl, $columnList);
 		// Get permission information
+		$module_args = new stdClass();
 		$module_args->module_srl = $module_srl;
 		$output = executeQueryArray('module.getModuleGrants', $module_args);
 		$grant = array();
@@ -124,10 +131,12 @@ class moduleAdminController extends module
 		}
 
 		// get Extra Vars
+		$extra_args = new stdClass();
 		$extra_args->module_srl = $module_srl;
 		$extra_output = executeQueryArray('module.getModuleExtraVars', $extra_args);
 		if($extra_output->toBool() && is_array($extra_output->data))
 		{
+			$extra_vars = new stdClass();
 			foreach($extra_output->data as $info)
 			{
 				$extra_vars->{$info->name} = $info->value;
@@ -156,19 +165,22 @@ class moduleAdminController extends module
 		$oDB = &DB::getInstance();
 		$oDB->begin();
 		// Copy a module
+		$triggerObj = new stdClass();
 		$triggerObj->originModuleSrl = $module_srl;
 		$triggerObj->moduleSrlList = array();
 
 		$errorLog = array();
-		foreach($clones as $mid => $browser_title) 
+		foreach($clones as $mid => $browser_title)
 		{
 			$clone_args = null;
-			$clone_args = clone($module_info);
+			$clone_args = clone $module_info;
 			$clone_args->module_srl = null;
 			$clone_args->content = null;
 			$clone_args->mid = $mid;
 			$clone_args->browser_title = $browser_title;
 			$clone_args->is_default = 'N';
+			$clone_args->isMenuCreate = $args->isMenuCreate;
+			unset($clone_args->menu_srl);
 			// Create a module
 			$output = $oModuleController->insertModule($clone_args);
 
@@ -244,6 +256,16 @@ class moduleAdminController extends module
 		return $module_srl;
 	}
 
+	private function _returnByProc($isProc, $msg='msg_invalid_request')
+	{
+		if(!$isProc)
+			return;
+		else
+		{
+			return new Object(-1, $msg);
+		}
+	}
+
 	/**
 	 * @brief Save the module permissions
 	 */
@@ -275,7 +297,9 @@ class moduleAdminController extends module
 
 		$grant_list = $xml_info->grant;
 
+		$grant_list->access = new stdClass();
 		$grant_list->access->default = 'guest';
+		$grant_list->manager = new stdClass();
 		$grant_list->manager->default = 'manager';
 
 		foreach($grant_list as $grant_name => $grant_info)
@@ -305,6 +329,7 @@ class moduleAdminController extends module
 		}
 
 		// Stored in the DB
+		$args = new stdClass();
 		$args->module_srl = $module_srl;
 		$output = executeQuery('module.deleteModuleGrants', $args);
 		if(!$output->toBool()) return $output;
@@ -315,7 +340,7 @@ class moduleAdminController extends module
 			{
 				foreach($group_srls as $key => $val)
 				{
-					$args = null;
+					$args = new stdClass();
 					$args->module_srl = $module_srl;
 					$args->name = $grant_name;
 					$args->group_srl = $val;
@@ -338,17 +363,31 @@ class moduleAdminController extends module
 		$mode = $mode === 'P' ? 'P' : 'M';
 
 		$oModuleModel = &getModel('module');
-		$columnList = array('module_srl', 'module', 'skin', 'mskin');
+		$columnList = array('module_srl', 'module', 'skin', 'mskin', 'is_skin_fix', 'is_mskin_fix');
 		$module_info = $oModuleModel->getModuleInfoByModuleSrl($module_srl, $columnList);
-		if($module_info->module_srl) 
+		if($module_info->module_srl)
 		{
 			if($mode === 'M')
 			{
-				$skin = $module_info->mskin;
+				if($module_info->is_mskin_fix == 'Y')
+				{
+					$skin = $module_info->mskin;
+				}
+				else
+				{
+					$skin = $oModuleModel->getModuleDefaultSkin($module_info->module, 'M');
+				}
 			}
 			else
 			{
-				$skin = $module_info->skin;
+				if($module_info->is_skin_fix == 'Y')
+				{
+					$skin = $module_info->skin;
+				}
+				else
+				{
+					$skin = $oModuleModel->getModuleDefaultSkin($module_info->module, 'P');
+				}
 			}
 
 			// Get skin information (to check extra_vars)
@@ -375,9 +414,9 @@ class moduleAdminController extends module
 			unset($obj->module);
 			unset($obj->_mode);
 			// Separately handle if a type of extra_vars is an image in the original skin_info
-			if($skin_info->extra_vars) 
+			if($skin_info->extra_vars)
 			{
-				foreach($skin_info->extra_vars as $vars) 
+				foreach($skin_info->extra_vars as $vars)
 				{
 					if($vars->type!='image') continue;
 
@@ -472,10 +511,10 @@ class moduleAdminController extends module
 		$oModuleModel = &getModel('module');
 		$oModuleController= &getController('module');
 		$columnList = array('module_srl', 'module', 'menu_srl', 'site_srl', 'mid', 'browser_title', 'is_default', 'content', 'mcontent', 'open_rss', 'regdate');
-		$updateList = array('module_category_srl','layout_srl','skin','mlayout_srl','mskin','description','header_text','footer_text'); //use_mobile
+		$updateList = array('module_category_srl','layout_srl','skin','mlayout_srl','mskin','description','header_text','footer_text', 'use_mobile');
 		foreach($updateList as $key=>$val)
 		{
-			if(!$vars->{$val} && $vars->{$val} !== 0)
+			if(!strlen($vars->{$val}))
 			{
 				unset($updateList[$key]);
 				$columnList[] = $val;
@@ -532,7 +571,9 @@ class moduleAdminController extends module
 		$xml_info = $oModuleModel->getModuleActionXml($module_info->module);
 		$grant_list = $xml_info->grant;
 
+		$grant_list->access = new stdClass();
 		$grant_list->access->default = 'guest';
+		$grant_list->manager = new stdClass();
 		$grant_list->manager->default = 'manager';
 
 		foreach($grant_list as $grant_name => $grant_info)
@@ -567,7 +608,7 @@ class moduleAdminController extends module
 		// Stored in the DB
 		foreach($modules as $module_srl)
 		{
-			$args = null;
+			$args = new stdClass();
 			$args->module_srl = $module_srl;
 			$output = executeQuery('module.deleteModuleGrants', $args);
 			if(!$output->toBool()) continue;
@@ -576,7 +617,7 @@ class moduleAdminController extends module
 			{
 				foreach($group_srls as $key => $val)
 				{
-					$args = null;
+					$args = new stdClass();
 					$args->module_srl = $module_srl;
 					$args->name = $grant_name;
 					$args->group_srl = $val;
@@ -614,6 +655,7 @@ class moduleAdminController extends module
 		$site_module_info = Context::get('site_module_info');
 		$target = Context::get('target');
 		$module = Context::get('module');
+		$args = new stdClass();
 		$args->site_srl = (int)$site_module_info->site_srl;
 		$args->name = str_replace(' ','_',Context::get('lang_code'));
 		$args->lang_name = str_replace(' ','_',Context::get('lang_name'));
@@ -664,6 +706,7 @@ class moduleAdminController extends module
 	{
 		// Get language code
 		$site_module_info = Context::get('site_module_info');
+		$args = new stdClass();
 		$args->site_srl = (int)$site_module_info->site_srl;
 		$args->name = str_replace(' ','_',Context::get('name'));
 		$args->lang_name = str_replace(' ','_',Context::get('lang_name'));
@@ -794,6 +837,8 @@ class moduleAdminController extends module
 	 */
 	function makeCacheDefinedLangCode($site_srl = 0)
 	{
+		$args = new stdClass();
+
 		// Get the language file of the current site
 		if(!$site_srl)
 		{
@@ -874,10 +919,12 @@ class moduleAdminController extends module
 
 		$layoutSrl = Context::get('layout_srl');
 
-		$skinFixTargetValue = ($skinType == 'M') ? 'is_mskin_fix' : 'is_skin_fix';
-		$isSkinFix = Context::get($skinFixTargetValue);
+		$isSkinFix = Context::get('is_skin_fix');
 
-		$isSkinFix = ($isSkinFix == 'N') ? 'N' : 'Y';
+		if($isSkinFix)
+		{
+			$isSkinFix = ($isSkinFix == 'N') ? 'N' : 'Y';
+		}
 
 		$skinName = Context::get('skin_name');
 		$skinVars = Context::get('skin_vars');
@@ -915,8 +962,15 @@ class moduleAdminController extends module
 		$layoutTargetValue = ($skinType == 'M') ? 'mlayout_srl' : 'layout_srl';
 		$skinFixTargetValue = ($skinType == 'M') ? 'is_mskin_fix' : 'is_skin_fix';
 
-		$moduleInfo->{$layoutTargetValue} = $layoutSrl;
-		$moduleInfo->{$skinFixTargetValue} = $isSkinFix;
+		if(strlen($layoutSrl))
+		{
+			$moduleInfo->{$layoutTargetValue} = $layoutSrl;
+		}
+
+		if(strlen($isSkinFix))
+		{
+			$moduleInfo->{$skinFixTargetValue} = $isSkinFix;
+		}
 
 		if($isSkinFix == 'Y')
 		{
@@ -935,10 +989,6 @@ class moduleAdminController extends module
 					$moduleInfo->{$key} = $val;
 				}
 			}
-		}
-		else
-		{
-			$moduleInfo->{$skinTargetValue} = '';
 		}
 
 		$oModuleController = getController('module');
