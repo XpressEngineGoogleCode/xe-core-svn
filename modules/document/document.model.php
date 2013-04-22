@@ -39,6 +39,7 @@ class documentModel extends document
 			return new Object(-1, 'msg_invalid_request');
 		}
 
+		$args = new stdClass();
 		$args->document_srl = $documentSrls;
 		$output = executeQueryArray('document.getDocumentExtraVars', $args);
 		return $output;
@@ -163,6 +164,7 @@ class documentModel extends document
 		{
 			$list_count = 1;
 		}
+		$args = new stdClass();
 		$args->document_srls = $document_srls;
 		$args->list_count = $list_count;
 		$args->order_type = 'asc';
@@ -333,6 +335,7 @@ class documentModel extends document
 	 */
 	function getNoticeList($obj, $columnList = array())
 	{
+		$args = new stdClass();
 		$args->module_srl = $obj->module_srl;
 		$args->category_srl= $obj->category_srl;
 		$output = executeQueryArray('document.getNoticeList', $args, $columnList);
@@ -373,6 +376,7 @@ class documentModel extends document
 		if(is_null($GLOBALS['XE_EXTRA_KEYS'][$module_srl]))
 		{
 			$oExtraVar = &ExtraVar::getInstance($module_srl);
+			$obj = new stdClass();
 			$obj->module_srl = $module_srl;
 			$obj->sort_index = 'var_idx';
 			$obj->order = 'asc';
@@ -543,6 +547,7 @@ class documentModel extends document
 	function getDocumentCount($module_srl, $search_obj = NULL)
 	{
 		// Additional search options
+		$args =new stdClass();
 		$args->module_srl = $module_srl;
 		$args->s_title = $search_obj->s_title;
 		$args->s_content = $search_obj->s_content;
@@ -590,6 +595,7 @@ class documentModel extends document
 		$args->var_idx = $search_obj->s_var_idx;
 		$args->var_eid = $search_obj->s_var_eid;
 		$args->var_value = $search_obj->s_var_value;
+		$args->var_lang_code = Context::getLangType();
 
 		$output = executeQuery('document.getDocumentExtraVarsCount', $args);
 		// Return total number of
@@ -646,6 +652,7 @@ class documentModel extends document
 	 */
 	function getCategory($category_srl, $columnList = array())
 	{
+		$args =new stdClass();
 		$args->category_srl = $category_srl;
 		$output = executeQuery('document.getCategory', $args, $columnList);
 
@@ -673,6 +680,7 @@ class documentModel extends document
 	 */
 	function getCategoryChlidCount($category_srl)
 	{
+		$args = new stdClass();
 		$args->category_srl = $category_srl;
 		$output = executeQuery('document.getChildCategoryCount',$args);
 		if($output->data->count > 0) return true;
@@ -1210,6 +1218,7 @@ class documentModel extends document
 			// get module_srl extra_vars list
 			if ($load_extra_vars)
 			{
+				$extra_args = new stdClass();
 				$extra_args->module_srl = $obj->module_srl;
 				$extra_output = executeQueryArray('document.getGroupsExtraVars', $extra_args);
 				if (!$extra_output->data || !$extra_output->toBool())
@@ -1230,6 +1239,7 @@ class documentModel extends document
 			else
 				$sortIndex = 'list_order';
 		}
+		$returnObj = new stdClass();
 		$returnObj->sort_index = $sortIndex;
 		$returnObj->isExtraVars = $isExtraVars;
 
@@ -1249,6 +1259,7 @@ class documentModel extends document
 	function _setSearchOption($searchOpt, &$args, &$query_id, &$use_division)
 	{
 		// Variable check
+		$args = new stdClass();
 		$args->category_srl = $searchOpt->category_srl?$searchOpt->category_srl:null;
 		$args->order_type = $searchOpt->order_type;
 		$args->page = $searchOpt->page?$searchOpt->page:1;
@@ -1341,6 +1352,10 @@ class documentModel extends document
 					$args->{"s_".$search_target} = $search_keyword;
 					break;
 				case 'is_notice' :
+					if($search_keyword=='N') $args->{"s_".$search_target} = 'N';
+					elseif($search_keyword=='Y') $args->{"s_".$search_target} = 'Y';
+					else $args->{"s_".$search_target} = '';
+					break;
 				case 'is_secret' :
 					if($search_keyword=='N') $args->statusList = array($this->getConfigStatus('public'));
 					elseif($search_keyword=='Y') $args->statusList = array($this->getConfigStatus('secret'));
@@ -1416,6 +1431,7 @@ class documentModel extends document
 				// If you do not value the best division top
 				if(!$division)
 				{
+					$division_args = new stdClass();
 					$division_args->module_srl = $args->module_srl;
 					$division_args->exclude_module_srl = $args->exclude_module_srl;
 					$division_args->list_count = 1;
@@ -1438,6 +1454,7 @@ class documentModel extends document
 				// Division after division from the 5000 value of the specified Wanted
 				if(!$last_division)
 				{
+					$last_division_args = new stdClass();
 					$last_division_args->module_srl = $args->module_srl;
 					$last_division_args->exclude_module_srl = $args->exclude_module_srl;
 					$last_division_args->list_count = 1;

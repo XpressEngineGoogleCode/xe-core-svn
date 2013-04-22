@@ -1,35 +1,37 @@
 <?php
+
 if(!defined('__XE_LOADED_DB_CLASS__'))
 {
 	define('__XE_LOADED_DB_CLASS__', 1);
 
-	require(_XE_PATH_.'classes/xml/xmlquery/DBParser.class.php');
-	require(_XE_PATH_.'classes/xml/xmlquery/QueryParser.class.php');
-	require(_XE_PATH_.'classes/xml/xmlquery/argument/Argument.class.php');
-	require(_XE_PATH_.'classes/xml/xmlquery/argument/SortArgument.class.php');
-	require(_XE_PATH_.'classes/xml/xmlquery/argument/ConditionArgument.class.php');
+	require(_XE_PATH_ . 'classes/xml/xmlquery/DBParser.class.php');
+	require(_XE_PATH_ . 'classes/xml/xmlquery/QueryParser.class.php');
+	require(_XE_PATH_ . 'classes/xml/xmlquery/argument/Argument.class.php');
+	require(_XE_PATH_ . 'classes/xml/xmlquery/argument/SortArgument.class.php');
+	require(_XE_PATH_ . 'classes/xml/xmlquery/argument/ConditionArgument.class.php');
 
-	require(_XE_PATH_.'classes/db/queryparts/expression/Expression.class.php');
-	require(_XE_PATH_.'classes/db/queryparts/expression/SelectExpression.class.php');
-	require(_XE_PATH_.'classes/db/queryparts/expression/InsertExpression.class.php');
-	require(_XE_PATH_.'classes/db/queryparts/expression/UpdateExpression.class.php');
-	require(_XE_PATH_.'classes/db/queryparts/expression/UpdateExpressionWithoutArgument.class.php');
-	require(_XE_PATH_.'classes/db/queryparts/table/Table.class.php');
-	require(_XE_PATH_.'classes/db/queryparts/table/JoinTable.class.php');
-	require(_XE_PATH_.'classes/db/queryparts/table/CubridTableWithHint.class.php');
-	require(_XE_PATH_.'classes/db/queryparts/table/MysqlTableWithHint.class.php');
-	require(_XE_PATH_.'classes/db/queryparts/table/MssqlTableWithHint.class.php');
-	require(_XE_PATH_.'classes/db/queryparts/table/IndexHint.class.php');
-	require(_XE_PATH_.'classes/db/queryparts/condition/ConditionGroup.class.php');
-	require(_XE_PATH_.'classes/db/queryparts/condition/Condition.class.php');
-	require(_XE_PATH_.'classes/db/queryparts/condition/ConditionWithArgument.class.php');
-	require(_XE_PATH_.'classes/db/queryparts/condition/ConditionWithoutArgument.class.php');
-	require(_XE_PATH_.'classes/db/queryparts/condition/ConditionSubquery.class.php');
-	require(_XE_PATH_.'classes/db/queryparts/expression/StarExpression.class.php');
-	require(_XE_PATH_.'classes/db/queryparts/order/OrderByColumn.class.php');
-	require(_XE_PATH_.'classes/db/queryparts/limit/Limit.class.php');
-	require(_XE_PATH_.'classes/db/queryparts/Query.class.php');
-	require(_XE_PATH_.'classes/db/queryparts/Subquery.class.php');
+	require(_XE_PATH_ . 'classes/db/queryparts/expression/Expression.class.php');
+	require(_XE_PATH_ . 'classes/db/queryparts/expression/SelectExpression.class.php');
+	require(_XE_PATH_ . 'classes/db/queryparts/expression/InsertExpression.class.php');
+	require(_XE_PATH_ . 'classes/db/queryparts/expression/UpdateExpression.class.php');
+	require(_XE_PATH_ . 'classes/db/queryparts/expression/UpdateExpressionWithoutArgument.class.php');
+	require(_XE_PATH_ . 'classes/db/queryparts/expression/ClickCountExpression.class.php');
+	require(_XE_PATH_ . 'classes/db/queryparts/table/Table.class.php');
+	require(_XE_PATH_ . 'classes/db/queryparts/table/JoinTable.class.php');
+	require(_XE_PATH_ . 'classes/db/queryparts/table/CubridTableWithHint.class.php');
+	require(_XE_PATH_ . 'classes/db/queryparts/table/MysqlTableWithHint.class.php');
+	require(_XE_PATH_ . 'classes/db/queryparts/table/MssqlTableWithHint.class.php');
+	require(_XE_PATH_ . 'classes/db/queryparts/table/IndexHint.class.php');
+	require(_XE_PATH_ . 'classes/db/queryparts/condition/ConditionGroup.class.php');
+	require(_XE_PATH_ . 'classes/db/queryparts/condition/Condition.class.php');
+	require(_XE_PATH_ . 'classes/db/queryparts/condition/ConditionWithArgument.class.php');
+	require(_XE_PATH_ . 'classes/db/queryparts/condition/ConditionWithoutArgument.class.php');
+	require(_XE_PATH_ . 'classes/db/queryparts/condition/ConditionSubquery.class.php');
+	require(_XE_PATH_ . 'classes/db/queryparts/expression/StarExpression.class.php');
+	require(_XE_PATH_ . 'classes/db/queryparts/order/OrderByColumn.class.php');
+	require(_XE_PATH_ . 'classes/db/queryparts/limit/Limit.class.php');
+	require(_XE_PATH_ . 'classes/db/queryparts/Query.class.php');
+	require(_XE_PATH_ . 'classes/db/queryparts/Subquery.class.php');
 }
 
 /**
@@ -46,17 +48,18 @@ if(!defined('__XE_LOADED_DB_CLASS__'))
  */
 class DB
 {
+
 	/**
 	 * priority of DBMS
 	 * @var array
 	 */
 	var $priority_dbms = array(
-			'mysqli' => 5,
-			'mysql' => 4,
-			'mysql_innodb' => 3,
-			'cubrid' => 2,
-			'mssql' => 1
-			);
+		'mysqli' => 5,
+		'mysql' => 4,
+		'mysql_innodb' => 3,
+		'cubrid' => 2,
+		'mssql' => 1
+	);
 
 	/**
 	 * count cache path
@@ -69,27 +72,27 @@ class DB
 	 * @var array
 	 */
 	var $cond_operation = array(
-			'equal' => '=',
-			'more' => '>=',
-			'excess' => '>',
-			'less' => '<=',
-			'below' => '<',
-			'notequal' => '<>',
-			'notnull' => 'is not null',
-			'null' => 'is null',
-			);
+		'equal' => '=',
+		'more' => '>=',
+		'excess' => '>',
+		'less' => '<=',
+		'below' => '<',
+		'notequal' => '<>',
+		'notnull' => 'is not null',
+		'null' => 'is null',
+	);
 
 	/**
 	 * master database connection string
 	 * @var array
 	 */
 	var $master_db = NULL;
+
 	/**
 	 * array of slave databases connection strings
 	 * @var array
 	 */
 	var $slave_db = NULL;
-
 	var $result = NULL;
 
 	/**
@@ -97,22 +100,26 @@ class DB
 	 * @var int
 	 */
 	var $errno = 0;
+
 	/**
 	 * error message
 	 * @var string
 	 */
 	var $errstr = '';
+
 	/**
 	 * query string of latest executed query
 	 * @var string
 	 */
 	var $query = '';
 	var $connection = '';
+
 	/**
 	 * elapsed time of latest executed query
 	 * @var int
 	 */
 	var $elapsed_time = 0;
+
 	/**
 	 * elapsed time of latest executed DB class
 	 * @var int
@@ -123,9 +130,8 @@ class DB
 	 * transaction flag
 	 * @var boolean
 	 */
-	var $transaction_started = false;
-
-	var $is_connected = false;
+	var $transaction_started = FALSE;
+	var $is_connected = FALSE;
 
 	/**
 	 * returns enable list in supported dbms list
@@ -153,21 +159,39 @@ class DB
 	var $use_prepared_statements;
 
 	/**
+	 * leve of transaction
+	 * @var unknown
+	 */
+	private $transationNestedLevel = 0;
+
+	/**
 	 * returns instance of certain db type
 	 * @param string $db_type type of db
 	 * @return DB return DB object instance
 	 */
 	function &getInstance($db_type = NULL)
 	{
-		if(!$db_type) $db_type = Context::getDBType();
-		if(!$db_type && Context::isInstalled()) return new Object(-1, 'msg_db_not_setted');
+		if(!$db_type)
+		{
+			$db_type = Context::getDBType();
+		}
+		if(!$db_type && Context::isInstalled())
+		{
+			return new Object(-1, 'msg_db_not_setted');
+		}
 
-		if(!isset($GLOBALS['__DB__'])) $GLOBALS['__DB__'] = array();
+		if(!isset($GLOBALS['__DB__']))
+		{
+			$GLOBALS['__DB__'] = array();
+		}
 		if(!isset($GLOBALS['__DB__'][$db_type]))
 		{
-			$class_name = 'DB'.ucfirst($db_type);
-			$class_file = _XE_PATH_."classes/db/$class_name.class.php";
-			if(!file_exists($class_file)) return new Object(-1, 'msg_db_not_setted');
+			$class_name = 'DB' . ucfirst($db_type);
+			$class_file = _XE_PATH_ . "classes/db/$class_name.class.php";
+			if(!file_exists($class_file))
+			{
+				return new Object(-1, 'msg_db_not_setted');
+			}
 
 			// get a singletone instance of the database driver class
 			require_once($class_file);
@@ -193,8 +217,8 @@ class DB
 	 */
 	function DB()
 	{
-		$this->count_cache_path = _XE_PATH_.$this->count_cache_path;
-		$this->cache_file = _XE_PATH_.$this->cache_file;
+		$this->count_cache_path = _XE_PATH_ . $this->count_cache_path;
+		$this->cache_file = _XE_PATH_ . $this->cache_file;
 	}
 
 	/**
@@ -225,8 +249,13 @@ class DB
 		$enableList = array();
 		if(is_array($this->supported_list))
 		{
-			foreach($this->supported_list AS $key=>$value)
-				if($value->enable) array_push($enableList, $value);
+			foreach($this->supported_list AS $key => $value)
+			{
+				if($value->enable)
+				{
+					array_push($enableList, $value);
+				}
+			}
 		}
 		return $enableList;
 	}
@@ -247,8 +276,13 @@ class DB
 		$disableList = array();
 		if(is_array($this->supported_list))
 		{
-			foreach($this->supported_list AS $key=>$value)
-				if(!$value->enable) array_push($disableList, $value);
+			foreach($this->supported_list AS $key => $value)
+			{
+				if(!$value->enable)
+				{
+					array_push($disableList, $value);
+				}
+			}
 		}
 		return $disableList;
 	}
@@ -267,31 +301,40 @@ class DB
 			return $this->supported_list;
 		}
 		$get_supported_list = array();
-		$db_classes_path = _XE_PATH_."classes/db/";
+		$db_classes_path = _XE_PATH_ . "classes/db/";
 		$filter = "/^DB([^\.]+)\.class\.php/i";
-		$supported_list = FileHandler::readDir($db_classes_path, $filter, true);
+		$supported_list = FileHandler::readDir($db_classes_path, $filter, TRUE);
 
 		// after creating instance of class, check is supported
 		for($i = 0; $i < count($supported_list); $i++)
 		{
 			$db_type = $supported_list[$i];
 
-			if(version_compare(phpversion(), '5.0') < 0 && preg_match('/pdo/i',$db_type)) continue;
+			if(version_compare(phpversion(), '5.0') < 0 && preg_match('/pdo/i', $db_type))
+			{
+				continue;
+			}
 
-			$class_name = sprintf("DB%s%s", strtoupper(substr($db_type,0,1)), strtolower(substr($db_type,1)));
-			$class_file = sprintf(_XE_PATH_."classes/db/%s.class.php", $class_name);
-			if(!file_exists($class_file)) continue;
+			$class_name = sprintf("DB%s%s", strtoupper(substr($db_type, 0, 1)), strtolower(substr($db_type, 1)));
+			$class_file = sprintf(_XE_PATH_ . "classes/db/%s.class.php", $class_name);
+			if(!file_exists($class_file))
+			{
+				continue;
+			}
 
 			unset($oDB);
 			require_once($class_file);
 			$tmp_fn = create_function('', "return new {$class_name}();");
-			$oDB    = $tmp_fn();
+			$oDB = $tmp_fn();
 
-			if(!$oDB) continue;
+			if(!$oDB)
+			{
+				continue;
+			}
 
-			$obj = null;
+			$obj = NULL;
 			$obj->db_type = $db_type;
-			$obj->enable = $oDB->isSupported() ? true : false;
+			$obj->enable = $oDB->isSupported() ? TRUE : FALSE;
 
 			$get_supported_list[] = $obj;
 		}
@@ -352,8 +395,14 @@ class DB
 	 */
 	function isConnected($type = 'master', $indx = 0)
 	{
-		if($type == 'master') return $this->master_db["is_connected"] ? true : false;
-		else return $this->slave_db[$indx]["is_connected"] ? true : false;
+		if($type == 'master')
+		{
+			return $this->master_db["is_connected"] ? TRUE : FALSE;
+		}
+		else
+		{
+			return $this->slave_db[$indx]["is_connected"] ? TRUE : FALSE;
+		}
 	}
 
 	/**
@@ -375,7 +424,10 @@ class DB
 	 */
 	function actFinish()
 	{
-		if(!$this->query) return;
+		if(!$this->query)
+		{
+			return;
+		}
 		$this->act_finish = getMicroTime();
 		$elapsed_time = $this->act_finish - $this->act_start;
 		$this->elapsed_time = $elapsed_time;
@@ -399,13 +451,19 @@ class DB
 
 			if(__DEBUG_DB_OUTPUT__ == 1)
 			{
-				$debug_file = _XE_PATH_."files/_debug_db_query.php";
+				$debug_file = _XE_PATH_ . "files/_debug_db_query.php";
 				$buff = array();
-				if(!file_exists($debug_file)) $buff[] = '<?php exit(); ?>';
-				$buff[] = print_r($log, true);
+				if(!file_exists($debug_file))
+				{
+					$buff[] = '<?php exit(); ?>';
+				}
+				$buff[] = print_r($log, TRUE);
 
-				if(@!$fp = fopen($debug_file, "a")) return;
-				fwrite($fp, implode("\n", $buff)."\n\n");
+				if(@!$fp = fopen($debug_file, "a"))
+				{
+					return;
+				}
+				fwrite($fp, implode("\n", $buff) . "\n\n");
 				fclose($fp);
 			}
 		}
@@ -419,10 +477,10 @@ class DB
 		if(__LOG_SLOW_QUERY__ > 0 && $elapsed_time > __LOG_SLOW_QUERY__)
 		{
 			$buff = '';
-			$log_file = _XE_PATH_.'files/_db_slow_query.php';
+			$log_file = _XE_PATH_ . 'files/_db_slow_query.php';
 			if(!file_exists($log_file))
 			{
-				$buff = '<?php exit();?>'."\n";
+				$buff = '<?php exit();?>' . "\n";
 			}
 
 			$buff .= sprintf("%s\t%s\n\t%0.6f sec\tquery_id:%s\n\n", date("Y-m-d H:i"), $this->query, $elapsed_time, $this->query_id);
@@ -453,7 +511,7 @@ class DB
 	 */
 	function isError()
 	{
-		return $this->errno === 0 ? false : true;
+		return $this->errno === 0 ? FALSE : TRUE;
 	}
 
 	/**
@@ -480,8 +538,14 @@ class DB
 	{
 		static $cache_file = array();
 
-		if(!$query_id) return new Object(-1, 'msg_invalid_queryid');
-		if(!$this->db_type) return;
+		if(!$query_id)
+		{
+			return new Object(-1, 'msg_invalid_queryid');
+		}
+		if(!$this->db_type)
+		{
+			return;
+		}
 
 		$this->actDBClassStart();
 
@@ -499,7 +563,7 @@ class DB
 			elseif(count($id_args) == 3)
 			{
 				$target = $id_args[0];
-				$typeList = array('addons'=>1, 'widgets'=>1);
+				$typeList = array('addons' => 1, 'widgets' => 1);
 				if(!isset($typeList[$target]))
 				{
 					$this->actDBClassFinish();
@@ -531,32 +595,36 @@ class DB
 		return $result;
 	}
 
-
 	/**
 	 * Look for query cache file
 	 * @param string $query_id query id for finding
 	 * @param string $xml_file original xml query file
 	 * @return string cache file
 	 */
-	function checkQueryCacheFile($query_id,$xml_file)
+	function checkQueryCacheFile($query_id, $xml_file)
 	{
 		// first try finding cache file
 		$cache_file = sprintf('%s%s%s.%s.%s.cache.php', _XE_PATH_, $this->cache_file, $query_id, __ZBXE_VERSION__, $this->db_type);
 
-		if(file_exists($cache_file)) $cache_time = filemtime($cache_file);
-		else $cache_time = -1;
+		if(file_exists($cache_file))
+		{
+			$cache_time = filemtime($cache_file);
+		}
+		else
+		{
+			$cache_time = -1;
+		}
 
 		// if there is no cache file or is not new, find original xml query file and parse it
-		if($cache_time < filemtime($xml_file) || $cache_time < filemtime(_XE_PATH_.'classes/db/DB.class.php') || $cache_time < filemtime(_XE_PATH_.'classes/xml/XmlQueryParser.150.class.php'))
+		if($cache_time < filemtime($xml_file) || $cache_time < filemtime(_XE_PATH_ . 'classes/db/DB.class.php') || $cache_time < filemtime(_XE_PATH_ . 'classes/xml/XmlQueryParser.150.class.php'))
 		{
-			require_once(_XE_PATH_.'classes/xml/XmlQueryParser.150.class.php');
+			require_once(_XE_PATH_ . 'classes/xml/XmlQueryParser.150.class.php');
 			$oParser = new XmlQueryParser();
 			$oParser->parse($query_id, $xml_file, $cache_file);
 		}
 
 		return $cache_file;
 	}
-
 
 	/**
 	 * Execute query and return the result
@@ -572,13 +640,22 @@ class DB
 	{
 		global $lang;
 
-		if(!file_exists($cache_file)) return new Object(-1, 'msg_invalid_queryid');
+		if(!file_exists($cache_file))
+		{
+			return new Object(-1, 'msg_invalid_queryid');
+		}
 
-		if($source_args) $args = @clone($source_args);
+		if($source_args)
+		{
+			$args = clone $source_args;
+		}
 
 		$output = include($cache_file);
 
-		if( (is_a($output, 'Object') || is_subclass_of($output, 'Object')) && !$output->toBool()) return $output;
+		if((is_a($output, 'Object') || is_subclass_of($output, 'Object')) && !$output->toBool())
+		{
+			return $output;
+		}
 
 		// execute appropriate query
 		switch($output->getAction())
@@ -597,21 +674,26 @@ class DB
 				$output = $this->_executeDeleteAct($output);
 				break;
 			case 'select' :
-				$arg_columns = is_array($arg_columns)?$arg_columns:array();
+				$arg_columns = is_array($arg_columns) ? $arg_columns : array();
 				$output->setColumnList($arg_columns);
 				$connection = $this->_getConnection('slave');
 				$output = $this->_executeSelectAct($output, $connection, TRUE, $buffered, $callback);
 				break;
 		}
 
-		if($this->isError()) $output = $this->getError();
-		else if(!is_a($output, 'Object') && !is_subclass_of($output, 'Object')) $output = new Object();
+		if($this->isError())
+		{
+			$output = $this->getError();
+		}
+		else if(!is_a($output, 'Object') && !is_subclass_of($output, 'Object'))
+		{
+			$output = new Object();
+		}
 		$output->add('_query', $this->query);
 		$output->add('_elapsed_time', sprintf("%0.5f", $this->elapsed_time));
 
 		return $output;
 	}
-
 
 	/**
 	 * Returns counter cache data
@@ -621,31 +703,55 @@ class DB
 	 */
 	function getCountCache($tables, $condition)
 	{
-		return false;
-		if(!$tables) return false;
-		if(!is_dir($this->count_cache_path)) return FileHandler::makeDir($this->count_cache_path);
+		return FALSE;
+		if(!$tables)
+		{
+			return FALSE;
+		}
+		if(!is_dir($this->count_cache_path))
+		{
+			return FileHandler::makeDir($this->count_cache_path);
+		}
 
 		$condition = md5($condition);
 
-		if(!is_array($tables)) $tables_str = $tables;
-		else $tables_str = implode('.',$tables);
+		if(!is_array($tables))
+		{
+			$tables_str = $tables;
+		}
+		else
+		{
+			$tables_str = implode('.', $tables);
+		}
 
 		$cache_path = sprintf('%s/%s%s', $this->count_cache_path, $this->prefix, $tables_str);
-		if(!is_dir($cache_path)) FileHandler::makeDir($cache_path);
+		if(!is_dir($cache_path))
+		{
+			FileHandler::makeDir($cache_path);
+		}
 
 		$cache_filename = sprintf('%s/%s.%s', $cache_path, $tables_str, $condition);
-		if(!file_exists($cache_filename)) return false;
+		if(!file_exists($cache_filename))
+		{
+			return FALSE;
+		}
 
 		$cache_mtime = filemtime($cache_filename);
 
-		if(!is_array($tables)) $tables = array($tables);
+		if(!is_array($tables))
+		{
+			$tables = array($tables);
+		}
 		foreach($tables as $alias => $table)
 		{
-			$table_filename = sprintf('%s/cache.%s%s', $this->count_cache_path, $this->prefix, $table) ;
-			if(!file_exists($table_filename) || filemtime($table_filename) > $cache_mtime) return false;
+			$table_filename = sprintf('%s/cache.%s%s', $this->count_cache_path, $this->prefix, $table);
+			if(!file_exists($table_filename) || filemtime($table_filename) > $cache_mtime)
+			{
+				return FALSE;
+			}
 		}
 
-		$count = (int)FileHandler::readFile($cache_filename);
+		$count = (int) FileHandler::readFile($cache_filename);
 		return $count;
 	}
 
@@ -658,17 +764,32 @@ class DB
 	 */
 	function putCountCache($tables, $condition, $count = 0)
 	{
-		return false;
-		if(!$tables) return false;
-		if(!is_dir($this->count_cache_path)) return FileHandler::makeDir($this->count_cache_path);
+		return FALSE;
+		if(!$tables)
+		{
+			return FALSE;
+		}
+		if(!is_dir($this->count_cache_path))
+		{
+			return FileHandler::makeDir($this->count_cache_path);
+		}
 
 		$condition = md5($condition);
 
-		if(!is_array($tables)) $tables_str = $tables;
-		else $tables_str = implode('.',$tables);
+		if(!is_array($tables))
+		{
+			$tables_str = $tables;
+		}
+		else
+		{
+			$tables_str = implode('.', $tables);
+		}
 
 		$cache_path = sprintf('%s/%s%s', $this->count_cache_path, $this->prefix, $tables_str);
-		if(!is_dir($cache_path)) FileHandler::makeDir($cache_path);
+		if(!is_dir($cache_path))
+		{
+			FileHandler::makeDir($cache_path);
+		}
 
 		$cache_filename = sprintf('%s/%s.%s', $cache_path, $tables_str, $condition);
 
@@ -682,11 +803,20 @@ class DB
 	 */
 	function resetCountCache($tables)
 	{
-		return false;
-		if(!$tables) return false;
-		if(!is_dir($this->count_cache_path)) return FileHandler::makeDir($this->count_cache_path);
+		return FALSE;
+		if(!$tables)
+		{
+			return FALSE;
+		}
+		if(!is_dir($this->count_cache_path))
+		{
+			return FileHandler::makeDir($this->count_cache_path);
+		}
 
-		if(!is_array($tables)) $tables = array($tables);
+		if(!is_array($tables))
+		{
+			$tables = array($tables);
+		}
 		foreach($tables as $alias => $table)
 		{
 			$filename = sprintf('%s/cache.%s%s', $this->count_cache_path, $this->prefix, $table);
@@ -694,7 +824,7 @@ class DB
 			FileHandler::writeFile($filename, '');
 		}
 
-		return true;
+		return TRUE;
 	}
 
 	/**
@@ -705,13 +835,34 @@ class DB
 	{
 		$result = array();
 
-		if(function_exists('mysql_connect')) $result[] = 'MySQL';
-		if(function_exists('cubrid_connect')) $result[] = 'Cubrid';
-		if(function_exists('ibase_connect')) $result[] = 'FireBird';
-		if(function_exists('pg_connect')) $result[] = 'Postgre';
-		if(function_exists('sqlite_open')) $result[] = 'sqlite2';
-		if(function_exists('mssql_connect')) $result[] = 'MSSQL';
-		if(function_exists('PDO')) $result[] = 'sqlite3(PDO)';
+		if(function_exists('mysql_connect'))
+		{
+			$result[] = 'MySQL';
+		}
+		if(function_exists('cubrid_connect'))
+		{
+			$result[] = 'Cubrid';
+		}
+		if(function_exists('ibase_connect'))
+		{
+			$result[] = 'FireBird';
+		}
+		if(function_exists('pg_connect'))
+		{
+			$result[] = 'Postgre';
+		}
+		if(function_exists('sqlite_open'))
+		{
+			$result[] = 'sqlite2';
+		}
+		if(function_exists('mssql_connect'))
+		{
+			$result[] = 'MSSQL';
+		}
+		if(function_exists('PDO'))
+		{
+			$result[] = 'sqlite3(PDO)';
+		}
 
 		return $result;
 	}
@@ -723,7 +874,10 @@ class DB
 	 */
 	function dropTable($table_name)
 	{
-		if(!$table_name) return;
+		if(!$table_name)
+		{
+			return;
+		}
 		$query = sprintf("drop table %s%s", $this->prefix, $table_name);
 		$this->_query($query);
 	}
@@ -734,40 +888,92 @@ class DB
 	 * @param boolean $with_values
 	 * @return string
 	 */
-	function getSelectSql($query, $with_values = true)
+	function getSelectSql($query, $with_values = TRUE)
 	{
 		$select = $query->getSelectString($with_values);
-		if($select == '') return new Object(-1, "Invalid query");
-		$select = 'SELECT ' .$select;
+		if($select == '')
+		{
+			return new Object(-1, "Invalid query");
+		}
+		$select = 'SELECT ' . $select;
 
 		$from = $query->getFromString($with_values);
-		if($from == '') return new Object(-1, "Invalid query");
-		$from = ' FROM '.$from;
+		if($from == '')
+		{
+			return new Object(-1, "Invalid query");
+		}
+		$from = ' FROM ' . $from;
 
 		$where = $query->getWhereString($with_values);
-		if($where != '') $where = ' WHERE ' . $where;
+		if($where != '')
+		{
+			$where = ' WHERE ' . $where;
+		}
 
 		$tableObjects = $query->getTables();
 		$index_hint_list = '';
 		foreach($tableObjects as $tableObject)
 		{
 			if(is_a($tableObject, 'CubridTableWithHint'))
+			{
 				$index_hint_list .= $tableObject->getIndexHintString() . ', ';
+			}
 		}
 		$index_hint_list = substr($index_hint_list, 0, -2);
 		if($index_hint_list != '')
+		{
 			$index_hint_list = 'USING INDEX ' . $index_hint_list;
+		}
 
 		$groupBy = $query->getGroupByString();
-		if($groupBy != '') $groupBy = ' GROUP BY ' . $groupBy;
+		if($groupBy != '')
+		{
+			$groupBy = ' GROUP BY ' . $groupBy;
+		}
 
 		$orderBy = $query->getOrderByString();
-		if($orderBy != '') $orderBy = ' ORDER BY ' . $orderBy;
+		if($orderBy != '')
+		{
+			$orderBy = ' ORDER BY ' . $orderBy;
+		}
 
 		$limit = $query->getLimitString();
-		if($limit != '') $limit = ' LIMIT ' . $limit;
+		if($limit != '')
+		{
+			$limit = ' LIMIT ' . $limit;
+		}
 
 		return $select . ' ' . $from . ' ' . $where . ' ' . $index_hint_list . ' ' . $groupBy . ' ' . $orderBy . ' ' . $limit;
+	}
+
+	/**
+	 * Given a SELECT statement that uses click count
+	 * returns the corresponding update sql string
+	 * for databases that don't have click count support built in
+	 * (aka all besides CUBRID)
+	 *
+	 * Function does not check if click count columns exist!
+	 * You must call $query->usesClickCount() before using this function
+	 *
+	 * @param $queryObject
+	 */
+	function getClickCountQuery($queryObject)
+	{
+		$new_update_columns = array();
+		$click_count_columns = $queryObject->getClickCountColumns();
+		foreach($click_count_columns as $click_count_column)
+		{
+			$click_count_column_name = $click_count_column->column_name;
+
+			$increase_by_1 = new Argument($click_count_column_name, null);
+			$increase_by_1->setColumnOperation('+');
+			$increase_by_1->ensureDefaultValue(1);
+
+			$update_expression = new UpdateExpression($click_count_column_name, $increase_by_1);
+			$new_update_columns[] = $update_expression;
+		}
+		$queryObject->columns = $new_update_columns;
+		return $queryObject;
 	}
 
 	/**
@@ -777,21 +983,27 @@ class DB
 	 * @param boolean $with_priority
 	 * @return string
 	 */
-	function getDeleteSql($query, $with_values = true, $with_priority = false)
+	function getDeleteSql($query, $with_values = TRUE, $with_priority = FALSE)
 	{
 		$sql = 'DELETE ';
 
-		$sql .= $with_priority?$query->getPriority():'';
+		$sql .= $with_priority ? $query->getPriority() : '';
 		$tables = $query->getTables();
 
 		$sql .= $tables[0]->getAlias();
 
 		$from = $query->getFromString($with_values);
-		if($from == '') return new Object(-1, "Invalid query");
-		$sql .= ' FROM '.$from;
+		if($from == '')
+		{
+			return new Object(-1, "Invalid query");
+		}
+		$sql .= ' FROM ' . $from;
 
 		$where = $query->getWhereString($with_values);
-		if($where != '') $sql .= ' WHERE ' . $where;
+		if($where != '')
+		{
+			$sql .= ' WHERE ' . $where;
+		}
 
 		return $sql;
 	}
@@ -803,20 +1015,29 @@ class DB
 	 * @param boolean $with_priority
 	 * @return string
 	 */
-	function getUpdateSql($query, $with_values = true, $with_priority = false)
+	function getUpdateSql($query, $with_values = TRUE, $with_priority = FALSE)
 	{
 		$columnsList = $query->getUpdateString($with_values);
-		if($columnsList == '') return new Object(-1, "Invalid query");
+		if($columnsList == '')
+		{
+			return new Object(-1, "Invalid query");
+		}
 
 		$tables = $query->getFromString($with_values);
-		if($tables == '') return new Object(-1, "Invalid query");
+		if($tables == '')
+		{
+			return new Object(-1, "Invalid query");
+		}
 
 		$where = $query->getWhereString($with_values);
-		if($where != '') $where = ' WHERE ' . $where;
+		if($where != '')
+		{
+			$where = ' WHERE ' . $where;
+		}
 
-		$priority = $with_priority?$query->getPriority():'';
+		$priority = $with_priority ? $query->getPriority() : '';
 
-		return "UPDATE $priority $tables SET $columnsList ".$where;
+		return "UPDATE $priority $tables SET $columnsList " . $where;
 	}
 
 	/**
@@ -826,11 +1047,11 @@ class DB
 	 * @param boolean $with_priority
 	 * @return string
 	 */
-	function getInsertSql($query, $with_values = true, $with_priority = false)
+	function getInsertSql($query, $with_values = TRUE, $with_priority = FALSE)
 	{
 		$tableName = $query->getFirstTableName();
 		$values = $query->getInsertString($with_values);
-		$priority = $with_priority?$query->getPriority():'';
+		$priority = $with_priority ? $query->getPriority() : '';
 
 		return "INSERT $priority INTO $tableName \n $values";
 	}
@@ -857,16 +1078,22 @@ class DB
 		if($type == 'master')
 		{
 			if(!$this->master_db['is_connected'])
+			{
 				$this->_connect($type);
+			}
 			$this->connection = 'Master ' . $this->master_db['db_hostname'];
 			return $this->master_db["resource"];
 		}
 
 		if($indx === NULL)
+		{
 			$indx = $this->_getSlaveConnectionStringIndex($type);
+		}
 
 		if(!$this->slave_db[$indx]['is_connected'])
+		{
 			$this->_connect($type, $indx);
+		}
 
 		$this->connection = 'Slave ' . $this->slave_db[$indx]['db_hostname'];
 		return $this->slave_db[$indx]["resource"];
@@ -878,11 +1105,15 @@ class DB
 	 */
 	function _dbInfoExists()
 	{
-		if (!$this->master_db)
-			return false;
-		if (count($this->slave_db) === 0)
-			return false;
-		return true;
+		if(!$this->master_db)
+		{
+			return FALSE;
+		}
+		if(count($this->slave_db) === 0)
+		{
+			return FALSE;
+		}
+		return TRUE;
 	}
 
 	/**
@@ -904,17 +1135,23 @@ class DB
 	 */
 	function close($type = 'master', $indx = 0)
 	{
-		if (!$this->isConnected($type, $indx))
+		if(!$this->isConnected($type, $indx))
+		{
 			return;
+		}
 
-		if ($type == 'master')
+		if($type == 'master')
+		{
 			$connection = &$this->master_db;
+		}
 		else
+		{
 			$connection = &$this->slave_db[$indx];
+		}
 
 		$this->_close($connection["resource"]);
 
-		$connection["is_connected"] = false;
+		$connection["is_connected"] = FALSE;
 	}
 
 	/**
@@ -924,7 +1161,7 @@ class DB
 	 */
 	function _begin()
 	{
-		return true;
+		return TRUE;
 	}
 
 	/**
@@ -933,11 +1170,16 @@ class DB
 	 */
 	function begin()
 	{
-		if (!$this->isConnected() || $this->transaction_started)
+		if(!$this->isConnected())
+		{
 			return;
+		}
 
-		if($this->_begin())
-			$this->transaction_started = true;
+		if($this->_begin($this->transationNestedLevel))
+		{
+			$this->transaction_started = TRUE;
+			$this->transationNestedLevel++;
+		}
 	}
 
 	/**
@@ -947,7 +1189,7 @@ class DB
 	 */
 	function _rollback()
 	{
-		return true;
+		return TRUE;
 	}
 
 	/**
@@ -956,10 +1198,19 @@ class DB
 	 */
 	function rollback()
 	{
-		if (!$this->isConnected() || !$this->transaction_started)
+		if(!$this->isConnected() || !$this->transaction_started)
+		{
 			return;
-		if($this->_rollback())
-			$this->transaction_started = false;
+		}
+		if($this->_rollback($this->transationNestedLevel))
+		{
+			$this->transationNestedLevel--;
+
+			if(!$this->transationNestedLevel)
+			{
+				$this->transaction_started = FALSE;
+			}
+		}
 	}
 
 	/**
@@ -969,7 +1220,7 @@ class DB
 	 */
 	function _commit()
 	{
-		return true;
+		return TRUE;
 	}
 
 	/**
@@ -977,12 +1228,21 @@ class DB
 	 * @param boolean $force regardless transaction start status or connect status, forced to commit
 	 * @return void
 	 */
-	function commit($force = false)
+	function commit($force = FALSE)
 	{
-		if (!$force && (!$this->isConnected() || !$this->transaction_started))
+		if(!$force && (!$this->isConnected() || !$this->transaction_started))
+		{
 			return;
-		if($this->_commit())
-			$this->transaction_started = false;
+		}
+		if($this->transationNestedLevel == 1 && $this->_commit())
+		{
+			$this->transaction_started = FALSE;
+			$this->transationNestedLevel = 0;
+		}
+		else
+		{
+			$this->transationNestedLevel--;
+		}
 	}
 
 	/**
@@ -1006,10 +1266,12 @@ class DB
 	 * @param bool $buffered is use buffered query
 	 * @return resource
 	 */
-	function _query($query, $connection = null, $buffered = TRUE)
+	function _query($query, $connection = NULL, $buffered = TRUE)
 	{
-		if($connection == null)
+		if($connection == NULL)
+		{
 			$connection = $this->_getConnection('master');
+		}
 		// Notify to start a query execution
 		$this->actStart($query);
 
@@ -1036,10 +1298,14 @@ class DB
 				&& $db_info->master_db["db_userid"] == $db_info->slave_db[0]["db_userid"]
 				&& $db_info->master_db["db_password"] == $db_info->slave_db[0]["db_password"]
 				&& $db_info->master_db["db_database"] == $db_info->slave_db[0]["db_database"]
-		  )
+		)
+		{
 			$this->slave_db[0] = &$this->master_db;
+		}
 		else
+		{
 			$this->slave_db = $db_info->slave_db;
+		}
 		$this->prefix = $db_info->master_db["db_table_prefix"];
 		$this->use_prepared_statements = $db_info->use_prepared_statements;
 	}
@@ -1075,28 +1341,36 @@ class DB
 	 */
 	function _connect($type = 'master', $indx = 0)
 	{
-		if ($this->isConnected($type, $indx))
+		if($this->isConnected($type, $indx))
+		{
 			return;
+		}
 
 		// Ignore if no DB information exists
-		if (!$this->_dbInfoExists())
+		if(!$this->_dbInfoExists())
+		{
 			return;
+		}
 
-		if ($type == 'master')
+		if($type == 'master')
+		{
 			$connection = &$this->master_db;
+		}
 		else
+		{
 			$connection = &$this->slave_db[$indx];
+		}
 
 		$result = $this->__connect($connection);
-		if($result === NULL || $result === false)
+		if($result === NULL || $result === FALSE)
 		{
-			$connection["is_connected"] = false;
+			$connection["is_connected"] = FALSE;
 			return;
 		}
 
 		// Check connections
 		$connection["resource"] = $result;
-		$connection["is_connected"] = true;
+		$connection["is_connected"] = TRUE;
 
 		// Save connection info for db logs
 		$this->connection = ucfirst($type) . ' ' . $connection["db_hostname"];
@@ -1121,7 +1395,10 @@ class DB
 	 */
 	function actDBClassFinish()
 	{
-		if(!$this->query) return;
+		if(!$this->query)
+		{
+			return;
+		}
 		$this->act_dbclass_finish = getMicroTime();
 		$elapsed_dbclass_time = $this->act_dbclass_finish - $this->act_dbclass_start;
 		$this->elapsed_dbclass_time = $elapsed_dbclass_time;
@@ -1138,12 +1415,12 @@ class DB
 	 * @param boolean $force force load DBParser instance
 	 * @return DBParser
 	 */
-	function &getParser($force = false)
+	function &getParser($force = FALSE)
 	{
-		static $dbParser = null;
+		static $dbParser = NULL;
 		if(!$dbParser || $force)
 		{
-			$oDB = &DB::getInstance();
+			$oDB = DB::getInstance();
 			$dbParser = $oDB->getParser();
 		}
 
@@ -1151,6 +1428,5 @@ class DB
 	}
 
 }
-
 /* End of file DB.class.php */
 /* Location: ./classes/db/DB.class.php */

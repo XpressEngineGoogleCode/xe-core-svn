@@ -286,6 +286,7 @@ class editorController extends editor
 	 */
 	function deleteSavedDoc($mode = false)
 	{
+		$args = new stdClass();
 		if(Context::get('is_logged'))
 		{
 			$logged_info = Context::get('logged_info');
@@ -362,6 +363,7 @@ class editorController extends editor
 		}
 		// Get xml information for looping DB list
 		if(!is_array($db_list)) $db_list = array($db_list);
+		$component_list = new stdClass();
 		foreach($db_list as $component)
 		{
 			if(in_array($component->component_name, array('colorpicker_text','colorpicker_bg'))) continue;
@@ -430,7 +432,7 @@ class editorController extends editor
 		if($filter_enabled)
 		{
 			$cache_file = $oEditorModel->getCacheFile($filter_enabled, $site_srl);
-			$buff = sprintf('<?php if(!defined("__ZBXE__")) exit(); $component_list = unserialize("%s"); ?>', str_replace('"','\\"',serialize($component_list)));
+			$buff = sprintf('<?php if(!defined("__XE__")) exit(); $component_list = unserialize("%s"); ?>', str_replace('"','\\"',serialize($component_list)));
 			FileHandler::writeFile($cache_file, $buff);
 			return $component_list;
 		}
@@ -452,7 +454,7 @@ class editorController extends editor
 		}
 
 		$cache_file = $oEditorModel->getCacheFile($filter_enabled, $site_srl);
-		$buff = sprintf('<?php if(!defined("__ZBXE__")) exit(); $component_list = unserialize("%s"); ?>', str_replace('"','\\"',serialize($component_list)));
+		$buff = sprintf('<?php if(!defined("__XE__")) exit(); $component_list = unserialize("%s"); ?>', str_replace('"','\\"',serialize($component_list)));
 		FileHandler::writeFile($cache_file, $buff);
 
 		return $component_list;

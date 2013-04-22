@@ -1,5 +1,7 @@
 <?php
-require_once(_XE_PATH_.'modules/autoinstall/autoinstall.lib.php');
+
+require_once(_XE_PATH_ . 'modules/autoinstall/autoinstall.lib.php');
+
 /**
  * autoinstall module admin controller class
  *
@@ -7,11 +9,13 @@ require_once(_XE_PATH_.'modules/autoinstall/autoinstall.lib.php');
  */
 class autoinstallAdminController extends autoinstall
 {
+
 	/**
 	 * Initialization
 	 */
 	function init()
 	{
+
 	}
 
 	/**
@@ -57,7 +61,7 @@ class autoinstallAdminController extends autoinstall
 	 */
 	function _updateinfo()
 	{
-		$oModel = &getModel('autoinstall');
+		$oModel = getModel('autoinstall');
 		$item = $oModel->getLatestPackage();
 		if($item)
 		{
@@ -73,7 +77,7 @@ class autoinstallAdminController extends autoinstall
 		$this->updatePackages($xmlDoc);
 		$this->checkInstalled();
 
-		$oAdminController = &getAdminController('admin');
+		$oAdminController = getAdminController('admin');
 		$output = $oAdminController->cleanFavorite();
 	}
 
@@ -85,7 +89,7 @@ class autoinstallAdminController extends autoinstall
 	function checkInstalled()
 	{
 		executeQuery("autoinstall.deleteInstalledPackage");
-		$oModel =& getModel('autoinstall');
+		$oModel = getModel('autoinstall');
 		$packages = $oModel->getPackages();
 		foreach($packages as $package)
 		{
@@ -98,11 +102,11 @@ class autoinstallAdminController extends autoinstall
 			$type = $oModel->getTypeFromPath($package->path);
 			if($type == "core")
 			{
-				$version = __ZBXE_VERSION__;
+				$version = __XE_VERSION__;
 			}
 			else
 			{
-				$config_file = null;
+				$config_file = NULL;
 				switch($type)
 				{
 					case "m.layout":
@@ -132,24 +136,34 @@ class autoinstallAdminController extends autoinstall
 						$type = "theme";
 						break;
 				}
-				if(!$config_file) continue;
+
+				if(!$config_file)
+				{
+					continue;
+				}
+
 				$xml = new XmlParser();
-				$xmlDoc = $xml->loadXmlFile($real_path.$config_file);
-				if(!$xmlDoc) continue;
+				$xmlDoc = $xml->loadXmlFile($real_path . $config_file);
+
+				if(!$xmlDoc)
+				{
+					continue;
+				}
+
 				$version = $xmlDoc->{$type}->version->body;
 			}
 
-			$args = null;
+			$args = new stdClass();
 			$args->package_srl = $package->package_srl;
 			$args->version = $package->version;
 			$args->current_version = $version;
 			if(version_compare($args->version, $args->current_version, ">"))
 			{
-				$args->need_update="Y";
+				$args->need_update = "Y";
 			}
 			else
 			{
-				$args->need_update="N";
+				$args->need_update = "N";
 			}
 
 			$output = executeQuery("autoinstall.insertInstalledPackage", $args);
@@ -165,9 +179,9 @@ class autoinstallAdminController extends autoinstall
 	{
 		@set_time_limit(0);
 		$package_srls = Context::get('package_srl');
-		$oModel =& getModel('autoinstall');
+		$oModel = getModel('autoinstall');
 		$packages = explode(',', $package_srls);
-		$ftp_info =  Context::getFTPInfo();
+		$ftp_info = Context::getFTPInfo();
 		if(!$_SESSION['ftp_password'])
 		{
 			$ftp_password = Context::get('ftp_password');
@@ -197,7 +211,10 @@ class autoinstallAdminController extends autoinstall
 			$oModuleInstaller->setServerUrl(_XE_DOWNLOAD_SERVER_);
 			$oModuleInstaller->setPassword($ftp_password);
 			$output = $oModuleInstaller->install();
-			if(!$output->toBool()) return $output;
+			if(!$output->toBool())
+			{
+				return $output;
+			}
 		}
 
 		$this->_updateinfo();
@@ -222,8 +239,11 @@ class autoinstallAdminController extends autoinstall
 	 */
 	function updatePackages(&$xmlDoc)
 	{
-		$oModel =& getModel('autoinstall');
-		if(!$xmlDoc->response->packages->item) return;
+		$oModel = getModel('autoinstall');
+		if(!$xmlDoc->response->packages->item)
+		{
+			return;
+		}
 		if(!is_array($xmlDoc->response->packages->item))
 		{
 			$xmlDoc->response->packages->item = array($xmlDoc->response->packages->item);
@@ -231,7 +251,7 @@ class autoinstallAdminController extends autoinstall
 		$targets = array('package_srl', 'updatedate', 'latest_item_srl', 'path', 'version', 'category_srl', 'have_instance');
 		foreach($xmlDoc->response->packages->item as $item)
 		{
-			$args = null;
+			$args = new stdClass();
 			foreach($targets as $target)
 			{
 				$args->{$target} = $item->{$target}->body;
@@ -261,7 +281,7 @@ class autoinstallAdminController extends autoinstall
 	function updateCategory(&$xmlDoc)
 	{
 		executeQuery("autoinstall.deleteCategory");
-		$oModel =& getModel('autoinstall');
+		$oModel = getModel('autoinstall');
 		if(!is_array($xmlDoc->response->categorylist->item))
 		{
 			$xmlDoc->response->categorylist->item = array($xmlDoc->response->categorylist->item);
@@ -269,7 +289,7 @@ class autoinstallAdminController extends autoinstall
 		$list_order = 0;
 		foreach($xmlDoc->response->categorylist->item as $item)
 		{
-			$args = null;
+			$args = new stdClass();
 			$args->category_srl = $item->category_srl->body;
 			$args->parent_srl = $item->parent_srl->body;
 			$args->title = $item->title->body;
@@ -306,10 +326,10 @@ class autoinstallAdminController extends autoinstall
 	 */
 	function uninstallPackageByPackageSrl($package_srl)
 	{
-		$oModel =& getModel('autoinstall');
+		$oModel = getModel('autoinstall');
 		$package = $oModel->getPackage($package_srl);
 
-		$this->_uninstallPackage($package);
+		return $this->_uninstallPackage($package);
 	}
 
 	/**
@@ -320,7 +340,7 @@ class autoinstallAdminController extends autoinstall
 	function uninstallPackageByPath($path)
 	{
 		$package->path = $path;
-		$this->_uninstallPackage($package);
+		return $this->_uninstallPackage($package);
 	}
 
 	private function _uninstallPackage($package)
@@ -335,7 +355,7 @@ class autoinstallAdminController extends autoinstall
 		{
 			$ftp_password = $_SESSION['ftp_password'];
 		}
-		$ftp_info =  Context::getFTPInfo();
+		$ftp_info = Context::getFTPInfo();
 
 		$isSftpSupported = function_exists(ssh2_sftp);
 		if($ftp_info->sftp && $ftp_info->sftp == 'Y' && $isSftpSupported)
@@ -355,12 +375,18 @@ class autoinstallAdminController extends autoinstall
 
 		$oModuleInstaller->setPassword($ftp_password);
 		$output = $oModuleInstaller->uninstall();
-		if(!$output->toBool()) return $output;
+		if(!$output->toBool())
+		{
+			return $output;
+		}
 
 		$this->_updateinfo();
 
 		$this->setMessage('success_deleted', 'update');
+
+		return new Object();
 	}
+
 }
 /* End of file autoinstall.admin.controller.php */
 /* Location: ./modules/autoinstall/autoinstall.admin.controller.php */

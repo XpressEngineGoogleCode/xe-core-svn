@@ -127,11 +127,12 @@ class widgetController extends widget
 				if(in_array($group_srl, $manager_group)) $is_admin = true;
 			}
 		}
-		if(!$is_admin && !$is_logged && $logged_info->is_admin != 'Y' && !$oModuleModel->isSiteAdmin($logged_info) && !(is_array($page_info->admin_id) && in_array($logged_infoi->user_id, $page_info->admin_id))) return new Object(-1,'msg_not_permitted');
+		if(!$is_admin && !$is_logged && $logged_info->is_admin != 'Y' && !$oModuleModel->isSiteAdmin($logged_info) && !(is_array($page_info->admin_id) && in_array($logged_info->user_id, $page_info->admin_id))) return new Object(-1,'msg_not_permitted');
 		// Enter post
 		$oDocumentModel = &getModel('document');
 		$oDocumentController = &getController('document');
 
+		$obj = new stdClass();
 		$obj->module_srl = $module_srl;
 		$obj->content = $content;
 		$obj->document_srl = $document_srl;
@@ -185,7 +186,7 @@ class widgetController extends widget
 				if(in_array($group_srl, $manager_group)) $is_admin = true;
 			}
 		}
-		if(!$is_admin && !$is_logged && $logged_info->is_admin != 'Y' && !$oModuleModel->isSiteAdmin($logged_info) && !(is_array($page_info->admin_id) && in_array($logged_infoi->user_id, $page_info->admin_id))) return new Object(-1,'msg_not_permitted');
+		if(!$is_admin && !$is_logged && $logged_info->is_admin != 'Y' && !$oModuleModel->isSiteAdmin($logged_info) && !(is_array($page_info->admin_id) && in_array($logged_info->user_id, $page_info->admin_id))) return new Object(-1,'msg_not_permitted');
 
 		$output = $oDocumentAdminController->copyDocumentModule(array($oDocument->get('document_srl')), $oDocument->get('module_srl'),0);
 		if(!$output->toBool()) return $output;
@@ -225,7 +226,7 @@ class widgetController extends widget
 				if(in_array($group_srl, $manager_group)) $is_admin = true;
 			}
 		}
-		if(!$is_admin && !$is_logged && $logged_info->is_admin != 'Y' && !$oModuleModel->isSiteAdmin($logged_info) && !(is_array($page_info->admin_id) && in_array($logged_infoi->user_id, $page_info->admin_id))) return new Object(-1,'msg_not_permitted');
+		if(!$is_admin && !$is_logged && $logged_info->is_admin != 'Y' && !$oModuleModel->isSiteAdmin($logged_info) && !(is_array($page_info->admin_id) && in_array($logged_info->user_id, $page_info->admin_id))) return new Object(-1,'msg_not_permitted');
 
 		$output = $oDocumentController->deleteDocument($oDocument->get('document_srl'), true);
 		if(!$output->toBool()) return $output;
@@ -692,6 +693,11 @@ class widgetController extends widget
 		$oWidgetModel = &getModel('widget');
 		$widget_info = $oWidgetModel->getWidgetInfo($widget);
 
+		if(!$vars)
+		{
+			$vars = new stdClass();
+		}
+		
 		$widget = $vars->selected_widget;
 		$vars->widgetstyle = $request_vars->widgetstyle;
 

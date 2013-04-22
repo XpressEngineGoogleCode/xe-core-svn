@@ -21,6 +21,7 @@ class fileAdminView extends file
 	function dispFileAdminList()
 	{
 		// Options to get a list
+		$args = new stdClass();
 		$args->page = Context::get('page'); // /< Page
 		$args->list_count = 30; // /< Number of documents that appear on a single page
 		$args->page_count = 10; // /< Number of pages that appear in the page navigation
@@ -31,7 +32,7 @@ class fileAdminView extends file
 		// Get a list
 		$oFileAdminModel = &getAdminModel('file');
 		$columnList = array('file_srl', 'upload_target_srl', 'upload_target_type', 'sid', 'module_srl'
-				, 'source_filename', 'isvalid', 'file_size', 'download_count', 'files.regdate', 'ipaddress');
+				, 'source_filename', 'isvalid', 'file_size', 'download_count', 'files.regdate', 'ipaddress', 'member.member_srl', 'member.nick_name');
 		$output = $oFileAdminModel->getFileList($args, $columnList);
 		// Get the document for looping a list
 		if($output->data)
@@ -53,7 +54,7 @@ class fileAdminView extends file
 			{
 				$file_srl = $file->file_srl;
 				$target_srl = $file->upload_target_srl;
-				$file_update_args = null;
+				$file_update_args = new stdClass();
 				$file_update_args->file_srl = $file_srl;
 				// Find and update if upload_target_type doesn't exist
 				if(!$file->upload_target_type)

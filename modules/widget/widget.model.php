@@ -67,6 +67,11 @@ class widgetModel extends widget
 			// Wanted information on the Widget
 			$widget_info = $this->getWidgetInfo($widget);
 
+			if(!$widget_info)
+			{
+				$widget_info = new stdClass();
+			}
+
 			// get easyinstall remove url
 			$packageSrl = $oAutoinstallModel->getPackageSrlByPath($widget_info->path);
 			$widget_info->remove_url = $oAutoinstallModel->getRemoveUrlByPackageSrl($packageSrl);
@@ -276,7 +281,7 @@ class widgetModel extends widget
 			}
 		}
 
-		$buff = '<?php if(!defined("__ZBXE__")) exit(); '.$buff.' ?>';
+		$buff = '<?php if(!defined("__XE__")) exit(); '.$buff.' ?>';
 		FileHandler::writeFile($cache_file, $buff);
 
 		if(file_exists($cache_file)) @include($cache_file);
@@ -419,7 +424,7 @@ class widgetModel extends widget
 			}
 		}
 
-		$buff = '<?php if(!defined("__ZBXE__")) exit(); '.$buff.' ?>';
+		$buff = '<?php if(!defined("__XE__")) exit(); '.$buff.' ?>';
 		FileHandler::writeFile($cache_file, $buff);
 
 		if(file_exists($cache_file)) @include($cache_file);

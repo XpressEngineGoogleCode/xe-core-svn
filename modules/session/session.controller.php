@@ -33,6 +33,7 @@ class sessionController extends session
 			$cache_vars = $oCacheHandler->get($cache_key);
 		}
 
+		$args = new stdClass();
 		$args->session_key = $session_key;
 		if($cache_vars) $session_info = $cache_vars;
 		else
@@ -79,7 +80,7 @@ class sessionController extends session
 				if($oCacheHandler->isSupport())
 				{
 					$cache_key = 'object:'.$session_key;
-					$oCacheHandler->put($cache_key,$args);
+					$oCacheHandler->put($cache_key,$args,$this->lifetime);
 				}
 				//put session into db
 				if($session_info->session_key) $output = executeQuery('session.updateSession', $args);
@@ -90,7 +91,7 @@ class sessionController extends session
 				if($oCacheHandler->isSupport())
 				{
 					$cache_key = 'object:'.$session_key;
-					$oCacheHandler->put($cache_key,$args);
+					$oCacheHandler->put($cache_key,$args,$this->lifetime);
 				}
 			}
 		}
@@ -100,7 +101,7 @@ class sessionController extends session
 			if($oCacheHandler->isSupport())
 			{
 				$cache_key = 'object:'.$session_key;
-				$oCacheHandler->put($cache_key,$args);
+				$oCacheHandler->put($cache_key,$args,$this->lifetime);
 			}
 			//put session into db
 			if($session_info->session_key) $output = executeQuery('session.updateSession', $args);
@@ -121,6 +122,7 @@ class sessionController extends session
 			$oCacheHandler->delete($cache_key);
 		}
 		//remove session from db
+		$args = new stdClass();
 		$args->session_key = $session_key;
 		executeQuery('session.deleteSession', $args);
 		return true;
@@ -139,6 +141,7 @@ class sessionController extends session
 	function gc($maxlifetime)
 	{
 		if(!$this->session_started) return;
+
 		$expired_sessions = executeQueryArray('session.getExpiredSessions', NULL, array(), FALSE, array($this, 'gc_fetch'));
 		executeQuery('session.gcSession');
 		return true;

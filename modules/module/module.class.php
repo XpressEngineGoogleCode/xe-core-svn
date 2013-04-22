@@ -62,6 +62,7 @@ class module extends ModuleObject
 			if($oDB->isColumnExists("documents","extra_vars".$i)) return true;
 		}
 		// Insert site information to the table, sites
+		$args = new stdClass();
 		$args->site_srl = 0;
 		$output = $oDB->executeQuery('module.getSite', $args);
 		if(!$output->data) return true;
@@ -95,11 +96,23 @@ class module extends ModuleObject
 		}
 
 		// XE 1.7
-		$output = executeQueryArray('module.getNotLinkedModuleGroupSiteSrl');
+		$args->site_srl = 0;
+		$output = executeQueryArray('module.getNotLinkedModuleBySiteSrl',$args);
+
 		if($output->toBool() && $output->data && count($output->data) > 0) return true;
 
 		// check fix mskin
 		if(!$oDB->isColumnExists("modules", "is_mskin_fix")) return true;
+
+		$oModuleModel = getModel('module');
+		$moduleConfig = $oModuleModel->getModuleConfig('module');
+		if(!$moduleConfig->isUpdateFixedValue) return true;
+
+		// check lost module
+		if(!$moduleConfig->isUpdateLostModule)
+		{
+			return true;
+		}
 		return false;
 	}
 
@@ -355,19 +368,7 @@ class module extends ModuleObject
 		if(!$oDB->isColumnExists("modules", "is_skin_fix"))
 		{
 			$oDB->addColumn('modules', 'is_skin_fix', 'char', 1, 'N');
-			$output = executeQueryArray('module.getAllSkinSetModule');
-			if($output->toBool() && $output->data)
-			{
-				$module_srls = array();
-				foreach($output->data as $val)
-				{
-					$module_srls[] = $val->module_srl;
-				}
-				unset($args);
-				$args->module_srls = implode(',', $module_srls);
-				$args->is_skin_fix = 'Y';
-				$output = executeQuery('module.updateSkinFixModules', $args);
-			}
+			$output = executeQuery('module.updateSkinFixModules');
 		}
 		if(!$oDB->isColumnExists("module_config", "site_srl"))
 		{
@@ -394,55 +395,106 @@ class module extends ModuleObject
 		}
 
 		// XE 1.7
-		$output = executeQueryArray('module.getNotLinkedModuleGroupSiteSrl');
-		if($output->toBool() && $output->data && count($output->data) > 0)
-		{
-			foreach($output->data as $siteInfo)
-			{
-				unset($args);
-				$args->site_srl = $siteInfo->site_srl;
-
-				//create temp menu.
-				$args->title = 'Temporary menu';
-				$menuSrl = $args->menu_srl = getNextSequence();
-				$args->listorder = $args->menu_srl * -1;
-
-				$ioutput = executeQuery('menu.insertMenu', $args);
-
-				if(!$ioutput->toBool())
-				{
-					return $ioutput;
-				}
-
-				//getNotLinkedModuleBySiteSrl
-				$soutput = executeQueryArray('module.getNotLinkedModuleBySiteSrl', $args);
-				$uoutput = $this->updateLinkModule($soutput->data, $menuSrl);
-
-				if(!$uoutput->toBool())
-				{
-					return $uoutput;
-				}
-			}
-
-		}
-
 		if(!$oDB->isColumnExists("modules", "is_mskin_fix"))
 		{
 			$oDB->addColumn('modules', 'is_mskin_fix', 'char', 1, 'N');
-			$output = executeQueryArray('module.getAllMobileSkinSetModule');
-			if($output->toBool() && $output->data)
+			$output = executeQuery('module.updateMobileSkinFixModules');
+		}
+
+		unset($args);
+		$args->site_srl = 0;
+		$output = executeQueryArray('module.getNotLinkedModuleBySiteSrl',$args);
+
+		if($output->toBool() && $output->data && count($output->data) > 0)
+		{
+			//create temp menu.
+			$args->title = 'Temporary menu';
+			$menuSrl = $args->menu_srl = getNextSequence();
+			$args->listorder = $args->menu_srl * -1;
+
+			$ioutput = executeQuery('menu.insertMenu', $args);
+
+			if(!$ioutput->toBool())
 			{
-				$module_srls = array();
-				foreach($output->data as $val)
+				return $ioutput;
+			}
+
+			//getNotLinkedModuleBySiteSrl
+			$soutput = executeQueryArray('module.getNotLinkedModuleBySiteSrl', $args);
+			$uoutput = $this->updateLinkModule($soutput->data, $menuSrl);
+		}
+
+		$oModuleModel = getModel('module');
+		$moduleConfig = $oModuleModel->getModuleConfig('module');
+		if(!$moduleConfig->isUpdateFixedValue)
+		{
+			$output = executeQuery('module.updateSkinFixModules');
+			$output = executeQuery('module.updateMobileSkinFixModules');
+
+			$oModuleController = getController('module');
+			$moduleConfig->isUpdateFixedValue = TRUE;
+			$output = $oModuleController->updateModuleConfig('module', $moduleConfig);
+		}
+
+		// check lost module
+		if(!$moduleConfig->isUpdateLostModule)
+		{
+			$args = new stdClass();
+			$args->site_srl = 0;
+			$output = executeQueryArray('module.getMidList', $args);
+			if(!$output->toBool())
+			{
+				return $output;
+			}
+			if($output->data)
+			{
+				$oMenuAdminModel = getAdminModel('menu'); /* @var $oMenuAdminModel menuAdminModel */
+				foreach($output->data as $row)
 				{
-					$module_srls[] = $val->module_srl;
+					$args = new stdClass();
+					$args->url = $row->mid;
+					$output2 = executeQuery('module.getMenuItem', $args);
+
+					if(!$output2->data->count)
+					{
+						$menuInfo = $oMenuAdminModel->getMenuByTitle('Temporary menu');
+
+						if(!$menuInfo)
+						{
+							$args = new stdClass();
+							$args->title = 'Temporary menu';
+							$menuSrl = $args->menu_srl = getNextSequence();
+							$args->listorder = $args->menu_srl * -1;
+
+							$ioutput = executeQuery('menu.insertMenu', $args);
+							if(!$ioutput->toBool())
+							{
+								return $ioutput;
+							}
+						}
+						else
+						{
+							$menuSrl = $menuInfo->menu_srl;
+						}
+
+						$uoutput = $this->updateLinkModule(array($row), $menuSrl);
+						if(!$uoutput->toBool())
+						{
+							return $uoutput;
+						}
+					}
 				}
-				unset($args);
-				$args->module_srls = implode(',', $module_srls);
-				$args->is_mskin_fix = 'Y';
-				$output = executeQuery('module.updateMobileSkinFixModules', $args);
+			}
+
+			$oModuleController = getController('module');
+			$moduleConfig->isUpdateLostModule = TRUE;
+			$output = $oModuleController->updateModuleConfig('module', $moduleConfig);
+			if(!$output->toBool())
+			{
+				return $output;
 			}
 		}
+
 		return new Object(0, 'success_updated');
 	}
 
@@ -452,7 +504,7 @@ class module extends ModuleObject
 	 * @param array $moduleInfos
 	 * @param int $menuSrl
 	 *
-	 * @return Object 
+	 * @return Object
 	 */
 	private function updateLinkModule($moduleInfos, $menuSrl)
 	{
@@ -466,6 +518,7 @@ class module extends ModuleObject
 			// search menu.
 			$args->url = $moduleInfo->mid;
 			$args->site_srl = $moduleInfo->site_srl;
+			$args->is_shortcut = 'N';
 
 			$output = executeQuery('menu.getMenuItemByUrl', $args);
 
@@ -483,7 +536,7 @@ class module extends ModuleObject
 				$item_args->listorder = -1*$item_args->menu_item_srl;
 
 				$output = executeQuery('menu.insertMenuItem', $item_args);
-				if(!$output->toBool()) 
+				if(!$output->toBool())
 				{
 					return $output;
 				}
@@ -491,7 +544,7 @@ class module extends ModuleObject
 			}
 
 			$output = executeQuery('module.updateModule', $moduleInfo);
-			if(!$output->toBool()) 
+			if(!$output->toBool())
 			{
 				return $output;
 			}
@@ -517,7 +570,7 @@ class module extends ModuleObject
 			$bFirst = true;
 			foreach($output2->data as $site)
 			{
-				if($bFirst) 
+				if($bFirst)
 				{
 					$bFirst = false;
 					continue;

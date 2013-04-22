@@ -23,28 +23,12 @@ class member extends ModuleObject {
 
 		$oModuleModel = &getModel('module');
 		$member_config = $oModuleModel->getModuleConfig('member');
-		// Set to use SSL upon actions related member join/information/password and so on
-		if(Context::get('_use_ssl') == 'optional')
+
+		// Set to use SSL upon actions related member join/information/password and so on. 2013.02.15
+		if(!Context::isExistsSSLAction('dispMemberModifyPassword') && Context::getSslStatus() == 'optional')
 		{
-			Context::addSSLAction('dispMemberModifyPassword');
-			Context::addSSLAction('dispMemberSignUpForm');
-			Context::addSSLAction('dispMemberModifyInfo');
-			Context::addSSLAction('dispMemberModifyEmailAddress');
-			Context::addSSLAction('dispMemberGetTempPassword');
-			Context::addSSLAction('dispMemberResendAuthMail');
-			Context::addSSLAction('dispMemberLoginForm');
-			Context::addSSLAction('dispMemberFindAccount');
-			Context::addSSLAction('dispMemberLeave');
-			Context::addSSLAction('procMemberLogin');
-			Context::addSSLAction('procMemberModifyPassword');
-			Context::addSSLAction('procMemberInsert');
-			Context::addSSLAction('procMemberModifyInfo');
-			Context::addSSLAction('procMemberFindAccount');
-			Context::addSSLAction('procMemberModifyEmailAddress');
-			Context::addSSLAction('procMemberUpdateAuthMail');
-			Context::addSSLAction('procMemberResendAuthMail');
-			Context::addSSLAction('procMemberLeave');
-			//Context::addSSLAction('getMemberMenu');
+			$ssl_actions = array('dispMemberModifyPassword', 'dispMemberSignUpForm', 'dispMemberModifyInfo', 'dispMemberModifyEmailAddress', 'dispMemberGetTempPassword', 'dispMemberResendAuthMail', 'dispMemberLoginForm', 'dispMemberFindAccount', 'dispMemberLeave', 'procMemberLogin', 'procMemberModifyPassword', 'procMemberInsert', 'procMemberModifyInfo', 'procMemberFindAccount', 'procMemberModifyEmailAddress', 'procMemberUpdateAuthMail', 'procMemberResendAuthMail', 'procMemberLeave'/*, 'getMemberMenu'*/);
+			Context::addSSLActions($ssl_actions);
 		}
 	}
 
@@ -130,10 +114,9 @@ class member extends ModuleObject {
 		$output = executeQuery('member.getMemberList', $admin_args);
 		if(!$output->data)
 		{
-			$admin_info = Context::gets('password','nick_name','email_address');
+			$admin_info = Context::gets('password','nick_name','email_address', 'user_id');
 			if($admin_info->email_address)
 			{
-				$admin_info->user_id = 'admin';
 				$admin_info->user_name = 'admin';
 				// Insert admin information
 				$oMemberAdminController->insertAdmin($admin_info);
@@ -165,7 +148,7 @@ class member extends ModuleObject {
 
 	/**
 	 * a method to check if successfully installed
-	 * 
+	 *
 	 * @return boolean
 	 */
 	function checkUpdate()
@@ -294,7 +277,7 @@ class member extends ModuleObject {
 		if(!$oDB->isColumnExists("member", "list_order"))
 		{
 			$oDB->addColumn("member", "list_order", "number", 11);
-			set_time_limit(0);
+			@set_time_limit(0);
 			$args->list_order = 'member_srl';
 			executeQuery('member.updateMemberListOrderAll',$args);
 			executeQuery('member.updateMemberListOrderAll');
@@ -388,6 +371,7 @@ class member extends ModuleObject {
 		$oDB = &DB::getInstance();
 		if(!$oDB->isTableExists('member_login_count') || $config->enable_login_fail_report == 'N') return new Object($error, $message);
 
+		$args = new stdClass();
 		$args->ipaddress = $_SERVER['REMOTE_ADDR'];
 
 		$output = executeQuery('member.getLoginCountByIp', $args);

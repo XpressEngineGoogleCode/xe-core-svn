@@ -18,7 +18,7 @@
 	<!--@end-->
 <!--@end-->
 <!--@if($layout_info->logo_image)-->
-	<h1 class="title"><a href="{$layout_info->index_url}" class="img"><img src="{$layout_info->logo_image}" alt="{$layout_info->index_title}" /></a></h1>
+	<h1 class="title"><a href="{$layout_info->index_url}" class="img"><img src="{$layout_info->logo_image}" alt="{$layout_info->index_title}"|cond="$layout_info->index_title" alt="{Context::getSiteTitle()}"|cond="!$layout_info->index_title && Context::getSiteTitle()" /></a></h1>
 <!--@elseif($layout_info->index_title)-->
 	<h1 class="title"><span class="txt">{$layout_info->index_title}</span></h1>
 <!--@end-->
@@ -31,11 +31,12 @@
 	<ul class="link">
 	<!--@if($is_logged)-->
 	<li><a href="{getUrl('act','dispMemberLogout')}">{$lang->cmd_logout}</a></li>
+	<li><a href="{getUrl('act', 'dispMemberInfo')}">{$lang->cmd_view_member_info}</a></li>
 	<!--@elseif($act!='dispMemberLoginForm')-->
 	<li><a href="{getUrl('act','dispMemberLoginForm')}" >{$lang->cmd_login}...</a></li>
 	<!--@end-->
 	<li><a href="{getUrl('m',0)}">PC</a></li>
-	<li class="lang off">
+	<li class="lang off" cond="count($lang_supported)>1">
 		<a href="#" onclick="return false;" title="{$lang_type}">{$lang_supported[$lang_type]} <i class="icon_arr_draw"></i></a>
 		<ul class="lang_lst">
 		<!--@foreach($lang_supported as $key=>$val)-->

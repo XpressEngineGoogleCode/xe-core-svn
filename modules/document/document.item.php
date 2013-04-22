@@ -84,6 +84,7 @@ class documentItem extends Object
 		}
 		if(!$output)
 		{
+			$args = new stdClass();
 			$args->document_srl = $this->document_srl;
 			$output = executeQuery('document.getDocument', $args, $this->columnList);
 			//insert in cache
@@ -171,6 +172,10 @@ class documentItem extends Object
 			// If the trackback module is configured to be disabled, do not allow. Otherwise, check the setting of each module.
 			$oModuleModel = &getModel('module');
 			$trackback_config = $oModuleModel->getModuleConfig('trackback');
+			if(!$trackback_config)
+			{
+				$trackback_config = new stdClass();
+			}
 			if(!isset($trackback_config->enable_trackback)) $trackback_config->enable_trackback = 'Y';
 			if($trackback_config->enable_trackback != 'Y') $allow_trackback_status = false;
 			else
@@ -754,7 +759,7 @@ class documentItem extends Object
 		if($this->get('uploaded_count'))
 		{
 			$oFileModel = &getModel('file');
-			$file_list = $oFileModel->getFiles($this->document_srl);
+			$file_list = $oFileModel->getFiles($this->document_srl, array(), 'file_srl', true);
 			if(count($file_list))
 			{
 				foreach($file_list as $file)
@@ -910,7 +915,7 @@ class documentItem extends Object
 		if(!$this->uploadedFiles[$sortIndex])
 		{
 			$oFileModel = &getModel('file');
-			$this->uploadedFiles[$sortIndex] = $oFileModel->getFiles($this->document_srl, array(), $sortIndex);
+			$this->uploadedFiles[$sortIndex] = $oFileModel->getFiles($this->document_srl, array(), $sortIndex, true);
 		}
 
 		return $this->uploadedFiles[$sortIndex];

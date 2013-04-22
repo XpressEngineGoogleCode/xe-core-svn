@@ -179,7 +179,20 @@ class memberModel extends member
 	 * @brief Check if logged-in
 	 */
 	function isLogged() {
-		if($_SESSION['is_logged']&&$_SESSION['ipaddress']==$_SERVER['REMOTE_ADDR']) return true;
+		if($_SESSION['is_logged'])
+		{
+			if(Mobile::isFromMobilePhone())
+			{
+				return true;
+			}
+			else
+			{
+				if($_SESSION['ipaddress'] == $_SERVER['REMOTE_ADDR'])
+				{
+					return true;
+				}
+			}
+		}
 
 		$_SESSION['is_logged'] = false;
 		return false;
@@ -249,6 +262,7 @@ class memberModel extends member
 	{
 		if(!$email_address) return;
 
+		$args = new stdClass();
 		$args->email_address = $email_address;
 		$output = executeQuery('member.getMemberInfoByEmailAddress', $args);
 		if(!$output->toBool()) return $output;
@@ -277,6 +291,7 @@ class memberModel extends member
 
 			if(!$GLOBALS['__member_info__'][$member_srl])
 			{
+				$args = new stdClass();
 				$args->member_srl = $member_srl;
 				$output = executeQuery('member.getMemberInfoByMemberSrl', $args, $columnList);
 				if(!$output->data) return;
@@ -357,16 +372,18 @@ class memberModel extends member
 	 */
 	function getMemberSrlByUserID($user_id)
 	{
+		$args = new stdClass();
 		$args->user_id = $user_id;
 		$output = executeQuery('member.getMemberSrl', $args);
 		return $output->data->member_srl;
 	}
 
 	/**
-	 * @brief Get member_srl corresponding to EmailAddress 
+	 * @brief Get member_srl corresponding to EmailAddress
 	 */
 	function getMemberSrlByEmailAddress($email_address)
 	{
+		$args = new stdClass();
 		$args->email_address = $email_address;
 		$output = executeQuery('member.getMemberSrl', $args);
 		return $output->data->member_srl;
@@ -377,6 +394,7 @@ class memberModel extends member
 	 */
 	function getMemberSrlByNickName($nick_name)
 	{
+		$args = new stdClass();
 		$args->nick_name = $nick_name;
 		$output = executeQuery('member.getMemberSrl', $args);
 		return $output->data->member_srl;
@@ -418,6 +436,7 @@ class memberModel extends member
 		{
 			if(!$output)
 			{
+				$args = new stdClass();
 				$args->member_srl = $member_srl;
 				$args->site_srl = $site_srl;
 				$output = executeQuery('member.getMemberGroups', $args);
@@ -462,6 +481,7 @@ class memberModel extends member
 	 */
 	function getDefaultGroup($site_srl = 0, $columnList = array())
 	{
+		$args = new stdClass();
 		$args->site_srl = $site_srl;
 		$output = executeQuery('member.getDefaultGroup', $args, $columnList);
 		return $output->data;
@@ -491,7 +511,7 @@ class memberModel extends member
 	 */
 	function getGroups($site_srl = 0)
 	{
-		if(!$GLOBALS['__group_info__'][$site_srl]) 
+		if(!$GLOBALS['__group_info__'][$site_srl])
 		{
 			$result = array();
 
@@ -499,6 +519,7 @@ class memberModel extends member
 			{
 				$site_srl = 0;
 			}
+			$args = new stdClass();
 			$args->site_srl = $site_srl;
 			$args->sort_index = 'list_order';
 			$args->order_type = 'asc';
@@ -510,7 +531,7 @@ class memberModel extends member
 
 			$group_list = $output->data;
 
-			foreach($group_list as $val) 
+			foreach($group_list as $val)
 			{
 				$result[$val->group_srl] = $val;
 			}
@@ -544,6 +565,7 @@ class memberModel extends member
 		if(!$this->join_form_list)
 		{
 			// Argument setting to sort list_order column
+			$args = new stdClass();
 			$args->sort_index = "list_order";
 			$output = executeQuery('member.getJoinFormList', $args);
 			// NULL if output data deosn't exist
@@ -611,6 +633,7 @@ class memberModel extends member
 	 */
 	function getUsedJoinFormList()
 	{
+		$args = new stdClass();
 		$args->sort_index = "list_order";
 		$output = executeQueryArray('member.getJoinFormList', $args);
 
@@ -640,7 +663,7 @@ class memberModel extends member
 	{
 		$extend_form_list = $this->getJoinFormlist();
 		if(!$extend_form_list) return;
-		// Member info is open only to an administrator and him/herself when is_private is true. 
+		// Member info is open only to an administrator and him/herself when is_private is true.
 		$logged_info = Context::get('logged_info');
 
 		foreach($extend_form_list as $srl => $item)
@@ -648,11 +671,6 @@ class memberModel extends member
 			$column_name = $item->column_name;
 			$value = $member_info->{$column_name};
 
-			if($logged_info->is_admin != 'Y' && $logged_info->member_srl != $member_info->member_srl && $member_info->{'open_'.$column_name}!='Y')
-			{
-				$extend_form_list[$srl]->is_private = true;
-				continue;
-			}
 			// Change values depening on the type of extend form
 			switch($item->column_type)
 			{
@@ -743,6 +761,7 @@ class memberModel extends member
 	 */
 	function isDeniedID($user_id)
 	{
+		$args = new stdClass();
 		$args->user_id = $user_id;
 		$output = executeQuery('member.chkDeniedID', $args);
 		if($output->data->count) return true;
@@ -752,8 +771,9 @@ class memberModel extends member
 	/**
 	 * @brief Verify if nick name is denied
 	 */
-	function isDeniedNickName($nickName) 
+	function isDeniedNickName($nickName)
 	{
+		$args = new stdClass();
 		$args->nick_name = $nickName;
 		$output = executeQuery('member.chkDeniedNickName', $args);
 		if($output->data->count) return true;
@@ -841,9 +861,9 @@ class memberModel extends member
 	/**
 	 * @brief Get the image mark of the group
 	 */
-	function getGroupImageMark($member_srl,$site_srl=0) 
+	function getGroupImageMark($member_srl,$site_srl=0)
 	{
-		if(!isset($GLOBALS['__member_info__']['group_image_mark'][$member_srl])) 
+		if(!isset($GLOBALS['__member_info__']['group_image_mark'][$member_srl]))
 		{
 			$oModuleModel = &getModel('module');
 			$config = $oModuleModel->getModuleConfig('member');
@@ -863,6 +883,7 @@ class memberModel extends member
 					{
 						if($group_info->image_mark)
 						{
+							$info = new stdClass();
 							$info->title = $group_info->title;
 							$info->description = $group_info->description;
 							$info->src = $group_info->image_mark;
@@ -890,7 +911,7 @@ class memberModel extends member
 			if(file_exists($filename))
 			{
 				$buff = FileHandler::readFile($filename);
-				$signature = trim(substr($buff, 40));
+				$signature = preg_replace('/<\?.*\?>/', '', $buff);
 				$GLOBALS['__member_info__']['signature'][$member_srl] = $signature;
 			}
 			else $GLOBALS['__member_info__']['signature'][$member_srl] = null;

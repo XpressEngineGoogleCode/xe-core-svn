@@ -32,7 +32,7 @@ class installAdminController extends install
 	 */
 	function procInstallAdminUpdate()
 	{
-		set_time_limit(0);
+		@set_time_limit(0);
 		$module_name = Context::get('module_name');
 		if(!$module_name) return new object(-1, 'invalid_request');
 
@@ -86,8 +86,8 @@ class installAdminController extends install
 
 		$db_info = Context::getDBInfo();
 		$db_info->default_url = $default_url;
-		$db_info->qmail_compatibility = $qmail_compatibility; 
-		$db_info->use_db_session = $use_db_session; 
+		$db_info->qmail_compatibility = $qmail_compatibility;
+		$db_info->use_db_session = $use_db_session;
 		$db_info->use_rewrite = $use_rewrite;
 		$db_info->use_sso = $use_sso;
 		$db_info->use_ssl = $use_ssl;
@@ -125,6 +125,7 @@ class installAdminController extends install
 			return new Object(-1, 'msg_invalid_request');
 		}
 
+		$site_args = new stdClass();
 		$site_args->site_srl = 0;
 		$site_args->index_module_srl = Context::get('index_module_srl');
 		$oModuleController = &getController('module');
@@ -184,11 +185,11 @@ class installAdminController extends install
 			$ftp_info->ftp_password = Context::get('ftp_password');
 		}
 
-		$buff = '<?php if(!defined("__ZBXE__")) exit();'."\n";
+		$buff = '<?php if(!defined("__XE__")) exit();'."\n";
 		foreach($ftp_info as $key => $val)
 		{
 			if(!$val) continue;
-			if(preg_match('/(<\?|<\?php|\?>)/xsm', preg_replace('/\s/', '', $val)))
+			if(preg_match('/(<\?|<\?php|\?>|fputs|fopen|fwrite|fgets|fread|\/\*|\*\/|chr\()/xsm', preg_replace('/\s/', '', $val)))
 			{
 				continue;
 			}
@@ -213,13 +214,14 @@ class installAdminController extends install
 
 		$db_info = Context::getDBInfo();
 		$db_info->use_mobile_view = $use_mobile_view;
-		$db_info->time_zone = $time_zone; 
+		$db_info->time_zone = $time_zone;
 
 		unset($db_info->lang_type);
 		Context::setDBInfo($db_info);
 		$oInstallController = &getController('install');
 		$oInstallController->makeConfigFile();
 
+		$site_args = new stdClass();
 		$site_args->site_srl = 0;
 		$site_args->index_module_srl = Context::get('index_module_srl');//
 		$site_args->default_language = Context::get('change_lang_type');//
@@ -230,26 +232,45 @@ class installAdminController extends install
 		$selected_lang = Context::get('selected_lang');
 		$this->saveLangSelected($selected_lang);
 
+		//save icon images
+		$deleteFavicon = Context::get('is_delete_favicon');
+		$deleteMobicon = Context::get('is_delete_mobicon');
+
+		$this->updateIcon('favicon.ico',$deleteFavicon);
+		$this->updateIcon('mobicon.png',$deleteMobicon);
+
 		//모듈 설정 저장(썸네일, 풋터스크립트)
+		$config = new stdClass();
 		$config->thumbnail_type = Context::get('thumbnail_type');
 		$config->htmlFooter = Context::get('htmlFooter');
 		$config->siteTitle = Context::get('site_title');
 		$this->setModulesConfig($config);
 
-		//파비콘
-		$isDeleteFavicon = Context::get('is_delete_favicon');
-		$favicon = Context::get('favicon');
-		$this->saveIcon($favicon,'favicon.ico', $isDeleteFavicon);
-
-		//모바일아이콘
-		$isDeleteMobicon = Context::get('is_delete_mobicon');
-		$mobicon = Context::get('mobicon');
-		$this->saveIcon($mobicon,'mobicon.png', $isDeleteMobicon);
-
 		$this->setRedirectUrl(Context::get('error_return_url'));
 	}
 
-	//from procInstallAdminSaveTimeZone
+	public function procInstallAdminConfigIconUpload() {
+		$this->setTemplatePath($this->module_path.'tpl');
+		$this->setTemplateFile("after_upload_config_image.html");
+
+		$favicon = Context::get('favicon');
+		$mobicon = Context::get('mobicon');
+		if(!$favicon && !$mobicon) {
+			Context::set('msg', Context::getLang("msg_invalid_format"));
+			return;
+		}
+		if($favicon) {
+			$name = 'favicon';
+			$tmpFileName = $this->saveIconTmp($favicon,'favicon.ico');
+		} else {
+			$name = 'mobicon';
+			$tmpFileName = $this->saveIconTmp($mobicon,'mobicon.png');
+		}
+
+		Context::set('name', $name);
+		Context::set('tmpFileName', $tmpFileName.'?'.time());
+	}
+
 	/**
 	 * @brief Supported languages (was procInstallAdminSaveLangSelected)
 	 */
@@ -271,6 +292,7 @@ class installAdminController extends install
 	/* 썸내일 보여주기 방식 변경.*/
 	function setModulesConfig($config)
 	{
+		$args = new stdClass();
 
 		if(!$config->thumbnail_type || $config->thumbnail_type != 'ratio' ) $args->thumbnail_type = 'crop';
 		else $args->thumbnail_type = 'ratio';
@@ -282,39 +304,71 @@ class installAdminController extends install
 
 		$args->htmlFooter = $config->htmlFooter;
 		$args->siteTitle = $config->siteTitle;
-		$oModuleController->insertModuleConfig('module',$args);
+		$oModuleController->updateModuleConfig('module',$args);
 
 		return $output;
 	}
 
-	function saveIcon($icon, $iconname, $isDelete = false)
+	private function saveIconTmp($icon, $iconname)
 	{
-		$mobicon_size = array('57','114');
 		$target_file = $icon['tmp_name'];
 		$type = $icon['type'];
-		$target_filename = _XE_PATH_.'files/attach/xeicon/'.$iconname;
-
-		if($isDelete && is_readable($target_filename))
-		{
-			@FileHandler::removeFile($target_filename);
-		}
+		$relative_filename = 'files/attach/xeicon/tmp/'.$iconname;
+		$target_filename = _XE_PATH_.$relative_filename;
 
 		list($width, $height, $type_no, $attrs) = @getimagesize($target_file);
-		if($iconname == 'favicon.ico' && preg_match('/^.*(icon).*$/',$type))
+		if($iconname == 'favicon.ico')
 		{
-			$fitHeight = $fitWidth = '16';
+			if(!preg_match('/^.*(icon).*$/',$type)) {
+				Context::set('msg', '*.icon '.Context::getLang('msg_possible_only_file'));
+				return;
+			}
+			if($width && $height && ($width != '16' || $height != '16')) {
+				Context::set('msg', Context::getLang('msg_invalid_format').' (size : 16x16)');
+				return;
+			}
 		}
-		else if($iconname == 'mobicon.png' && preg_match('/^.*(png).*$/',$type) && in_array($height,$mobicon_size) && in_array($width,$mobicon_size))
+		else if($iconname == 'mobicon.png')
 		{
-			$fitHeight = $fitWidth = $height;
+			if(!preg_match('/^.*(png).*$/',$type)) {
+				Context::set('msg', '*.png '.Context::getLang('msg_possible_only_file'));
+				return;
+			}
+			if(!(($height == '57' && $width == '57') || ($height == '114' && $width == '114'))) {
+				Context::set('msg', Context::getLang('msg_invalid_format').' (size : 57x57, 114x114)');
+				return;
+			}
 		}
 		else
 		{
-			return false;
+			Context::set('msg', Context::getLang('msg_invalid_format'));
+			return;
 		}
+
+		$fitHeight = $fitWidth = $height;
 		//FileHandler::createImageFile($target_file, $target_filename, $fitHeight, $fitWidth, $ext);
 		FileHandler::copyFile($target_file, $target_filename);
+		return $relative_filename;
 	}
+
+	private function updateIcon($iconname, $deleteIcon = false) {
+		$image_filepath = _XE_PATH_.'files/attach/xeicon/';
+
+		if($deleteIcon) {
+			FileHandler::removeFile($image_filepath.$iconname);
+			return;
+		}
+
+		$tmpicon_filepath = $image_filepath.'tmp/'.$iconname;
+		$icon_filepath = $image_filepath.$iconname;
+		if(file_exists($tmpicon_filepath))
+		{
+			FileHandler::moveFile($tmpicon_filepath, $icon_filepath);
+		}
+
+		FileHandler::removeFile($tmpicon_filepath);
+	}
+
 
 }
 /* End of file install.admin.controller.php */

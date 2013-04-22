@@ -1,22 +1,25 @@
 <?php
+
 /**
- * InsertColumnsTag class
- * Models the <column> tag inside an XML Query file whose action is 'insert'
+ * Models the &lt;columns&gt; tag inside an XML Query file whose action is 'insert'
  *
- * @author Arnia Software
- * @package /classes/xml/xmlquery/tags/column
+ * @author Corina Udrescu (corina.udrescu@arnia.ro)
+ * @package classes\xml\xmlquery\tags\column
  * @version 0.1
  */
 class InsertColumnsTag
 {
+
 	/**
 	 * Column list
+	 *
 	 * @var array value is InsertColumnTag object
 	 */
 	var $columns;
 
 	/**
-	 * constructor
+	 * Constructor
+	 *
 	 * @param array|string $xml_columns
 	 * @return void
 	 */
@@ -25,20 +28,35 @@ class InsertColumnsTag
 		$this->columns = array();
 
 		if(!$xml_columns)
+		{
 			return;
+		}
 
-		if(!is_array($xml_columns)) $xml_columns = array($xml_columns);
+		if(!is_array($xml_columns))
+		{
+			$xml_columns = array($xml_columns);
+		}
 
 		foreach($xml_columns as $column)
 		{
-			if($column->name === 'query') $this->columns[] = new QueryTag($column, true);
-			else if(!isset($column->attrs->var) && !isset($column->attrs->default)) $this->columns[] = new InsertColumnTagWithoutArgument($column);
-			else $this->columns[] = new InsertColumnTag($column);
+			if($column->name === 'query')
+			{
+				$this->columns[] = new QueryTag($column, TRUE);
+			}
+			else if(!isset($column->attrs->var) && !isset($column->attrs->default))
+			{
+				$this->columns[] = new InsertColumnTagWithoutArgument($column);
+			}
+			else
+			{
+				$this->columns[] = new InsertColumnTag($column);
+			}
 		}
 	}
 
 	/**
 	 * InsertColumnTag object to string
+	 *
 	 * @return string
 	 */
 	function toString()
@@ -55,6 +73,7 @@ class InsertColumnsTag
 
 	/**
 	 * Return argument list
+	 *
 	 * @return array
 	 */
 	function getArguments()

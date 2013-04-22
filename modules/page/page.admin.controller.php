@@ -149,6 +149,7 @@ class pageAdminController extends page
 
 		$oDocumentModel = &getModel('document');
 		$oDocumentController = &getController('document');
+		$obj = new stdClass();
 		$obj->module_srl = $module_srl;
 		$obj->list_count = 99999999;
 		$output = $oDocumentModel->getDocumentList($obj);
@@ -192,7 +193,7 @@ class pageAdminController extends page
 		$this->add('page',Context::get('page'));
 		$this->setMessage('success_deleted');
 
-		$returnUrl = Context::get('success_return_url') ? Context::get('success_return_url') : getNotEncodedUrl('', 'module', 'admin', 'module_srl', $output->get('module_srl'), 'act', 'dispPageAdminInfo');
+		$returnUrl = Context::get('success_return_url') ? Context::get('success_return_url') : getNotEncodedUrl('', 'module', 'admin', 'act', 'dispPageAdminContent');
 		$this->setRedirectUrl($returnUrl);
 	}
 
