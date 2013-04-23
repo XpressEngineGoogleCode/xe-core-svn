@@ -130,19 +130,21 @@ class sessionController extends session
 
 	public function gc_fetch($obj)
 	{
-		//remove session from cache
+		$cache_key = 'object:'.$obj->session_key;
 		$oCacheHandler = &CacheHandler::getInstance('object');
-		if($oCacheHandler->isSupport())
-		{
-			$cache_key = 'object:'.$obj->session_key;
-			$oCacheHandler->delete($cache_key);
-		}
+		$oCacheHandler->delete($cache_key);
 	}
 	function gc($maxlifetime)
 	{
 		if(!$this->session_started) return;
 
-		$expired_sessions = executeQueryArray('session.getExpiredSessions', NULL, array(), FALSE, array($this, 'gc_fetch'));
+		//remove session from cache
+		$oCacheHandler = &CacheHandler::getInstance('object');
+		if($oCacheHandler->isSupport())
+		{
+			$expired_sessions = executeQueryArray('session.getExpiredSessions', NULL, array(), array($this, 'gc_fetch'), FALSE);
+		}
+
 		executeQuery('session.gcSession');
 		return true;
 	}

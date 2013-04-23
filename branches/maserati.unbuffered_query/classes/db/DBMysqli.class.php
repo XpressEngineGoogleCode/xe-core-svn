@@ -245,15 +245,15 @@ class DBMysqli extends DBMysql
 	 * Fetch the result
 	 * @param resource $result
 	 * @param int|NULL $arrayIndexEndValue
-	 * @param bool $buffered is use buffered query
 	 * @param callable $callback callback function called when fetch
+	 * @param bool $buffered is use buffered query
 	 * @return array
 	 */
-	function _fetch($result, $arrayIndexEndValue = NULL, $buffered = TRUE, $callback = NULL)
+	function _fetch($result, $arrayIndexEndValue = NULL, $callback = NULL, $buffered = TRUE)
 	{
 		if($this->use_prepared_statements != 'Y')
 		{
-			return parent::_fetch($result, $arrayIndexEndValue, $buffered, $callback);
+			return parent::_fetch($result, $arrayIndexEndValue, $callback, $buffered);
 		}
 		$output = array();
 		if(!$this->isConnected() || $this->isError() || !$result)
@@ -298,24 +298,53 @@ class DBMysqli extends DBMysql
 		call_user_func_array('mysqli_stmt_bind_result', $resultArray);
 
 		$rows = array();
-		while(mysqli_stmt_fetch($stmt))
+
+		if(isset($callback))
 		{
-			$resultObject = new stdClass();
-
-			foreach($resultArray as $key => $value)
+			if(is_callable($callback))
 			{
-				if($key === 0)
+				while(mysqli_stmt_fetch($stmt))
 				{
-					continue; // Skip stmt object
-				}
-				if(strpos($key, 'repeat_'))
-				{
-					$key = substr($key, 6);
-				}
-				$resultObject->$key = $value;
-			}
+					$resultObject = new stdClass();
 
-			$rows[] = $resultObject;
+					foreach($resultArray as $key => $value)
+					{
+						if($key === 0)
+						{
+							continue; // Skip stmt object
+						}
+						if(strpos($key, 'repeat_'))
+						{
+							$key = substr($key, 6);
+						}
+						$resultObject->$key = $value;
+					}
+
+					call_user_func($callback, $resultObject);
+				}
+			}
+		}
+		else
+		{
+			while(mysqli_stmt_fetch($stmt))
+			{
+				$resultObject = new stdClass();
+
+				foreach($resultArray as $key => $value)
+				{
+					if($key === 0)
+					{
+						continue; // Skip stmt object
+					}
+					if(strpos($key, 'repeat_'))
+					{
+						$key = substr($key, 6);
+					}
+					$resultObject->$key = $value;
+				}
+
+				$rows[] = $resultObject;
+			}
 		}
 
 		mysqli_stmt_close($stmt);
@@ -408,18 +437,18 @@ class DBMysqli extends DBMysql
 	 * @param Object $queryObject
 	 * @param resource $connection
 	 * @param boolean $with_values
-	 * @param boolean $buffered is use buffered query
 	 * @param callable $callback callback function called when fetch
+	 * @param boolean $buffered is use buffered query
 	 * @return Object
 	 */
-	function _executeSelectAct($queryObject, $connection = null, $with_values = false, $buffered = TRUE, $callback = NULL)
+	function _executeSelectAct($queryObject, $connection = null, $with_values = false, $callback = NULL, $buffered = TRUE)
 	{
 		if($this->use_prepared_statements != 'Y')
 		{
-			return parent::_executeSelectAct($queryObject, $connection, $with_values, $buffered, $callback);
+			return parent::_executeSelectAct($queryObject, $connection, $with_values, $callback, $buffered);
 		}
 		$this->param = $queryObject->getArguments();
-		$result = parent::_executeSelectAct($queryObject, $connection, $with_values, $buffered, $callback);
+		$result = parent::_executeSelectAct($queryObject, $connection, $with_values, $callback, $buffered);
 		unset($this->param);
 		return $result;
 	}
