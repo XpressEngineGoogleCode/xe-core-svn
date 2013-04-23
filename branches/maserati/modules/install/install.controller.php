@@ -513,14 +513,23 @@ class installController extends install
 		{
 			if($key == 'master_db')
 			{
-				$buff .= $this->_getDbConnText($key, $val);
+				$tmpValue = $this->_getDbConnText($key, $val);
 			}
 			else if($key == 'slave_db')
 			{
-				$buff .= $this->_getDbConnText($key, $val, true);
+				$tmpValue = $this->_getDbConnText($key, $val, true);
 			}
 			else
-				$buff .= sprintf("\$db_info->%s = '%s';" . PHP_EOL, $key, str_replace("'","\\'",$val));
+			{
+				$tmpValue = sprintf("\$db_info->%s = '%s';" . PHP_EOL, $key, str_replace("'","\\'",$val));
+			}
+
+			if(preg_match('/(<\?|<\?php|\?>|fputs|fopen|fwrite|fgets|fread|\/\*|\*\/|chr\()/xsm', preg_replace('/\s/', '', $tmpValue)))
+			{
+				continue;
+			}
+
+			$buff .= $tmpValue;
 		}
 		$buff .= "?>";
 		return $buff;
