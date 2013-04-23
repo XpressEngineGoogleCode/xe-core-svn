@@ -2883,6 +2883,9 @@ jQuery(function($){
 				if(!$._xeAdminVar.htItemTypes.hasOwnProperty(sModuleName)) continue;
 				
 				item = $._xeAdminVar.htAllModules[sModuleName];
+				if(!item){
+					continue;
+				}
 				sModuleTitle = item.title;
 				//console.log(item);
 				
