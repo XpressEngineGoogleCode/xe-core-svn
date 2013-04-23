@@ -225,20 +225,20 @@ class DBMysql extends DB
 		{
 			return $output;
 		}
-		while($tmp = $this->db_fetch_object($result))
+
+		if(isset($callback))
 		{
-			if(isset($callback))
+			if(is_callable($callback))
 			{
-				if(is_callable($callback))
+				while($tmp = $this->db_fetch_object($result))
 				{
 					call_user_func($callback, $tmp);
 				}
-				else
-				{
-					break;
-				}
 			}
-			else
+		}
+		else
+		{
+			while($tmp = $this->db_fetch_object($result))
 			{
 				if($arrayIndexEndValue)
 				{
