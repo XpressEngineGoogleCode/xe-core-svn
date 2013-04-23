@@ -2,6 +2,12 @@
 
 = XE Releases =
 
+[ReleaseNote_1_7_3_2 1.7.3.2]
+
+[ReleaseNote_1_7_3_1 1.7.3.1]
+
+[ReleaseNote_1_7_3_0 1.7.3.0]
+
 [ReleaseNote_1_5_4 1.5.4]
 
 [ReleaseNote_1_5_3_3 1.5.3.3]
@@ -25,9 +31,3 @@
 [ReleaseNote_1_5_2_2 1.5.2.2]
 
 [ReleaseNote_1_5_2 1.5.2]
-
-[ReleaseNote_1_7_3_0 1.7.3.0]
-
-[ReleaseNote_1_7_3_1 1.7.3.1]
-
-[ReleaseNote_1_7_3_2 1.7.3.2]
