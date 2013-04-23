@@ -521,7 +521,14 @@ class installController extends install
 			}
 			else
 			{
-				$tmpValue = sprintf("\$db_info->%s = '%s';" . PHP_EOL, $key, str_replace("'","\\'",$val));
+				if($key == 'default_url')
+				{
+					$tmpValue = sprintf("\$db_info->%s = '%s';" . PHP_EOL, $key, addslashes($val));
+				}
+				else
+				{
+					$tmpValue = sprintf("\$db_info->%s = '%s';" . PHP_EOL, $key, str_replace("'","\\'",$val));
+				}
 			}
 
 			if(preg_match('/(<\?|<\?php|\?>|fputs|fopen|fwrite|fgets|fread|\/\*|\*\/|chr\()/xsm', preg_replace('/\s/', '', $tmpValue)))
