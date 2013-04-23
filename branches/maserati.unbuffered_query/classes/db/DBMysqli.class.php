@@ -445,10 +445,10 @@ class DBMysqli extends DBMysql
 	{
 		if($this->use_prepared_statements != 'Y')
 		{
-			return parent::_executeSelectAct($queryObject, $connection, $with_values, $callback, $buffered);
+			return parent::_executeSelectAct($queryObject, $connection, TRUE, $callback, $buffered);
 		}
 		$this->param = $queryObject->getArguments();
-		$result = parent::_executeSelectAct($queryObject, $connection, $with_values, $callback, $buffered);
+		$result = parent::_executeSelectAct($queryObject, $connection, FALSE, $callback, $buffered);
 		unset($this->param);
 		return $result;
 	}

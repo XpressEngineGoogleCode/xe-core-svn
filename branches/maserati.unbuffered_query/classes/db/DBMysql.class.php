@@ -296,7 +296,7 @@ class DBMysql extends DB
 		$result = $this->_query($query);
 		$tmp = $this->_fetch($result);
 		if($tmp->password == $saved_password || $tmp->old_password == $saved_password)
-		
+		{	
 			return true;
 		}
 		return false;
