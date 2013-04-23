@@ -103,19 +103,23 @@ class installAdminController extends install
 
 		unset($db_info->lang_type);
 
-		Context::setDBInfo($db_info);
-
 		$oInstallController = &getController('install');
-		$oInstallController->makeConfigFile();
-
-		if($default_url)
+		if(!$oInstallController->makeConfigFile())
 		{
-			$site_args->site_srl = 0;
-			$site_args->domain = $default_url;
-			$oModuleController = &getController('module');
-			$oModuleController->updateSite($site_args);
+			return new Object(-1, 'msg_invalid_request');
 		}
-		$this->setRedirectUrl(Context::get('error_return_url'));
+		else
+		{
+			Context::setDBInfo($db_info);
+			if($default_url)
+			{
+				$site_args->site_srl = 0;
+				$site_args->domain = $default_url;
+				$oModuleController = &getController('module');
+				$oModuleController->updateSite($site_args);
+			}
+			$this->setRedirectUrl(Context::get('error_return_url'));
+		}
 	}
 
 	function procInstallAdminUpdateIndexModule()
@@ -219,7 +223,10 @@ class installAdminController extends install
 		unset($db_info->lang_type);
 		Context::setDBInfo($db_info);
 		$oInstallController = &getController('install');
-		$oInstallController->makeConfigFile();
+		if(!$oInstallController->makeConfigFile())
+		{
+			return new Object(-1, 'msg_invalid_request');
+		}
 
 		$site_args = new stdClass();
 		$site_args->site_srl = 0;
