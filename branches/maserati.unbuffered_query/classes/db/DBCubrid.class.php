@@ -215,10 +215,20 @@ class DBCubrid extends DB
 	 * this method is private
 	 * @param string $query
 	 * @param resource $connection
+	 * @param bool $buffered is use buffered query
 	 * @return resource
 	 */
-	function __query($query, $connection)
+	function __query($query, $connection, $buffered)
 	{
+		if($buffered)
+		{
+			$option = CUBRID_ASYNC;
+		}
+		else
+		{
+			$option = NULL;
+		}
+
 		if($this->use_prepared_statements == 'Y')
 		{
 			$req = @cubrid_prepare($connection, $query);
@@ -277,7 +287,7 @@ class DBCubrid extends DB
 				}
 			}
 
-			$result = @cubrid_execute($req);
+			$result = @cubrid_execute($req, $option);
 			if(!$result)
 			{
 				$this->_setError();
@@ -286,7 +296,7 @@ class DBCubrid extends DB
 			return $req;
 		}
 		// Execute the query
-		$result = @cubrid_execute($connection, $query);
+		$result = @cubrid_execute($connection, $query, $option);
 		// error check
 		if(!$result)
 		{
@@ -314,9 +324,11 @@ class DBCubrid extends DB
 	 * Fetch the result
 	 * @param resource $result
 	 * @param int|NULL $arrayIndexEndValue
+	 * @param bool $buffered is use buffered query
+	 * @param callable $callback callback function called when fetch
 	 * @return array
 	 */
-	function _fetch($result, $arrayIndexEndValue = NULL)
+	function _fetch($result, $arrayIndexEndValue = NULL, $buffered = TRUE, $callback = NULL)
 	{
 		$output = array();
 		if(!$this->isConnected() || $this->isError() || !$result)
@@ -324,10 +336,12 @@ class DBCubrid extends DB
 			return array();
 		}
 
+		/*
 		if($this->use_prepared_statements == 'Y')
 		{
 
 		}
+		*/
 
 		// TODO Improve this piece of code
 		// This code trims values from char type columns
@@ -343,23 +357,36 @@ class DBCubrid extends DB
 			}
 		}
 
-		while($tmp = cubrid_fetch($result, CUBRID_OBJECT))
+		if(isset($callback))
 		{
-			if(is_array($char_type_fields))
+			if(is_callable($callback))
 			{
-				foreach($char_type_fields as $val)
+				while($tmp = cubrid_fetch($result, CUBRID_OBJECT))
 				{
-					$tmp->{$val} = rtrim($tmp->{$val});
+					call_user_func($callback, $tmp);
 				}
 			}
+		}
+		else
+		{
+			while($tmp = cubrid_fetch($result, CUBRID_OBJECT))
+			{
+				if(is_array($char_type_fields))
+				{
+					foreach($char_type_fields as $val)
+					{
+						$tmp->{$val} = rtrim($tmp->{$val});
+					}
+				}
 
-			if($arrayIndexEndValue)
-			{
-				$output[$arrayIndexEndValue--] = $tmp;
-			}
-			else
-			{
-				$output[] = $tmp;
+				if($arrayIndexEndValue)
+				{
+					$output[$arrayIndexEndValue--] = $tmp;
+				}
+				else
+				{
+					$output[] = $tmp;
+				}
 			}
 		}
 
@@ -964,9 +991,11 @@ class DBCubrid extends DB
 	 * @param Object $queryObject
 	 * @param resource $connection
 	 * @param boolean $with_values
+	 * @param boolean $buffered is use buffered query
+	 * @param callable $callback callback function called when fetch
 	 * @return Object
 	 */
-	function _executeSelectAct($queryObject, $connection = NULL, $with_values = TRUE)
+	function _executeSelectAct($queryObject, $connection = NULL, $with_values = TRUE, $buffered = TRUE, $callback = NULL)
 	{
 		if($this->use_prepared_statements == 'Y')
 		{
@@ -988,7 +1017,7 @@ class DBCubrid extends DB
 			}
 
 			$query .= (__DEBUG_QUERY__ & 1 && $this->query_id) ? sprintf(' ' . $this->comment_syntax, $this->query_id) : '';
-			$result = $this->_query($query, $connection);
+			$result = $this->_query($query, $connection, $buffered);
 
 			if($this->isError())
 			{
@@ -996,7 +1025,7 @@ class DBCubrid extends DB
 				return $this->queryError($queryObject);
 			}
 
-			$data = $this->_fetch($result);
+			$data = $this->_fetch($result, NULL, $buffered, $callback);
 			$buff = new Object ();
 			$buff->data = $data;
 
