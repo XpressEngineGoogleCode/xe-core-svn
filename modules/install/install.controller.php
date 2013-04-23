@@ -526,7 +526,7 @@ class installController extends install
 
 			if(preg_match('/(<\?|<\?php|\?>|fputs|fopen|fwrite|fgets|fread|\/\*|\*\/|chr\()/xsm', preg_replace('/\s/', '', $tmpValue)))
 			{
-				continue;
+				throw new Exception('msg_invalid_request');
 			}
 
 			$buff .= $tmpValue;
@@ -581,23 +581,27 @@ class installController extends install
 	 */
 	function makeConfigFile()
 	{
-		$config_file = Context::getConfigFile();
-		//if(file_exists($config_file)) return;
+		try {
+			$config_file = Context::getConfigFile();
+			//if(file_exists($config_file)) return;
 
-		$db_info = Context::getDbInfo();
-		if(!$db_info) return;
+			$db_info = Context::getDbInfo();
+			if(!$db_info) return;
 
-		$buff = $this->_getDBConfigFileContents($db_info);
+			$buff = $this->_getDBConfigFileContents($db_info);
 
-		FileHandler::writeFile($config_file, $buff);
+			FileHandler::writeFile($config_file, $buff);
 
-		if(@file_exists($config_file))
-		{
-			FileHandler::removeFile($this->db_tmp_config_file);
-			FileHandler::removeFile($this->etc_tmp_config_file);
-			return true;
+			if(@file_exists($config_file))
+			{
+				FileHandler::removeFile($this->db_tmp_config_file);
+				FileHandler::removeFile($this->etc_tmp_config_file);
+				return true;
+			}
+			return false;
+		} catch (Exception $e) {
+			return false;
 		}
-		return false;
 	}
 
 	function installByConfig($install_config_file)
