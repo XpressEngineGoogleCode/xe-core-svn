@@ -213,14 +213,14 @@ function &getClass($module_name)
  * @param string $query_id (module name.query XML file)
  * @param object $args values of args object
  * @param string[] $arg_columns Column list
- * @param bool $buffered is use buffered query
  * @param callable $callback callback function called when fetch
+ * @param bool $buffered is use buffered query
  * @return object Query result data
  */
-function executeQuery($query_id, $args = NULL, $arg_columns = NULL, $buffered = TRUE, $callback = NULL)
+function executeQuery($query_id, $args = NULL, $arg_columns = NULL, $callback = NULL, $buffered = TRUE)
 {
 	$oDB = DB::getInstance();
-	return $oDB->executeQuery($query_id, $args, $arg_columns, $buffered, $callback);
+	return $oDB->executeQuery($query_id, $args, $arg_columns, $callback, $buffered);
 }
 
 /**
@@ -231,14 +231,14 @@ function executeQuery($query_id, $args = NULL, $arg_columns = NULL, $buffered = 
  * @param string $query_id (module name.query XML file)
  * @param object $args values of args object
  * @param string[] $arg_columns Column list
- * @param bool $buffered is use buffered query
  * @param callable $callback callback function called when fetch
+ * @param bool $buffered is use buffered query
  * @return object Query result data
  */
-function executeQueryArray($query_id, $args = NULL, $arg_columns = NULL, $buffered = TRUE, $callback = NULL)
+function executeQueryArray($query_id, $args = NULL, $arg_columns = NULL, $callback = NULL, $buffered = TRUE)
 {
 	$oDB = DB::getInstance();
-	$output = $oDB->executeQuery($query_id, $args, $arg_columns, $buffered, $callback);
+	$output = $oDB->executeQuery($query_id, $args, $arg_columns, $callback, $buffered);
 	if(!is_array($output->data) && count($output->data) > 0)
 	{
 		$output->data = array($output->data);

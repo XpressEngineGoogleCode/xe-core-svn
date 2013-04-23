@@ -214,11 +214,11 @@ class DBMysql extends DB
 	 * Fetch the result
 	 * @param resource $result
 	 * @param int|NULL $arrayIndexEndValue
-	 * @param bool $buffered is use buffered query
 	 * @param callable $callback callback function called when fetch
+	 * @param bool $buffered is use buffered query
 	 * @return array
 	 */
-	function _fetch($result, $arrayIndexEndValue = NULL, $buffered = TRUE, $callback = NULL)
+	function _fetch($result, $arrayIndexEndValue = NULL, $callback = NULL, $buffered = TRUE)
 	{
 		$output = array();
 		if(!$this->isConnected() || $this->isError() || !$result)
@@ -296,7 +296,7 @@ class DBMysql extends DB
 		$result = $this->_query($query);
 		$tmp = $this->_fetch($result);
 		if($tmp->password == $saved_password || $tmp->old_password == $saved_password)
-		{
+		
 			return true;
 		}
 		return false;
@@ -644,11 +644,11 @@ class DBMysql extends DB
 	 * @param Object $queryObject
 	 * @param resource $connection
 	 * @param boolean $with_values
-	 * @param boolean $buffered is use buffered query
 	 * @param callable $callback callback function called when fetch
+	 * @param boolean $buffered is use buffered query
 	 * @return Object
 	 */
-	function _executeSelectAct($queryObject, $connection = null, $with_values = true, $buffered = TRUE, $callback = NULL)
+	function _executeSelectAct($queryObject, $connection = null, $with_values = true, $callback = NULL, $buffered = TRUE)
 	{
 		$limit = $queryObject->getLimit();
 		$result = NULL;
@@ -671,7 +671,7 @@ class DBMysql extends DB
 				return $this->queryError($queryObject);
 			}
 
-			$data = $this->_fetch($result, NULL, $buffered, $callback);
+			$data = $this->_fetch($result, NULL, $callback, $buffered);
 			$buff = new Object ();
 			$buff->data = $data;
 

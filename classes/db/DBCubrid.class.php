@@ -220,15 +220,6 @@ class DBCubrid extends DB
 	 */
 	function __query($query, $connection, $buffered)
 	{
-		if($buffered)
-		{
-			$option = CUBRID_ASYNC;
-		}
-		else
-		{
-			$option = NULL;
-		}
-
 		if($this->use_prepared_statements == 'Y')
 		{
 			$req = @cubrid_prepare($connection, $query);
@@ -287,7 +278,7 @@ class DBCubrid extends DB
 				}
 			}
 
-			$result = @cubrid_execute($req, $option);
+			$result = @cubrid_execute($req);
 			if(!$result)
 			{
 				$this->_setError();
@@ -296,7 +287,7 @@ class DBCubrid extends DB
 			return $req;
 		}
 		// Execute the query
-		$result = @cubrid_execute($connection, $query, $option);
+		$result = @cubrid_execute($connection, $query);
 		// error check
 		if(!$result)
 		{
@@ -324,11 +315,10 @@ class DBCubrid extends DB
 	 * Fetch the result
 	 * @param resource $result
 	 * @param int|NULL $arrayIndexEndValue
-	 * @param bool $buffered is use buffered query
 	 * @param callable $callback callback function called when fetch
 	 * @return array
 	 */
-	function _fetch($result, $arrayIndexEndValue = NULL, $buffered = TRUE, $callback = NULL)
+	function _fetch($result, $arrayIndexEndValue = NULL, $callback = NULL)
 	{
 		$output = array();
 		if(!$this->isConnected() || $this->isError() || !$result)
@@ -991,11 +981,11 @@ class DBCubrid extends DB
 	 * @param Object $queryObject
 	 * @param resource $connection
 	 * @param boolean $with_values
-	 * @param boolean $buffered is use buffered query
 	 * @param callable $callback callback function called when fetch
+	 * @param boolean $buffered is use buffered query
 	 * @return Object
 	 */
-	function _executeSelectAct($queryObject, $connection = NULL, $with_values = TRUE, $buffered = TRUE, $callback = NULL)
+	function _executeSelectAct($queryObject, $connection = NULL, $with_values = TRUE, $callback = NULL, $buffered = TRUE)
 	{
 		if($this->use_prepared_statements == 'Y')
 		{
@@ -1025,7 +1015,7 @@ class DBCubrid extends DB
 				return $this->queryError($queryObject);
 			}
 
-			$data = $this->_fetch($result, NULL, $buffered, $callback);
+			$data = $this->_fetch($result, NULL, $callback);
 			$buff = new Object ();
 			$buff->data = $data;
 

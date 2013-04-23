@@ -530,11 +530,11 @@ class DB
 	 * @param string $query_id query id (module.queryname)
 	 * @param array|object $args arguments for query
 	 * @param array $arg_columns column list. if you want get specific colums from executed result, add column list to $arg_columns
-	 * @param bool $buffered is use buffered query
 	 * @param callable $callback callback function called when fetch
+	 * @param bool $buffered is use buffered query
 	 * @return object result of query
 	 */
-	function executeQuery($query_id, $args = NULL, $arg_columns = NULL, $buffered = TRUE, $callback = NULL)
+	function executeQuery($query_id, $args = NULL, $arg_columns = NULL, $callback = NULL, $buffered = TRUE)
 	{
 		static $cache_file = array();
 
@@ -588,7 +588,7 @@ class DB
 			// look for cache file
 			$cache_file[$query_id] = $this->checkQueryCacheFile($query_id, $xml_file);
 		}
-		$result = $this->_executeQuery($cache_file[$query_id], $args, $query_id, $arg_columns, $buffered, $callback);
+		$result = $this->_executeQuery($cache_file[$query_id], $args, $query_id, $arg_columns, $callback, $buffered);
 
 		$this->actDBClassFinish();
 		// execute query
@@ -632,11 +632,11 @@ class DB
 	 * @param array|object $source_args arguments for query
 	 * @param string $query_id query id
 	 * @param array $arg_columns column list. if you want get specific colums from executed result, add column list to $arg_columns
-	 * @param bool $buffered is use buffered query
 	 * @param callable $callback callback function called when fetch
+	 * @param bool $buffered is use buffered query
 	 * @return object result of query
 	 */
-	function _executeQuery($cache_file, $source_args, $query_id, $arg_columns, $buffered, $callback)
+	function _executeQuery($cache_file, $source_args, $query_id, $arg_columns, $callback, $buffered)
 	{
 		global $lang;
 
@@ -677,7 +677,7 @@ class DB
 				$arg_columns = is_array($arg_columns) ? $arg_columns : array();
 				$output->setColumnList($arg_columns);
 				$connection = $this->_getConnection('slave');
-				$output = $this->_executeSelectAct($output, $connection, TRUE, $buffered, $callback);
+				$output = $this->_executeSelectAct($output, $connection, TRUE, $callback, $buffered);
 				break;
 		}
 
