@@ -301,6 +301,10 @@ class moduleAdminView extends module
 		Context::set('filebox_list', $output->data);
 		Context::set('page_navigation', $output->page_navigation);
 		Context::set('page', $page);
+		
+		$oSecurity = new Security();
+		$oSecurity->encodeHTML('filebox_list..comment', 'filebox_list..attributes.');
+		debugPrint($output->data);
 		$this->setTemplateFile('adminFileBox');
 	}
 }
