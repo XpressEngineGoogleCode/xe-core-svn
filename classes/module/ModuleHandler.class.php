@@ -101,6 +101,22 @@ class ModuleHandler extends Handler
 	 * */
 	function init()
 	{
+		// if success_return_url and error_return_url is incorrect
+		$urls = array(Context::get('success_return_url'), Context::get('error_return_url'));
+		foreach($urls as $url)
+		{
+			if(empty($url))
+			{
+				continue;
+			}
+			$urlInfo = parse_url($url);
+			$host = $urlInfo['host'];
+			if($host)
+			{
+				return FALSE;
+			}
+		}
+		
 		$oModuleModel = getModel('module');
 		$site_module_info = Context::get('site_module_info');
 
