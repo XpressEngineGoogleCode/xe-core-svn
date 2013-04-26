@@ -361,6 +361,11 @@ class memberModel extends member
 				$info->homepage = '';
 			}
 
+			if(!$oValidator->applyRule('url', $info->blog))
+			{
+				$info->blog = '';
+			}
+
 			$GLOBALS['__member_info__'][$info->member_srl] = $info;
 		}
 
