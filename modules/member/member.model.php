@@ -344,7 +344,7 @@ class memberModel extends member
 
 			// XSS defence
 			$oSecurity = new Security($info);
-			$oSecurity->encodeHTML('user_name', 'nick_name', 'find_account_answer', 'description', 'address.', 'group_list..');
+			$oSecurity->encodeHTML('user_id', 'user_name', 'nick_name', 'find_account_answer', 'description', 'address.', 'group_list..');
 
 			if($extra_vars)
 			{
