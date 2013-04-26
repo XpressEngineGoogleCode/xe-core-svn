@@ -2067,7 +2067,7 @@ class moduleModel extends module
 		Context::set('page_navigation', $output->page_navigation);
 
 		$security = new Security();
-		$security->encodeHTML('filebox_list..comment');
+		$security->encodeHTML('filebox_list..comment', 'filebox_list..attributes.');
 
 		$oTemplate = &TemplateHandler::getInstance();
 		$html = $oTemplate->compile('./modules/module/tpl/', 'filebox_list_html');

@@ -536,6 +536,9 @@ class moduleAdminModel extends module
 		Context::set('lang_code_list', $output->data);
 		Context::set('page_navigation', $output->page_navigation);
 
+		$oSecurity = new Security();
+		$oSecurity->encodeHTML('lang_code_list..');
+
 		$oTemplate = TemplateHandler::getInstance();
 		$tpl = $oTemplate->compile('./modules/module/tpl', 'multilingual_v17_list.html');
 

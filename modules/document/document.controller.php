@@ -2247,6 +2247,10 @@ class documentController extends document
 			$oDocumentModel = &getModel('document');
 			$columnList = array('document_srl', 'title', 'nick_name', 'status');
 			$documentList = $oDocumentModel->getDocuments($documentSrlList, $this->grant->is_admin, false, $columnList);
+			foreach($documentList as &$doc)
+			{
+				$doc->variables['title'] = htmlspecialchars($doc->variables['title']);
+			}
 		}
 		else
 		{
