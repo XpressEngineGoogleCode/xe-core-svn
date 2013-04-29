@@ -346,6 +346,9 @@ class memberModel extends member
 			$oSecurity = new Security($info);
 			$oSecurity->encodeHTML('user_id', 'user_name', 'nick_name', 'find_account_answer', 'description', 'address.', 'group_list..');
 
+			$info->homepage = strip_tags($info->homepage);
+			$info->blog = strip_tags($info->blog);
+
 			if($extra_vars)
 			{
 				foreach($extra_vars as $key => $val)
