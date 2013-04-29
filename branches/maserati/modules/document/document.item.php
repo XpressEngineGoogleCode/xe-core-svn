@@ -315,6 +315,11 @@ class documentItem extends Object
 		return htmlspecialchars($this->get('nick_name'));
 	}
 
+	function getLastUpdater()
+	{
+		return htmlspecialchars($this->get('last_updater'));
+	}
+
 	function getTitleText($cut_size = 0, $tail='...')
 	{
 		if(!$this->document_srl) return;
