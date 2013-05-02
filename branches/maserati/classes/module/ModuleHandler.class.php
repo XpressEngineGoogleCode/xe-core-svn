@@ -349,14 +349,28 @@ class ModuleHandler extends Handler
 		}
 
 		// check REQUEST_METHOD in controller
-		if($type == 'controller' && strtoupper($_SERVER['REQUEST_METHOD']) != 'POST')
+		if($type == 'controller')
 		{
-			$this->error = "msg_invalid_request";
-			$oMessageObject = ModuleHandler::getModuleInstance('message', 'view');
-			$oMessageObject->setError(-1);
-			$oMessageObject->setMessage($this->error);
-			$oMessageObject->dispMessage();
-			return $oMessageObject;
+			$allowedMethod = $xml_info->action->{$this->act}->method;
+
+			if(!$allowedMethod)
+			{
+				$allowedMethodList[0] = 'POST';
+			}
+			else
+			{
+				$allowedMethodList = explode('|', strtoupper($allowedMethod));
+			}
+
+			if(!in_array(strtoupper($_SERVER['REQUEST_METHOD']), $allowedMethodList))
+			{
+				$this->error = "msg_invalid_request";
+				$oMessageObject = ModuleHandler::getModuleInstance('message', 'view');
+				$oMessageObject->setError(-1);
+				$oMessageObject->setMessage($this->error);
+				$oMessageObject->dispMessage();
+				return $oMessageObject;
+			}
 		}
 
 		if($this->module_info->use_mobile != "Y")
