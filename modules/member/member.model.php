@@ -353,7 +353,14 @@ class memberModel extends member
 			{
 				foreach($extra_vars as $key => $val)
 				{
-					$oSecurity->encodeHTML($key);
+					if(is_array($val))
+					{
+						$oSecurity->encodeHTML($key . '.');
+					}
+					else
+					{
+						$oSecurity->encodeHTML($key);
+					}
 				}
 			}
 
