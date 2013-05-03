@@ -178,6 +178,8 @@ class memberView extends member
 		}
 
 		Context::set('displayDatas', $displayDatas);
+		$oSecurity = new Security();
+		$oSecurity->encodeHTML('displayDatas..title', 'displayDatas..description');
 		return $displayDatas;
 	}
 
