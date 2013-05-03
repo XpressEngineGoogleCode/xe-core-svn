@@ -99,6 +99,14 @@ class layoutAdminController extends layout
 
 		$is_sitemap = $extra_vars->is_sitemap;
 		unset($extra_vars->is_sitemap);
+		
+		//Security
+		$security = new Security($extra_vars);
+		foreach($extra_vars as $key=>$val)
+		{
+			if(substr($value->title,0,12)=='$user_lang->') continue;
+			$security->encodeHTML($key);
+		}
 
 		$args = Context::gets('layout_srl','title');
 		// Get layout information
