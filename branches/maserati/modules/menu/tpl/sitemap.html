@@ -1417,7 +1417,7 @@ jQuery(function($){
 
 		var sMenuId = $._htMarkupActionParam.sMenuId;
 		var htInfo = htNodeInfo[sMenuId];
-		$(ev.target).find('.title').html(htInfo.sText);
+		$(ev.target).find('.title').text(htInfo.sText);
 	});
 	$('#propertiesRoot').bind("hide", function(ev, htOpt){
 		if(htOpt && htOpt.bOpeningProp) return;
@@ -1605,10 +1605,9 @@ jQuery(function($){
 		
 		var sMenuId = $._htMarkupActionParam.sMenuId;
 		var htInfo = htNodeInfo[sMenuId];
-		$(ev.target).find('.title').html(htInfo.sText);
+		$(ev.target).find('.title').text(htInfo.sText);
 
 		$(ev.target).find('.title').attr('href', htInfo.href);
-		//$(ev.target).find('.url').html(htInfo.url);
 
 		var title = htInfo.sModuleType;
 		if($._xeAdminVar.htAllModules[htInfo.sModuleType]){
@@ -1616,9 +1615,9 @@ jQuery(function($){
 		}
 		
 		if(!$._xeAdminVar.htAllModules[htInfo.sModuleType]){
-			$(ev.target).find('.module_type').html(htInfo.sModuleType + '(' + xe.lang.not_found_module +')');
+			$(ev.target).find('.module_type').text(htInfo.sModuleType + '(' + xe.lang.not_found_module +')');
 		}else{
-			$(ev.target).find('.module_type').html($._xeAdminVar.htAllModules[htInfo.sModuleType].title);
+			$(ev.target).find('.module_type').text($._xeAdminVar.htAllModules[htInfo.sModuleType].title);
 		}
 
 		if(htInfo.bShortCut){
@@ -1726,12 +1725,12 @@ jQuery(function($){
 		var $description = $(this).find('._description');
 		
 		var $title = $(this).find("._title");
-		$title.html($._xeAdminVar.sSelectedModuleTitle);
+		$title.text($._xeAdminVar.sSelectedModuleTitle);
 		var htItemType = $._xeAdminVar.htAllModules[$._xeAdminVar.sSelectedModuleName];
 
 		var $link = $(this).find("._link");
 		
-		$description.html(htItemType.description || "");
+		$description.text(htItemType.description || "");
 		if(htItemType.package_srl && htItemType.url){
 			$link.show();
 			$link.attr('target', '_blank');
@@ -1857,9 +1856,6 @@ jQuery(function($){
 		
 		var htInfo = htNodeInfo[$._xeAdminVar.sSelectedMenuSrl];
 		
-		//$(this).find('.module_type').html($._xeAdminVar.htItemTypes[htInfo.sModuleType].title);
-		//console.log(htInfo);
-		
 		if(htInfo.sModuleType === "_SHORTCUT"){
 			$(this).addClass('url');
 			$(this).removeClass('page');
@@ -1886,7 +1882,7 @@ jQuery(function($){
 			}else{
 				// URL shortcut
 				$(this).find('a[href="#fix_linkUrl"]').click();
-				$(this).find('._url_link').val($('<div />').html(htInfo.url).text());
+				$(this).find('._url_link').val($('<div />').text(htInfo.url).text());
 				
 				showMenuSelector($(this).find('._menuSelector_menuTreeContainer'));
 			}
@@ -2462,8 +2458,6 @@ jQuery(function($){
 					$Panel.find('.list').append($node);
 				}
 				
-				//$Panel.find('.list').html(sResult);
-
 				var htInfo = htData.page_navigation;
 				
 				var fnCallback = function(htNewParams){
@@ -2951,13 +2945,13 @@ jQuery(function($){
 			sSkinTitle = '{$lang->no_skin}';
 		}
 		
-		$('#design ._layoutName').html(sLayoutTitle);
+		$('#design ._layoutName').text(sLayoutTitle);
 		
 		<!--@if($act == 'dispMenuAdminSiteMap')-->
-		$('#design ._skinTitle').html(sSkinTitle);
+		$('#design ._skinTitle').text(sSkinTitle);
 		<!--@end-->
 		<!--@if($act == 'dispMenuAdminSiteDesign')-->
-		$('#design .active ._skinTitle').html(sSkinTitle);
+		$('#design .active ._skinTitle').text(sSkinTitle);
 		<!--@end-->
 		
 		updatePreview(htDesign);
@@ -3233,10 +3227,12 @@ jQuery(function($){
 		$thumbnail.css('border', '1px solid #888');
 		$thumbnail.css('padding', '3px');
 		
+		var $text = $('<div style="float:right;width:240px;text-align:left"></div>');
+		$text.text($label.text());
 		$.xeMsgBox.confirmDialog({
 			sTitle : xe.lang.confirm_delete,
 
-			sText : $thumbnail.outerHTML() + '<div style="float:right;width:240px;text-align:left">' + $label.text() + '</div>',
+			sText : $thumbnail.outerHTML() + $text.html(),
 			
 			bSmall: true,
 			
