@@ -146,6 +146,9 @@ class moduleAdminView extends module
 		$columnList = array('module_srl', 'module', 'mid', 'browser_title');
 		$module_info = $oModuleModel->getModuleInfoByModuleSrl($module_srl, $columnList);
 		Context::set('module_info', $module_info);
+
+		$oSecurity = new Security();
+		$oSecurity->encodeHTML('module_info.');
 		// Set the layout to be pop-up
 		$this->setLayoutPath('./common/tpl');
 		$this->setLayoutFile('popup_layout');
