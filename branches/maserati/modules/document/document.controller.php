@@ -1844,7 +1844,7 @@ class documentController extends document
 				$category_srl,
 				getUrl('','mid',$node->mid,'category',$category_srl),
 				$expand,
-				$color,
+				htmlspecialchars($color),
 				$group_check_code,
 				$category_srl,
 				$node->document_count
