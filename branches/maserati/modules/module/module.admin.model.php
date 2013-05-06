@@ -54,8 +54,33 @@ class moduleAdminModel extends module
 		return $output;
 	}
 
-	function getSelectedManageHTML($grantList, $tabChoice = array())
+	function getSelectedManageHTML($grantList, $tabChoice = array(), $modulePath = NULL)
 	{
+		if($modulePath)
+		{
+			// get the skins path
+			$oModuleModel = &getModel('module');
+			$skin_list = $oModuleModel->getSkins($modulePath);
+			Context::set('skin_list',$skin_list);
+
+			$mskin_list = $oModuleModel->getSkins($modulePath, "m.skins");
+			Context::set('mskin_list', $mskin_list);
+		}
+
+		// get the layouts path
+		$oLayoutModel = &getModel('layout');
+		$layout_list = $oLayoutModel->getLayoutList();
+		Context::set('layout_list', $layout_list);
+
+		$mobile_layout_list = $oLayoutModel->getLayoutList(0,"M");
+		Context::set('mlayout_list', $mobile_layout_list);
+
+		$security = new Security();
+		$security->encodeHTML('layout_list..layout', 'layout_list..title');
+		$security->encodeHTML('mlayout_list..layout', 'mlayout_list..title');
+		$security->encodeHTML('skin_list..title');
+		$security->encodeHTML('mskin_list..title');
+
 		$grant_list =new stdClass();
 		// Grant virtual permission for access and manager
 		if(!$grantList)
