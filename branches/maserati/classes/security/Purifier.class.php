@@ -35,7 +35,9 @@ class Purifier
 
 		$this->_config = HTMLPurifier_Config::createDefault();
 		$this->_config->set('HTML.TidyLevel', 'light');
+		$this->_config->set('Output.FlashCompat', TRUE);
 		$this->_config->set('HTML.SafeObject', TRUE);
+		$this->_config->set('HTML.SafeEmbed', TRUE);
 		$this->_config->set('HTML.SafeIframe', TRUE);
 		$this->_config->set('URI.SafeIframeRegexp', $whiteDomainRegex);
 		$this->_config->set('Cache.SerializerPath', $this->_cacheDir);
