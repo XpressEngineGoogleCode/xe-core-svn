@@ -53,6 +53,7 @@ class Purifier
 			foreach($editComponentAttrs AS $k => $v)
 			{
 				$this->_def->addAttribute('img', $v, 'CDATA');
+				$this->_def->addAttribute('div', $v, 'CDATA');
 			}
 		}
 
