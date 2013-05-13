@@ -1599,34 +1599,32 @@ class memberController extends member
 			if(!$user_id || strtolower($this->memberInfo->user_id) != strtolower($user_id)) return $this->recordLoginError(-1, 'invalid_user_id');
 		}
 
+		$output = executeQuery('member.getLoginCountByIp', $args);
+		$errorCount = $output->data->count;
+		if($errorCount >= $config->max_error_count)
+		{
+			$last_update = strtotime($output->data->last_update);
+			$term = intval(time()-$last_update);
+			if($term < $config->max_error_count_time)
+			{
+				$term = $config->max_error_count_time - $term;
+				if($term < 60) $term = intval($term).Context::getLang('unit_sec');
+				elseif(60 <= $term && $term < 3600) $term = intval($term/60).Context::getLang('unit_min');
+				elseif(3600 <= $term && $term < 86400) $term = intval($term/3600).Context::getLang('unit_hour');
+				else $term = intval($term/86400).Context::getLang('unit_day');
+
+				return new Object(-1, sprintf(Context::getLang('excess_ip_access_count'),$term));
+			}
+			else
+			{
+				$args->ipaddress = $_SERVER['REMOTE_ADDR'];
+				$output = executeQuery('member.deleteLoginCountByIp', $args);
+			}
+		}
+
 		// Password Check
 		if($password && !$oMemberModel->isValidPassword($this->memberInfo->password, $password, $this->memberInfo->member_srl))
 		{
-			$output = executeQuery('member.getLoginCountByIp', $args);
-			$count = (int)$output->data->count + 1;
-			if($config->max_error_count < $count)
-			{
-				$last_update = strtotime($output->data->last_update);
-				$term = intval(time()-$last_update);
-				if($term < $config->max_error_count_time)
-				{
-					$term = $config->max_error_count_time - $term;
-					if($term < 60) $term = intval($term).Context::getLang('unit_sec');
-					elseif(60 <= $term && $term < 3600) $term = intval($term/60).Context::getLang('unit_min');
-					elseif(3600 <= $term && $term < 86400) $term = intval($term/3600).Context::getLang('unit_hour');
-					else $term = intval($term/86400).Context::getLang('unit_day');
-
-					$this->recordMemberLoginError(-1, 'invalid_password',$this->memberInfo);
-
-					return new Object(-1, sprintf(Context::getLang('excess_ip_access_count'),$term));
-				}
-				else
-				{
-					$args->ipaddress = $_SERVER['REMOTE_ADDR'];
-					$output = executeQuery('member.deleteLoginCountByIp', $args);
-				}
-			}
-
 			return $this->recordMemberLoginError(-1, 'invalid_password',$this->memberInfo);
 		}
 

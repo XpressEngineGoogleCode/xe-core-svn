@@ -44,7 +44,7 @@ var no_text_comment = '{$lang->no_text_comment}';
 					<block cond="trim($oTrashVO->getTitle())">{$oTrashVO->getTitle()}</block>
 				</td>
 				<td class="nowr"><!--@if($oTrashVO->getOriginModule() == 'document')-->{$lang->document}<!--@else-->{$lang->comment}<!--@end--></td>
-				<td class="nowr"><a href="#popup_menu_area" class="member_{$oTrashVO->getRemoverSrl()}">{htmlspecialchars($oTrashVO->getNickName())}</a></td>
+				<td class="nowr"><a href="#popup_menu_area" class="member_{$oTrashVO->getRemoverSrl()}">{$oTrashVO->getNickName()}</a></td>
 				<td class="nowr">{zdate($oTrashVO->getRegdate(), "Y-m-d H:i:s")}</td>
 				<td class="nowr">{$oTrashVO->getIpaddress()}</td>
 				<td class="title">{$oTrashVO->getDescription()}</td>

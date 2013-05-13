@@ -101,6 +101,22 @@ class ModuleHandler extends Handler
 	 * */
 	function init()
 	{
+		// if success_return_url and error_return_url is incorrect
+		$urls = array(Context::get('success_return_url'), Context::get('error_return_url'));
+		foreach($urls as $url)
+		{
+			if(empty($url))
+			{
+				continue;
+			}
+			$urlInfo = parse_url($url);
+			$host = $urlInfo['host'];
+			if($host)
+			{
+				return FALSE;
+			}
+		}
+		
 		$oModuleModel = getModel('module');
 		$site_module_info = Context::get('site_module_info');
 
@@ -331,6 +347,32 @@ class ModuleHandler extends Handler
 		{
 			$kind = 'admin';
 		}
+
+		// check REQUEST_METHOD in controller
+		if($type == 'controller')
+		{
+			$allowedMethod = $xml_info->action->{$this->act}->method;
+
+			if(!$allowedMethod)
+			{
+				$allowedMethodList[0] = 'POST';
+			}
+			else
+			{
+				$allowedMethodList = explode('|', strtoupper($allowedMethod));
+			}
+
+			if(!in_array(strtoupper($_SERVER['REQUEST_METHOD']), $allowedMethodList))
+			{
+				$this->error = "msg_invalid_request";
+				$oMessageObject = ModuleHandler::getModuleInstance('message', 'view');
+				$oMessageObject->setError(-1);
+				$oMessageObject->setMessage($this->error);
+				$oMessageObject->dispMessage();
+				return $oMessageObject;
+			}
+		}
+
 		if($this->module_info->use_mobile != "Y")
 		{
 			Mobile::setMobile(FALSE);
