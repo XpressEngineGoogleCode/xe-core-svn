@@ -1,0 +1,16 @@
+#sidebar Releases
+
+=XE 1.7.3.2 Release Note=
+(~r13129)
+
+<wiki:toc />
+
+===Defect===
+
+  * XSS, CSRF등 웹쉘 방어 코드 추가 `[`issue 3403, issue 3421  난다날아, 체리필터, 헤슨`]`
+  * 폼 메소드 오류 수정`[`issue 3412, issue 3412, r13109`, 헤슨, 체리필터]`
+  * zh-TW 어드민 CSS 오류 수정`[`issue 3408, 난다날아, 패치제공 royallin11`]`
+  * 로그인 횟수 제한 기능 오류 수정 `[`issue 3366, 똥똥 `]`
+  * CSS minify 툴 기능오류 수정 `[`r13123, 난다날아 `]`
+  * 삽입된 에디터 컴포넌트 코드에서 일부 HTML 속성이 제거되는 현상 수정 `[`issue 3398, 체리필터`]`
+  * Purifier에서 `<`embed`>`가 제거되는 문제 수정`[`issue 3399, 체리필터`]`
