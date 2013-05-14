@@ -109,11 +109,17 @@ class ModuleHandler extends Handler
 			{
 				continue;
 			}
+
 			$urlInfo = parse_url($url);
 			$host = $urlInfo['host'];
-			if($host)
+
+			$dbInfo = Context::getDBInfo();
+			$defaultUrlInfo = parse_url($dbInfo->default_url);
+			$defaultHost = $defaultUrlInfo['host'];
+
+			if($host && $host != $defaultHost)
 			{
-				return FALSE;
+				throw new Exception('msg_default_url_is_null');
 			}
 		}
 		
