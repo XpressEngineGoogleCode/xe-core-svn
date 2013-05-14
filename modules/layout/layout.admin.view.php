@@ -110,8 +110,7 @@ class layoutAdminView extends layout
 		$this->setTemplateFile('layout_all_instance_list');
 
 		$security = new Security();
-		$security->encodeHTML('layout_list...');
-
+		$security->encodeHTML('layout_list..');
 	}
 
 	/**

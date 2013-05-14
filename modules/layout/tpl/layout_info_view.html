@@ -66,11 +66,6 @@
 		{@$cnt = 1}
 		
 		<block loop="$selected_layout->extra_var => $name, $var">
-		<!--@if(strpos($var->value, "$user_lang->") === false)-->
-			{@ $var->value = htmlspecialchars_decode($var->value)}
-		<!--@else-->
-			{@ $var->value = htmlspecialchars($var->value)}
-		<!--@end-->
 		<block cond="$cnt == 1 && $var->group"><div class="x_tab-content"></block>
 			<block cond="$group != $var->group">
 				<block cond="$cnt != 1"></div></block>
@@ -82,12 +77,12 @@
 				<label class="x_control-label" for="{$name}"|cond="$var->type!='text'&&$var->type!='textarea'" for="lang_{$name}"|cond="$var->type=='text'||$var->type=='textarea'">{$var->title}</label>
 				<div class="x_controls">
 					<div cond="$var->type == 'text'">
-						<input type="text" name="{$name}" id="{$name}" class="lang_code" value="{$var->value}" />
+						<input type="text" name="{$name}" id="{$name}" class="lang_code" value="<!--@if(strpos($var->value, "$user_lang->") !== false)-->{htmlspecialchars($var->value)}<!--@else-->{$var->value}<!--@end-->" />
 					</div>
 
 					<div cond="$var->type == 'textarea'">
 						{@$use_multilang_textarea = true}
-						<textarea name="{$name}" rows="4" cols="42" class="lang_code">{$var->value}</textarea>
+						<textarea name="{$name}" rows="4" cols="42" class="lang_code"><!--@if(strpos($var->value, "$user_lang->") !== false)-->{htmlspecialchars($var->value)}<!--@else-->{$var->value}<!--@end--></textarea>
 					</div>
 
 					<block cond="$var->type == 'image'">
