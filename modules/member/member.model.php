@@ -344,13 +344,23 @@ class memberModel extends member
 
 			// XSS defence
 			$oSecurity = new Security($info);
-			$oSecurity->encodeHTML('user_name', 'nick_name', 'find_account_answer', 'description', 'address.', 'group_list..');
+			$oSecurity->encodeHTML('user_id', 'user_name', 'nick_name', 'find_account_answer', 'description', 'address.', 'group_list..');
+
+			$info->homepage = strip_tags($info->homepage);
+			$info->blog = strip_tags($info->blog);
 
 			if($extra_vars)
 			{
 				foreach($extra_vars as $key => $val)
 				{
-					$oSecurity->encodeHTML($key);
+					if(is_array($val))
+					{
+						$oSecurity->encodeHTML($key . '.');
+					}
+					else
+					{
+						$oSecurity->encodeHTML($key);
+					}
 				}
 			}
 
@@ -359,6 +369,11 @@ class memberModel extends member
 			if(!$oValidator->applyRule('url', $info->homepage))
 			{
 				$info->homepage = '';
+			}
+
+			if(!$oValidator->applyRule('url', $info->blog))
+			{
+				$info->blog = '';
 			}
 
 			$GLOBALS['__member_info__'][$info->member_srl] = $info;

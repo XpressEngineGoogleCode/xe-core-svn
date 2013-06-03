@@ -270,9 +270,11 @@ class commentController extends comment
 			{
 				$logged_info = Context::get('logged_info');
 				$obj->member_srl = $logged_info->member_srl;
-				$obj->user_id = $logged_info->user_id;
-				$obj->user_name = $logged_info->user_name;
-				$obj->nick_name = $logged_info->nick_name;
+
+				// user_id, user_name and nick_name already encoded
+				$obj->user_id = htmlspecialchars_decode($logged_info->user_id);
+				$obj->user_name = htmlspecialchars_decode($logged_info->user_name);
+				$obj->nick_name = htmlspecialchars_decode($logged_info->nick_name);
 				$obj->email_address = $logged_info->email_address;
 				$obj->homepage = $logged_info->homepage;
 			}
@@ -1331,6 +1333,9 @@ class commentController extends comment
 			$commentList = array();
 			$this->setMessage($lang->no_documents);
 		}
+
+		$oSecurity = new Security($commentList);
+		$oSecurity->encodeHTML('..variables.', '..');
 
 		$this->add('comment_list', $commentList);
 	}

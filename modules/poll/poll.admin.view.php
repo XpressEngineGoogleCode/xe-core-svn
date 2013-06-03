@@ -90,7 +90,7 @@ class pollAdminView extends poll
 		Context::set('module_list', $module_list);			
 
 		$security = new Security();				
-		$security->encodeHTML('poll_list..title');
+		$security->encodeHTML('poll_list..title', 'poll_list..nick_name');
 		// Set a template
 		$this->setTemplatePath($this->module_path.'tpl');
 		$this->setTemplateFile('poll_list');
