@@ -302,8 +302,6 @@ class adminAdminView extends admin
 		;
 		$output = $oDocumentModel->getDocumentList($args, FALSE, FALSE, $columnList);
 		Context::set('latestDocumentList', $output->data);
-		$security = new Security();
-		$security->encodeHTML('latestDocumentList..variables.nick_name');
 		unset($args, $output, $columnList);
 
 		// Latest Comment
@@ -381,6 +379,9 @@ class adminAdminView extends admin
 		Context::set('addTables', $addTables);
 		Context::set('needUpdate', $needUpdate);
 		Context::set('newVersionList', $needUpdateList);
+
+		$oSecurity = new Security();
+		$oSecurity->encodeHTML('module_list..', 'module_list..author..', 'newVersionList..');
 
 		// gathering enviroment check
 		$mainVersion = join('.', array_slice(explode('.', __XE_VERSION__), 0, 2));

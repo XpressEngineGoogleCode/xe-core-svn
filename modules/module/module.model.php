@@ -833,6 +833,7 @@ class moduleModel extends module
 					$grant = $action->attrs->grant?$action->attrs->grant:'guest';
 					$standalone = $action->attrs->standalone=='true'?'true':'false';
 					$ruleset = $action->attrs->ruleset?$action->attrs->ruleset:'';
+					$method = $action->attrs->method?$action->attrs->method:'';
 
 					$index = $action->attrs->index;
 					$admin_index = $action->attrs->admin_index;
@@ -845,6 +846,7 @@ class moduleModel extends module
 					$info->action->{$name}->grant = $grant;
 					$info->action->{$name}->standalone = $standalone=='true'?true:false;
 					$info->action->{$name}->ruleset = $ruleset;
+					$info->action->{$name}->method = $method;
 					if($action->attrs->menu_name)
 					{
 						if($menu_index == 'true')
@@ -866,6 +868,7 @@ class moduleModel extends module
 					$buff .= sprintf('$info->action->%s->grant=\'%s\';', $name, $grant);
 					$buff .= sprintf('$info->action->%s->standalone=%s;', $name, $standalone);
 					$buff .= sprintf('$info->action->%s->ruleset=\'%s\';', $name, $ruleset);
+					$buff .= sprintf('$info->action->%s->method=\'%s\';', $name, $method);
 
 					if($index=='true')
 					{
@@ -2067,7 +2070,7 @@ class moduleModel extends module
 		Context::set('page_navigation', $output->page_navigation);
 
 		$security = new Security();
-		$security->encodeHTML('filebox_list..comment');
+		$security->encodeHTML('filebox_list..comment', 'filebox_list..attributes.');
 
 		$oTemplate = &TemplateHandler::getInstance();
 		$html = $oTemplate->compile('./modules/module/tpl/', 'filebox_list_html');

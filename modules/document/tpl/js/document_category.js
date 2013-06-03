@@ -31,9 +31,13 @@ function Tree(url){
             // node
             var node = '';
             if(color && color !='transparent'){
-                node = $('<li id="tree_'+node_srl+'"><span style="color:'+color+';">'+text+'</span></li>');
+                node = $('<li id="tree_'+node_srl+'"></li>');
+				var $span = $('<span></span>').css('color', color).text(text);
+				node.append($span);
             }else{
-                node = $('<li id="tree_'+node_srl+'"><span>'+text+'</span></li>');
+                node = $('<li id="tree_'+node_srl+'"></li>');
+				var $span = $('<span></span>').text(text);
+				node.append($span);
             }
 
             // button

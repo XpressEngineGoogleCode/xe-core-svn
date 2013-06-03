@@ -240,9 +240,11 @@ class documentController extends document
 		if(Context::get('is_logged') && !$manual_inserted && !$isRestore)
 		{
 			$obj->member_srl = $logged_info->member_srl;
-			$obj->user_id = $logged_info->user_id;
-			$obj->user_name = $logged_info->user_name;
-			$obj->nick_name = $logged_info->nick_name;
+
+			// user_id, user_name and nick_name already encoded
+			$obj->user_id = htmlspecialchars_decode($logged_info->user_id);
+			$obj->user_name = htmlspecialchars_decode($logged_info->user_name);
+			$obj->nick_name = htmlspecialchars_decode($logged_info->nick_name);
 			$obj->email_address = $logged_info->email_address;
 			$obj->homepage = $logged_info->homepage;
 		}
@@ -695,9 +697,11 @@ class documentController extends document
 		{
 			$logged_info = Context::get('logged_info');
 			$trash_args->member_srl = $logged_info->member_srl;
-			$trash_args->user_id = $logged_info->user_id;
-			$trash_args->user_name = $logged_info->user_name;
-			$trash_args->nick_name = $logged_info->nick_name;
+
+			// user_id, user_name and nick_name already encoded
+			$trash_args->user_id = htmlspecialchars_decode($logged_info->user_id);
+			$trash_args->user_name = htmlspecialchars_decode($logged_info->user_name);
+			$trash_args->nick_name = htmlspecialchars_decode($logged_info->nick_name);
 		}
 		// Date setting for updating documents
 		$doucment_args = new stdClass();
@@ -1463,7 +1467,8 @@ class documentController extends document
 			{
 				$idx .= '[]';
 			}
-			$js_code[] = sprintf('validator.cast("ADD_MESSAGE", ["extra_vars%s","%s"]);', $idx, $val->name);
+			$name = str_ireplace(array('<script', '</script'), array('<scr" + "ipt', '</scr" + "ipt'), $val->name);
+			$js_code[] = sprintf('validator.cast("ADD_MESSAGE", ["extra_vars%s","%s"]);', $idx, $name);
 			if($val->is_required == 'Y') $js_code[] = sprintf('validator.cast("ADD_EXTRA_FIELD", ["extra_vars%s", { required:true }]);', $idx);
 		}
 
@@ -1840,7 +1845,7 @@ class documentController extends document
 				$category_srl,
 				getUrl('','mid',$node->mid,'category',$category_srl),
 				$expand,
-				$color,
+				htmlspecialchars($color),
 				$group_check_code,
 				$category_srl,
 				$node->document_count
@@ -2254,6 +2259,8 @@ class documentController extends document
 			$documentList = array();
 			$this->setMessage($lang->no_documents);
 		}
+		$oSecurity = new Security($documentList);
+		$oSecurity->encodeHTML('..variables.');
 		$this->add('document_list', $documentList);
 	}
 
