@@ -921,7 +921,7 @@ class documentModel extends document
 		$extra_keys = $this->getExtraKeys($module_srl);
 		Context::set('extra_keys', $extra_keys);
 		$security = new Security();
-		$security->encodeHTML('extra_keys..eid');
+		$security->encodeHTML('extra_keys..');
 
 		// Get information of module_grants
 		$oTemplate = &TemplateHandler::getInstance();

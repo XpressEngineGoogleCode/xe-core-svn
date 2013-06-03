@@ -55,7 +55,7 @@
 				<!--@foreach($usedIdentifiers as $name=>$title)-->
 					{@$used_values .= "\t".$member_info[$name]}
 				<!--@end-->
-				<td><input type="checkbox" name="user" value="{$member_info['member_srl']."\t".$member_info['email_address'].$used_values."\t".$member_info['group_list']."\t".$lang_denied}" disabled="disabled"|cond="$member_info['is_admin'] == 'Y'"/></td>
+				<td><input type="checkbox" name="user" value="{$member_info['member_srl']."\t".$member_info['email_address'].$used_values."\t".$member_info['group_list']}" disabled="disabled"|cond="$member_info['is_admin'] == 'Y'"/></td>
 			</tr>
 			<tr cond="$total_count==0">
 				<td>{$lang->msg_no_result}</td>

@@ -70,24 +70,8 @@ class pageAdminView extends page
 
 		$oModuleAdminModel = &getAdminModel('module'); /* @var $oModuleAdminModel moduleAdminModel */
 
-		// get the skins path
-		$oModuleModel = &getModel('module');
-		$skin_list = $oModuleModel->getSkins($this->module_path);
-		Context::set('skin_list',$skin_list);
-
-		$mskin_list = $oModuleModel->getSkins($this->module_path, "m.skins");
-		Context::set('mskin_list', $mskin_list);
-
-		// get the layouts path
-		$oLayoutModel = &getModel('layout');
-		$layout_list = $oLayoutModel->getLayoutList();
-		Context::set('layout_list', $layout_list);
-
-		$mobile_layout_list = $oLayoutModel->getLayoutList(0,"M");
-		Context::set('mlayout_list', $mobile_layout_list);
-
 		$tabChoice = array('tab1'=>1, 'tab3'=>1);
-		$selected_manage_content = $oModuleAdminModel->getSelectedManageHTML($this->xml_info->grant, $tabChoice);
+		$selected_manage_content = $oModuleAdminModel->getSelectedManageHTML($this->xml_info->grant, $tabChoice, $this->module_path);
 		Context::set('selected_manage_content', $selected_manage_content);
 
 		// To write to a template context:: set
@@ -96,6 +80,7 @@ class pageAdminView extends page
 		Context::set('page', $output->page);
 		Context::set('page_list', $output->data);
 		Context::set('page_navigation', $output->page_navigation);
+
 		//Security
 		$security = new Security();
 		$security->encodeHTML('page_list..browser_title');

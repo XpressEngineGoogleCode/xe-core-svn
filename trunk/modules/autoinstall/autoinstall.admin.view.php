@@ -272,6 +272,8 @@ class autoinstallAdminView extends autoinstall
 			}
 
 			Context::set('installed', $installed);
+			$oSecurity = new Security();
+			$oSecurity->encodeHTML('installed..');
 
 			foreach($installed as $key => $val)
 			{
@@ -471,7 +473,7 @@ class autoinstallAdminView extends autoinstall
 		}
 
 		$security = new Security();
-		$security->encodeHTML('package.', 'package.depends..');
+		$security->encodeHTML('package.', 'package.depends..', 'item_list..');
 	}
 
 	/**

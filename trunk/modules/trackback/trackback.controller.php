@@ -88,6 +88,9 @@ class trackbackController extends trackback
 			$this->setMessage($lang->no_trackbacks);
 		}
 
+		$oSecurity = new Security($trackbackList);
+		$oSecurity->encodeHTML('..title', '..blog_name', '..excerpt');
+
 		$this->add('trackback_list', $trackbackList);
 	}
 
