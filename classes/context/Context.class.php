@@ -959,7 +959,7 @@ class Context
 	 */
 	function setLang($code, $val)
 	{
-		if(isset($GLOBALS['lang']))
+		if(!isset($GLOBALS['lang']))
 		{
 			$GLOBALS['lang'] = new stdClass();
 		}
