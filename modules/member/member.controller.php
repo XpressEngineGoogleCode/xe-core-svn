@@ -1204,6 +1204,22 @@ class memberController extends member
 		}
 
 		$oMemberModel = &getModel('member');
+		// Check managed Email Host
+		if($oMemberModel->isDeniedEmailHost($newEmail))
+		{
+			$config = $oMemberModel->getMemberConfig();
+			$emailhost_check = $config->emailhost_check;
+
+			$managed_email_host = Context::getLang('managed_email_host');
+			$email_hosts = $oMemberModel->getManagedEmailHosts();
+			foreach ($email_hosts as $host)
+			{
+				$hosts[] = $host->email_host;
+			}
+			$message = sprintf($managed_email_host[$emailhost_check],implode(', ',$hosts),'id@'.implode(', id@',$hosts));
+			return new Object(-1, $message);
+		}
+
 		$member_srl = $oMemberModel->getMemberSrlByEmailAddress($newEmail);
 		if($member_srl)
 		{

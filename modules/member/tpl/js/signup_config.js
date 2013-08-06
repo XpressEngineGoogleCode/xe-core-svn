@@ -164,11 +164,6 @@ jQuery(function($){
 			$('#manage_email_host').focus();
 			return;
 		}
-		
-
-		//hosts = hosts.replace(/\n/g, ',');
-
-		//hosts = hosts.replace(/[]/g, '');
 
 		var tag;
 		function on_complete(data)
