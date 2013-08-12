@@ -65,8 +65,6 @@ class memberModel extends member
 
 		if(!$config->identifier) $config->identifier = 'user_id';
 
-		if(!$config->emailhost_check) $config->emailhost_check = 'allowed';
-
 		if(!$config->max_error_count) $config->max_error_count = 10;
 		if(!$config->max_error_count_time) $config->max_error_count_time = 300;
 
@@ -773,20 +771,6 @@ class memberModel extends member
 		return $output->data;
 	}
 
-	function getManagedEmailHosts()
-	{
-		static $output;
-		if(isset($output->data)) return $output->data;
-		$output = executeQueryArray('member.getManagedEmailHosts');
-		if(!$output->toBool())
-		{
-			$output->data = array();
-			return array();
-		}
-
-		return $output->data;
-	}
-
 	/**
 	 * @brief Verify if ID is denied
 	 */
@@ -814,48 +798,6 @@ class memberModel extends member
 		}
 		return false;
 	}
-
-	/**
-	 * @brief Verify if email_host from email_address is denied
-	 */
-	function isDeniedEmailHost($email_address)
-	{
-		$oMemberModel = &getModel('member');
-		$config = $oMemberModel->getMemberConfig();
-		$emailhost_check = $config->emailhost_check;
-		$managedHosts = $oMemberModel->getManagedEmailHosts();
-		if(count($managedHosts) < 1) return FALSE;
-
-		static $return;
-		if(!isset($return[$email_address]))
-		{
-			$email = explode('@',$email_address);
-			$email_hostname = $email[1];
-			if(!$email_hostname) return TRUE;
-
-			foreach($managedHosts as $managedHost)
-			{
-				if($managedHost->email_host && $managedHost->email_host == $email_hostname)
-				{
-					$return[$email_address] = TRUE;
-				}
-			}
-			if(!$return[$email_address])
-			{
-				$return[$email_address] = FALSE;
-			}
-		}
-
-		if($emailhost_check == 'prohibited')
-		{
-			return $return[$email_address];
-		}
-		else
-		{
-			return (!$return[$email_address]);
-		}
-	}
-
 	/**
 	 * @brief Get information of the profile image
 	 */
