@@ -109,6 +109,11 @@ class DBMysql_innodb extends DBMysql
 	 */
 	function __query($query, $connection)
 	{
+		if(!$connection)
+		{
+			Context::close();
+			exit();
+		}
 		// Run the query statement
 		$result = @mysql_query($query, $connection);
 		// Error Check
