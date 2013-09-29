@@ -87,6 +87,10 @@ class DBMysql extends DB
 
 		// Attempt to connect
 		$result = @mysql_connect($connection["db_hostname"], $connection["db_userid"], $connection["db_password"]);
+		if(!$result)
+		{
+			exit('XE cannot connect to DB.');
+		}
 
 		if(mysql_error())
 		{
@@ -190,6 +194,10 @@ class DBMysql extends DB
 	 */
 	function __query($query, $connection)
 	{
+		if(!$connection)
+		{
+			exit('XE cannot handle DB connection.');
+		}
 		// Run the query statement
 		$result = mysql_query($query, $connection);
 		// Error Check
