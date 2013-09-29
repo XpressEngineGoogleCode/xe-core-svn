@@ -233,7 +233,6 @@ function doSubmitConfig()
 		if($this.parents('.imageUpload').length) return;
 
 		var $input = jQuery('<input>').attr('type', 'hidden').attr('name', $this.attr('name')).val($this.val());
-		console.log($this.val());
 		$container.append($input);
 	});
 	$configForm.submit();
