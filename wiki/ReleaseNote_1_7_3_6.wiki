@@ -1,0 +1,14 @@
+#sidebar Releases
+
+=XE 1.7.3.6 Release Note=
+(~r13172)
+
+<wiki:toc />
+
+===Defect===
+
+  * XSS 보안 취약점 방어.
+  * CSRF 보안 취약점 방어.
+
+
+기타 변경점은 https://code.google.com/p/xe-core/source/list 에서 확인이 가능합니다.
